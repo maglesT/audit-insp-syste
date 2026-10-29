@@ -13,7 +13,7 @@ from pathlib import Path
 if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common import (Clause, edge_lines, english_line, english_page, normalise, pdf_pages,  # noqa: E402
-                    line_key, repeated_lines, running_lines)
+                    line_key, repeated_lines, resolve_duplicates, running_lines)
 
 NUM = re.compile(r"^([1-9]\d?(?:\.(?:0|[1-9]\d{0,2})){0,4})\.?(?=\s|$)\s*(.*)$")
 SECTION = [
@@ -26,6 +26,8 @@ BACK_MATTER = re.compile(r"^(\d{1,2}\.?\s+)?(Glossary|GLOSSARY|Definitions|DEFIN
 APPENDIX = re.compile(r"^(?:Appendix|APPENDIX)\s+([0-9IVX]+|[A-Z])\b")
 DOT_LEADER = re.compile(r"(\.\s?){4,}\s*\d*\s*$|\s\d{1,3}\s*$")
 MAX_GAP = 3
+DATE = re.compile(r"^(January|February|March|April|May|June|July|August|September|October|November|December)"
+                  r"\s+\d{4}\b")
 
 
 def parse_number(s):
@@ -127,6 +129,8 @@ def parse(path, pages=None):
                 start("principle", ref, "", line, pno)
                 continue
             m = NUM.match(line)
+            if m and DATE.match(m.group(2)) and "." not in m.group(1):
+                m = None                     # "1 July 2018" on a cover page is a date, not clause 1
             if m:
                 num, rest = m.group(1), m.group(2)
                 cand = parse_number(num)
@@ -196,4 +200,4 @@ def parse(path, pages=None):
                           section=c["section"], number=c["number"], heading=c["lines"][0][:160],
                           text=normalise(" ".join(c["lines"])), page_start=c["page_start"],
                           page_end=c["page_end"], kind=c["kind"], notes=c["notes"]))
-    return out, body_chars, dropped
+    return resolve_duplicates(out), body_chars, dropped

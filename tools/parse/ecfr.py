@@ -9,33 +9,51 @@ from pathlib import Path
 
 if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parent))
-from common import Clause, normalise  # noqa: E402
+from common import Clause, normalise, resolve_duplicates  # noqa: E402
 
 MARK = re.compile(r"^\(([a-z]{1,2}|\d{1,2}|[ivxl]{1,5}|[A-Z])\)\s*")
 ROMAN = re.compile(r"^[ivxl]+$")
-INLINE = re.compile(r"^([A-Z][^()]{0,100}?\.)\s+\((\d{1,2})\)\s*")
+INLINE = re.compile(r"^([A-Z][^()]{0,160}?(?:\.\s+|—))\((\d{1,2}|[a-z]|[A-Z])\)\s*")
 
 
+DEFINITION = re.compile(r"^([A-Z][\w ,’'()-]{1,60}?) (?:means|has the meaning)\b")
 LETTER_BEFORE = {"i": "h", "v": "u", "x": "w", "l": "k"}
 
 
 def level(mark, stack):
-    """eCFR nesting: (a) -> (1) -> (i) -> (A).
+    """eCFR nesting: (a) -> (1) -> (i) -> (A); below a roman numeral, lettered sub-items (level 4), then italic
+    numbers (5) and italic romans (6), as in 314.81(b)(2)(vii)(a)(8)(i).
 
     i, v, x and l are ambiguous: a letter right after (h), (u), (w) or (k) at letter level, otherwise a roman
     numeral under the current number. Longer roman marks (ii, iv) are always roman.
     """
     if mark.isdigit():
+        # an italic number below a lettered sub-item or a capital: 314.81(b)(2)(vii)(a)(1), (b)(3)(v)(A)(1)
+        if any(lv in (3, 4) for lv, _ in stack):
+            italic = next((mk for lv, mk in reversed(stack) if lv == 5), None)
+            if mark == "1" or (italic is not None and int(mark) == int(italic) + 1):
+                return 5
         return 1
     if mark.isupper():
         return 3
     if ROMAN.match(mark):
+        if stack and stack[-1][0] in (5, 6) and (mark == "i" or stack[-1][0] == 6):
+            return 6                                # an italic roman below an italic number: ...(a)(8)(i)
         if len(mark) > 1:
             return 2
         last_letter = next((mk for lv, mk in reversed(stack) if lv == 0), None)
         if last_letter == LETTER_BEFORE.get(mark):
             return 0
         return 2 if any(lv == 1 for lv, _ in stack) else 0
+    if len(mark) == 1 and any(lv >= 2 for lv, _ in stack):
+        # A letter below a roman numeral, e.g. 314.81(b)(2)(ii)(a): a sub-item, unless it is the next top-level
+        # paragraph and no sub-item list is open whose next letter it would be.
+        deep = next((mk for lv, mk in reversed(stack) if lv == 4), None)
+        if deep is not None and ord(mark) == ord(deep) + 1:
+            return 4
+        last_letter = next((mk for lv, mk in reversed(stack) if lv == 0), None)
+        if last_letter is None or ord(mark) != ord(last_letter) + 1:
+            return 4
     return 0
 
 
@@ -51,7 +69,7 @@ def parse(path):
         head = sec.find("HEAD")
         title = text_of(head) if head is not None else num
         stack = []          # [(level, mark)]
-        current = None
+        current, prefix = None, num
         clauses.append(Clause(source=Path(path).name, ref=num, section="", number=num, heading=title, text=title,
                               page_start=0, page_end=0, kind="clause"))
         body_chars += len(title.replace(" ", ""))
@@ -70,6 +88,14 @@ def parse(path):
                 marks.append(h.group(2))
                 rest = rest[h.end():]
             if not marks:
+                d = DEFINITION.match(txt)
+                if d:
+                    # an unmarked definition ("Domestic means ...", 207.1): its own clause; its items nest below it
+                    prefix, stack = f'{num} "{d.group(1)}"', []
+                    current = Clause(source=Path(path).name, ref=prefix, section="", number=prefix,
+                                     heading=txt[:160], text=txt, page_start=0, page_end=0, kind="clause")
+                    clauses.append(current)
+                    continue
                 if current is None:
                     current = clauses[-1]
                 current.text = normalise(current.text + " " + txt)
@@ -84,13 +110,15 @@ def parse(path):
                     end = txt.index(f"({marks[k + 1]})", pos + len(mark) + 2)
                     head_text = txt[pos:end].strip()
                     pos = end
-                    ref = num + "".join(f"({mk})" for _, mk in stack)
+                    ref = prefix + "".join(f"({mk})" for _, mk in stack)
                     clauses.append(Clause(source=Path(path).name, ref=ref, section="", number=ref,
                                           heading=head_text[:160], text=head_text, page_start=0, page_end=0,
                                           kind="clause"))
-            ref = num + "".join(f"({mk})" for _, mk in stack)
+            if stack and stack[0][0] == 0:
+                prefix = num                        # a lettered paragraph ends a run of unmarked definitions
+            ref = prefix + "".join(f"({mk})" for _, mk in stack)
             body = txt[pos:].strip()
             current = Clause(source=Path(path).name, ref=ref, section="", number=ref, heading=body[:160], text=body,
                              page_start=0, page_end=0, kind="clause")
             clauses.append(current)
-    return clauses, body_chars, 0
+    return resolve_duplicates(clauses), body_chars, 0
