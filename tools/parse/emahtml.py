@@ -2,7 +2,8 @@
 
 The page groups numbered questions under topic headings (h2: "EU GMP guide part I: Basic requirements for medicinal
 products: Chapter 1: Pharmaceutical quality system"). Each question sits in an accordion button (h3) above its
-answer; numbering restarts under every topic. A clause is one question with its answer, referenced by the topic and
+answer; numbering restarts under every topic. Numbers
+only need to increase (EMA removes Q&As; a gap is noted), and subheadings inside an answer stay in the answer. A clause is one question with its answer, referenced by the topic and
 the number: "EU GMP guide part I: Chapter 1: Pharmaceutical quality system Q1". The wordy middle part of a topic
 title ("Basic requirements for medicinal products", "Supplementary requirements") is left out of the reference;
 the full title stays in `section`. Text under a topic that is not part of a question is an unnumbered segment.
@@ -40,26 +41,27 @@ def parse(path):
                 break
             topic, label, expected, current = text, topic_label(text), 1, None
             unnumbered += 1
-            rows.append(["unnumbered", f"_unnumbered:{unnumbered}", topic, [text]])
+            rows.append(["unnumbered", f"_unnumbered:{unnumbered}", topic, [text], []])
             continue
         m = QUESTION.match(text)
-        if topic and b["tag"] == "h3" and m and int(m.group(1)) == expected:
-            expected += 1
+        if topic and b["tag"] == "h3" and m and int(m.group(1)) >= expected:
+            gap = int(m.group(1)) > expected                # EMA removes Q&As, leaving gaps in the numbering
+            expected = int(m.group(1)) + 1
             ref = f"{label} Q{m.group(1)}"
             used[ref] = used.get(ref, 0) + 1
             ref = ref if used[ref] == 1 else f"{ref} #{used[ref]}"
-            current = ["clause", ref, topic, [text]]
+            current = ["clause", ref, topic, [text], ["gap before " + ref] if gap else []]
             rows.append(current)
             continue
-        if current is not None and b["tag"] not in ("h2", "h3"):
+        if current is not None and b["tag"] != "h2":     # subheadings inside an answer stay in the answer
             current[3].append(text)
             continue
         current = None
         unnumbered += 1
-        rows.append(["unnumbered", f"_unnumbered:{unnumbered}", topic, [text]])
+        rows.append(["unnumbered", f"_unnumbered:{unnumbered}", topic, [text], []])
     name = Path(path).name
     clauses = [Clause(source=name, ref=ref, section=sec[:160], number=ref if kind == "clause" else "",
-                      heading=parts[0][:160], text=" ".join(parts), page_start=0, page_end=0, kind=kind)
-               for kind, ref, sec, parts in rows]
+                      heading=parts[0][:160], text=" ".join(parts), page_start=0, page_end=0, kind=kind,
+                      notes=notes) for kind, ref, sec, parts, notes in rows]
     body = sum(len(c.text.replace(" ", "").replace("|", "")) for c in clauses)
     return clauses, body, 0

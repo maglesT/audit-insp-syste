@@ -40,17 +40,29 @@ def write_jsonl(path, rows):
 ALTERNATIVE_GAIN = 0.05   # an alternative text parser must cover this much more of the text than the numbered one
 
 
+def usable_share(result):
+    """Share of the body text in citable clauses that can be cited as they are: a unique reference and at most
+    LARGE characters. One oversized clause (a Q&A answer that swallowed the rest of a guideline) or duplicate
+    references then cannot make a parse look good."""
+    clauses, body, _ = result
+    refs = [c.ref for c in clauses if c.kind in common.CITABLE]
+    dup = {r for r in refs if refs.count(r) > 1}
+    good = sum(len(c.text.replace(" ", "").replace("|", "")) for c in clauses
+               if c.kind in common.CITABLE and c.ref not in dup and len(c.text) <= LARGE)
+    return good / body if body else 0.0
+
+
 def text_parser(path, pages=None):
-    """Numbered parser by default; the Q&A or the article parser when it finds at least 3 clauses of its own kind
-    (Q<n> / Article <n>) and puts clearly more of the text into citable clauses. Deterministic: same input, same
-    choice. The choice is noted on the first clause."""
+    """Numbered parser by default; the Q&A or the article parser when it finds at least 2 clauses of its own kind
+    (Q<n> / Article <n>) and puts at least ALTERNATIVE_GAIN more of the text into usable clauses (usable_share).
+    Deterministic: same input, same choice. The choice is noted on the first clause."""
     best = numbered.parse(path, pages=pages)
-    best_share, name = common.report("", *best)["numbered_share"], "numbered"
+    best_share, name = usable_share(best), "numbered"
     for alt, prefix in ((qa, "Q"), (articles, "Article ")):
         result = alt.parse(path, pages=pages)
         own = sum(1 for c in result[0] if c.kind == "clause" and c.ref.startswith(prefix))
-        share = common.report("", *result)["numbered_share"]
-        if own >= 3 and share >= best_share + ALTERNATIVE_GAIN:
+        share = usable_share(result)
+        if own >= 2 and share >= best_share + ALTERNATIVE_GAIN:
             best, best_share, name = result, share, alt.__name__
     if name != "numbered" and best[0]:
         best[0][0].notes.append(f"parser: {name}")

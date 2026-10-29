@@ -33,6 +33,13 @@ class Articles(unittest.TestCase):
         self.assertEqual(crosscheck.missed_obligations(path, clauses), [])
 
 
+    def test_annex_and_signature_are_not_article_text(self):
+        r = refs(articles.parse, "eu-directive-2017-1572-gmp.pdf")
+        self.assertNotIn("Done at Brussels", r["Article 18"].text)
+        self.assertNotIn("Correlation table", r["Article 18"].text)
+        self.assertEqual(len([k for k in r if k == "Article 1"]), 1)
+
+
 class QA(unittest.TestCase):
     def test_hbel_qa(self):
         r = refs(qa.parse, "ema-hbel-qa-cross-contamination.pdf")
@@ -53,6 +60,17 @@ class QA(unittest.TestCase):
         clauses, _, _ = run.text_parser(common.OFFICIAL / "eu-directive-2017-1572-gmp.pdf")
         self.assertIn("parser: articles", clauses[0].notes)
 
+    def test_chooser_is_not_fooled_by_one_huge_clause(self):
+        """ICH Q9(R1) lists four risk questions; as Q&A, Q4 would swallow the rest of the guideline."""
+        clauses, _, _ = run.text_parser(common.OFFICIAL / "ich-q9r1.pdf")
+        self.assertFalse(any(n.startswith("parser:") for c in clauses for n in c.notes))
+
+    def test_chooser_prefers_clean_questions(self):
+        for name in ("pics-pi053-1-qa-cross-contamination.pdf", "ema-nitrosamines-qa-mah-rev23-2025.pdf",
+                     "ema-qa-microbial-contamination-nonsterile.pdf"):
+            clauses, _, _ = run.text_parser(common.OFFICIAL / name)
+            self.assertIn("parser: qa", clauses[0].notes, name)
+
 
 class EmaPage(unittest.TestCase):
     def test_questions_under_topics(self):
@@ -60,6 +78,12 @@ class EmaPage(unittest.TestCase):
         q1 = r["EU GMP guide part I: Chapter 1: Pharmaceutical quality system Q1"]
         self.assertIn("The product review is expected annually", q1.text)
         self.assertGreaterEqual(len(r), 100)
+
+    def test_subheadings_stay_in_the_answer(self):
+        clauses, _, _ = emahtml.parse(common.OFFICIAL / "ema-gmp-gdp-qa.html")
+        q2 = next(c for c in clauses if c.ref.startswith("EU GMP guide annexes: Annex 6") and c.ref.endswith(" Q2"))
+        self.assertIn("Valve", q2.text)
+        self.assertGreater(len(q2.text), 1500)
 
     def test_topic_label(self):
         title = "EU GMP guide annexes: Supplementary requirements: Annex 11: Computerised systems"

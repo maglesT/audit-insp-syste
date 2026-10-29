@@ -24,6 +24,9 @@ CHAPTER = re.compile(r"^(CHAPTER|SECTION)\s+([IVX]+|\d+)\b")
 PARAGRAPH = re.compile(r"^(\d{1,2})\.\s+(\S.*)$")
 POINT = re.compile(r"^\((\d{1,2}|[a-z])\)\s+(\S.*)$")
 FOOTNOTE = re.compile(r"^\(1\)\s+(OJ\s|Regulation\b|Directive\b|Commission\b|Council\b|Decision\b)")
+OJ_FOOTNOTE = re.compile(r"^\(1\)\s+OJ\s")
+CLOSING = re.compile(r"^(ANNEX\b|Done at\s)")
+SENTENCE_END = re.compile(r"[.;]$")
 
 
 def _successor(prev, cur):
@@ -34,21 +37,38 @@ def _successor(prev, cur):
     return prev.isalpha() and cur.isalpha() and ord(cur) == ord(prev) + 1
 
 
+def _body_follows(lines, i):
+    """Does an article or paragraph start later on the same page? Then a "(1) Regulation ..." line is the first point
+    of a list, not a footnote (footnotes are the last lines of a page)."""
+    page = lines[i][0]
+    return any(ARTICLE.match(ln) or PARAGRAPH.match(ln) for p, ln in lines[i + 1:] if p == page)
+
+
 def parse(path, pages=None):
     """Recitals and articles as clauses: (clauses, body_chars, dropped_chars)."""
     pages = pdf_pages(path) if pages is None else pages
     lines, dropped = body_lines(pages, keep=ARTICLE)
     clauses, cur, resume, unnumbered, body = [], None, None, 0, 0
     article = paragraph = point = None
-    recital, footnote_page = 0, None
+    recital, footnote_page, closing = 0, None, False
 
     def start(kind, ref, line, pno):
         nonlocal cur
-        cur = {"kind": kind, "ref": ref, "lines": [line], "page_start": pno, "page_end": pno}
+        cur = {"kind": kind, "ref": ref, "lines": [line], "page_start": pno, "page_end": pno, "notes": []}
         clauses.append(cur)
 
-    for pno, line in lines:
+    for i, (pno, line) in enumerate(lines):
         body += len(line.replace(" ", ""))
+        if closing or CLOSING.match(line):
+            # "Done at Brussels ..." and the annexes (correlation tables repeat "Article 1"): unnumbered to the end
+            if not closing or cur is None:
+                unnumbered += 1
+                start("unnumbered", f"_unnumbered:{unnumbered}", line, pno)
+            else:
+                cur["lines"].append(line)
+                cur["page_end"] = pno
+            closing = True
+            continue
         if footnote_page is not None and pno != footnote_page:
             footnote_page, cur = None, resume          # the interrupted clause goes on after the footnotes
         if footnote_page is not None:
@@ -65,11 +85,12 @@ def parse(path, pages=None):
             continue
         p = POINT.match(line)
         if article is None and p and p.group(1).isdigit() and int(p.group(1)) == recital + 1 and not (
-                recital and FOOTNOTE.match(line)):
+                OJ_FOOTNOTE.match(line) or (recital and FOOTNOTE.match(line))):
             recital += 1
             start("clause", f"Recital ({recital})", line, pno)
             continue
-        if FOOTNOTE.match(line):
+        if FOOTNOTE.match(line) and not (article is not None and point is None and not OJ_FOOTNOTE.match(line)
+                                         and _body_follows(lines, i)):
             resume, footnote_page = cur, pno
             unnumbered += 1
             start("unnumbered", f"_footnotes:{unnumbered}", line, pno)
@@ -89,8 +110,12 @@ def parse(path, pages=None):
             unnumbered += 1
             start("unnumbered", f"_unnumbered:{unnumbered}", line, pno)
         else:
+            if (point is not None and cur["ref"].endswith(f"({point})") and SENTENCE_END.search(cur["lines"][-1])
+                    and not cur.get("noted")):
+                cur["noted"] = True
+                cur["notes"].append("check: text after the end of this point may belong to the paragraph")
             cur["lines"].append(line)
             cur["page_end"] = pno
     return [Clause(source=Path(path).name, ref=c["ref"], section="", number=c["ref"] if c["kind"] == "clause" else "",
                    heading=c["lines"][0][:160], text=normalise(" ".join(c["lines"])), page_start=c["page_start"],
-                   page_end=c["page_end"], kind=c["kind"]) for c in clauses], body, dropped
+                   page_end=c["page_end"], kind=c["kind"], notes=c["notes"]) for c in clauses], body, dropped
