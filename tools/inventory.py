@@ -19,7 +19,7 @@ OFFICIAL = ROOT / "sources" / "official"
 CATALOG = ROOT / "sources" / "catalog.csv"
 URLS = ROOT / "sources" / "urls.tsv"
 INVENTORY = ROOT / "sources" / "inventory.csv"
-FIELDS = ["file", "regulator", "title", "version", "applies_to", "pilot_role",
+FIELDS = ["file", "regulator", "title", "version", "applies_to", "pilot_role", "source_class",
           "url", "sha256", "bytes", "pages", "text_chars"]
 MIN_CHARS_PER_PAGE = 200  # below this the PDF is probably scanned and needs OCR
 

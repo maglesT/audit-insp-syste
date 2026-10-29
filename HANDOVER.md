@@ -13,12 +13,12 @@ Last updated: 29 October 2026 (session 1).
   owner together for approval, then build the pilot.
 
 ## Open with the owner
-1. The repo name. Until the owner gives it, work stays local in `/home/user/gmp-audit`; once known, attach it
-   with `add_repo` (push) and push `main`.
+1. Anvisa English PDFs (RDC 658/2022, RDC 654/2022) are behind a captcha; the owner downloads them (Phase 2).
 2. Optional: three EU PDFs behind a bot check (Annex 19 old and 2026 act, Glossary). See section "Still needed"
    in `docs/01-source-inventory.md`.
 
 ## Facts a new session needs
+- Repo: `maglesT/audit-insp-syste` (private). Owner decision D7: regulator-published English translations are allowed.
 - The owner's email is triplerascals03@gmail.com. Updates go in Gmail thread id 1a1888c48a563240 (reply with replyThreadId), whose subject starts with
   "Audit:".
 - eBMR repo (read-only context): `maglesT/ebmr`. It is not this product. Do not copy its controls blindly.

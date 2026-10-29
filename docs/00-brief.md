@@ -31,9 +31,11 @@ audits with them.
   annexes: main, sterile, APIs), India Revised Schedule M, and ICH (Q7, Q9, Q10).
 - **Phase 2:** UK MHRA, EDQM, Health Canada (GUI-0001), TGA (PIC/S plus TGA specifics), SAHPRA (formerly MCC).
 - **Phase 3, on demand:** Saudi SFDA/GCC, Kenya PPB, Nigeria NAFDAC, Singapore HSA, Malaysia NPRA.
-- **Dropped** (their official texts are not in English): Anvisa, Invima, Russia/EAEU, Japan PMDA/MHLW, Turkey,
-  COFEPRIS, Ukraine, Vietnam, Indonesia. Never label a checklist "Anvisa" or "PMDA" unless their own texts are
-  mapped.
+- **Dropped** (no English text from the regulator itself): Invima, Russia/EAEU, Turkey, COFEPRIS, Ukraine,
+  Vietnam, Indonesia. Never label a checklist with a regulator's name unless its own texts are mapped.
+- **Amendment (owner, 29 Oct 2026):** a regulator's own published English translation counts as a source, labelled
+  "not legally binding". Japan (PMDA) and Brazil (Anvisa) therefore move into Phase 2. Third-party translations
+  stay excluded.
 - **Library structure:** three deep cores (EU GMP/PIC/S, US FDA, WHO GMP). Each topic has ONE requirement, mapped
   to every regulator's clause, with a flag wherever a regulator adds or tightens something. Every further
   regulator is a mapping onto a core plus its own additions.
