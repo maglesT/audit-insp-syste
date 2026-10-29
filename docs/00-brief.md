@@ -84,3 +84,20 @@ audits with them.
   - verifiers return structured results;
   - a fresh session after each big milestone, with a handover note in the repo;
   - estimate the token and time cost per regulator.
+
+## Later phase (owner, 29 Oct 2026; record in the plan, do not build yet): question-answering assistant
+- **Basis:** an assistant that explains requirements in plain words. It is built only AFTER the pilot library is
+  verified, and it works from the verified library, not raw PDFs: retrieval at requirement level, tagged by
+  regulator, plant type and requirement strength.
+- **What customers see:**
+  - no quoting of regulatory text (copyright) and no clause numbers (option A);
+  - answers in our own words, which may name regulators ("EU GMP and PIC/S require …").
+- **Checking every answer internally:**
+  - each statement must trace to verified library requirements;
+  - a program confirms the underlying quotes exist at their clauses; only then is the answer shown;
+  - "Not found in the sources" is a valid answer, and nothing comes from general model knowledge.
+- **Release:** accuracy is measured with a question set built from the library before release. The internal
+  version comes first (it also helps library verification); a customer version follows only on the owner's
+  decision.
+- **Legal:** the owner should have a lawyer confirm that internal storage and processing of the WHO, PIC/S and
+  ICH texts is allowed.
