@@ -19,7 +19,7 @@ Last updated: 29 October 2026 (session 1).
    in `docs/01-source-inventory.md`.
 
 ## Facts a new session needs
-- The owner's email is triplerascals03@gmail.com. Updates go in the Gmail thread whose subject starts with
+- The owner's email is triplerascals03@gmail.com. Updates go in Gmail thread id 1a1888c48a563240 (reply with replyThreadId), whose subject starts with
   "Audit:".
 - eBMR repo (read-only context): `maglesT/ebmr`. It is not this product. Do not copy its controls blindly.
 - Downloads: EC, FDA, eCFR (send `Accept-Encoding`, i.e. `curl --compressed`), ICH, PIC/S (`/docview/<id>`) and
