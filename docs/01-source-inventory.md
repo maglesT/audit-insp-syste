@@ -9,7 +9,7 @@ All files were downloaded on 29 October 2026 directly from the regulators' own s
 The eBMR extracts were not reused: every text will be re-extracted from these PDFs with `pdftotext -layout`.
 The Schedule M gazette PDF is byte-identical to the eBMR copy (sha256 `918704…d271`).
 
-## What we have (237 files, 29 October 2026)
+## What we have (247 files, 29 October 2026)
 
 Scope rule (owner, D9): every in-scope GMP guideline of each pilot body. That means binding rules, final guidances,
 supplementary annexes, and the inspectors' own aides. Priority `must` = binding or what inspectors work from;
@@ -29,14 +29,12 @@ not turned into items until final.
 
 All PDFs have an extractable text layer (`tools/inventory.py check` enforces this).
 
-## Still needed: `sources/missing.tsv` (29 rows)
+## Still needed: `sources/missing.tsv` (17 rows)
 
-**From the owner** (these sites block automated downloads; we do not get around that):
-1. **EUR-Lex**: Directive (EU) 2017/1572 and Regulation (EU) 1252/2014 (both `must`, the EU's binding GMP law);
-   excipient risk-assessment and API-GDP guidelines (we hold the identical PIC/S texts).
-2. **EC health site**: Annex 19 + its 2026 revision act, Glossary, written-confirmation template.
-3. **EMA**: nitrosamines Q&A for MAHs.
-4. **Anvisa** (phase 2): RDC 658/2022, RDC 654/2022, and the IN annexes in English.
+**From the owner:** received on 29 Oct (D11): the EU binding law, Annex 19 (2005 and 2026), the Glossary, the
+template, the EMA nitrosamines Q&A, and Anvisa RDC 658. Still wanted for Brazil (phase 2): RDC 654/2022 (APIs)
+and the English IN annexes, if Anvisa publishes them. Optional and low priority: EU GDP guidelines 2013/C 343/01
+(we hold PIC/S PE 011) and the drafts of Chapter 1 and Annex 22 (we hold the PIC/S copies).
 
 **We handle these ourselves:**
 - Four Indian circulars are scanned images with no text, so they need OCR, which is not installed yet. The
