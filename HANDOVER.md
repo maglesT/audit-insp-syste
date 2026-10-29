@@ -1,6 +1,6 @@
 # Handover: read this first in every new session
 
-Last updated: 29 October 2026 (session 1).
+Last updated: 29 October 2026 (end of session 1).
 
 ## Where we are
 - Brief: `docs/00-brief.md` (the owner's decisions). Small decisions: `docs/decisions.md`.
@@ -35,6 +35,13 @@ Last updated: 29 October 2026 (session 1).
   - One review pass is done (5 defects, all fixed with tests): contents detection, decimal rule, leading zeros,
     header/footer removal (now page edges only, with dropped text counted), and eCFR inline paragraphs plus
     roman-vs-letter (i).
+- **Start of session 2, do first:** table-aware extraction with **pdfplumber** (D21) for the table-format sources.
+  These include PIC/S PI 058-1, the ICH Q7 Q&A, the PIC/S aide-memoires (PI 030, PI 009 and others), and the
+  CDSCO checklist circulars.
+  - Goal: one clause per table row (ref = table and row label), then re-run `tools/parse/run.py`. The "possibly
+    missed" obligations (211 today) should fall sharply.
+  - Use Docling or Table Transformer only if pdfplumber leaves misses, and say so in decisions.
+  - Install with `pip install pdfplumber`, pinning the version in a `requirements.txt`, and add the install to CI.
 - **S1 remaining (next session, in this order):**
   1. A heading-based parser for FDA guidance PDFs and fda.gov HTML pages (the 60 pending files).
   2. An article parser for EU legal acts (Directive 2017/1572, Regulation 1252/2014: "Article N").
@@ -44,8 +51,8 @@ Last updated: 29 October 2026 (session 1).
      limit of 0.80 also catches documents with long intros. Investigate the duplicate refs in Annex 1 (EU and PIC/S
      copies) and the large clauses. Add `sources/parse-overrides` only where a rule cannot be fixed generally.
      Exit: every pilot source is unflagged or has a written explanation in the report.
-  5. Then S2: library schema, Layer 1 checker with the NLP pieces (D19), mutation harness, customer export and
-     the option-A test.
+  5. Then S2: library schema, Layer 1 checker with the NLP pieces (D19), BM25 plus a pinned embedding model for
+     candidate search (D21), mutation harness, customer export and the option-A test.
 
 ## Open with the owner
 1. Anvisa RDC 654/2022 (APIs) and the English IN annexes are still wanted (phase 2; captcha, so the owner
