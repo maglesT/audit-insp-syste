@@ -20,8 +20,11 @@ Last updated: 29 October 2026 (session 1).
   - `tools/parse/ecfr.py` handles 21 CFR XML, with paragraph nesting like 211.42(c)(10)(vi).
   - `tools/parse/run.py` writes `library/clauses/*.jsonl` (not committed, D20) and `library/parse-report.md`.
   - `tests/test_parse.py` pins clauses the plan cites.
-  - Current result: 120 sources, about 15,100 clauses, **99 flagged** for review. 60 FDA guidance and web files
+  - Current result: 120 sources, about 15,900 clauses, **94 flagged** for review. 60 FDA guidance and web files
     are pending.
+  - One review pass is done (5 defects, all fixed with tests): contents detection, decimal rule, leading zeros,
+    header/footer removal (now page edges only, with dropped text counted), and eCFR inline paragraphs plus
+    roman-vs-letter (i).
 - **S1 remaining (next session, in this order):**
   1. A heading-based parser for FDA guidance PDFs and fda.gov HTML pages (the 60 pending files).
   2. An article parser for EU legal acts (Directive 2017/1572, Regulation 1252/2014: "Article N").

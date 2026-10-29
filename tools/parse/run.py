@@ -38,9 +38,9 @@ def main():
         if parse is None:
             pending.append(row["file"])
             continue
-        clauses, body = parse(common.OFFICIAL / row["file"])
+        clauses, body, dropped = parse(common.OFFICIAL / row["file"])
         common.write_clauses(row["file"], clauses)
-        rep = common.report(row["file"], clauses, body)
+        rep = common.report(row["file"], clauses, body, dropped)
         rep["large"] = [c.ref for c in clauses if c.kind == "clause" and len(c.text) > LARGE]
         rep["flag"] = bool(rep["duplicate_refs"] or rep["large"] or rep["numbered_share"] < MIN_NUMBERED)
         results.append(rep)

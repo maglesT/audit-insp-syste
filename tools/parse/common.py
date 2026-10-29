@@ -57,12 +57,18 @@ def english_page(page):
     return sum(1 for c in letters if DEVANAGARI.match(c)) / len(letters) < 0.05
 
 
+def edge_lines(page, n=3):
+    """The first and last few non-empty lines of a page: the only places running headers and footers sit."""
+    lines = [ln for ln in page.splitlines() if ln.strip()]
+    return lines[:n] + lines[-n:] if len(lines) > 2 * n else lines
+
+
 def repeated_lines(pages, min_share=0.3, min_pages=3):
     """Lines that recur on many pages (running headers and footers), compared with digits masked."""
     counts = {}
     for page in pages:
         seen = set()
-        for line in page.splitlines():
+        for line in edge_lines(page):
             key = re.sub(r"\d+", "#", line.strip())
             if key and key not in seen:
                 seen.add(key)
@@ -80,7 +86,7 @@ def write_clauses(source, clauses):
     return path
 
 
-def report(source, clauses, body_chars):
+def report(source, clauses, body_chars, dropped_chars=0):
     """Completeness figures for one source."""
     assigned = sum(len(c.text.replace(" ", "")) for c in clauses)
     numbered = sum(len(c.text.replace(" ", "")) for c in clauses if c.kind in ("clause", "principle"))
@@ -92,6 +98,7 @@ def report(source, clauses, body_chars):
         "unnumbered_segments": sum(1 for c in clauses if c.kind == "unnumbered"),
         "toc_segments": sum(1 for c in clauses if c.kind == "toc"),
         "body_chars": body_chars,
+        "dropped_chars": dropped_chars,
         "assigned_share": round(assigned / body_chars, 4) if body_chars else 1.0,
         "numbered_share": round(numbered / body_chars, 4) if body_chars else 1.0,
         "duplicate_refs": dups,

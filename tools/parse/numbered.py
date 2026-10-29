@@ -12,16 +12,18 @@ from pathlib import Path
 
 if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parent))
-from common import Clause, english_page, normalise, pdf_pages, repeated_lines  # noqa: E402
+from common import Clause, edge_lines, english_page, normalise, pdf_pages, repeated_lines  # noqa: E402
 
-NUM = re.compile(r"^(\d{1,2}(?:\.\d{1,3}){0,4})\.?(?=\s|$)\s*(.*)$")
+NUM = re.compile(r"^([1-9]\d?(?:\.(?:0|[1-9]\d{0,2})){0,4})\.?(?=\s|$)\s*(.*)$")
 SECTION = [
     (re.compile(r"^PART[\s-]+([IVXL]+)\b"), "Part {}"),
     (re.compile(r"^ANNEX\s+(\d+[A-Z]?)\*?\s*$", re.I), "Annex {}"),
     (re.compile(r"^CHAPTER\s+(\d+)\b"), "Chapter {}"),
 ]
 PRINCIPLE = re.compile(r"^(Principles?|PRINCIPLES?)\.?\s*$")
-BACK_MATTER = re.compile(r"^(\d{1,2}\.?\s+)?(Glossary|GLOSSARY|Definitions|DEFINITIONS|Abbreviations|ABBREVIATIONS|References|REFERENCES|Bibliography|Appendix\b.*|APPENDIX\b.*)\s*$")
+BACK_MATTER = re.compile(r"^(\d{1,2}\.?\s+)?(Glossary|GLOSSARY|Definitions|DEFINITIONS|Abbreviations|ABBREVIATIONS|References|REFERENCES|Bibliography)\s*$")
+APPENDIX = re.compile(r"^(?:Appendix|APPENDIX)\s+([0-9IVX]+|[A-Z])\b")
+DOT_LEADER = re.compile(r"(\.\s?){4,}\s*\d*\s*$|\s\d{1,3}\s*$")
 MAX_GAP = 3
 
 
@@ -43,7 +45,7 @@ def plausible(prev, cand):
     if cand[:len(prev)] == prev and len(cand) == len(prev) + 1 and cand[-1] == 1:   # first child
         return True, False
     # ICH Q7 style decimals: heading 2.1, paragraphs 2.10, 2.11 ..., next heading 2.2, paragraphs 2.20 ...
-    if len(cand) == len(prev) and cand[:-1] == prev[:-1]:
+    if len(cand) >= 2 and len(cand) == len(prev) and cand[:-1] == prev[:-1]:
         p, c = prev[-1], cand[-1]
         if 1 <= p <= 9 and c == p * 10:
             return True, False
@@ -71,13 +73,17 @@ def parse(path):
                "lines": [line], "page_start": page, "page_end": page, "notes": []}
         clauses.append(cur)
 
-    lines = []
+    lines, dropped = [], 0
     for pno, (page, is_en) in enumerate(zip(pages, english), start=1):
         if not is_en:
             continue
+        edges = {ln.strip() for ln in edge_lines(page)}
         for raw in page.splitlines():
             line = raw.strip()
-            if not line or re.sub(r"\d+", "#", line) in noise or re.fullmatch(r"[-–—\s\d]+", line):
+            if not line:
+                continue
+            if line in edges and (re.sub(r"\d+", "#", line) in noise or re.fullmatch(r"[-–—\s\d]+", line)):
+                dropped += len(line.replace(" ", ""))
                 continue
             lines.append((pno, line))
 
@@ -100,10 +106,16 @@ def parse(path):
                 unnumbered += 1
                 start("unnumbered", f"_unnumbered:{unnumbered}", "", line, pno)
                 continue
+            ma = APPENDIX.match(line)
+            if ma and heading_like(line):
+                base = re.sub(r"\s*Appendix \S+$", "", section)
+                section, prev, seen_in_section = f"{base} Appendix {ma.group(1)}".strip(), None, set()
+                unnumbered += 1
+                start("unnumbered", f"_unnumbered:{unnumbered}", "", line, pno)
+                continue
             if BACK_MATTER.match(line):
                 unnumbered += 1
                 start("unnumbered", f"_unnumbered:{unnumbered}", "", line, pno)
-                prev, run, seen_in_section = None, run + 1, set()
                 continue
             if PRINCIPLE.match(line):
                 ref = f"{section} Principle".strip()
@@ -122,7 +134,7 @@ def parse(path):
                 follows = len(cand) == 1 and child_follows(i, cand[0])
                 as_heading = heading_like(rest) and (follows or upper)
                 as_paragraph = single_run and not follows
-                if len(cand) == 1 and not (as_heading or as_paragraph):
+                if len(cand) == 1 and not (as_heading or as_paragraph or restart):
                     ok = restart = False
                 if ok or restart:
                     if restart:   # numbering starts again: one of the runs is a table of contents
@@ -152,13 +164,26 @@ def parse(path):
     for (sec, r), size in runs.items():
         if sec not in best or size > runs[(sec, best[sec])]:
             best[sec] = r
-    count = {}
+    # A run counts as a contents list only on positive evidence: its numbers appear again in the run that is kept,
+    # and either most entries end in dot leaders or a page number, or nearly all numbers repeat and entries are short
+    # (a "document map" table).
+    count, leaders, numbers = {}, {}, {}
     for c in clauses:
         if c["kind"] == "clause":
-            count[(c["section"], c["run"])] = count.get((c["section"], c["run"]), 0) + 1
+            key = (c["section"], c["run"])
+            count[key] = count.get(key, 0) + 1
+            leaders[key] = leaders.get(key, 0) + bool(DOT_LEADER.search(c["lines"][0]))
+            numbers.setdefault(key, set()).add(c["number"])
+    toc_like = {}
+    for key in count:
+        kept = (key[0], best.get(key[0]))
+        repeats = len(numbers[key] & numbers.get(kept, set())) / len(numbers[key])
+        short = runs[key] / count[key] < 400
+        toc_like[key] = key != kept and repeats >= 0.5 and (leaders[key] >= 0.5 * count[key]
+                                                           or (repeats >= 0.8 and short))
     for c in clauses:
         key = (c["section"], c["run"])
-        if c["kind"] == "clause" and best.get(c["section"]) != c["run"] and runs[key] / count[key] < 250:
+        if c["kind"] == "clause" and best.get(c["section"]) != c["run"] and toc_like.get(key):
             c["kind"] = "toc"
     out = []
     for c in clauses:
@@ -166,4 +191,4 @@ def parse(path):
                           section=c["section"], number=c["number"], heading=c["lines"][0][:160],
                           text=normalise(" ".join(c["lines"])), page_start=c["page_start"],
                           page_end=c["page_end"], kind=c["kind"], notes=c["notes"]))
-    return out, body_chars
+    return out, body_chars, dropped
