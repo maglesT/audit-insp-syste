@@ -16,7 +16,6 @@ ROMAN = re.compile(r"^[ivxl]+$")
 INLINE = re.compile(r"^([A-Z][^()]{0,160}?(?:\.\s+|—))\((\d{1,2}|[a-z]|[A-Z])\)\s*")
 
 
-DEFINITION = re.compile(r"^([A-Z][\w ,’'()-]{1,60}?) (?:means|has the meaning)\b")
 LETTER_BEFORE = {"i": "h", "v": "u", "x": "w", "l": "k"}
 
 
@@ -57,6 +56,14 @@ def level(mark, stack):
     return 0
 
 
+def defined_term(p):
+    """The term of a definition paragraph: it opens with the term in italics (<P><I>Term</I> means ...)."""
+    if (p.text or "").strip() or not len(p) or p[0].tag != "I":
+        return None
+    term = normalise("".join(p[0].itertext())).rstrip(".,:")
+    return term if 0 < len(term) <= 80 else None
+
+
 def text_of(el):
     return normalise("".join(el.itertext()))
 
@@ -69,7 +76,7 @@ def parse(path):
         head = sec.find("HEAD")
         title = text_of(head) if head is not None else num
         stack = []          # [(level, mark)]
-        current, prefix = None, num
+        current, prefix, definitions_base, item = None, num, [], 0
         clauses.append(Clause(source=Path(path).name, ref=num, section="", number=num, heading=title, text=title,
                               page_start=0, page_end=0, kind="clause"))
         body_chars += len(title.replace(" ", ""))
@@ -88,10 +95,14 @@ def parse(path):
                 marks.append(h.group(2))
                 rest = rest[h.end():]
             if not marks:
-                d = DEFINITION.match(txt)
-                if d:
-                    # an unmarked definition ("Domestic means ...", 207.1): its own clause; its items nest below it
-                    prefix, stack = f'{num} "{d.group(1)}"', []
+                term = defined_term(p)
+                if term:
+                    # an unmarked definition ("<I>Foreign</I> for the purposes of ...", 207.1): its own clause under
+                    # the paragraph it sits in; "(1)", "(2)" ... in sequence nest below it
+                    if prefix == num:
+                        definitions_base = list(stack)
+                    prefix = num + "".join(f"({mk})" for _, mk in definitions_base) + f' "{term}"'
+                    stack, item = [], 0
                     current = Clause(source=Path(path).name, ref=prefix, section="", number=prefix,
                                      heading=txt[:160], text=txt, page_start=0, page_end=0, kind="clause")
                     clauses.append(current)
@@ -100,6 +111,11 @@ def parse(path):
                     current = clauses[-1]
                 current.text = normalise(current.text + " " + txt)
                 continue
+            if prefix != num:                       # inside a run of definitions
+                if len(marks) == 1 and marks[0].isdigit() and int(marks[0]) == item + 1:
+                    item += 1
+                else:                               # anything else ends the run
+                    prefix, stack = num, list(definitions_base)
             pos = 0                                 # split txt so parent and child texts do not overlap
             for k, mark in enumerate(marks):
                 lvl = level(mark, stack)
@@ -114,8 +130,6 @@ def parse(path):
                     clauses.append(Clause(source=Path(path).name, ref=ref, section="", number=ref,
                                           heading=head_text[:160], text=head_text, page_start=0, page_end=0,
                                           kind="clause"))
-            if stack and stack[0][0] == 0:
-                prefix = num                        # a lettered paragraph ends a run of unmarked definitions
             ref = prefix + "".join(f"({mk})" for _, mk in stack)
             body = txt[pos:].strip()
             current = Clause(source=Path(path).name, ref=ref, section="", number=ref, heading=body[:160], text=body,
