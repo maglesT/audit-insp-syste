@@ -77,6 +77,11 @@ class KnownClauses(unittest.TestCase):
         clauses, _, _ = numbered.parse(common.OFFICIAL / "pics-pi041-1-data-integrity.pdf")
         self.assertIn("Expectation", " ".join(c.text for c in clauses))
 
+    def test_who_side_header_is_not_clause_text(self):
+        r = refs(numbered.parse, "who-trs1044-a2-sterile.pdf")
+        self.assertIn("may be necessary, depending on the validated campaign length", r["4.21"].text)
+        self.assertNotIn("Technical Report Series", r["4.21"].text)
+
     def test_cfr_nesting(self):
         r = refs(ecfr.parse, "ecfr-21cfr211-2026-10-27.xml")
         self.assertIn("211.42(c)(10)(vi)", r)
