@@ -15,7 +15,7 @@ ROOT = Path(__file__).resolve().parents[2]
 OFFICIAL = ROOT / "sources" / "official"
 CLAUSES = ROOT / "library" / "clauses"
 
-CITABLE = ("clause", "principle", "table_row", "table_header")   # kinds with a reference of their own
+CITABLE = ("clause", "principle", "section", "table_row", "table_header")   # kinds with a reference of their own
 DEVANAGARI = re.compile(r"[ऀ-ॿ]")
 
 
@@ -29,7 +29,7 @@ class Clause:
     text: str              # whitespace-normalised text of the whole clause
     page_start: int
     page_end: int
-    kind: str = "clause"   # clause | principle | unnumbered | toc | table_row | table_header
+    kind: str = "clause"   # clause | principle | section | unnumbered | toc | table_row | table_header
     notes: list = field(default_factory=list)
     parent: str = ""       # table rows: the clause the table sits in ("" when it sits before any clause)
 
@@ -139,7 +139,7 @@ def resolve_duplicates(clauses):
     toc_pages = contents_pages(clauses)
     groups = {}
     for i, c in enumerate(clauses):
-        if c.kind in ("clause", "principle"):
+        if c.kind in ("clause", "principle", "section"):
             groups.setdefault(c.ref, []).append(i)
     for ref, idx in groups.items():
         if len(idx) < 2:

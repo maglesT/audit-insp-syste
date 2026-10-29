@@ -110,19 +110,21 @@ def parse(path, pages=None):
                 sec = None   # a chapter heading inside an annex or part does not restart numbering
             if sec:
                 section, prev, seen_in_section = sec, None, set()
-                unnumbered += 1
-                start("unnumbered", f"_unnumbered:{unnumbered}", "", line, pno)
+                start("section", sec, "", line, pno)     # text under the heading, before clause 1, is citable
                 continue
             ma = APPENDIX.match(line)
             if ma and heading_like(line):
                 base = re.sub(r"\s*Appendix \S+$", "", section)
                 section, prev, seen_in_section = f"{base} Appendix {ma.group(1)}".strip(), None, set()
-                unnumbered += 1
-                start("unnumbered", f"_unnumbered:{unnumbered}", "", line, pno)
+                start("section", section, "", line, pno)
                 continue
-            if BACK_MATTER.match(line):
-                unnumbered += 1
-                start("unnumbered", f"_unnumbered:{unnumbered}", "", line, pno)
+            mb = BACK_MATTER.match(line)
+            if mb:
+                if mb.group(2).lower() in ("references", "bibliography"):
+                    unnumbered += 1
+                    start("unnumbered", f"_unnumbered:{unnumbered}", "", line, pno)
+                else:                                  # definitions often carry "should" / "may": citable
+                    start("section", f"{section} {mb.group(2).title()}".strip(), "", line, pno)
                 continue
             if PRINCIPLE.match(line):
                 ref = f"{section} Principle".strip()
