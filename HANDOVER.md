@@ -22,6 +22,16 @@ Last updated: 29 October 2026 (session 1).
   - `tests/test_parse.py` pins clauses the plan cites.
   - Current result: 120 sources, about 15,900 clauses, **94 flagged** for review. 60 FDA guidance and web files
     are pending.
+  - **NLP safety net (owner request, D19), so a requirement cannot go missing even when the structure is misread:**
+    - `tools/parse/obligations.py` lists every obligation sentence (shall/must/should/may, plus the numbers in
+      it): about 27,400 across 120 sources.
+    - `tools/parse/crosscheck.py` re-reads each PDF independently (`pdftotext -raw`) and reports obligation
+      sentences missing from the parsed clauses. Today there are 211 possible misses (0.8 %). Most are tables
+      (PIC/S PI 058 interpretation table, Q&A tables, aide-memoires, CDSCO checklists), where layout and raw
+      extraction order the columns differently. Next step: table-aware extraction for those documents, e.g. one
+      clause per table row with pdfplumber or pdftotext -bbox.
+    - S2/S3 rule: every obligation sentence must end up covered by a mapping or marked not applicable. This is
+      the completeness check that does not rely on the numbering.
   - One review pass is done (5 defects, all fixed with tests): contents detection, decimal rule, leading zeros,
     header/footer removal (now page edges only, with dropped text counted), and eCFR inline paragraphs plus
     roman-vs-letter (i).
@@ -29,7 +39,8 @@ Last updated: 29 October 2026 (session 1).
   1. A heading-based parser for FDA guidance PDFs and fda.gov HTML pages (the 60 pending files).
   2. An article parser for EU legal acts (Directive 2017/1572, Regulation 1252/2014: "Article N").
   3. A Q&A parser for EMA/PIC/S Q&A documents (some parse to 0 clauses today).
-  4. Work through the flags in `library/parse-report.md`. Many come from too-strict thresholds: the numbered-share
+  4. Table-aware extraction for table-format documents (see the 211 possible misses), then work through the
+     flags in `library/parse-report.md`. Many come from too-strict thresholds: the numbered-share
      limit of 0.80 also catches documents with long intros. Investigate the duplicate refs in Annex 1 (EU and PIC/S
      copies) and the large clauses. Add `sources/parse-overrides` only where a rule cannot be fixed generally.
      Exit: every pilot source is unflagged or has a written explanation in the report.
