@@ -2,9 +2,9 @@
 
   python3 tools/parse/run.py            # writes library/clauses/*.jsonl and library/parse-report.md
 
-Scope: pilot regulators, priority must/should. Parsers: eCFR XML (ecfr.py), fda.gov HTML (fdahtml.py), FDA PDFs
-(headings.py), all other PDFs (numbered.py); tables in PDFs are read by tables.py. A file no parser handles is listed
-as "pending" in the report.
+Scope: pilot regulators, priority must/should. Parsers: eCFR XML (ecfr.py), fda.gov HTML (fdahtml.py), the EMA
+Q&A page (emahtml.py), FDA PDFs (headings.py), all other PDFs (numbered.py, or qa.py / articles.py when they fit
+better, see text_parser); tables in PDFs are read by tables.py. A file no parser handles is listed as "pending".
 """
 import csv
 import json
@@ -16,10 +16,13 @@ import common  # noqa: E402
 import crosscheck  # noqa: E402
 import obligations  # noqa: E402
 import ecfr  # noqa: E402
+import emahtml  # noqa: E402
 import fdahtml  # noqa: E402
 import headings  # noqa: E402
 import numbered  # noqa: E402
 import tables  # noqa: E402
+import articles  # noqa: E402
+import qa  # noqa: E402
 
 PILOT = {"FDA", "EU", "EMA", "PICS", "WHO", "INDIA", "ICH"}
 LARGE = 4000            # characters; a clause this long probably swallowed the next ones
@@ -34,15 +37,47 @@ def write_jsonl(path, rows):
             f.write(json.dumps(r, ensure_ascii=False) + "\n")
 
 
+ALTERNATIVE_GAIN = 0.05   # an alternative text parser must cover this much more of the text than the numbered one
+
+
+def usable_share(result):
+    """Share of the body text in citable clauses that can be cited as they are: a unique reference and at most
+    LARGE characters. One oversized clause (a Q&A answer that swallowed the rest of a guideline) or duplicate
+    references then cannot make a parse look good."""
+    clauses, body, _ = result
+    refs = [c.ref for c in clauses if c.kind in common.CITABLE]
+    dup = {r for r in refs if refs.count(r) > 1}
+    good = sum(len(c.text.replace(" ", "").replace("|", "")) for c in clauses
+               if c.kind in common.CITABLE and c.ref not in dup and len(c.text) <= LARGE)
+    return good / body if body else 0.0
+
+
+def text_parser(path, pages=None):
+    """Numbered parser by default; the Q&A or the article parser when it finds at least 2 clauses of its own kind
+    (Q<n> / Article <n>) and puts at least ALTERNATIVE_GAIN more of the text into usable clauses (usable_share).
+    Deterministic: same input, same choice. The choice is noted on the first clause."""
+    best = numbered.parse(path, pages=pages)
+    best_share, name = usable_share(best), "numbered"
+    for alt, prefix in ((qa, "Q"), (articles, "Article ")):
+        result = alt.parse(path, pages=pages)
+        own = sum(1 for c in result[0] if c.kind == "clause" and c.ref.startswith(prefix))
+        share = usable_share(result)
+        if own >= 2 and share >= best_share + ALTERNATIVE_GAIN:
+            best, best_share, name = result, share, alt.__name__
+    if name != "numbered" and best[0]:
+        best[0][0].notes.append(f"parser: {name}")
+    return best
+
+
 def parser_for(row):
     f = row["file"]
     if f.endswith(".xml"):
         return ecfr.parse
     if f.endswith(".html"):
-        return fdahtml.parse if row["regulator"] == "FDA" else None   # EMA Q&A pages: Q&A parser, next step
+        return {"FDA": fdahtml.parse, "EMA": emahtml.parse}.get(row["regulator"])
     if row["regulator"] == "FDA":
         return lambda path: tables.parse(path, headings.parse)
-    return tables.parse
+    return lambda path: tables.parse(path, text_parser)
 
 
 def main():

@@ -1,6 +1,6 @@
 # Handover: read this first in every new session
 
-Last updated: 29 October 2026 (session 2, FDA parser branch).
+Last updated: 29 October 2026 (session 2, article and Q&A parser branch).
 
 ## Where we are
 - Brief: `docs/00-brief.md` (the owner's decisions). Small decisions: `docs/decisions.md`.
@@ -45,12 +45,17 @@ Last updated: 29 October 2026 (session 2, FDA parser branch).
 - **Session 2, done: FDA parsers (D24).** `tools/parse/headings.py` parses FDA guidance and compliance-program PDFs by
   section, guided by each document's own contents list ("IV.B.2", "Part III 3.A"); `tools/parse/fdahtml.py` parses
   fda.gov pages (Q&A pages -> "Q7"; other pages -> "¶12"). All 59 FDA files parse; 179 sources in the report, only
-  `ema-gmp-gdp-qa.html` pending (Q&A parser). An article parser for the EU legal acts is drafted (session scratchpad,
-  not yet in the repo; recitals, "Article 5(2)", OJ footnotes per page).
+  `ema-gmp-gdp-qa.html` pending (Q&A parser).
+- **Session 2, done: article, Q&A and EMA-page parsers (D25).** `articles.py` (EU Directive 2017/1572, Regulation
+  1252/2014: "Recital (7)", "Article 4(2)(a)"; OJ footnotes and the annex kept out), `qa.py` ("Q7" per question),
+  `emahtml.py` (EMA GMP/GDP Q&A page: "<topic> Q<n>", 129 questions). `run.text_parser` picks the numbered parser
+  unless Q&A/articles fit clearly better (usable share: unique refs, clauses <= 4,000 characters); today it switches
+  exactly 6 documents (EMA HBEL Q&A, EMA microbial Q&A, PIC/S PI 053, EMA nitrosamines Q&A, the two EU acts).
+  No source is pending any more.
 - **S1 remaining (in this order):**
   1. (done) FDA parsers.
-  2. An article parser for EU legal acts (Directive 2017/1572, Regulation 1252/2014: "Article N").
-  3. A Q&A parser for EMA/PIC/S Q&A documents (some parse to 0 clauses today).
+  2. (done) Article parser for EU legal acts.
+  3. (done) Q&A parsers (PDF and the EMA web page).
   4. Work through the flags in `library/parse-report.md` (tables are done). Many come from too-strict thresholds: the numbered-share
      limit of 0.80 also catches documents with long intros. Investigate the duplicate refs in Annex 1 (EU and PIC/S
      copies) and the large clauses. Add `sources/parse-overrides` only where a rule cannot be fixed generally.
