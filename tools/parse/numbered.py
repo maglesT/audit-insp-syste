@@ -27,7 +27,7 @@ APPENDIX = re.compile(r"^(?:Appendix|APPENDIX)\s+([0-9IVX]+|[A-Z])\b")
 DOT_LEADER = re.compile(r"(\.\s?){4,}\s*\d*\s*$|\s\d{1,3}\s*$")
 MAX_GAP = 3
 PAGE_END = re.compile(r"(\.\s?){4,}\s*\d*\s*$|\s{3,}\d{1,3}\s*$")   # a contents entry: leaders or a page number
-UNDO_LINES = 40         # a stray number is taken back only if the old numbering resumes within this many lines
+UNDO_LINES = 60         # stray numbers are taken back only if the old numbering resumes within this many lines
 DATE = re.compile(r"^(January|February|March|April|May|June|July|August|September|October|November|December)"
                   r"\s+\d{4}\b")
 
@@ -71,7 +71,7 @@ def parse(path, pages=None):
     noise = repeated_lines([p for p, e in zip(pages, english) if e])
     running = running_lines([p for p, e in zip(pages, english) if e])
     clauses, cur, section, prev = [], None, "", None
-    seen_in_section, unnumbered, run, last_jump = set(), 0, 0, None
+    seen_in_section, unnumbered, run, jumps = set(), 0, 0, []
     body_chars = 0
 
     def start(kind, ref, number, line, page):
@@ -149,15 +149,25 @@ def parse(path, pages=None):
                 num, rest = m.group(1), m.group(2)
                 cand = parse_number(num)
                 ok, gap = plausible(prev, cand)
-                if (not ok and last_jump is not None and i - last_jump["line"] <= UNDO_LINES
-                        and len(cand) > 1 and rest[:1].isupper() and plausible(last_jump["prev"], cand)[0]):
-                    # The last accepted number was a stray (a footnote, a list item, a running header, a wrapped
-                    # line): the numbering goes on from before it. Take it back into the clause it interrupted.
-                    clauses.remove(last_jump["clause"])
+                # only a single stray, or a run of single numbers ("10." to "15." of a list), is taken back: a run
+                # of numbers like 17.4, 17.5 is real structure
+                back = next((k for k in range(len(jumps) - 1, -1, -1) if i - jumps[k]["line"] <= UNDO_LINES
+                             and plausible(jumps[k]["prev"], cand)[0]
+                             and (k == len(jumps) - 1 or all("." not in j["clause"]["number"] for j in jumps[k:]))),
+                            None) if not ok else None
+                if back is not None and len(cand) > 1 and rest[:1].isupper():
+                    # The last accepted numbers were strays (a footnote, a list "10. ... 15.", a running header, a
+                    # wrapped line): the numbering goes on from before them. Take them back into the clause they
+                    # interrupted.
+                    first = clauses.index(jumps[back]["clause"])
+                    taken = clauses[first:]
+                    del clauses[first:]
                     if clauses:
-                        clauses[-1]["lines"] += last_jump["clause"]["lines"]
-                        clauses[-1]["page_end"] = last_jump["clause"]["page_end"]
-                    prev, last_jump = last_jump["prev"], None
+                        for c in taken:
+                            clauses[-1]["lines"] += c["lines"]
+                        clauses[-1]["page_end"] = taken[-1]["page_end"]
+                    prev = jumps[back]["prev"]
+                    del jumps[back:]
                     ok, gap = plausible(prev, cand)
                 restart = (not ok and cand in ([1], [1, 1]) and heading_like(rest)
                            and tuple(cand) in seen_in_section)
@@ -181,7 +191,9 @@ def parse(path, pages=None):
                     start("clause", ref, num, line, pno)
                     if gap:
                         cur["notes"].append(f"gap before {num} (previous {'.'.join(map(str, prev))})")
-                    last_jump = {"line": i, "prev": prev, "clause": cur} if prev is not None else None
+                    if prev is not None:
+                        jumps.append({"line": i, "prev": prev, "clause": cur})
+                        jumps[:] = [j for j in jumps if i - j["line"] <= UNDO_LINES]
                     prev = cand
                     seen_in_section.add(tuple(cand))
                     continue

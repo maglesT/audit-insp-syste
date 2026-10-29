@@ -36,6 +36,11 @@ class Duplicates(unittest.TestCase):
         r = {c.ref for c in numbered.parse(common.OFFICIAL / "ich-q1a-r2.pdf")[0] if c.kind == "clause"}
         self.assertTrue({"2.1.9", "2.2", "2.2.1"} <= r)
 
+    def test_stray_list_run_is_taken_back(self):
+        """EU GMP Part II: list items "10." to "15." no longer swallow sections 2.5 to 9.46."""
+        r = {c.ref for c in numbered.parse(common.OFFICIAL / "eu-2014-08_gmp_part1.pdf")[0] if c.kind == "clause"}
+        self.assertTrue({"2.50", "5.40", "9.46"} <= r)
+
     def test_contents_line_does_not_open_an_appendix(self):
         r = {c.ref for c in numbered.parse(common.OFFICIAL / "who-trs1033-a4-data-integrity.pdf")[0]}
         self.assertIn("1.1", r)
