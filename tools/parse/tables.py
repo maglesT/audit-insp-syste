@@ -104,7 +104,8 @@ def _cells(table, words):
             if box is None:
                 cells.append("")
                 continue
-            inside = [w for w in words if box[0] <= (w[0] + w[2]) / 2 <= box[2] and box[1] <= (w[1] + w[3]) / 2 <= box[3]]
+            inside = [w for w in words
+                      if box[0] <= (w[0] + w[2]) / 2 <= box[2] and box[1] <= (w[1] + w[3]) / 2 <= box[3]]
             cells.append(normalise(" ".join(w[4] for w in inside)))
         rows.append(cells)
     return rows
@@ -177,13 +178,16 @@ def logical_numbers(tables):
     return nums
 
 
-def parse(path):
-    """Numbered parse of the text around the tables plus one clause per table row: (clauses, body, dropped)."""
-    import numbered
+def parse(path, text_parser=None):
+    """Parse of the text around the tables (numbered parser unless another is given, e.g. headings.parse) plus one
+    clause per table row: (clauses, body, dropped)."""
+    if text_parser is None:
+        import numbered
+        text_parser = numbered.parse
     pages, tables, dropped_rows = read(path)
     if not tables:
-        return numbered.parse(path)
-    clauses, body, dropped = numbered.parse(path, pages=pages)
+        return text_parser(path)
+    clauses, body, dropped = text_parser(path, pages=pages)
     parent, kept, last_ref = {}, [], ""
     for c in clauses:
         found = MARKER_RX.findall(c.text)
@@ -199,7 +203,7 @@ def parse(path):
         if c.text:
             kept.append(c)
     rows = rows_to_clauses(Path(path).name, tables, parent)
-    body += sum(len(x.replace(" ", "")) for t in tables for r in t["rows"] for x in r)
+    body += sum(len(x.replace(" ", "").replace("|", "")) for t in tables for r in t["rows"] for x in r)
     return kept + rows, body, dropped + dropped_rows
 
 
