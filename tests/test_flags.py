@@ -31,6 +31,20 @@ class Duplicates(unittest.TestCase):
         self.assertEqual(out[2].ref, "1 #2")
         self.assertIn("Appendix A Model form", out[2].notes[0])
 
+    def test_stray_number_is_taken_back(self):
+        """ICH Q1A: a stray "3" (a list or footnote number) no longer swallows 2.1.9 to 2.2.x."""
+        r = {c.ref for c in numbered.parse(common.OFFICIAL / "ich-q1a-r2.pdf")[0] if c.kind == "clause"}
+        self.assertTrue({"2.1.9", "2.2", "2.2.1"} <= r)
+
+    def test_contents_line_does_not_open_an_appendix(self):
+        r = {c.ref for c in numbered.parse(common.OFFICIAL / "who-trs1033-a4-data-integrity.pdf")[0]}
+        self.assertIn("1.1", r)
+        self.assertNotIn("Appendix 1 1.1", r)
+
+    def test_title_case_chapter_after_subsections(self):
+        r = {c.ref for c in numbered.parse(common.OFFICIAL / "eu-annex11_01-2011_en.pdf")[0] if c.kind == "clause"}
+        self.assertTrue({"5", "6", "9", "10"} <= r)
+
     def test_cover_date_is_not_clause_one(self):
         r = {c.ref: c for c in numbered.parse(common.OFFICIAL / "pics-pi043-1-am-cross-contamination.pdf")[0]}
         self.assertTrue(r["1"].text.startswith("1. DOCUMENT HISTORY"))
