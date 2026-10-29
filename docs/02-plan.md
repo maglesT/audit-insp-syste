@@ -8,10 +8,10 @@ Clause references in this document were checked against the official texts in `s
 | # | Question | Recommendation |
 |---|---|---|
 | Q1 | ~~Anthropic API key~~. **Decided (D14):** no API key. The AI checking runs inside Claude Code sessions on the owner's Max 20x plan, using background agents. | Done. Optional later: a RunPod **GPU** pod with an open model as a third, independent verifier (owner to confirm GPU access). |
-| Q2 | Should the two blind verifiers come from **different AI vendors**? The brief says "ideally different models". | Start with two different Claude models: Opus 5.5 and Sonnet 5.5, with different prompts. Add another vendor only if a regulator misses its Layer 3 detection thresholds. |
+| Q2 | Verifier models. | **Decided (D15):** Opus for both blind verifiers, each with its own prompt written independently. Layer 3 measures whether the two are independent enough. |
 | Q3 | **Release thresholds** (section 2.6). | Approve as written. |
-| Q4 | **Exception to "no print/export".** The site's own audit records (its findings and report) must be printable and exportable, because Annex 11 §8.1 and 21 CFR 11.10(b) require readable copies of electronic records. The report contains the text of the audited items only, with a watermark. | Accept. Without it a customer's self-inspection records would not comply. |
-| Q5 | **Plant types for the pilot**: OSD + injectables (from the brief). Oral liquids, semisolids and APIs come right after the pilot accuracy report. | Confirm. |
+| Q4 | Printing/exporting the site's own audit report. | **Decided (D16): no print or export at all.** See the compliance gap in section 3.3, R6. |
+| Q5 | Pilot plant types. | **Decided:** OSD + injectables; oral liquids, semisolids and APIs right after the pilot accuracy report. |
 
 Everything else is decided in this plan and recorded in `docs/decisions.md`. The owner can overrule any of it.
 
@@ -95,7 +95,9 @@ Customers see only the compiled item text and its tags (regulator names, plant t
 
 ### 2.5 Stage 4: Layer 2, independent AI review of meaning
 1. **Two blind verifiers.**
-   - Verifier A is Claude Opus 5.5 and verifier B is Claude Sonnet 5.5. Each has its own prompt.
+   - Both verifiers are Claude Opus (D15), each with its own prompt, written independently. The prompts differ
+     in framing: A checks the item against the clause, and B checks the clause against the item. Neither sees
+     the other's answer.
    - Each sees only the item (with addendum) and the cited clause text.
    - Each answers fixed structured questions:
      - Is the item required by this clause?
@@ -154,8 +156,8 @@ Alongside the mutants run 300 untouched mappings, to measure false alarms.
 ### 2.7 How models are run (D14)
 - **Where:** every model call runs as a Claude Code background agent in a working session. There is no API
   key. Agents take batches of about 40 clause units and return structured JSON verdicts only, with no prose.
-- **Which models:** Opus drafts and is verifier A; Sonnet is verifier B; the reverse test uses Sonnet; Opus
-  adjudicates. Each role has its own fixed prompt file in the repo.
+- **Which models (D15):** Opus for everything: drafting, verifier A, verifier B, the reverse test and
+  adjudication. Each role has its own fixed prompt file in the repo.
 - **Swappable runner:** the pipeline calls a small "model runner" interface, so the backend can change later
   without touching the library. Options: an API key, or a RunPod GPU pod with an open model as a third verifier.
 - **Pacing:** at most 2–3 agents at a time, within the plan's usage limits. Each batch is resumable, so a run
@@ -212,9 +214,8 @@ Hosting is decided before launch.
   - Text selection and copy are disabled on item text.
   - There is no download button.
 - **Watermark** with viewer name, organisation and time on every screen.
-- **The exception (Q4):** the site's own audit report and findings can be printed or exported, because Annex 11
-  §8.1 and 21 CFR 11.10(b) require readable copies of electronic records. The report shows the text of the
-  audited items only, watermarked.
+- **No exception (D16):** the site's own audit report and findings cannot be printed or exported either; they
+  are read on screen only. For the compliance consequence, see R6 below.
 - **Disclaimer** on every checklist and report: "Compiled from official texts with automated multi-step
   verification. Supports internal audits; does not replace the site's own judgement."
 - **Option A in the app:**
@@ -233,7 +234,7 @@ rules below. Each one is tied to the clause that breaks if it is dropped.
 | R3 | Audit trail of every create/change of a finding, conclusion and action: who, when (server time), old value, new value, reason | Annex 11 §9; 21 CFR 11.10(e); EU Ch 4 §4.9 |
 | R4 | No deletion. A correction keeps the original visible and requires a reason. | EU Ch 4 §4.9; 21 CFR 11.10(e) (changes must not obscure earlier entries) |
 | R5 | Records made at the time of the action, with server-generated timestamps | EU Ch 4 §4.8; 21 CFR 11.10(e) |
-| R6 | Readable printed/exported copies of the site's own records | Annex 11 §8.1; 21 CFR 11.10(b) |
+| R6 | **Not met: owner decision D16.** No printed or exported copies, not even of the site's own findings. | Annex 11 §8.1 (printed copies of electronic data) and 21 CFR 11.10(b) (copies for inspection) are not met. It must be disclosed to customers as a known limitation. Inspectors can be shown the records on screen. |
 | R7 | Regular backups, with a tested restore; retention as the site's own rules set | Annex 11 §7.1, §7.2; EU Ch 4 §4.12 |
 | R8 | Report contents: results, evaluation and conclusions, corrective actions; follow-up recorded | Schedule M Part I 10.5, 10.1; WHO TRS 986 A2 8.5, 8.6; EU Ch 9 §9.3 |
 
