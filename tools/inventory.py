@@ -10,6 +10,7 @@ must be re-verified before release.
 """
 import csv
 import hashlib
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -19,7 +20,7 @@ OFFICIAL = ROOT / "sources" / "official"
 CATALOG = ROOT / "sources" / "catalog.csv"
 URLS = ROOT / "sources" / "urls.tsv"
 INVENTORY = ROOT / "sources" / "inventory.csv"
-FIELDS = ["file", "regulator", "title", "version", "applies_to", "pilot_role", "source_class",
+FIELDS = ["file", "regulator", "title", "version", "applies_to", "priority", "phase", "source_class",
           "url", "sha256", "bytes", "pages", "text_chars"]
 MIN_CHARS_PER_PAGE = 200  # below this the PDF is probably scanned and needs OCR
 
@@ -44,6 +45,9 @@ def text_chars(path):
     if path.suffix == ".pdf":
         text = subprocess.run(["pdftotext", "-layout", str(path), "-"],
                               capture_output=True, text=True, check=True).stdout
+    elif path.suffix == ".html":
+        text = re.sub(r"<script.*?</script>|<style.*?</style>|<[^>]+>", " ",
+                      path.read_text(encoding="utf-8", errors="replace"), flags=re.S)
     else:
         text = path.read_text(encoding="utf-8")
     return len("".join(text.split()))

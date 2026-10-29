@@ -1,39 +1,238 @@
-file,regulator,title,version,applies_to,pilot_role,source_class
-ecfr-21cfr210-2026-10-27.xml,FDA,21 CFR Part 210 - CGMP in manufacturing processing packing or holding of drugs; general,eCFR up to date as of 2026-10-27,ALL,core,official
-ecfr-21cfr211-2026-10-27.xml,FDA,21 CFR Part 211 - CGMP for finished pharmaceuticals,eCFR up to date as of 2026-10-27,OSD;LIQ;SEMI;INJ,core,official
-fda-aseptic-2004.pdf,FDA,Guidance: Sterile Drug Products Produced by Aseptic Processing - CGMP,September 2004,INJ,core,official
-fda-process-validation-2011.pdf,FDA,Guidance: Process Validation - General Principles and Practices,January 2011,OSD;LIQ;SEMI;INJ;API,supporting,official
-fda-oos-2022.pdf,FDA,Guidance: Investigating Out-of-Specification (OOS) Test Results,Revision 1 May 2022,OSD;LIQ;SEMI;INJ;API,supporting,official
-fda-data-integrity-2018.pdf,FDA,Guidance: Data Integrity and Compliance With Drug CGMP - Q&A,December 2018,ALL,supporting,official
-eu-2011_intro_en.pdf,EU,EudraLex Vol 4 Introduction,2011,ALL,context,official
-eu-vol4-chap1_2013-01_en.pdf,EU,Part I Chapter 1 Pharmaceutical Quality System,in operation 31 Jan 2013,OSD;LIQ;SEMI;INJ,core,official
-eu-2014-03_chapter_2.pdf,EU,Part I Chapter 2 Personnel,in operation 16 Feb 2014,OSD;LIQ;SEMI;INJ,core,official
-eu-chapter_3.pdf,EU,Part I Chapter 3 Premises and Equipment,in operation 1 Mar 2015,OSD;LIQ;SEMI;INJ,core,official
-eu-chapter4_01-2011_en.pdf,EU,Part I Chapter 4 Documentation,in operation 30 Jun 2011,OSD;LIQ;SEMI;INJ,core,official
-eu-chapter_5.pdf,EU,Part I Chapter 5 Production,in operation 1 Mar 2015,OSD;LIQ;SEMI;INJ,core,official
-eu-2014-11_vol4_chapter_6.pdf,EU,Part I Chapter 6 Quality Control,in operation 1 Oct 2014,OSD;LIQ;SEMI;INJ,core,official
-eu-vol4-chap7_2012-06_en.pdf,EU,Part I Chapter 7 Outsourced Activities,in operation 31 Jan 2013,OSD;LIQ;SEMI;INJ,core,official
-eu-2014-08_gmp_chap8.pdf,EU,Part I Chapter 8 Complaints and Product Recall,in operation 1 Mar 2015,OSD;LIQ;SEMI;INJ,core,official
-eu-cap9_en.pdf,EU,Part I Chapter 9 Self Inspection,undated on the PDF,OSD;LIQ;SEMI;INJ,core,official
-eu-2014-08_gmp_part1.pdf,EU,Part II Basic Requirements for Active Substances used as Starting Materials,in operation 1 Sep 2014,API,core,official
-eu-20220825_gmp-an1_en_0.pdf,EU,Annex 1 Manufacture of Sterile Medicinal Products,C(2022) 5938 of 22 Aug 2022,INJ,core,official
-eu-anx08_en.pdf,EU,Annex 8 Sampling of Starting and Packaging Materials,undated on the PDF,OSD;LIQ;SEMI;INJ,core,official
-eu-anx09_en.pdf,EU,Annex 9 Manufacture of Liquids Creams and Ointments,undated on the PDF,LIQ;SEMI,core,official
-eu-annex11_01-2011_en.pdf,EU,Annex 11 Computerised Systems,in operation 30 Jun 2011,ALL,core,official
-eu-2015-10_annex15.pdf,EU,Annex 15 Qualification and Validation,in operation 1 Oct 2015,ALL,core,official
-eu-v4_an16_201510_en.pdf,EU,Annex 16 Certification by a Qualified Person and Batch Release,in operation 15 Apr 2016,OSD;LIQ;SEMI;INJ,supporting,official
-eu-2018_annex17_en.pdf,EU,Annex 17 Real Time Release Testing and Parametric Release,in operation 26 Dec 2018,INJ,supporting,official
-pics-pe009-18-intro.pdf,PICS,PE 009-18 Guide to GMP - Introduction,24 September 2026,ALL,context,official
-pics-pe009-18-part1.pdf,PICS,PE 009-18 Guide to GMP - Part I,24 September 2026,OSD;LIQ;SEMI;INJ,core,official
-pics-pe009-18-part2.pdf,PICS,PE 009-18 Guide to GMP - Part II (APIs),24 September 2026,API,core,official
-pics-pe009-18-annexes.pdf,PICS,PE 009-18 Guide to GMP - Annexes 1-20,24 September 2026,ALL,core,official
-who-trs986-a2-gmp-main.pdf,WHO,TRS 986 Annex 2 GMP for pharmaceutical products: main principles,2014,OSD;LIQ;SEMI;INJ,core,official
-who-trs1044-a2-sterile.pdf,WHO,TRS 1044 Annex 2 GMP for sterile pharmaceutical products,2022,INJ,core,official
-who-trs957-a2-api.pdf,WHO,TRS 957 Annex 2 GMP for active pharmaceutical ingredients,2010,API,core,official
-who-trs1019-a3-validation.pdf,WHO,TRS 1019 Annex 3 GMP guidelines on validation,2019,ALL,supporting,official
-india-schedule-m-2023-GSR922E.pdf,INDIA,Revised Schedule M (G.S.R. 922(E)) Parts I-XIII,28 December 2023,ALL,core,official
-ich-q7.pdf,ICH,Q7 GMP Guide for Active Pharmaceutical Ingredients,Step 4 10 November 2000,API,core,official
-ich-q7-qa.pdf,ICH,Q7 Questions and Answers,10 June 2015,API,supporting,official
-ich-q9r1.pdf,ICH,Q9(R1) Quality Risk Management,adopted 18 January 2023,ALL,core,official
-ich-q10.pdf,ICH,Q10 Pharmaceutical Quality System,Step 4 4 June 2008,ALL,core,official
-japan-mhlw-gmp-ordinance-179-en-tentative.pdf,JAPAN,MHLW Ministerial Ordinance No. 179 on GMP (manufacturing and quality control of drugs and quasi-drugs) - PMDA tentative English translation,Ordinance of 24 Dec 2004 as amended by No. 90 of 28 Apr 2021,ALL,phase2,regulator_translation
+file,regulator,title,version,applies_to,priority,phase,source_class
+ecfr-21cfr210-2026-10-27.xml,FDA,21 CFR Part 210 - CGMP in manufacturing processing packing or holding of drugs; general,eCFR up to date as of 2026-10-27,ALL,must,pilot,official
+ecfr-21cfr211-2026-10-27.xml,FDA,21 CFR Part 211 - CGMP for finished pharmaceuticals,eCFR up to date as of 2026-10-27,OSD;LIQ;SEMI;INJ,must,pilot,official
+fda-aseptic-2004.pdf,FDA,Guidance: Sterile Drug Products Produced by Aseptic Processing - CGMP,September 2004,INJ,must,pilot,official
+fda-process-validation-2011.pdf,FDA,Guidance: Process Validation - General Principles and Practices,January 2011,OSD;LIQ;SEMI;INJ;API,should,pilot,official
+fda-oos-2022.pdf,FDA,Guidance: Investigating Out-of-Specification (OOS) Test Results,Revision 1 May 2022,OSD;LIQ;SEMI;INJ;API,should,pilot,official
+fda-data-integrity-2018.pdf,FDA,Guidance: Data Integrity and Compliance With Drug CGMP - Q&A,December 2018,ALL,should,pilot,official
+eu-2011_intro_en.pdf,EU,EudraLex Vol 4 Introduction,2011,ALL,reference,pilot,official
+eu-vol4-chap1_2013-01_en.pdf,EU,Part I Chapter 1 Pharmaceutical Quality System,in operation 31 Jan 2013,OSD;LIQ;SEMI;INJ,must,pilot,official
+eu-2014-03_chapter_2.pdf,EU,Part I Chapter 2 Personnel,in operation 16 Feb 2014,OSD;LIQ;SEMI;INJ,must,pilot,official
+eu-chapter_3.pdf,EU,Part I Chapter 3 Premises and Equipment,in operation 1 Mar 2015,OSD;LIQ;SEMI;INJ,must,pilot,official
+eu-chapter4_01-2011_en.pdf,EU,Part I Chapter 4 Documentation,in operation 30 Jun 2011,OSD;LIQ;SEMI;INJ,must,pilot,official
+eu-chapter_5.pdf,EU,Part I Chapter 5 Production,in operation 1 Mar 2015,OSD;LIQ;SEMI;INJ,must,pilot,official
+eu-2014-11_vol4_chapter_6.pdf,EU,Part I Chapter 6 Quality Control,in operation 1 Oct 2014,OSD;LIQ;SEMI;INJ,must,pilot,official
+eu-vol4-chap7_2012-06_en.pdf,EU,Part I Chapter 7 Outsourced Activities,in operation 31 Jan 2013,OSD;LIQ;SEMI;INJ,must,pilot,official
+eu-2014-08_gmp_chap8.pdf,EU,Part I Chapter 8 Complaints and Product Recall,in operation 1 Mar 2015,OSD;LIQ;SEMI;INJ,must,pilot,official
+eu-cap9_en.pdf,EU,Part I Chapter 9 Self Inspection,undated on the PDF,OSD;LIQ;SEMI;INJ,must,pilot,official
+eu-2014-08_gmp_part1.pdf,EU,Part II Basic Requirements for Active Substances used as Starting Materials,in operation 1 Sep 2014,API,must,pilot,official
+eu-20220825_gmp-an1_en_0.pdf,EU,Annex 1 Manufacture of Sterile Medicinal Products,C(2022) 5938 of 22 Aug 2022,INJ,must,pilot,official
+eu-anx08_en.pdf,EU,Annex 8 Sampling of Starting and Packaging Materials,undated on the PDF,OSD;LIQ;SEMI;INJ,must,pilot,official
+eu-anx09_en.pdf,EU,Annex 9 Manufacture of Liquids Creams and Ointments,undated on the PDF,LIQ;SEMI,must,pilot,official
+eu-annex11_01-2011_en.pdf,EU,Annex 11 Computerised Systems,in operation 30 Jun 2011,ALL,must,pilot,official
+eu-2015-10_annex15.pdf,EU,Annex 15 Qualification and Validation,in operation 1 Oct 2015,ALL,must,pilot,official
+eu-v4_an16_201510_en.pdf,EU,Annex 16 Certification by a Qualified Person and Batch Release,in operation 15 Apr 2016,OSD;LIQ;SEMI;INJ,should,pilot,official
+eu-2018_annex17_en.pdf,EU,Annex 17 Real Time Release Testing and Parametric Release,in operation 26 Dec 2018,INJ,should,pilot,official
+pics-pe009-18-intro.pdf,PICS,PE 009-18 Guide to GMP - Introduction,24 September 2026,ALL,reference,pilot,official
+pics-pe009-18-part1.pdf,PICS,PE 009-18 Guide to GMP - Part I,24 September 2026,OSD;LIQ;SEMI;INJ,must,pilot,official
+pics-pe009-18-part2.pdf,PICS,PE 009-18 Guide to GMP - Part II (APIs),24 September 2026,API,must,pilot,official
+pics-pe009-18-annexes.pdf,PICS,PE 009-18 Guide to GMP - Annexes 1-20,24 September 2026,ALL,must,pilot,official
+who-trs986-a2-gmp-main.pdf,WHO,TRS 986 Annex 2 GMP for pharmaceutical products: main principles,2014,OSD;LIQ;SEMI;INJ,must,pilot,official
+who-trs1044-a2-sterile.pdf,WHO,TRS 1044 Annex 2 GMP for sterile pharmaceutical products,2022,INJ,must,pilot,official
+who-trs957-a2-api.pdf,WHO,TRS 957 Annex 2 GMP for active pharmaceutical ingredients,2010,API,must,pilot,official
+who-trs1019-a3-validation.pdf,WHO,TRS 1019 Annex 3 GMP guidelines on validation,2019,ALL,should,pilot,official
+india-schedule-m-2023-GSR922E.pdf,INDIA,Revised Schedule M (G.S.R. 922(E)) Parts I-XIII,28 December 2023,ALL,must,pilot,official
+ich-q7.pdf,ICH,Q7 GMP Guide for Active Pharmaceutical Ingredients,Step 4 10 November 2000,API,must,pilot,official
+ich-q7-qa.pdf,ICH,Q7 Questions and Answers,10 June 2015,API,should,pilot,official
+ich-q9r1.pdf,ICH,Q9(R1) Quality Risk Management,adopted 18 January 2023,ALL,must,pilot,official
+ich-q10.pdf,ICH,Q10 Pharmaceutical Quality System,Step 4 4 June 2008,ALL,must,pilot,official
+japan-mhlw-gmp-ordinance-179-en-tentative.pdf,JAPAN,MHLW Ministerial Ordinance No. 179 on GMP (manufacturing and quality control of drugs and quasi-drugs) - PMDA tentative English translation,Ordinance of 24 Dec 2004 as amended by No. 90 of 28 Apr 2021,ALL,must,phase2,regulator_translation
+fda-cfr-21-part-11.xml,FDA,21 CFR Part 11 Electronic Records; Electronic Signatures,eCFR up to date as of 2026-10-27,ALL,must,pilot,official
+fda-cfr-21-314.81.xml,FDA,21 CFR 314.81 Other postmarketing reports (incl. field alert reports  annual reports),eCFR up to date as of 2026-10-27,OSD;LIQ;SEMI;INJ,must,pilot,official
+fda-cfr-21-314.70.xml,FDA,21 CFR 314.70 Supplements and other changes to an approved NDA,eCFR up to date as of 2026-10-27,OSD;LIQ;SEMI;INJ,should,pilot,official
+fda-cfr-21-part-207.xml,FDA,21 CFR Part 207 Establishment registration  drug listing,eCFR up to date as of 2026-10-27,ALL,should,pilot,official
+fda-cfr-21-part-4.xml,FDA,21 CFR Part 4 Regulation of combination products (Subpart A CGMP relevant for prefilled syringes/co-packaged; device QS parts not fetched),eCFR up to date as of 2026-10-27,INJ,should,pilot,official
+fda-cfr-21-part-200.xml,FDA,21 CFR Part 200 General (incl. 200.10 contract facilities  200.50 ophthalmic sterility),eCFR up to date as of 2026-10-27,ALL,should,pilot,official
+fda-cfr-21-part-7.xml,FDA,21 CFR Part 7 Enforcement policy (Subpart C recalls),eCFR up to date as of 2026-10-27,ALL,reference,pilot,official
+fda-cfr-21-part-201.xml,FDA,21 CFR Part 201 Labeling,eCFR up to date as of 2026-10-27,OSD;LIQ;SEMI;INJ,reference,pilot,official
+fda-guidance-part11-scope-application-2003.pdf,FDA,Part 11  Electronic Records; Electronic Signatures - Scope and Application,Final 2003-09,ALL,must,pilot,official
+fda-guidance-quality-systems-approach-2006.pdf,FDA,Quality Systems Approach to Pharmaceutical CGMP Regulations,Final 2006-09,ALL,must,pilot,official
+fda-guidance-quality-agreements-2016.pdf,FDA,Contract Manufacturing Arrangements for Drugs: Quality Agreements,Final 2016-11,ALL,must,pilot,official
+fda-guidance-cci-in-lieu-of-sterility-2008.pdf,FDA,Container and Closure System Integrity Testing in Lieu of Sterility Testing as a Component of the Stability Protocol for Sterile Products,Final 2008-02,INJ,must,pilot,official
+fda-guidance-npbl-cross-contamination-2013.pdf,FDA,Non-Penicillin Beta-Lactam Drugs: A CGMP Framework for Preventing Cross-Contamination,Final 2013-04,ALL,must,pilot,official
+fda-guidance-npbl-cross-contamination-draft-2022.pdf,FDA,Non-Penicillin Beta-Lactam Drugs: A CGMP Framework for Preventing Cross-Contamination (draft revision),Draft 2022-06,ALL,reference,pilot,official
+fda-guidance-deg-eg-high-risk-components-2023.pdf,FDA,Testing of Glycerin  Propylene Glycol  Maltitol Solution  HSH  Sorbitol Solution and Other High-Risk Drug Components for DEG and EG,Final 2023-05,LIQ;SEMI;OSD,must,pilot,official
+fda-guidance-methanol-testing-alcohol-2023.pdf,FDA,Policy for Testing of Alcohol (Ethanol) and Isopropyl Alcohol for Methanol,Final 2023-10,LIQ;SEMI,must,pilot,official
+fda-guidance-benzene-carbomers-2023.pdf,FDA,Reformulating Drug Products That Contain Carbomers Manufactured With Benzene,Final 2023-12,SEMI;LIQ,should,pilot,official
+fda-guidance-melamine-components-2009.pdf,FDA,Pharmaceutical Components at Risk for Melamine Contamination,Final 2009-08,ALL,should,pilot,official
+fda-guidance-nitrosamine-control-2024.pdf,FDA,Control of Nitrosamine Impurities in Human Drugs (Rev 2),Final 2024-09,ALL,must,pilot,official
+fda-guidance-nitrosamine-ndsri-ai-limits-2023.pdf,FDA,Recommended Acceptable Intake Limits for Nitrosamine Drug Substance-Related Impurities,Final 2023-08,ALL,should,pilot,official
+fda-guidance-211-110-inprocess-draft-2025.pdf,FDA,Considerations for Complying with 21 CFR 211.110,Draft 2025-01,OSD;LIQ;SEMI;INJ,reference,pilot,official
+fda-guidance-pyrogen-endotoxins-qa-2026.pdf,FDA,Pyrogen and Endotoxins Testing: Questions and Answers,Final 2026-03,INJ;API,must,pilot,official
+fda-guidance-field-alert-report-qa-2021.pdf,FDA,Field Alert Report Submission: Questions and Answers,Final 2021-07,OSD;LIQ;SEMI;INJ,must,pilot,official
+fda-guidance-micro-quality-nonsterile-draft-2021.pdf,FDA,Microbiological Quality Considerations in Non-Sterile Drug Manufacturing,Draft 2021-09,OSD;LIQ;SEMI,reference,pilot,official
+fda-guidance-visible-particulates-injectables-draft-2021.pdf,FDA,Inspection of Injectable Products for Visible Particulates,Draft 2021-12,INJ,reference,pilot,official
+fda-guidance-container-closure-systems-1999.pdf,FDA,Container Closure Systems for Packaging Human Drugs and Biologics,Final 1999-07,ALL,should,pilot,official
+fda-guidance-container-closure-systems-qa-2002.pdf,FDA,Container Closure Systems for Packaging Human Drugs and Biologics - Questions and Answers,Final 2002-05,ALL,reference,pilot,official
+fda-guidance-sterilization-validation-submission-1994.pdf,FDA,Submission Documentation for Sterilization Process Validation in Applications for Human and Veterinary Drug Products,Final 1994-11,INJ,should,pilot,official
+fda-guidance-parametric-release-submission-2010.pdf,FDA,Submission of Documentation in Applications for Parametric Release of Human and Veterinary Drug Products Terminally Sterilized by Moist Heat,Final 2010-02,INJ,reference,pilot,official
+fda-cpg-490-200-parametric-release.html,FDA,CPG Sec. 490.200 Parametric Release of Parenteral Drug Products Terminally Sterilized by Moist Heat,Final 2012-07,INJ,should,pilot,official
+fda-cpg-490-100-process-validation-preapproval.pdf,FDA,CPG Sec. 490.100 Process Validation Requirements for Drug Products and APIs Subject to Pre-Market Approval,Final 2004-03,ALL,reference,pilot,official
+fda-guidance-dissolution-mechanical-calibration-2010.pdf,FDA,The Use of Mechanical Calibration of Dissolution Apparatus 1 and 2 - CGMP,Final 2010-01,OSD,should,pilot,official
+fda-guidance-analytical-procedures-validation-2015.pdf,FDA,Analytical Procedures and Methods Validation for Drugs and Biologics,Final 2015-07,ALL,should,pilot,official
+fda-guidance-elemental-impurities-2018.pdf,FDA,Elemental Impurities in Drug Products,Final 2018-08,OSD;LIQ;SEMI;INJ,should,pilot,official
+fda-guidance-residual-solvents-us-2009.pdf,FDA,Residual Solvents in Drug Products Marketed in the United States,Final 2009-11,ALL,reference,pilot,official
+fda-guidance-changes-approved-nda-anda-2004.pdf,FDA,Changes to an Approved NDA or ANDA,Final 2004-04,OSD;LIQ;SEMI;INJ,should,pilot,official
+fda-guidance-cmc-changes-annual-reports-2014.pdf,FDA,CMC Postapproval Manufacturing Changes To Be Documented in Annual Reports,Final 2014-03,OSD;LIQ;SEMI;INJ,reference,pilot,official
+fda-guidance-anda-stability-2013.pdf,FDA,ANDAs: Stability Testing of Drug Substances and Products,Final 2013-06,ALL,should,pilot,official
+fda-guidance-product-recalls-2020.pdf,FDA,Product Recalls  Including Removals and Corrections,Final 2020-03,ALL,should,pilot,official
+fda-guidance-voluntary-recalls-initiation-2022.pdf,FDA,Initiation of Voluntary Recalls Under 21 CFR Part 7  Subpart C,Final 2022-03,ALL,should,pilot,official
+fda-guidance-delaying-denying-inspection-2024.pdf,FDA,Circumstances that Constitute Delaying  Denying  Limiting  or Refusing a Drug or Device Inspection,Final 2024-06,ALL,should,pilot,official
+fda-guidance-remote-regulatory-assessments-2025.pdf,FDA,Conducting Remote Regulatory Assessments Questions and Answers,Final 2025-06,ALL,should,pilot,official
+fda-guidance-form-483-response-draft-2026.pdf,FDA,Responding to FDA Form 483 Observations at the Conclusion of a Drug CGMP Inspection,Draft 2026-03,ALL,reference,pilot,official
+fda-guidance-alternative-tools-facility-assessment-2025.pdf,FDA,Alternative Tools: Assessing Drug Manufacturing Facilities Identified in Pending Applications,Final 2025-09,ALL,reference,pilot,official
+fda-guidance-formal-dispute-resolution-cgmp-2006.pdf,FDA,Formal Dispute Resolution: Scientific and Technical Issues Related to Pharmaceutical CGMP,Final 2006-01,ALL,reference,pilot,official
+fda-guidance-pat-framework-2004.pdf,FDA,PAT - A Framework for Innovative Pharmaceutical Development  Manufacturing  and Quality Assurance,Final 2004-09,ALL,reference,pilot,official
+fda-guidance-heparin-crude-monitoring-2013.pdf,FDA,Heparin for Drug and Medical Device Use: Monitoring Crude Heparin for Quality,Final 2013-06,API;INJ,reference,pilot,official
+fda-guidance-drug-shortage-risk-mgmt-draft-2022.pdf,FDA,Risk Management Plans to Mitigate the Potential for Drug Shortages,Draft 2022-05,ALL,reference,pilot,official
+fda-guidance-discontinuance-notification-draft-2024.pdf,FDA,Notifying FDA of a Discontinuance or Interruption in Manufacturing of Finished Products or APIs,Draft 2024-02,ALL,reference,pilot,official
+fda-guidance-csa-production-qms-software-2026.pdf,FDA,Computer Software Assurance for Production and Quality Management System Software (CDRH/CBER; device-oriented  useful for CSV approach),Final 2026-02,ALL,reference,pilot,official
+fda-guidance-establishment-registration-electronic-2009.pdf,FDA,Providing Regulatory Submissions in Electronic Format - Drug Establishment Registration and Drug Listing,Final 2009-06,ALL,reference,pilot,official
+fda-guidance-chewable-tablets-2018.pdf,FDA,Quality Attribute Considerations for Chewable Tablets,Final 2018-08,OSD,reference,pilot,official
+fda-guidance-dissolution-ir-sod-1997.pdf,FDA,Dissolution Testing of Immediate Release Solid Oral Dosage Forms,Final 1997-08,OSD,reference,pilot,official
+fda-guidance-supac-ss-1997.pdf,FDA,SUPAC-SS: Nonsterile Semisolid Dosage Forms,Final 1997-05,SEMI,reference,pilot,official
+fda-guidance-supac-ir-1995.pdf,FDA,SUPAC-IR: Immediate-Release Solid Oral Dosage Forms,Final 1995-11,OSD,reference,pilot,official
+fda-cgmp-qa-general-provisions.html,FDA,Questions and Answers on CGMP for Drugs: General Provisions,web page  current,ALL,must,pilot,official
+fda-cgmp-qa-buildings-facilities.html,FDA,Questions and Answers on CGMP for Drugs: Buildings and Facilities,web page  current,ALL,must,pilot,official
+fda-cgmp-qa-equipment.html,FDA,Questions and Answers on CGMP for Drugs: Equipment,web page  current,ALL,must,pilot,official
+fda-cgmp-qa-components-containers-closures.html,FDA,Questions and Answers on CGMP for Drugs: Control of Components and Drug Product Containers and Closures,web page  current,ALL,must,pilot,official
+fda-cgmp-qa-production-process-controls.html,FDA,Questions and Answers on CGMP for Drugs: Production and Process Controls,web page  current,ALL,must,pilot,official
+fda-cgmp-qa-holding-distribution.html,FDA,Questions and Answers on CGMP for Drugs: Holding and Distribution,web page  current,ALL,must,pilot,official
+fda-cgmp-qa-laboratory-controls.html,FDA,Questions and Answers on CGMP for Drugs: Laboratory Controls,web page  current,ALL,must,pilot,official
+fda-cgmp-qa-records-reports.html,FDA,Questions and Answers on CGMP for Drugs: Records and Reports,web page  current,ALL,must,pilot,official
+fda-cgmp-qa-returned-salvaged.html,FDA,Questions and Answers on CGMP for Drugs: Returned and Salvaged Drug Products,web page  current,ALL,must,pilot,official
+fda-cp-7356-002-drug-manufacturing-inspections.pdf,FDA,Compliance Program 7356.002 Drug Manufacturing Inspections,current CP,ALL,must,pilot,official
+fda-cp-7356-002a-sterile-drug-process.pdf,FDA,Compliance Program 7356.002A Sterile Drug Process Inspections,current CP,INJ;API,must,pilot,official
+fda-cp-7356-002f-api.pdf,FDA,Compliance Program 7356.002F Active Pharmaceutical Ingredients,current CP,API,must,pilot,official
+fda-cp-7346-832-preapproval-inspections.pdf,FDA,Compliance Program 7346.832 Preapproval Inspections,current CP,ALL,must,pilot,official
+fda-cp-7356-843-postapproval-inspections.pdf,FDA,Compliance Program 7356.843 Postapproval Inspections,current CP,ALL,should,pilot,official
+fda-cp-7356-021-dqrs-field-alerts.pdf,FDA,Compliance Program 7356.021 Drug Quality Reporting System and NDA Field Alert Reporting,current CP,OSD;LIQ;SEMI;INJ,should,pilot,official
+fda-cp-7356-008-drug-sampling-testing.pdf,FDA,Compliance Program 7356.008 Drug Quality Sampling and Testing - Human Drugs,current CP,ALL,reference,pilot,official
+fda-cp-7356-000-combination-products.pdf,FDA,Compliance Program 7356.000 Inspections of CDER-led or CDRH-led Combination Products,current CP,INJ,reference,pilot,official
+fda-ora-guide-osd-pre-post-approval-1994.html,FDA,Guide to Inspections of Oral Solid Dosage Forms Pre/Post Approval Issues,1994-01,OSD,must,pilot,official
+fda-ora-guide-cleaning-validation-1993.html,FDA,Guide to Inspections: Validation of Cleaning Processes,1993-07,ALL,must,pilot,official
+fda-ora-guide-high-purity-water-1993.html,FDA,Guide to Inspections of High Purity Water Systems,1993-07,ALL,must,pilot,official
+fda-ora-guide-micro-qc-labs-1993.html,FDA,Guide to Inspections of Microbiological Pharmaceutical QC Laboratories,1993-07,ALL,must,pilot,official
+fda-ora-guide-pharma-qc-labs-1993.html,FDA,Guide to Inspections of Pharmaceutical QC Laboratories,1993-07,ALL,must,pilot,official
+fda-ora-guide-topical-drug-products-1994.html,FDA,Guide to Inspections of Topical Drug Products,1994-07,SEMI,must,pilot,official
+fda-ora-guide-oral-solutions-suspensions-1994.html,FDA,Guide to Inspections of Oral Solutions and Suspensions,1994-08,LIQ,must,pilot,official
+fda-ora-guide-lyophilization-parenterals-1993.html,FDA,Guide to Inspections of Lyophilization of Parenterals,1993-07,INJ,must,pilot,official
+fda-ora-guide-sterile-drug-substance-1994.html,FDA,Guide to Inspections of Sterile Drug Substance Manufacturers,1994-07,API;INJ,must,pilot,official
+fda-ora-guide-dosage-form-cgmps-1993.html,FDA,Guide to Inspections of Dosage Form Drug Manufacturers - CGMPs,1993-10,OSD;LIQ;SEMI;INJ,must,pilot,official
+fda-ora-guide-foreign-pharma-manufacturers-1996.html,FDA,Guide to Inspections of Foreign Pharmaceutical Manufacturers,1996-05,ALL,should,pilot,official
+fda-ora-guide-computerized-systems-1983.html,FDA,Guide to Inspection of Computerized Systems in Drug Processing,1983-02,ALL,reference,pilot,official
+fda-itg-bacterial-endotoxins-pyrogens.html,FDA,Inspection Technical Guide: Bacterial Endotoxins/Pyrogens,ITG (1985),INJ;API,should,pilot,official
+fda-itg-expiration-dating-stability.html,FDA,Inspection Technical Guide: Expiration Dating and Stability Testing for Human Drug Products,ITG (1985),ALL,should,pilot,official
+fda-itg-water-pharmaceutical-use.html,FDA,Inspection Technical Guide: Water for Pharmaceutical Use,ITG (1986),ALL,should,pilot,official
+fda-itg-heat-exchangers-contamination.html,FDA,Inspection Technical Guide: Heat Exchangers to Avoid Contamination,ITG,ALL,reference,pilot,official
+fda-itg-reverse-osmosis.html,FDA,Inspection Technical Guide: Reverse Osmosis,ITG,ALL,reference,pilot,official
+fda-itg-gasket-microbial-contamination.html,FDA,Inspection Technical Guide: Microbiological Contamination of Equipment Gaskets with Product Contact,ITG,ALL,reference,pilot,official
+fda-itg-leak-testing-ampuls.html,FDA,Inspection Technical Guide: Leak Testing Sealed Ampuls of Parenteral Solutions,ITG,INJ,reference,pilot,official
+fda-itg-sterilizing-symbols-dzf.html,FDA,Inspection Technical Guide: Sterilizing Symbols (D  Z  F),ITG,INJ,reference,pilot,official
+fda-itg-lyophilization-parenterals.html,FDA,Inspection Technical Guide: Lyophilization of Parenterals,ITG,INJ,reference,pilot,official
+fda-alert-benzene-contamination.html,FDA,FDA alert to drug manufacturers on risk of benzene contamination,2022-12,OSD;LIQ;SEMI,should,pilot,official
+eu-annex21-importation.pdf,EU,EudraLex Vol 4 Annex 21 - Importation of medicinal products,C(2022) 843 final  16.2.2022,ALL,should,pilot,official
+eu-p3-site-master-file.pdf,EU,EudraLex Vol 4 Part III - Explanatory notes on the preparation of a Site Master File,SANCO/C8/AM/sl/ares(2010)1064603 (2011),ALL,should,pilot,official
+eu-p3-mra-batch-certificate.pdf,EU,Internationally harmonised requirements for batch certification in the context of MRAs,EMA/INS/MRA/387218/2011 Rev 5  1 June 2011,ALL,reference,pilot,official
+eu-p3-gmp-mah-reflection-paper.pdf,EU,Reflection paper on GMP and Marketing Authorisation Holders,EMA/419571/2021 Version 2  10 Jan 2022,ALL,should,pilot,official
+eu-draft-chapter4-documentation.pdf,EU,DRAFT revised Chapter 4 - Documentation (consultation),consultation 7 Jul - 7 Oct 2025,ALL,reference,pilot,official
+eu-draft-annex11-computerised-systems.pdf,EU,DRAFT revised Annex 11 - Computerised Systems (consultation),consultation 7 Jul - 7 Oct 2025,ALL,reference,pilot,official
+ema-gmp-gdp-qa.html,EMA,EMA Guidance on GMP and GDP: Questions and answers (web page  all sections incl. Part I  Part II  annexes  data integrity),page retrieved 2026-10-29,ALL,must,pilot,official
+ema-hbel-guideline.pdf,EMA,Guideline on setting health based exposure limits for use in risk identification in the manufacture of different medicinal products in shared facilities,EMA/CHMP/CVMP/SWP/169430/2012  20 Nov 2014,ALL,must,pilot,official
+ema-hbel-qa-cross-contamination.pdf,EMA,Q&A on implementation of risk-based prevention of cross-contamination in production and the HBEL guideline,EMA/CHMP/CVMP/SWP/246844/2018  19 Apr 2018,ALL,must,pilot,official
+ema-process-validation-finished-products.pdf,EMA,Guideline on process validation for finished products - information and data to be provided in regulatory submissions,EMA/CHMP/CVMP/QWP/BWP/70278/2012-Rev1 Corr.1  21 Nov 2016,OSD;LIQ;SEMI;INJ,must,pilot,official
+ema-sterilisation-guideline.pdf,EMA,Guideline on the sterilisation of the medicinal product  active substance  excipient and primary container,EMA/CHMP/CVMP/QWP/850374/2015  6 Mar 2019,INJ,must,pilot,official
+ema-water-quality-guideline.pdf,EMA,Guideline on the quality of water for pharmaceutical use,EMA/CHMP/CVMP/QWP/496873/2018  20 Jul 2020,ALL,must,pilot,official
+ema-qa-wfi-non-distillation.pdf,EMA,Q&A on production of WFI by non-distillation methods - reverse osmosis  biofilms and control strategies,EMA/INS/GMP/443117/2017  1 Aug 2017,INJ,should,pilot,official
+ema-qa-microbial-contamination-nonsterile.pdf,EMA,Q&A: technical and organisational measures to prevent microbial contamination of non-sterile medicinal products,EMA/INS/GMP/161750/2026  13 Jul 2026,OSD;LIQ;SEMI,must,pilot,official
+ema-qa-xray-sterilisation-sus.pdf,EMA,Q&A on X-ray sterilisation of single-use systems used in pharmaceutical manufacturing,EMA/CHMP/CVMP/QIG/GMP/QWP/BWP/397209/2023  12 Oct 2023,INJ,reference,pilot,official
+ema-manufacture-finished-dosage-form.pdf,EMA,Guideline on manufacture of the finished dosage form,EMA/CHMP/QWP/245074/2015  4 Jul 2017,OSD;LIQ;SEMI;INJ,should,pilot,official
+ema-guideline-declaration-storage-conditions.pdf,EMA,Guideline on declaration of storage conditions,CPMP/QWP/609/96/Rev 2  19 Nov 2007,ALL,reference,pilot,official
+pics-pi041-1-data-integrity.pdf,PICS,PI 041-1 Good practices for data management and integrity in regulated GMP/GDP environments,PI 041-1  1 Jul 2021,ALL,must,pilot,official
+pics-pi006-4-qualification-validation.pdf,PICS,PI 006-4 Recommendations on qualification and validation,PI 006-4  1 Oct 2026,ALL,must,pilot,official
+pics-pi006-3-validation-superseded.pdf,PICS,PI 006-3 Recommendations on VMP  IQ/OQ  non-sterile process validation  cleaning validation,PI 006-3  25 Sep 2007,ALL,reference,pilot,official
+pics-pi007-6-aseptic-validation.pdf,PICS,PI 007-6 Recommendation on the validation of aseptic processes,PI 007-6  1 Jan 2011,INJ,must,pilot,official
+pics-pi011-3-computerised-systems.pdf,PICS,PI 011-3 Good practices for computerised systems in regulated GxP environments,PI 011-3  25 Sep 2007,ALL,should,pilot,official
+pics-pi058-1-annex1-interpretation.pdf,PICS,PI 058-1 Interpretation of the most important changes in Annex 1 (2022),PI 058-1  28 Oct 2026,INJ,must,pilot,official
+pics-pi014-3-isolators.pdf,PICS,PI 014-3 Isolators used for aseptic processing and sterility testing,PI 014-3  25 Sep 2007,INJ,should,pilot,official
+pics-pi012-3-sterility-testing.pdf,PICS,PI 012-3 Recommendation on sterility testing,PI 012-3  25 Sep 2007,INJ,should,pilot,official
+pics-pi005-3-parametric-release.pdf,PICS,PI 005-3 Guidance on parametric release,PI 005-3  25 Sep 2007,INJ,reference,pilot,official
+pics-pi009-4-am-utilities.pdf,PICS,PI 009-4 Aide-memoire: inspection of utilities,PI 009-4  1 Jan 2021,ALL,must,pilot,official
+pics-pi023-2-am-qc-labs.pdf,PICS,PI 023-2 Aide-memoire: inspection of pharmaceutical QC laboratories,PI 023-2  25 Sep 2007,ALL,must,pilot,official
+pics-pi030-1-am-api.pdf,PICS,PI 030-1 Aide-memoire: inspection of active pharmaceutical ingredients,PI 030-1  13 Jan 2009,API,must,pilot,official
+pics-pi043-1-am-cross-contamination.pdf,PICS,PI 043-1 Aide-memoire: cross-contamination in shared facilities,PI 043-1  1 Jul 2018,ALL,must,pilot,official
+pics-pi052-1-am-hbel.pdf,PICS,PI 052-1 Aide-memoire: inspection of HBEL assessments and use in QRM,PI 052-1  1 Jun 2020,ALL,must,pilot,official
+pics-pi053-1-qa-cross-contamination.pdf,PICS,PI 053-1 Q&A on implementation of risk-based prevention of cross-contamination in production,PI 053-1  1 Jun 2020,ALL,should,pilot,official
+pics-pi038-2-am-qrm.pdf,PICS,PI 038-2 Aide-memoire: assessment of quality risk management implementation,PI 038-2  1 Jan 2021,ALL,must,pilot,official
+pics-pi028-2-am-packaging.pdf,PICS,PI 028-2 Aide-memoire: GMP inspection related to packaging,PI 028-2  1 Jan 2021,OSD;LIQ;SEMI;INJ,must,pilot,official
+pics-pi054-1-pqs-effectiveness.pdf,PICS,PI 054-1 Recommendation: how to evaluate and demonstrate the effectiveness of a PQS (CAPA  change management),PI 054-1  15 Jul 2021,ALL,should,pilot,official
+pics-pi040-1-deficiency-classification.pdf,PICS,PI 040-1 Guidance on classification of GMP deficiencies,PI 040-1  1 Jan 2019,ALL,should,pilot,official
+pics-pi045-1-excipient-risk-assessment.pdf,PICS,PI 045-1 Guidelines on formalised risk assessment for ascertaining appropriate GMP for excipients,PI 045-1  1 Jul 2018,OSD;LIQ;SEMI;INJ,should,pilot,official
+pics-pi047-1-gdp-active-substances.pdf,PICS,PI 047-1 Guidelines on principles of GDP of active substances for medicinal products for human use,PI 047-1  1 Jul 2018,API,should,pilot,official
+pics-pe008-4-site-master-file.pdf,PICS,PE 008-4 Explanatory notes for manufacturers on preparation of a site master file,PE 008-4  1 Jan 2011,ALL,should,pilot,official
+pics-pe011-1-gdp-guide.pdf,PICS,PE 011-1 PIC/S Guide to good distribution practice for medicinal products,PE 011-1  1 Jun 2014,ALL,reference,pilot,official
+pics-draft-chapter1-pqs.pdf,PICS,DRAFT revised Chapter 1 - Pharmaceutical Quality System (joint EU/PIC/S consultation),consultation 3 Sep - 3 Dec 2025,ALL,reference,pilot,official
+pics-draft-annex22-ai.pdf,PICS,DRAFT new Annex 22 - Artificial Intelligence (joint EU/PIC/S consultation),consultation 7 Jul - 7 Oct 2025,ALL,reference,pilot,official
+who-trs1033-a3-water.pdf,WHO,Good manufacturing practices: water for pharmaceutical use,TRS 1033 Annex 3 (2021),ALL,must,pilot,official
+who-trs1025-a3-wfi-non-distillation.pdf,WHO,Production of water for injection by means other than distillation,TRS 1025 Annex 3 (2020),INJ,should,pilot,official
+who-trs1010-a8-hvac-nonsterile.pdf,WHO,Guidelines on HVAC systems for non-sterile pharmaceutical products,TRS 1010 Annex 8 (2018),OSD;LIQ;SEMI;API,must,pilot,official
+who-trs1019-a2-hvac-nonsterile-part2.pdf,WHO,HVAC systems for non-sterile pharmaceutical products. Part 2: Interpretation of guidelines,TRS 1019 Annex 2 (2019),OSD;LIQ;SEMI;API,should,pilot,official
+who-trs1033-a4-data-integrity.pdf,WHO,Guideline on data integrity,TRS 1033 Annex 4 (2021),ALL,must,pilot,official
+who-trs1025-a4-chromatography.pdf,WHO,Good chromatography practices,TRS 1025 Annex 4 (2020),ALL,must,pilot,official
+who-trs1052-a4-qc-labs.pdf,WHO,WHO good practices for pharmaceutical quality control laboratories,TRS 1052 Annex 4 (2024),ALL,must,pilot,official
+who-trs961-a2-micro-labs.pdf,WHO,WHO good practices for pharmaceutical microbiology laboratories,TRS 961 Annex 2 (2011),ALL,must,pilot,official
+who-trs957-a3-hazardous.pdf,WHO,WHO GMP for pharmaceutical products containing hazardous substances,TRS 957 Annex 3 (2010),ALL,should,pilot,official
+who-trs1033-a2-hbel-cleaning.pdf,WHO,Points to consider when including HBELs in cleaning validation,TRS 1033 Annex 2 (2021),ALL,must,pilot,official
+who-trs981-a2-qrm.pdf,WHO,WHO guidelines on quality risk management,TRS 981 Annex 2 (2013),ALL,should,pilot,official
+who-trs1044-a4-tech-transfer.pdf,WHO,WHO guidelines on technology transfer in pharmaceutical manufacturing,TRS 1044 Annex 4 (2022),ALL,should,pilot,official
+who-trs1025-a7-storage-distribution.pdf,WHO,Good storage and distribution practices for medical products,TRS 1025 Annex 7 (2020),ALL,must,pilot,official
+who-trs961-a9-storage-transport-ttsp.pdf,WHO,Model guidance for the storage and transport of time- and temperature-sensitive pharmaceutical products,TRS 961 Annex 9 (2011),ALL,should,pilot,official
+who-trs992-a5-ttsp-supplements.pdf,WHO,Technical supplements to Model guidance for storage and transport of TTSPPs,TRS 992 Annex 5 (2015),ALL,should,pilot,official
+who-trs929-a4-sampling.pdf,WHO,WHO guidelines for sampling of pharmaceutical products and related materials,TRS 929 Annex 4 (2005),ALL,must,pilot,official
+who-trs1060-a3-excipients.pdf,WHO,WHO good manufacturing practices for excipients used in pharmaceutical products,TRS 1060 Annex 3 (2025),ALL,should,pilot,official
+who-trs902-a9-packaging.pdf,WHO,Guidelines on packaging for pharmaceutical products,TRS 902 Annex 9 (2002),ALL,should,pilot,official
+who-trs992-a4-hold-time.pdf,WHO,General guidance on hold-time studies,TRS 992 Annex 4 (2015),ALL,must,pilot,official
+who-trs1060-a2-nitrosamines.pdf,WHO,WHO good practice considerations for the prevention and control of nitrosamines in pharmaceutical products,TRS 1060 Annex 2 (2025),ALL,must,pilot,official
+who-trs1025-a6-amr-environment.pdf,WHO,Points to consider for manufacturers and inspectors: environmental aspects of manufacturing for the prevention of AMR,TRS 1025 Annex 6 (2020),OSD;LIQ;SEMI;INJ;API,should,pilot,official
+who-trs1067-a2-continuous-mfg.pdf,WHO,WHO points to consider in continuous manufacturing of pharmaceutical products,TRS 1067 Annex 2 (2026),OSD;API,reference,pilot,official
+who-trs961-a14-site-master-file.pdf,WHO,WHO guidelines for drafting a site master file,TRS 961 Annex 14 (2011),ALL,should,pilot,official
+who-trs996-a4-app1-model-inspection-report.pdf,WHO,Guidance on GMP: inspection report (Annex 4 incl. Appendix 1 model inspection report),TRS 996 Annex 4  Appendix 1 (2016),ALL,should,pilot,official
+who-trs996-a4-app2-risk-category.pdf,WHO,GMP inspection: example of a risk category assessment of the site (compliance level vs inspection frequency),TRS 996 Annex 4  Appendix 2 (2016),ALL,reference,pilot,official
+who-trs1010-a10-stability.pdf,WHO,Stability testing of active pharmaceutical ingredients and finished pharmaceutical products,TRS 1010 Annex 10 (2018),ALL,must,pilot,official
+who-trs943-a3-reference-substances.pdf,WHO,General guidelines for the establishment  maintenance and distribution of chemical reference substances,TRS 943 Annex 3 (2007),ALL,should,pilot,official
+who-trs1044-a6-rd-facilities.pdf,WHO,WHO good practices for research and development facilities of pharmaceutical products,TRS 1044 Annex 6 (2022),ALL,reference,pilot,official
+who-trs953-a2-app1-stability-conditions.pdf,WHO,Stability conditions for WHO Member States by Region,Update March 2021 (TRS 953 Annex 2 Appendix 1),ALL,should,pilot,official
+ich-q1a-r2.pdf,ICH,Q1A(R2) Stability testing of new drug substances and products,Step 4  6 Feb 2003,ALL,must,pilot,official
+ich-q1b.pdf,ICH,Q1B Photostability testing of new drug substances and products,Step 4  6 Nov 1996,ALL,should,pilot,official
+ich-q1c.pdf,ICH,Q1C Stability testing for new dosage forms,Step 4  6 Nov 1996,ALL,reference,pilot,official
+ich-q1d.pdf,ICH,Q1D Bracketing and matrixing designs for stability testing,Step 4  7 Feb 2002,ALL,should,pilot,official
+ich-q1e.pdf,ICH,Q1E Evaluation of stability data,Step 4  6 Feb 2003,ALL,should,pilot,official
+ich-q2-r2.pdf,ICH,Q2(R2) Validation of analytical procedures,Step 4  1 Nov 2023,ALL,must,pilot,official
+ich-q14.pdf,ICH,Q14 Analytical procedure development,Step 4  1 Nov 2023,ALL,reference,pilot,official
+ich-q3a-r2.pdf,ICH,Q3A(R2) Impurities in new drug substances,Step 4  25 Oct 2006,API,should,pilot,official
+ich-q3b-r2.pdf,ICH,Q3B(R2) Impurities in new drug products,Step 4  2 Jun 2006,OSD;LIQ;SEMI;INJ,should,pilot,official
+ich-q3c-r9.pdf,ICH,Q3C(R9) Impurities: guideline for residual solvents,Step 4  24 Jan 2024,ALL,must,pilot,official
+ich-q3d-r2.pdf,ICH,Q3D(R2) Guideline for elemental impurities,Step 4  26 Apr 2022,ALL,must,pilot,official
+ich-m7-r2.pdf,ICH,M7(R2) Assessment and control of DNA reactive (mutagenic) impurities to limit potential carcinogenic risk,Step 4  3 Apr 2023,ALL,should,pilot,official
+ich-m7-r2-addendum.pdf,ICH,M7(R2) Addendum: application of the principles of M7 to calculation of compound-specific acceptable intakes,Step 4  3 Apr 2023,ALL,reference,pilot,official
+ich-q6a.pdf,ICH,Q6A Specifications: test procedures and acceptance criteria for new drug substances and new drug products (chemical substances),Step 4  6 Oct 1999,ALL,should,pilot,official
+ich-q8-r2.pdf,ICH,Q8(R2) Pharmaceutical development,Step 4  Aug 2009,ALL,reference,pilot,official
+ich-q8-q9-q10-qa-r4.pdf,ICH,Q8/Q9/Q10 Questions and answers (R4),R4  Nov 2010,ALL,should,pilot,official
+ich-q11.pdf,ICH,Q11 Development and manufacture of drug substances,Step 4  1 May 2012,API,reference,pilot,official
+ich-q11-qa-pmda.pdf,ICH,Q11 Questions and answers: selection and justification of starting materials,Step 4  23 Aug 2017,API,should,pilot,official
+ich-q12.pdf,ICH,Q12 Technical and regulatory considerations for pharmaceutical product lifecycle management,Step 4  20 Nov 2019,ALL,should,pilot,official
+ich-q12-annexes.pdf,ICH,Q12 Annexes,Step 4  20 Nov 2019,ALL,reference,pilot,official
+ich-q13.pdf,ICH,Q13 Continuous manufacturing of drug substances and drug products,Step 4  16 Nov 2022,OSD;API,reference,pilot,official
+india-drugs-rules-1945-consolidated-2024-07.pdf,INDIA,The Drugs Rules  1945 (CDSCO compiled version  incl. conditions of licence Rules 74/78  Schedule L-1 and revised Schedule M),As amended to G.S.R. 360(E) of 1 Jul 2024,ALL,must,pilot,official
+india-gsr666e-2024-schm-corrigendum.pdf,INDIA,G.S.R. 666(E) corrigendum to G.S.R. 922(E) (revised Schedule M),25 Oct 2024,ALL,must,pilot,official
+india-gsr10e-2025-schm-extension.pdf,INDIA,G.S.R. 10(E) draft notification: extension of revised Schedule M timeline for small and medium manufacturers,4 Jan 2025,ALL,reference,pilot,official
+india-gsr11e-2025-schm-ext-corrigendum.pdf,INDIA,G.S.R. 11(E) corrigendum to G.S.R. 10(E),6 Jan 2025,ALL,reference,pilot,official
+india-gsr127e-2025-schm-timeline.pdf,INDIA,G.S.R. 127(E) Drugs Amendment Rules 2025: extension of revised Schedule M timeline,11 Feb 2025,ALL,should,pilot,official
+india-gsr477e-2026-schk-syrup.pdf,INDIA,G.S.R. 477(E) Drugs (Fifth Amendment) Rules 2026: removal of syrup exemption under Schedule K,9 Jun 2026,LIQ,reference,pilot,official
+india-cdsco-circ-2024-03-risk-based-inspection.pdf,INDIA,CDSCO guidance document for risk based inspection of drug manufacturing sites,Circular of 27 Mar 2024,ALL,must,pilot,official
+india-cdsco-gdp-guidelines-2024.pdf,INDIA,CDSCO guidelines on good distribution practices for pharmaceutical products,Ver. 00 (marked DRAFT GUIDANCE)  listed 2 Apr 2024,ALL,should,pilot,official
+japan-pmda-pics-adoption-notice-2012-en.pdf,JAPAN,Administrative notice on application of the PIC/S GMP Guide (1 Feb 2012) - PMDA tentative translation,1 Feb 2012,ALL,must,phase2,regulator_translation
+japan-pmda-pics-adoption-qa-2012-en.pdf,JAPAN,Q&A on application of the PIC/S GMP Guide - PMDA tentative translation,1 Feb 2012,ALL,should,phase2,regulator_translation
+japan-pmda-computerized-systems-guideline-2010-en.pdf,JAPAN,Guideline on management of computerized systems for MAHs and manufacturers - PMDA tentative translation,Oct 2010 (translation Aug 2011),ALL,should,phase2,regulator_translation
+japan-pmda-computerized-systems-qa-2010-en.pdf,JAPAN,Q&A on the computerized systems guideline - PMDA tentative translation,21 Oct 2010 (translation Aug 2011),ALL,should,phase2,regulator_translation
+japan-pmda-aseptic-processing-guidance-en.pdf,JAPAN,Guidance on the manufacture of sterile pharmaceutical products by aseptic processing - English translation,first edition July 2006 (revision date per PDF),INJ,must,phase2,regulator_translation
