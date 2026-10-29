@@ -107,6 +107,9 @@ Customers see only the compiled item text and its tags (regulator names, plant t
    - A mapping passes only if both answer "correct" on every question.
 2. **Adjudication.** When the verifiers disagree, Opus 5.5 at high effort sees both answers and decides. If it
    cannot decide, the item is marked **unverified** and is not shipped.
+   - To meet the < 0.5 % unverified limit (D13), an unverified item gets up to two repair rounds: the item
+     wording is redrafted against the clause, then the full Layer 1 + Layer 2 checks run again. If it still
+     fails, it stays unverified.
 3. **Reverse test.**
    - A third prompt sees only the plain item and writes the requirement it implies.
    - A fixed-rubric judge compares that with the clause text, looking for meaning drift.
@@ -138,7 +141,7 @@ Alongside the mutants run 300 untouched mappings, to measure false alarms.
 | Detection of the Layer-1 error types (wrong clause, changed number) | 100 % |
 | Detection of each meaning error type | ≥ 95 %, with a 95 % confidence lower bound ≥ 90 % |
 | False alarms on correct mappings | ≤ 10 % |
-| Requirements left "unverified" | ≤ 5 % of `must` requirements; unverified items are never shipped |
+| Requirements left "unverified" | < 0.5 % of `must` requirements (owner, D13); unverified items are never shipped |
 | Clause coverage | 100 % mapped or not-applicable-with-reason |
 | Audit of not-applicable reasons | a verifier sample of 50 per regulator, ≥ 95 % agreement |
 
@@ -263,16 +266,18 @@ S9 can run in parallel with S4–S8 (it needs only the export format from S2).
 - Basis: an assumed cost of about US$0.06 per clause unit in batch (about US$0.11 at standard rates). It covers
   drafting, consolidation, two verifiers, the reverse test and about 20 % adjudication.
 - Layer 3 mutants and re-runs add roughly 40 %.
+- The repair rounds needed for the < 0.5 % unverified limit (D13) add an estimated 10–20 %. The table below
+  includes this.
 - **S3 replaces these guesses with measured figures.**
 
 | Regulator (pilot sources, `must` + `should`) | Clause units (rough) | API cost, batch incl. Layer 3 | Claude Code sessions |
 |---|---|---|---|
-| EU GMP/PIC/S (core) | ~2,500 | US$200–350 | 3–4 |
-| US FDA (211 + guidances + inspection guides) | ~3,000 | US$250–400 | 3–4 |
-| WHO (core) | ~2,500 | US$200–350 | 3 |
-| India Schedule M | ~1,500 | US$120–200 | 2 |
-| ICH | ~800 | US$60–120 | 1 |
-| **Pilot total** | **~10,000** | **US$850–1,450** | **12–14** |
+| EU GMP/PIC/S (core) | ~2,500 | US$220–400 | 3–4 |
+| US FDA (211 + guidances + inspection guides) | ~3,000 | US$280–460 | 3–4 |
+| WHO (core) | ~2,500 | US$220–400 | 3 |
+| India Schedule M | ~1,500 | US$130–230 | 2 |
+| ICH | ~800 | US$70–140 | 1 |
+| **Pilot total** | **~10,000** | **US$950–1,650** | **12–14** |
 | Each phase-2 regulator (mapping onto a core) | 500–1,500 | US$50–150 | 1–2 |
 
 **Time.** Batch results arrive within hours. The pilot library (S1–S8) is about 3–5 weeks of sessions, and the
