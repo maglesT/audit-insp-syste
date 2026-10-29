@@ -7,7 +7,7 @@ Clause references in this document were checked against the official texts in `s
 
 | # | Question | Recommendation |
 |---|---|---|
-| Q1 | The AI checking needs an **Anthropic API key with a budget**. Doing it inside Claude Code sessions alone is not workable: about 10,000 clause units × 5 model calls each. | Yes. Create a key with a **US$2,000 cap for the pilot**. Slice 3 measures the real cost on a ~US$50 sample before anything large runs. |
+| Q1 | ~~Anthropic API key~~. **Decided (D14):** no API key. The AI checking runs inside Claude Code sessions on the owner's Max 20x plan, using background agents. | Done. Optional later: a RunPod **GPU** pod with an open model as a third, independent verifier (owner to confirm GPU access). |
 | Q2 | Should the two blind verifiers come from **different AI vendors**? The brief says "ideally different models". | Start with two different Claude models: Opus 5.5 and Sonnet 5.5, with different prompts. Add another vendor only if a regulator misses its Layer 3 detection thresholds. |
 | Q3 | **Release thresholds** (section 2.6). | Approve as written. |
 | Q4 | **Exception to "no print/export".** The site's own audit records (its findings and report) must be printable and exportable, because Annex 11 §8.1 and 21 CFR 11.10(b) require readable copies of electronic records. The report contains the text of the audited items only, with a watermark. | Accept. Without it a customer's self-inspection records would not comply. |
@@ -151,10 +151,16 @@ Alongside the mutants run 300 untouched mappings, to measure false alarms.
 - Product wording: "compiled from official texts with automated multi-step verification" plus the disclaimer.
 - An optional consultant spot-check of about 100 items remains available before selling.
 
-### 2.7 How models are run
-- **Library runs** use the Message Batches API (half price; results within hours), with prompt caching for the
-  fixed instructions.
-- **Recording:** model IDs and prompt versions are written into every verification record.
+### 2.7 How models are run (D14)
+- **Where:** every model call runs as a Claude Code background agent in a working session. There is no API
+  key. Agents take batches of about 40 clause units and return structured JSON verdicts only, with no prose.
+- **Which models:** Opus drafts and is verifier A; Sonnet is verifier B; the reverse test uses Sonnet; Opus
+  adjudicates. Each role has its own fixed prompt file in the repo.
+- **Swappable runner:** the pipeline calls a small "model runner" interface, so the backend can change later
+  without touching the library. Options: an API key, or a RunPod GPU pod with an open model as a third verifier.
+- **Pacing:** at most 2–3 agents at a time, within the plan's usage limits. Each batch is resumable, so a run
+  can span sessions, and results are committed per batch.
+- **Recording:** model names and prompt versions are written into every verification record.
 - **Prompt changes:** a new prompt version re-runs Layer 3 before it is used.
 
 ---
@@ -250,8 +256,8 @@ big milestone, with `HANDOVER.md` updated. "Tokens" means AI usage. API dollars 
 |---|---|---|
 | S1 | Parsers + clause store for all pilot sources; completeness report per source | none |
 | S2 | Library schema, Layer 1 checker, mutation harness (deterministic part), customer export and option-A test | none |
-| S3 | **Calibration:** run the full pipeline on the self-inspection topic across all pilot regulators (about 200 clause units); measure cost per unit, Layer 2 agreement and Layer 3 detection. Go/no-go and a real cost forecast. | Q1 key (~US$50) |
-| S4 | EU GMP/PIC/S core: OSD + injectables, Layer 3, release gate | Q1–Q3 |
+| S3 | **Calibration:** run the full pipeline on the self-inspection topic across all pilot regulators (about 200 clause units); measure cost per unit, Layer 2 agreement and Layer 3 detection. Go/no-go and a measured usage forecast. | none (runs in sessions, D14) |
+| S4 | EU GMP/PIC/S core: OSD + injectables, Layer 3, release gate | Q3 |
 | S5 | FDA: core + mapping + additions | |
 | S6 | WHO core | |
 | S7 | Schedule M mapping + additions | |
@@ -262,26 +268,25 @@ big milestone, with `HANDOVER.md` updated. "Tokens" means AI usage. API dollars 
 
 S9 can run in parallel with S4–S8 (it needs only the export format from S2).
 
-**Estimates for library work, pilot scope.**
-- Basis: an assumed cost of about US$0.06 per clause unit in batch (about US$0.11 at standard rates). It covers
-  drafting, consolidation, two verifiers, the reverse test and about 20 % adjudication.
-- Layer 3 mutants and re-runs add roughly 40 %.
-- The repair rounds needed for the < 0.5 % unverified limit (D13) add an estimated 10–20 %. The table below
-  includes this.
-- **S3 replaces these guesses with measured figures.**
+**Estimates for library work, pilot scope (Claude usage on the Max 20x plan, D14).**
+- Basis: about 7,000–9,000 tokens per clause unit, covering drafting, consolidation, two verifiers, the reverse
+  test, about 20 % adjudication, Layer 3 mutants and re-runs, and the D13 repair rounds. Agents work in batches of
+  about 40 clause units.
+- **S3 replaces these guesses with measured figures**, and with the real number of agent runs a week that the
+  plan's limits allow.
 
-| Regulator (pilot sources, `must` + `should`) | Clause units (rough) | API cost, batch incl. Layer 3 | Claude Code sessions |
+| Regulator (pilot sources, `must` + `should`) | Clause units (rough) | Claude usage (tokens) | Agent runs (about 40 units each, all passes) |
 |---|---|---|---|
-| EU GMP/PIC/S (core) | ~2,500 | US$220–400 | 3–4 |
-| US FDA (211 + guidances + inspection guides) | ~3,000 | US$280–460 | 3–4 |
-| WHO (core) | ~2,500 | US$220–400 | 3 |
-| India Schedule M | ~1,500 | US$130–230 | 2 |
-| ICH | ~800 | US$70–140 | 1 |
-| **Pilot total** | **~10,000** | **US$950–1,650** | **12–14** |
-| Each phase-2 regulator (mapping onto a core) | 500–1,500 | US$50–150 | 1–2 |
+| EU GMP/PIC/S (core) | ~2,500 | 18–23 M | ~380 |
+| US FDA (211 + guidances + inspection guides) | ~3,000 | 21–27 M | ~450 |
+| WHO (core) | ~2,500 | 18–23 M | ~380 |
+| India Schedule M | ~1,500 | 11–14 M | ~230 |
+| ICH | ~800 | 6–7 M | ~120 |
+| **Pilot total** | **~10,000** | **75–95 M** | **~1,550** |
+| Each phase-2 regulator (mapping onto a core) | 500–1,500 | 4–14 M | 80–230 |
 
-**Time.** Batch results arrive within hours. The pilot library (S1–S8) is about 3–5 weeks of sessions, and the
-app (S9–S10) about 2 weeks in parallel.
+**Time.** At 2–3 agents at a time, the pilot library (S1–S8) is about **6–10 weeks**. The exact figure depends
+on the weekly usage limits, which S3 measures. The app (S9–S10, about 2 weeks) runs in parallel.
 
 **Building with Claude Code costs separately.** That's roughly 1–3 M tokens per slice, kept low by short agent
 briefs, structured agent output and fresh sessions per slice.
