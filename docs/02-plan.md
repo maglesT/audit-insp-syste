@@ -1,6 +1,6 @@
 # Plan (b)–(d): library, verification, customer app, slices
 
-Status: draft for owner approval, 29 October 2026. Deliverable (a) is `docs/01-source-inventory.md`.
+Status: APPROVED by the owner on 29 October 2026 (D13-D18). Deliverable (a) is `docs/01-source-inventory.md`.
 Clause references in this document were checked against the official texts in `sources/official/`.
 
 ## 0. Decisions the owner needs to make
