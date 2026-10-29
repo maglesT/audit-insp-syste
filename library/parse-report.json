@@ -317,24 +317,20 @@
   },
   {
    "source": "eu-2014-08_gmp_part1.pdf",
-   "clauses": 277,
+   "clauses": 439,
    "table_rows": 0,
    "unnumbered_segments": 1,
-   "toc_segments": 66,
+   "toc_segments": 107,
    "body_chars": 104851,
    "dropped_chars": 89,
    "assigned_share": 1.0,
-   "numbered_share": 0.9738,
+   "numbered_share": 0.9631,
    "duplicate_refs": [],
-   "gaps": [
-    "gap before 14 (previous 12.8)",
-    "gap before 17 (previous 14.5)"
-   ],
+   "gaps": [],
    "large": [
-    "1.2",
-    "10"
+    "1.2"
    ],
-   "restarts": 3,
+   "restarts": 1,
    "obligations": 550,
    "obligations_outside_numbered": 0,
    "missed_obligations": [],
@@ -342,7 +338,7 @@
     "large clauses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Genuine: 1.2 Scope contains Table 1 (API manufacturing steps per type of manufacture), which is long text without sub-numbers. The earlier list-item problem (item 10 swallowing sections 2.5 to 9.46) is fixed."
   },
   {
    "source": "eu-20220825_gmp-an1_en_0.pdf",
@@ -411,7 +407,7 @@
   },
   {
    "source": "eu-annex11_01-2011_en.pdf",
-   "clauses": 24,
+   "clauses": 34,
    "table_rows": 0,
    "unnumbered_segments": 1,
    "toc_segments": 0,
@@ -420,9 +416,7 @@
    "assigned_share": 1.0,
    "numbered_share": 0.881,
    "duplicate_refs": [],
-   "gaps": [
-    "gap before 7 (previous 4.8)"
-   ],
+   "gaps": [],
    "large": [],
    "restarts": 0,
    "obligations": 59,
@@ -497,7 +491,7 @@
     "large clauses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Known parser limitation, text kept (to fix before S2 mapping): the annex prints line numbers in the margin, so its headings (2.1, 3.1 ...) are not seen and the whole body sits in clause 1."
   },
   {
    "source": "pics-pe009-18-part1.pdf",
@@ -546,17 +540,16 @@
   },
   {
    "source": "pics-pe009-18-annexes.pdf",
-   "clauses": 1236,
+   "clauses": 1291,
    "table_rows": 106,
    "unnumbered_segments": 2,
-   "toc_segments": 68,
+   "toc_segments": 75,
    "body_chars": 610639,
    "dropped_chars": 10144,
    "assigned_share": 1.0,
-   "numbered_share": 0.9714,
+   "numbered_share": 0.9682,
    "duplicate_refs": [],
    "gaps": [
-    "gap before 7 (previous 4.8)",
     "gap before 5.1 (previous 2)",
     "gap before 7 (previous 5)"
    ],
@@ -564,13 +557,12 @@
     "Annex 2A 5.23",
     "Annex 2A 8.3",
     "Annex 3 13",
-    "Annex 13 3 #10",
-    "Annex 15 1 #2",
+    "Annex 13 3 #4",
     "Annex 20 3 #2",
     "Annex 20 Appendix I 7"
    ],
-   "restarts": 90,
-   "obligations": 2593,
+   "restarts": 54,
+   "obligations": 2590,
    "obligations_outside_numbered": 0,
    "missed_obligations": [
     "Figure 1: Example of gene therapy mRNA ATMP manufacturing Figure 2: Example of in vivo viral vector gene therapy ATMP manufacturing Linear DNA template preparation Plasmid DNA construct preparation \u2193 ",
@@ -585,7 +577,7 @@
     "possible misses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Known parser limitation, text kept (to fix before S2 mapping): Annex 2A Part B uses lettered numbers ('B 1.1') that are not recognised (8.3 holds Part B); a source typo '14..' in Annex 3 makes 13 hold 15 onwards. Possible misses are text inside ATMP flowchart figures."
   },
   {
    "source": "who-trs986-a2-gmp-main.pdf",
@@ -631,50 +623,44 @@
     "possible misses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Genuine: The possible miss is the caption and column header text of Table 1 (maximum particle concentrations per grade), which the parse already holds as Table 1 rows. No obligation text is lost."
   },
   {
    "source": "who-trs957-a2-api.pdf",
-   "clauses": 354,
+   "clauses": 558,
    "table_rows": 8,
    "unnumbered_segments": 4,
-   "toc_segments": 3,
+   "toc_segments": 2,
    "body_chars": 113044,
    "dropped_chars": 186,
    "assigned_share": 1.0,
-   "numbered_share": 0.9874,
+   "numbered_share": 0.9885,
    "duplicate_refs": [],
    "gaps": [
-    "gap before 14 (previous 12.8)",
-    "gap before 17 (previous 14.5)",
     "gap before 2.3 (previous 2.1.1)"
    ],
-   "large": [
-    "Annex 2 Appendix 2 10"
-   ],
-   "restarts": 6,
+   "large": [],
+   "restarts": 5,
    "obligations": 550,
    "obligations_outside_numbered": 0,
    "missed_obligations": [],
-   "flags": [
-    "large clauses"
-   ],
-   "flag": true,
+   "flags": [],
+   "flag": false,
    "explanation": ""
   },
   {
    "source": "who-trs1019-a3-validation.pdf",
-   "clauses": 399,
+   "clauses": 412,
    "table_rows": 0,
    "unnumbered_segments": 5,
-   "toc_segments": 26,
+   "toc_segments": 18,
    "body_chars": 139584,
    "dropped_chars": 5294,
    "assigned_share": 1.0,
-   "numbered_share": 0.9636,
+   "numbered_share": 0.9816,
    "duplicate_refs": [],
    "gaps": [
-    "gap before 13 (previous 11.4)",
+    "gap before 4 (previous 2.3)",
     "gap before 3 (previous 1.5)",
     "gap before 4 (previous 2.5)",
     "gap before 4.10 (previous 4.8)"
@@ -682,7 +668,7 @@
    "large": [
     "Appendix 5 2"
    ],
-   "restarts": 8,
+   "restarts": 14,
    "obligations": 565,
    "obligations_outside_numbered": 0,
    "missed_obligations": [],
@@ -690,11 +676,11 @@
     "large clauses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Genuine: Appendix 5 clause 2 (pages 60-62) is reference item 2 followed by a long 'Further reading' bibliography with bullets and no numbers. No numbered clauses are swallowed, and the text holds no requirements."
   },
   {
    "source": "india-schedule-m-2023-GSR922E.pdf",
-   "clauses": 1580,
+   "clauses": 1592,
    "table_rows": 34,
    "unnumbered_segments": 1,
    "toc_segments": 0,
@@ -705,7 +691,6 @@
    "duplicate_refs": [],
    "gaps": [
     "gap before 5.1 (previous 3.1)",
-    "gap before 4.8 (previous 4.6.2)",
     "gap before 4 (previous 2.4)",
     "gap before 4 (previous 1.2)",
     "gap before 8 (previous 6.5)",
@@ -716,7 +701,6 @@
    ],
    "large": [
     "Part I 20.10",
-    "Part II 4.8",
     "Part VII 3.2",
     "Part XIII 3.4"
    ],
@@ -728,7 +712,7 @@
     "large clauses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Known parser limitation, text kept (to fix before S2 mapping): Part VII headings written as '4. Complaints:-' are not split (3.2 holds 4 to 9); Part I 20.10 and Part XIII 3.4 are genuine long lists."
   },
   {
    "source": "ich-q7.pdf",
@@ -777,7 +761,7 @@
   },
   {
    "source": "ich-q9r1.pdf",
-   "clauses": 26,
+   "clauses": 22,
    "table_rows": 3,
    "unnumbered_segments": 2,
    "toc_segments": 15,
@@ -790,7 +774,7 @@
    "large": [
     "1"
    ],
-   "restarts": 7,
+   "restarts": 0,
    "obligations": 83,
    "obligations_outside_numbered": 21,
    "missed_obligations": [
@@ -802,7 +786,7 @@
     "possible misses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Known parser limitation, text kept (to fix before S2 mapping): the Annex I/II sections numbered 'I.1' to 'II.9' are not recognised; the outside obligations are the reference list and annex text; the possible miss is the QRM process flowchart."
   },
   {
    "source": "ich-q10.pdf",
@@ -1077,7 +1061,7 @@
     "obligations outside citable clauses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Genuine: The 4 obligations outside clauses are on the cover pages (pages 1-3): standard FDA wording about submitting comments and contacts. They are not requirements."
   },
   {
    "source": "fda-guidance-methanol-testing-alcohol-2023.pdf",
@@ -1123,7 +1107,7 @@
     "large clauses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Genuine: Section III (pages 6-13) is one long section in the source, with no lettered or numbered subsections. It is made up of paragraphs, bulleted recommendations by dosage form and many footnotes. The one obligation outside clauses is cover-page comment wording."
   },
   {
    "source": "fda-guidance-melamine-components-2009.pdf",
@@ -1169,7 +1153,7 @@
     "possible misses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Genuine: The possible miss is text from the chemical reaction diagram (formation of NDMA from dimethylformamide). The obligations outside clauses are in the literature reference list (9) and the cover page (2), and none of them are requirements."
   },
   {
    "source": "fda-guidance-nitrosamine-ndsri-ai-limits-2023.pdf",
@@ -1257,7 +1241,7 @@
     "large clauses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Known parser limitation, text kept (to fix before S2 mapping): numbered subsections 1. to 4. under III.B (a fourth outline level) are not split by the contents-based parser."
   },
   {
    "source": "fda-guidance-sterilization-validation-submission-1994.pdf",
@@ -1702,7 +1686,7 @@
     "text not assigned"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Genuine: The 12 obligations outside clauses are in the unnumbered 'Field Reporting Requirements' preamble on pages 1-5 (pOAI alert steps, notification of OQS). This is real instruction text without a number in the source, so it lacks a citable ref. A synthetic ref such as 'Field Reporting Requirements' would fix that. The unassigned share is 0.9999; I did not find which few characters are unassigned."
   },
   {
    "source": "fda-cp-7356-002a-sterile-drug-process.pdf",
@@ -1731,7 +1715,7 @@
     "large clauses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "3.6.B and 3.8 are genuine long sections built from (1)/(a) item lists. Known parser limitation, text kept (to fix before S2 mapping): Attachment A (inspection questionnaire, pages 39-54) is named only in the running page header, so Part VII holds it."
   },
   {
    "source": "fda-cp-7356-002f-api.pdf",
@@ -1756,7 +1740,7 @@
     "large clauses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Genuine: Part III 1.B (pages 15-28) describes the six inspection systems as parenthesised sub-items (1)-(6), with (a)/(b) under facilities and equipment. This is consistent with the parser stopping at the letter level in compliance programs, and no lettered or numbered heading is swallowed. Splitting at (1) would be an enhancement. The cover segment is the field reporting preamble."
   },
   {
    "source": "fda-cp-7346-832-preapproval-inspections.pdf",
@@ -1781,7 +1765,7 @@
     "large clauses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Genuine: Part III 1.B (pages 19-31) is one lettered section in the source, with sub-objectives (1)-(4) and (a)-(e) in parentheses. Section C starts correctly on page 31, so nothing at letter level is swallowed. The 7 outside obligations are in the field reporting preamble on the cover pages."
   },
   {
    "source": "fda-cp-7356-843-postapproval-inspections.pdf",
@@ -1807,7 +1791,7 @@
     "large clauses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Genuine: Part II 4.A and 4.C (pages 16-21 and 24-33) are lettered objectives whose sub-objectives are numbered (1)-(4) in parentheses. These are split consistently with the depth rule for compliance programs, and the next letters B and D start correctly. The one outside obligation is in the cover preamble."
   },
   {
    "source": "fda-cp-7356-021-dqrs-field-alerts.pdf",
@@ -2220,7 +2204,7 @@
     "large clauses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Sections 1, 4 and 5.1-5.6 are genuinely long discursive sections. Known parser limitation, text kept (to fix before S2 mapping): the wrapped heading '6. Falsified Medicines Directive ...' and '7. Conclusion' are folded into 5.7."
   },
   {
    "source": "ema-gmp-gdp-qa.html",
@@ -2248,7 +2232,7 @@
     "large clauses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Genuine: The large items are single Q&A answers of 4.5-6k characters, which are long prose answers in the source. The outside obligations are introductory paragraphs on the page and in the data-integrity section before Q1. Those data-integrity paragraphs carry real expectations (senior management, interim measures) but have no question number in the source."
   },
   {
    "source": "ema-hbel-guideline.pdf",
@@ -2273,7 +2257,7 @@
     "large clauses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Genuine: Section 4.1 (pages 4-6) is one numbered section in the source. It has unnumbered sub-headings (hazard identification, NOAEL, adjustment factors) and the PDE formula, and the next heading 4.2 starts correctly."
   },
   {
    "source": "ema-hbel-qa-cross-contamination.pdf",
@@ -2321,29 +2305,26 @@
     "obligations outside citable clauses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Genuine: Sections 5.2 and 5.4 (pages 6-9) are genuine single sections without sub-numbers. The 9 outside obligations are in the References list at the end, which consists of titles of EU regulations and directives, not requirements."
   },
   {
    "source": "ema-sterilisation-guideline.pdf",
-   "clauses": 56,
+   "clauses": 57,
    "table_rows": 37,
    "unnumbered_segments": 2,
-   "toc_segments": 16,
+   "toc_segments": 15,
    "body_chars": 52135,
    "dropped_chars": 2990,
    "assigned_share": 1.0,
-   "numbered_share": 0.8562,
+   "numbered_share": 0.8566,
    "duplicate_refs": [],
-   "gaps": [
-    "gap before 5.1.1 (previous 3)"
-   ],
+   "gaps": [],
    "large": [
     "4.1",
     "4.1.1",
-    "3 #2",
-    "3 #3"
+    "4.3"
    ],
-   "restarts": 5,
+   "restarts": 0,
    "obligations": 150,
    "obligations_outside_numbered": 0,
    "missed_obligations": [],
@@ -2351,7 +2332,7 @@
     "large clauses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Genuine: 4.1, 4.1.1 and 4.3 are long sections without sub-numbers (decision trees and their explanations). The footnote that swallowed 4.1.6 to 4.2.3 is fixed."
   },
   {
    "source": "ema-water-quality-guideline.pdf",
@@ -2398,7 +2379,7 @@
     "large clauses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Part I Q3 is one long answer. Known parser limitation, text kept (to fix before S2 mapping): list items 1-4 inside Part II Q1 take over the question numbering, so Part II questions 2-4 sit under '4'."
   },
   {
    "source": "ema-qa-microbial-contamination-nonsterile.pdf",
@@ -2421,7 +2402,7 @@
     "obligations outside citable clauses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Genuine: The 6 outside obligations are in the unnumbered title question and Background text on page 1, before Q1. They hold real expectations (QRM for microbial risk, cleaning SOPs) that have no Q number in the source. A synthetic ref such as 'Background' would make them citable."
   },
   {
    "source": "ema-manufacture-finished-dosage-form.pdf",
@@ -2447,28 +2428,25 @@
     "large clauses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Genuine: Sections 4.3 and 4.4 (pages 5-9) are genuine single sections without sub-numbering, and 4.5 starts correctly. The 4 outside obligations are in the References list (ICH and EU directive titles)."
   },
   {
    "source": "pics-pi041-1-data-integrity.pdf",
-   "clauses": 375,
+   "clauses": 398,
    "table_rows": 215,
    "unnumbered_segments": 1,
-   "toc_segments": 24,
+   "toc_segments": 35,
    "body_chars": 135418,
    "dropped_chars": 1410,
    "assigned_share": 1.0,
-   "numbered_share": 0.976,
+   "numbered_share": 0.967,
    "duplicate_refs": [],
-   "gaps": [
-    "gap before 4 (previous 2)"
-   ],
+   "gaps": [],
    "large": [
-    "1 #4",
-    "2 #4"
+    "2 #2"
    ],
-   "restarts": 7,
-   "obligations": 531,
+   "restarts": 2,
+   "obligations": 532,
    "obligations_outside_numbered": 0,
    "missed_obligations": [
     "8.8 Verification of records (secondary checks) Item When and who should verify the records?"
@@ -2478,7 +2456,7 @@
     "possible misses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Known parser limitation, text kept (to fix before S2 mapping): the numbered table rows '1. Expectation' / '2. Expectation' start clauses that hold following sections; the possible miss is in table 8.8."
   },
   {
    "source": "pics-pi006-4-qualification-validation.pdf",
@@ -2505,7 +2483,7 @@
     "large clauses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Genuine: Clause 3.4.3 (pages 10-11) is one genuine list of VMP contents, items a) onwards, and the next clause 4 starts correctly."
   },
   {
    "source": "pics-pi007-6-aseptic-validation.pdf",
@@ -2556,7 +2534,7 @@
     "large clauses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Known parser limitation, text kept (to fix before S2 mapping): after the reference list restarts the numbering, sections 27 (glossary) to 29 (revision history) are held in reference item '15 #2'."
   },
   {
    "source": "pics-pi058-1-annex1-interpretation.pdf",
@@ -2605,7 +2583,7 @@
     "large clauses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Genuine: Appendix 1 9.4.13 (pages 13-15) is one genuine clause, a list of development steps a) to h) and onwards for the sporicidal gassing process, and 9.4.14 starts correctly."
   },
   {
    "source": "pics-pi012-3-sterility-testing.pdf",
@@ -2653,7 +2631,7 @@
   },
   {
    "source": "pics-pi023-2-am-qc-labs.pdf",
-   "clauses": 92,
+   "clauses": 96,
    "table_rows": 62,
    "unnumbered_segments": 1,
    "toc_segments": 2,
@@ -2696,7 +2674,7 @@
     "possible misses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Known parser limitation, text kept (to fix before S2 mapping): a table row on page 11 without a bottom rule is read as plain text, not as a row (material status control); the text is in the parse but the row is not clean."
   },
   {
    "source": "pics-pi043-1-am-cross-contamination.pdf",
@@ -2776,11 +2754,9 @@
    "assigned_share": 1.0,
    "numbered_share": 0.9224,
    "duplicate_refs": [],
-   "gaps": [
-    "gap before 3 (previous 1)"
-   ],
+   "gaps": [],
    "large": [],
-   "restarts": 1,
+   "restarts": 0,
    "obligations": 28,
    "obligations_outside_numbered": 0,
    "missed_obligations": [
@@ -2790,7 +2766,7 @@
     "possible misses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Known parser limitation, text kept (to fix before S2 mapping): table rows without ruling lines are merged ('3.3 3.4 3.5 ...' on page 7), so one row holds several areas; the possible miss is in that row."
   },
   {
    "source": "pics-pi028-2-am-packaging.pdf",
@@ -2815,7 +2791,7 @@
   },
   {
    "source": "pics-pi054-1-pqs-effectiveness.pdf",
-   "clauses": 108,
+   "clauses": 123,
    "table_rows": 102,
    "unnumbered_segments": 1,
    "toc_segments": 0,
@@ -2825,17 +2801,13 @@
    "numbered_share": 0.994,
    "duplicate_refs": [],
    "gaps": [],
-   "large": [
-    "6"
-   ],
+   "large": [],
    "restarts": 0,
    "obligations": 21,
    "obligations_outside_numbered": 0,
    "missed_obligations": [],
-   "flags": [
-    "large clauses"
-   ],
-   "flag": true,
+   "flags": [],
+   "flag": false,
    "explanation": ""
   },
   {
@@ -2850,10 +2822,11 @@
    "numbered_share": 0.9702,
    "duplicate_refs": [],
    "gaps": [
-    "gap before 3 (previous 1)"
+    "gap before 3 (previous 1)",
+    "gap before 5.4 (previous 5.2.3)"
    ],
    "large": [],
-   "restarts": 9,
+   "restarts": 8,
    "obligations": 36,
    "obligations_outside_numbered": 0,
    "missed_obligations": [],
@@ -2905,7 +2878,7 @@
     "large clauses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Known parser limitation, text kept (to fix before S2 mapping): the unnumbered trailing annex (glossary) and revision history are appended to the last clause 8.2."
   },
   {
    "source": "pics-pe008-4-site-master-file.pdf",
@@ -2951,7 +2924,7 @@
     "large clauses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Genuine: Ref '8 #2' is the last reference-list entry plus the unnumbered 'Further reading' bibliography (pages 22-24). The unnumbered segment is the background/history text before section 1, describing Expert Committee recommendations, not requirements."
   },
   {
    "source": "who-trs1025-a3-wfi-non-distillation.pdf",
@@ -2976,7 +2949,7 @@
   },
   {
    "source": "who-trs1010-a8-hvac-nonsterile.pdf",
-   "clauses": 117,
+   "clauses": 118,
    "table_rows": 18,
    "unnumbered_segments": 2,
    "toc_segments": 13,
@@ -2986,8 +2959,7 @@
    "numbered_share": 0.8494,
    "duplicate_refs": [],
    "gaps": [
-    "gap before 4 (previous 2)",
-    "gap before 12 (previous 10.2)"
+    "gap before 4 (previous 2)"
    ],
    "large": [],
    "restarts": 0,
@@ -3025,18 +2997,18 @@
     "large clauses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Clause 7 is a genuinely long unnumbered section. Known parser limitation, text kept (to fix before S2 mapping): top-level headings 8 to 13 on pages 21-24 are not started as clauses and sit in 7.1."
   },
   {
    "source": "who-trs1033-a4-data-integrity.pdf",
-   "clauses": 98,
+   "clauses": 85,
    "table_rows": 0,
    "unnumbered_segments": 2,
-   "toc_segments": 1,
+   "toc_segments": 13,
    "body_chars": 45930,
    "dropped_chars": 1557,
    "assigned_share": 1.0,
-   "numbered_share": 0.9249,
+   "numbered_share": 0.9176,
    "duplicate_refs": [],
    "gaps": [
     "gap before 4 (previous 2.4)"
@@ -3076,7 +3048,7 @@
   },
   {
    "source": "who-trs1052-a4-qc-labs.pdf",
-   "clauses": 298,
+   "clauses": 377,
    "table_rows": 17,
    "unnumbered_segments": 4,
    "toc_segments": 11,
@@ -3085,16 +3057,11 @@
    "assigned_share": 1.0,
    "numbered_share": 0.9245,
    "duplicate_refs": [],
-   "gaps": [
-    "gap before 3 (previous 1.2)"
-   ],
+   "gaps": [],
    "large": [
-    "Appendix 3 2.1",
-    "Appendix 3 6.3 #2",
-    "Appendix 3 6.7 #2",
-    "Appendix 3 6.10 #2"
+    "Appendix 3 2.1"
    ],
-   "restarts": 22,
+   "restarts": 8,
    "obligations": 436,
    "obligations_outside_numbered": 0,
    "missed_obligations": [],
@@ -3102,11 +3069,11 @@
     "large clauses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Genuine: Appendix 3 2.1 is the glossary (pages 6-13), one long list of definitions."
   },
   {
    "source": "who-trs961-a2-micro-labs.pdf",
-   "clauses": 201,
+   "clauses": 207,
    "table_rows": 54,
    "unnumbered_segments": 3,
    "toc_segments": 0,
@@ -3115,9 +3082,7 @@
    "assigned_share": 1.0,
    "numbered_share": 0.9977,
    "duplicate_refs": [],
-   "gaps": [
-    "gap before 4 (previous 2.4)"
-   ],
+   "gaps": [],
    "large": [
     "Annex 2 Appendix 4 8 #2"
    ],
@@ -3129,7 +3094,7 @@
     "large clauses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Known parser limitation, text kept (to fix before S2 mapping): the unnumbered Appendix 5 (reference-culture flowchart) and the further-reading list follow the last reference item and are filed under it ('8 #2')."
   },
   {
    "source": "who-trs957-a3-hazardous.pdf",
@@ -3156,7 +3121,7 @@
     "possible misses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Genuine: The possible miss is label text from Figure 2 (safe-change filter bypass diagram: sensors, VFD, exhaust labels), not a lost sentence."
   },
   {
    "source": "who-trs1033-a2-hbel-cleaning.pdf",
@@ -3183,7 +3148,7 @@
     "large clauses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Genuine: Section 5.7 is one long section without sub-numbers on HBEL policy and setting (pages 8-10). The unnumbered segment is the reference list. Body refs carry a wrong 'Appendix 1' prefix from the contents list (separate issue)."
   },
   {
    "source": "who-trs981-a2-qrm.pdf",
@@ -3213,7 +3178,7 @@
     "large clauses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "1.1 and 1.2 are genuinely long background sections. Known parser limitation, text kept (to fix before S2 mapping): the top-level heading '6.' on page 27 is not started, so 5.4 holds section 6 (risk management tools)."
   },
   {
    "source": "who-trs1044-a4-tech-transfer.pdf",
@@ -3240,14 +3205,14 @@
   },
   {
    "source": "who-trs1025-a7-storage-distribution.pdf",
-   "clauses": 246,
+   "clauses": 225,
    "table_rows": 1,
    "unnumbered_segments": 2,
-   "toc_segments": 1,
+   "toc_segments": 21,
    "body_chars": 57485,
    "dropped_chars": 2080,
    "assigned_share": 1.0,
-   "numbered_share": 0.9982,
+   "numbered_share": 0.9896,
    "duplicate_refs": [],
    "gaps": [
     "gap before 4 (previous 2.3)"
@@ -3284,22 +3249,22 @@
     "large clauses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Known parser limitation, text kept (to fix before S2 mapping): the unnumbered bibliography and contributor list after the last clause are appended to 12.1.2; no requirement text is affected."
   },
   {
    "source": "who-trs992-a5-ttsp-supplements.pdf",
-   "clauses": 317,
+   "clauses": 321,
    "table_rows": 12,
    "unnumbered_segments": 17,
-   "toc_segments": 134,
+   "toc_segments": 131,
    "body_chars": 21031,
    "dropped_chars": 2101,
    "assigned_share": 1.0,
-   "numbered_share": 0.6577,
+   "numbered_share": 0.699,
    "duplicate_refs": [],
    "gaps": [],
    "large": [],
-   "restarts": 125,
+   "restarts": 129,
    "obligations": 0,
    "obligations_outside_numbered": 0,
    "missed_obligations": [],
@@ -3309,7 +3274,7 @@
   },
   {
    "source": "who-trs929-a4-sampling.pdf",
-   "clauses": 80,
+   "clauses": 81,
    "table_rows": 0,
    "unnumbered_segments": 2,
    "toc_segments": 22,
@@ -3320,8 +3285,7 @@
    "duplicate_refs": [],
    "gaps": [],
    "large": [
-    "Annex 4 Appendix 5 1.2",
-    "Annex 4 Appendix 5 10"
+    "Annex 4 Appendix 5 1.2"
    ],
    "restarts": 0,
    "obligations": 175,
@@ -3331,11 +3295,11 @@
     "large clauses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Genuine: Appendix 5 1.2 is the glossary (pages 3-6). The table row '10' that swallowed 5.1 to 5.3 is fixed."
   },
   {
    "source": "who-trs1060-a3-excipients.pdf",
-   "clauses": 256,
+   "clauses": 272,
    "table_rows": 11,
    "unnumbered_segments": 3,
    "toc_segments": 19,
@@ -3349,7 +3313,7 @@
     "Appendix 1 2.1",
     "Appendix 1 6"
    ],
-   "restarts": 36,
+   "restarts": 32,
    "obligations": 366,
    "obligations_outside_numbered": 8,
    "missed_obligations": [],
@@ -3357,7 +3321,7 @@
     "large clauses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Genuine: Ref 'Appendix 1 2.1' is the genuine glossary (pages 4-8) and 'Appendix 1 6' is the last reference entry plus a long further-reading list (pages 28-30). The unnumbered segment is the republication note and background before section 1; its should-sentences describe the purpose of the guideline. Separate issue: contents entries became clauses and the body carries a wrong 'Appendix 1' prefix."
   },
   {
    "source": "who-trs902-a9-packaging.pdf",
@@ -3383,7 +3347,7 @@
     "large clauses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Genuine: Both large clauses are single sections subdivided only by unnumbered run-in headings (closure types in 2.2.3; dosage forms such as tablets in 5.1.2), pages 17-19 and 24-26. Body refs carry a wrong 'Annex 9 Appendix 4' prefix from the contents list (separate issue)."
   },
   {
    "source": "who-trs992-a4-hold-time.pdf",
@@ -3457,24 +3421,24 @@
     "large clauses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "1.1 is a genuinely long background section. Known parser limitation, text kept (to fix before S2 mapping): the document quotes WHO GMP clauses 7.x and 13.x out of sequence, after which the real heading '4. Expectations' is folded into 7.6."
   },
   {
    "source": "who-trs961-a14-site-master-file.pdf",
-   "clauses": 27,
+   "clauses": 30,
    "table_rows": 0,
    "unnumbered_segments": 1,
-   "toc_segments": 3,
+   "toc_segments": 4,
    "body_chars": 11449,
    "dropped_chars": 25,
    "assigned_share": 1.0,
-   "numbered_share": 0.9767,
+   "numbered_share": 0.9761,
    "duplicate_refs": [],
    "gaps": [
-    "gap before 4 (previous 2.5)"
+    "gap before 8.1 (previous 6)"
    ],
    "large": [],
-   "restarts": 5,
+   "restarts": 4,
    "obligations": 15,
    "obligations_outside_numbered": 0,
    "missed_obligations": [],
@@ -3528,7 +3492,7 @@
     "large clauses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Genuine: 2.2.7.3 is one section with an embedded table of water-loss rate ratios (pages 19-21). The unnumbered segments are the introduction/background (history of the guideline) and the reference list. Body refs carry a wrong 'Appendix 3' prefix (separate issue)."
   },
   {
    "source": "who-trs943-a3-reference-substances.pdf",
@@ -3574,30 +3538,23 @@
   },
   {
    "source": "ich-q1a-r2.pdf",
-   "clauses": 63,
+   "clauses": 71,
    "table_rows": 33,
    "unnumbered_segments": 2,
-   "toc_segments": 0,
+   "toc_segments": 26,
    "body_chars": 47645,
    "dropped_chars": 855,
    "assigned_share": 1.0,
-   "numbered_share": 0.9734,
+   "numbered_share": 0.8672,
    "duplicate_refs": [],
    "gaps": [],
-   "large": [
-    "3",
-    "3 #2",
-    "1 #4",
-    "3 #3"
-   ],
-   "restarts": 9,
-   "obligations": 167,
+   "large": [],
+   "restarts": 0,
+   "obligations": 163,
    "obligations_outside_numbered": 1,
    "missed_obligations": [],
-   "flags": [
-    "large clauses"
-   ],
-   "flag": true,
+   "flags": [],
+   "flag": false,
    "explanation": ""
   },
   {
@@ -3624,7 +3581,7 @@
     "large clauses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Known parser limitation, text kept (to fix before S2 mapping): a list item '2.' in section 1 (light source options) is taken as clause 2 and holds the real section 2 (drug substance); section 3 is a genuine long section."
   },
   {
    "source": "ich-q1d.pdf",
@@ -3674,7 +3631,7 @@
     "possible misses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Genuine: Appendix A 2.1 'General Principles' is one unsub-numbered section of about 4,400 characters (pages 5-6). The possible misses are yes/no labels and boxes of the Appendix A decision tree. The unnumbered segment is the ICH cover. Separate issue: contents lines became clauses and the body carries a wrong 'Appendix A' prefix."
   },
   {
    "source": "ich-q2-r2.pdf",
@@ -3744,18 +3701,18 @@
     "large clauses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Genuine: Sections 5 and 6 are genuinely single sections without sub-numbers, just over the 4,000-character limit (pages 7-10). The unnumbered segment is the ICH cover page."
   },
   {
    "source": "ich-q3c-r9.pdf",
-   "clauses": 96,
+   "clauses": 93,
    "table_rows": 19,
    "unnumbered_segments": 7,
    "toc_segments": 17,
    "body_chars": 86079,
    "dropped_chars": 81,
    "assigned_share": 1.0,
-   "numbered_share": 0.9266,
+   "numbered_share": 0.9224,
    "duplicate_refs": [],
    "gaps": [],
    "large": [
@@ -3763,7 +3720,7 @@
     "Part VI 6",
     "Part VI 7"
    ],
-   "restarts": 16,
+   "restarts": 13,
    "obligations": 84,
    "obligations_outside_numbered": 6,
    "missed_obligations": [],
@@ -3771,30 +3728,29 @@
     "large clauses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Part V 15 and Part VI 6-7 are genuine long solvent monographs (PDE derivations). The outside obligations are in the unnumbered PDE appendices."
   },
   {
    "source": "ich-q3d-r2.pdf",
-   "clauses": 363,
+   "clauses": 360,
    "table_rows": 268,
    "unnumbered_segments": 25,
-   "toc_segments": 13,
+   "toc_segments": 15,
    "body_chars": 186008,
    "dropped_chars": 1799,
    "assigned_share": 1.0,
-   "numbered_share": 0.4985,
+   "numbered_share": 0.4981,
    "duplicate_refs": [],
    "gaps": [
     "gap before 5 (previous 3.4)",
-    "gap before 7 (previous 5.7)",
-    "gap before 5 (previous 3)"
+    "gap before 7 (previous 5.7)"
    ],
    "large": [
     "Appendix 5 5.3",
     "Appendix 5 7",
     "Appendix 5 1 #2"
    ],
-   "restarts": 13,
+   "restarts": 10,
    "obligations": 174,
    "obligations_outside_numbered": 31,
    "missed_obligations": [],
@@ -3803,11 +3759,11 @@
     "obligations outside citable clauses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Genuine: Section 7 is split in the source only by unnumbered 'Option 1/2a/2b/3' headings (pages 14-16); 5.3 and the Appendix 5 background are single sections. The obligations outside clauses are in the unnumbered element safety monographs of Appendix 3 (filed as REFERENCES segments); nearly all are descriptive 'may' statements, but one real 'should' on assessing chromium(VI) (pages 36-39) has no clause reference."
   },
   {
    "source": "ich-m7-r2.pdf",
-   "clauses": 125,
+   "clauses": 126,
    "table_rows": 65,
    "unnumbered_segments": 2,
    "toc_segments": 28,
@@ -3817,12 +3773,10 @@
    "numbered_share": 0.9127,
    "duplicate_refs": [],
    "gaps": [
-    "gap before 7.1 (previous 5.3)",
-    "gap before 8.3 (previous 8.1)"
+    "gap before 7.1 (previous 5.3)"
    ],
    "large": [
     "3",
-    "8.3",
     "1 #2"
    ],
    "restarts": 12,
@@ -3833,7 +3787,7 @@
     "large clauses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Known parser limitation, text kept (to fix before S2 mapping): short numbered list items (1., 2., 3.) in the hazard-assessment and acceptable-intake text are taken as clauses '3' and '1 #2', which then hold following text."
   },
   {
    "source": "ich-q6a.pdf",
@@ -3863,7 +3817,7 @@
     "large clauses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Genuine: 3.3.1 and 3.3.2.x are lists of tests lettered a) to m) in the source; lettered items are kept inside their numbered clause by design."
   },
   {
    "source": "ich-q8-q9-q10-qa-r4.pdf",
@@ -3911,21 +3865,21 @@
   },
   {
    "source": "ich-q12.pdf",
-   "clauses": 168,
+   "clauses": 135,
    "table_rows": 88,
    "unnumbered_segments": 2,
-   "toc_segments": 1,
+   "toc_segments": 32,
    "body_chars": 57875,
    "dropped_chars": 490,
    "assigned_share": 1.0,
-   "numbered_share": 0.9609,
+   "numbered_share": 0.9002,
    "duplicate_refs": [],
    "gaps": [],
    "large": [
-    "Appendix 2 1.3",
-    "Appendix 2 3.2.3.1"
+    "1.3",
+    "3.2.3.1"
    ],
-   "restarts": 9,
+   "restarts": 0,
    "obligations": 118,
    "obligations_outside_numbered": 6,
    "missed_obligations": [],
@@ -3933,11 +3887,11 @@
     "large clauses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Genuine: 1.3 is an introductory bullet list of the regulatory tools (pages 7-8) and 3.2.3.1 is one long section including decision-tree figure text (pages 11-13). The unnumbered segment is the cover/legal notice. Body refs carry a wrong 'Appendix 2' prefix (separate issue)."
   },
   {
    "source": "india-drugs-rules-1945-consolidated-2024-07.pdf",
-   "clauses": 3040,
+   "clauses": 3078,
    "table_rows": 628,
    "unnumbered_segments": 2,
    "toc_segments": 236,
@@ -3949,17 +3903,13 @@
    "gaps": [
     "gap before 2.4 (previous 2.2)",
     "gap before 1.5 (previous 1.3)",
-    "gap before 6 (previous 3.10)",
     "gap before 5.1 (previous 3.1)",
     "gap before 5 (previous 2.4)",
-    "gap before 4 (previous 1.2)",
     "gap before 8 (previous 6.5)",
     "gap before 10.1 (previous 8.2)",
     "gap before 18.1 (previous 15.2)",
     "gap before 21.1 (previous 19.11)",
-    "gap before 4 (previous 2.5)",
-    "gap before 7 (previous 4.2)",
-    "gap before 2.5 (previous 2.2.3)"
+    "gap before 7 (previous 4.2)"
    ],
    "large": [
     "Part IV 9",
@@ -3992,8 +3942,6 @@
     "Part I 20.10",
     "Part III 2.4",
     "Part VII 3.2",
-    "Part XI 3.6",
-    "Part XII 7",
     "Part XIII 3.4",
     "Part I 1.1 #2",
     "Part I 1.1 #4",
@@ -4002,11 +3950,10 @@
     "Part II Appendix III 1.4",
     "Part II Appendix III 1.6",
     "Part II Appendix III 1.9",
-    "Part II Appendix V 8",
     "Part II Appendix XI 6",
     "Part II Appendix XI 99"
    ],
-   "restarts": 472,
+   "restarts": 471,
    "obligations": 5314,
    "obligations_outside_numbered": 0,
    "missed_obligations": [
@@ -4020,7 +3967,7 @@
     "possible misses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Known parser limitation, text kept (to fix before S2 mapping): numbered items of forms and lists inside the Rules (e.g. Part IV 9, Part VII 9) take over the rule numbering and hold following rules; possible misses are amendment footnotes and a drawing. The Drugs Rules are context for Schedule M, not the core GMP text."
   },
   {
    "source": "india-gsr666e-2024-schm-corrigendum.pdf",
@@ -4043,7 +3990,7 @@
     "obligations outside citable clauses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Genuine: A one-page corrigendum with two substitution items (1) and (2); its obligation words are legal drafting phrases, not GMP requirements. No clauses were produced since the items are not in a numbered-clause format."
   },
   {
    "source": "india-gsr127e-2025-schm-timeline.pdf",
@@ -4068,7 +4015,7 @@
     "obligations outside citable clauses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Genuine: the one obligation outside a clause is the enacting preamble of the notification (no GMP requirement)."
   },
   {
    "source": "india-cdsco-circ-2024-03-risk-based-inspection.pdf",
@@ -4093,7 +4040,7 @@
     "large clauses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Genuine: 'Table 2 1' is a genuine single table cell (pages 18-19) explaining how to score site complexity."
   },
   {
    "source": "india-cdsco-gdp-guidelines-2024.pdf",
@@ -4183,7 +4130,7 @@
     "large clauses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Known parser limitation, text kept (to fix before S2 mapping): the unnumbered trailing annex (glossary) is appended to the last clause, Chapter 8 8.1."
   },
   {
    "source": "eu-2015-c95-02-excipients-risk-assessment.pdf",
@@ -4206,7 +4153,7 @@
     "obligations outside citable clauses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Genuine: The segment is the unnumbered Introduction before Chapter 1 (page 1), which restates the legal duties of authorisation holders and a 21 March 2016 deadline. These are real requirements, but the source does not number them; they would need to be cited as 'Introduction'."
   },
   {
    "source": "eu-annex19-2026-c2026-4135.pdf",
@@ -4277,7 +4224,7 @@
     "large clauses"
    ],
    "flag": true,
-   "explanation": ""
+   "explanation": "Genuine: The large clauses are genuinely long Q&A answers (Q3, Q4, Q8, Q10) whose internal option lists 1-4 and A/B, plus footnotes, belong to the answer (Q10: pages 15-19). The unnumbered segment is the introduction and revision-history text before Q1, with general expectations on MAHs."
   }
  ],
  "pending": []

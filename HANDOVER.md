@@ -1,6 +1,6 @@
 # Handover: read this first in every new session
 
-Last updated: 29 October 2026 (session 2, article and Q&A parser branch).
+Last updated: 29 October 2026 (session 2, flags branch: S1 exit reached).
 
 ## Where we are
 - Brief: `docs/00-brief.md` (the owner's decisions). Small decisions: `docs/decisions.md`.
@@ -52,16 +52,19 @@ Last updated: 29 October 2026 (session 2, article and Q&A parser branch).
   unless Q&A/articles fit clearly better (usable share: unique refs, clauses <= 4,000 characters); today it switches
   exactly 6 documents (EMA HBEL Q&A, EMA microbial Q&A, PIC/S PI 053, EMA nitrosamines Q&A, the two EU acts).
   No source is pending any more.
-- **S1 remaining (in this order):**
-  1. (done) FDA parsers.
-  2. (done) Article parser for EU legal acts.
-  3. (done) Q&A parsers (PDF and the EMA web page).
-  4. Work through the flags in `library/parse-report.md` (tables are done). Many come from too-strict thresholds: the numbered-share
-     limit of 0.80 also catches documents with long intros. Investigate the duplicate refs in Annex 1 (EU and PIC/S
-     copies) and the large clauses. Add `sources/parse-overrides` only where a rule cannot be fixed generally.
-     Exit: every pilot source is unflagged or has a written explanation in the report.
-  5. Then S2: library schema, Layer 1 checker with the NLP pieces (D19), BM25 plus a pinned embedding model for
-     candidate search (D21), mutation harness, customer export and the option-A test.
+- **Session 2, done: parse-report flags (D26). S1 exit criterion met:** every flagged source has a written explanation
+  in `library/parse-explanations.csv` (`run.py --report` re-renders the report without parsing). 180 sources, 22,831
+  clauses, 59 flagged, 0 unexplained, 20 possible misses (figure text). Fixed in general: unique references
+  (`common.resolve_duplicates`: contents copies -> toc, real restarts "#2" + note), contents lines no longer open
+  appendix sections, stray numbers (footnotes, list items, running headers, wrapped lines) are taken back when the old
+  numbering resumes, title-case chapters after subsections, glossaries and annex/appendix intro text are citable
+  sections, cover dates, eCFR deep levels and italic definitions, FDA appendices/attachments.
+- **Next (S1 tail, before S2 mapping):** 22 sources carry a "Known parser limitation" explanation (text kept,
+  reference coarse). Most valuable to fix: PE 009 Annex 2A "B 1.1" numbering, EU Annex 17 margin line numbers, ICH Q9
+  annex "I.1" numbering, Schedule M Part VII ":-" headings, unnumbered trailing annexes, table rows without ruling
+  lines (PI 038, PI 030 p11), list items taking over numbering (Q1B, M7, PI 041, WFI Q&A, Drugs Rules forms).
+- **Then S2:** library schema, Layer 1 checker with the NLP pieces (D19), BM25 plus a pinned embedding model for
+  candidate search (D21), mutation harness, customer export and the option-A test.
 
 ## Open with the owner
 1. Anvisa RDC 654/2022 (APIs) and the English IN annexes are still wanted (phase 2; captcha, so the owner
