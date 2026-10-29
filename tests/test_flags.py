@@ -50,6 +50,12 @@ class Duplicates(unittest.TestCase):
         r = {c.ref for c in numbered.parse(common.OFFICIAL / "eu-annex11_01-2011_en.pdf")[0] if c.kind == "clause"}
         self.assertTrue({"5", "6", "9", "10"} <= r)
 
+    def test_one_principle_per_chapter_and_one_glossary(self):
+        r = {c.ref for c in numbered.parse(common.OFFICIAL / "pics-pe009-18-part1.pdf")[0] if c.kind in common.CITABLE}
+        self.assertTrue({"Part I 1 Principle", "Part I 9 Principle"} <= r)
+        r = [c.ref for c in numbered.parse(common.OFFICIAL / "pics-pe009-18-part2.pdf")[0] if c.kind in common.CITABLE]
+        self.assertEqual([x for x in r if "Glossary" in x], ["Part II Glossary"])
+
     def test_cover_date_is_not_clause_one(self):
         r = {c.ref: c for c in numbered.parse(common.OFFICIAL / "pics-pi043-1-am-cross-contamination.pdf")[0]}
         self.assertTrue(r["1"].text.startswith("1. DOCUMENT HISTORY"))
@@ -77,6 +83,12 @@ class Cfr(unittest.TestCase):
         r = {c.ref: c for c in ecfr.parse(common.OFFICIAL / "fda-cfr-21-part-207.xml")[0]}
         self.assertIn('207.1 "Content of labeling"(2)', r)
         self.assertIn('207.1 "Foreign"(2)', r)
+
+    def test_italic_markup_decides_deep_levels(self):
+        """201.327: a plain "(3)" after italic items is not italic; every eCFR part parses without restarts."""
+        for name in ("fda-cfr-21-part-201.xml", "fda-cfr-21-part-207.xml", "fda-cfr-21-314.81.xml"):
+            clauses, _, _ = ecfr.parse(common.OFFICIAL / name)
+            self.assertFalse([c.ref for c in clauses if "#" in c.ref], name)
 
     def test_part_211_unchanged(self):
         clauses, _, _ = ecfr.parse(common.OFFICIAL / "ecfr-21cfr211-2026-10-27.xml")

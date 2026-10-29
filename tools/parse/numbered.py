@@ -121,17 +121,21 @@ def parse(path, pages=None):
             if sec and sec.startswith("Chapter") and section.startswith(("Annex", "Part")):
                 sec = None   # a chapter heading inside an annex or part does not restart numbering
             if sec:
-                section, prev, seen_in_section = sec, None, set()
+                section, prev, seen_in_section, jumps = sec, None, set(), []
                 start("section", sec, "", line, pno)     # text under the heading, before clause 1, is citable
                 continue
             ma = APPENDIX.match(line)
             if ma and heading_like(line) and not PAGE_END.search(line):
                 base = re.sub(r"\s*Appendix \S+$", "", section)
                 section, prev, seen_in_section = f"{base} Appendix {ma.group(1)}".strip(), None, set()
+                jumps = []
                 start("section", section, "", line, pno)
                 continue
             mb = BACK_MATTER.match(line)
+            if mb and cur is not None and cur["ref"] == f"{section} {mb.group(2).title()}".strip():
+                mb = None                    # the glossary's own running header: its text goes on
             if mb:
+                jumps = []
                 if mb.group(2).lower() in ("references", "bibliography"):
                     unnumbered += 1
                     start("unnumbered", f"_unnumbered:{unnumbered}", "", line, pno)
@@ -139,7 +143,10 @@ def parse(path, pages=None):
                     start("section", f"{section} {mb.group(2).title()}".strip(), "", line, pno)
                 continue
             if PRINCIPLE.match(line):
-                ref = f"{section} Principle".strip()
+                # one Principle per chapter: "Part I 1 Principle" when the chapter's numbering follows
+                nxt = next(((parse_number(mm.group(1))) for _, ln in lines[i + 1:i + 80] if (mm := NUM.match(ln))), None)
+                chapter = (str(nxt[0]) if nxt and len(nxt) > 1 and not section.endswith(f" {nxt[0]}") else "")
+                ref = f"{section} {chapter} Principle".replace("  ", " ").strip()
                 start("principle", ref, "", line, pno)
                 continue
             m = NUM.match(line)
@@ -153,6 +160,7 @@ def parse(path, pages=None):
                 # of numbers like 17.4, 17.5 is real structure
                 back = next((k for k in range(len(jumps) - 1, -1, -1) if i - jumps[k]["line"] <= UNDO_LINES
                              and plausible(jumps[k]["prev"], cand)[0]
+                             and not plausible(parse_number(jumps[k]["clause"]["number"]), cand)[0]
                              and (k == len(jumps) - 1 or all("." not in j["clause"]["number"] for j in jumps[k:]))),
                             None) if not ok else None
                 if back is not None and len(cand) > 1 and rest[:1].isupper():

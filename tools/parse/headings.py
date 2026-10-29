@@ -31,7 +31,7 @@ MARK = re.compile(r"^(PART\s+[IVX]+|[IVX]{1,5}\.|[A-Z]\.|\d{1,2}(?:\.\d{1,2}){1,
 LEADER = re.compile(r"(?:\.\s?){4,}\s*\d*\s*$|\s{3,}\d{1,3}\s*$")
 DOTS = re.compile(r"(?:\.\s?){4,}\s*\d*\s*$")
 LINE_NO = re.compile(r"^\d{1,4}\s{2,}(?=\S)")
-BACK = re.compile(r"^(?:(APPENDIX|Appendix|ATTACHMENT|Attachment)\s+([A-Z]|\d{1,2})(?![a-z])"
+BACK = re.compile(r"^(?:(APPENDIX|Appendix|ATTACHMENT|Attachment)\s+([IVX]+\b|[A-Z](?![a-z])|\d{1,2}\b)"
                   r"|(?:REFERENCES|References|GLOSSARY|Glossary|DEFINITIONS|ACRONYMS|ABBREVIATIONS|BIBLIOGRAPHY)\s*:?\s*$)")
 LOOKAHEAD = 4
 LISTING_MAX = 150      # characters; an appendix "heading" this short with a longer copy elsewhere is a list entry
@@ -213,7 +213,8 @@ def parse(path, pages=None):
         if b and heading_like(line) and not MARK.match(line):
             # appendices and attachments carry text of their own ("Appendix 1"); references, glossaries and the
             # like close the last section without becoming part of it
-            if b.group(1):
+            listing = any(BACK.match(ln) for _, ln in lines[i + 1:i + 4])   # "Attachment A ..., Attachment B ..."
+            if b.group(1) and not listing:
                 start("clause", f"{b.group(1).title()} {b.group(2)}", line, pno)
             else:
                 unnumbered += 1
@@ -259,7 +260,7 @@ def parse(path, pages=None):
         out[-1].notes += notes
     # Compliance programs list their attachments in a short entry ("Attachment A - Inspectional ...") before the
     # attachment itself: the listing entry is not the attachment.
-    for ref in {c.ref for c in out if c.ref.startswith(("Appendix ", "Attachment "))}:
+    for ref in sorted({c.ref for c in out if c.ref.startswith(("Appendix ", "Attachment "))}):
         copies = [c for c in out if c.ref == ref]
         longest = max(copies, key=lambda c: len(c.text))
         for c in copies:

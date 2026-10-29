@@ -93,6 +93,8 @@ def flags(rep):
         why.append("possible misses")
     if rep["assigned_share"] < 1.0:
         why.append("text not assigned")
+    if rep.get("restarts") and rep["source"].endswith(".xml"):
+        why.append("numbering restarts")             # the eCFR structure is explicit: a restart is a parse error
     return why
 
 

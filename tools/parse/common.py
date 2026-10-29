@@ -147,7 +147,9 @@ def resolve_duplicates(clauses):
         for i in idx[:-1]:
             c = clauses[i]
             short_entry = len(c.text) <= CONTENTS_ENTRY_MAX and CONTENTS_ENTRY.search(c.text)
-            if c.page_start in toc_pages or short_entry:
+            on_contents_page = c.page_start in toc_pages and len(c.text) <= CONTENTS_ENTRY_MAX
+            early_heading = c.kind == "section" and len(c.text) <= CONTENTS_ENTRY_MAX
+            if on_contents_page or short_entry or early_heading:
                 c.kind, c.ref = "toc", f"_toc:{c.ref}"
         rest = [i for i in idx if clauses[i].kind != "toc"]
         for n, i in enumerate(rest[1:], start=2):

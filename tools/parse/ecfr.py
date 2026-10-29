@@ -13,47 +13,63 @@ from common import Clause, normalise, resolve_duplicates  # noqa: E402
 
 MARK = re.compile(r"^\(([a-z]{1,2}|\d{1,2}|[ivxl]{1,5}|[A-Z])\)\s*")
 ROMAN = re.compile(r"^[ivxl]+$")
-INLINE = re.compile(r"^([A-Z][^()]{0,160}?(?:\.\s+|—))\((\d{1,2}|[a-z]|[A-Z])\)\s*")
+INLINE = re.compile(r"^([A-Z][^()]{0,160}?(?:[.?]\s+|—))\((\d{1,2}|[a-z]|[A-Z])\)\s*")
 
 
 LETTER_BEFORE = {"i": "h", "v": "u", "x": "w", "l": "k"}
 
 
-def level(mark, stack):
-    """eCFR nesting: (a) -> (1) -> (i) -> (A); below a roman numeral, lettered sub-items (level 4), then italic
-    numbers (5) and italic romans (6), as in 314.81(b)(2)(vii)(a)(8)(i).
+def level(mark, stack, italic=False):
+    """eCFR nesting: (a) -> (1) -> (i) -> (A), then the italic levels (a) -> (1) -> (i) as in
+    314.81(b)(2)(vii)(a)(8)(i). The XML marks italic markers ("(<I>a</I>)"): italic letter = 4, number = 5, roman = 6.
 
-    i, v, x and l are ambiguous: a letter right after (h), (u), (w) or (k) at letter level, otherwise a roman
+    i, v, x and l are ambiguous: a letter right after (h), (u), (w) or (k) at the same level, otherwise a roman
     numeral under the current number. Longer roman marks (ii, iv) are always roman.
     """
+    if italic:
+        if mark.isdigit():
+            return 5
+        if ROMAN.match(mark) and (len(mark) > 1 or any(lv == 5 for lv, _ in stack)) and not (
+                next((mk for lv, mk in reversed(stack) if lv == 4), None) == LETTER_BEFORE.get(mark)):
+            return 6
+        return 4
     if mark.isdigit():
-        # an italic number below a lettered sub-item or a capital: 314.81(b)(2)(vii)(a)(1), (b)(3)(v)(A)(1)
-        if any(lv in (3, 4) for lv, _ in stack):
-            italic = next((mk for lv, mk in reversed(stack) if lv == 5), None)
-            if mark == "1" or (italic is not None and int(mark) == int(italic) + 1):
-                return 5
         return 1
     if mark.isupper():
         return 3
     if ROMAN.match(mark):
-        if stack and stack[-1][0] in (5, 6) and (mark == "i" or stack[-1][0] == 6):
-            return 6                                # an italic roman below an italic number: ...(a)(8)(i)
         if len(mark) > 1:
             return 2
         last_letter = next((mk for lv, mk in reversed(stack) if lv == 0), None)
         if last_letter == LETTER_BEFORE.get(mark):
             return 0
         return 2 if any(lv == 1 for lv, _ in stack) else 0
-    if len(mark) == 1 and any(lv >= 2 for lv, _ in stack):
-        # A letter below a roman numeral, e.g. 314.81(b)(2)(ii)(a): a sub-item, unless it is the next top-level
-        # paragraph and no sub-item list is open whose next letter it would be.
-        deep = next((mk for lv, mk in reversed(stack) if lv == 4), None)
-        if deep is not None and ord(mark) == ord(deep) + 1:
-            return 4
-        last_letter = next((mk for lv, mk in reversed(stack) if lv == 0), None)
-        if last_letter is None or ord(mark) != ord(last_letter) + 1:
-            return 4
     return 0
+
+
+def _pieces(el, italic=False):
+    yield el.text or "", italic
+    for child in el:
+        yield from _pieces(child, italic or child.tag == "I")
+        yield child.tail or "", italic
+
+
+def italic_flags(p, marks):
+    """For each marker (in order of appearance), whether the XML prints it in italics: "(ii)(<I>a</I>)"."""
+    raw, mask = "", []
+    for text, italic in _pieces(p):
+        raw += text
+        mask += [italic] * len(text)
+    flags, pos = [], 0
+    for mark in marks:
+        at = raw.find(f"({mark})", pos)
+        if at < 0:
+            at = raw.find(mark, pos)
+            flags.append(at >= 0 and mask[at])
+            continue
+        flags.append(mask[at + 1])
+        pos = at + len(mark) + 2
+    return flags
 
 
 def defined_term(p):
@@ -116,9 +132,10 @@ def parse(path):
                     item += 1
                 else:                               # anything else ends the run
                     prefix, stack = num, list(definitions_base)
+            italic = italic_flags(p, marks)
             pos = 0                                 # split txt so parent and child texts do not overlap
             for k, mark in enumerate(marks):
-                lvl = level(mark, stack)
+                lvl = level(mark, stack, italic=italic[k])
                 while stack and stack[-1][0] >= lvl:
                     stack.pop()
                 stack.append((lvl, mark))
