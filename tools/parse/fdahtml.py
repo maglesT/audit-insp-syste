@@ -44,8 +44,9 @@ def list_marker(kind, n):
 class Blocks(HTMLParser):
     """Text blocks inside <article>: {"tag", "text", "marker", "bold"} in page order."""
 
-    def __init__(self):
+    def __init__(self, skip=SKIP):
         super().__init__(convert_charrefs=True)
+        self.skip_tags = skip
         self.article = self.skip = 0
         self.blocks, self.buf, self.strong, self.lists = [], [], [], []
         self.tag, self.marker, self.in_strong = "p", "", False
@@ -63,7 +64,7 @@ class Blocks(HTMLParser):
             self.article += 1
         if not self.article:
             return
-        if tag in SKIP:
+        if tag in self.skip_tags:
             self.skip += 1
         elif tag in ("ol", "ul"):
             self.flush()
@@ -86,7 +87,7 @@ class Blocks(HTMLParser):
         if tag == "article":
             self.flush()
             self.article -= 1
-        elif tag in SKIP:
+        elif tag in self.skip_tags:
             self.skip = max(0, self.skip - 1)
         elif tag in BLOCK:
             self.flush()
@@ -103,8 +104,8 @@ class Blocks(HTMLParser):
                 self.strong.append(data)
 
 
-def blocks(path):
-    parser = Blocks()
+def blocks(path, skip=SKIP):
+    parser = Blocks(skip)
     parser.feed(Path(path).read_text(encoding="utf-8", errors="replace"))
     parser.flush()
     out = parser.blocks
