@@ -12,7 +12,8 @@ from pathlib import Path
 
 if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parent))
-from common import Clause, edge_lines, english_page, normalise, pdf_pages, repeated_lines  # noqa: E402
+from common import (Clause, edge_lines, english_line, english_page, normalise, pdf_pages,  # noqa: E402
+                    line_key, repeated_lines, running_lines)
 
 NUM = re.compile(r"^([1-9]\d?(?:\.(?:0|[1-9]\d{0,2})){0,4})\.?(?=\s|$)\s*(.*)$")
 SECTION = [
@@ -59,10 +60,12 @@ def heading_like(rest):
     return bool(rest) and len(rest) < 90 and not rest.endswith((".", ";", ",", ":"))
 
 
-def parse(path):
-    pages = pdf_pages(path)
+def parse(path, pages=None):
+    """pages: text per page from another extractor (table mode); default pdftotext -layout."""
+    pages = pdf_pages(path) if pages is None else pages
     english = [english_page(p) for p in pages]
     noise = repeated_lines([p for p, e in zip(pages, english) if e])
+    running = running_lines([p for p, e in zip(pages, english) if e])
     clauses, cur, section, prev = [], None, "", None
     seen_in_section, unnumbered, run = set(), 0, 0
     body_chars = 0
@@ -80,9 +83,11 @@ def parse(path):
         edges = {ln.strip() for ln in edge_lines(page)}
         for raw in page.splitlines():
             line = raw.strip()
-            if not line:
+            if not line or not english_line(line):
                 continue
-            if line in edges and (re.sub(r"\d+", "#", line) in noise or re.fullmatch(r"[-–—\s\d]+", line)):
+            masked = line_key(line)
+            if masked in running or (line in edges and not line.startswith("[[TABLE ")
+                                     and (masked in noise or re.fullmatch(r"[-–—\s\d]+", line))):
                 dropped += len(line.replace(" ", ""))
                 continue
             lines.append((pno, line))

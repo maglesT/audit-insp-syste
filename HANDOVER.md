@@ -1,6 +1,6 @@
 # Handover: read this first in every new session
 
-Last updated: 29 October 2026 (end of session 1).
+Last updated: 29 October 2026 (session 2, after the table-extraction merge).
 
 ## Where we are
 - Brief: `docs/00-brief.md` (the owner's decisions). Small decisions: `docs/decisions.md`.
@@ -35,19 +35,18 @@ Last updated: 29 October 2026 (end of session 1).
   - One review pass is done (5 defects, all fixed with tests): contents detection, decimal rule, leading zeros,
     header/footer removal (now page edges only, with dropped text counted), and eCFR inline paragraphs plus
     roman-vs-letter (i).
-- **Start of session 2, do first:** table-aware extraction with **pdfplumber** (D21) for the table-format sources.
-  These include PIC/S PI 058-1, the ICH Q7 Q&A, the PIC/S aide-memoires (PI 030, PI 009 and others), and the
-  CDSCO checklist circulars.
-  - Goal: one clause per table row (ref = table and row label), then re-run `tools/parse/run.py`. The "possibly
-    missed" obligations (211 today) should fall sharply.
-  - Use Docling or Table Transformer only if pdfplumber leaves misses, and say so in decisions.
-  - Install with `pip install pdfplumber`, pinning the version in a `requirements.txt`, and add the install to CI.
+- **Session 2, done: table-aware extraction (D22, D23).** `tools/parse/tables.py` (pdfplumber cell boxes + poppler
+  words) gives one clause per table row (`Table <k> <label>`, kind `table_row`, `parent` = enclosing clause) for every
+  non-FDA PDF; text around tables is still `pdftotext -layout`. Cross-check fallback: on table pages a sentence counts
+  as found when all its words are in one row. Also fixed: WHO side header and India gazette header inside clause text;
+  mixed Hindi/English gazette pages. Result: 19,465 clauses, possible misses **211 -> 19** (remaining: figure and
+  flowchart text in PE 009 annexes, Q1E, Q9, WHO TRS 957/1044; Drugs Rules footnotes; one PI 030 row without a bottom
+  rule; PI 041 8.8 and PI 038 3.3, to look at in the flags step). Full run takes about 9 minutes.
 - **S1 remaining (next session, in this order):**
   1. A heading-based parser for FDA guidance PDFs and fda.gov HTML pages (the 60 pending files).
   2. An article parser for EU legal acts (Directive 2017/1572, Regulation 1252/2014: "Article N").
   3. A Q&A parser for EMA/PIC/S Q&A documents (some parse to 0 clauses today).
-  4. Table-aware extraction for table-format documents (see the 211 possible misses), then work through the
-     flags in `library/parse-report.md`. Many come from too-strict thresholds: the numbered-share
+  4. Work through the flags in `library/parse-report.md` (tables are done). Many come from too-strict thresholds: the numbered-share
      limit of 0.80 also catches documents with long intros. Investigate the duplicate refs in Annex 1 (EU and PIC/S
      copies) and the large clauses. Add `sources/parse-overrides` only where a rule cannot be fixed generally.
      Exit: every pilot source is unflagged or has a written explanation in the report.

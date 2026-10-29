@@ -15,6 +15,7 @@ ROOT = Path(__file__).resolve().parents[2]
 OFFICIAL = ROOT / "sources" / "official"
 CLAUSES = ROOT / "library" / "clauses"
 
+CITABLE = ("clause", "principle", "table_row", "table_header")   # kinds with a reference of their own
 DEVANAGARI = re.compile(r"[ऀ-ॿ]")
 
 
@@ -28,8 +29,9 @@ class Clause:
     text: str              # whitespace-normalised text of the whole clause
     page_start: int
     page_end: int
-    kind: str = "clause"   # clause | principle | unnumbered | toc
+    kind: str = "clause"   # clause | principle | unnumbered | toc | table_row | table_header
     notes: list = field(default_factory=list)
+    parent: str = ""       # table rows: the clause the table sits in ("" when it sits before any clause)
 
     def to_json(self):
         d = asdict(self)
@@ -50,11 +52,24 @@ def pdf_pages(path):
     return pages
 
 
+def devanagari_share(text):
+    letters = [c for c in text if c.isalpha()]
+    return sum(1 for c in letters if DEVANAGARI.match(c)) / len(letters) if letters else 0.0
+
+
 def english_page(page):
-    letters = [c for c in page if c.isalpha()]
-    if not letters:
-        return True
-    return sum(1 for c in letters if DEVANAGARI.match(c)) / len(letters) < 0.05
+    """Mostly English. Gazette notices mix a Hindi preamble and the English rule text on one page; such a page is
+    kept, and its Hindi lines are dropped one by one (english_line)."""
+    return devanagari_share(page) < 0.5
+
+
+def english_line(line):
+    return devanagari_share(line) < 0.3
+
+
+def line_key(line):
+    """A line compared across pages: digits masked, spacing collapsed (layout mode varies the gaps)."""
+    return re.sub(r"\s+", " ", re.sub(r"\d+", "#", line.strip()))
 
 
 def edge_lines(page, n=3):
@@ -63,15 +78,35 @@ def edge_lines(page, n=3):
     return lines[:n] + lines[-n:] if len(lines) > 2 * n else lines
 
 
-def repeated_lines(pages, min_share=0.3, min_pages=3):
+def repeated_lines(pages, min_share=0.3, min_pages=3, n=3):
     """Lines that recur on many pages (running headers and footers), compared with digits masked."""
     counts = {}
     for page in pages:
         seen = set()
-        for line in edge_lines(page):
-            key = re.sub(r"\d+", "#", line.strip())
+        for line in edge_lines(page, n):
+            key = line_key(line)
             if key and key not in seen:
                 seen.add(key)
+                counts[key] = counts.get(key, 0) + 1
+    limit = max(min_pages, int(len(pages) * min_share))
+    return {k for k, n in counts.items() if n >= limit}
+
+
+SIDE_HEADER = re.compile(r"^WHO Technical Report Series,? No\. #, #$")
+
+
+def running_lines(pages, min_share=0.3, min_pages=3):
+    """Known running lines that recur on many pages anywhere on the page, compared with digits masked.
+
+    WHO TRS volumes print the series name ("WHO Technical Report Series, No. 1044, 2022") rotated in the margin;
+    layout mode puts it mid-page, between body lines, where the edge rule misses it. Only lines matching
+    SIDE_HEADER count: a general "repeated anywhere" rule would also drop body lines that repeat, such as list
+    items in the PIC/S aide-memoires.
+    """
+    counts = {}
+    for page in pages:
+        for key in {line_key(ln) for ln in page.splitlines()}:
+            if SIDE_HEADER.match(key):
                 counts[key] = counts.get(key, 0) + 1
     limit = max(min_pages, int(len(pages) * min_share))
     return {k for k, n in counts.items() if n >= limit}
@@ -88,13 +123,14 @@ def write_clauses(source, clauses):
 
 def report(source, clauses, body_chars, dropped_chars=0):
     """Completeness figures for one source."""
-    assigned = sum(len(c.text.replace(" ", "")) for c in clauses)
-    numbered = sum(len(c.text.replace(" ", "")) for c in clauses if c.kind in ("clause", "principle"))
-    refs = [c.ref for c in clauses if c.kind in ("clause", "principle")]
+    assigned = sum(len(c.text.replace(" ", "").replace("|", "")) for c in clauses)
+    numbered = sum(len(c.text.replace(" ", "").replace("|", "")) for c in clauses if c.kind in CITABLE)
+    refs = [c.ref for c in clauses if c.kind in CITABLE]
     dups = sorted({r for r in refs if refs.count(r) > 1})
     return {
         "source": source,
         "clauses": len(refs),
+        "table_rows": sum(1 for c in clauses if c.kind == "table_row"),
         "unnumbered_segments": sum(1 for c in clauses if c.kind == "unnumbered"),
         "toc_segments": sum(1 for c in clauses if c.kind == "toc"),
         "body_chars": body_chars,
