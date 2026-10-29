@@ -11,9 +11,10 @@ Last updated: 29 October 2026 (session 1).
   - Collected by three agents (FDA, EU/PIC/S, WHO/ICH/India). Their staging folders were in `work/` (not
     committed).
   - CI runs `python3 tools/inventory.py check` and the unit tests.
-- **Next:** deliverables (b) library data model + verification pipeline with release thresholds, (c) customer app
-  scope + minimum compliance rules, (d) slices with a token/time estimate per regulator. Show all three to the
-  owner together for approval, then build the pilot.
+- **Deliverables (b)-(d): `docs/02-plan.md`, a draft waiting for owner approval.** Owner questions Q1-Q5 are
+  in its section 0: API key and budget, verifier vendors, thresholds, the report-print exception, pilot plant
+  types.
+- **Next, once approved:** slice S1 (parsers and clause store), then S2. S3 needs the API key (Q1).
 
 ## Open with the owner
 1. Anvisa RDC 654/2022 (APIs) and the English IN annexes are still wanted (phase 2; captcha, so the owner
