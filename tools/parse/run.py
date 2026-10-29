@@ -39,7 +39,7 @@ def parser_for(row):
     if f.endswith(".xml"):
         return ecfr.parse
     if f.endswith(".html"):
-        return fdahtml.parse
+        return fdahtml.parse if row["regulator"] == "FDA" else None   # EMA Q&A pages: Q&A parser, next step
     if row["regulator"] == "FDA":
         return lambda path: tables.parse(path, headings.parse)
     return tables.parse

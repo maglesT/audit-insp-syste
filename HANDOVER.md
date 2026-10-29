@@ -1,6 +1,6 @@
 # Handover: read this first in every new session
 
-Last updated: 29 October 2026 (session 2, after the table-extraction merge).
+Last updated: 29 October 2026 (session 2, FDA parser branch).
 
 ## Where we are
 - Brief: `docs/00-brief.md` (the owner's decisions). Small decisions: `docs/decisions.md`.
@@ -42,8 +42,13 @@ Last updated: 29 October 2026 (session 2, after the table-extraction merge).
   mixed Hindi/English gazette pages. Result: 19,465 clauses, possible misses **211 -> 19** (remaining: figure and
   flowchart text in PE 009 annexes, Q1E, Q9, WHO TRS 957/1044; Drugs Rules footnotes; one PI 030 row without a bottom
   rule; PI 041 8.8 and PI 038 3.3, to look at in the flags step). Full run takes about 9 minutes.
-- **S1 remaining (next session, in this order):**
-  1. A heading-based parser for FDA guidance PDFs and fda.gov HTML pages (the 60 pending files).
+- **Session 2, done: FDA parsers (D24).** `tools/parse/headings.py` parses FDA guidance and compliance-program PDFs by
+  section, guided by each document's own contents list ("IV.B.2", "Part III 3.A"); `tools/parse/fdahtml.py` parses
+  fda.gov pages (Q&A pages -> "Q7"; other pages -> "¶12"). All 59 FDA files parse; 179 sources in the report, only
+  `ema-gmp-gdp-qa.html` pending (Q&A parser). An article parser for the EU legal acts is drafted (session scratchpad,
+  not yet in the repo; recitals, "Article 5(2)", OJ footnotes per page).
+- **S1 remaining (in this order):**
+  1. (done) FDA parsers.
   2. An article parser for EU legal acts (Directive 2017/1572, Regulation 1252/2014: "Article N").
   3. A Q&A parser for EMA/PIC/S Q&A documents (some parse to 0 clauses today).
   4. Work through the flags in `library/parse-report.md` (tables are done). Many come from too-strict thresholds: the numbered-share

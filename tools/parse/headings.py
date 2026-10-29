@@ -28,8 +28,10 @@ ROMAN = {v: i for i, v in enumerate("I II III IV V VI VII VIII IX X XI XII XIII 
 MARK = re.compile(r"^(PART\s+[IVX]+|[IVX]{1,5}\.|[A-Z]\.|\d{1,2}(?:\.\d{1,2}){1,2}\.?|\d{1,2}\.|[a-z]\.|\(\d{1,2}\)"
                   r"|\([a-z]\))(?:\s+|\s*[—–]\s*)(\S.*)$")
 LEADER = re.compile(r"(?:\.\s?){4,}\s*\d*\s*$|\s{3,}\d{1,3}\s*$")
+DOTS = re.compile(r"(?:\.\s?){4,}\s*\d*\s*$")
 LINE_NO = re.compile(r"^\d{1,4}\s{2,}(?=\S)")
 LOOKAHEAD = 4
+CONTENTS_ENTRY_MAX = 300   # characters; a "section" this short before the outline restarts is a contents entry
 TOC_GAP = 6            # lines without a leader allowed inside the contents block (wrapped entries)
 
 
@@ -101,8 +103,9 @@ class Outline:
         return ".".join(labels)
 
 
-def body_lines(pages):
-    """(page, line) of the body: English lines without running headers, footers and margin line numbers."""
+def body_lines(pages, keep=None):
+    """(page, line) of the body: English lines without running headers, footers and margin line numbers. Lines
+    matching `keep` are never taken for running headers ("Article 3" at the top of several pages is a heading)."""
     noise = repeated_lines(pages)
     every = [ln.strip() for pg in pages for ln in pg.splitlines() if ln.strip()]
     margin_numbers = sum(1 for ln in every if LINE_NO.match(ln)) > 0.3 * max(1, len(every))
@@ -116,7 +119,8 @@ def body_lines(pages):
             if not line or not english_line(line):
                 continue
             running = line_key(raw) in noise or re.fullmatch(r"[-–—\s\d]+|Page \d+( of \d+)?", line)
-            if raw.strip() in edges and not line.startswith("[[TABLE ") and running:
+            kept = line.startswith("[[TABLE ") or (keep is not None and keep.match(line))
+            if raw.strip() in edges and not kept and running:
                 dropped += len(line.replace(" ", ""))
                 continue
             out.append((pno, line))
@@ -124,12 +128,14 @@ def body_lines(pages):
 
 
 def contents_block(lines):
-    """(first, last) line index of the table of contents: marked lines with dot leaders close together."""
-    idx = [i for i, (_, ln) in enumerate(lines) if LEADER.search(ln) and MARK.match(ln)]
-    if len(idx) < 3:
+    """(first, last) line index of the table of contents: lines with dot leaders close together, at least three of
+    them with a marker. A wrapped entry has its marker on one line and the leader on the next; counting leader
+    lines without a marker keeps such a last entry inside the block."""
+    leaders = [i for i, (_, ln) in enumerate(lines) if DOTS.search(ln) or (LEADER.search(ln) and MARK.match(ln))]
+    if sum(1 for i in leaders if MARK.match(lines[i][1])) < 3:
         return None
-    first = last = idx[0]
-    for i in idx[1:]:
+    first = last = leaders[0]
+    for i in leaders[1:]:
         if i - last > TOC_GAP:
             break
         last = i
@@ -137,12 +143,39 @@ def contents_block(lines):
 
 
 def _words(text, n):
-    return [re.sub(r"\d+$", "", w) for w in re.findall(r"[a-z0-9]+", text.lower())[:n]]
+    """First n title words: no leader or page number, no footnote digit glued to a word ("Definitions5")."""
+    text = LEADER.sub("", text)
+    words = [re.sub(r"\d+$", "", w) for w in re.findall(r"[a-z0-9]+", text.lower())]
+    return [w for w in words if w][:n]
+
+
+def same_title(body, entry):
+    """A body heading matches a contents entry when the first words agree, allowing a plural or a shortened
+    title ("Objective" / "OBJECTIVES", "BACKGROUND/POLICY" / "BACKGROUND")."""
+    if not body or not entry:
+        return False
+    for a, b in zip(body, entry):
+        if not (a == b or (min(len(a), len(b)) >= 4 and (a.startswith(b) or b.startswith(a)))):
+            return False
+    return True
 
 
 def heading_like(rest):
+    """Without a contents list: a heading is in capitals or title case and does not end like a sentence; list items
+    in the body ("1. For CGMP coverage that may result in ...") do not pass."""
     rest = rest.strip()
-    return bool(rest) and (rest.isupper() or (len(rest) < 110 and not rest.endswith((".", ";", ",", ":"))))
+    if not rest or rest.endswith((".", ";", ",", ":")) or len(rest) >= 110:
+        return False
+    words = [w for w in re.findall(r"[A-Za-z][A-Za-z'’-]*", rest) if len(w) > 3]
+    return rest.isupper() or (bool(words) and sum(w[0].isupper() for w in words) >= 0.6 * len(words))
+
+
+def restarts(outline, mark):
+    """Is mark the first top-level heading again ("I." after "IV.")?"""
+    if not outline.stack:
+        return False
+    kind, value, _ = outline.stack[0]
+    return value != 1 and (kind, 1) in readings(mark)
 
 
 def parse(path, pages=None):
@@ -176,12 +209,21 @@ def parse(path, pages=None):
         ref = None
         if m and entries:
             for j in range(nxt, min(nxt + LOOKAHEAD, len(entries))):
-                if m.group(1).rstrip(".") == entries[j][0] and _words(m.group(2), 2) == entries[j][1]:
+                if m.group(1).rstrip(".") == entries[j][0] and same_title(_words(m.group(2), 2), entries[j][1]):
                     skipped = [e[2] for e in entries[nxt:j]]
                     ref, nxt = entries[j][2], j + 1
                     break
-        elif m and heading_like(m.group(2)) and outline.accept(m.group(1)):
-            ref, skipped = outline.ref(), []
+        elif m and heading_like(m.group(2)):
+            ok = outline.accept(m.group(1))
+            if not ok and restarts(outline, m.group(1)):
+                # The outline starts again at "I.": what came before was a contents list without dot leaders.
+                for c in clauses:
+                    if c["kind"] == "clause" and len(" ".join(c["lines"])) < CONTENTS_ENTRY_MAX:
+                        c["kind"] = "toc"
+                outline = Outline()
+                ok = outline.accept(m.group(1))
+            if ok:
+                ref, skipped = outline.ref(), []
         if ref:
             start("clause", ref, line, pno)
             cur["notes"] += [f"gap: contents entry {s} not found in the body" for s in skipped]

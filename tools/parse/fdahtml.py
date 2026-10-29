@@ -24,7 +24,11 @@ BLOCK = {"p", "li", "h1", "h2", "h3", "h4", "h5", "h6", "dt", "dd", "td", "th", 
 SKIP = {"script", "style", "nav", "noscript", "button", "form", "svg"}
 ROMAN = "I II III IV V VI VII VIII IX X XI XII XIII XIV XV XVI XVII XVIII XIX XX".split()
 QUESTION = re.compile(r"^(?:Q\s?)?(\d{1,3})\.\s+(.+)$")
+ANSWER_LINK = re.compile(r"^Answer \d{1,3}$")
+# breadcrumbs and chapter links: "Home | General Provisions | Buildings ...", "[Previous Chapter] [Table of Contents]"
+NAV = re.compile(r"^(?:[^.]{0,80}(?: \| [^.]{0,80}){2,}|(?:\[[^\]]{1,40}\]\s*)+)$")
 CHROME = re.compile(r"^(Content current as of|Regulated Product|Topic\(s\)|Submit Comments)")
+SHORT = 40
 HEADINGS = ("h1", "h2", "h3", "h4", "h5", "h6")
 
 
@@ -51,7 +55,8 @@ class Blocks(HTMLParser):
         if text:
             strong = re.sub(r"\s+", " ", "".join(self.strong)).strip()
             self.blocks.append({"tag": self.tag, "text": text, "marker": self.marker, "bold": strong == text})
-        self.buf, self.strong, self.marker = [], [], ""
+            self.marker = ""                  # kept until a block is emitted: <li><p>text</p></li> keeps "4."
+        self.buf, self.strong = [], []
 
     def handle_starttag(self, tag, attrs):
         if tag == "article":
@@ -128,7 +133,8 @@ def questions(bl):
     numbered = [(i, int(m.group(1))) for i, b in enumerate(bl)
                 if (m := QUESTION.match(b["text"])) and len(m.group(2)) >= 15]
     found = {}
-    if len({n for _, n in numbered}) >= 3:
+    by_number = len({n for _, n in numbered}) >= 3
+    if by_number:
         pos = len(bl)
         for k in range(max(n for _, n in numbered), 0, -1):
             before = [i for i, n in numbered if n == k and i < pos]
@@ -148,7 +154,10 @@ def questions(bl):
                 first_seen.setdefault(key, i)
     start = min(found, default=len(bl))
     keys = {_key(bl[i]["text"]) for i in found}
-    index = {i for i in range(start) if _key(bl[i]["text"]) in keys}
+    # Above the first question sit the index (questions, sometimes worded slightly differently, and "Answer N"
+    # links): on a numbered page every numbered entry there is index; elsewhere entries matching a question.
+    index = {i for i in range(start) if _key(bl[i]["text"]) in keys or ANSWER_LINK.match(bl[i]["text"])
+             or (by_number and (QUESTION.match(bl[i]["text"]) or bl[i]["marker"].isdigit()))}
     return found, index
 
 
@@ -164,10 +173,19 @@ def parse(path):
         elif i in found:
             in_q = True
             rows.append(["clause", f"Q{found[i]}", "", [text]])
+        elif NAV.match(b["text"]):
+            in_q = False
+            unnumbered += 1
+            rows.append(["unnumbered", f"_unnumbered:{unnumbered}", heading, [text]])
         elif in_q and b["tag"] not in ("h1", "h2"):
             rows[-1][3].append(text)                  # answer, references and date stay with their question
         elif b["tag"] in HEADINGS or (b["bold"] and len(b["text"]) < 120):
             in_q, heading = False, text
+            unnumbered += 1
+            rows.append(["unnumbered", f"_unnumbered:{unnumbered}", heading, [text]])
+        elif len(b["text"]) < SHORT and not b["text"].endswith((".", "?", ";")):
+            # short labels ("Docket Number:", "Search for FDA", list captions) are kept, but not as clauses
+            in_q = False
             unnumbered += 1
             rows.append(["unnumbered", f"_unnumbered:{unnumbered}", heading, [text]])
         else:
@@ -178,5 +196,5 @@ def parse(path):
     clauses = [Clause(source=name, ref=ref, section=sec[:160], number=ref if kind == "clause" else "",
                       heading=parts[0][:160], text=" ".join(parts), page_start=0, page_end=0, kind=kind)
                for kind, ref, sec, parts in rows]
-    body = sum(len(c.text.replace(" ", "")) for c in clauses)
+    body = sum(len(c.text.replace(" ", "").replace("|", "")) for c in clauses)   # counted as common.report does
     return clauses, body, 0

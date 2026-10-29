@@ -70,6 +70,20 @@ class Guidances(unittest.TestCase):
             self.assertEqual(crosscheck.missed_obligations(common.OFFICIAL / name, clauses), [], name)
 
 
+    def test_wrapped_last_contents_entry(self):
+        r = refs(headings.parse, "fda-guidance-voluntary-recalls-initiation-2022.pdf")
+        self.assertIn("III.D", r)
+
+    def test_heading_with_plural_or_shorter_title(self):
+        r = refs(headings.parse, "fda-cp-7356-002a-sterile-drug-process.pdf")
+        self.assertIn("Part II 2.1", r)                           # contents "Objective", body "OBJECTIVES"
+
+    def test_body_list_items_are_not_headings_without_contents(self):
+        self.assertFalse(headings.heading_like("For CGMP coverage that may result in an OAI status, enter a"))
+        self.assertTrue(headings.heading_like("Program Management Instructions"))
+        self.assertTrue(headings.heading_like("BACKGROUND"))
+
+
 class Pages(unittest.TestCase):
     def test_qa_page_questions_in_order(self):
         clauses, _, _ = fdahtml.parse(common.OFFICIAL / "fda-cgmp-qa-laboratory-controls.html")
@@ -81,6 +95,19 @@ class Pages(unittest.TestCase):
     def test_qa_index_is_not_a_clause(self):
         clauses, _, _ = fdahtml.parse(common.OFFICIAL / "fda-cgmp-qa-equipment.html")
         self.assertEqual(sum(c.kind == "toc" for c in clauses), sum(c.ref.startswith("Q") for c in clauses))
+
+    def test_qa_index_never_duplicates_a_question(self):
+        clauses, _, _ = fdahtml.parse(common.OFFICIAL / "fda-cgmp-qa-production-process-controls.html")
+        self.assertEqual([c.ref for c in clauses if c.ref.startswith("¶")], [])
+        self.assertEqual(len([c for c in clauses if c.ref.startswith("Q")]), 24)
+
+    def test_list_marker_survives_nested_paragraph(self):
+        parser = fdahtml.Blocks()
+        parser.feed('<article><ol type="A"><li>First</li><li><p>Second item text</p></li></ol>'
+                    "<p>[Previous Chapter] [Table of Contents]</p></article>")
+        self.assertEqual([(b["marker"], b["text"]) for b in parser.blocks[:2]],
+                         [("A", "First"), ("B", "Second item text")])
+        self.assertTrue(fdahtml.NAV.match(parser.blocks[2]["text"]))
 
     def test_inspection_guide_paragraphs(self):
         clauses, _, _ = fdahtml.parse(common.OFFICIAL / "fda-ora-guide-cleaning-validation-1993.html")
