@@ -203,8 +203,12 @@ def parse(path, text_parser=None):
         if c.text:
             kept.append(c)
     rows = rows_to_clauses(Path(path).name, tables, parent)
-    body += sum(len(x.replace(" ", "").replace("|", "")) for t in tables for r in t["rows"] for x in r)
-    return kept + rows, body, dropped + dropped_rows
+    raw = sum(len(x.replace(" ", "").replace("|", "")) for t in tables for r in t["rows"] for x in r)
+    kept_chars = sum(len(c.text.replace(" ", "").replace("|", "")) for c in rows)
+    # header and caption rows repeated on every page are kept once; the repeats count as dropped, like running
+    # page headers
+    body += kept_chars
+    return kept + rows, body, dropped + dropped_rows + max(0, raw - kept_chars)
 
 
 def _row_key(row):

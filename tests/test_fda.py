@@ -84,6 +84,18 @@ class Guidances(unittest.TestCase):
         self.assertTrue(headings.heading_like("BACKGROUND"))
 
 
+    def test_appendices_end_the_last_section(self):
+        r = refs(headings.parse, "fda-aseptic-2004.pdf")
+        self.assertIn("Appendix 1", r)
+        self.assertLess(len(r["XII"].text), 15000)
+        self.assertNotIn("GLOSSARY", r["Appendix 3"].text)
+
+    def test_attachment_listing_is_not_the_attachment(self):
+        r = refs(headings.parse, "fda-cp-7356-002-drug-manufacturing-inspections.pdf")
+        self.assertGreater(len(r["Attachment A"].text), 1000)
+        self.assertNotIn("Attachment A #2", r)
+
+
 class Pages(unittest.TestCase):
     def test_qa_page_questions_in_order(self):
         clauses, _, _ = fdahtml.parse(common.OFFICIAL / "fda-cgmp-qa-laboratory-controls.html")
