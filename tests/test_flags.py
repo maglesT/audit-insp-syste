@@ -36,6 +36,16 @@ class Duplicates(unittest.TestCase):
         self.assertTrue(r["1"].text.startswith("1. DOCUMENT HISTORY"))
 
 
+class Sections(unittest.TestCase):
+    def test_glossary_and_appendix_text_are_citable(self):
+        clauses, _, _ = numbered.parse(common.OFFICIAL / "who-trs1033-a4-data-integrity.pdf")
+        r = {c.ref: c for c in clauses if c.kind in common.CITABLE}
+        self.assertIn("Appendix 1", r)
+        self.assertIn("Examples in data integrity management", r["Appendix 1"].text)
+        self.assertTrue(any(ref.endswith("Glossary") for ref in r))
+        self.assertFalse(any(c.text.startswith("References") and c.kind == "section" for c in clauses))
+
+
 class Cfr(unittest.TestCase):
     def test_lettered_items_below_roman(self):
         clauses, _, _ = ecfr.parse(common.OFFICIAL / "fda-cfr-21-314.81.xml")
