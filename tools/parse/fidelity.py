@@ -22,7 +22,8 @@ only in these narrow cases, each of which leaves the words of the regulation unc
   - footnote marks: small-font tokens in the PDF that do not follow a number (a following small number may be an
     exponent and is not tolerated), or a one- to three-digit number in the clause that the page prints small or
     starts a footnote line with;
-  - text set vertically, read one character at a time (runs of three or more single characters);
+  - text set vertically, read one character at a time (runs of three or more single characters), and headings in
+    small capitals read as split words ("s cope of g uideline") at a clause's start or end;
   - a line of five or more words printed on a third of the pages (a running title in the margin, or a reference
     such as "PIC/S GMP Guide Part I" repeated in an aide-memoire): kept in the reading, but a clause may lack it;
   - a footnote number or sign that only moved within the clause.
@@ -65,7 +66,7 @@ MARGIN = 1
 TOKEN = re.compile(r"\d+(?:[.,]\d+)*|[^\W\d_]+|[<>≤≥±%−]")
 LIGATURES = re.compile(r"ffi|ffl|ff|fi|fl")
 INDIC = re.compile(r"[ऀ-෿]")
-PAGE_NUMBER = re.compile(r"\s*(page\s*)?\d{1,4}(\s*(of|/)\s*\d{1,4})?\s*", re.I)
+PAGE_NUMBER = re.compile(r"\s*(page\s*)?(\d{1,4}|[ivxl]{1,6})(\s*(of|/)\s*\d{1,4})?\s*", re.I)
 TABLE_KINDS = ("table_row", "table_header")
 
 
@@ -226,12 +227,15 @@ def chain(blocks, free=None):
         skipped.append(skipped[-1] + (not f))
     best, best_score, start, score = (0, 0), -1.0, 0, 0.0
     for k, b in enumerate(blocks):
-        if k == 0 or score <= 0:
-            start, score = k, float(b.size)
-        else:
+        go_on = -1.0
+        if k:
             p = blocks[k - 1]
             gap = skipped[b.b] - skipped[p.b + p.size] if free else b.b - p.b - p.size
-            score += b.size - 0.5 * max(0, gap - (b.a - p.a - p.size) - CHAIN_SLACK)
+            go_on = score + b.size - 0.5 * max(0, gap - (b.a - p.a - p.size) - CHAIN_SLACK)
+        if go_on < b.size:                                  # starting afresh here scores better
+            start, score = k, float(b.size)
+        else:
+            score = go_on
         if score > best_score:
             best, best_score = (start, k + 1), score
     return blocks[best[0]:best[1]]
@@ -307,6 +311,18 @@ def stored_elsewhere(run, elsewhere, tables=()):
     return len(hit) == len(run)
 
 
+def letters(toks):
+    return unlig("".join(t for t in toks if not t.isdigit()))
+
+
+def spaced(clause_part, window, at):
+    """Clause tokens at the start or end of the clause that the page prints near that place with the same letters
+    split differently: headings in small capitals, which pdfminer reads as "s cope of g uideline"."""
+    want = letters(clause_part)
+    k = 3 * len(clause_part) + 4
+    return len(want) >= 4 and want in letters(window[max(at - k, 0):at + k])
+
+
 def compare_text(clause, window, small=frozenset(), starts=frozenset(), covered=None, elsewhere=frozenset(),
                  soft=frozenset(), tables=()):
     """Discrepancies of running text: (op, clause tokens, page tokens) for every difference in the clause's
@@ -344,6 +360,8 @@ def compare_text(clause, window, small=frozenset(), starts=frozenset(), covered=
         if op == "insert" and all(k in small for k in range(j1, j2)) \
                 and not (j1 > 0 and re.search(r"\d", stretch[j1 - 1])):
             continue                                        # footnote marks (not an exponent after a number)
+        if op == "delete" and (i1 == 0 or i2 == len(clause)) and spaced(a, window, lo if i1 == 0 else hi):
+            continue                                        # a heading at the clause's edge set in spaced capitals
         if op == "delete" and len(a) <= 2 and all(
                 t.isdigit() and len(t) <= 3 and (t in starts or any(stretch[k] == t for k in small)) for t in a):
             continue                                        # footnote marks the PDF prints small or as a line start
@@ -389,10 +407,13 @@ def held_nearby(run, page, clauses):
     (every token in a run of min(len, ELSEWHERE) tokens found there): repeated table rows ("N/A | No Q&A drafted")
     align to their first copy, and a clause read in another order leaves its text elsewhere on the page."""
     n = min(len(run), ELSEWHERE)
-    near = set()
+    near, text = set(), []
     for c in clauses:
         if c["page_start"] - 1 <= page <= c["page_end"] + 1:
             near |= grams(tokens(c["text"]), n)
+            text.append(letters(tokens(c["text"])))
+    if len(letters(run)) >= 8 and any(letters(run) in t for t in text):
+        return True                                         # the same letters split differently (small capitals)
     hit = set()
     for k in range(len(run) - n + 1):
         if tuple(run[k:k + n]) in near:
