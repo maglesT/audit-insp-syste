@@ -32,15 +32,27 @@ class Fidelity(unittest.TestCase):
         pages = [fidelity.words("intro"), fidelity.words("A B C"), fidelity.words("D E"), fidelity.words("far away")]
         rows = fidelity.compare([clause("1", "C D", pages=(2, 2)), clause("2", "far away", pages=(1, 1)),
                                  clause("t", "toc 3", kind="toc")], pages)
-        self.assertEqual([(r, s) for r, _, s, _ in rows], [("1", 1.0), ("2", 0.0)])      # page 4 is out of reach
+        self.assertEqual([(r[0], r[2]) for r in rows], [("1", 1.0), ("2", 0.0)])      # page 4 is out of reach
+        self.assertEqual(rows[1][4:], ("elsewhere", []))
+
+    def test_classify(self):
+        page, doc, raw = ["a", "b", "word"], ["a", "b", "word", "label"], ["a", "b", "word", "label", "pdfgap"]
+        self.assertEqual(fidelity.classify(["12", "th"], page, doc, raw), ("minor", []))
+        self.assertEqual(fidelity.classify(["word", "12"], page, doc, raw), ("order", []))
+        self.assertEqual(fidelity.classify(["label", "word"], page, doc, raw), ("elsewhere", []))
+        self.assertEqual(fidelity.classify(["pdfgap", "label"], page, doc, raw), ("engine", []))
+        self.assertEqual(fidelity.classify(["glued23", "word"], page, doc, raw), ("unconfirmed", ["glued23"]))
 
     def test_flags_and_explanations(self):
         doc = {"clause_min": 0.99, "source_min": 0.995, "sources": {
-            "a.pdf": fidelity.source_summary([("1", "clause", 1.0, 10), ("2", "clause", 0.5, 10)]),
-            "b.pdf": fidelity.source_summary([("1", "clause", 0.9, 10)])}}
+            "a.pdf": fidelity.source_summary([("1", "clause", 1.0, 10, "", []), ("2", "clause", 0.5, 10,
+                                                                                 "unconfirmed", ["x"])]),
+            "b.pdf": fidelity.source_summary([("1", "clause", 0.9, 10, "unconfirmed", ["y"]),
+                                              ("2", "clause", 0.9, 10, "order", [])])}}
         self.assertEqual(doc["sources"]["a.pdf"]["median"], 0.75)
         missing = fidelity.unexplained(doc, {})
-        self.assertEqual([(f, r) for f, r, _ in missing], [("a.pdf", "*"), ("a.pdf", "2"), ("b.pdf", "*"), ("b.pdf", "1")])
+        self.assertEqual([(f, r) for f, r, _ in missing], [("a.pdf", "*"), ("a.pdf", "2"), ("b.pdf", "*"),
+                                                            ("b.pdf", "1")])    # b 2 is explained by rule
         why = {("a.pdf", "*"): "figure text", ("b.pdf", "1"): "flowchart"}
         self.assertEqual([(f, r) for f, r, _ in fidelity.unexplained(doc, why)], [("b.pdf", "*")])
 
