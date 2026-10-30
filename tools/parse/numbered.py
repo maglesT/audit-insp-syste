@@ -32,6 +32,7 @@ DOT_LEADER = re.compile(r"(\.\s?){4,}\s*\d*\s*$|\s\d{1,3}\s*$")
 MAX_GAP = 3
 PAGE_END = re.compile(r"(\.\s?){4,}\s*\d*\s*$|\s{3,}\d{1,3}\s*$")   # a contents entry: leaders or a page number
 PREFIXED = re.compile(r"^((?:[A-H]|I{1,3}|IV)\s?\.?\s?)(\d{1,2}(?:\.\d{1,3}){0,3})\.?\s+([A-Z].*)$")
+MARGIN_NO = re.compile(r"^\d{1,4}\s{2,}(?=\S)")
 UNDO_LINES = 60         # stray numbers are taken back only if the old numbering resumes within this many lines
 DATE = re.compile(r"^(January|February|March|April|May|June|July|August|September|October|November|December)"
                   r"\s+\d{4}\b")
@@ -86,12 +87,20 @@ def parse(path, pages=None):
         clauses.append(cur)
 
     lines, dropped = [], 0
+    every = [ln.strip() for pg in pages for ln in pg.splitlines() if ln.strip()]
+    # Draft-style documents (EU Annex 17) print a line number in the margin of every line: strip it
+    margin_numbers = sum(1 for ln in every if MARGIN_NO.match(ln)) > 0.3 * max(1, len(every))
     for pno, (page, is_en) in enumerate(zip(pages, english), start=1):
         if not is_en:
             continue
         edges = {ln.strip() for ln in edge_lines(page)}
         for raw in page.splitlines():
             line = raw.strip()
+            if margin_numbers:
+                if re.fullmatch(r"\d{1,4}", line):
+                    dropped += len(line)
+                    continue
+                line = MARGIN_NO.sub("", line)
             if not line or not english_line(line):
                 continue
             masked = line_key(line)
@@ -210,6 +219,19 @@ def parse(path, pages=None):
                 as_paragraph = single_run and not follows
                 if len(cand) == 1 and not (as_heading or as_paragraph or restart):
                     ok = restart = False
+                if len(cand) == 1 and rest[:1].islower():
+                    ok = restart = False         # "1 mg, no further testing ..." is a wrapped line, not clause 1
+                if (not ok and len(cand) == 1 and prev == cand and upper and heading_like(rest) and cur is not None
+                        and cur["number"] == num and len(clauses) > 1):
+                    # "2. DRUG SUBSTANCE" after a list item "2. A near UV lamp ..." took number 2: the list item
+                    # goes back into the clause before it, and the heading takes the number
+                    first_line = NUM.match(cur["lines"][0]).group(2)
+                    if not (sum(ch.isupper() for ch in first_line) >= 0.8 * max(1, sum(ch.isalpha() for ch in first_line))):
+                        clauses.remove(cur)
+                        clauses[-1]["lines"] += cur["lines"]
+                        clauses[-1]["page_end"] = cur["page_end"]
+                        prev = parse_number(clauses[-1]["number"]) if clauses[-1]["number"] else None
+                        ok = True
                 if ok or restart:
                     if restart:   # numbering starts again: one of the runs is a table of contents
                         run += 1
