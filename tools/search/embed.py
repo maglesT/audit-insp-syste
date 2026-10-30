@@ -30,6 +30,9 @@ MODEL = {
 }
 
 
+POOLING = "cls-l2"                                     # what encode() does; part of the cache fingerprint
+
+
 def model_dir(model=MODEL):
     return MODELS / model["name"]
 
@@ -69,9 +72,13 @@ def fetch(model=MODEL, directory=None, opener=urllib.request.urlopen):
             continue
         url = f"https://huggingface.co/{model['repo']}/resolve/{model['revision']}/{name}"
         tmp = path.with_suffix(path.suffix + ".part")
-        with opener(url) as response, open(tmp, "wb") as f:
-            while block := response.read(1 << 20):
-                f.write(block)
+        try:
+            with opener(url, timeout=120) as response, open(tmp, "wb") as f:
+                while block := response.read(1 << 20):
+                    f.write(block)
+        except BaseException:
+            tmp.unlink(missing_ok=True)
+            raise
         if sha256(tmp) != want:
             tmp.unlink()
             raise SystemExit(f"{name}: downloaded file does not match the pinned sha256; refused")
@@ -102,7 +109,11 @@ class Embedder:
 
     @property
     def fingerprint(self):
-        return f"{self.model['name']}@{self.model['revision'][:12]}"
+        """Name, revision and a hash of everything that shapes a vector (files, prefix, truncation, pooling), so
+        cached vectors are reused only for exactly the same encoding."""
+        settings = json.dumps({k: self.model[k] for k in ("files", "query_prefix", "max_tokens")}, sort_keys=True)
+        digest = hashlib.sha256((settings + "|" + POOLING).encode()).hexdigest()[:12]
+        return f"{self.model['name']}@{self.model['revision'][:12]}-{digest}"
 
     def encode(self, texts, query=False, batch=32):
         import numpy as np

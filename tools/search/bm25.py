@@ -12,14 +12,28 @@ WORD = re.compile(r"[a-z0-9]+")
 STOP = set("""a an and are as at be been being but by can could do does for from had has have if in into is it its
 may might must no not of on or other our shall should so such than that the their them then there these they this
 those to under up upon was were what when where whether which while who whom will with within without would""".split())
-SUFFIXES = ("ations", "ation", "ions", "ion", "ating", "ated", "ates", "ings", "ing", "ies", "ied", "ed", "es", "s")
+# (suffix, shortest stem left): "-ation" and "-ate" need 5 letters left, so deviation/deviate -> "deviat" and
+# operate/operation/operating -> "operat", while validate/validation -> "valid"
+SUFFIXES = (("ations", 5), ("ation", 5), ("ions", 4), ("ion", 4), ("ating", 5), ("ated", 5), ("ates", 5),
+            ("ate", 5), ("ings", 4), ("ing", 4), ("ies", 3), ("ied", 3), ("ed", 4), ("es", 4), ("s", 4))
+KEEP = ("ss", "us", "is")                           # "process", "status", "analysis" are not plurals
 
 
 def stem(word):
-    for suffix in SUFFIXES:
-        if word.endswith(suffix) and len(word) - len(suffix) >= 4:
-            word = word[:-len(suffix)]
-            return word + "y" if suffix in ("ies", "ied") else word
+    """A light stem that joins a word with its common inflections: procedure/procedures, manufacture/
+    manufactured/manufacturing, control/controlled, validate/validated/validation, process/processes."""
+    if word.endswith(KEEP):
+        return word
+    stripped = False
+    for suffix, rest in SUFFIXES:
+        if word.endswith(suffix) and len(word) - len(suffix) >= rest:
+            word = word[:-len(suffix)] + ("y" if suffix in ("ies", "ied") else "")
+            stripped = True
+            break
+    if stripped and len(word) > 4 and word[-1] == word[-2] and word[-1] not in "aeiouys":
+        word = word[:-1]                            # controll -> control, submitt -> submit
+    if word.endswith("e") and len(word) > 4:
+        word = word[:-1]                            # procedure -> procedur, like procedures -> procedur
     return word
 
 

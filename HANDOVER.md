@@ -157,7 +157,8 @@ finished in about 4 minutes in total.
     below); it is kept as a reference measurement.
   - **Candidate search done (D32):** `tools/search/candidates.py query "<text>" --source <file>` shortlists the
     obligation clauses of other sources (BM25 by default). The embedding model (`python3 tools/search/embed.py
-    fetch`, pinned and sha256-checked) did not measurably help on the pilot evaluation, so it is off by default.
+    fetch`, pinned and sha256-checked) was not measurably better than BM25 on the pilot evaluation (it helps a
+    little only where the wording differs, as in ICH Q7 "internal audits"), so it is off by default.
     Re-measure it with `candidates.py evaluate` once Stage 2 has real cross-regulator pairings.
   - Mutation harness done at pilot scale (`tools/ai/mutate.py`, PRs #22, #24).
   - Still to do in S2: customer export with the option-A test.
