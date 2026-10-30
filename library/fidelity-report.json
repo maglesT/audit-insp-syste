@@ -1,0 +1,7823 @@
+{
+ "engine": "pdfminer.six via pdfplumber",
+ "clause_min": 0.99,
+ "source_min": 0.995,
+ "sources": {
+  "ema-hbel-guideline.pdf": {
+   "clauses": 26,
+   "median": 1.0,
+   "min": 0.9943,
+   "flagged": []
+  },
+  "ema-hbel-qa-cross-contamination.pdf": {
+   "clauses": 14,
+   "median": 1.0,
+   "min": 1.0,
+   "flagged": []
+  },
+  "ema-manufacture-finished-dosage-form.pdf": {
+   "clauses": 32,
+   "median": 1.0,
+   "min": 1.0,
+   "flagged": []
+  },
+  "ema-nitrosamines-qa-mah-rev23-2025.pdf": {
+   "clauses": 61,
+   "median": 1.0,
+   "min": 0.9231,
+   "flagged": [
+    {
+     "ref": "Table 1 0",
+     "kind": "table_row",
+     "share": 0.9512,
+     "words": 41
+    },
+    {
+     "ref": "Table 1 1",
+     "kind": "table_row",
+     "share": 0.9592,
+     "words": 49
+    },
+    {
+     "ref": "Table 1 2",
+     "kind": "table_row",
+     "share": 0.9565,
+     "words": 23
+    },
+    {
+     "ref": "Table 1 3",
+     "kind": "table_row",
+     "share": 0.9667,
+     "words": 30
+    },
+    {
+     "ref": "Table 1 4",
+     "kind": "table_row",
+     "share": 0.9545,
+     "words": 22
+    },
+    {
+     "ref": "Table 1 4*",
+     "kind": "table_row",
+     "share": 0.9455,
+     "words": 55
+    },
+    {
+     "ref": "Table 1 6",
+     "kind": "table_row",
+     "share": 0.9615,
+     "words": 52
+    },
+    {
+     "ref": "Table 1 7",
+     "kind": "table_row",
+     "share": 0.9355,
+     "words": 31
+    },
+    {
+     "ref": "Table 1 8",
+     "kind": "table_row",
+     "share": 0.9787,
+     "words": 47
+    },
+    {
+     "ref": "Table 1 9",
+     "kind": "table_row",
+     "share": 0.9859,
+     "words": 71
+    },
+    {
+     "ref": "Table 1 10",
+     "kind": "table_row",
+     "share": 0.9895,
+     "words": 95
+    },
+    {
+     "ref": "Table 1 11",
+     "kind": "table_row",
+     "share": 0.9231,
+     "words": 26
+    },
+    {
+     "ref": "Table 1 12",
+     "kind": "table_row",
+     "share": 0.9688,
+     "words": 32
+    },
+    {
+     "ref": "Table 1 13",
+     "kind": "table_row",
+     "share": 0.9231,
+     "words": 26
+    },
+    {
+     "ref": "Table 1 14",
+     "kind": "table_row",
+     "share": 0.9608,
+     "words": 51
+    },
+    {
+     "ref": "Table 2 15",
+     "kind": "table_row",
+     "share": 0.9231,
+     "words": 26
+    },
+    {
+     "ref": "Table 2 16",
+     "kind": "table_row",
+     "share": 0.9882,
+     "words": 85
+    },
+    {
+     "ref": "Table 2 17",
+     "kind": "table_row",
+     "share": 0.97,
+     "words": 100
+    },
+    {
+     "ref": "Table 2 18",
+     "kind": "table_row",
+     "share": 0.973,
+     "words": 37
+    },
+    {
+     "ref": "Table 2 19",
+     "kind": "table_row",
+     "share": 0.9778,
+     "words": 45
+    },
+    {
+     "ref": "Table 2 20",
+     "kind": "table_row",
+     "share": 0.9787,
+     "words": 47
+    },
+    {
+     "ref": "Table 2 21",
+     "kind": "table_row",
+     "share": 0.975,
+     "words": 80
+    },
+    {
+     "ref": "Table 2 22",
+     "kind": "table_row",
+     "share": 0.9821,
+     "words": 56
+    },
+    {
+     "ref": "Table 2 23",
+     "kind": "table_row",
+     "share": 0.9565,
+     "words": 23
+    }
+   ]
+  },
+  "ema-process-validation-finished-products.pdf": {
+   "clauses": 30,
+   "median": 1.0,
+   "min": 0.9957,
+   "flagged": []
+  },
+  "ema-qa-microbial-contamination-nonsterile.pdf": {
+   "clauses": 3,
+   "median": 1.0,
+   "min": 1.0,
+   "flagged": []
+  },
+  "ema-qa-wfi-non-distillation.pdf": {
+   "clauses": 21,
+   "median": 1.0,
+   "min": 1.0,
+   "flagged": []
+  },
+  "ema-sterilisation-guideline.pdf": {
+   "clauses": 58,
+   "median": 1.0,
+   "min": 0.7143,
+   "flagged": [
+    {
+     "ref": "4.1.1",
+     "kind": "clause",
+     "share": 0.9847,
+     "words": 1044
+    },
+    {
+     "ref": "Table 5 Parameter",
+     "kind": "table_row",
+     "share": 0.7143,
+     "words": 7
+    },
+    {
+     "ref": "Table 5 Filter retention capacity",
+     "kind": "table_row",
+     "share": 0.9048,
+     "words": 21
+    }
+   ]
+  },
+  "ema-water-quality-guideline.pdf": {
+   "clauses": 66,
+   "median": 1.0,
+   "min": 0.8571,
+   "flagged": [
+    {
+     "ref": "Table 7 Cleaning/Rinsing of Equipment\u2026",
+     "kind": "table_row",
+     "share": 0.8571,
+     "words": 14
+    }
+   ]
+  },
+  "eu-2014-03_chapter_2.pdf": {
+   "clauses": 25,
+   "median": 1.0,
+   "min": 0.9918,
+   "flagged": []
+  },
+  "eu-2014-08_gmp_chap8.pdf": {
+   "clauses": 33,
+   "median": 1.0,
+   "min": 1.0,
+   "flagged": []
+  },
+  "eu-2014-08_gmp_part1.pdf": {
+   "clauses": 439,
+   "median": 1.0,
+   "min": 1.0,
+   "flagged": []
+  },
+  "eu-2014-11_vol4_chapter_6.pdf": {
+   "clauses": 43,
+   "median": 1.0,
+   "min": 1.0,
+   "flagged": []
+  },
+  "eu-2015-10_annex15.pdf": {
+   "clauses": 118,
+   "median": 1.0,
+   "min": 1.0,
+   "flagged": []
+  },
+  "eu-2015-c95-01-gdp-active-substances.pdf": {
+   "clauses": 62,
+   "median": 1.0,
+   "min": 1.0,
+   "flagged": []
+  },
+  "eu-2015-c95-02-excipients-risk-assessment.pdf": {
+   "clauses": 19,
+   "median": 1.0,
+   "min": 1.0,
+   "flagged": []
+  },
+  "eu-2018_annex17_en.pdf": {
+   "clauses": 37,
+   "median": 1.0,
+   "min": 0.9808,
+   "flagged": [
+    {
+     "ref": "3.6",
+     "kind": "clause",
+     "share": 0.9808,
+     "words": 52
+    }
+   ]
+  },
+  "eu-20220825_gmp-an1_en_0.pdf": {
+   "clauses": 335,
+   "median": 1.0,
+   "min": 0.6508,
+   "flagged": [
+    {
+     "ref": "_unnumbered:1",
+     "kind": "unnumbered",
+     "share": 0.6508,
+     "words": 63
+    },
+    {
+     "ref": "Annex 1 8.59",
+     "kind": "clause",
+     "share": 0.9846,
+     "words": 65
+    },
+    {
+     "ref": "Annex 1 8.68",
+     "kind": "clause",
+     "share": 0.9683,
+     "words": 63
+    },
+    {
+     "ref": "Table 2 Grade",
+     "kind": "table_row",
+     "share": 0.9643,
+     "words": 28
+    },
+    {
+     "ref": "Table 6 Grade",
+     "kind": "table_row",
+     "share": 0.9286,
+     "words": 28
+    },
+    {
+     "ref": "Table 7 Grade",
+     "kind": "table_row",
+     "share": 0.9375,
+     "words": 32
+    }
+   ]
+  },
+  "eu-annex11_01-2011_en.pdf": {
+   "clauses": 40,
+   "median": 1.0,
+   "min": 1.0,
+   "flagged": []
+  },
+  "eu-annex19-2026-c2026-4135.pdf": {
+   "clauses": 51,
+   "median": 1.0,
+   "min": 1.0,
+   "flagged": []
+  },
+  "eu-annex21-importation.pdf": {
+   "clauses": 30,
+   "median": 1.0,
+   "min": 1.0,
+   "flagged": []
+  },
+  "eu-anx08_en.pdf": {
+   "clauses": 7,
+   "median": 1.0,
+   "min": 0.99,
+   "flagged": []
+  },
+  "eu-anx09_en.pdf": {
+   "clauses": 11,
+   "median": 1.0,
+   "min": 1.0,
+   "flagged": []
+  },
+  "eu-cap9_en.pdf": {
+   "clauses": 5,
+   "median": 1.0,
+   "min": 1.0,
+   "flagged": []
+  },
+  "eu-chapter4_01-2011_en.pdf": {
+   "clauses": 35,
+   "median": 1.0,
+   "min": 1.0,
+   "flagged": []
+  },
+  "eu-chapter_3.pdf": {
+   "clauses": 46,
+   "median": 1.0,
+   "min": 0.9971,
+   "flagged": []
+  },
+  "eu-chapter_5.pdf": {
+   "clauses": 74,
+   "median": 1.0,
+   "min": 1.0,
+   "flagged": []
+  },
+  "eu-directive-2017-1572-gmp.pdf": {
+   "clauses": 67,
+   "median": 1.0,
+   "min": 1.0,
+   "flagged": []
+  },
+  "eu-p3-gmp-mah-reflection-paper.pdf": {
+   "clauses": 16,
+   "median": 1.0,
+   "min": 1.0,
+   "flagged": []
+  },
+  "eu-p3-site-master-file.pdf": {
+   "clauses": 39,
+   "median": 1.0,
+   "min": 1.0,
+   "flagged": []
+  },
+  "eu-regulation-1252-2014-gmp-active-substances.pdf": {
+   "clauses": 99,
+   "median": 1.0,
+   "min": 1.0,
+   "flagged": []
+  },
+  "eu-v4_an16_201510_en.pdf": {
+   "clauses": 74,
+   "median": 1.0,
+   "min": 1.0,
+   "flagged": []
+  },
+  "eu-vol4-chap1_2013-01_en.pdf": {
+   "clauses": 15,
+   "median": 1.0,
+   "min": 1.0,
+   "flagged": []
+  },
+  "eu-vol4-chap7_2012-06_en.pdf": {
+   "clauses": 19,
+   "median": 1.0,
+   "min": 1.0,
+   "flagged": []
+  },
+  "eu-written-confirmation-template-2013.pdf": {
+   "clauses": 13,
+   "median": 1.0,
+   "min": 0.48,
+   "flagged": [
+    {
+     "ref": "2",
+     "kind": "clause",
+     "share": 0.939,
+     "words": 344
+    },
+    {
+     "ref": "Table 1 D a t e o f p u b l i c a t i o n :",
+     "kind": "table_row",
+     "share": 0.48,
+     "words": 25
+    },
+    {
+     "ref": "Table 1 S u p e r s e d e s :",
+     "kind": "table_row",
+     "share": 0.5667,
+     "words": 30
+    }
+   ]
+  },
+  "fda-aseptic-2004.pdf": {
+   "clauses": 80,
+   "median": 1.0,
+   "min": 0.8974,
+   "flagged": [
+    {
+     "ref": "Table 1 Clean Area Classification (0.5 um\u2026",
+     "kind": "table_row",
+     "share": 0.8974,
+     "words": 39
+    }
+   ]
+  },
+  "fda-cp-7346-832-preapproval-inspections.pdf": {
+   "clauses": 75,
+   "median": 1.0,
+   "min": 0.9842,
+   "flagged": [
+    {
+     "ref": "Table 4 Manufacturing and control of finished\u2026 #3",
+     "kind": "table_row",
+     "share": 0.9842,
+     "words": 380
+    }
+   ]
+  },
+  "fda-cp-7356-002-drug-manufacturing-inspections.pdf": {
+   "clauses": 60,
+   "median": 1.0,
+   "min": 0.9669,
+   "flagged": [
+    {
+     "ref": "Part II 3.A",
+     "kind": "clause",
+     "share": 0.9688,
+     "words": 864
+    },
+    {
+     "ref": "Part VI 1",
+     "kind": "clause",
+     "share": 0.9669,
+     "words": 604
+    },
+    {
+     "ref": "Attachment B",
+     "kind": "clause",
+     "share": 0.9722,
+     "words": 468
+    }
+   ]
+  },
+  "fda-cp-7356-002a-sterile-drug-process.pdf": {
+   "clauses": 54,
+   "median": 1.0,
+   "min": 0.9808,
+   "flagged": [
+    {
+     "ref": "Part II 2.2.C",
+     "kind": "clause",
+     "share": 0.9808,
+     "words": 52
+    },
+    {
+     "ref": "Part III 3.1",
+     "kind": "clause",
+     "share": 0.9869,
+     "words": 305
+    },
+    {
+     "ref": "Part III 3.3",
+     "kind": "clause",
+     "share": 0.9883,
+     "words": 857
+    },
+    {
+     "ref": "Part III 3.5",
+     "kind": "clause",
+     "share": 0.9857,
+     "words": 561
+    },
+    {
+     "ref": "Part III 3.6.A",
+     "kind": "clause",
+     "share": 0.9889,
+     "words": 451
+    }
+   ]
+  },
+  "fda-cp-7356-002f-api.pdf": {
+   "clauses": 35,
+   "median": 1.0,
+   "min": 0.983,
+   "flagged": [
+    {
+     "ref": "_unnumbered:1",
+     "kind": "unnumbered",
+     "share": 0.983,
+     "words": 352
+    },
+    {
+     "ref": "Part II 2.F",
+     "kind": "clause",
+     "share": 0.9862,
+     "words": 290
+    },
+    {
+     "ref": "Part III 1.B",
+     "kind": "clause",
+     "share": 0.9887,
+     "words": 2826
+    }
+   ]
+  },
+  "fda-cp-7356-021-dqrs-field-alerts.pdf": {
+   "clauses": 26,
+   "median": 1.0,
+   "min": 0.9969,
+   "flagged": []
+  },
+  "fda-cp-7356-843-postapproval-inspections.pdf": {
+   "clauses": 44,
+   "median": 1.0,
+   "min": 0.9767,
+   "flagged": [
+    {
+     "ref": "Part II 3.E",
+     "kind": "clause",
+     "share": 0.9767,
+     "words": 86
+    }
+   ]
+  },
+  "fda-data-integrity-2018.pdf": {
+   "clauses": 29,
+   "median": 1.0,
+   "min": 0.9767,
+   "flagged": [
+    {
+     "ref": "_unnumbered:2",
+     "kind": "unnumbered",
+     "share": 0.9767,
+     "words": 86
+    }
+   ]
+  },
+  "fda-guidance-analytical-procedures-validation-2015.pdf": {
+   "clauses": 32,
+   "median": 1.0,
+   "min": 0.9889,
+   "flagged": [
+    {
+     "ref": "_unnumbered:2",
+     "kind": "unnumbered",
+     "share": 0.9889,
+     "words": 90
+    }
+   ]
+  },
+  "fda-guidance-anda-stability-2013.pdf": {
+   "clauses": 5,
+   "median": 1.0,
+   "min": 0.9905,
+   "flagged": []
+  },
+  "fda-guidance-benzene-carbomers-2023.pdf": {
+   "clauses": 10,
+   "median": 1.0,
+   "min": 0.9677,
+   "flagged": [
+    {
+     "ref": "_unnumbered:2",
+     "kind": "unnumbered",
+     "share": 0.9765,
+     "words": 85
+    },
+    {
+     "ref": "Table 1 Modified-Release Solid Oral Dosage Forms",
+     "kind": "table_row",
+     "share": 0.9677,
+     "words": 31
+    }
+   ]
+  },
+  "fda-guidance-cci-in-lieu-of-sterility-2008.pdf": {
+   "clauses": 9,
+   "median": 1.0,
+   "min": 1.0,
+   "flagged": []
+  },
+  "fda-guidance-changes-approved-nda-anda-2004.pdf": {
+   "clauses": 74,
+   "median": 1.0,
+   "min": 0.9845,
+   "flagged": [
+    {
+     "ref": "_unnumbered:2",
+     "kind": "unnumbered",
+     "share": 0.9883,
+     "words": 171
+    },
+    {
+     "ref": "IX.C.2",
+     "kind": "clause",
+     "share": 0.9845,
+     "words": 129
+    }
+   ]
+  },
+  "fda-guidance-container-closure-systems-1999.pdf": {
+   "clauses": 86,
+   "median": 1.0,
+   "min": 0.9825,
+   "flagged": [
+    {
+     "ref": "Table 3 Quality Control",
+     "kind": "table_row",
+     "share": 0.9825,
+     "words": 57
+    },
+    {
+     "ref": "Table 4 Quality Control",
+     "kind": "table_row",
+     "share": 0.9877,
+     "words": 81
+    },
+    {
+     "ref": "Table 6 Quality Control",
+     "kind": "table_row",
+     "share": 0.9828,
+     "words": 58
+    }
+   ]
+  },
+  "fda-guidance-deg-eg-high-risk-components-2023.pdf": {
+   "clauses": 6,
+   "median": 1.0,
+   "min": 1.0,
+   "flagged": []
+  },
+  "fda-guidance-delaying-denying-inspection-2024.pdf": {
+   "clauses": 15,
+   "median": 1.0,
+   "min": 0.9965,
+   "flagged": []
+  },
+  "fda-guidance-dissolution-mechanical-calibration-2010.pdf": {
+   "clauses": 5,
+   "median": 1.0,
+   "min": 0.9907,
+   "flagged": []
+  },
+  "fda-guidance-elemental-impurities-2018.pdf": {
+   "clauses": 15,
+   "median": 1.0,
+   "min": 0.9877,
+   "flagged": [
+    {
+     "ref": "_unnumbered:2",
+     "kind": "unnumbered",
+     "share": 0.9878,
+     "words": 82
+    },
+    {
+     "ref": "I",
+     "kind": "clause",
+     "share": 0.9877,
+     "words": 487
+    }
+   ]
+  },
+  "fda-guidance-field-alert-report-qa-2021.pdf": {
+   "clauses": 16,
+   "median": 1.0,
+   "min": 0.9877,
+   "flagged": [
+    {
+     "ref": "_unnumbered:2",
+     "kind": "unnumbered",
+     "share": 0.9877,
+     "words": 81
+    }
+   ]
+  },
+  "fda-guidance-melamine-components-2009.pdf": {
+   "clauses": 6,
+   "median": 1.0,
+   "min": 0.9902,
+   "flagged": []
+  },
+  "fda-guidance-methanol-testing-alcohol-2023.pdf": {
+   "clauses": 7,
+   "median": 1.0,
+   "min": 0.9923,
+   "flagged": []
+  },
+  "fda-guidance-nitrosamine-control-2024.pdf": {
+   "clauses": 58,
+   "median": 1.0,
+   "min": 0.6667,
+   "flagged": [
+    {
+     "ref": "II",
+     "kind": "clause",
+     "share": 0.9872,
+     "words": 469
+    },
+    {
+     "ref": "III.A",
+     "kind": "clause",
+     "share": 0.9821,
+     "words": 390
+    },
+    {
+     "ref": "III.A.2",
+     "kind": "clause",
+     "share": 0.98,
+     "words": 100
+    },
+    {
+     "ref": "III.B.1",
+     "kind": "clause",
+     "share": 0.978,
+     "words": 182
+    },
+    {
+     "ref": "III.D",
+     "kind": "clause",
+     "share": 0.9882,
+     "words": 169
+    },
+    {
+     "ref": "Table 2 \ud835\udc5b\ud835\udc5b\ud835\udc56\ud835\udc56=2 \ud835\udc4b\ud835\udc4b\ud835\udc4b\ud835\udc4b",
+     "kind": "table_row",
+     "share": 0.6667,
+     "words": 3
+    },
+    {
+     "ref": "Table 2 \u2211 \ud835\udc34\ud835\udc34\ud835\udc34\ud835\udc34\ud835\udc34\ud835\udc34 \u2217 100% \u2264 100%",
+     "kind": "table_row",
+     "share": 0.6667,
+     "words": 3
+    }
+   ]
+  },
+  "fda-guidance-nitrosamine-ndsri-ai-limits-2023.pdf": {
+   "clauses": 52,
+   "median": 1.0,
+   "min": 0.9231,
+   "flagged": [
+    {
+     "ref": "II",
+     "kind": "clause",
+     "share": 0.9863,
+     "words": 293
+    },
+    {
+     "ref": "Table 2 row 1",
+     "kind": "table_row",
+     "share": 0.9231,
+     "words": 13
+    }
+   ]
+  },
+  "fda-guidance-npbl-cross-contamination-2013.pdf": {
+   "clauses": 9,
+   "median": 1.0,
+   "min": 0.9818,
+   "flagged": [
+    {
+     "ref": "_unnumbered:2",
+     "kind": "unnumbered",
+     "share": 0.9818,
+     "words": 110
+    }
+   ]
+  },
+  "fda-guidance-part11-scope-application-2003.pdf": {
+   "clauses": 16,
+   "median": 1.0,
+   "min": 0.981,
+   "flagged": [
+    {
+     "ref": "III.C.2",
+     "kind": "clause",
+     "share": 0.981,
+     "words": 210
+    }
+   ]
+  },
+  "fda-guidance-product-recalls-2020.pdf": {
+   "clauses": 6,
+   "median": 1.0,
+   "min": 0.9787,
+   "flagged": [
+    {
+     "ref": "II",
+     "kind": "clause",
+     "share": 0.9787,
+     "words": 2204
+    }
+   ]
+  },
+  "fda-guidance-pyrogen-endotoxins-qa-2026.pdf": {
+   "clauses": 19,
+   "median": 1.0,
+   "min": 0.8571,
+   "flagged": [
+    {
+     "ref": "_unnumbered:2",
+     "kind": "unnumbered",
+     "share": 0.8571,
+     "words": 14
+    },
+    {
+     "ref": "III.1",
+     "kind": "clause",
+     "share": 0.9877,
+     "words": 325
+    }
+   ]
+  },
+  "fda-guidance-quality-agreements-2016.pdf": {
+   "clauses": 21,
+   "median": 1.0,
+   "min": 0.9881,
+   "flagged": [
+    {
+     "ref": "_unnumbered:2",
+     "kind": "unnumbered",
+     "share": 0.9881,
+     "words": 84
+    }
+   ]
+  },
+  "fda-guidance-quality-systems-approach-2006.pdf": {
+   "clauses": 67,
+   "median": 1.0,
+   "min": 0.3333,
+   "flagged": [
+    {
+     "ref": "IV.C.1",
+     "kind": "clause",
+     "share": 0.9883,
+     "words": 343
+    },
+    {
+     "ref": "Table 1 row 1",
+     "kind": "table_row",
+     "share": 0.9231,
+     "words": 13
+    },
+    {
+     "ref": "Table 2 row 1",
+     "kind": "table_row",
+     "share": 0.5833,
+     "words": 12
+    },
+    {
+     "ref": "Table 2 1. General Arrangements",
+     "kind": "table_row",
+     "share": 0.3333,
+     "words": 3
+    },
+    {
+     "ref": "Table 2 2. Develop Personnel",
+     "kind": "table_row",
+     "share": 0.7222,
+     "words": 18
+    },
+    {
+     "ref": "Table 2 3. Facilities and Equipment",
+     "kind": "table_row",
+     "share": 0.6829,
+     "words": 41
+    },
+    {
+     "ref": "Table 4 Quality System Element",
+     "kind": "table_row",
+     "share": 0.8,
+     "words": 5
+    },
+    {
+     "ref": "Table 5 1. Analyze Data for Trends",
+     "kind": "table_row",
+     "share": 0.9,
+     "words": 10
+    }
+   ]
+  },
+  "fda-guidance-remote-regulatory-assessments-2025.pdf": {
+   "clauses": 20,
+   "median": 1.0,
+   "min": 0.9793,
+   "flagged": [
+    {
+     "ref": "III.A.6",
+     "kind": "clause",
+     "share": 0.9793,
+     "words": 193
+    }
+   ]
+  },
+  "fda-guidance-sterilization-validation-submission-1994.pdf": {
+   "clauses": 91,
+   "median": 1.0,
+   "min": 0.95,
+   "flagged": [
+    {
+     "ref": "_unnumbered:2",
+     "kind": "unnumbered",
+     "share": 0.95,
+     "words": 20
+    },
+    {
+     "ref": "I.A",
+     "kind": "clause",
+     "share": 0.9713,
+     "words": 349
+    },
+    {
+     "ref": "II.A.3",
+     "kind": "clause",
+     "share": 0.9825,
+     "words": 57
+    }
+   ]
+  },
+  "fda-guidance-voluntary-recalls-initiation-2022.pdf": {
+   "clauses": 10,
+   "median": 1.0,
+   "min": 0.9877,
+   "flagged": [
+    {
+     "ref": "_unnumbered:2",
+     "kind": "unnumbered",
+     "share": 0.9877,
+     "words": 81
+    }
+   ]
+  },
+  "fda-oos-2022.pdf": {
+   "clauses": 24,
+   "median": 1.0,
+   "min": 0.9956,
+   "flagged": []
+  },
+  "fda-process-validation-2011.pdf": {
+   "clauses": 23,
+   "median": 1.0,
+   "min": 0.9808,
+   "flagged": [
+    {
+     "ref": "_unnumbered:2",
+     "kind": "unnumbered",
+     "share": 0.9808,
+     "words": 104
+    }
+   ]
+  },
+  "ich-m7-r2.pdf": {
+   "clauses": 109,
+   "median": 1.0,
+   "min": 0.8,
+   "flagged": [
+    {
+     "ref": "Table 4 header",
+     "kind": "table_header",
+     "share": 0.8,
+     "words": 15
+    },
+    {
+     "ref": "Table 5 header",
+     "kind": "table_header",
+     "share": 0.8,
+     "words": 15
+    },
+    {
+     "ref": "Table 7 Scenario 1",
+     "kind": "table_row",
+     "share": 0.8333,
+     "words": 6
+    },
+    {
+     "ref": "Table 7 Treatment duration of >1-10 years\u2026",
+     "kind": "table_row",
+     "share": 0.9855,
+     "words": 69
+    },
+    {
+     "ref": "Table 7 Treatment duration of >10 years to\u2026",
+     "kind": "table_row",
+     "share": 0.9841,
+     "words": 63
+    },
+    {
+     "ref": "Table 9 1-Chloro-4- nitrobenzene",
+     "kind": "table_row",
+     "share": 0.9091,
+     "words": 11
+    }
+   ]
+  },
+  "ich-q10.pdf": {
+   "clauses": 58,
+   "median": 1.0,
+   "min": 0.5,
+   "flagged": [
+    {
+     "ref": "Table 3 header",
+     "kind": "table_header",
+     "share": 0.5,
+     "words": 8
+    },
+    {
+     "ref": "Table 4 header",
+     "kind": "table_header",
+     "share": 0.5,
+     "words": 8
+    },
+    {
+     "ref": "Table 5 header",
+     "kind": "table_header",
+     "share": 0.875,
+     "words": 8
+    },
+    {
+     "ref": "Table 6 header",
+     "kind": "table_header",
+     "share": 0.875,
+     "words": 8
+    }
+   ]
+  },
+  "ich-q11-qa-pmda.pdf": {
+   "clauses": 68,
+   "median": 1.0,
+   "min": 1.0,
+   "flagged": []
+  },
+  "ich-q12.pdf": {
+   "clauses": 137,
+   "median": 1.0,
+   "min": 0.9643,
+   "flagged": [
+    {
+     "ref": "1.2",
+     "kind": "clause",
+     "share": 0.9643,
+     "words": 56
+    }
+   ]
+  },
+  "ich-q1a-r2.pdf": {
+   "clauses": 73,
+   "median": 1.0,
+   "min": 1.0,
+   "flagged": []
+  },
+  "ich-q1b.pdf": {
+   "clauses": 11,
+   "median": 1.0,
+   "min": 1.0,
+   "flagged": []
+  },
+  "ich-q1d.pdf": {
+   "clauses": 46,
+   "median": 1.0,
+   "min": 0.5882,
+   "flagged": [
+    {
+     "ref": "Table 4 header #2",
+     "kind": "table_header",
+     "share": 0.5882,
+     "words": 17
+    },
+    {
+     "ref": "Table 5 header #2",
+     "kind": "table_header",
+     "share": 0.5882,
+     "words": 17
+    }
+   ]
+  },
+  "ich-q1e.pdf": {
+   "clauses": 68,
+   "median": 1.0,
+   "min": 0.774,
+   "flagged": [
+    {
+     "ref": "Appendix A #2",
+     "kind": "section",
+     "share": 0.9277,
+     "words": 346
+    },
+    {
+     "ref": "Appendix B 8",
+     "kind": "clause",
+     "share": 0.774,
+     "words": 146
+    }
+   ]
+  },
+  "ich-q2-r2.pdf": {
+   "clauses": 202,
+   "median": 1.0,
+   "min": 0.7941,
+   "flagged": [
+    {
+     "ref": "Table 2 Measured Quality Attribute Analytical\u2026",
+     "kind": "table_row",
+     "share": 0.7941,
+     "words": 34
+    },
+    {
+     "ref": "Table 4 Technique",
+     "kind": "table_row",
+     "share": 0.9615,
+     "words": 26
+    },
+    {
+     "ref": "Table 4 Technique #2",
+     "kind": "table_row",
+     "share": 0.9615,
+     "words": 26
+    },
+    {
+     "ref": "Table 5 Specificity/ Selectivity",
+     "kind": "table_row",
+     "share": 0.9756,
+     "words": 41
+    },
+    {
+     "ref": "Table 7 Technique",
+     "kind": "table_row",
+     "share": 0.8667,
+     "words": 15
+    }
+   ]
+  },
+  "ich-q3a-r2.pdf": {
+   "clauses": 33,
+   "median": 1.0,
+   "min": 0.9,
+   "flagged": [
+    {
+     "ref": "Table 3 Maximum Daily Dose 1",
+     "kind": "table_row",
+     "share": 0.9286,
+     "words": 14
+    },
+    {
+     "ref": "Table 4 0.1649",
+     "kind": "table_row",
+     "share": 0.9,
+     "words": 10
+    }
+   ]
+  },
+  "ich-q3b-r2.pdf": {
+   "clauses": 26,
+   "median": 1.0,
+   "min": 0.8889,
+   "flagged": [
+    {
+     "ref": "Glossary",
+     "kind": "section",
+     "share": 0.9385,
+     "words": 1171
+    },
+    {
+     "ref": "Table 3 0.550",
+     "kind": "table_row",
+     "share": 0.8889,
+     "words": 9
+    },
+    {
+     "ref": "Table 4 0.192",
+     "kind": "table_row",
+     "share": 0.8889,
+     "words": 9
+    }
+   ]
+  },
+  "ich-q3c-r9.pdf": {
+   "clauses": 68,
+   "median": 1.0,
+   "min": 0.9016,
+   "flagged": [
+    {
+     "ref": "Part I Appendix 1",
+     "kind": "section",
+     "share": 0.9398,
+     "words": 133
+    },
+    {
+     "ref": "Part I Appendix 1 2",
+     "kind": "clause",
+     "share": 0.9769,
+     "words": 173
+    },
+    {
+     "ref": "Part I Appendix 1 3",
+     "kind": "clause",
+     "share": 0.9771,
+     "words": 350
+    },
+    {
+     "ref": "Part I Appendix 1 5",
+     "kind": "clause",
+     "share": 0.9375,
+     "words": 80
+    },
+    {
+     "ref": "Part I Appendix 3",
+     "kind": "section",
+     "share": 0.9781,
+     "words": 1185
+    },
+    {
+     "ref": "Part II",
+     "kind": "section",
+     "share": 0.9016,
+     "words": 488
+    },
+    {
+     "ref": "Part II 7.2",
+     "kind": "clause",
+     "share": 0.9524,
+     "words": 105
+    },
+    {
+     "ref": "Part III",
+     "kind": "section",
+     "share": 0.9214,
+     "words": 560
+    },
+    {
+     "ref": "Part III 5.3",
+     "kind": "clause",
+     "share": 0.9706,
+     "words": 170
+    },
+    {
+     "ref": "Part IV #2",
+     "kind": "section",
+     "share": 0.9132,
+     "words": 1037
+    },
+    {
+     "ref": "Part V",
+     "kind": "section",
+     "share": 0.957,
+     "words": 791
+    },
+    {
+     "ref": "_unnumbered:3",
+     "kind": "unnumbered",
+     "share": 0.9602,
+     "words": 1532
+    }
+   ]
+  },
+  "ich-q3d-r2.pdf": {
+   "clauses": 381,
+   "median": 1.0,
+   "min": 0.9545,
+   "flagged": [
+    {
+     "ref": "_unnumbered:18",
+     "kind": "unnumbered",
+     "share": 0.9891,
+     "words": 1009
+    },
+    {
+     "ref": "Table 36 Element",
+     "kind": "table_row",
+     "share": 0.9762,
+     "words": 42
+    },
+    {
+     "ref": "Table 37 Element",
+     "kind": "table_row",
+     "share": 0.9545,
+     "words": 22
+    }
+   ]
+  },
+  "ich-q6a.pdf": {
+   "clauses": 35,
+   "median": 1.0,
+   "min": 1.0,
+   "flagged": []
+  },
+  "ich-q7-qa.pdf": {
+   "clauses": 206,
+   "median": 1.0,
+   "min": 0.9468,
+   "flagged": [
+    {
+     "ref": "Table 4 2.1",
+     "kind": "table_row",
+     "share": 0.971,
+     "words": 69
+    },
+    {
+     "ref": "Table 29 20.1",
+     "kind": "table_row",
+     "share": 0.9767,
+     "words": 86
+    },
+    {
+     "ref": "Table 30 row 1",
+     "kind": "table_row",
+     "share": 0.9468,
+     "words": 94
+    },
+    {
+     "ref": "Table 31 row 1",
+     "kind": "table_row",
+     "share": 0.9468,
+     "words": 94
+    }
+   ]
+  },
+  "ich-q7.pdf": {
+   "clauses": 446,
+   "median": 1.0,
+   "min": 1.0,
+   "flagged": []
+  },
+  "ich-q8-q9-q10-qa-r4.pdf": {
+   "clauses": 89,
+   "median": 1.0,
+   "min": 0.9828,
+   "flagged": [
+    {
+     "ref": "Table 7 6",
+     "kind": "table_row",
+     "share": 0.9828,
+     "words": 58
+    },
+    {
+     "ref": "Table 7 7",
+     "kind": "table_row",
+     "share": 0.9889,
+     "words": 90
+    },
+    {
+     "ref": "Table 8 4",
+     "kind": "table_row",
+     "share": 0.9891,
+     "words": 92
+    }
+   ]
+  },
+  "ich-q9r1.pdf": {
+   "clauses": 45,
+   "median": 1.0,
+   "min": 0.8889,
+   "flagged": [
+    {
+     "ref": "4",
+     "kind": "clause",
+     "share": 0.8889,
+     "words": 216
+    }
+   ]
+  },
+  "india-cdsco-circ-2024-03-risk-based-inspection.pdf": {
+   "clauses": 1314,
+   "median": 1.0,
+   "min": 0.7143,
+   "flagged": [
+    {
+     "ref": "12",
+     "kind": "clause",
+     "share": 0.9762,
+     "words": 42
+    },
+    {
+     "ref": "Table 9 17.16",
+     "kind": "table_row",
+     "share": 0.9677,
+     "words": 31
+    },
+    {
+     "ref": "Table 9 17.17",
+     "kind": "table_row",
+     "share": 0.9375,
+     "words": 16
+    },
+    {
+     "ref": "Table 10 17.2",
+     "kind": "table_row",
+     "share": 0.9355,
+     "words": 31
+    },
+    {
+     "ref": "Table 10 17.2 #4",
+     "kind": "table_row",
+     "share": 0.9524,
+     "words": 21
+    },
+    {
+     "ref": "Table 11 18.3",
+     "kind": "table_row",
+     "share": 0.9667,
+     "words": 30
+    },
+    {
+     "ref": "Table 11 18.6",
+     "kind": "table_row",
+     "share": 0.9412,
+     "words": 17
+    },
+    {
+     "ref": "Table 11 18.7",
+     "kind": "table_row",
+     "share": 0.9688,
+     "words": 32
+    },
+    {
+     "ref": "Table 12 19.8",
+     "kind": "table_row",
+     "share": 0.9857,
+     "words": 70
+    },
+    {
+     "ref": "Table 13 21.1 #2",
+     "kind": "table_row",
+     "share": 0.9615,
+     "words": 26
+    },
+    {
+     "ref": "Table 13 26.6",
+     "kind": "table_row",
+     "share": 0.9333,
+     "words": 15
+    },
+    {
+     "ref": "Table 15 27.10",
+     "kind": "table_row",
+     "share": 0.8947,
+     "words": 19
+    },
+    {
+     "ref": "Table 15 29.3",
+     "kind": "table_row",
+     "share": 0.9583,
+     "words": 24
+    },
+    {
+     "ref": "Table 25 54.1 #4",
+     "kind": "table_row",
+     "share": 0.9231,
+     "words": 13
+    },
+    {
+     "ref": "Table 25 54.2 #4",
+     "kind": "table_row",
+     "share": 0.9714,
+     "words": 35
+    },
+    {
+     "ref": "Table 26 56.1",
+     "kind": "table_row",
+     "share": 0.9231,
+     "words": 13
+    },
+    {
+     "ref": "Table 26 56.2",
+     "kind": "table_row",
+     "share": 0.9375,
+     "words": 16
+    },
+    {
+     "ref": "Table 26 56.3",
+     "kind": "table_row",
+     "share": 0.9375,
+     "words": 16
+    },
+    {
+     "ref": "Table 26 56.4",
+     "kind": "table_row",
+     "share": 0.9565,
+     "words": 23
+    },
+    {
+     "ref": "Table 26 57.1",
+     "kind": "table_row",
+     "share": 0.9375,
+     "words": 32
+    },
+    {
+     "ref": "Table 26 57.2",
+     "kind": "table_row",
+     "share": 0.9474,
+     "words": 19
+    },
+    {
+     "ref": "Table 26 57.3",
+     "kind": "table_row",
+     "share": 0.9524,
+     "words": 21
+    },
+    {
+     "ref": "Table 26 57.4",
+     "kind": "table_row",
+     "share": 0.9615,
+     "words": 26
+    },
+    {
+     "ref": "Table 26 57.5",
+     "kind": "table_row",
+     "share": 0.95,
+     "words": 20
+    },
+    {
+     "ref": "Table 29 1 Building 3.3",
+     "kind": "table_row",
+     "share": 0.9667,
+     "words": 30
+    },
+    {
+     "ref": "Table 29 4.3",
+     "kind": "table_row",
+     "share": 0.9868,
+     "words": 76
+    },
+    {
+     "ref": "Table 29 4.4",
+     "kind": "table_row",
+     "share": 0.9844,
+     "words": 64
+    },
+    {
+     "ref": "Table 29 1 Building 4.5",
+     "kind": "table_row",
+     "share": 0.9111,
+     "words": 45
+    },
+    {
+     "ref": "Table 29 4.6",
+     "kind": "table_row",
+     "share": 0.9872,
+     "words": 78
+    },
+    {
+     "ref": "Table 29 4.7",
+     "kind": "table_row",
+     "share": 0.9839,
+     "words": 62
+    },
+    {
+     "ref": "Table 29 4.8",
+     "kind": "table_row",
+     "share": 0.973,
+     "words": 37
+    },
+    {
+     "ref": "Table 29 1 Building 4.11",
+     "kind": "table_row",
+     "share": 0.9639,
+     "words": 83
+    },
+    {
+     "ref": "Table 29 1 Building 4.18",
+     "kind": "table_row",
+     "share": 0.9344,
+     "words": 61
+    },
+    {
+     "ref": "Table 29 4.19",
+     "kind": "table_row",
+     "share": 0.9583,
+     "words": 24
+    },
+    {
+     "ref": "Table 29 4.20",
+     "kind": "table_row",
+     "share": 0.9667,
+     "words": 30
+    },
+    {
+     "ref": "Table 29 4.21",
+     "kind": "table_row",
+     "share": 0.9744,
+     "words": 39
+    },
+    {
+     "ref": "Table 29 4.22",
+     "kind": "table_row",
+     "share": 0.963,
+     "words": 27
+    },
+    {
+     "ref": "Table 29 4.24",
+     "kind": "table_row",
+     "share": 0.9643,
+     "words": 28
+    },
+    {
+     "ref": "Table 29 4.28",
+     "kind": "table_row",
+     "share": 0.9565,
+     "words": 23
+    },
+    {
+     "ref": "Table 29 1 Building 4.31",
+     "kind": "table_row",
+     "share": 0.9091,
+     "words": 44
+    },
+    {
+     "ref": "Table 29 1 Building 6.7",
+     "kind": "table_row",
+     "share": 0.9762,
+     "words": 84
+    },
+    {
+     "ref": "Table 29 7.3",
+     "kind": "table_row",
+     "share": 0.9737,
+     "words": 38
+    },
+    {
+     "ref": "Table 29 7.4",
+     "kind": "table_row",
+     "share": 0.9697,
+     "words": 33
+    },
+    {
+     "ref": "Table 29 7.5",
+     "kind": "table_row",
+     "share": 0.9873,
+     "words": 79
+    },
+    {
+     "ref": "Table 29 8.1",
+     "kind": "table_row",
+     "share": 0.9565,
+     "words": 23
+    },
+    {
+     "ref": "Table 29 1 Building 8.3",
+     "kind": "table_row",
+     "share": 0.9808,
+     "words": 104
+    },
+    {
+     "ref": "Table 29 8.4",
+     "kind": "table_row",
+     "share": 0.9792,
+     "words": 48
+    },
+    {
+     "ref": "Table 29 8.6",
+     "kind": "table_row",
+     "share": 0.9767,
+     "words": 43
+    },
+    {
+     "ref": "Table 29 1 Building 8.12",
+     "kind": "table_row",
+     "share": 0.9394,
+     "words": 66
+    },
+    {
+     "ref": "Table 29 8.15",
+     "kind": "table_row",
+     "share": 0.9815,
+     "words": 54
+    },
+    {
+     "ref": "Table 29 8.16",
+     "kind": "table_row",
+     "share": 0.9815,
+     "words": 54
+    },
+    {
+     "ref": "Table 29 8.17",
+     "kind": "table_row",
+     "share": 0.9783,
+     "words": 46
+    },
+    {
+     "ref": "Table 29 8.20",
+     "kind": "table_row",
+     "share": 0.9608,
+     "words": 51
+    },
+    {
+     "ref": "Table 29 1 Building 8.22",
+     "kind": "table_row",
+     "share": 0.9302,
+     "words": 43
+    },
+    {
+     "ref": "Table 29 8.26",
+     "kind": "table_row",
+     "share": 0.9821,
+     "words": 56
+    },
+    {
+     "ref": "Table 29 8.27",
+     "kind": "table_row",
+     "share": 0.9722,
+     "words": 36
+    },
+    {
+     "ref": "Table 29 8.28",
+     "kind": "table_row",
+     "share": 0.95,
+     "words": 20
+    },
+    {
+     "ref": "Table 29 8.30",
+     "kind": "table_row",
+     "share": 0.9792,
+     "words": 48
+    },
+    {
+     "ref": "Table 29 8.31",
+     "kind": "table_row",
+     "share": 0.9821,
+     "words": 56
+    },
+    {
+     "ref": "Table 29 1 Building 8.33",
+     "kind": "table_row",
+     "share": 0.9412,
+     "words": 51
+    },
+    {
+     "ref": "Table 29 9.6",
+     "kind": "table_row",
+     "share": 0.9792,
+     "words": 48
+    },
+    {
+     "ref": "Table 29 9.9",
+     "kind": "table_row",
+     "share": 0.9767,
+     "words": 43
+    },
+    {
+     "ref": "Table 29 1 Building 9.10",
+     "kind": "table_row",
+     "share": 0.9889,
+     "words": 90
+    },
+    {
+     "ref": "Table 29 10.1",
+     "kind": "table_row",
+     "share": 0.9744,
+     "words": 39
+    },
+    {
+     "ref": "Table 29 10.2",
+     "kind": "table_row",
+     "share": 0.9787,
+     "words": 47
+    },
+    {
+     "ref": "Table 29 10.3",
+     "kind": "table_row",
+     "share": 0.9804,
+     "words": 51
+    },
+    {
+     "ref": "Table 29 10.4",
+     "kind": "table_row",
+     "share": 0.9714,
+     "words": 35
+    },
+    {
+     "ref": "Table 29 10.5",
+     "kind": "table_row",
+     "share": 0.9697,
+     "words": 33
+    },
+    {
+     "ref": "Table 29 1 Building 10.7",
+     "kind": "table_row",
+     "share": 0.9811,
+     "words": 53
+    },
+    {
+     "ref": "Table 29 10.8",
+     "kind": "table_row",
+     "share": 0.9667,
+     "words": 30
+    },
+    {
+     "ref": "Table 29 10.10",
+     "kind": "table_row",
+     "share": 0.975,
+     "words": 40
+    },
+    {
+     "ref": "Table 29 10.12",
+     "kind": "table_row",
+     "share": 0.9796,
+     "words": 49
+    },
+    {
+     "ref": "Table 29 11.2",
+     "kind": "table_row",
+     "share": 0.9677,
+     "words": 31
+    },
+    {
+     "ref": "Table 29 11.4",
+     "kind": "table_row",
+     "share": 0.9828,
+     "words": 58
+    },
+    {
+     "ref": "Table 29 11.5",
+     "kind": "table_row",
+     "share": 0.9583,
+     "words": 24
+    },
+    {
+     "ref": "Table 29 11.6",
+     "kind": "table_row",
+     "share": 0.9655,
+     "words": 29
+    },
+    {
+     "ref": "Table 29 11.7",
+     "kind": "table_row",
+     "share": 0.9767,
+     "words": 43
+    },
+    {
+     "ref": "Table 29 11.8",
+     "kind": "table_row",
+     "share": 0.9792,
+     "words": 48
+    },
+    {
+     "ref": "Table 29 1 Building 11.9",
+     "kind": "table_row",
+     "share": 0.9885,
+     "words": 87
+    },
+    {
+     "ref": "Table 29 11.10",
+     "kind": "table_row",
+     "share": 0.9861,
+     "words": 72
+    },
+    {
+     "ref": "Table 29 11.11",
+     "kind": "table_row",
+     "share": 0.96,
+     "words": 25
+    },
+    {
+     "ref": "Table 29 11.12",
+     "kind": "table_row",
+     "share": 0.9615,
+     "words": 26
+    },
+    {
+     "ref": "Table 29 11.13",
+     "kind": "table_row",
+     "share": 0.9697,
+     "words": 33
+    },
+    {
+     "ref": "Table 29 11.15",
+     "kind": "table_row",
+     "share": 0.9756,
+     "words": 41
+    },
+    {
+     "ref": "Table 29 11.16",
+     "kind": "table_row",
+     "share": 0.9412,
+     "words": 17
+    },
+    {
+     "ref": "Table 29 11.17",
+     "kind": "table_row",
+     "share": 0.9524,
+     "words": 21
+    },
+    {
+     "ref": "Table 29 11.18",
+     "kind": "table_row",
+     "share": 0.9655,
+     "words": 29
+    },
+    {
+     "ref": "Table 29 11.19",
+     "kind": "table_row",
+     "share": 0.9667,
+     "words": 30
+    },
+    {
+     "ref": "Table 29 11.20",
+     "kind": "table_row",
+     "share": 0.9667,
+     "words": 60
+    },
+    {
+     "ref": "Table 29 1 Building 12.1",
+     "kind": "table_row",
+     "share": 0.9714,
+     "words": 35
+    },
+    {
+     "ref": "Table 29 12.2",
+     "kind": "table_row",
+     "share": 0.9556,
+     "words": 45
+    },
+    {
+     "ref": "Table 29 12.3",
+     "kind": "table_row",
+     "share": 0.9706,
+     "words": 34
+    },
+    {
+     "ref": "Table 29 12.4",
+     "kind": "table_row",
+     "share": 0.9672,
+     "words": 61
+    },
+    {
+     "ref": "Table 29 12.5",
+     "kind": "table_row",
+     "share": 0.9333,
+     "words": 30
+    },
+    {
+     "ref": "Table 29 12.6",
+     "kind": "table_row",
+     "share": 0.9667,
+     "words": 30
+    },
+    {
+     "ref": "Table 29 12.7",
+     "kind": "table_row",
+     "share": 0.9615,
+     "words": 26
+    },
+    {
+     "ref": "Table 29 12.8",
+     "kind": "table_row",
+     "share": 0.9792,
+     "words": 96
+    },
+    {
+     "ref": "Table 29 12.9",
+     "kind": "table_row",
+     "share": 0.9697,
+     "words": 33
+    },
+    {
+     "ref": "Table 29 1 Building 12.10",
+     "kind": "table_row",
+     "share": 0.9634,
+     "words": 82
+    },
+    {
+     "ref": "Table 29 13.4",
+     "kind": "table_row",
+     "share": 0.9767,
+     "words": 43
+    },
+    {
+     "ref": "Table 29 13.5",
+     "kind": "table_row",
+     "share": 0.9767,
+     "words": 43
+    },
+    {
+     "ref": "Table 29 13.6",
+     "kind": "table_row",
+     "share": 0.9615,
+     "words": 26
+    },
+    {
+     "ref": "Table 29 13.7",
+     "kind": "table_row",
+     "share": 0.9722,
+     "words": 36
+    },
+    {
+     "ref": "Table 29 1 Building 13.8",
+     "kind": "table_row",
+     "share": 0.9348,
+     "words": 46
+    },
+    {
+     "ref": "Table 29 13.9",
+     "kind": "table_row",
+     "share": 0.9706,
+     "words": 34
+    },
+    {
+     "ref": "Table 29 14.1",
+     "kind": "table_row",
+     "share": 0.9846,
+     "words": 65
+    },
+    {
+     "ref": "Table 29 1 Building 14.6",
+     "kind": "table_row",
+     "share": 0.9737,
+     "words": 114
+    },
+    {
+     "ref": "Table 29 14.7",
+     "kind": "table_row",
+     "share": 0.9773,
+     "words": 44
+    },
+    {
+     "ref": "Table 29 1 Building 14.15",
+     "kind": "table_row",
+     "share": 0.974,
+     "words": 77
+    },
+    {
+     "ref": "Table 29 14.19",
+     "kind": "table_row",
+     "share": 0.9667,
+     "words": 30
+    },
+    {
+     "ref": "Table 29 14.20",
+     "kind": "table_row",
+     "share": 0.96,
+     "words": 25
+    },
+    {
+     "ref": "Table 29 1 Building 16.1",
+     "kind": "table_row",
+     "share": 0.9863,
+     "words": 73
+    },
+    {
+     "ref": "Table 29 16.10",
+     "kind": "table_row",
+     "share": 0.9688,
+     "words": 32
+    },
+    {
+     "ref": "Table 29 16.12",
+     "kind": "table_row",
+     "share": 0.9706,
+     "words": 34
+    },
+    {
+     "ref": "Table 29 1 Building 16.13",
+     "kind": "table_row",
+     "share": 0.88,
+     "words": 25
+    },
+    {
+     "ref": "Table 29 16.14",
+     "kind": "table_row",
+     "share": 0.9524,
+     "words": 21
+    },
+    {
+     "ref": "Table 29 16.15",
+     "kind": "table_row",
+     "share": 0.9756,
+     "words": 41
+    },
+    {
+     "ref": "Table 29 16.16",
+     "kind": "table_row",
+     "share": 0.96,
+     "words": 25
+    },
+    {
+     "ref": "Table 29 1 Building 17.7",
+     "kind": "table_row",
+     "share": 0.9844,
+     "words": 64
+    },
+    {
+     "ref": "Table 29 17.16",
+     "kind": "table_row",
+     "share": 0.9828,
+     "words": 58
+    },
+    {
+     "ref": "Table 29 17.17",
+     "kind": "table_row",
+     "share": 0.9333,
+     "words": 30
+    },
+    {
+     "ref": "Table 29 17.21",
+     "kind": "table_row",
+     "share": 0.9836,
+     "words": 61
+    },
+    {
+     "ref": "Table 29 1 Building 17.22",
+     "kind": "table_row",
+     "share": 0.9492,
+     "words": 59
+    },
+    {
+     "ref": "Table 29 17.24",
+     "kind": "table_row",
+     "share": 0.9737,
+     "words": 38
+    },
+    {
+     "ref": "Table 29 1 Building 18.3",
+     "kind": "table_row",
+     "share": 0.978,
+     "words": 91
+    },
+    {
+     "ref": "Table 29 18.6",
+     "kind": "table_row",
+     "share": 0.9706,
+     "words": 34
+    },
+    {
+     "ref": "Table 29 18.7",
+     "kind": "table_row",
+     "share": 0.9833,
+     "words": 60
+    },
+    {
+     "ref": "Table 29 18.8",
+     "kind": "table_row",
+     "share": 0.9783,
+     "words": 46
+    },
+    {
+     "ref": "Table 29 1 Building 18.12",
+     "kind": "table_row",
+     "share": 0.9592,
+     "words": 49
+    },
+    {
+     "ref": "Table 29 18.13",
+     "kind": "table_row",
+     "share": 0.9583,
+     "words": 24
+    },
+    {
+     "ref": "Table 29 1 Building 19.3",
+     "kind": "table_row",
+     "share": 0.9786,
+     "words": 187
+    },
+    {
+     "ref": "Table 29 19.8",
+     "kind": "table_row",
+     "share": 0.9783,
+     "words": 46
+    },
+    {
+     "ref": "Table 29 1 Building 20.1",
+     "kind": "table_row",
+     "share": 0.9464,
+     "words": 56
+    },
+    {
+     "ref": "Table 29 20.3",
+     "kind": "table_row",
+     "share": 0.973,
+     "words": 37
+    },
+    {
+     "ref": "Table 29 1 Building 20.15",
+     "kind": "table_row",
+     "share": 0.9516,
+     "words": 62
+    },
+    {
+     "ref": "Table 29 20.16",
+     "kind": "table_row",
+     "share": 0.9787,
+     "words": 47
+    },
+    {
+     "ref": "Table 29 21.6",
+     "kind": "table_row",
+     "share": 0.78,
+     "words": 50
+    },
+    {
+     "ref": "Table 29 1 Building 21.7",
+     "kind": "table_row",
+     "share": 0.9754,
+     "words": 122
+    },
+    {
+     "ref": "Table 29 21.12",
+     "kind": "table_row",
+     "share": 0.9783,
+     "words": 46
+    },
+    {
+     "ref": "Table 29 21.13",
+     "kind": "table_row",
+     "share": 0.9778,
+     "words": 45
+    },
+    {
+     "ref": "Table 29 1 Building 21.14",
+     "kind": "table_row",
+     "share": 0.9434,
+     "words": 53
+    },
+    {
+     "ref": "Table 29 1 Building 22.4",
+     "kind": "table_row",
+     "share": 0.9843,
+     "words": 127
+    },
+    {
+     "ref": "Table 29 22.5",
+     "kind": "table_row",
+     "share": 0.9899,
+     "words": 99
+    },
+    {
+     "ref": "Table 29 22.6",
+     "kind": "table_row",
+     "share": 0.9767,
+     "words": 43
+    },
+    {
+     "ref": "Table 29 1 Building 22.9",
+     "kind": "table_row",
+     "share": 0.961,
+     "words": 77
+    },
+    {
+     "ref": "Table 29 22.12",
+     "kind": "table_row",
+     "share": 0.92,
+     "words": 25
+    },
+    {
+     "ref": "Table 29 1 Building 22.16",
+     "kind": "table_row",
+     "share": 0.961,
+     "words": 77
+    },
+    {
+     "ref": "Table 29 23.6",
+     "kind": "table_row",
+     "share": 0.981,
+     "words": 105
+    },
+    {
+     "ref": "Table 29 1 Building 23.7",
+     "kind": "table_row",
+     "share": 0.961,
+     "words": 77
+    },
+    {
+     "ref": "Table 29 23.9",
+     "kind": "table_row",
+     "share": 0.9767,
+     "words": 43
+    },
+    {
+     "ref": "Table 29 23.10",
+     "kind": "table_row",
+     "share": 0.9655,
+     "words": 29
+    },
+    {
+     "ref": "Table 29 1 Building 24.4",
+     "kind": "table_row",
+     "share": 0.9189,
+     "words": 37
+    },
+    {
+     "ref": "Table 29 24.6",
+     "kind": "table_row",
+     "share": 0.9831,
+     "words": 59
+    },
+    {
+     "ref": "Table 29 1 Building 25.5",
+     "kind": "table_row",
+     "share": 0.9688,
+     "words": 64
+    },
+    {
+     "ref": "Table 29 26.5",
+     "kind": "table_row",
+     "share": 0.975,
+     "words": 40
+    },
+    {
+     "ref": "Table 29 26.6",
+     "kind": "table_row",
+     "share": 0.9688,
+     "words": 32
+    },
+    {
+     "ref": "Table 29 1 Building 26.7",
+     "kind": "table_row",
+     "share": 0.9737,
+     "words": 76
+    },
+    {
+     "ref": "Table 29 26.8",
+     "kind": "table_row",
+     "share": 0.9891,
+     "words": 92
+    },
+    {
+     "ref": "Table 29 1 Building 27.2",
+     "kind": "table_row",
+     "share": 0.9826,
+     "words": 115
+    },
+    {
+     "ref": "Table 29 1 Building 27.9",
+     "kind": "table_row",
+     "share": 0.9818,
+     "words": 110
+    },
+    {
+     "ref": "Table 29 27.10",
+     "kind": "table_row",
+     "share": 0.9487,
+     "words": 39
+    },
+    {
+     "ref": "Table 29 1 Building 28.5",
+     "kind": "table_row",
+     "share": 0.9722,
+     "words": 72
+    },
+    {
+     "ref": "Table 29 1 Building 28.11",
+     "kind": "table_row",
+     "share": 0.981,
+     "words": 158
+    },
+    {
+     "ref": "Table 29 29.3",
+     "kind": "table_row",
+     "share": 0.9722,
+     "words": 36
+    },
+    {
+     "ref": "Table 29 1 Building 30.6",
+     "kind": "table_row",
+     "share": 0.9571,
+     "words": 70
+    },
+    {
+     "ref": "Table 29 1 Building 31.3",
+     "kind": "table_row",
+     "share": 0.88,
+     "words": 25
+    },
+    {
+     "ref": "Table 29 32.4",
+     "kind": "table_row",
+     "share": 0.9762,
+     "words": 42
+    },
+    {
+     "ref": "Table 29 33.3",
+     "kind": "table_row",
+     "share": 0.9459,
+     "words": 37
+    },
+    {
+     "ref": "Table 29 1 Building 34.2",
+     "kind": "table_row",
+     "share": 0.9722,
+     "words": 72
+    },
+    {
+     "ref": "Table 29 34.8",
+     "kind": "table_row",
+     "share": 0.9722,
+     "words": 36
+    },
+    {
+     "ref": "Table 29 1 Building 34.12",
+     "kind": "table_row",
+     "share": 0.9149,
+     "words": 47
+    },
+    {
+     "ref": "Table 29 34.14",
+     "kind": "table_row",
+     "share": 0.975,
+     "words": 40
+    },
+    {
+     "ref": "Table 29 36.2",
+     "kind": "table_row",
+     "share": 0.9565,
+     "words": 23
+    },
+    {
+     "ref": "Table 29 1 Building 38.1",
+     "kind": "table_row",
+     "share": 0.9429,
+     "words": 35
+    },
+    {
+     "ref": "Table 29 1 Building 39.4",
+     "kind": "table_row",
+     "share": 0.9643,
+     "words": 56
+    },
+    {
+     "ref": "Table 29 39.5",
+     "kind": "table_row",
+     "share": 0.9722,
+     "words": 36
+    },
+    {
+     "ref": "Table 29 39.10",
+     "kind": "table_row",
+     "share": 0.9677,
+     "words": 31
+    },
+    {
+     "ref": "Table 29 39.12",
+     "kind": "table_row",
+     "share": 0.9697,
+     "words": 33
+    },
+    {
+     "ref": "Table 29 39.13",
+     "kind": "table_row",
+     "share": 0.975,
+     "words": 40
+    },
+    {
+     "ref": "Table 29 1 Building 39.15",
+     "kind": "table_row",
+     "share": 0.9492,
+     "words": 59
+    },
+    {
+     "ref": "Table 29 39.16",
+     "kind": "table_row",
+     "share": 0.9643,
+     "words": 28
+    },
+    {
+     "ref": "Table 29 39.17",
+     "kind": "table_row",
+     "share": 0.9815,
+     "words": 54
+    },
+    {
+     "ref": "Table 29 39.22",
+     "kind": "table_row",
+     "share": 0.9722,
+     "words": 36
+    },
+    {
+     "ref": "Table 29 39.23",
+     "kind": "table_row",
+     "share": 0.9545,
+     "words": 22
+    },
+    {
+     "ref": "Table 29 39.24",
+     "kind": "table_row",
+     "share": 0.9655,
+     "words": 29
+    },
+    {
+     "ref": "Table 29 1 Building 39.25",
+     "kind": "table_row",
+     "share": 0.8621,
+     "words": 29
+    },
+    {
+     "ref": "Table 29 40.3",
+     "kind": "table_row",
+     "share": 0.9643,
+     "words": 28
+    },
+    {
+     "ref": "Table 29 1 Building 40.4",
+     "kind": "table_row",
+     "share": 0.9302,
+     "words": 43
+    },
+    {
+     "ref": "Table 29 40.9",
+     "kind": "table_row",
+     "share": 0.9688,
+     "words": 32
+    },
+    {
+     "ref": "Table 29 40.10",
+     "kind": "table_row",
+     "share": 0.9643,
+     "words": 28
+    },
+    {
+     "ref": "Table 29 1 Building 40.13",
+     "kind": "table_row",
+     "share": 0.9388,
+     "words": 49
+    },
+    {
+     "ref": "Table 29 1 and premises: - 41 Building\u2026",
+     "kind": "table_row",
+     "share": 0.7778,
+     "words": 9
+    },
+    {
+     "ref": "Table 29 1 Building 46.1",
+     "kind": "table_row",
+     "share": 0.9861,
+     "words": 72
+    },
+    {
+     "ref": "Table 29 48.2",
+     "kind": "table_row",
+     "share": 0.9796,
+     "words": 49
+    },
+    {
+     "ref": "Table 29 48.3",
+     "kind": "table_row",
+     "share": 0.9804,
+     "words": 51
+    },
+    {
+     "ref": "Table 29 1 Building 48.4",
+     "kind": "table_row",
+     "share": 0.9459,
+     "words": 37
+    },
+    {
+     "ref": "Table 29 48.5",
+     "kind": "table_row",
+     "share": 0.9688,
+     "words": 32
+    },
+    {
+     "ref": "Table 29 48.6",
+     "kind": "table_row",
+     "share": 0.9778,
+     "words": 45
+    },
+    {
+     "ref": "Table 29 48.7",
+     "kind": "table_row",
+     "share": 0.9688,
+     "words": 32
+    },
+    {
+     "ref": "Table 29 48.8",
+     "kind": "table_row",
+     "share": 0.9697,
+     "words": 33
+    },
+    {
+     "ref": "Table 29 48.9",
+     "kind": "table_row",
+     "share": 0.9836,
+     "words": 61
+    },
+    {
+     "ref": "Table 29 48.10",
+     "kind": "table_row",
+     "share": 0.9667,
+     "words": 30
+    },
+    {
+     "ref": "Table 29 48.11",
+     "kind": "table_row",
+     "share": 0.9639,
+     "words": 83
+    },
+    {
+     "ref": "Table 29 1 Building 49.1",
+     "kind": "table_row",
+     "share": 0.9677,
+     "words": 124
+    },
+    {
+     "ref": "Table 29 1 Building 49.5",
+     "kind": "table_row",
+     "share": 0.9467,
+     "words": 75
+    },
+    {
+     "ref": "Table 29 49.6",
+     "kind": "table_row",
+     "share": 0.9535,
+     "words": 43
+    },
+    {
+     "ref": "Table 29 49.7",
+     "kind": "table_row",
+     "share": 0.9804,
+     "words": 51
+    },
+    {
+     "ref": "Table 29 49.8",
+     "kind": "table_row",
+     "share": 0.9783,
+     "words": 46
+    },
+    {
+     "ref": "Table 29 1 Building 49.12",
+     "kind": "table_row",
+     "share": 0.9615,
+     "words": 78
+    },
+    {
+     "ref": "Table 29 50.1",
+     "kind": "table_row",
+     "share": 0.9756,
+     "words": 41
+    },
+    {
+     "ref": "Table 29 50.2",
+     "kind": "table_row",
+     "share": 0.9827,
+     "words": 173
+    },
+    {
+     "ref": "Table 29 50.3",
+     "kind": "table_row",
+     "share": 0.9833,
+     "words": 60
+    },
+    {
+     "ref": "Table 29 1 Building 51.2",
+     "kind": "table_row",
+     "share": 0.9429,
+     "words": 35
+    },
+    {
+     "ref": "Table 29 52.2",
+     "kind": "table_row",
+     "share": 0.9615,
+     "words": 26
+    },
+    {
+     "ref": "Table 29 52.3",
+     "kind": "table_row",
+     "share": 0.9565,
+     "words": 23
+    },
+    {
+     "ref": "Table 29 52.4",
+     "kind": "table_row",
+     "share": 0.9828,
+     "words": 58
+    },
+    {
+     "ref": "Table 29 1 Building 52.8",
+     "kind": "table_row",
+     "share": 0.9661,
+     "words": 59
+    },
+    {
+     "ref": "Table 29 53.4",
+     "kind": "table_row",
+     "share": 0.9688,
+     "words": 32
+    },
+    {
+     "ref": "Table 29 54.1",
+     "kind": "table_row",
+     "share": 0.9643,
+     "words": 28
+    },
+    {
+     "ref": "Table 29 54.2",
+     "kind": "table_row",
+     "share": 0.9565,
+     "words": 23
+    },
+    {
+     "ref": "Table 29 54.4",
+     "kind": "table_row",
+     "share": 0.9474,
+     "words": 38
+    },
+    {
+     "ref": "Table 29 54.5",
+     "kind": "table_row",
+     "share": 0.9744,
+     "words": 39
+    },
+    {
+     "ref": "Table 29 54.6",
+     "kind": "table_row",
+     "share": 0.9444,
+     "words": 18
+    },
+    {
+     "ref": "Table 29 54.7",
+     "kind": "table_row",
+     "share": 0.9767,
+     "words": 43
+    },
+    {
+     "ref": "Table 29 54.8",
+     "kind": "table_row",
+     "share": 0.9762,
+     "words": 42
+    },
+    {
+     "ref": "Table 29 54.9",
+     "kind": "table_row",
+     "share": 0.9565,
+     "words": 23
+    },
+    {
+     "ref": "Table 29 1 Building 54.10",
+     "kind": "table_row",
+     "share": 0.8846,
+     "words": 26
+    },
+    {
+     "ref": "Table 29 54.11",
+     "kind": "table_row",
+     "share": 0.9744,
+     "words": 39
+    },
+    {
+     "ref": "Table 29 54.12",
+     "kind": "table_row",
+     "share": 0.9048,
+     "words": 21
+    },
+    {
+     "ref": "Table 29 54.15",
+     "kind": "table_row",
+     "share": 0.9722,
+     "words": 36
+    },
+    {
+     "ref": "Table 29 54.16",
+     "kind": "table_row",
+     "share": 0.9583,
+     "words": 24
+    },
+    {
+     "ref": "Table 29 54.17",
+     "kind": "table_row",
+     "share": 0.9767,
+     "words": 43
+    },
+    {
+     "ref": "Table 29 55.4",
+     "kind": "table_row",
+     "share": 0.9811,
+     "words": 53
+    },
+    {
+     "ref": "Table 29 1 and premises: - 56 Building\u2026",
+     "kind": "table_row",
+     "share": 0.7143,
+     "words": 7
+    },
+    {
+     "ref": "Table 29 56.1",
+     "kind": "table_row",
+     "share": 0.963,
+     "words": 27
+    },
+    {
+     "ref": "Table 29 56.2",
+     "kind": "table_row",
+     "share": 0.9667,
+     "words": 30
+    },
+    {
+     "ref": "Table 29 56.3",
+     "kind": "table_row",
+     "share": 0.9677,
+     "words": 31
+    },
+    {
+     "ref": "Table 29 56.4",
+     "kind": "table_row",
+     "share": 0.9697,
+     "words": 33
+    },
+    {
+     "ref": "Table 29 57.1",
+     "kind": "table_row",
+     "share": 0.9737,
+     "words": 38
+    },
+    {
+     "ref": "Table 29 57.2",
+     "kind": "table_row",
+     "share": 0.9811,
+     "words": 53
+    },
+    {
+     "ref": "Table 29 57.3",
+     "kind": "table_row",
+     "share": 0.973,
+     "words": 37
+    },
+    {
+     "ref": "Table 29 57.4",
+     "kind": "table_row",
+     "share": 0.9667,
+     "words": 30
+    },
+    {
+     "ref": "Table 29 57.5",
+     "kind": "table_row",
+     "share": 0.9583,
+     "words": 24
+    },
+    {
+     "ref": "Table 29 1 Building 58.1",
+     "kind": "table_row",
+     "share": 0.9741,
+     "words": 116
+    },
+    {
+     "ref": "Table 29 59.1",
+     "kind": "table_row",
+     "share": 0.9667,
+     "words": 30
+    },
+    {
+     "ref": "Table 29 59.2",
+     "kind": "table_row",
+     "share": 0.9737,
+     "words": 38
+    },
+    {
+     "ref": "Table 29 1 Building 59.3",
+     "kind": "table_row",
+     "share": 0.9344,
+     "words": 61
+    },
+    {
+     "ref": "Table 29 59.4",
+     "kind": "table_row",
+     "share": 0.95,
+     "words": 20
+    },
+    {
+     "ref": "Table 29 59.5",
+     "kind": "table_row",
+     "share": 0.931,
+     "words": 29
+    },
+    {
+     "ref": "Table 29 59.6",
+     "kind": "table_row",
+     "share": 0.9459,
+     "words": 37
+    }
+   ]
+  },
+  "india-cdsco-gdp-guidelines-2024.pdf": {
+   "clauses": 217,
+   "median": 1.0,
+   "min": 0.9286,
+   "flagged": [
+    {
+     "ref": "5.4",
+     "kind": "clause",
+     "share": 0.9859,
+     "words": 71
+    },
+    {
+     "ref": "11.11",
+     "kind": "clause",
+     "share": 0.9808,
+     "words": 52
+    },
+    {
+     "ref": "11.14",
+     "kind": "clause",
+     "share": 0.9655,
+     "words": 29
+    },
+    {
+     "ref": "11.15",
+     "kind": "clause",
+     "share": 0.9608,
+     "words": 51
+    },
+    {
+     "ref": "12.4",
+     "kind": "clause",
+     "share": 0.9753,
+     "words": 81
+    },
+    {
+     "ref": "12.5",
+     "kind": "clause",
+     "share": 0.9744,
+     "words": 39
+    },
+    {
+     "ref": "13.31",
+     "kind": "clause",
+     "share": 0.9714,
+     "words": 35
+    },
+    {
+     "ref": "16.17",
+     "kind": "clause",
+     "share": 0.9706,
+     "words": 34
+    },
+    {
+     "ref": "18.11",
+     "kind": "clause",
+     "share": 0.9744,
+     "words": 39
+    },
+    {
+     "ref": "21.3",
+     "kind": "clause",
+     "share": 0.9286,
+     "words": 14
+    }
+   ]
+  },
+  "india-drugs-rules-1945-consolidated-2024-07.pdf": {
+   "clauses": 2981,
+   "median": 1.0,
+   "min": 0.4615,
+   "flagged": [
+    {
+     "ref": "Part I 4 #16",
+     "kind": "clause",
+     "share": 0.9869,
+     "words": 534
+    },
+    {
+     "ref": "Part I 3 #18",
+     "kind": "clause",
+     "share": 0.9898,
+     "words": 197
+    },
+    {
+     "ref": "Part IV 4",
+     "kind": "clause",
+     "share": 0.987,
+     "words": 1621
+    },
+    {
+     "ref": "Part IV 99",
+     "kind": "clause",
+     "share": 0.9662,
+     "words": 5386
+    },
+    {
+     "ref": "Part I 9.2",
+     "kind": "clause",
+     "share": 0.6667,
+     "words": 3
+    },
+    {
+     "ref": "Part I 10.8",
+     "kind": "clause",
+     "share": 0.8333,
+     "words": 6
+    },
+    {
+     "ref": "Part I 11.2",
+     "kind": "clause",
+     "share": 0.6667,
+     "words": 3
+    },
+    {
+     "ref": "Part I 17.2",
+     "kind": "clause",
+     "share": 0.6667,
+     "words": 3
+    },
+    {
+     "ref": "Part I 18.2",
+     "kind": "clause",
+     "share": 0.6667,
+     "words": 3
+    },
+    {
+     "ref": "Part I 19.9",
+     "kind": "clause",
+     "share": 0.75,
+     "words": 4
+    },
+    {
+     "ref": "Part III 8.5",
+     "kind": "clause",
+     "share": 0.9855,
+     "words": 69
+    },
+    {
+     "ref": "Part III 9.1",
+     "kind": "clause",
+     "share": 0.9767,
+     "words": 86
+    },
+    {
+     "ref": "Part VI 22.3",
+     "kind": "clause",
+     "share": 0.75,
+     "words": 4
+    },
+    {
+     "ref": "Part VI 23.1",
+     "kind": "clause",
+     "share": 0.6667,
+     "words": 3
+    },
+    {
+     "ref": "Part VI 23.3",
+     "kind": "clause",
+     "share": 0.6667,
+     "words": 3
+    },
+    {
+     "ref": "Part VI 23.5",
+     "kind": "clause",
+     "share": 0.8333,
+     "words": 6
+    },
+    {
+     "ref": "Part VI 23.5.5",
+     "kind": "clause",
+     "share": 0.9615,
+     "words": 26
+    },
+    {
+     "ref": "Part XII 1.2",
+     "kind": "clause",
+     "share": 0.6667,
+     "words": 3
+    },
+    {
+     "ref": "Part XII 2.1",
+     "kind": "clause",
+     "share": 0.6667,
+     "words": 3
+    },
+    {
+     "ref": "Part XII 3.2",
+     "kind": "clause",
+     "share": 0.75,
+     "words": 4
+    },
+    {
+     "ref": "Part XII 4.1",
+     "kind": "clause",
+     "share": 0.8,
+     "words": 5
+    },
+    {
+     "ref": "Part XII 4.4",
+     "kind": "clause",
+     "share": 0.6667,
+     "words": 3
+    },
+    {
+     "ref": "Part XII 5.1",
+     "kind": "clause",
+     "share": 0.8,
+     "words": 5
+    },
+    {
+     "ref": "Part XII 6.7.4",
+     "kind": "clause",
+     "share": 0.9737,
+     "words": 38
+    },
+    {
+     "ref": "Part XII 9.1",
+     "kind": "clause",
+     "share": 0.6667,
+     "words": 3
+    },
+    {
+     "ref": "Part XII 11.5",
+     "kind": "clause",
+     "share": 0.8333,
+     "words": 6
+    },
+    {
+     "ref": "Part XII 12.2",
+     "kind": "clause",
+     "share": 0.75,
+     "words": 4
+    },
+    {
+     "ref": "Part XII 12.5",
+     "kind": "clause",
+     "share": 0.8,
+     "words": 5
+    },
+    {
+     "ref": "Part XII 14.3",
+     "kind": "clause",
+     "share": 0.6667,
+     "words": 3
+    },
+    {
+     "ref": "Part XII 14.5",
+     "kind": "clause",
+     "share": 0.6667,
+     "words": 3
+    },
+    {
+     "ref": "Part XII 17.2",
+     "kind": "clause",
+     "share": 0.875,
+     "words": 8
+    },
+    {
+     "ref": "Part XII 18.1",
+     "kind": "clause",
+     "share": 0.6667,
+     "words": 3
+    },
+    {
+     "ref": "Part XII 18.8",
+     "kind": "clause",
+     "share": 0.75,
+     "words": 4
+    },
+    {
+     "ref": "Part XII 18.9",
+     "kind": "clause",
+     "share": 0.6667,
+     "words": 3
+    },
+    {
+     "ref": "Part II 1 #7",
+     "kind": "clause",
+     "share": 0.9697,
+     "words": 66
+    },
+    {
+     "ref": "Part II 6 #7",
+     "kind": "clause",
+     "share": 0.9899,
+     "words": 199
+    },
+    {
+     "ref": "Part II Appendix III 1.3.3",
+     "kind": "clause",
+     "share": 0.9889,
+     "words": 270
+    },
+    {
+     "ref": "Table 1 657 [Fast FCF Green",
+     "kind": "table_row",
+     "share": 0.9677,
+     "words": 31
+    },
+    {
+     "ref": "Table 1 Tartrazine",
+     "kind": "table_row",
+     "share": 0.9286,
+     "words": 14
+    },
+    {
+     "ref": "Table 1 Sunset FCF Yellow",
+     "kind": "table_row",
+     "share": 0.9375,
+     "words": 16
+    },
+    {
+     "ref": "Table 1 659 [Quinoline Yellow WS RED",
+     "kind": "table_row",
+     "share": 0.9412,
+     "words": 17
+    },
+    {
+     "ref": "Table 1 Erythrosine",
+     "kind": "table_row",
+     "share": 0.875,
+     "words": 16
+    },
+    {
+     "ref": "Table 1 Eosin YS Eosine G or",
+     "kind": "table_row",
+     "share": 0.7895,
+     "words": 19
+    },
+    {
+     "ref": "Table 1 Toney Red Sudan III or",
+     "kind": "table_row",
+     "share": 0.8,
+     "words": 10
+    },
+    {
+     "ref": "Table 1 Ponceau 4 R",
+     "kind": "table_row",
+     "share": 0.9,
+     "words": 20
+    },
+    {
+     "ref": "Table 1 Carmoisine",
+     "kind": "table_row",
+     "share": 0.8571,
+     "words": 14
+    },
+    {
+     "ref": "Table 1 1335 [Allura Red",
+     "kind": "table_row",
+     "share": 0.8824,
+     "words": 17
+    },
+    {
+     "ref": "Table 1 661 [Brillium Blue FCF",
+     "kind": "table_row",
+     "share": 0.9231,
+     "words": 26
+    },
+    {
+     "ref": "Table 1 Naphthol Black. Blue",
+     "kind": "table_row",
+     "share": 0.8889,
+     "words": 18
+    },
+    {
+     "ref": "Table 2 header",
+     "kind": "table_header",
+     "share": 0.6923,
+     "words": 13
+    },
+    {
+     "ref": "Table 2 2.",
+     "kind": "table_row",
+     "share": 0.9583,
+     "words": 24
+    },
+    {
+     "ref": "Table 2 3.",
+     "kind": "table_row",
+     "share": 0.9333,
+     "words": 15
+    },
+    {
+     "ref": "Table 2 5.",
+     "kind": "table_row",
+     "share": 0.9375,
+     "words": 16
+    },
+    {
+     "ref": "Table 2 6.",
+     "kind": "table_row",
+     "share": 0.9333,
+     "words": 15
+    },
+    {
+     "ref": "Table 2 7.",
+     "kind": "table_row",
+     "share": 0.9286,
+     "words": 14
+    },
+    {
+     "ref": "Table 2 8.",
+     "kind": "table_row",
+     "share": 0.9375,
+     "words": 16
+    },
+    {
+     "ref": "Table 2 9.",
+     "kind": "table_row",
+     "share": 0.963,
+     "words": 27
+    },
+    {
+     "ref": "Table 2 11.",
+     "kind": "table_row",
+     "share": 0.9643,
+     "words": 28
+    },
+    {
+     "ref": "Table 2 13.",
+     "kind": "table_row",
+     "share": 0.875,
+     "words": 16
+    },
+    {
+     "ref": "Table 2 16.",
+     "kind": "table_row",
+     "share": 0.9583,
+     "words": 24
+    },
+    {
+     "ref": "Table 2 17.",
+     "kind": "table_row",
+     "share": 0.9286,
+     "words": 14
+    },
+    {
+     "ref": "Table 2 20.",
+     "kind": "table_row",
+     "share": 0.9333,
+     "words": 15
+    },
+    {
+     "ref": "Table 2 21.",
+     "kind": "table_row",
+     "share": 0.8824,
+     "words": 17
+    },
+    {
+     "ref": "Table 2 23.",
+     "kind": "table_row",
+     "share": 0.8333,
+     "words": 12
+    },
+    {
+     "ref": "Table 2 24.",
+     "kind": "table_row",
+     "share": 0.8333,
+     "words": 12
+    },
+    {
+     "ref": "Table 2 25.",
+     "kind": "table_row",
+     "share": 0.8333,
+     "words": 12
+    },
+    {
+     "ref": "Table 2 29.",
+     "kind": "table_row",
+     "share": 0.9375,
+     "words": 16
+    },
+    {
+     "ref": "Table 2 30.",
+     "kind": "table_row",
+     "share": 0.8824,
+     "words": 17
+    },
+    {
+     "ref": "Table 2 32.",
+     "kind": "table_row",
+     "share": 0.9375,
+     "words": 16
+    },
+    {
+     "ref": "Table 2 33.",
+     "kind": "table_row",
+     "share": 0.8824,
+     "words": 17
+    },
+    {
+     "ref": "Table 2 35.",
+     "kind": "table_row",
+     "share": 0.8889,
+     "words": 18
+    },
+    {
+     "ref": "Table 2 37.",
+     "kind": "table_row",
+     "share": 0.875,
+     "words": 16
+    },
+    {
+     "ref": "Table 2 39.",
+     "kind": "table_row",
+     "share": 0.8,
+     "words": 10
+    },
+    {
+     "ref": "Table 2 40.",
+     "kind": "table_row",
+     "share": 0.8667,
+     "words": 15
+    },
+    {
+     "ref": "Table 2 42.",
+     "kind": "table_row",
+     "share": 0.8571,
+     "words": 14
+    },
+    {
+     "ref": "Table 2 43.",
+     "kind": "table_row",
+     "share": 0.8182,
+     "words": 11
+    },
+    {
+     "ref": "Table 2 45.",
+     "kind": "table_row",
+     "share": 0.9333,
+     "words": 15
+    },
+    {
+     "ref": "Table 2 47.",
+     "kind": "table_row",
+     "share": 0.9375,
+     "words": 16
+    },
+    {
+     "ref": "Table 2 48.",
+     "kind": "table_row",
+     "share": 0.875,
+     "words": 16
+    },
+    {
+     "ref": "Table 2 49.",
+     "kind": "table_row",
+     "share": 0.8667,
+     "words": 15
+    },
+    {
+     "ref": "Table 2 50.",
+     "kind": "table_row",
+     "share": 0.8462,
+     "words": 13
+    },
+    {
+     "ref": "Table 2 52.",
+     "kind": "table_row",
+     "share": 0.8182,
+     "words": 11
+    },
+    {
+     "ref": "Table 2 53.",
+     "kind": "table_row",
+     "share": 0.8095,
+     "words": 21
+    },
+    {
+     "ref": "Table 2 54.",
+     "kind": "table_row",
+     "share": 0.9375,
+     "words": 16
+    },
+    {
+     "ref": "Table 2 56.",
+     "kind": "table_row",
+     "share": 0.913,
+     "words": 23
+    },
+    {
+     "ref": "Table 2 57.",
+     "kind": "table_row",
+     "share": 0.913,
+     "words": 23
+    },
+    {
+     "ref": "Table 2 59.",
+     "kind": "table_row",
+     "share": 0.8889,
+     "words": 18
+    },
+    {
+     "ref": "Table 3 header",
+     "kind": "table_header",
+     "share": 0.4615,
+     "words": 13
+    },
+    {
+     "ref": "Table 5 header",
+     "kind": "table_header",
+     "share": 0.4615,
+     "words": 13
+    },
+    {
+     "ref": "Table 6 header",
+     "kind": "table_header",
+     "share": 0.6154,
+     "words": 13
+    },
+    {
+     "ref": "Table 23 6.",
+     "kind": "table_row",
+     "share": 0.9,
+     "words": 10
+    },
+    {
+     "ref": "Table 28 1179 [28. White or Yellow Petroleum\u2026",
+     "kind": "table_row",
+     "share": 0.9706,
+     "words": 34
+    },
+    {
+     "ref": "Table 29 Grade",
+     "kind": "table_row",
+     "share": 0.9697,
+     "words": 33
+    },
+    {
+     "ref": "Table 35 60.",
+     "kind": "table_row",
+     "share": 0.8889,
+     "words": 9
+    },
+    {
+     "ref": "Table 44 header",
+     "kind": "table_header",
+     "share": 0.9167,
+     "words": 12
+    },
+    {
+     "ref": "Table 44 4.",
+     "kind": "table_row",
+     "share": 0.9787,
+     "words": 47
+    },
+    {
+     "ref": "Table 45 S.No. Category of Medicine Minimum\u2026",
+     "kind": "table_row",
+     "share": 0.9265,
+     "words": 68
+    },
+    {
+     "ref": "Table 45 header",
+     "kind": "table_header",
+     "share": 0.9167,
+     "words": 12
+    },
+    {
+     "ref": "Table 45 11.",
+     "kind": "table_row",
+     "share": 0.9545,
+     "words": 22
+    },
+    {
+     "ref": "Table 46 2.",
+     "kind": "table_row",
+     "share": 0.9286,
+     "words": 28
+    }
+   ]
+  },
+  "india-gsr127e-2025-schm-timeline.pdf": {
+   "clauses": 14,
+   "median": 1.0,
+   "min": 0.88,
+   "flagged": [
+    {
+     "ref": "_unnumbered:1",
+     "kind": "unnumbered",
+     "share": 0.9843,
+     "words": 254
+    },
+    {
+     "ref": "4",
+     "kind": "clause",
+     "share": 0.88,
+     "words": 150
+    }
+   ]
+  },
+  "india-gsr666e-2024-schm-corrigendum.pdf": {
+   "clauses": 1,
+   "median": 0.9058,
+   "min": 0.9058,
+   "flagged": [
+    {
+     "ref": "_unnumbered:1",
+     "kind": "unnumbered",
+     "share": 0.9058,
+     "words": 191
+    }
+   ]
+  },
+  "india-schedule-m-2023-GSR922E.pdf": {
+   "clauses": 1593,
+   "median": 1.0,
+   "min": 0.6667,
+   "flagged": [
+    {
+     "ref": "Part I 9.2",
+     "kind": "clause",
+     "share": 0.6667,
+     "words": 3
+    },
+    {
+     "ref": "Part I 11.2",
+     "kind": "clause",
+     "share": 0.6667,
+     "words": 3
+    },
+    {
+     "ref": "Part I 17.2",
+     "kind": "clause",
+     "share": 0.6667,
+     "words": 3
+    },
+    {
+     "ref": "Part I 18.2",
+     "kind": "clause",
+     "share": 0.6667,
+     "words": 3
+    },
+    {
+     "ref": "Part I 19.9",
+     "kind": "clause",
+     "share": 0.75,
+     "words": 4
+    },
+    {
+     "ref": "Part III 4.5",
+     "kind": "clause",
+     "share": 0.9811,
+     "words": 106
+    },
+    {
+     "ref": "Part III 9.1",
+     "kind": "clause",
+     "share": 0.9767,
+     "words": 86
+    },
+    {
+     "ref": "Part VI 22.3",
+     "kind": "clause",
+     "share": 0.75,
+     "words": 4
+    },
+    {
+     "ref": "Part VI 23.5",
+     "kind": "clause",
+     "share": 0.8333,
+     "words": 6
+    },
+    {
+     "ref": "Part XII 1.2",
+     "kind": "clause",
+     "share": 0.6667,
+     "words": 3
+    },
+    {
+     "ref": "Part XII 2.1",
+     "kind": "clause",
+     "share": 0.6667,
+     "words": 3
+    },
+    {
+     "ref": "Part XII 3.2",
+     "kind": "clause",
+     "share": 0.75,
+     "words": 4
+    },
+    {
+     "ref": "Part XII 4.1",
+     "kind": "clause",
+     "share": 0.8,
+     "words": 5
+    },
+    {
+     "ref": "Part XII 4.4",
+     "kind": "clause",
+     "share": 0.6667,
+     "words": 3
+    },
+    {
+     "ref": "Part XII 5.1",
+     "kind": "clause",
+     "share": 0.8,
+     "words": 5
+    },
+    {
+     "ref": "Part XII 9.1",
+     "kind": "clause",
+     "share": 0.6667,
+     "words": 3
+    },
+    {
+     "ref": "Part XII 11.5",
+     "kind": "clause",
+     "share": 0.8333,
+     "words": 6
+    },
+    {
+     "ref": "Part XII 12.2",
+     "kind": "clause",
+     "share": 0.75,
+     "words": 4
+    },
+    {
+     "ref": "Part XII 12.5",
+     "kind": "clause",
+     "share": 0.8,
+     "words": 5
+    },
+    {
+     "ref": "Part XII 14.3",
+     "kind": "clause",
+     "share": 0.6667,
+     "words": 3
+    },
+    {
+     "ref": "Part XII 14.5",
+     "kind": "clause",
+     "share": 0.6667,
+     "words": 3
+    },
+    {
+     "ref": "Part XII 17.2",
+     "kind": "clause",
+     "share": 0.875,
+     "words": 8
+    },
+    {
+     "ref": "Part XII 18.1",
+     "kind": "clause",
+     "share": 0.6667,
+     "words": 3
+    },
+    {
+     "ref": "Part XII 18.8",
+     "kind": "clause",
+     "share": 0.75,
+     "words": 4
+    },
+    {
+     "ref": "Part XII 18.9",
+     "kind": "clause",
+     "share": 0.6667,
+     "words": 3
+    },
+    {
+     "ref": "Part XIII 1 #3",
+     "kind": "clause",
+     "share": 0.9848,
+     "words": 66
+    },
+    {
+     "ref": "Part XIII 7 #2",
+     "kind": "clause",
+     "share": 0.9167,
+     "words": 216
+    },
+    {
+     "ref": "Table 1 Grade",
+     "kind": "table_row",
+     "share": 0.9697,
+     "words": 33
+    }
+   ]
+  },
+  "pics-pe008-4-site-master-file.pdf": {
+   "clauses": 47,
+   "median": 1.0,
+   "min": 1.0,
+   "flagged": []
+  },
+  "pics-pe009-18-annexes.pdf": {
+   "clauses": 1303,
+   "median": 1.0,
+   "min": 0.8889,
+   "flagged": [
+    {
+     "ref": "Annex 1 8.68",
+     "kind": "clause",
+     "share": 0.9683,
+     "words": 63
+    },
+    {
+     "ref": "Annex 2B B 3 #2",
+     "kind": "clause",
+     "share": 0.9877,
+     "words": 81
+    },
+    {
+     "ref": "Annex 14 5.4",
+     "kind": "clause",
+     "share": 0.9744,
+     "words": 39
+    },
+    {
+     "ref": "Annex 20 15",
+     "kind": "clause",
+     "share": 0.9632,
+     "words": 136
+    },
+    {
+     "ref": "Table 1 Grade",
+     "kind": "table_row",
+     "share": 0.9643,
+     "words": 28
+    },
+    {
+     "ref": "Table 5 Grade",
+     "kind": "table_row",
+     "share": 0.9286,
+     "words": 28
+    },
+    {
+     "ref": "Table 6 Grade",
+     "kind": "table_row",
+     "share": 0.9375,
+     "words": 32
+    },
+    {
+     "ref": "Table 7 Example Products",
+     "kind": "table_row",
+     "share": 0.8889,
+     "words": 9
+    },
+    {
+     "ref": "Table 7 Gene therapy: in vivo non- viral\u2026",
+     "kind": "table_row",
+     "share": 0.9565,
+     "words": 23
+    },
+    {
+     "ref": "Table 7 Somatic cell therapy",
+     "kind": "table_row",
+     "share": 0.9714,
+     "words": 35
+    },
+    {
+     "ref": "Table 7 Tissue engineered products",
+     "kind": "table_row",
+     "share": 0.9737,
+     "words": 38
+    },
+    {
+     "ref": "Table 12 1. Animal or plant sources\u2026",
+     "kind": "table_row",
+     "share": 0.9706,
+     "words": 34
+    },
+    {
+     "ref": "Table 13 6. Human sources",
+     "kind": "table_row",
+     "share": 0.9524,
+     "words": 21
+    },
+    {
+     "ref": "Table 17 World Health Organization WHO Technical\u2026",
+     "kind": "table_row",
+     "share": 0.9636,
+     "words": 55
+    }
+   ]
+  },
+  "pics-pe009-18-part1.pdf": {
+   "clauses": 286,
+   "median": 1.0,
+   "min": 0.9808,
+   "flagged": [
+    {
+     "ref": "Part I 1.7",
+     "kind": "clause",
+     "share": 0.9808,
+     "words": 52
+    },
+    {
+     "ref": "Part I 1.13",
+     "kind": "clause",
+     "share": 0.989,
+     "words": 91
+    },
+    {
+     "ref": "Part I 2.4",
+     "kind": "clause",
+     "share": 0.9889,
+     "words": 90
+    }
+   ]
+  },
+  "pics-pe009-18-part2.pdf": {
+   "clauses": 449,
+   "median": 1.0,
+   "min": 0.9756,
+   "flagged": [
+    {
+     "ref": "Part II 2.21",
+     "kind": "clause",
+     "share": 0.9891,
+     "words": 92
+    },
+    {
+     "ref": "Part II 4.15",
+     "kind": "clause",
+     "share": 0.9865,
+     "words": 74
+    },
+    {
+     "ref": "Part II 4.33",
+     "kind": "clause",
+     "share": 0.9756,
+     "words": 41
+    }
+   ]
+  },
+  "pics-pi006-4-qualification-validation.pdf": {
+   "clauses": 282,
+   "median": 1.0,
+   "min": 0.985,
+   "flagged": [
+    {
+     "ref": "5.2.2",
+     "kind": "clause",
+     "share": 0.985,
+     "words": 133
+    },
+    {
+     "ref": "5.5.2",
+     "kind": "clause",
+     "share": 0.9881,
+     "words": 168
+    }
+   ]
+  },
+  "pics-pi007-6-aseptic-validation.pdf": {
+   "clauses": 172,
+   "median": 1.0,
+   "min": 1.0,
+   "flagged": []
+  },
+  "pics-pi009-4-am-utilities.pdf": {
+   "clauses": 56,
+   "median": 1.0,
+   "min": 0.9556,
+   "flagged": [
+    {
+     "ref": "Table 2 1.6",
+     "kind": "table_row",
+     "share": 0.9556,
+     "words": 45
+    },
+    {
+     "ref": "Table 3 2.3",
+     "kind": "table_row",
+     "share": 0.9884,
+     "words": 172
+    },
+    {
+     "ref": "Table 4 3.3",
+     "kind": "table_row",
+     "share": 0.9878,
+     "words": 82
+    }
+   ]
+  },
+  "pics-pi011-3-computerised-systems.pdf": {
+   "clauses": 260,
+   "median": 1.0,
+   "min": 0.8525,
+   "flagged": [
+    {
+     "ref": "2.2",
+     "kind": "clause",
+     "share": 0.9818,
+     "words": 110
+    },
+    {
+     "ref": "3.5",
+     "kind": "clause",
+     "share": 0.9789,
+     "words": 95
+    },
+    {
+     "ref": "4.8",
+     "kind": "clause",
+     "share": 0.9867,
+     "words": 150
+    },
+    {
+     "ref": "5.1",
+     "kind": "clause",
+     "share": 0.9849,
+     "words": 265
+    },
+    {
+     "ref": "5.2",
+     "kind": "clause",
+     "share": 0.9863,
+     "words": 219
+    },
+    {
+     "ref": "6.1",
+     "kind": "clause",
+     "share": 0.9851,
+     "words": 67
+    },
+    {
+     "ref": "7.3",
+     "kind": "clause",
+     "share": 0.9706,
+     "words": 102
+    },
+    {
+     "ref": "8.5",
+     "kind": "clause",
+     "share": 0.9808,
+     "words": 104
+    },
+    {
+     "ref": "8.6",
+     "kind": "clause",
+     "share": 0.9836,
+     "words": 122
+    },
+    {
+     "ref": "9.1",
+     "kind": "clause",
+     "share": 0.9802,
+     "words": 101
+    },
+    {
+     "ref": "9.3",
+     "kind": "clause",
+     "share": 0.9881,
+     "words": 252
+    },
+    {
+     "ref": "11",
+     "kind": "clause",
+     "share": 0.8525,
+     "words": 61
+    },
+    {
+     "ref": "13.4",
+     "kind": "clause",
+     "share": 0.9726,
+     "words": 73
+    },
+    {
+     "ref": "14.2",
+     "kind": "clause",
+     "share": 0.9835,
+     "words": 182
+    },
+    {
+     "ref": "14.3",
+     "kind": "clause",
+     "share": 0.9886,
+     "words": 176
+    },
+    {
+     "ref": "14.4",
+     "kind": "clause",
+     "share": 0.9891,
+     "words": 92
+    },
+    {
+     "ref": "16.2",
+     "kind": "clause",
+     "share": 0.9818,
+     "words": 110
+    },
+    {
+     "ref": "16.4",
+     "kind": "clause",
+     "share": 0.9794,
+     "words": 97
+    },
+    {
+     "ref": "17.2",
+     "kind": "clause",
+     "share": 0.985,
+     "words": 133
+    },
+    {
+     "ref": "18.6",
+     "kind": "clause",
+     "share": 0.9785,
+     "words": 93
+    },
+    {
+     "ref": "20.1",
+     "kind": "clause",
+     "share": 0.9557,
+     "words": 158
+    },
+    {
+     "ref": "20.2",
+     "kind": "clause",
+     "share": 0.9845,
+     "words": 129
+    },
+    {
+     "ref": "21.1",
+     "kind": "clause",
+     "share": 0.987,
+     "words": 77
+    },
+    {
+     "ref": "21.5",
+     "kind": "clause",
+     "share": 0.9747,
+     "words": 158
+    },
+    {
+     "ref": "21.7",
+     "kind": "clause",
+     "share": 0.9831,
+     "words": 59
+    },
+    {
+     "ref": "21.8",
+     "kind": "clause",
+     "share": 0.9897,
+     "words": 97
+    },
+    {
+     "ref": "21.10",
+     "kind": "clause",
+     "share": 0.9844,
+     "words": 128
+    },
+    {
+     "ref": "21.13",
+     "kind": "clause",
+     "share": 0.9765,
+     "words": 85
+    },
+    {
+     "ref": "22",
+     "kind": "clause",
+     "share": 0.9333,
+     "words": 30
+    },
+    {
+     "ref": "23.10",
+     "kind": "clause",
+     "share": 0.96,
+     "words": 100
+    },
+    {
+     "ref": "Table 3 2. Implementing #2",
+     "kind": "table_row",
+     "share": 0.9512,
+     "words": 41
+    },
+    {
+     "ref": "Table 5 (9)",
+     "kind": "table_row",
+     "share": 0.9412,
+     "words": 17
+    }
+   ]
+  },
+  "pics-pi012-3-sterility-testing.pdf": {
+   "clauses": 125,
+   "median": 1.0,
+   "min": 1.0,
+   "flagged": []
+  },
+  "pics-pi014-3-isolators.pdf": {
+   "clauses": 113,
+   "median": 1.0,
+   "min": 1.0,
+   "flagged": []
+  },
+  "pics-pi023-2-am-qc-labs.pdf": {
+   "clauses": 97,
+   "median": 1.0,
+   "min": 0.6364,
+   "flagged": [
+    {
+     "ref": "Table 3 1. #2",
+     "kind": "table_row",
+     "share": 0.96,
+     "words": 25
+    },
+    {
+     "ref": "Table 3 3.3.",
+     "kind": "table_row",
+     "share": 0.9865,
+     "words": 74
+    },
+    {
+     "ref": "Table 3 9.3.",
+     "kind": "table_row",
+     "share": 0.9608,
+     "words": 51
+    },
+    {
+     "ref": "Table 3 9.4.",
+     "kind": "table_row",
+     "share": 0.9765,
+     "words": 85
+    },
+    {
+     "ref": "Table 4 header",
+     "kind": "table_header",
+     "share": 0.6364,
+     "words": 11
+    },
+    {
+     "ref": "Table 4 1.2.",
+     "kind": "table_row",
+     "share": 0.9889,
+     "words": 90
+    },
+    {
+     "ref": "Table 4 header #2",
+     "kind": "table_header",
+     "share": 0.7273,
+     "words": 11
+    },
+    {
+     "ref": "Table 5 header",
+     "kind": "table_header",
+     "share": 0.7273,
+     "words": 11
+    }
+   ]
+  },
+  "pics-pi028-2-am-packaging.pdf": {
+   "clauses": 29,
+   "median": 1.0,
+   "min": 0.9,
+   "flagged": [
+    {
+     "ref": "Table 2 header",
+     "kind": "table_header",
+     "share": 0.9,
+     "words": 10
+    },
+    {
+     "ref": "Table 2 1.8",
+     "kind": "table_row",
+     "share": 0.9825,
+     "words": 114
+    }
+   ]
+  },
+  "pics-pi030-1-am-api.pdf": {
+   "clauses": 114,
+   "median": 1.0,
+   "min": 0.8182,
+   "flagged": [
+    {
+     "ref": "Table 3 header",
+     "kind": "table_header",
+     "share": 0.9091,
+     "words": 11
+    },
+    {
+     "ref": "Table 4 header",
+     "kind": "table_header",
+     "share": 0.9091,
+     "words": 11
+    },
+    {
+     "ref": "Table 5 header",
+     "kind": "table_header",
+     "share": 0.9091,
+     "words": 11
+    },
+    {
+     "ref": "Table 6 header",
+     "kind": "table_header",
+     "share": 0.9091,
+     "words": 11
+    },
+    {
+     "ref": "Table 7 header",
+     "kind": "table_header",
+     "share": 0.9091,
+     "words": 11
+    },
+    {
+     "ref": "Table 8 header",
+     "kind": "table_header",
+     "share": 0.9091,
+     "words": 11
+    },
+    {
+     "ref": "Table 9 header",
+     "kind": "table_header",
+     "share": 0.9091,
+     "words": 11
+    },
+    {
+     "ref": "Table 10 header",
+     "kind": "table_header",
+     "share": 0.9091,
+     "words": 11
+    },
+    {
+     "ref": "Table 14 header",
+     "kind": "table_header",
+     "share": 0.8182,
+     "words": 11
+    },
+    {
+     "ref": "Table 15 header",
+     "kind": "table_header",
+     "share": 0.8182,
+     "words": 11
+    },
+    {
+     "ref": "Table 16 header",
+     "kind": "table_header",
+     "share": 0.8182,
+     "words": 11
+    },
+    {
+     "ref": "Table 17 header",
+     "kind": "table_header",
+     "share": 0.9091,
+     "words": 11
+    },
+    {
+     "ref": "Table 18 header",
+     "kind": "table_header",
+     "share": 0.9091,
+     "words": 11
+    },
+    {
+     "ref": "Table 19 header",
+     "kind": "table_header",
+     "share": 0.9091,
+     "words": 11
+    }
+   ]
+  },
+  "pics-pi038-2-am-qrm.pdf": {
+   "clauses": 94,
+   "median": 1.0,
+   "min": 1.0,
+   "flagged": []
+  },
+  "pics-pi040-1-deficiency-classification.pdf": {
+   "clauses": 55,
+   "median": 1.0,
+   "min": 1.0,
+   "flagged": []
+  },
+  "pics-pi041-1-data-integrity.pdf": {
+   "clauses": 401,
+   "median": 1.0,
+   "min": 0.9091,
+   "flagged": [
+    {
+     "ref": "Table 8 2.",
+     "kind": "table_row",
+     "share": 0.9091,
+     "words": 11
+    }
+   ]
+  },
+  "pics-pi043-1-am-cross-contamination.pdf": {
+   "clauses": 154,
+   "median": 1.0,
+   "min": 0.96,
+   "flagged": [
+    {
+     "ref": "5.1.2",
+     "kind": "clause",
+     "share": 0.9689,
+     "words": 193
+    },
+    {
+     "ref": "Table 8 3.16",
+     "kind": "table_row",
+     "share": 0.9762,
+     "words": 42
+    },
+    {
+     "ref": "Table 9 3.46",
+     "kind": "table_row",
+     "share": 0.96,
+     "words": 25
+    }
+   ]
+  },
+  "pics-pi045-1-excipient-risk-assessment.pdf": {
+   "clauses": 26,
+   "median": 1.0,
+   "min": 1.0,
+   "flagged": []
+  },
+  "pics-pi047-1-gdp-active-substances.pdf": {
+   "clauses": 70,
+   "median": 1.0,
+   "min": 1.0,
+   "flagged": []
+  },
+  "pics-pi052-1-am-hbel.pdf": {
+   "clauses": 39,
+   "median": 1.0,
+   "min": 1.0,
+   "flagged": []
+  },
+  "pics-pi053-1-qa-cross-contamination.pdf": {
+   "clauses": 18,
+   "median": 1.0,
+   "min": 1.0,
+   "flagged": []
+  },
+  "pics-pi054-1-pqs-effectiveness.pdf": {
+   "clauses": 125,
+   "median": 1.0,
+   "min": 1.0,
+   "flagged": []
+  },
+  "pics-pi058-1-annex1-interpretation.pdf": {
+   "clauses": 109,
+   "median": 1.0,
+   "min": 0.9756,
+   "flagged": [
+    {
+     "ref": "Table 2 Scope (Q#2)",
+     "kind": "table_row",
+     "share": 0.9898,
+     "words": 98
+    },
+    {
+     "ref": "Table 4 4.22 (Q#1)",
+     "kind": "table_row",
+     "share": 0.9877,
+     "words": 81
+    },
+    {
+     "ref": "Table 8 8.23 (Q#1)",
+     "kind": "table_row",
+     "share": 0.988,
+     "words": 83
+    },
+    {
+     "ref": "Table 8 8.87, 8.92",
+     "kind": "table_row",
+     "share": 0.9756,
+     "words": 82
+    }
+   ]
+  },
+  "who-trs1010-a10-stability.pdf": {
+   "clauses": 82,
+   "median": 1.0,
+   "min": 0.9906,
+   "flagged": []
+  },
+  "who-trs1010-a8-hvac-nonsterile.pdf": {
+   "clauses": 121,
+   "median": 1.0,
+   "min": 0.0,
+   "flagged": [
+    {
+     "ref": "Table 1 ISO 29463",
+     "kind": "table_row",
+     "share": 0.0,
+     "words": 2
+    },
+    {
+     "ref": "Table 1 EN 779 & EN 1822",
+     "kind": "table_row",
+     "share": 0.1707,
+     "words": 41
+    },
+    {
+     "ref": "Table 1 Eurovent 4/5 ASHRAE 52.1 BS6540 Part 1",
+     "kind": "table_row",
+     "share": 0.25,
+     "words": 20
+    },
+    {
+     "ref": "Table 1 Eurovent 4/5 ASHRAE 52.1 BS6540 Part 1 #2",
+     "kind": "table_row",
+     "share": 0.3333,
+     "words": 15
+    },
+    {
+     "ref": "Table 1 ASHRAE 52.2",
+     "kind": "table_row",
+     "share": 0.1538,
+     "words": 13
+    },
+    {
+     "ref": "Table 1 Eurovent 4/5 rating",
+     "kind": "table_row",
+     "share": 0.5,
+     "words": 4
+    },
+    {
+     "ref": "Table 2 ISO 29463",
+     "kind": "table_row",
+     "share": 0.0,
+     "words": 2
+    },
+    {
+     "ref": "Table 2 header",
+     "kind": "table_header",
+     "share": 0.0,
+     "words": 9
+    },
+    {
+     "ref": "Table 2 row 3",
+     "kind": "table_row",
+     "share": 0.0,
+     "words": 8
+    },
+    {
+     "ref": "Table 2 Eurovent 4/5 ASHRAE 52.1 BS6540 Part 1",
+     "kind": "table_row",
+     "share": 0.25,
+     "words": 28
+    },
+    {
+     "ref": "Table 2 Eurovent 4/5 ASHRAE 52.1 BS6540 Part 1 #2",
+     "kind": "table_row",
+     "share": 0.1923,
+     "words": 26
+    },
+    {
+     "ref": "Table 2 ASHRAE 52.2",
+     "kind": "table_row",
+     "share": 0.381,
+     "words": 21
+    },
+    {
+     "ref": "Table 2 Eurovent 4/5 rating",
+     "kind": "table_row",
+     "share": 0.5,
+     "words": 4
+    },
+    {
+     "ref": "Table 3 ISO 29463",
+     "kind": "table_row",
+     "share": 0.0,
+     "words": 2
+    },
+    {
+     "ref": "Table 3 header",
+     "kind": "table_header",
+     "share": 0.0,
+     "words": 9
+    },
+    {
+     "ref": "Table 3 row 3",
+     "kind": "table_row",
+     "share": 0.0,
+     "words": 6
+    },
+    {
+     "ref": "Table 3 Eurovent 4/5 ASHRAE 52.1 BS6540 Part 1",
+     "kind": "table_row",
+     "share": 0.4,
+     "words": 15
+    },
+    {
+     "ref": "Table 3 Eurovent 4/5 ASHRAE 52.1 BS6540 Part 1 #2",
+     "kind": "table_row",
+     "share": 0.2941,
+     "words": 17
+    },
+    {
+     "ref": "Table 3 ASHRAE 52.2",
+     "kind": "table_row",
+     "share": 0.4615,
+     "words": 13
+    },
+    {
+     "ref": "Table 3 Eurovent 4/5 rating",
+     "kind": "table_row",
+     "share": 0.5,
+     "words": 4
+    }
+   ]
+  },
+  "who-trs1019-a2-hvac-nonsterile-part2.pdf": {
+   "clauses": 24,
+   "median": 1.0,
+   "min": 0.9986,
+   "flagged": []
+  },
+  "who-trs1019-a3-validation.pdf": {
+   "clauses": 407,
+   "median": 1.0,
+   "min": 0.9927,
+   "flagged": []
+  },
+  "who-trs1025-a3-wfi-non-distillation.pdf": {
+   "clauses": 39,
+   "median": 1.0,
+   "min": 0.8056,
+   "flagged": [
+    {
+     "ref": "3.2",
+     "kind": "clause",
+     "share": 0.8056,
+     "words": 36
+    },
+    {
+     "ref": "7.2",
+     "kind": "clause",
+     "share": 0.9412,
+     "words": 34
+    }
+   ]
+  },
+  "who-trs1025-a4-chromatography.pdf": {
+   "clauses": 100,
+   "median": 1.0,
+   "min": 1.0,
+   "flagged": []
+  },
+  "who-trs1025-a6-amr-environment.pdf": {
+   "clauses": 14,
+   "median": 1.0,
+   "min": 0.998,
+   "flagged": []
+  },
+  "who-trs1025-a7-storage-distribution.pdf": {
+   "clauses": 215,
+   "median": 1.0,
+   "min": 0.9809,
+   "flagged": [
+    {
+     "ref": "Appendix 1",
+     "kind": "section",
+     "share": 0.9809,
+     "words": 209
+    }
+   ]
+  },
+  "who-trs1033-a2-hbel-cleaning.pdf": {
+   "clauses": 51,
+   "median": 1.0,
+   "min": 0.8889,
+   "flagged": [
+    {
+     "ref": "Appendix 1",
+     "kind": "section",
+     "share": 0.985,
+     "words": 466
+    },
+    {
+     "ref": "Table 2 Pre- Ce- ding Product a",
+     "kind": "table_row",
+     "share": 0.8889,
+     "words": 9
+    }
+   ]
+  },
+  "who-trs1033-a3-water.pdf": {
+   "clauses": 121,
+   "median": 1.0,
+   "min": 1.0,
+   "flagged": []
+  },
+  "who-trs1033-a4-data-integrity.pdf": {
+   "clauses": 88,
+   "median": 1.0,
+   "min": 1.0,
+   "flagged": []
+  },
+  "who-trs1044-a2-sterile.pdf": {
+   "clauses": 315,
+   "median": 1.0,
+   "min": 0.9609,
+   "flagged": [
+    {
+     "ref": "4.25",
+     "kind": "clause",
+     "share": 0.9856,
+     "words": 139
+    },
+    {
+     "ref": "8.10",
+     "kind": "clause",
+     "share": 0.9609,
+     "words": 230
+    },
+    {
+     "ref": "8.68",
+     "kind": "clause",
+     "share": 0.9846,
+     "words": 65
+    }
+   ]
+  },
+  "who-trs1044-a4-tech-transfer.pdf": {
+   "clauses": 136,
+   "median": 1.0,
+   "min": 1.0,
+   "flagged": []
+  },
+  "who-trs1052-a4-qc-labs.pdf": {
+   "clauses": 382,
+   "median": 1.0,
+   "min": 0.8772,
+   "flagged": [
+    {
+     "ref": "Appendix 1",
+     "kind": "section",
+     "share": 0.9847,
+     "words": 914
+    },
+    {
+     "ref": "Appendix 2",
+     "kind": "section",
+     "share": 0.9648,
+     "words": 1365
+    },
+    {
+     "ref": "Appendix 2 1.0",
+     "kind": "clause",
+     "share": 0.9877,
+     "words": 405
+    },
+    {
+     "ref": "Appendix 3 #2",
+     "kind": "section",
+     "share": 0.9834,
+     "words": 901
+    },
+    {
+     "ref": "Appendix 3 1 #2",
+     "kind": "clause",
+     "share": 0.8772,
+     "words": 114
+    },
+    {
+     "ref": "Appendix 3 2",
+     "kind": "clause",
+     "share": 0.944,
+     "words": 125
+    },
+    {
+     "ref": "Appendix 3 1 #3",
+     "kind": "clause",
+     "share": 0.9091,
+     "words": 22
+    },
+    {
+     "ref": "Appendix 3 2 #2",
+     "kind": "clause",
+     "share": 0.9,
+     "words": 10
+    },
+    {
+     "ref": "Appendix 3 3 #2",
+     "kind": "clause",
+     "share": 0.9167,
+     "words": 12
+    },
+    {
+     "ref": "Appendix 3 4 #2",
+     "kind": "clause",
+     "share": 0.9167,
+     "words": 12
+    },
+    {
+     "ref": "Appendix 3 5 #2",
+     "kind": "clause",
+     "share": 0.9048,
+     "words": 21
+    },
+    {
+     "ref": "Appendix 3 6 #2",
+     "kind": "clause",
+     "share": 0.9,
+     "words": 10
+    },
+    {
+     "ref": "Appendix 3 7 #2",
+     "kind": "clause",
+     "share": 0.9167,
+     "words": 12
+    },
+    {
+     "ref": "Appendix 3 8",
+     "kind": "clause",
+     "share": 0.9453,
+     "words": 439
+    }
+   ]
+  },
+  "who-trs1060-a2-nitrosamines.pdf": {
+   "clauses": 130,
+   "median": 1.0,
+   "min": 0.9365,
+   "flagged": [
+    {
+     "ref": "Appendix 1 1.8",
+     "kind": "clause",
+     "share": 0.9365,
+     "words": 63
+    }
+   ]
+  },
+  "who-trs1060-a3-excipients.pdf": {
+   "clauses": 272,
+   "median": 1.0,
+   "min": 0.7647,
+   "flagged": [
+    {
+     "ref": "Appendix 1 12.10",
+     "kind": "clause",
+     "share": 0.9796,
+     "words": 49
+    },
+    {
+     "ref": "Appendix 1 7.2 #2",
+     "kind": "clause",
+     "share": 0.8974,
+     "words": 39
+    },
+    {
+     "ref": "Table 1 header #2",
+     "kind": "table_header",
+     "share": 0.7647,
+     "words": 17
+    },
+    {
+     "ref": "Table 2 header #2",
+     "kind": "table_header",
+     "share": 0.7647,
+     "words": 17
+    },
+    {
+     "ref": "Table 3 header #2",
+     "kind": "table_header",
+     "share": 0.7647,
+     "words": 17
+    },
+    {
+     "ref": "Table 3 row 3",
+     "kind": "table_row",
+     "share": 0.9615,
+     "words": 52
+    }
+   ]
+  },
+  "who-trs902-a9-packaging.pdf": {
+   "clauses": 110,
+   "median": 1.0,
+   "min": 0.96,
+   "flagged": [
+    {
+     "ref": "Annex 9 Appendix 4 1.2.1",
+     "kind": "clause",
+     "share": 0.9882,
+     "words": 85
+    },
+    {
+     "ref": "Annex 9 Appendix 4 1.3.3",
+     "kind": "clause",
+     "share": 0.9868,
+     "words": 76
+    },
+    {
+     "ref": "Annex 9 Appendix 4 2.1.3",
+     "kind": "clause",
+     "share": 0.9848,
+     "words": 132
+    },
+    {
+     "ref": "Annex 9 Appendix 4 2.2.2",
+     "kind": "clause",
+     "share": 0.9884,
+     "words": 86
+    },
+    {
+     "ref": "Annex 9 Appendix 4 3.3.2",
+     "kind": "clause",
+     "share": 0.9762,
+     "words": 84
+    },
+    {
+     "ref": "Annex 9 Appendix 4 5.1.1",
+     "kind": "clause",
+     "share": 0.96,
+     "words": 25
+    },
+    {
+     "ref": "Annex 9 Appendix 4 5.2.1",
+     "kind": "clause",
+     "share": 0.9844,
+     "words": 128
+    },
+    {
+     "ref": "Annex 9 Appendix 4 5.2.2",
+     "kind": "clause",
+     "share": 0.9787,
+     "words": 47
+    },
+    {
+     "ref": "Annex 9 Appendix 4 5.2.3",
+     "kind": "clause",
+     "share": 0.9785,
+     "words": 93
+    }
+   ]
+  },
+  "who-trs929-a4-sampling.pdf": {
+   "clauses": 83,
+   "median": 1.0,
+   "min": 0.8333,
+   "flagged": [
+    {
+     "ref": "Annex 4 Appendix 5 4",
+     "kind": "clause",
+     "share": 0.8333,
+     "words": 6
+    }
+   ]
+  },
+  "who-trs943-a3-reference-substances.pdf": {
+   "clauses": 42,
+   "median": 0.9928,
+   "min": 0.9704,
+   "flagged": [
+    {
+     "ref": "_unnumbered:1",
+     "kind": "unnumbered",
+     "share": 0.986,
+     "words": 643
+    },
+    {
+     "ref": "Annex 3 Glossary",
+     "kind": "section",
+     "share": 0.9751,
+     "words": 362
+    },
+    {
+     "ref": "Annex 3 A 1",
+     "kind": "clause",
+     "share": 0.9709,
+     "words": 275
+    },
+    {
+     "ref": "Annex 3 A 2",
+     "kind": "clause",
+     "share": 0.9804,
+     "words": 459
+    },
+    {
+     "ref": "Annex 3 A 3.1",
+     "kind": "clause",
+     "share": 0.9714,
+     "words": 105
+    },
+    {
+     "ref": "Annex 3 A 3.2",
+     "kind": "clause",
+     "share": 0.9839,
+     "words": 124
+    },
+    {
+     "ref": "Annex 3 A 3.3",
+     "kind": "clause",
+     "share": 0.9874,
+     "words": 239
+    },
+    {
+     "ref": "Annex 3 A 4.1",
+     "kind": "clause",
+     "share": 0.9704,
+     "words": 203
+    },
+    {
+     "ref": "Annex 3 A 4.2.3",
+     "kind": "clause",
+     "share": 0.9856,
+     "words": 348
+    },
+    {
+     "ref": "Annex 3 A 6.3",
+     "kind": "clause",
+     "share": 0.9726,
+     "words": 475
+    },
+    {
+     "ref": "Annex 3 A 6.5",
+     "kind": "clause",
+     "share": 0.9847,
+     "words": 131
+    },
+    {
+     "ref": "Annex 3 B 4.3",
+     "kind": "clause",
+     "share": 0.9708,
+     "words": 171
+    },
+    {
+     "ref": "Annex 3 B 4.4",
+     "kind": "clause",
+     "share": 0.9897,
+     "words": 97
+    },
+    {
+     "ref": "Annex 3 B 4.5",
+     "kind": "clause",
+     "share": 0.9874,
+     "words": 159
+    },
+    {
+     "ref": "_unnumbered:2",
+     "kind": "unnumbered",
+     "share": 0.9718,
+     "words": 319
+    }
+   ]
+  },
+  "who-trs953-a2-app1-stability-conditions.pdf": {
+   "clauses": 208,
+   "median": 1.0,
+   "min": 0.8333,
+   "flagged": [
+    {
+     "ref": "Table 2 Brazil",
+     "kind": "table_row",
+     "share": 0.8333,
+     "words": 6
+    },
+    {
+     "ref": "Table 2 Canada",
+     "kind": "table_row",
+     "share": 0.9091,
+     "words": 11
+    },
+    {
+     "ref": "Table 2 Chile",
+     "kind": "table_row",
+     "share": 0.8333,
+     "words": 6
+    },
+    {
+     "ref": "Table 2 Peru",
+     "kind": "table_row",
+     "share": 0.8333,
+     "words": 6
+    },
+    {
+     "ref": "Table 2 United States of America",
+     "kind": "table_row",
+     "share": 0.9286,
+     "words": 14
+    },
+    {
+     "ref": "Table 2 Afghanistan",
+     "kind": "table_row",
+     "share": 0.8333,
+     "words": 6
+    },
+    {
+     "ref": "Table 2 Bahrain",
+     "kind": "table_row",
+     "share": 0.8333,
+     "words": 6
+    },
+    {
+     "ref": "Table 2 Djibouti",
+     "kind": "table_row",
+     "share": 0.8333,
+     "words": 6
+    },
+    {
+     "ref": "Table 2 Egypt",
+     "kind": "table_row",
+     "share": 0.8333,
+     "words": 6
+    },
+    {
+     "ref": "Table 2 Iran (Islamic Republic of)",
+     "kind": "table_row",
+     "share": 0.8889,
+     "words": 9
+    },
+    {
+     "ref": "Table 2 Iraq",
+     "kind": "table_row",
+     "share": 0.8333,
+     "words": 6
+    },
+    {
+     "ref": "Table 2 Jordan",
+     "kind": "table_row",
+     "share": 0.8333,
+     "words": 6
+    },
+    {
+     "ref": "Table 2 Kuwait",
+     "kind": "table_row",
+     "share": 0.8333,
+     "words": 6
+    },
+    {
+     "ref": "Table 2 Lebanon",
+     "kind": "table_row",
+     "share": 0.8333,
+     "words": 6
+    },
+    {
+     "ref": "Table 2 Libyan Arab Jamahiriya",
+     "kind": "table_row",
+     "share": 0.875,
+     "words": 8
+    },
+    {
+     "ref": "Table 2 Morocco",
+     "kind": "table_row",
+     "share": 0.8333,
+     "words": 6
+    },
+    {
+     "ref": "Table 2 Oman",
+     "kind": "table_row",
+     "share": 0.8333,
+     "words": 6
+    },
+    {
+     "ref": "Table 2 Pakistan",
+     "kind": "table_row",
+     "share": 0.8333,
+     "words": 6
+    },
+    {
+     "ref": "Table 2 Qatar",
+     "kind": "table_row",
+     "share": 0.8333,
+     "words": 6
+    },
+    {
+     "ref": "Table 2 Saudi Arabia",
+     "kind": "table_row",
+     "share": 0.8571,
+     "words": 7
+    },
+    {
+     "ref": "Table 2 Somalia",
+     "kind": "table_row",
+     "share": 0.8333,
+     "words": 6
+    },
+    {
+     "ref": "Table 2 Sudan",
+     "kind": "table_row",
+     "share": 0.8333,
+     "words": 6
+    },
+    {
+     "ref": "Table 2 Syrian Arab Republic",
+     "kind": "table_row",
+     "share": 0.875,
+     "words": 8
+    },
+    {
+     "ref": "Table 2 Tunisia",
+     "kind": "table_row",
+     "share": 0.8333,
+     "words": 6
+    },
+    {
+     "ref": "Table 2 United Arab Emirates",
+     "kind": "table_row",
+     "share": 0.875,
+     "words": 8
+    },
+    {
+     "ref": "Table 2 Yemen",
+     "kind": "table_row",
+     "share": 0.8333,
+     "words": 6
+    },
+    {
+     "ref": "Table 3 Austria",
+     "kind": "table_row",
+     "share": 0.9091,
+     "words": 11
+    },
+    {
+     "ref": "Table 3 Azerbaijan",
+     "kind": "table_row",
+     "share": 0.8333,
+     "words": 6
+    },
+    {
+     "ref": "Table 3 Belgium",
+     "kind": "table_row",
+     "share": 0.9091,
+     "words": 11
+    },
+    {
+     "ref": "Table 3 Bulgaria",
+     "kind": "table_row",
+     "share": 0.9091,
+     "words": 11
+    },
+    {
+     "ref": "Table 3 Cyprus",
+     "kind": "table_row",
+     "share": 0.9091,
+     "words": 11
+    },
+    {
+     "ref": "Table 3 Czech Republic",
+     "kind": "table_row",
+     "share": 0.9167,
+     "words": 12
+    },
+    {
+     "ref": "Table 3 Denmark",
+     "kind": "table_row",
+     "share": 0.9091,
+     "words": 11
+    },
+    {
+     "ref": "Table 3 Estonia",
+     "kind": "table_row",
+     "share": 0.9091,
+     "words": 11
+    },
+    {
+     "ref": "Table 3 Finland",
+     "kind": "table_row",
+     "share": 0.9091,
+     "words": 11
+    },
+    {
+     "ref": "Table 3 France",
+     "kind": "table_row",
+     "share": 0.9091,
+     "words": 11
+    },
+    {
+     "ref": "Table 3 Germany",
+     "kind": "table_row",
+     "share": 0.9091,
+     "words": 11
+    },
+    {
+     "ref": "Table 3 Greece",
+     "kind": "table_row",
+     "share": 0.9091,
+     "words": 11
+    },
+    {
+     "ref": "Table 3 Hungary",
+     "kind": "table_row",
+     "share": 0.9091,
+     "words": 11
+    },
+    {
+     "ref": "Table 3 Ireland",
+     "kind": "table_row",
+     "share": 0.9091,
+     "words": 11
+    },
+    {
+     "ref": "Table 3 Israel",
+     "kind": "table_row",
+     "share": 0.9091,
+     "words": 11
+    },
+    {
+     "ref": "Table 3 Italy",
+     "kind": "table_row",
+     "share": 0.9091,
+     "words": 11
+    },
+    {
+     "ref": "Table 3 Latvia",
+     "kind": "table_row",
+     "share": 0.9091,
+     "words": 11
+    },
+    {
+     "ref": "Table 3 Lithuania",
+     "kind": "table_row",
+     "share": 0.9091,
+     "words": 11
+    }
+   ]
+  },
+  "who-trs957-a2-api.pdf": {
+   "clauses": 559,
+   "median": 1.0,
+   "min": 0.6667,
+   "flagged": [
+    {
+     "ref": "Annex 2",
+     "kind": "section",
+     "share": 0.9,
+     "words": 10
+    },
+    {
+     "ref": "Annex 2 3.1",
+     "kind": "clause",
+     "share": 0.75,
+     "words": 4
+    },
+    {
+     "ref": "Annex 2 6.1",
+     "kind": "clause",
+     "share": 0.8333,
+     "words": 6
+    },
+    {
+     "ref": "Annex 2 9",
+     "kind": "clause",
+     "share": 0.8889,
+     "words": 9
+    },
+    {
+     "ref": "Annex 2 11.4",
+     "kind": "clause",
+     "share": 0.8,
+     "words": 5
+    },
+    {
+     "ref": "Annex 2 12.3",
+     "kind": "clause",
+     "share": 0.6667,
+     "words": 3
+    },
+    {
+     "ref": "Annex 2 18",
+     "kind": "clause",
+     "share": 0.9,
+     "words": 10
+    },
+    {
+     "ref": "Annex 2 18.4",
+     "kind": "clause",
+     "share": 0.8333,
+     "words": 6
+    },
+    {
+     "ref": "Annex 2 Appendix 2",
+     "kind": "section",
+     "share": 0.9667,
+     "words": 30
+    },
+    {
+     "ref": "Annex 2 Appendix 2 1.1",
+     "kind": "clause",
+     "share": 0.9742,
+     "words": 233
+    },
+    {
+     "ref": "Annex 2 Appendix 2 1.2",
+     "kind": "clause",
+     "share": 0.9608,
+     "words": 51
+    },
+    {
+     "ref": "Annex 2 Appendix 2 1.3",
+     "kind": "clause",
+     "share": 0.9774,
+     "words": 575
+    },
+    {
+     "ref": "Annex 2 Appendix 2 2",
+     "kind": "clause",
+     "share": 0.6667,
+     "words": 3
+    },
+    {
+     "ref": "Annex 2 Appendix 2 2.12",
+     "kind": "clause",
+     "share": 0.9333,
+     "words": 45
+    },
+    {
+     "ref": "Annex 2 Appendix 2 2.13",
+     "kind": "clause",
+     "share": 0.9811,
+     "words": 53
+    },
+    {
+     "ref": "Annex 2 Appendix 2 2.14",
+     "kind": "clause",
+     "share": 0.9231,
+     "words": 13
+    },
+    {
+     "ref": "Annex 2 Appendix 2 2.18",
+     "kind": "clause",
+     "share": 0.9697,
+     "words": 33
+    },
+    {
+     "ref": "Annex 2 Appendix 2 2.3",
+     "kind": "clause",
+     "share": 0.9877,
+     "words": 163
+    },
+    {
+     "ref": "Annex 2 Appendix 2 2.41",
+     "kind": "clause",
+     "share": 0.9412,
+     "words": 34
+    },
+    {
+     "ref": "Annex 2 Appendix 2 2.50",
+     "kind": "clause",
+     "share": 0.989,
+     "words": 91
+    },
+    {
+     "ref": "Annex 2 Appendix 2 3.1",
+     "kind": "clause",
+     "share": 0.75,
+     "words": 4
+    },
+    {
+     "ref": "Annex 2 Appendix 2 3.10",
+     "kind": "clause",
+     "share": 0.9643,
+     "words": 28
+    },
+    {
+     "ref": "Annex 2 Appendix 2 3.11",
+     "kind": "clause",
+     "share": 0.95,
+     "words": 20
+    },
+    {
+     "ref": "Annex 2 Appendix 2 3.12",
+     "kind": "clause",
+     "share": 0.9773,
+     "words": 44
+    },
+    {
+     "ref": "Annex 2 Appendix 2 3.24",
+     "kind": "clause",
+     "share": 0.9896,
+     "words": 96
+    },
+    {
+     "ref": "Annex 2 Appendix 2 3.30",
+     "kind": "clause",
+     "share": 0.9706,
+     "words": 34
+    },
+    {
+     "ref": "Annex 2 Appendix 2 3.31",
+     "kind": "clause",
+     "share": 0.9474,
+     "words": 19
+    },
+    {
+     "ref": "Annex 2 Appendix 2 4",
+     "kind": "clause",
+     "share": 0.75,
+     "words": 4
+    },
+    {
+     "ref": "Annex 2 Appendix 2 4.10",
+     "kind": "clause",
+     "share": 0.9853,
+     "words": 68
+    },
+    {
+     "ref": "Annex 2 Appendix 2 4.13",
+     "kind": "clause",
+     "share": 0.9545,
+     "words": 22
+    },
+    {
+     "ref": "Annex 2 Appendix 2 4.14",
+     "kind": "clause",
+     "share": 0.9697,
+     "words": 66
+    },
+    {
+     "ref": "Annex 2 Appendix 2 4.20",
+     "kind": "clause",
+     "share": 0.9778,
+     "words": 45
+    },
+    {
+     "ref": "Annex 2 Appendix 2 4.21",
+     "kind": "clause",
+     "share": 0.9848,
+     "words": 66
+    },
+    {
+     "ref": "Annex 2 Appendix 2 4.23",
+     "kind": "clause",
+     "share": 0.9737,
+     "words": 38
+    },
+    {
+     "ref": "Annex 2 Appendix 2 4.31",
+     "kind": "clause",
+     "share": 0.9474,
+     "words": 19
+    },
+    {
+     "ref": "Annex 2 Appendix 2 4.32",
+     "kind": "clause",
+     "share": 0.9286,
+     "words": 42
+    },
+    {
+     "ref": "Annex 2 Appendix 2 4.33",
+     "kind": "clause",
+     "share": 0.9667,
+     "words": 30
+    },
+    {
+     "ref": "Annex 2 Appendix 2 4.34",
+     "kind": "clause",
+     "share": 0.96,
+     "words": 50
+    },
+    {
+     "ref": "Annex 2 Appendix 2 4.60",
+     "kind": "clause",
+     "share": 0.9787,
+     "words": 47
+    },
+    {
+     "ref": "Annex 2 Appendix 2 5",
+     "kind": "clause",
+     "share": 0.6667,
+     "words": 3
+    },
+    {
+     "ref": "Annex 2 Appendix 2 5.11",
+     "kind": "clause",
+     "share": 0.9394,
+     "words": 33
+    },
+    {
+     "ref": "Annex 2 Appendix 2 5.12",
+     "kind": "clause",
+     "share": 0.9231,
+     "words": 13
+    },
+    {
+     "ref": "Annex 2 Appendix 2 5.13",
+     "kind": "clause",
+     "share": 0.963,
+     "words": 27
+    },
+    {
+     "ref": "Annex 2 Appendix 2 5.14",
+     "kind": "clause",
+     "share": 0.942,
+     "words": 69
+    },
+    {
+     "ref": "Annex 2 Appendix 2 5.21",
+     "kind": "clause",
+     "share": 0.9862,
+     "words": 145
+    },
+    {
+     "ref": "Annex 2 Appendix 2 5.22",
+     "kind": "clause",
+     "share": 0.9512,
+     "words": 41
+    },
+    {
+     "ref": "Annex 2 Appendix 2 5.25",
+     "kind": "clause",
+     "share": 0.9,
+     "words": 20
+    },
+    {
+     "ref": "Annex 2 Appendix 2 5.26",
+     "kind": "clause",
+     "share": 0.9412,
+     "words": 17
+    },
+    {
+     "ref": "Annex 2 Appendix 2 5.31",
+     "kind": "clause",
+     "share": 0.9375,
+     "words": 16
+    },
+    {
+     "ref": "Annex 2 Appendix 2 5.33",
+     "kind": "clause",
+     "share": 0.9286,
+     "words": 14
+    },
+    {
+     "ref": "Annex 2 Appendix 2 5.41",
+     "kind": "clause",
+     "share": 0.9048,
+     "words": 21
+    },
+    {
+     "ref": "Annex 2 Appendix 2 5.42",
+     "kind": "clause",
+     "share": 0.975,
+     "words": 40
+    },
+    {
+     "ref": "Annex 2 Appendix 2 5.43",
+     "kind": "clause",
+     "share": 0.9836,
+     "words": 61
+    },
+    {
+     "ref": "Annex 2 Appendix 2 5.47",
+     "kind": "clause",
+     "share": 0.9833,
+     "words": 60
+    },
+    {
+     "ref": "Annex 2 Appendix 2 6",
+     "kind": "clause",
+     "share": 0.75,
+     "words": 4
+    },
+    {
+     "ref": "Annex 2 Appendix 2 6.1",
+     "kind": "clause",
+     "share": 0.8333,
+     "words": 6
+    },
+    {
+     "ref": "Annex 2 Appendix 2 6.12",
+     "kind": "clause",
+     "share": 0.9773,
+     "words": 44
+    },
+    {
+     "ref": "Annex 2 Appendix 2 6.16",
+     "kind": "clause",
+     "share": 0.9286,
+     "words": 56
+    },
+    {
+     "ref": "Annex 2 Appendix 2 6.17",
+     "kind": "clause",
+     "share": 0.9683,
+     "words": 63
+    },
+    {
+     "ref": "Annex 2 Appendix 2 6.30",
+     "kind": "clause",
+     "share": 0.975,
+     "words": 120
+    },
+    {
+     "ref": "Annex 2 Appendix 2 6.41",
+     "kind": "clause",
+     "share": 0.9805,
+     "words": 205
+    },
+    {
+     "ref": "Annex 2 Appendix 2 6.51",
+     "kind": "clause",
+     "share": 0.9302,
+     "words": 43
+    },
+    {
+     "ref": "Annex 2 Appendix 2 6.52",
+     "kind": "clause",
+     "share": 0.9784,
+     "words": 139
+    },
+    {
+     "ref": "Annex 2 Appendix 2 6.53",
+     "kind": "clause",
+     "share": 0.9545,
+     "words": 44
+    },
+    {
+     "ref": "Annex 2 Appendix 2 6.60",
+     "kind": "clause",
+     "share": 0.9865,
+     "words": 223
+    },
+    {
+     "ref": "Annex 2 Appendix 2 6.61",
+     "kind": "clause",
+     "share": 0.9474,
+     "words": 38
+    },
+    {
+     "ref": "Annex 2 Appendix 2 6.70",
+     "kind": "clause",
+     "share": 0.9767,
+     "words": 43
+    },
+    {
+     "ref": "Annex 2 Appendix 2 6.71",
+     "kind": "clause",
+     "share": 0.9828,
+     "words": 58
+    },
+    {
+     "ref": "Annex 2 Appendix 2 7.10",
+     "kind": "clause",
+     "share": 0.9545,
+     "words": 22
+    },
+    {
+     "ref": "Annex 2 Appendix 2 7.12",
+     "kind": "clause",
+     "share": 0.9524,
+     "words": 21
+    },
+    {
+     "ref": "Annex 2 Appendix 2 7.21",
+     "kind": "clause",
+     "share": 0.9762,
+     "words": 42
+    },
+    {
+     "ref": "Annex 2 Appendix 2 7.22",
+     "kind": "clause",
+     "share": 0.9783,
+     "words": 46
+    },
+    {
+     "ref": "Annex 2 Appendix 2 7.23",
+     "kind": "clause",
+     "share": 0.8824,
+     "words": 17
+    },
+    {
+     "ref": "Annex 2 Appendix 2 7.24",
+     "kind": "clause",
+     "share": 0.9796,
+     "words": 49
+    },
+    {
+     "ref": "Annex 2 Appendix 2 7.30",
+     "kind": "clause",
+     "share": 0.9825,
+     "words": 57
+    },
+    {
+     "ref": "Annex 2 Appendix 2 7.31",
+     "kind": "clause",
+     "share": 0.9583,
+     "words": 72
+    },
+    {
+     "ref": "Annex 2 Appendix 2 7.32",
+     "kind": "clause",
+     "share": 0.963,
+     "words": 81
+    },
+    {
+     "ref": "Annex 2 Appendix 2 7.34",
+     "kind": "clause",
+     "share": 0.96,
+     "words": 25
+    },
+    {
+     "ref": "Annex 2 Appendix 2 7.41",
+     "kind": "clause",
+     "share": 0.9231,
+     "words": 26
+    },
+    {
+     "ref": "Annex 2 Appendix 2 7.42",
+     "kind": "clause",
+     "share": 0.9706,
+     "words": 34
+    },
+    {
+     "ref": "Annex 2 Appendix 2 7.44",
+     "kind": "clause",
+     "share": 0.9524,
+     "words": 21
+    },
+    {
+     "ref": "Annex 2 Appendix 2 8",
+     "kind": "clause",
+     "share": 0.8333,
+     "words": 6
+    },
+    {
+     "ref": "Annex 2 Appendix 2 8.11",
+     "kind": "clause",
+     "share": 0.9831,
+     "words": 59
+    },
+    {
+     "ref": "Annex 2 Appendix 2 8.12",
+     "kind": "clause",
+     "share": 0.975,
+     "words": 40
+    },
+    {
+     "ref": "Annex 2 Appendix 2 8.20",
+     "kind": "clause",
+     "share": 0.9722,
+     "words": 72
+    },
+    {
+     "ref": "Annex 2 Appendix 2 8.30",
+     "kind": "clause",
+     "share": 0.9804,
+     "words": 51
+    },
+    {
+     "ref": "Annex 2 Appendix 2 8.31",
+     "kind": "clause",
+     "share": 0.9861,
+     "words": 72
+    },
+    {
+     "ref": "Annex 2 Appendix 2 8.33",
+     "kind": "clause",
+     "share": 0.9808,
+     "words": 52
+    },
+    {
+     "ref": "Annex 2 Appendix 2 8.34",
+     "kind": "clause",
+     "share": 0.963,
+     "words": 27
+    },
+    {
+     "ref": "Annex 2 Appendix 2 8.40",
+     "kind": "clause",
+     "share": 0.9722,
+     "words": 72
+    },
+    {
+     "ref": "Annex 2 Appendix 2 8.41",
+     "kind": "clause",
+     "share": 0.9565,
+     "words": 46
+    },
+    {
+     "ref": "Annex 2 Appendix 2 8.43",
+     "kind": "clause",
+     "share": 0.9583,
+     "words": 24
+    },
+    {
+     "ref": "Annex 2 Appendix 2 8.46",
+     "kind": "clause",
+     "share": 0.9474,
+     "words": 19
+    },
+    {
+     "ref": "Annex 2 Appendix 2 8.50",
+     "kind": "clause",
+     "share": 0.9783,
+     "words": 92
+    },
+    {
+     "ref": "Annex 2 Appendix 2 8.52",
+     "kind": "clause",
+     "share": 0.9333,
+     "words": 15
+    },
+    {
+     "ref": "Annex 2 Appendix 2 9",
+     "kind": "clause",
+     "share": 0.7778,
+     "words": 9
+    },
+    {
+     "ref": "Annex 2 Appendix 2 9.10",
+     "kind": "clause",
+     "share": 0.9615,
+     "words": 26
+    },
+    {
+     "ref": "Annex 2 Appendix 2 9.11",
+     "kind": "clause",
+     "share": 0.9394,
+     "words": 33
+    },
+    {
+     "ref": "Annex 2 Appendix 2 9.21",
+     "kind": "clause",
+     "share": 0.9818,
+     "words": 55
+    },
+    {
+     "ref": "Annex 2 Appendix 2 9.32",
+     "kind": "clause",
+     "share": 0.9706,
+     "words": 34
+    },
+    {
+     "ref": "Annex 2 Appendix 2 9.34",
+     "kind": "clause",
+     "share": 0.9655,
+     "words": 29
+    },
+    {
+     "ref": "Annex 2 Appendix 2 9.35",
+     "kind": "clause",
+     "share": 0.9688,
+     "words": 32
+    },
+    {
+     "ref": "Annex 2 Appendix 2 9.43",
+     "kind": "clause",
+     "share": 0.9778,
+     "words": 90
+    },
+    {
+     "ref": "Annex 2 Appendix 2 11.12",
+     "kind": "clause",
+     "share": 0.9205,
+     "words": 88
+    },
+    {
+     "ref": "Annex 2 Appendix 2 11.13",
+     "kind": "clause",
+     "share": 0.9494,
+     "words": 79
+    },
+    {
+     "ref": "Annex 2 Appendix 2 11.15",
+     "kind": "clause",
+     "share": 0.9818,
+     "words": 55
+    },
+    {
+     "ref": "Annex 2 Appendix 2 11.18",
+     "kind": "clause",
+     "share": 0.9792,
+     "words": 48
+    },
+    {
+     "ref": "Annex 2 Appendix 2 11.19",
+     "kind": "clause",
+     "share": 0.9434,
+     "words": 53
+    },
+    {
+     "ref": "Annex 2 Appendix 2 11.20",
+     "kind": "clause",
+     "share": 0.95,
+     "words": 20
+    },
+    {
+     "ref": "Annex 2 Appendix 2 11.21",
+     "kind": "clause",
+     "share": 0.9118,
+     "words": 102
+    },
+    {
+     "ref": "Annex 2 Appendix 2 11.22",
+     "kind": "clause",
+     "share": 0.9333,
+     "words": 45
+    },
+    {
+     "ref": "Annex 2 Appendix 2 11.23",
+     "kind": "clause",
+     "share": 0.95,
+     "words": 20
+    },
+    {
+     "ref": "Annex 2 Appendix 2 11.4",
+     "kind": "clause",
+     "share": 0.8,
+     "words": 5
+    },
+    {
+     "ref": "Annex 2 Appendix 2 11.40",
+     "kind": "clause",
+     "share": 0.9444,
+     "words": 18
+    },
+    {
+     "ref": "Annex 2 Appendix 2 11.41",
+     "kind": "clause",
+     "share": 0.96,
+     "words": 75
+    },
+    {
+     "ref": "Annex 2 Appendix 2 11.42",
+     "kind": "clause",
+     "share": 0.9667,
+     "words": 30
+    },
+    {
+     "ref": "Annex 2 Appendix 2 11.43",
+     "kind": "clause",
+     "share": 0.9706,
+     "words": 68
+    },
+    {
+     "ref": "Annex 2 Appendix 2 11.44",
+     "kind": "clause",
+     "share": 0.9524,
+     "words": 63
+    },
+    {
+     "ref": "Annex 2 Appendix 2 11.50",
+     "kind": "clause",
+     "share": 0.9697,
+     "words": 33
+    },
+    {
+     "ref": "Annex 2 Appendix 2 11.52",
+     "kind": "clause",
+     "share": 0.9821,
+     "words": 56
+    },
+    {
+     "ref": "Annex 2 Appendix 2 11.53",
+     "kind": "clause",
+     "share": 0.9608,
+     "words": 51
+    },
+    {
+     "ref": "Annex 2 Appendix 2 11.54",
+     "kind": "clause",
+     "share": 0.9714,
+     "words": 35
+    },
+    {
+     "ref": "Annex 2 Appendix 2 11.55",
+     "kind": "clause",
+     "share": 0.9625,
+     "words": 80
+    },
+    {
+     "ref": "Annex 2 Appendix 2 11.62",
+     "kind": "clause",
+     "share": 0.9821,
+     "words": 56
+    },
+    {
+     "ref": "Annex 2 Appendix 2 11.71",
+     "kind": "clause",
+     "share": 0.9846,
+     "words": 65
+    },
+    {
+     "ref": "Annex 2 Appendix 2 11.72",
+     "kind": "clause",
+     "share": 0.9655,
+     "words": 58
+    },
+    {
+     "ref": "Annex 2 Appendix 2 12.11",
+     "kind": "clause",
+     "share": 0.9595,
+     "words": 74
+    },
+    {
+     "ref": "Annex 2 Appendix 2 12.20",
+     "kind": "clause",
+     "share": 0.9722,
+     "words": 36
+    },
+    {
+     "ref": "Annex 2 Appendix 2 12.22",
+     "kind": "clause",
+     "share": 0.9706,
+     "words": 34
+    },
+    {
+     "ref": "Annex 2 Appendix 2 12.23",
+     "kind": "clause",
+     "share": 0.9286,
+     "words": 14
+    },
+    {
+     "ref": "Annex 2 Appendix 2 12.3",
+     "kind": "clause",
+     "share": 0.6667,
+     "words": 3
+    },
+    {
+     "ref": "Annex 2 Appendix 2 12.30",
+     "kind": "clause",
+     "share": 0.8984,
+     "words": 128
+    },
+    {
+     "ref": "Annex 2 Appendix 2 12.40",
+     "kind": "clause",
+     "share": 0.9706,
+     "words": 34
+    },
+    {
+     "ref": "Annex 2 Appendix 2 12.42",
+     "kind": "clause",
+     "share": 0.975,
+     "words": 40
+    },
+    {
+     "ref": "Annex 2 Appendix 2 12.43",
+     "kind": "clause",
+     "share": 0.9861,
+     "words": 72
+    },
+    {
+     "ref": "Annex 2 Appendix 2 12.44",
+     "kind": "clause",
+     "share": 0.9596,
+     "words": 99
+    },
+    {
+     "ref": "Annex 2 Appendix 2 12.45",
+     "kind": "clause",
+     "share": 0.9592,
+     "words": 49
+    },
+    {
+     "ref": "Annex 2 Appendix 2 12.50",
+     "kind": "clause",
+     "share": 0.9897,
+     "words": 97
+    },
+    {
+     "ref": "Annex 2 Appendix 2 12.52",
+     "kind": "clause",
+     "share": 0.898,
+     "words": 49
+    },
+    {
+     "ref": "Annex 2 Appendix 2 12.60",
+     "kind": "clause",
+     "share": 0.9464,
+     "words": 56
+    },
+    {
+     "ref": "Annex 2 Appendix 2 12.70",
+     "kind": "clause",
+     "share": 0.9825,
+     "words": 57
+    },
+    {
+     "ref": "Annex 2 Appendix 2 12.71",
+     "kind": "clause",
+     "share": 0.9701,
+     "words": 67
+    },
+    {
+     "ref": "Annex 2 Appendix 2 12.73",
+     "kind": "clause",
+     "share": 0.9889,
+     "words": 90
+    },
+    {
+     "ref": "Annex 2 Appendix 2 12.74",
+     "kind": "clause",
+     "share": 0.9765,
+     "words": 85
+    },
+    {
+     "ref": "Annex 2 Appendix 2 12.80",
+     "kind": "clause",
+     "share": 0.975,
+     "words": 40
+    },
+    {
+     "ref": "Annex 2 Appendix 2 12.81",
+     "kind": "clause",
+     "share": 0.9762,
+     "words": 42
+    },
+    {
+     "ref": "Annex 2 Appendix 2 12.82",
+     "kind": "clause",
+     "share": 0.9375,
+     "words": 16
+    },
+    {
+     "ref": "Annex 2 Appendix 2 12.83",
+     "kind": "clause",
+     "share": 0.9318,
+     "words": 44
+    },
+    {
+     "ref": "Annex 2 Appendix 2 13",
+     "kind": "clause",
+     "share": 0.9706,
+     "words": 306
+    },
+    {
+     "ref": "Annex 2 Appendix 2 14.10",
+     "kind": "clause",
+     "share": 0.9211,
+     "words": 38
+    },
+    {
+     "ref": "Annex 2 Appendix 2 14.20",
+     "kind": "clause",
+     "share": 0.9737,
+     "words": 76
+    },
+    {
+     "ref": "Annex 2 Appendix 2 14.30",
+     "kind": "clause",
+     "share": 0.9667,
+     "words": 30
+    },
+    {
+     "ref": "Annex 2 Appendix 2 14.31",
+     "kind": "clause",
+     "share": 0.9892,
+     "words": 93
+    },
+    {
+     "ref": "Annex 2 Appendix 2 14.32",
+     "kind": "clause",
+     "share": 0.973,
+     "words": 37
+    },
+    {
+     "ref": "Annex 2 Appendix 2 14.40",
+     "kind": "clause",
+     "share": 0.9474,
+     "words": 38
+    },
+    {
+     "ref": "Annex 2 Appendix 2 14.50",
+     "kind": "clause",
+     "share": 0.9231,
+     "words": 13
+    },
+    {
+     "ref": "Annex 2 Appendix 2 15",
+     "kind": "clause",
+     "share": 0.9867,
+     "words": 225
+    },
+    {
+     "ref": "Annex 2 Appendix 2 16",
+     "kind": "clause",
+     "share": 0.9766,
+     "words": 214
+    },
+    {
+     "ref": "Annex 2 Appendix 2 17.11",
+     "kind": "clause",
+     "share": 0.9474,
+     "words": 19
+    },
+    {
+     "ref": "Annex 2 Appendix 2 17.20",
+     "kind": "clause",
+     "share": 0.9872,
+     "words": 78
+    },
+    {
+     "ref": "Annex 2 Appendix 2 17.30",
+     "kind": "clause",
+     "share": 0.96,
+     "words": 25
+    },
+    {
+     "ref": "Annex 2 Appendix 2 17.63",
+     "kind": "clause",
+     "share": 0.8824,
+     "words": 17
+    },
+    {
+     "ref": "Annex 2 Appendix 2 17.70",
+     "kind": "clause",
+     "share": 0.9677,
+     "words": 31
+    },
+    {
+     "ref": "Annex 2 Appendix 2 17.80",
+     "kind": "clause",
+     "share": 0.9655,
+     "words": 29
+    },
+    {
+     "ref": "Annex 2 Appendix 2 18",
+     "kind": "clause",
+     "share": 0.8,
+     "words": 10
+    },
+    {
+     "ref": "Annex 2 Appendix 2 18.11",
+     "kind": "clause",
+     "share": 0.9794,
+     "words": 97
+    },
+    {
+     "ref": "Annex 2 Appendix 2 18.12",
+     "kind": "clause",
+     "share": 0.9796,
+     "words": 49
+    },
+    {
+     "ref": "Annex 2 Appendix 2 18.13",
+     "kind": "clause",
+     "share": 0.9845,
+     "words": 129
+    },
+    {
+     "ref": "Annex 2 Appendix 2 18.36",
+     "kind": "clause",
+     "share": 0.9895,
+     "words": 95
+    },
+    {
+     "ref": "Annex 2 Appendix 2 18.4",
+     "kind": "clause",
+     "share": 0.8333,
+     "words": 6
+    },
+    {
+     "ref": "Annex 2 Appendix 2 18.41",
+     "kind": "clause",
+     "share": 0.9756,
+     "words": 41
+    },
+    {
+     "ref": "Annex 2 Appendix 2 18.43",
+     "kind": "clause",
+     "share": 0.9792,
+     "words": 48
+    },
+    {
+     "ref": "Annex 2 Appendix 2 18.50",
+     "kind": "clause",
+     "share": 0.9167,
+     "words": 12
+    },
+    {
+     "ref": "Annex 2 Appendix 2 18.53",
+     "kind": "clause",
+     "share": 0.9808,
+     "words": 52
+    },
+    {
+     "ref": "Annex 2 Appendix 2 19",
+     "kind": "clause",
+     "share": 0.8571,
+     "words": 7
+    },
+    {
+     "ref": "Annex 2 Appendix 2 19.10",
+     "kind": "clause",
+     "share": 0.973,
+     "words": 37
+    },
+    {
+     "ref": "Annex 2 Appendix 2 19.40",
+     "kind": "clause",
+     "share": 0.9773,
+     "words": 44
+    },
+    {
+     "ref": "Annex 2 Appendix 2 19.50",
+     "kind": "clause",
+     "share": 0.975,
+     "words": 40
+    },
+    {
+     "ref": "Annex 2 Appendix 2 19.51",
+     "kind": "clause",
+     "share": 0.9615,
+     "words": 26
+    },
+    {
+     "ref": "Annex 2 Appendix 2 19.60",
+     "kind": "clause",
+     "share": 0.9655,
+     "words": 58
+    },
+    {
+     "ref": "Annex 2 Appendix 2 19.70",
+     "kind": "clause",
+     "share": 0.9667,
+     "words": 30
+    },
+    {
+     "ref": "Annex 2 Appendix 2 19.80",
+     "kind": "clause",
+     "share": 0.96,
+     "words": 25
+    },
+    {
+     "ref": "Annex 2 Appendix 2 19.81",
+     "kind": "clause",
+     "share": 0.9767,
+     "words": 43
+    },
+    {
+     "ref": "Annex 2 Appendix 2 19.82",
+     "kind": "clause",
+     "share": 0.9722,
+     "words": 36
+    },
+    {
+     "ref": "Annex 2 Appendix 2 Glossary",
+     "kind": "section",
+     "share": 0.9729,
+     "words": 1551
+    },
+    {
+     "ref": "Annex 2 Appendix 1",
+     "kind": "section",
+     "share": 0.964,
+     "words": 694
+    },
+    {
+     "ref": "Annex 2 Appendix 2 #2",
+     "kind": "section",
+     "share": 0.875,
+     "words": 8
+    },
+    {
+     "ref": "Annex 2 Appendix 2 2.3 #2",
+     "kind": "clause",
+     "share": 0.9598,
+     "words": 498
+    },
+    {
+     "ref": "_unnumbered:4",
+     "kind": "unnumbered",
+     "share": 0.9783,
+     "words": 138
+    }
+   ]
+  },
+  "who-trs957-a3-hazardous.pdf": {
+   "clauses": 94,
+   "median": 0.9862,
+   "min": 0.6667,
+   "flagged": [
+    {
+     "ref": "Annex 3 Glossary",
+     "kind": "section",
+     "share": 0.9375,
+     "words": 48
+    },
+    {
+     "ref": "Annex 3 1.2",
+     "kind": "clause",
+     "share": 0.9848,
+     "words": 66
+    },
+    {
+     "ref": "Annex 3 1.3",
+     "kind": "clause",
+     "share": 0.9796,
+     "words": 49
+    },
+    {
+     "ref": "Annex 3 Glossary #2",
+     "kind": "section",
+     "share": 0.9713,
+     "words": 905
+    },
+    {
+     "ref": "Annex 3 4",
+     "kind": "clause",
+     "share": 0.6667,
+     "words": 3
+    },
+    {
+     "ref": "Annex 3 4.1",
+     "kind": "clause",
+     "share": 0.9747,
+     "words": 79
+    },
+    {
+     "ref": "Annex 3 5",
+     "kind": "clause",
+     "share": 0.6667,
+     "words": 3
+    },
+    {
+     "ref": "Annex 3 6",
+     "kind": "clause",
+     "share": 0.875,
+     "words": 8
+    },
+    {
+     "ref": "Annex 3 6.1",
+     "kind": "clause",
+     "share": 0.9699,
+     "words": 166
+    },
+    {
+     "ref": "Annex 3 6.2",
+     "kind": "clause",
+     "share": 0.9785,
+     "words": 279
+    },
+    {
+     "ref": "Annex 3 6.3",
+     "kind": "clause",
+     "share": 0.9583,
+     "words": 24
+    },
+    {
+     "ref": "Annex 3 6.4",
+     "kind": "clause",
+     "share": 0.9194,
+     "words": 62
+    },
+    {
+     "ref": "Annex 3 6.5",
+     "kind": "clause",
+     "share": 0.9897,
+     "words": 97
+    },
+    {
+     "ref": "Annex 3 6.6",
+     "kind": "clause",
+     "share": 0.8286,
+     "words": 35
+    },
+    {
+     "ref": "Annex 3 6.7",
+     "kind": "clause",
+     "share": 0.9577,
+     "words": 71
+    },
+    {
+     "ref": "Annex 3 7.3",
+     "kind": "clause",
+     "share": 0.913,
+     "words": 23
+    },
+    {
+     "ref": "Annex 3 7.4",
+     "kind": "clause",
+     "share": 0.9286,
+     "words": 14
+    },
+    {
+     "ref": "Annex 3 8",
+     "kind": "clause",
+     "share": 0.6667,
+     "words": 3
+    },
+    {
+     "ref": "Annex 3 8.6",
+     "kind": "clause",
+     "share": 0.9722,
+     "words": 36
+    },
+    {
+     "ref": "Annex 3 8.7",
+     "kind": "clause",
+     "share": 0.9412,
+     "words": 17
+    },
+    {
+     "ref": "Annex 3 9.2",
+     "kind": "clause",
+     "share": 0.9302,
+     "words": 43
+    },
+    {
+     "ref": "Annex 3 9.3",
+     "kind": "clause",
+     "share": 0.9618,
+     "words": 471
+    },
+    {
+     "ref": "Annex 3 9.4",
+     "kind": "clause",
+     "share": 0.9872,
+     "words": 78
+    },
+    {
+     "ref": "Annex 3 9.5",
+     "kind": "clause",
+     "share": 0.9062,
+     "words": 32
+    },
+    {
+     "ref": "Annex 3 9.7",
+     "kind": "clause",
+     "share": 0.9211,
+     "words": 38
+    },
+    {
+     "ref": "Annex 3 10.1",
+     "kind": "clause",
+     "share": 0.9851,
+     "words": 67
+    },
+    {
+     "ref": "Annex 3 10.5",
+     "kind": "clause",
+     "share": 0.934,
+     "words": 106
+    },
+    {
+     "ref": "Annex 3 10.6",
+     "kind": "clause",
+     "share": 0.9714,
+     "words": 70
+    },
+    {
+     "ref": "Annex 3 11.1",
+     "kind": "clause",
+     "share": 0.8511,
+     "words": 94
+    },
+    {
+     "ref": "Annex 3 11.2",
+     "kind": "clause",
+     "share": 0.8475,
+     "words": 59
+    },
+    {
+     "ref": "Annex 3 11.3",
+     "kind": "clause",
+     "share": 0.9062,
+     "words": 32
+    },
+    {
+     "ref": "Annex 3 11.4",
+     "kind": "clause",
+     "share": 0.9385,
+     "words": 65
+    },
+    {
+     "ref": "Annex 3 11.5",
+     "kind": "clause",
+     "share": 0.8889,
+     "words": 36
+    },
+    {
+     "ref": "Annex 3 11.6",
+     "kind": "clause",
+     "share": 0.9286,
+     "words": 14
+    },
+    {
+     "ref": "Annex 3 11.7",
+     "kind": "clause",
+     "share": 0.8947,
+     "words": 19
+    },
+    {
+     "ref": "Annex 3 11.8",
+     "kind": "clause",
+     "share": 0.9655,
+     "words": 29
+    },
+    {
+     "ref": "Annex 3 11.9",
+     "kind": "clause",
+     "share": 0.9294,
+     "words": 85
+    },
+    {
+     "ref": "Annex 3 11.10",
+     "kind": "clause",
+     "share": 0.9583,
+     "words": 24
+    },
+    {
+     "ref": "Annex 3 11.11",
+     "kind": "clause",
+     "share": 0.9459,
+     "words": 37
+    },
+    {
+     "ref": "Annex 3 11.14",
+     "kind": "clause",
+     "share": 0.9545,
+     "words": 44
+    },
+    {
+     "ref": "Annex 3 11.15",
+     "kind": "clause",
+     "share": 0.9375,
+     "words": 16
+    },
+    {
+     "ref": "Annex 3 12.2",
+     "kind": "clause",
+     "share": 0.9586,
+     "words": 145
+    },
+    {
+     "ref": "Annex 3 13",
+     "kind": "clause",
+     "share": 0.6667,
+     "words": 3
+    },
+    {
+     "ref": "Annex 3 13.1",
+     "kind": "clause",
+     "share": 0.9667,
+     "words": 30
+    },
+    {
+     "ref": "Annex 3 13.2",
+     "kind": "clause",
+     "share": 0.925,
+     "words": 40
+    },
+    {
+     "ref": "Annex 3 14.1",
+     "kind": "clause",
+     "share": 0.9672,
+     "words": 61
+    },
+    {
+     "ref": "Annex 3 15",
+     "kind": "clause",
+     "share": 0.75,
+     "words": 4
+    },
+    {
+     "ref": "Annex 3 15.1",
+     "kind": "clause",
+     "share": 0.9375,
+     "words": 16
+    },
+    {
+     "ref": "_unnumbered:3",
+     "kind": "unnumbered",
+     "share": 0.9852,
+     "words": 135
+    }
+   ]
+  },
+  "who-trs961-a14-site-master-file.pdf": {
+   "clauses": 32,
+   "median": 0.9849,
+   "min": 0.6667,
+   "flagged": [
+    {
+     "ref": "Annex 14",
+     "kind": "section",
+     "share": 0.9,
+     "words": 10
+    },
+    {
+     "ref": "Annex 14 1.1",
+     "kind": "clause",
+     "share": 0.9747,
+     "words": 79
+    },
+    {
+     "ref": "Annex 14 1.2",
+     "kind": "clause",
+     "share": 0.9756,
+     "words": 41
+    },
+    {
+     "ref": "Annex 14 1.4",
+     "kind": "clause",
+     "share": 0.9783,
+     "words": 230
+    },
+    {
+     "ref": "Annex 14 1.1 #2",
+     "kind": "clause",
+     "share": 0.967,
+     "words": 91
+    },
+    {
+     "ref": "Annex 14 1.2 #2",
+     "kind": "clause",
+     "share": 0.9862,
+     "words": 145
+    },
+    {
+     "ref": "Annex 14 1.3 #2",
+     "kind": "clause",
+     "share": 0.9474,
+     "words": 19
+    },
+    {
+     "ref": "Annex 14 2",
+     "kind": "clause",
+     "share": 0.6667,
+     "words": 3
+    },
+    {
+     "ref": "Annex 14 2.1",
+     "kind": "clause",
+     "share": 0.9836,
+     "words": 61
+    },
+    {
+     "ref": "Annex 14 2.2",
+     "kind": "clause",
+     "share": 0.9062,
+     "words": 96
+    },
+    {
+     "ref": "Annex 14 2.3",
+     "kind": "clause",
+     "share": 0.9719,
+     "words": 178
+    },
+    {
+     "ref": "Annex 14 3",
+     "kind": "clause",
+     "share": 0.9778,
+     "words": 45
+    },
+    {
+     "ref": "Annex 14 4.1",
+     "kind": "clause",
+     "share": 0.9586,
+     "words": 145
+    },
+    {
+     "ref": "Annex 14 4.1.1",
+     "kind": "clause",
+     "share": 0.9677,
+     "words": 31
+    },
+    {
+     "ref": "Annex 14 4.2.1",
+     "kind": "clause",
+     "share": 0.9565,
+     "words": 23
+    },
+    {
+     "ref": "Annex 14 4.2.3",
+     "kind": "clause",
+     "share": 0.9524,
+     "words": 21
+    },
+    {
+     "ref": "Annex 14 6",
+     "kind": "clause",
+     "share": 0.9897,
+     "words": 195
+    },
+    {
+     "ref": "Annex 14 9",
+     "kind": "clause",
+     "share": 0.9577,
+     "words": 142
+    }
+   ]
+  },
+  "who-trs961-a2-micro-labs.pdf": {
+   "clauses": 206,
+   "median": 1.0,
+   "min": 0.6,
+   "flagged": [
+    {
+     "ref": "Annex 2",
+     "kind": "section",
+     "share": 0.973,
+     "words": 111
+    },
+    {
+     "ref": "Annex 2 4.2",
+     "kind": "clause",
+     "share": 0.6667,
+     "words": 3
+    },
+    {
+     "ref": "Annex 2 4.3",
+     "kind": "clause",
+     "share": 0.8889,
+     "words": 9
+    },
+    {
+     "ref": "Annex 2 8",
+     "kind": "clause",
+     "share": 0.8,
+     "words": 5
+    },
+    {
+     "ref": "Annex 2 Appendix 4",
+     "kind": "section",
+     "share": 0.9865,
+     "words": 148
+    },
+    {
+     "ref": "Annex 2 Appendix 4 Glossary",
+     "kind": "section",
+     "share": 0.9698,
+     "words": 431
+    },
+    {
+     "ref": "Annex 2 Appendix 4 1.1",
+     "kind": "clause",
+     "share": 0.9756,
+     "words": 41
+    },
+    {
+     "ref": "Annex 2 Appendix 4 1.2",
+     "kind": "clause",
+     "share": 0.9444,
+     "words": 36
+    },
+    {
+     "ref": "Annex 2 Appendix 4 1.3",
+     "kind": "clause",
+     "share": 0.9756,
+     "words": 41
+    },
+    {
+     "ref": "Annex 2 Appendix 4 1.4",
+     "kind": "clause",
+     "share": 0.9858,
+     "words": 141
+    },
+    {
+     "ref": "Annex 2 Appendix 4 2.1.2",
+     "kind": "clause",
+     "share": 0.9867,
+     "words": 75
+    },
+    {
+     "ref": "Annex 2 Appendix 4 2.1.7",
+     "kind": "clause",
+     "share": 0.9538,
+     "words": 65
+    },
+    {
+     "ref": "Annex 2 Appendix 4 2.1.8",
+     "kind": "clause",
+     "share": 0.9792,
+     "words": 48
+    },
+    {
+     "ref": "Annex 2 Appendix 4 2.2.1",
+     "kind": "clause",
+     "share": 0.9821,
+     "words": 56
+    },
+    {
+     "ref": "Annex 2 Appendix 4 2.4.1",
+     "kind": "clause",
+     "share": 0.963,
+     "words": 54
+    },
+    {
+     "ref": "Annex 2 Appendix 4 2.4.2",
+     "kind": "clause",
+     "share": 0.975,
+     "words": 40
+    },
+    {
+     "ref": "Annex 2 Appendix 4 2.4.3",
+     "kind": "clause",
+     "share": 0.9589,
+     "words": 73
+    },
+    {
+     "ref": "Annex 2 Appendix 4 2.4.4",
+     "kind": "clause",
+     "share": 0.9216,
+     "words": 102
+    },
+    {
+     "ref": "Annex 2 Appendix 4 2.4.5",
+     "kind": "clause",
+     "share": 0.9412,
+     "words": 17
+    },
+    {
+     "ref": "Annex 2 Appendix 4 2.4.6",
+     "kind": "clause",
+     "share": 0.9714,
+     "words": 35
+    },
+    {
+     "ref": "Annex 2 Appendix 4 2.4.7",
+     "kind": "clause",
+     "share": 0.9815,
+     "words": 54
+    },
+    {
+     "ref": "Annex 2 Appendix 4 2.4.8",
+     "kind": "clause",
+     "share": 0.9853,
+     "words": 68
+    },
+    {
+     "ref": "Annex 2 Appendix 4 2.4.9",
+     "kind": "clause",
+     "share": 0.9737,
+     "words": 38
+    },
+    {
+     "ref": "Annex 2 Appendix 4 2.4.10",
+     "kind": "clause",
+     "share": 0.913,
+     "words": 23
+    },
+    {
+     "ref": "Annex 2 Appendix 4 2.4.11",
+     "kind": "clause",
+     "share": 0.9604,
+     "words": 101
+    },
+    {
+     "ref": "Annex 2 Appendix 4 3",
+     "kind": "clause",
+     "share": 0.8,
+     "words": 5
+    },
+    {
+     "ref": "Annex 2 Appendix 4 3.1",
+     "kind": "clause",
+     "share": 0.9293,
+     "words": 99
+    },
+    {
+     "ref": "Annex 2 Appendix 4 3.2",
+     "kind": "clause",
+     "share": 0.9863,
+     "words": 73
+    },
+    {
+     "ref": "Annex 2 Appendix 4 4",
+     "kind": "clause",
+     "share": 0.92,
+     "words": 50
+    },
+    {
+     "ref": "Annex 2 Appendix 4 4.2",
+     "kind": "clause",
+     "share": 0.6667,
+     "words": 3
+    },
+    {
+     "ref": "Annex 2 Appendix 4 4.2.1",
+     "kind": "clause",
+     "share": 0.9524,
+     "words": 21
+    },
+    {
+     "ref": "Annex 2 Appendix 4 4.3",
+     "kind": "clause",
+     "share": 0.8889,
+     "words": 9
+    },
+    {
+     "ref": "Annex 2 Appendix 4 4.3.2",
+     "kind": "clause",
+     "share": 0.9535,
+     "words": 86
+    },
+    {
+     "ref": "Annex 2 Appendix 4 4.3.4",
+     "kind": "clause",
+     "share": 0.9817,
+     "words": 109
+    },
+    {
+     "ref": "Annex 2 Appendix 4 4.3.5.1",
+     "kind": "clause",
+     "share": 0.9487,
+     "words": 39
+    },
+    {
+     "ref": "Annex 2 Appendix 4 4.3.5.2",
+     "kind": "clause",
+     "share": 0.966,
+     "words": 147
+    },
+    {
+     "ref": "Annex 2 Appendix 4 4.3.5.3",
+     "kind": "clause",
+     "share": 0.9756,
+     "words": 41
+    },
+    {
+     "ref": "Annex 2 Appendix 4 4.3.6",
+     "kind": "clause",
+     "share": 0.9667,
+     "words": 30
+    },
+    {
+     "ref": "Annex 2 Appendix 4 4.3.7.1",
+     "kind": "clause",
+     "share": 0.9468,
+     "words": 94
+    },
+    {
+     "ref": "Annex 2 Appendix 4 4.3.8",
+     "kind": "clause",
+     "share": 0.9725,
+     "words": 109
+    },
+    {
+     "ref": "Annex 2 Appendix 4 5.2.1",
+     "kind": "clause",
+     "share": 0.9333,
+     "words": 105
+    },
+    {
+     "ref": "Annex 2 Appendix 4 5.2.2",
+     "kind": "clause",
+     "share": 0.9877,
+     "words": 81
+    },
+    {
+     "ref": "Annex 2 Appendix 4 5.2.4",
+     "kind": "clause",
+     "share": 0.9667,
+     "words": 30
+    },
+    {
+     "ref": "Annex 2 Appendix 4 5.2.6",
+     "kind": "clause",
+     "share": 0.9836,
+     "words": 61
+    },
+    {
+     "ref": "Annex 2 Appendix 4 5.2.8",
+     "kind": "clause",
+     "share": 0.8824,
+     "words": 17
+    },
+    {
+     "ref": "Annex 2 Appendix 4 5.2.9",
+     "kind": "clause",
+     "share": 0.8974,
+     "words": 39
+    },
+    {
+     "ref": "Annex 2 Appendix 4 5.2.10",
+     "kind": "clause",
+     "share": 0.9615,
+     "words": 26
+    },
+    {
+     "ref": "Annex 2 Appendix 4 5.3.1",
+     "kind": "clause",
+     "share": 0.9592,
+     "words": 49
+    },
+    {
+     "ref": "Annex 2 Appendix 4 6.1.1",
+     "kind": "clause",
+     "share": 0.9861,
+     "words": 72
+    },
+    {
+     "ref": "Annex 2 Appendix 4 6.2.3",
+     "kind": "clause",
+     "share": 0.9667,
+     "words": 60
+    },
+    {
+     "ref": "Annex 2 Appendix 4 7",
+     "kind": "clause",
+     "share": 0.9412,
+     "words": 17
+    },
+    {
+     "ref": "Annex 2 Appendix 4 8",
+     "kind": "clause",
+     "share": 0.6,
+     "words": 5
+    },
+    {
+     "ref": "Annex 2 Appendix 4 8.1",
+     "kind": "clause",
+     "share": 0.9474,
+     "words": 57
+    },
+    {
+     "ref": "Annex 2 Appendix 4 8.3",
+     "kind": "clause",
+     "share": 0.963,
+     "words": 27
+    },
+    {
+     "ref": "Annex 2 Appendix 4 9",
+     "kind": "clause",
+     "share": 0.8,
+     "words": 5
+    },
+    {
+     "ref": "Annex 2 Appendix 4 10",
+     "kind": "clause",
+     "share": 0.9,
+     "words": 10
+    },
+    {
+     "ref": "Annex 2 Appendix 4 10.1.1",
+     "kind": "clause",
+     "share": 0.9592,
+     "words": 49
+    },
+    {
+     "ref": "Annex 2 Appendix 4 11.2",
+     "kind": "clause",
+     "share": 0.9524,
+     "words": 21
+    },
+    {
+     "ref": "Annex 2 Appendix 4 12",
+     "kind": "clause",
+     "share": 0.6667,
+     "words": 3
+    },
+    {
+     "ref": "Annex 2 Appendix 4 12.1",
+     "kind": "clause",
+     "share": 0.9444,
+     "words": 144
+    },
+    {
+     "ref": "_unnumbered:4",
+     "kind": "unnumbered",
+     "share": 0.9751,
+     "words": 281
+    },
+    {
+     "ref": "_unnumbered:5",
+     "kind": "unnumbered",
+     "share": 0.9508,
+     "words": 488
+    },
+    {
+     "ref": "Table 1 Autoclave unloading, inside the\u2026",
+     "kind": "table_row",
+     "share": 0.9412,
+     "words": 17
+    },
+    {
+     "ref": "Table 1 Sterility testing \u2014 UDAF",
+     "kind": "table_row",
+     "share": 0.9231,
+     "words": 13
+    },
+    {
+     "ref": "Table 1 Sterility testing \u2014 background to UDAF",
+     "kind": "table_row",
+     "share": 0.9333,
+     "words": 15
+    },
+    {
+     "ref": "Table 1 Sterility testing \u2014 isolator",
+     "kind": "table_row",
+     "share": 0.9412,
+     "words": 17
+    },
+    {
+     "ref": "Table 2 Laboratory",
+     "kind": "table_row",
+     "share": 0.9615,
+     "words": 26
+    }
+   ]
+  },
+  "who-trs961-a9-storage-transport-ttsp.pdf": {
+   "clauses": 142,
+   "median": 0.9911,
+   "min": 0.5,
+   "flagged": [
+    {
+     "ref": "Annex 9 Abbreviations",
+     "kind": "section",
+     "share": 0.987,
+     "words": 460
+    },
+    {
+     "ref": "Annex 9 Glossary",
+     "kind": "section",
+     "share": 0.9745,
+     "words": 903
+    },
+    {
+     "ref": "Annex 9 1",
+     "kind": "clause",
+     "share": 0.5,
+     "words": 2
+    },
+    {
+     "ref": "Annex 9 1.1.2",
+     "kind": "clause",
+     "share": 0.9608,
+     "words": 51
+    },
+    {
+     "ref": "Annex 9 2.1.1",
+     "kind": "clause",
+     "share": 0.9828,
+     "words": 58
+    },
+    {
+     "ref": "Annex 9 2.1.2",
+     "kind": "clause",
+     "share": 0.9878,
+     "words": 82
+    },
+    {
+     "ref": "Annex 9 3.1",
+     "kind": "clause",
+     "share": 0.9837,
+     "words": 123
+    },
+    {
+     "ref": "Annex 9 3.2",
+     "kind": "clause",
+     "share": 0.9474,
+     "words": 38
+    },
+    {
+     "ref": "Annex 9 3.3.1",
+     "kind": "clause",
+     "share": 0.9848,
+     "words": 66
+    },
+    {
+     "ref": "Annex 9 3.4.1",
+     "kind": "clause",
+     "share": 0.9545,
+     "words": 44
+    },
+    {
+     "ref": "Annex 9 3.4.2",
+     "kind": "clause",
+     "share": 0.988,
+     "words": 83
+    },
+    {
+     "ref": "Annex 9 3.4.3",
+     "kind": "clause",
+     "share": 0.9737,
+     "words": 114
+    },
+    {
+     "ref": "Annex 9 3.5",
+     "kind": "clause",
+     "share": 0.9766,
+     "words": 128
+    },
+    {
+     "ref": "Annex 9 3.6.1",
+     "kind": "clause",
+     "share": 0.9811,
+     "words": 53
+    },
+    {
+     "ref": "Annex 9 3.7.1",
+     "kind": "clause",
+     "share": 0.9265,
+     "words": 68
+    },
+    {
+     "ref": "Annex 9 3.7.2",
+     "kind": "clause",
+     "share": 0.9487,
+     "words": 39
+    },
+    {
+     "ref": "Annex 9 3.9.1",
+     "kind": "clause",
+     "share": 0.9865,
+     "words": 222
+    },
+    {
+     "ref": "Annex 9 4",
+     "kind": "clause",
+     "share": 0.75,
+     "words": 4
+    },
+    {
+     "ref": "Annex 9 4.1",
+     "kind": "clause",
+     "share": 0.9808,
+     "words": 52
+    },
+    {
+     "ref": "Annex 9 4.2",
+     "kind": "clause",
+     "share": 0.9402,
+     "words": 117
+    },
+    {
+     "ref": "Annex 9 4.3",
+     "kind": "clause",
+     "share": 0.9745,
+     "words": 392
+    },
+    {
+     "ref": "Annex 9 4.5.3",
+     "kind": "clause",
+     "share": 0.987,
+     "words": 77
+    },
+    {
+     "ref": "Annex 9 4.5.4",
+     "kind": "clause",
+     "share": 0.985,
+     "words": 133
+    },
+    {
+     "ref": "Annex 9 4.7",
+     "kind": "clause",
+     "share": 0.962,
+     "words": 263
+    },
+    {
+     "ref": "Annex 9 4.8",
+     "kind": "clause",
+     "share": 0.9843,
+     "words": 127
+    },
+    {
+     "ref": "Annex 9 4.10",
+     "kind": "clause",
+     "share": 0.9,
+     "words": 10
+    },
+    {
+     "ref": "Annex 9 4.10.1",
+     "kind": "clause",
+     "share": 0.9552,
+     "words": 67
+    },
+    {
+     "ref": "Annex 9 4.10.2",
+     "kind": "clause",
+     "share": 0.9333,
+     "words": 45
+    },
+    {
+     "ref": "Annex 9 4.10.3",
+     "kind": "clause",
+     "share": 0.9851,
+     "words": 67
+    },
+    {
+     "ref": "Annex 9 5",
+     "kind": "clause",
+     "share": 0.6667,
+     "words": 3
+    },
+    {
+     "ref": "Annex 9 5.1",
+     "kind": "clause",
+     "share": 0.9444,
+     "words": 36
+    },
+    {
+     "ref": "Annex 9 6",
+     "kind": "clause",
+     "share": 0.75,
+     "words": 4
+    },
+    {
+     "ref": "Annex 9 6.1",
+     "kind": "clause",
+     "share": 0.9689,
+     "words": 161
+    },
+    {
+     "ref": "Annex 9 6.2",
+     "kind": "clause",
+     "share": 0.9844,
+     "words": 64
+    },
+    {
+     "ref": "Annex 9 6.3",
+     "kind": "clause",
+     "share": 0.9277,
+     "words": 83
+    },
+    {
+     "ref": "Annex 9 6.4.1",
+     "kind": "clause",
+     "share": 0.96,
+     "words": 175
+    },
+    {
+     "ref": "Annex 9 6.4.2",
+     "kind": "clause",
+     "share": 0.9684,
+     "words": 190
+    },
+    {
+     "ref": "Annex 9 6.4.3",
+     "kind": "clause",
+     "share": 0.9879,
+     "words": 165
+    },
+    {
+     "ref": "Annex 9 6.5.2",
+     "kind": "clause",
+     "share": 0.9744,
+     "words": 117
+    },
+    {
+     "ref": "Annex 9 6.5.3",
+     "kind": "clause",
+     "share": 0.9801,
+     "words": 151
+    },
+    {
+     "ref": "Annex 9 6.5.4",
+     "kind": "clause",
+     "share": 0.9762,
+     "words": 84
+    },
+    {
+     "ref": "Annex 9 6.6",
+     "kind": "clause",
+     "share": 0.9467,
+     "words": 244
+    },
+    {
+     "ref": "Annex 9 6.7",
+     "kind": "clause",
+     "share": 0.8889,
+     "words": 9
+    },
+    {
+     "ref": "Annex 9 6.7.1",
+     "kind": "clause",
+     "share": 0.92,
+     "words": 25
+    },
+    {
+     "ref": "Annex 9 6.7.2",
+     "kind": "clause",
+     "share": 0.92,
+     "words": 25
+    },
+    {
+     "ref": "Annex 9 6.7.3",
+     "kind": "clause",
+     "share": 0.92,
+     "words": 25
+    },
+    {
+     "ref": "Annex 9 6.7.4",
+     "kind": "clause",
+     "share": 0.9467,
+     "words": 75
+    },
+    {
+     "ref": "Annex 9 6.8.2",
+     "kind": "clause",
+     "share": 0.9565,
+     "words": 92
+    },
+    {
+     "ref": "Annex 9 6.8.3",
+     "kind": "clause",
+     "share": 0.9574,
+     "words": 188
+    },
+    {
+     "ref": "Annex 9 6.8.4",
+     "kind": "clause",
+     "share": 0.9519,
+     "words": 104
+    },
+    {
+     "ref": "Annex 9 6.9",
+     "kind": "clause",
+     "share": 0.9769,
+     "words": 173
+    },
+    {
+     "ref": "Annex 9 6.10",
+     "kind": "clause",
+     "share": 0.9891,
+     "words": 92
+    },
+    {
+     "ref": "Annex 9 6.12.1",
+     "kind": "clause",
+     "share": 0.9712,
+     "words": 139
+    },
+    {
+     "ref": "Annex 9 6.12.2",
+     "kind": "clause",
+     "share": 0.9767,
+     "words": 43
+    },
+    {
+     "ref": "Annex 9 8.1.2",
+     "kind": "clause",
+     "share": 0.975,
+     "words": 120
+    },
+    {
+     "ref": "Annex 9 9",
+     "kind": "clause",
+     "share": 0.8333,
+     "words": 6
+    },
+    {
+     "ref": "Annex 9 9.1",
+     "kind": "clause",
+     "share": 0.9733,
+     "words": 75
+    },
+    {
+     "ref": "Annex 9 9.2.1",
+     "kind": "clause",
+     "share": 0.9557,
+     "words": 158
+    },
+    {
+     "ref": "Annex 9 9.2.2",
+     "kind": "clause",
+     "share": 0.9897,
+     "words": 97
+    },
+    {
+     "ref": "Annex 9 9.3.1",
+     "kind": "clause",
+     "share": 0.9894,
+     "words": 94
+    },
+    {
+     "ref": "Annex 9 10",
+     "kind": "clause",
+     "share": 0.6667,
+     "words": 3
+    },
+    {
+     "ref": "Annex 9 10.2",
+     "kind": "clause",
+     "share": 0.9778,
+     "words": 90
+    },
+    {
+     "ref": "Annex 9 11",
+     "kind": "clause",
+     "share": 0.6667,
+     "words": 3
+    },
+    {
+     "ref": "Annex 9 11.2",
+     "kind": "clause",
+     "share": 0.9722,
+     "words": 36
+    },
+    {
+     "ref": "Annex 9 11.3.1",
+     "kind": "clause",
+     "share": 0.9789,
+     "words": 142
+    },
+    {
+     "ref": "Annex 9 11.4.1",
+     "kind": "clause",
+     "share": 0.9779,
+     "words": 181
+    },
+    {
+     "ref": "Annex 9 11.5",
+     "kind": "clause",
+     "share": 0.9877,
+     "words": 81
+    },
+    {
+     "ref": "Annex 9 12",
+     "kind": "clause",
+     "share": 0.6667,
+     "words": 3
+    },
+    {
+     "ref": "Annex 9 12.1.1",
+     "kind": "clause",
+     "share": 0.9892,
+     "words": 93
+    },
+    {
+     "ref": "Annex 9 12.1.2",
+     "kind": "clause",
+     "share": 0.9855,
+     "words": 691
+    }
+   ]
+  },
+  "who-trs981-a2-qrm.pdf": {
+   "clauses": 46,
+   "median": 1.0,
+   "min": 0.66,
+   "flagged": [
+    {
+     "ref": "3.6",
+     "kind": "clause",
+     "share": 0.9828,
+     "words": 116
+    },
+    {
+     "ref": "6",
+     "kind": "clause",
+     "share": 0.8772,
+     "words": 920
+    },
+    {
+     "ref": "Table 3 Hazard operability analysis (HAZOP)",
+     "kind": "table_row",
+     "share": 0.8077,
+     "words": 52
+    },
+    {
+     "ref": "Table 3 Hazard analysis and critical control\u2026",
+     "kind": "table_row",
+     "share": 0.8333,
+     "words": 84
+    },
+    {
+     "ref": "Table 3 'BJMVSF\u0001NPEFT\u0001F\u00f5FDUT\u0001 BOBMZTJT\u0001 '.&\"",
+     "kind": "table_row",
+     "share": 0.8313,
+     "words": 83
+    },
+    {
+     "ref": "Table 4 'BJMVSF\u0001NPEFT\u0001F\u00f5FDUT\u0001 BOBMZTJT\u0001 '.&\"",
+     "kind": "table_row",
+     "share": 0.8276,
+     "words": 29
+    },
+    {
+     "ref": "Table 4 Source: Based on reference 9. This\u2026",
+     "kind": "table_row",
+     "share": 0.66,
+     "words": 50
+    }
+   ]
+  },
+  "who-trs986-a2-gmp-main.pdf": {
+   "clauses": 322,
+   "median": 1.0,
+   "min": 0.9947,
+   "flagged": []
+  },
+  "who-trs992-a4-hold-time.pdf": {
+   "clauses": 6,
+   "median": 1.0,
+   "min": 1.0,
+   "flagged": []
+  },
+  "who-trs992-a5-ttsp-supplements.pdf": {
+   "clauses": 318,
+   "median": 1.0,
+   "min": 0.9565,
+   "flagged": [
+    {
+     "ref": "_unnumbered:1",
+     "kind": "unnumbered",
+     "share": 0.96,
+     "words": 25
+    },
+    {
+     "ref": "1",
+     "kind": "clause",
+     "share": 0.9877,
+     "words": 163
+    },
+    {
+     "ref": "3",
+     "kind": "clause",
+     "share": 0.9565,
+     "words": 23
+    }
+   ]
+  },
+  "who-trs996-a4-app1-model-inspection-report.pdf": {
+   "clauses": 84,
+   "median": 1.0,
+   "min": 0.9884,
+   "flagged": [
+    {
+     "ref": "Appendix 2 4.11.7",
+     "kind": "clause",
+     "share": 0.9884,
+     "words": 173
+    }
+   ]
+  }
+ }
+}
