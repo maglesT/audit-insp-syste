@@ -177,6 +177,8 @@ def coverage(drafts, mappings, clauses_of):
         key = (req.meta["source"], req.meta["ref"])
         text = normalise(clauses_of(key[0])[key[1]]["text"])
         covered = [False] * len(text)
+        number = LEADING_NUMBER.match(text)                 # "9.3 All self inspections ...": not a word to quote
+        covered[:number.end()] = [True] * number.end()
         for q in quotes.get(key, []):
             for start in _spans(text, q):
                 covered[start:start + len(q)] = [True] * len(q)
@@ -198,6 +200,7 @@ def coverage(drafts, mappings, clauses_of):
 
 
 WORD = re.compile(r"\w+")
+LEADING_NUMBER = re.compile(r"\s*(?:[A-Z]?\d+(?:\.\d+)*\.?|\([a-z0-9]+\))?\s*")
 
 
 def report(mappings, rejected, draft_summary, verify_results, verify_summary):
@@ -273,19 +276,34 @@ def prepare_draft(pilot=PILOT, sources=None, clauses_of=None, context_of=None, t
     return run_dir
 
 
+def twin_quote(quote, text):
+    """The twin clause's own span for a quote: word for word, except that a word broken at a line end in one
+    text ("self- inspection") may be whole in the other. None when there is no such span."""
+    text = normalise(text)
+    quote = normalise(quote)
+    if quote in text:
+        return quote
+    parts = [re.escape(w) for w in re.split(r"-\s*", quote)]
+    hit = re.search(r"-\s?".join(parts), text)
+    return hit.group(0) if hit else None
+
+
 def twin_mappings(mappings, units, sources, clauses_of):
     """D36: each drafted unit's mappings copied to its twins (same text in another source). The quote is checked
     word for word against the twin's own clause and the plant types are cut to the twin source's scope; a copy
-    that fails either is rejected, never kept. Returns (copies, rejected)."""
+    that fails either is rejected, never kept. The copy keeps the twin's own wording (twin_quote). Returns
+    (copies, rejected)."""
     twins = {(u["source"], u["ref"]): u["twins"] for u in units if u["twins"]}
     copies, rejected = [], []
     for n, m in enumerate(mappings):
         for t in twins.get((m["source"], m["ref"]), []):
             clause = clauses_of(t["source"])[t["ref"]]
             scope = runner_scope(sources[t["source"]]["applies_to"])
+            quote = twin_quote(m["quote"], clause["text"])
             copy = {**m, "source": t["source"], "ref": t["ref"], "clause_sha256": clause["sha256"],
-                    "plant_types": [p for p in m["plant_types"] if p in scope], "twin_of": n}
-            if normalise(m["quote"]) not in normalise(clause["text"]):
+                    "quote": quote or m["quote"], "plant_types": [p for p in m["plant_types"] if p in scope],
+                    "twin_of": n}
+            if quote is None:
                 rejected.append({**copy, "reason": "quote not found in the twin clause"})
             elif not copy["plant_types"]:
                 rejected.append({**copy, "reason": "no plant type inside the twin source's scope"})

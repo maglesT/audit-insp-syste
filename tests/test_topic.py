@@ -106,6 +106,18 @@ class Twins(unittest.TestCase):
         _, rejected = pilot.twin_mappings([self.mapping(SI, plants=["LIQ"])], units, SOURCES, TREES.get)
         self.assertEqual(rejected[0]["reason"], "no plant type inside the twin source's scope")
 
+    def test_twin_quote_keeps_the_twins_wording(self):
+        self.assertEqual(pilot.twin_quote("The self-inspection shall be documented", "1. The self- inspection shall "
+                                          "be documented."), "The self- inspection shall be documented")
+        self.assertEqual(pilot.twin_quote("The self- inspection", "The self-inspection is done."), "The self-inspection")
+        self.assertIsNone(pilot.twin_quote("The self inspection shall", "The self-inspection shall"))
+
+    def test_coverage_ignores_the_clause_number(self):
+        req = pilot.runner.Request("draft-000", "s", "u", {}, meta={"source": "x", "ref": "9.3"})
+        trees = {"x": {"9.3": {"text": "9.3 All self inspections should be recorded."}}}
+        m = {"source": "x", "ref": "9.3", "quote": "All self inspections should be recorded."}
+        self.assertEqual(pilot.coverage([req], [m], trees.get), [])
+
     def test_topic_pilot(self):
         self.assertEqual(pilot.topic_pilot([{"source": "a", "ref": "1"}, {"source": "b", "ref": "2"},
                                             {"source": "a", "ref": "3"}]), {"a": ["1", "3"], "b": ["2"]})
