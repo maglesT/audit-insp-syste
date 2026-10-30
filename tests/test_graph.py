@@ -47,6 +47,14 @@ SEGMENTS = {
 }
 
 
+def entries_of(source, title):
+    """Stand-in for reading the glossary PDF."""
+    if source != "gl.pdf":
+        return []
+    return [("QUALIFIED PERSON", "The person responsible for batch certification."),
+            ("Batch (or Lot)", "A defined quantity of material."), ("Appendix 1. Tables", "Not a term.")]
+
+
 def clauses_of(source):
     return {s["ref"]: s for s in SEGMENTS[source] if s["kind"] in layer1.CITABLE}
 
@@ -88,10 +96,20 @@ class References(unittest.TestCase):
 
 class Definitions(unittest.TestCase):
     def test_glossary_terms_and_uses(self):
-        self.assertEqual(graph.glossary_terms("gl.pdf", SEGMENTS["gl.pdf"], SOURCES["gl.pdf"]["title"]),
-                         [("_unnumbered:1", "Qualified Person")])               # "Batch" is too short a term
-        rows = graph.definitions({"EU": ["gl.pdf", "ch1.pdf"]}, SEGMENTS.get, SOURCES)
-        self.assertEqual(rows, [("gl.pdf", "_unnumbered:1", "ch1.pdf", "1.9", "Qualified Person")])
+        terms = graph.glossary_terms("gl.pdf", SEGMENTS["gl.pdf"], SOURCES["gl.pdf"]["title"], entries_of)
+        self.assertEqual([t[:2] for t in terms], [("_unnumbered:1", "QUALIFIED PERSON")])  # "Batch": too short
+        self.assertEqual(terms[0][2], "The person responsible for batch certification.")
+        rows = graph.definitions({"EU": ["gl.pdf", "ch1.pdf"]}, SEGMENTS.get, SOURCES, entries_of)
+        self.assertEqual(rows, [("gl.pdf", "_unnumbered:1", "ch1.pdf", "1.9", "QUALIFIED PERSON")])
+
+    def test_glossary_entries_from_layout(self):
+        if not (graph.model.ROOT / "sources" / "official" / "eu-glossary.pdf").exists():
+            self.skipTest("source not present")
+        entries = dict(graph.glossary_entries("eu-glossary.pdf", "EudraLex Vol 4 Glossary"))
+        self.assertIn("AIR-LOCK", entries)
+        self.assertTrue(entries["AIR-LOCK"].startswith("An enclosed space"))
+        who = dict(graph.glossary_entries("who-trs986-a2-gmp-main.pdf", "WHO GMP main principles"))
+        self.assertIn("airlock", who)
 
 
 class SameText(unittest.TestCase):
@@ -115,7 +133,8 @@ def req(rid, mappings):
 
 class Uses(unittest.TestCase):
     def setUp(self):
-        self.rows = (graph.links(SOURCES, SEGMENTS.get, clauses_of, reqs=[], files=list(SEGMENTS)))
+        self.rows = graph.links(SOURCES, SEGMENTS.get, clauses_of, reqs=[], files=list(SEGMENTS),
+                                entries_of=entries_of)
 
     def test_links_cover_every_kind(self):
         kinds = {r[0] for r in self.rows}
@@ -128,14 +147,15 @@ class Uses(unittest.TestCase):
         self.assertIn(("stricter_than", "p211.xml", "211.84", "ch1.pdf", "1.4", "SI-001"), rows)
 
     def test_context(self):
-        items = graph.context("ch1.pdf", "1.9", self.rows, SEGMENTS.get)
+        items = graph.context("ch1.pdf", "1.9", self.rows, SEGMENTS.get, SOURCES, entries_of)
         whys = [w for w, _, _, _ in items]
         self.assertTrue(any("5.21" in w for w in whys))
-        self.assertTrue(any("Qualified Person" in w for w in whys))
+        self.assertTrue(any("QUALIFIED PERSON" in w for w in whys))
         self.assertTrue(all(t for _, _, _, t in items))                        # texts filled in
         block = graph.context_block(items)
         self.assertTrue(block.startswith("CONTEXT (for understanding only; do not draft"))
         self.assertIn("Sampling should follow a written procedure", block)
+        self.assertIn("The person responsible for batch certification.", block)   # the definition only
         self.assertIn("further context left out", graph.context_block(items, limit=10))
         self.assertEqual(graph.context_block([]), "")
 

@@ -97,7 +97,8 @@ def graph_context(files):
     import graph
     import layer1
     rows = graph.links(files=files, reqs=[])
-    return lambda source, ref: graph.context_block(graph.context(source, ref, rows, layer1.segments_of))
+    sources = layer1.catalog()
+    return lambda source, ref: graph.context_block(graph.context(source, ref, rows, layer1.segments_of, sources))
 
 
 def draft_requests(pilot, sources, clauses_of, context_of=None):

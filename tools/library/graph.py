@@ -63,6 +63,11 @@ def documents(sources):
             m = re.search(pattern, title)
             if m and not (fam == "EU" and kind == "part" and m.group(1) == "III"):   # Part III is a collection
                 out.setdefault((fam, kind, m.group(1)), file)
+        if re.search(r"\bAnnexes\b", title):                # PIC/S: all annexes in one file, one section each
+            out.setdefault((fam, "annexes"), file)
+    for key, file in list(out.items()):                     # PIC/S: chapters are sections of Part I
+        if key[1:] == ("part", "I"):
+            out.setdefault((key[0], "chapters"), file)
     return out
 
 
@@ -103,6 +108,17 @@ def references(source, segments, sources, docs, clause_trees):
             to_ref = None
             if target and m.group(5):                       # 21 CFR 211.84
                 to_ref = find_ref(clause_trees(target), f"{m.group(4)}.{m.group(5)}")
+            if not target and key[1] in ("annex", "chapter"):    # a section of a combined file (PIC/S)
+                combined = docs.get((fam, key[1] + ("es" if key[1] == "annex" else "s")))
+                if combined:
+                    prefix = f"Annex {key[2]}" if key[1] == "annex" else f"Part I {key[2]}"
+                    tree_c = clause_trees(combined)
+                    hit = prefix if prefix in tree_c else next(
+                        (r for r in tree_c if r.startswith(prefix + " ") or r.startswith(prefix + "A ")), None)
+                    if hit:
+                        target, to_ref = combined, hit
+            if target == source and to_ref is None:
+                continue                                    # the combined file naming its own section
             link = (seg["ref"], target, to_ref, m.group(0).strip())
             if link[1:3] not in seen:
                 seen.add(link[1:3])
@@ -128,46 +144,115 @@ def references(source, segments, sources, docs, clause_trees):
 
 
 GLOSSARY = re.compile(r"glossary|definitions?\b|terminology", re.I)
-TERM = re.compile(r"^\s*(?:\d+(?:\.\d+)*\.?\s+)?([A-Z][A-Za-z0-9 ()/,'-]{2,60}?)\s*(?::|\s[-–]\s|\.\s)(?=\s*[A-Z])")
+HEADING = re.compile(r"^\s*(?:\d{1,2}\.?\s+)?(?:glossary|definitions|terminology)\s*$", re.I)
+NEXT_PART = re.compile(r"^\s*(?:\d{1,2}\.\s+[A-Z]|ANNEX\b|APPENDIX\b|REFERENCES\b|Annex \d)")
+INLINE = re.compile(r"^\s{2,}([A-Za-z][\w ()/,'-]{2,70}?)\.\s+([A-Z].*)$")   # WHO: "   batch. A defined ..."
+TOO_COMMON = 300            # a term used in more clauses than this is everyday GMP wording, not worth a link
+NOT_TERMS = {"reference", "references", "introduction", "scope", "background", "abbreviations", "purpose",
+             "objective", "objectives", "general", "principle", "summary", "annex", "appendix", "notes"}
 
 
-def glossary_terms(source, segments, title=""):
-    """[(ref, term)] of the definition entries of a source: segments in a glossary or definitions part (or of a
-    glossary document) whose text starts with a term followed by ':' or ' - ' or '. '."""
-    whole = bool(GLOSSARY.search(title) or "glossary" in source.lower())
-    out = []
-    for seg in segments:
-        if seg["kind"] == "toc":
-            continue
-        where = " ".join([seg.get("section", ""), seg.get("heading", ""), seg["ref"]])
-        if not (whole or GLOSSARY.search(where)):
-            continue
-        m = TERM.match(seg["text"])
-        if m:
-            term = m.group(1).strip(" ,-")
-            if 2 <= len(term.split()) <= 8 or (len(term.split()) == 1 and len(term) >= 6):
-                out.append((seg["ref"], term))
+def _is_term(line, after):
+    """A glossary term line: short, starts with a capital, no full stop at the end, and followed by a longer line."""
+    text = line.strip()
+    return (0 < len(text) <= 80 and len(text.split()) <= 10 and text[0].isupper() and not text.endswith((".", ",", ";", ":"))
+            and not re.search(r"\.{4,}|\s\d+$", text) and len(after.strip()) > len(text) * 0.6)
+
+
+def glossary_entries(source, title=""):
+    """[(term, definition)] of a PDF source's glossary or definitions section, read from the layout text, where
+    each entry starts after a blank line with the term on its own line. A glossary document is read whole."""
+    path = model.ROOT / "sources" / "official" / source
+    if path.suffix.lower() != ".pdf" or not path.exists():
+        return []
+    import common
+    lines = "\n".join(common.pdf_pages(path)).splitlines()
+    if GLOSSARY.search(title):
+        start, stop = 0, len(lines)
+    else:
+        starts = [i for i, l in enumerate(lines) if HEADING.match(l)]
+        if not starts:
+            return []
+        start = starts[-1]                                  # the last one: the first is usually the contents
+        stop = next((j for j in range(start + 2, len(lines)) if NEXT_PART.match(lines[j])
+                     and not HEADING.match(lines[j])), len(lines))
+    repeated = Counter(l.strip() for l in lines if l.strip())
+    lines = ["" if repeated[l.strip()] >= 3 else l for l in lines]     # page headers and footers
+
+    def prev_ends_sentence(i):
+        before = next((lines[j] for j in range(i - 1, start - 1, -1) if lines[j].strip()), ".")
+        return before.rstrip().endswith((".", ":")) or HEADING.match(before)
+
+    inline = [(i, m) for i in range(start + 1, stop) if (m := INLINE.match(lines[i]))
+              and len(m.group(1).split()) <= 6 and prev_ends_sentence(i)]
+    if len(inline) >= 3:                                    # "term. Definition" entries on one line
+        out = []
+        for n, (i, m) in enumerate(inline):
+            end = inline[n + 1][0] if n + 1 < len(inline) else stop
+            body = [m.group(2)] + [lines[j].strip() for j in range(i + 1, end) if lines[j].strip()]
+            out.append((m.group(1).strip(), " ".join(body)))
+        return out
+    out, i = [], start + 1
+    while i < stop:
+        nxt = next((j for j in range(i + 1, stop) if lines[j].strip()), None)
+        if (i == 0 or not lines[i - 1].strip()) and nxt is not None and _is_term(lines[i], lines[nxt]):
+            body, j = [], nxt
+            while j < stop and not (not lines[j - 1].strip() and j + 1 < stop
+                                    and _is_term(lines[j], lines[j + 1] if lines[j + 1].strip() else "")):
+                body.append(lines[j].strip())
+                j += 1
+            definition = " ".join(b for b in body if b)
+            if definition:
+                out.append((re.sub(r"\s+", " ", lines[i].strip()), definition))
+            i = j
+        else:
+            i += 1
     return out
 
 
-def definitions(families, segments_of, sources):
+def glossary_terms(source, segments, title="", entries_of=None):
+    """[(ref, term, definition)] of a source's definition entries; ref is the glossary segment they belong to.
+    entries_of(source, title) reads the entries (default: glossary_entries, from the PDF layout text)."""
+    refs = [s["ref"] for s in segments if s["kind"] != "toc" and GLOSSARY.search(
+        " ".join([s["ref"], s.get("section", ""), s.get("heading", "")]))]
+    if not refs and GLOSSARY.search(title):
+        refs = [next((s["ref"] for s in segments if s["kind"] != "toc"), "")]
+    if not refs:
+        return []
+    out = []
+    for term, definition in (entries_of or glossary_entries)(source, title):
+        name = re.sub(r"\s*\(.*?\)", "", term).strip(" -")        # "Batch (or Lot)" -> "Batch"
+        if GLOSSARY.search(name) and len(name.split()) <= 2 or ". " in name or name.lower() in NOT_TERMS or \
+                re.match(r"(?:Appendix|Annex|Part|Chapter|Section|Table|Figure)\b", name):
+            continue                                        # headings, not terms
+        if 2 <= len(name.split()) <= 8 or (len(name.split()) == 1 and len(name) >= 6):
+            out.append((refs[0], name, definition))
+    return out
+
+
+def definitions(families, segments_of, sources, entries_of=None):
     """defines links: (glossary source, entry ref, using source, using ref, term) for every clause of the same
     family whose text uses the term as whole words."""
     out = []
     for fam, files in families.items():
         terms = [(f, ref, term) for f in files
-                 for ref, term in glossary_terms(f, segments_of(f), sources.get(f, {}).get("title", ""))]
+                 for ref, term, _ in glossary_terms(f, segments_of(f), sources.get(f, {}).get("title", ""),
+                                                    entries_of)]
         if not terms:
             continue
         patterns = [(f, ref, term, re.compile(rf"(?<![\w-]){re.escape(term)}(?![\w-])", re.I))
                     for f, ref, term in terms]
+        found = defaultdict(list)
         for f in files:
             for seg in segments_of(f):
                 if seg["kind"] == "toc":
                     continue
                 for gf, gref, term, pattern in patterns:
                     if (gf, gref) != (f, seg["ref"]) and pattern.search(seg["text"]):
-                        out.append((gf, gref, f, seg["ref"], term))
+                        found[(gf, gref, term)].append((f, seg["ref"]))
+        for (gf, gref, term), uses in found.items():
+            if len(uses) <= TOO_COMMON:
+                out += [(gf, gref, f, ref, term) for f, ref in uses]
     return out
 
 
@@ -212,14 +297,14 @@ def library_links(reqs):
     return out
 
 
-def links(sources=None, segments_of=None, clauses_of=None, reqs=None, files=None):
+def links(sources=None, segments_of=None, clauses_of=None, reqs=None, files=None, entries_of=None):
     """Every link row: (kind, from source, from ref, to source, to ref, detail)."""
     import layer1
     sources = sources or catalog()
     segments_of = segments_of or layer1.segments_of
     clauses_of = clauses_of or layer1.clauses_of
     files = sorted(files or (f for f in sources if (model.ROOT / "library" / "clauses" / (Path(f).stem + ".jsonl"))
-                             .exists()))
+                             .exists() or GLOSSARY.search(sources[f]["title"])))   # glossaries: parsed on demand
     docs = documents({f: sources[f] for f in sources})
     out = []
     for f in files:
@@ -228,17 +313,24 @@ def links(sources=None, segments_of=None, clauses_of=None, reqs=None, files=None
     families = defaultdict(list)
     for f in files:
         families[family_of(sources[f])].append(f)
-    out += [("defines", a, b, c, d, e) for a, b, c, d, e in definitions(families, segments_of, sources)]
+    out += [("defines", a, b, c, d, e) for a, b, c, d, e in definitions(families, segments_of, sources, entries_of)]
     clauses = [((f, ref), c["text"]) for f in files for ref, c in clauses_of(f).items()]
     out += [("same_text_as", a[0], a[1], b[0], b[1], str(s)) for a, b, s in same_text(clauses)]
     out += library_links(model.requirements() if reqs is None else reqs)
     return out
 
 
-def context(source, ref, rows, segments_of):
+def context(source, ref, rows, segments_of, sources=None, entries_of=None):
     """What a drafter or verifier may read beside a clause, marked as context only: the clauses it refers to and
-    the definitions of the terms it uses. [(why, source, ref, text)]."""
-    texts = {}
+    the definitions of the terms it uses (the definition itself, not the whole glossary). [(why, source, ref,
+    text)]."""
+    texts, defs = {}, {}
+
+    def definition(s, r, term):
+        if s not in defs:
+            title = (sources or {}).get(s, {}).get("title", "")
+            defs[s] = {(gr, t): d for gr, t, d in glossary_terms(s, segments_of(s), title, entries_of)}
+        return defs[s].get((r, term)) or text_of(s, r)[:500]
 
     def text_of(s, r):
         if s not in texts:
@@ -252,7 +344,7 @@ def context(source, ref, rows, segments_of):
             out.append((f"referred to as {detail!r}", ts, tr, text_of(ts, tr)))
         if kind == "defines" and (ts, tr) == (source, ref) and (fs, fr) not in seen:
             seen.add((fs, fr))
-            out.append((f"definition of {detail!r}", fs, fr, text_of(fs, fr)))
+            out.append((f"definition of {detail!r}", fs, fr, definition(fs, fr, detail)))
     return out
 
 
@@ -349,7 +441,7 @@ def main():
     elif a.command == "context":
         if len(a.args) != 2:
             ap.error("context <file> <ref>")
-        print(context_block(context(a.args[0], a.args[1], rows, layer1.segments_of)) or "(no context)")
+        print(context_block(context(a.args[0], a.args[1], rows, layer1.segments_of, catalog())) or "(no context)")
     else:
         if len(a.args) != 1:
             ap.error("impact <file>")
