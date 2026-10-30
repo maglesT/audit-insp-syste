@@ -1,4 +1,4 @@
-"""Source fidelity check (tools/parse/fidelity.py, D38)."""
+"""Source fidelity check (tools/parse/fidelity.py, D39): the comparison must catch wrong stored text."""
 import sys
 import unittest
 from pathlib import Path
@@ -6,69 +6,136 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools" / "parse"))
 import fidelity  # noqa: E402
 
-
-def clause(ref, text, kind="clause", pages=(1, 1)):
-    return {"ref": ref, "text": text, "kind": kind, "page_start": pages[0], "page_end": pages[1]}
+T = fidelity.tokens
 
 
-class Fidelity(unittest.TestCase):
-    def test_words_are_normalised(self):
-        self.assertEqual(fidelity.words("Manufac- turing ﬁles, SOFT\u00adWARE; 9.3"),
-                         ["manufacturing", "les", "software", "9", "3"])
-        self.assertEqual(fidelity.words("qualification"), fidelity.words("qualication"))   # dropped ligature
-        self.assertEqual(fidelity.words("3,5,8- pyrene multi\u2010 disciplinary"), ["3", "5", "8", "pyrene",
-                                                                                 "multidisciplinary"])
+def text_flags(stored, printed, small=(), starts=()):
+    return fidelity.describe(fidelity.compare_text(T(stored), T(printed), set(small), set(starts)))
 
-    def test_share(self):
-        page = fidelity.words("Header line. 9.3 All self inspections should be recorded. Footer 12")
-        self.assertEqual(fidelity.share(fidelity.words("9.3 All self inspections should be recorded."), page), 1.0)
-        self.assertEqual(fidelity.share(fidelity.words("All self inspections must be recorded."), page), 5 / 6)
-        self.assertEqual(fidelity.share(fidelity.words("recorded be should"), page), 1 / 3)       # order counts
-        self.assertEqual(fidelity.share(fidelity.words("recorded be should"), page, bag=True), 1.0)  # tables
-        self.assertEqual(fidelity.share(fidelity.words("the PD50 value"), fidelity.words("the PD 50 value")), 1.0)
-        self.assertEqual(fidelity.share(fidelity.words("the ab value"), fidelity.words("the a b value")), 2 / 3)
-        self.assertEqual(fidelity.share(fidelity.words("the PD50 value"), fidelity.words("the PD 50 value")), 1.0)
-        self.assertEqual(fidelity.share(fidelity.words("the ab value"), fidelity.words("the a b value")), 2 / 3)
 
-    def test_compare_uses_the_clause_pages_with_a_margin(self):
-        pages = [fidelity.words("intro"), fidelity.words("A B C"), fidelity.words("D E"), fidelity.words("far away")]
-        rows = fidelity.compare([clause("1", "C D", pages=(2, 2)), clause("2", "far away", pages=(1, 1)),
-                                 clause("t", "toc 3", kind="toc")], pages)
-        self.assertEqual([(r[0], r[2]) for r in rows], [("1", 1.0), ("2", 0.0)])      # page 4 is out of reach
-        self.assertEqual(rows[1][4:], ("elsewhere", []))
+PAGE = ("Header line. 9.3 Samples should not be released before testing is complete. The limit is 0.5 % and "
+        "products are stored at 25 °C. Footer")
 
-    def test_classify(self):
-        page, doc, raw = ["a", "b", "word"], ["a", "b", "word", "label"], ["a", "b", "word", "label", "pdfgap"]
-        self.assertEqual(fidelity.classify(["th", "st"], page, doc, raw), ("minor", []))
-        # a number no reading has is never minor: "store at 25 °C" stored, "52 °C" printed
-        self.assertEqual(fidelity.classify(["25"], ["store", "at", "52", "c"], ["store", "at", "52", "c"],
-                                           ["store", "at", "52", "c"]), ("unconfirmed", ["25"]))
-        self.assertEqual(fidelity.classify(["25"], ["store", "at", "52", "c"], ["store", "at", "52", "c", "25"],
-                                           ["25"]), ("unconfirmed", ["25"]))   # "25" elsewhere does not count
-        self.assertEqual(fidelity.classify(["word", "th"], page, doc, raw), ("order", []))
-        self.assertEqual(fidelity.classify(["label", "word"], page, doc, raw), ("elsewhere", []))
-        self.assertEqual(fidelity.classify(["pdfgap", "label"], page, doc, raw), ("engine", []))
-        self.assertEqual(fidelity.classify(["glued23", "word"], page, doc, raw), ("unconfirmed", ["glued23"]))
 
-    def test_flags_and_explanations(self):
-        doc = {"clause_min": 0.99, "source_min": 0.995, "sources": {
-            "a.pdf": fidelity.source_summary([("1", "clause", 1.0, 10, "", []), ("2", "clause", 0.5, 10,
-                                                                                 "unconfirmed", ["x"])]),
-            "b.pdf": fidelity.source_summary([("1", "clause", 0.9, 10, "unconfirmed", ["y"]),
-                                              ("2", "clause", 0.9, 10, "order", [])])}}
-        self.assertEqual(doc["sources"]["a.pdf"]["median"], 0.75)
-        missing = fidelity.unexplained(doc, {})
-        self.assertEqual([(f, r) for f, r, _ in missing], [("a.pdf", "*"), ("a.pdf", "2"), ("b.pdf", "*"),
-                                                            ("b.pdf", "1")])    # b 2 is explained by rule
-        why = {("a.pdf", "*"): "figure text", ("b.pdf", "1"): "flowchart"}
-        self.assertEqual([(f, r) for f, r, _ in fidelity.unexplained(doc, why)], [("b.pdf", "*")])
+class Tokens(unittest.TestCase):
+    def test_tokens(self):
+        self.assertEqual(T("Store at < 0.5 % and -20 °C; ﬁles, SOFT­WARE (cid:3)"),
+                         ["store", "at", "<", "0.5", "%", "and", "−", "20", "c", "files", "software"])
 
-    def test_committed_report_is_explained(self):
-        if not fidelity.REPORT.exists():
-            self.skipTest("no fidelity report yet")
+    def test_ligatures_only_as_pairs(self):
+        self.assertTrue(fidelity.same("qualification", "qualication"))
+        self.assertFalse(fidelity.same("off", "on"))
+        self.assertFalse(fidelity.same("five", "four"))
+
+
+class Catches(unittest.TestCase):
+    """Review of D39: errors in stored text that the comparison must flag."""
+
+    def test_exact_text_passes(self):
+        self.assertEqual(text_flags("Samples should not be released before testing is complete.", PAGE), "")
+
+    def test_dropped_not(self):
+        self.assertEqual(text_flags("Samples should be released before testing is complete.", PAGE), "+not")
+
+    def test_dropped_end_of_clause(self):
+        self.assertIn("-", text_flags("Samples should not be released before testing is complete. The limit is 5",
+                                      PAGE))
+
+    def test_numbers_signs_units(self):
+        self.assertEqual(text_flags("The limit is 5 % and", PAGE), "-5 | +0.5")
+        self.assertEqual(text_flags("The limit is 0.5 % and products are stored at 52 °C.", PAGE), "-52 | +25")
+        self.assertEqual(text_flags("The limit is < 0.5 % and", "The limit is > 0.5 % and"), "-< | +>")
+        self.assertEqual(text_flags("stored at 25 °C here", "stored at 25 °F here"), "-c | +f")
+        self.assertEqual(text_flags("stored at -20 °C", "stored at 20 °C"), "-−")
+
+    def test_truncated_or_swapped_word(self):
+        self.assertEqual(text_flags("Samples should not be relea before testing", PAGE), "-relea | +released")
+        self.assertEqual(text_flags("Samples must not be released", PAGE), "-must | +should")
+
+    def test_one_word_in_a_long_clause(self):
+        long = " ".join(f"word{chr(97 + n % 26)}{chr(97 + n // 26)}" for n in range(150))
+        self.assertEqual(text_flags(long.replace("wordzb", "wrong"), long), "-wrong | +wordzb")
+
+    def test_exponent_is_not_a_footnote_mark(self):
+        printed = T("not more than 10 6 CFU")
+        small = {printed.index("6")}
+        self.assertEqual(fidelity.describe(fidelity.compare_text(T("not more than 10 CFU"), printed, small)), "+6")
+
+
+class Tolerates(unittest.TestCase):
+    """What the second engine reads differently while the words are the same."""
+
+    def test_split_joined_and_ligature_words(self):
+        self.assertEqual(text_flags("a cross- contamination risk", "a crosscontamination risk"), "")
+        self.assertEqual(text_flags("a crosscontamination risk", "a cross contamination risk"), "")
+        self.assertEqual(text_flags("the qualification of staff", "the qualication of staff"), "")
+        self.assertEqual(text_flags("a multidisciplinary team", "a multi 73 disciplinary team"), "")
+
+    def test_footnote_marks(self):
+        printed = T("re 23 qualification of systems")
+        self.assertEqual(fidelity.describe(fidelity.compare_text(T("requalification of systems"), printed,
+                                                                {printed.index("23")})), "")
+        self.assertEqual(text_flags("the annex. 1 Records are kept", "the annex. Records are kept",
+                                    starts={"1"}), "")
+
+    def test_vertical_text(self):
+        self.assertEqual(text_flags("records are kept", "records w h o t r s are kept"), "")
+
+
+class Coverage(unittest.TestCase):
+    def reading(self, *pages):
+        return [(T(p), set(), set()) for p in pages], False
+
+    def clause(self, ref, text, page=1, kind="clause"):
+        return {"ref": ref, "text": text, "kind": kind, "page_start": page, "page_end": page}
+
+    def test_cut_off_clause_end_is_uncovered(self):
+        reading = self.reading("1.1 Samples should not be released before testing is complete. "
+                               "1.2 Records are kept for five years.")
+        rows, uncovered = fidelity.compare([self.clause("1.1", "1.1 Samples should not be released before"),
+                                            self.clause("1.2", "1.2 Records are kept for five years.")], reading)
+        self.assertEqual([d for _, _, _, d in rows], ["", ""])
+        self.assertEqual(uncovered, [(1, "testing is complete")])
+
+    def test_contents_count_toward_coverage(self):
+        reading = self.reading("Contents Scope of the guide 3 1.1 Records are kept for five years.")
+        rows, uncovered = fidelity.compare([self.clause("_toc", "Contents Scope of the guide 3", kind="toc"),
+                                            self.clause("1.1", "1.1 Records are kept for five years.")], reading)
+        self.assertEqual((len(rows), uncovered), (1, []))
+
+
+class Tables(unittest.TestCase):
+    def test_rows_as_a_bag_in_their_own_stretch(self):
+        window = T("Grade A 3 520 20 Grade B 352 000 2 900")
+        self.assertEqual(fidelity.compare_table(T("A 20 520 3 Grade"), window), [])
+        self.assertTrue(fidelity.compare_table(T("Grade A 3 521 20"), window))
+
+
+class Check(unittest.TestCase):
+    def doc(self, discrepancy="-25 | +52"):
+        return {"code_sha256": fidelity.code_sha256(), "sources": {"a.pdf": {
+            "pdf_sha256": "h", "clauses": 2, "tokens": 9,
+            "flagged": [{"ref": "1", "kind": "clause", "tokens": 5, "discrepancy": discrepancy}]}}}
+
+    def test_explanations_must_match_the_discrepancy(self):
+        why = [("a.pdf", "1", "-25 | +52", "reason")]
+        self.assertEqual(fidelity.problems(self.doc(), why), [])
+        self.assertEqual(len(fidelity.problems(self.doc("-25 | +53"), why)), 1)        # changed: lapses
+        self.assertEqual(fidelity.problems(self.doc("+ii 3 i 151"), [("a.pdf", "*", r"\+ii 3 i \d+", "gazette")]), [])
+        self.assertEqual(len(fidelity.problems(self.doc("-25 | +52"), [("a.pdf", "*", r"\+ii 3 i \d+", "gazette")])), 1)
+
+    def test_stale_reports_and_coverage_fail(self):
+        why = [("a.pdf", "1", "-25 | +52", "reason")]
+        stale = {**self.doc(), "code_sha256": "old"}
+        self.assertIn("another version", fidelity.problems(stale, why)[0][2])
+        self.assertIn("differs", fidelity.problems(self.doc(), why, inventory={"a.pdf": "other"})[0][2])
+        self.assertIn("missing", fidelity.problems(self.doc(), why, pilot=["a.pdf", "b.pdf"])[0][2])
+
+    def test_committed_report(self):
         import json
         doc = json.loads(fidelity.REPORT.read_text(encoding="utf-8"))
-        self.assertEqual(fidelity.unexplained(doc, fidelity.explanations()), [])
+        self.assertEqual(fidelity.problems(doc, fidelity.explanations(), fidelity.inventory_hashes(),
+                                           fidelity.pilot_pdfs()), [])
 
 
 if __name__ == "__main__":

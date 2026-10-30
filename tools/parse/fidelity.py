@@ -1,32 +1,49 @@
 """Source fidelity (owner priority 0a, D39): every parsed clause of every PDF, checked against a second engine.
 
-  python3 tools/parse/fidelity.py run [FILE ...]    # re-extract, compare, write library/fidelity-report.{json,md}
-  python3 tools/parse/fidelity.py check             # every flag in the committed report is explained (CI)
+  python3 tools/parse/fidelity.py run [FILE ...]    # re-read, compare, write library/fidelity-report.{json,md}
+  python3 tools/parse/fidelity.py check             # the committed report is current and fully explained (CI)
 
 The parser reads PDFs with poppler (`pdftotext -layout`). This check reads them again with pdfminer.six (through
-pdfplumber's page text), which is a separate code base, and compares each clause with the second engine's words on
-the clause's pages (one page of margin either side, since a clause's page numbers come from the first engine).
-Both texts are normalised the same way first: Unicode NFKC (ligatures, full-width letters), soft hyphens dropped,
-a word broken at a line end joined ("manufac- turing" -> "manufacturing"; letters on both sides, any hyphen), letters case-folded, punctuation and
-spacing ignored, and the letters of ligatures (fi, fl, ff, ffi, ffl) left out, since pdfminer drops some ligature
-glyphs. A clause word of three or more characters that the second engine split ("PD50" as "PD 50") counts as
-found when it is not a whole word on the pages but appears in their words run together. A clause's match share is the share of its words found, in order, in the second engine's words
-(difflib longest matching blocks). Table rows (kind table_row) are compared as a bag of words, since the two
-engines may read table cells in different orders.
+pdfplumber's words), a separate code base, and compares each stored clause with the second reading of its pages,
+in both directions: the clause's tokens are aligned to the page text (one page of margin either side), the
+stretch of page text from the first to the last matching token is taken as the clause's place in the PDF, and
+every difference in that stretch is a discrepancy, whether the stored clause has a token the PDF lacks there or
+the PDF has a token the stored clause lacks (dropped text, a dropped "not"). There is no share threshold: one
+wrong token in a long clause is flagged.
 
-Flags: a clause under CLAUSE_MIN, and a source whose clauses' median is under SOURCE_MIN. Each flagged clause is
-classified by its missing words (classify): minor tokens, reading order, elsewhere in the document, or read by a
-third reading (poppler's raw order). A flag whose missing words all fall under those rules is explained by rule;
-an "unconfirmed" word, which no reading of the PDF has, must be fixed in the parser or explained in
-library/fidelity-explanations.csv (source, ref or "*", reason), and so must a source median under SOURCE_MIN.
-`check` fails on anything unexplained, so CI holds the committed report to that rule without re-reading the PDFs. Contents
-entries (kind toc) are left out. HTML and XML sources are parsed from structured text, not PDF, and are not covered.
+Tokens: words, numbers with their decimal point ("0.5"), and the signs < > ≤ ≥ ± % − (a minus sign before a
+number); case is folded and Unicode normalised (NFKC, soft hyphens). Before comparing, the second reading drops
+what the parser drops too: running headers and footers (lines repeated at page edges, or long lines printed on a
+third of the pages: running titles in the margin), page numbers at page edges, margin line numbers of
+line-numbered documents, Devanagari text of bilingual gazettes, and "(cid:n)" glyphs. A difference is tolerated
+only in these narrow cases, each of which leaves the words of the regulation unchanged:
+  - ligature letters dropped by pdfminer ("qualication" for "qualification"), or a word split or joined
+    differently ("cross- contamination" / "crosscontamination", "multi- 73 disciplinary" with a margin line
+    number inside the split word): the same letters in the same order;
+  - footnote marks: small-font tokens in the PDF that do not follow a number (a following small number may be an
+    exponent and is not tolerated), or a one- to three-digit number in the clause that the page prints small or
+    starts a footnote line with;
+  - text set vertically, read one character at a time (runs of three or more single characters);
+  - a footnote number or sign that only moved within the clause.
+Table rows (kinds table_row, table_header) are compared as a bag of tokens against the row's own stretch of the
+page, since the two engines read cells in different orders. Coverage, the other direction at document level:
+every run of three or more tokens of the second reading that no clause accounts for (text missing from every
+stored clause: a dropped paragraph, a clause end cut off) is flagged as "uncovered" with its page.
+
+A flagged clause is fixed in the parser or explained in library/fidelity-explanations.csv: source, ref (or "*"),
+discrepancy (the exact discrepancy text, or with ref "*" a regular expression every listed discrepancy must match
+in full, for one systematic layout effect of a source), reason. An explanation lapses when the discrepancy
+changes. The report records the sha256 of this file, of each PDF and of each clause file; `check` fails when the
+code changed since the report was built, a PDF differs from sources/inventory.csv, a pilot must/should PDF is
+missing from the report, or a discrepancy is unexplained, so CI holds the committed report to these rules without
+re-reading the PDFs. HTML and XML sources are not PDF and are not covered; a clause boundary error is found only
+when it changes a clause's text (structure checks cover the rest).
 """
 import argparse
 import csv
+import hashlib
 import json
 import re
-import statistics
 import sys
 import unicodedata
 from collections import Counter
@@ -35,219 +52,391 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
+import common  # noqa: E402
 from common import CLAUSES, OFFICIAL  # noqa: E402
 
 ROOT = HERE.parents[1]
 REPORT = ROOT / "library" / "fidelity-report.json"
 REPORT_MD = ROOT / "library" / "fidelity-report.md"
 EXPLANATIONS = ROOT / "library" / "fidelity-explanations.csv"
-CLAUSE_MIN = 0.99
-SOURCE_MIN = 0.995
 MARGIN = 1
-
-
-# pdfminer drops some ligature glyphs ("qualiﬁcation" -> "qualication"): the letters a ligature stands for are
-# left out of every word on both sides before comparing
+TOKEN = re.compile(r"\d+(?:[.,]\d+)*|[^\W\d_]+|[<>≤≥±%−]")
 LIGATURES = re.compile(r"ffi|ffl|ff|fi|fl")
+INDIC = re.compile(r"[ऀ-෿]")
+PAGE_NUMBER = re.compile(r"\s*(page\s*)?\d{1,4}(\s*(of|/)\s*\d{1,4})?\s*", re.I)
+TABLE_KINDS = ("table_row", "table_header")
 
 
-def words(text):
-    """The comparable words of a text (see the module docstring)."""
-    text = unicodedata.normalize("NFKC", text).replace("\u00ad", "")
-    text = re.sub(r"([^\W\d_])[-\u2010\u2011]\s+([^\W\d_])", r"\1\2", text)   # letters only: "3,5,8- pyrene" stays
-    return [LIGATURES.sub("", w) or w for w in re.findall(r"\w+", text.casefold())]
+def code_sha256():
+    return hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
 
 
-def matched(clause_words, page_words, bag=False):
-    """(share, missing words): the share of the clause's words found in the page words, in order or as a bag of
-    words, and the words not found. A clause word of three or more characters that the second engine split ("PD50"
-    read as "PD 50", subscripts and superscripts) counts as found when it is not a whole word there but appears in
-    the page's words run together (a word that is there but out of order still counts as missing)."""
-    if not clause_words:
-        return 1.0, []
-    if bag:
-        have = Counter(page_words)
-        missing = [w for w, n in Counter(clause_words).items() for _ in range(max(n - have[w], 0))]
-    else:
-        sm = SequenceMatcher(None, clause_words, page_words, autojunk=False)
-        got = set()
-        for b in sm.get_matching_blocks():
-            got.update(range(b.a, b.a + b.size))
-        missing = [w for n, w in enumerate(clause_words) if n not in got]
-    whole, joined = set(page_words), "".join(page_words)
-    missing = [w for w in missing if not (len(w) > 2 and w not in whole and w in joined)]
-    return (len(clause_words) - len(missing)) / len(clause_words), missing
+def tokens(text):
+    """The comparable tokens of a text (see the module docstring)."""
+    text = unicodedata.normalize("NFKC", text).replace("­", "")
+    text = re.sub(r"\(cid:\d+\)", " ", text)
+    text = re.sub(r"(?:(?<=\s)|^)[-−](?=\d)", "−", text)
+    return [t for t in TOKEN.findall(text.casefold()) if not INDIC.search(t)]
 
 
-def share(clause_words, page_words, bag=False):
-    return matched(clause_words, page_words, bag)[0]
+def unlig(text):
+    return LIGATURES.sub("", text)
 
 
-def classify(missing, page_words, doc_words, raw_words):
-    """Why a flagged clause's missing words are missing, or which are not explained by rule:
-    (category, unconfirmed words). Categories, checked in this order for every missing word:
-      minor      one or two letters (superscripts such as "th", units, list letters); never a number: a number
-                 must be on the clause's own pages in the second reading, so a changed limit ("25" stored,
-                 "52" printed) is flagged even when "25" appears elsewhere in the document
-      order      on the clause's pages, in another order (columns, table cells, headers read differently)
-      elsewhere  elsewhere in the second engine's text of the document (a table row repeating a spanned cell's
-                 label, a clause whose page numbers are off)
-      engine     not in the second engine's text but in poppler's raw-order text (a pdfminer gap)
-    A word in none of these is unconfirmed: no independent reading of the PDF has it, so the stored text may be
-    wrong and the flag needs a fix or an explanation in library/fidelity-explanations.csv."""
-    page, doc = set(page_words), set(doc_words)
-    doc_joined, raw, raw_joined = "".join(doc_words), set(raw_words), "".join(raw_words)
-    seen, unconfirmed = set(), []
-    for w in missing:
-        if len(w) <= 2 and not w.isdigit():
-            seen.add("minor")
-        elif w.isdigit() and w not in page:
-            unconfirmed.append(w)                   # a number counts only where the clause is printed
-        elif w in page:
-            seen.add("order")
-        elif w in doc or w in doc_joined:
-            seen.add("elsewhere")
-        elif w in raw or w in raw_joined:
-            seen.add("engine")
-        else:
-            unconfirmed.append(w)
-    order = ("unconfirmed", "engine", "elsewhere", "order", "minor")
-    category = next(c for c in order if c in seen or (c == "unconfirmed" and unconfirmed))
-    return category, unconfirmed
+def same(a, b):
+    """Two tokens are the same, or one is the other with its ligature letters dropped."""
+    return a == b or bool(LIGATURES.search(a) and unlig(a) == b) or bool(LIGATURES.search(b) and unlig(b) == a)
 
 
-def second_engine_pages(path):
-    """Words per page from pdfminer.six (via pdfplumber)."""
+def page_lines(page):
+    """[[(word, small font)]] per line of a pdfplumber page, words in reading order, lines by baseline."""
+    words = page.extract_words(extra_attrs=["size"], keep_blank_chars=False, use_text_flow=True)
+    if not words:
+        return []
+    sizes = sorted(w["size"] for w in words)
+    body = sizes[len(sizes) // 2]
+    lines, line = [], []
+    for w in words:
+        if line and abs(w["top"] - line[-1]["top"]) > 2.5 and abs(w["bottom"] - line[-1]["bottom"]) > 2.5:
+            lines.append(line)
+            line = []
+        line.append(w)
+    lines.append(line)
+    return [[(w["text"], w["size"] < 0.8 * body) for w in ln] for ln in lines]
+
+
+def latin_line(line):
+    """A line without Devanagari text; empty when only a gazette header's remnant would be left."""
+    indic = any(INDIC.search(t) for t, _ in line)
+    kept = [(INDIC.sub("", t).replace("‍", ""), small) for t, small in line if "cid:" not in t]
+    kept = [(t, small) for t, small in kept if t.strip()]
+    if indic and not any(re.search(r"[^\W\d_]{3}", t) for t, _ in kept):
+        return []
+    return kept
+
+
+def read_pages(lines_per_page):
+    """[(tokens, small-font token indexes, numbers that start a line)] per page, and whether the document has
+    numbered lines, from page_lines() of every page (see the module docstring for what is dropped)."""
+    pages = [[ln for ln in (latin_line(ln) for ln in pl) if ln] for pl in lines_per_page]
+    texts = ["\n".join(" ".join(t for t, _ in ln) for ln in pl) for pl in pages]
+    running = common.repeated_lines(texts)
+    anywhere = Counter(k for t in texts for k in {common.line_key(ln) for ln in t.splitlines()} if len(k.split()) >= 5)
+    running |= {k for k, n in anywhere.items() if n >= max(3, int(len(texts) * 0.3))}
+
+    def header(line):
+        key = common.line_key(line)
+        if re.fullmatch(r"[#\s]*", key):
+            return False                                    # numbers alone: page numbers are taken at the edges
+        return bool(key in running or common.SIDE_HEADER.match(key)
+                    or common.SIDE_HEADER.match(common.line_key(line[::-1])))
+    all_lines = [" ".join(t for t, _ in ln) for pl in pages for ln in pl]
+    leading = [int(m.group(1)) for ln in all_lines for m in [re.match(r"^(\d{1,4})\s+\S", ln)] if m]
+    numbered = (len(leading) > 0.4 * max(len(all_lines), 1)
+                and sum(b == a + 1 for a, b in zip(leading, leading[1:])) > 0.6 * len(leading))
+    out = []
+    for pl in pages:
+        toks, small, starts = [], set(), set()
+        for n, ln in enumerate(pl):
+            line = " ".join(t for t, _ in ln)
+            if header(line) or (len(ln) > 1 and all(re.fullmatch(r"[^\W\d_]", t) for t, _ in ln)):
+                continue
+            if (n < 2 or n >= len(pl) - 2) and PAGE_NUMBER.fullmatch(line):
+                continue
+            words = list(ln)
+            if numbered and words and re.fullmatch(r"\d{1,4}", words[0][0]):
+                words = words[1:]
+            if words and re.fullmatch(r"\d{1,3}", words[0][0]):
+                starts.add(words[0][0])
+            for t, is_small in words:
+                for tok in tokens(t):
+                    if is_small:
+                        small.add(len(toks))
+                    toks.append(tok)
+        out.append((toks, small, starts))
+    return out, numbered
+
+
+def second_reading(path):
     import pdfplumber
     with pdfplumber.open(path) as pdf:
-        return [words(page.extract_text() or "") for page in pdf.pages]
+        return read_pages([page_lines(p) for p in pdf.pages])
 
 
-def compare(clauses, pages, raw_words=()):
-    """[(ref, kind, share, words, category, unconfirmed)] for every clause but contents entries; category and
-    unconfirmed (classify) are filled in for flagged clauses only."""
-    doc_words = [w for p in pages for w in p]
+def char_runs(words):
+    """Vertical text read one character at a time: runs of single-character tokens, joined both ways."""
+    runs, cur = [], []
+    for t in list(words) + [""]:
+        if len(t) == 1:
+            cur.append(t)
+            continue
+        if len(cur) >= 3:
+            runs += ["".join(cur), "".join(reversed(cur))]
+        cur = []
+    return runs
+
+
+def joins(words):
+    """Every token and run of two or three adjacent tokens, joined, with and without ligature letters."""
+    out = {"".join(words[k:k + n]) for n in (1, 2, 3) for k in range(len(words) - n + 1)}
+    return out | {unlig(x) for x in out}
+
+
+def compare_table(clause, window, covered=None):
+    """Discrepancies of a table row: its tokens missing from its own stretch of the page, as a bag. covered (a
+    set) receives the window positions of tokens the row accounts for."""
+    blocks = [b for b in SequenceMatcher(None, clause, window, autojunk=False).get_matching_blocks() if b.size]
+    lo, hi = (blocks[0].b, blocks[-1].b + blocks[-1].size) if blocks else (0, len(window))
+    if covered is not None and blocks:
+        wanted = Counter(clause)
+        for k in range(max(lo - len(clause), 0), min(hi + len(clause), len(window))):
+            if wanted[window[k]] > 0:
+                wanted[window[k]] -= 1
+                covered.add(k)
+    stretch = window[max(lo - len(clause), 0):hi + len(clause)]
+    have, missing = Counter(stretch), []
+    for t in clause:
+        if have[t] > 0:
+            have[t] -= 1
+        else:
+            missing.append(t)
+    near, runs = joins(stretch), char_runs(stretch)
+    missing = [t for t in missing if not any(same(t, x) for x in stretch) and unlig(t) not in near
+               and not any(t in r for r in runs)]
+    return [("missing", missing, [])] if missing else []
+
+
+def compare_text(clause, window, small=frozenset(), starts=frozenset(), covered=None):
+    """Discrepancies of running text: (op, clause tokens, page tokens) for every difference in the clause's
+    stretch of the page that no rule of the module docstring tolerates. covered (a set) receives the window
+    positions of the stretch, for the coverage check."""
+    blocks = [b for b in SequenceMatcher(None, clause, window, autojunk=False).get_matching_blocks() if b.size]
+    if not blocks:
+        return [("missing", clause, [])]
+    lo, hi = blocks[0].b, blocks[-1].b + blocks[-1].size
+    if covered is not None:
+        covered.update(range(lo, hi))
+    stretch = window[lo:hi]
+    small = {k - lo for k in small if lo <= k < hi}
+    found = []
+    for op, i1, i2, j1, j2 in SequenceMatcher(None, clause, stretch, autojunk=False).get_opcodes():
+        if op == "equal":
+            continue
+        a, b = clause[i1:i2], stretch[j1:j2]
+        letters = [x for x in b if not (x.isdigit() and len(x) <= 4)]
+        if op == "replace" and (
+                (len(a) == len(b) and all(same(x, y) for x, y in zip(a, b)))
+                or unlig("".join(a)) == unlig("".join(b))
+                or (2 <= len(letters) < len(b) and all(x.isalpha() for x in letters)
+                    and unlig("".join(a)) == unlig("".join(letters)))):
+            continue                                        # ligatures, split or joined words, margin numbers
+        if op == "insert" and len(b) >= 3 and all(len(x) == 1 for x in b):
+            continue                                        # vertical text read character by character
+        if op == "insert" and all(k in small for k in range(j1, j2)) \
+                and not (j1 > 0 and re.search(r"\d", stretch[j1 - 1])):
+            continue                                        # footnote marks (not an exponent after a number)
+        if op == "delete" and len(a) <= 2 and all(
+                t.isdigit() and len(t) <= 3 and (t in starts or any(stretch[k] == t for k in small)) for t in a):
+            continue                                        # footnote marks the PDF prints small or as a line start
+        found.append((op, a, b))
+    edges = window[max(lo - 4, 0):hi + 4]
+    near = joins(edges) | joins([x for x in edges if not (x.isdigit() and len(x) <= 3)])
+    inserted = {"".join(b) for op, _, b in found if op == "insert"}
+    deleted = {"".join(a) for op, a, _ in found if op == "delete"}
+    found = [f for f in found
+             if not (f[0] == "delete" and (unlig("".join(f[1])) in near or "".join(f[1]) in inserted))
+             and not (f[0] == "insert" and "".join(f[2]) in deleted)]
+    moved = Counter(t for op, _, b in found if op == "insert" for t in b) & \
+        Counter(t for op, a, _ in found if op == "delete" for t in a)
+
+    def mark(t):
+        return (t.isdigit() and len(t) <= 3) or t in "<>≤≥±%−"
+    return [(op, a, b) for op, a, b in found
+            if not (op in ("insert", "delete") and len(a or b) == 1 and mark((a or b)[0]) and moved[(a or b)[0]])]
+
+
+def describe(discrepancies):
+    """One line per clause: "-x y" for clause tokens the page lacks, "+x y" for page tokens the clause lacks."""
+    parts = []
+    for _, a, b in discrepancies:
+        if a:
+            parts.append("-" + " ".join(a))
+        if b:
+            parts.append("+" + " ".join(b))
+    return " | ".join(parts)
+
+
+UNCOVERED_MIN = 3
+
+
+def compare(clauses, reading):
+    """([(ref, kind, tokens, discrepancy text)] for every clause but contents entries ("" when it matches),
+    [(page, uncovered text)]): runs of UNCOVERED_MIN or more tokens of the second reading that no clause's
+    stretch accounts for (text the stored clauses lack: a dropped paragraph, a cut-off clause end). Contents
+    entries count toward coverage but are not compared."""
+    pages, _ = reading
+    covered = [set() for _ in pages]
     out = []
     for c in clauses:
-        if c["kind"] == "toc":
-            continue
-        cw = words(c["text"])
-        if not cw:
+        toks = tokens(c["text"])
+        if not toks:
             continue
         first, last = max(c["page_start"] - 1 - MARGIN, 0), min(c["page_end"] + MARGIN, len(pages))
-        pw = [w for p in pages[first:last] for w in p]
-        sh, missing = matched(cw, pw, bag=c["kind"] == "table_row")
-        cat, unconfirmed = classify(missing, pw, doc_words, raw_words) if sh < CLAUSE_MIN else ("", [])
-        out.append((c["ref"], c["kind"], round(sh, 4), len(cw), cat, unconfirmed))
-    return out
+        window, small, starts, where = [], set(), set(), []
+        for p in range(first, last):
+            page_tokens, page_small, page_starts = pages[p]
+            small |= {len(window) + k for k in page_small}
+            where += [(p, k) for k in range(len(page_tokens))]
+            window += page_tokens
+            starts |= page_starts
+        hit = set()
+        if c["kind"] in TABLE_KINDS:
+            found = compare_table(toks, window, hit)
+        else:
+            found = compare_text(toks, window, small, starts, hit)
+        for k in hit:
+            covered[where[k][0]].add(where[k][1])
+        if c["kind"] != "toc":
+            out.append((c["ref"], c["kind"], len(toks), describe(found)))
+    uncovered = []
+    for p, (page_tokens, page_small, _) in enumerate(pages):
+        run = []
+        for k, t in enumerate(page_tokens + [None]):
+            if t is not None and k not in covered[p] and k not in page_small:
+                run.append(t)
+                continue
+            if len(run) >= UNCOVERED_MIN:
+                uncovered.append((p + 1, " ".join(run)))
+            run = []
+    return out, uncovered
 
 
-def source_summary(rows):
-    shares = [r[2] for r in rows]
-    return {"clauses": len(rows), "median": round(statistics.median(shares), 4) if shares else 1.0,
-            "min": min(shares) if shares else 1.0,
-            "flagged": [{"ref": r, "kind": k, "share": s, "words": n, "category": cat, "unconfirmed": u}
-                        for r, k, s, n, cat, u in rows if s < CLAUSE_MIN]}
-
-
-def raw_words(path):
-    """Words of poppler's raw-order text (`pdftotext -raw`), the third reading used by classify."""
-    import subprocess
-    return words(subprocess.run(["pdftotext", "-raw", str(path), "-"], capture_output=True, text=True,
-                                check=True).stdout)
+def sha256(path):
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
 def pdf_sources():
-    """The PDF sources that have parsed clauses."""
+    """The PDF sources with parsed clauses."""
     return sorted(p.stem + ".pdf" for p in CLAUSES.glob("*.jsonl") if (OFFICIAL / (p.stem + ".pdf")).exists())
 
 
-def run(files=None):
+def check_source(f):
+    """The report entry of one PDF source."""
+    path = CLAUSES / (Path(f).stem + ".jsonl")
+    clauses = [json.loads(ln) for ln in path.read_text(encoding="utf-8").splitlines() if ln.strip()]
+    rows, uncovered = compare(clauses, second_reading(OFFICIAL / f))
+    return {"pdf_sha256": sha256(OFFICIAL / f), "clauses_sha256": sha256(path), "clauses": len(rows),
+            "tokens": sum(n for _, _, n, _ in rows),
+            "flagged": [{"ref": r, "kind": k, "tokens": n, "discrepancy": d} for r, k, n, d in rows if d]
+            + [{"ref": f"page {p}", "kind": "uncovered", "tokens": len(t.split()), "discrepancy": "+" + t}
+               for p, t in uncovered]}
+
+
+def run(files=None, jobs=1):
     files = files or pdf_sources()
-    report = json.loads(REPORT.read_text(encoding="utf-8")) if REPORT.exists() and files != pdf_sources() else {}
-    report = report.get("sources", {})
-    for f in files:
-        clauses = [json.loads(l) for l in (CLAUSES / (Path(f).stem + ".jsonl")).read_text(encoding="utf-8")
-                   .splitlines() if l.strip()]
-        report[f] = source_summary(compare(clauses, second_engine_pages(OFFICIAL / f), raw_words(OFFICIAL / f)))
-        print(f"{f}: median {report[f]['median']:.4f}, {len(report[f]['flagged'])} flagged", flush=True)
-    doc = {"engine": "pdfminer.six via pdfplumber", "clause_min": CLAUSE_MIN, "source_min": SOURCE_MIN,
+    old = json.loads(REPORT.read_text(encoding="utf-8")) if REPORT.exists() else {}
+    report = old.get("sources", {}) if old.get("code_sha256") == code_sha256() else {}
+    if jobs > 1:
+        from concurrent.futures import ProcessPoolExecutor
+        with ProcessPoolExecutor(jobs) as pool:
+            results = pool.map(check_source, files)
+            for f, entry in zip(files, results):
+                report[f] = entry
+                print(f"{f}: {entry['clauses']} clauses, {len(entry['flagged'])} flagged", flush=True)
+    else:
+        for f in files:
+            report[f] = check_source(f)
+            print(f"{f}: {report[f]['clauses']} clauses, {len(report[f]['flagged'])} flagged", flush=True)
+    doc = {"engine": "pdfminer.six via pdfplumber", "code_sha256": code_sha256(),
            "sources": dict(sorted(report.items()))}
-    REPORT.write_text(json.dumps(doc, indent=1) + "\n", encoding="utf-8")
+    REPORT.write_text(json.dumps(doc, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
     REPORT_MD.write_text(markdown(doc), encoding="utf-8")
     return doc
 
 
 def explanations(path=EXPLANATIONS):
+    """[(source, ref, discrepancy, reason)]."""
     if not Path(path).exists():
-        return {}
+        return []
     with open(path, encoding="utf-8") as f:
-        return {(r["source"], r["ref"]): r["reason"] for r in csv.DictReader(f)}
+        return [(r["source"], r["ref"], r["discrepancy"], r["reason"]) for r in csv.DictReader(f)]
 
 
-def unexplained(doc, why):
-    """Flags that neither a rule (classify: every missing word is minor, out of order, elsewhere in the document
-    or read by poppler) nor an explanation covers: (source, ref or "*", detail). A source median under the
-    threshold always needs an explanation."""
+def explanation(source, flag, why):
+    """The reason that covers a flagged clause, or None: an entry for its ref with the same discrepancy text, or a
+    source-wide pattern ("*") that the discrepancy matches in full."""
+    for s, ref, disc, reason in why:
+        if s != source:
+            continue
+        if ref == flag["ref"] and disc == flag["discrepancy"]:
+            return reason
+        if ref == "*" and re.fullmatch(disc, flag["discrepancy"]):
+            return reason
+    return None
+
+
+def problems(doc, why, inventory=None, pilot=()):
+    """Everything `check` fails on: [(source, ref or "", detail)]."""
     out = []
+    if doc.get("code_sha256") != code_sha256():
+        out.append(("", "", "the report was built by another version of fidelity.py: run it again"))
     for f, s in doc["sources"].items():
-        if s["median"] < doc["source_min"] and (f, "*") not in why:
-            out.append((f, "*", f"median {s['median']:.4f} under {doc['source_min']}"))
-        for c in s["flagged"]:
-            if c.get("category", "unconfirmed") != "unconfirmed" or (f, c["ref"]) in why or (f, "*") in why:
-                continue
-            out.append((f, c["ref"], f"{c['kind']} share {c['share']:.4f} ({c['words']} words); no reading has: "
-                                     f"{' '.join(c.get('unconfirmed', []))}"))
+        if inventory is not None and inventory.get(f) != s["pdf_sha256"]:
+            out.append((f, "", "the PDF differs from sources/inventory.csv: run the check again"))
+        for flag in s["flagged"]:
+            if explanation(f, flag, why) is None:
+                out.append((f, flag["ref"], f"{flag['kind']}: {flag['discrepancy']}"))
+    out += [(f, "", "pilot must/should PDF source missing from the report") for f in sorted(set(pilot) - set(doc["sources"]))]
     return out
+
+
+def pilot_pdfs():
+    with open(ROOT / "sources" / "catalog.csv", encoding="utf-8") as f:
+        return [r["file"] for r in csv.DictReader(f) if r["file"].endswith(".pdf") and r["phase"] == "pilot"
+                and r["priority"] in ("must", "should")]
+
+
+def inventory_hashes():
+    with open(ROOT / "sources" / "inventory.csv", encoding="utf-8") as f:
+        return {r["file"]: r["sha256"] for r in csv.DictReader(f)}
 
 
 def markdown(doc):
     srcs = doc["sources"]
-    total = sum(s["clauses"] for s in srcs.values())
-    flags = [(f, c) for f, s in srcs.items() for c in s["flagged"]]
-    cats = Counter(c.get("category", "") for _, c in flags)
     why = explanations()
+    flags = [(f, c) for f, s in srcs.items() for c in s["flagged"]]
     lines = ["# Source fidelity report", "",
              f"Built by `python3 tools/parse/fidelity.py run` (D39): every parsed clause of every PDF source compared "
-             f"word by word with a second engine ({doc['engine']}). Flags: a clause under {doc['clause_min']:.0%} "
-             f"of its words matched, a source median under {doc['source_min']:.1%}.", "",
-             f"Sources: {len(srcs)}; clauses: {total}; flagged clauses: {len(flags)} "
-             f"({', '.join(f'{k} {v}' for k, v in sorted(cats.items()))}); sources under the median threshold: "
-             f"{sum(s['median'] < doc['source_min'] for s in srcs.values())}.", "",
-             "Categories (`classify`): minor = only numbers or one- or two-character tokens differ (footnote marks, "
-             "superscripts); order = the words are on the clause's pages in another order; elsewhere = the words are "
-             "elsewhere in the document (a table row repeating a spanned cell's label); engine = pdfminer misses them "
-             "but poppler's raw reading has them; unconfirmed = no reading of the PDF has a word, so the flag is "
-             "fixed or explained in `library/fidelity-explanations.csv`.", "",
-             "## Unconfirmed words and low medians", ""]
-    for f, s in srcs.items():
-        if s["median"] < doc["source_min"]:
-            lines.append(f"- {f}: median {s['median']:.4f}. {why.get((f, '*'), 'NOT EXPLAINED')}")
+             f"in both directions with a second reading ({doc['engine']}); the rules are in the module docstring. "
+             "Every flagged clause is fixed or explained in `library/fidelity-explanations.csv`.", "",
+             f"Sources: {len(srcs)}; clauses: {sum(s['clauses'] for s in srcs.values())}; tokens: "
+             f"{sum(s['tokens'] for s in srcs.values())}; flagged clauses: {len(flags)}; unexplained: "
+             f"{sum(explanation(f, c, why) is None for f, c in flags)}.", "",
+             "| Source | Clauses | Flagged |", "|---|---|---|"]
+    lines += [f"| {f} | {s['clauses']} | {len(s['flagged'])} |" for f, s in srcs.items()]
+    lines += ["", "## Flagged clauses", ""]
     for f, c in flags:
-        if c.get("category") == "unconfirmed":
-            lines.append(f"- {f} {c['ref']} ({c['kind']}, {c['share']:.4f}): {' '.join(c['unconfirmed'])}. "
-                         f"{why.get((f, c['ref']), why.get((f, '*'), 'NOT EXPLAINED'))}")
-    lines += ["", "| Source | Clauses | Median | Lowest | Flagged |", "|---|---|---|---|---|"]
-    for f, s in srcs.items():
-        lines.append(f"| {f} | {s['clauses']} | {s['median']:.4f} | {s['min']:.4f} | {len(s['flagged'])} |")
+        lines.append(f"- {f} {c['ref']} ({c['kind']}): `{c['discrepancy'][:300]}` - "
+                     f"{explanation(f, c, why) or 'NOT EXPLAINED'}")
     return "\n".join(lines) + "\n"
 
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("command", choices=["run", "check"])
-    ap.add_argument("files", nargs="*")
+    ap.add_argument("files", nargs="*", help="run: PDF file names in sources/official (default: all parsed PDFs)")
+    ap.add_argument("--jobs", type=int, default=1, help="run: processes")
     a = ap.parse_args()
     if a.command == "run":
-        run(a.files or None)
+        run([Path(f).name for f in a.files] or None, a.jobs)
         return
     doc = json.loads(REPORT.read_text(encoding="utf-8"))
-    missing = unexplained(doc, explanations())
-    for f, ref, detail in missing:
-        print(f"unexplained: {f} {ref}: {detail}")
-    print(f"fidelity: {sum(s['clauses'] for s in doc['sources'].values())} clauses in {len(doc['sources'])} sources, "
-          f"{len(missing)} unexplained flags")
-    sys.exit(1 if missing else 0)
+    found = problems(doc, explanations(), inventory_hashes(), pilot_pdfs())
+    for f, ref, detail in found:
+        print(f"fidelity: {f} {ref}: {detail}")
+    print(f"fidelity: {sum(s['clauses'] for s in doc['sources'].values())} clauses in {len(doc['sources'])} "
+          f"sources, {len(found)} problems")
+    sys.exit(1 if found else 0)
 
 
 if __name__ == "__main__":

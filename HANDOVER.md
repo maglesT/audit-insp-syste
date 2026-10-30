@@ -1,6 +1,6 @@
 # Handover: read this first in every new session
 
-Last updated: 30 October 2026 (session 3; D37, D38; source fidelity check D39).
+Last updated: 30 October 2026, end of session 3 (D37, D38 merged; source fidelity check D39 in progress).
 
 ## Mutation test results (30 Oct 2026, plan 2.6 / Layer 3, pilot scale)
 `tools/ai/mutate.py` planted errors in the 56 session-pilot mappings and mixed the mutants, shuffled, with the 56
@@ -184,9 +184,26 @@ finished in about 4 minutes in total.
     items, the main saving); adjudication of disagreements; reverse test (numbers, conditions, frequencies + 20 %);
     mutation test on the items; then the go/no-go and forecast. The drafter now assigns each obligation's
     sub-topic (S3 took it from the dropped consolidation).
-  - **Source fidelity check done (0a, D39):** `python3 tools/parse/fidelity.py run|check` (check in CI); 20,562
-    clauses of 146 PDFs re-read with pdfminer.six; every flag explained by rule or in
-    `library/fidelity-explanations.csv`; four minor real defects passed to 0b.
+  - **START HERE (session 4): source fidelity check (0a, D39) is in progress on branch `fidelity-check`.**
+    - Code: `tools/parse/fidelity.py` (rebuilt two-way comparison + coverage pass, see D39 and its docstring),
+      `tests/test_fidelity.py` (all pass except `test_committed_report`, which needs a fresh run),
+      `tools/parse/run.py` (`fidelity_line` for the parse report), CI step `python3 tools/parse/fidelity.py check`.
+    - The committed `library/fidelity-report.*` and `library/fidelity-explanations.csv` are from the REJECTED first
+      version (old format): regenerate with `python3 tools/parse/fidelity.py run --jobs 4` (needs the clause store:
+      `python3 tools/parse/run.py`, about 9 minutes; the fidelity run took about 25 minutes single-process), then
+      rewrite the explanations CSV in the new format (source, ref, discrepancy, reason).
+    - Then: go through every flag and every "uncovered" run. Prototype tuning: `scratchpad` is gone, but the
+      rules are all in fidelity.py. Known noisy source: india-cdsco-circ-2024-03 Table 29 (rotated header cells
+      "Rating", "0 x"), front-matter pages (cover/history tables). Real defects found so far (fix in 0b or explain):
+      Schedule M Part XIII 7 #2 (digital-signature stamp "Manoj Kumar ... digitally signed" in the clause),
+      Schedule M Part XIII 4-6 #2 and CDSCO Table 5 1.3 (words glued across table cells: "areaSuper",
+      "Schedulearea"), Schedule M Part III 9.1 (HVAC figure labels), written-confirmation template clause 2
+      (page footer glued in), PI 011 14.2, 20.1, Table 3 (footnote numbers inside hyphenated words), PI 011 6.2
+      and 9.1 (stored text seems to run into the next clause: check the boundary), WHO TRS 957 Annex 2 Appendix 2
+      1.3 (one insert to check).
+    - Before the PR: one more independent review pass focused on whether the check can MISS wrong stored text
+      (the last review planted errors to measure it; do the same), then PR, merge on green CI, reply to the
+      coordinating session (session_01PybpFuvG6mX9B3zK3YZjZ1) when 0a-0d are done.
   - **Owner priority from the coordinating session (first, after D37):** source fidelity: 0a second-engine
     re-extraction check (`tools/parse/fidelity.py`), 0b the 10 known parser limits, 0c version currency
     (`tools/currency.py`), 0d a 50-clause human spot-check sheet; one PR each. Then structured obligations and the gold set (coordinator items

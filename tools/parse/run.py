@@ -106,17 +106,17 @@ def explanations():
 
 
 def fidelity_line():
-    """One line on the second-engine fidelity check (D39), from the committed library/fidelity-report.json."""
+    """One line on the second-reading fidelity check (D39), from the committed library/fidelity-report.json."""
     import fidelity
     if not fidelity.REPORT.exists():
         return "Source fidelity (D39): not run yet (`python3 tools/parse/fidelity.py run`)."
     doc = json.loads(fidelity.REPORT.read_text(encoding="utf-8"))
     srcs = doc["sources"]
     flags = sum(len(s["flagged"]) for s in srcs.values())
-    open_ = len(fidelity.unexplained(doc, fidelity.explanations()))
+    open_ = len(fidelity.problems(doc, fidelity.explanations()))
     return (f"Source fidelity (D39, `library/fidelity-report.md`): {sum(s['clauses'] for s in srcs.values())} "
-            f"clauses of {len(srcs)} PDF sources re-read with pdfminer.six; {flags} under 99 % of words matched, "
-            f"all but {open_} explained by rule or in `library/fidelity-explanations.csv`.")
+            f"clauses of {len(srcs)} PDF sources compared in both directions with a pdfminer.six reading; "
+            f"{flags} flagged, {open_} not yet fixed or explained in `library/fidelity-explanations.csv`.")
 
 
 def write_report(results, pending):
