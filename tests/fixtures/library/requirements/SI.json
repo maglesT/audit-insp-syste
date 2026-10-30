@@ -1,0 +1,87 @@
+{
+ "requirements": [
+  {
+   "id": "SI-001",
+   "topic": "SI.PROG",
+   "item_text": "Self-inspections are run at a set frequency written in a procedure, and at least once every year.",
+   "strength": "mandatory",
+   "plant_types": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "parameters": {
+    "frequency_max_months": 12
+   },
+   "general": false,
+   "status": "draft",
+   "mappings": [
+    {
+     "source": "india-schedule-m-2023-GSR922E.pdf",
+     "clause_ref": "Part I 10.4",
+     "clause_sha256": "0d92f20e6c5bab86d555e3d6ff3a18bbf93d5104f92d65f9e63454fcf8f5f9cd",
+     "quote": "shall be at least once in a year. The frequency shall be stated in the procedure.",
+     "strength": "mandatory",
+     "relation": "same",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "addendum": ""
+    }
+   ]
+  },
+  {
+   "id": "SI-002",
+   "topic": "SI.REPORT",
+   "item_text": "Every self-inspection is documented in a report listing what was observed and, where relevant, proposed corrective actions; the actions later taken are recorded too.",
+   "strength": "recommended",
+   "plant_types": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ],
+   "parameters": {},
+   "general": false,
+   "status": "draft",
+   "mappings": [
+    {
+     "source": "eu-cap9_en.pdf",
+     "clause_ref": "Chapter 9 9.3",
+     "clause_sha256": "dceb35bb870e55a63a92097777cac493be79dc929e73fef5e9f31f28b9754b80",
+     "quote": "All self inspections should be recorded. Reports should contain all the observations made during the inspections and, where applicable, proposals for corrective measures.",
+     "strength": "recommended",
+     "relation": "same",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "addendum": ""
+    },
+    {
+     "source": "who-trs986-a2-gmp-main.pdf",
+     "clause_ref": "8.5",
+     "clause_sha256": "33270016c045cdd68eb253d22e460d75134618c1524ed0fa143927f2a01855e8",
+     "quote": "A report should be made at the completion of a self-inspection.",
+     "strength": "recommended",
+     "relation": "same",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "addendum": ""
+    }
+   ]
+  }
+ ]
+}
