@@ -1,6 +1,6 @@
 # Handover: read this first in every new session
 
-Last updated: 30 October 2026 (session 3, verifier prompts tightened, D31).
+Last updated: 30 October 2026 (session 3, mutation re-run with D31 prompts).
 
 ## Mutation test results (30 Oct 2026, plan 2.6 / Layer 3, pilot scale)
 `tools/ai/mutate.py` planted errors in the 56 session-pilot mappings and mixed the mutants, shuffled, with the 56
@@ -50,8 +50,16 @@ Run folders in `library/ai-runs/`:
     plan's 100 per type per regulator is needed. Changed number has only 2 mutants, because only 2 pilot items carry
     a number.
 - **Prompts tightened since (D31, owner):** both verifiers now judge only what the item's own words say and must
-  not read the clause back into it. The numbers above were measured with the earlier prompts; the next mutation
-  run measures the new ones. The finding was: tell both verifiers to judge only what the item's own words say. A condition that is in the clause but missing from the item is an omission, even if it
+  not read the clause back into it. The numbers above were measured with the earlier prompts.
+- **Re-run with the D31 prompts** (`20261030T101130.341864Z-mutation-verify/`):
+  - Same set-up as before: the same key, inputs and batches (checked identical); only the prompts changed. Ten agents;
+    the transcript scan was clean and no call failed.
+  - Result: **both verifiers caught all 92 mutants**, and there were still **0 false alarms** on the 56 controls.
+  - The only verdict that changed: B now rejects the WHO 8.9 "before approval" mutant ("The item drops the 'before
+    approval' timing"). The Schedule M 10.8.2 mutant that both missed in the superseded run is caught by both.
+  - Detection no longer depends on having two verifiers for these mutants, but single verdicts varied from run to
+    run before, so both verifiers stay.
+  - The 95 % lower bound is still capped at 0.80 by n = 15; the full-scale run is still needed. A condition that is in the clause but missing from the item is an omission, even if it
   seems implied. A trigger such as "if / where ... required / before" is part of the obligation. Both misses across
   the two runs are of this kind, and both came from a verifier reading the clause into the item.
 - **Limits of this test:**
