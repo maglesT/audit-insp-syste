@@ -23,7 +23,7 @@ ID = re.compile(r"^[A-Z]{2,5}-\d{3,4}$")                       # "SI-001": topic
 SHA256 = re.compile(r"^[0-9a-f]{64}$")
 
 REQUIREMENT_FIELDS = {"id": str, "topic": str, "item_text": str, "strength": str, "plant_types": list,
-                      "parameters": dict, "status": str, "mappings": list}
+                      "parameters": dict, "general": bool, "status": str, "mappings": list}
 MAPPING_FIELDS = {"source": str, "clause_ref": str, "clause_sha256": str, "quote": str, "strength": str,
                   "relation": str, "plant_types": list, "addendum": str}
 
@@ -74,7 +74,8 @@ def validate(root=LIBRARY, sources=None):
     """
     if sources is None:
         import csv
-        sources = {r["file"]: r for r in csv.DictReader(open(ROOT / "sources" / "catalog.csv", encoding="utf-8"))}
+        with open(ROOT / "sources" / "catalog.csv", encoding="utf-8") as f:
+            sources = {r["file"]: r for r in csv.DictReader(f)}
     known_topics = topics(root)
     errors, seen = [], set()
     for req in requirements(root):
@@ -115,8 +116,9 @@ def validate(root=LIBRARY, sources=None):
                 errors.append(f"{mw}: strength must be one of {STRENGTHS}")
             if m.get("relation") not in RELATIONS:
                 errors.append(f"{mw}: relation must be one of {RELATIONS}")
-            if any(p not in PLANT_TYPES for p in m.get("plant_types") or []):
-                errors.append(f"{mw}: unknown plant type")
+            if not isinstance(m.get("plant_types"), list) or not m["plant_types"] \
+                    or any(p not in PLANT_TYPES for p in m["plant_types"]):
+                errors.append(f"{mw}: plant_types must be a non-empty subset of {PLANT_TYPES}")
             if not str(m.get("quote", "")).strip():
                 errors.append(f"{mw}: empty quote")
             if m.get("relation") in ("stricter", "adds") and not str(m.get("addendum", "")).strip():
@@ -125,6 +127,9 @@ def validate(root=LIBRARY, sources=None):
         for ref, entry in clauses.items():
             where = f"coverage {stem} {ref}"
             if set(entry) == {"requirements"}:
+                if not isinstance(entry["requirements"], list) or not entry["requirements"]:
+                    errors.append(f"{where}: 'requirements' must be a non-empty list")
+                    continue
                 errors += [f"{where}: unknown requirement {r}" for r in entry["requirements"] if r not in seen]
             elif set(entry) == {"na"}:
                 if not str(entry["na"]).strip():

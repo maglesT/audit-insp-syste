@@ -16,7 +16,7 @@ import model  # noqa: E402
 SCHEMA = """
 CREATE TABLE topic (id TEXT PRIMARY KEY, name TEXT NOT NULL);
 CREATE TABLE requirement (id TEXT PRIMARY KEY, topic TEXT NOT NULL REFERENCES topic(id), item_text TEXT NOT NULL,
-    strength TEXT NOT NULL, status TEXT NOT NULL, parameters TEXT NOT NULL);
+    strength TEXT NOT NULL, status TEXT NOT NULL, parameters TEXT NOT NULL, general INTEGER NOT NULL);
 CREATE TABLE requirement_plant (requirement TEXT NOT NULL REFERENCES requirement(id), plant_type TEXT NOT NULL,
     PRIMARY KEY (requirement, plant_type));
 CREATE TABLE mapping (requirement TEXT NOT NULL REFERENCES requirement(id), n INTEGER NOT NULL, source TEXT NOT NULL,
@@ -37,8 +37,9 @@ def build(root=model.LIBRARY, out=None):
     db.executemany("INSERT INTO topic VALUES (?, ?)", model.topics(root).items())
     import json
     for r in model.requirements(root):
-        db.execute("INSERT INTO requirement VALUES (?, ?, ?, ?, ?, ?)",
-                   (r["id"], r["topic"], r["item_text"], r["strength"], r["status"], json.dumps(r["parameters"])))
+        db.execute("INSERT INTO requirement VALUES (?, ?, ?, ?, ?, ?, ?)",
+                   (r["id"], r["topic"], r["item_text"], r["strength"], r["status"], json.dumps(r["parameters"]),
+                    int(r["general"])))
         db.executemany("INSERT INTO requirement_plant VALUES (?, ?)", [(r["id"], p) for p in r["plant_types"]])
         for n, m in enumerate(r["mappings"], start=1):
             db.execute("INSERT INTO mapping VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",

@@ -13,8 +13,13 @@ Checks, per mapping:
                plant types are covered by its mappings
 Per library:
   6 coverage   for every source with a coverage file, every citable clause is mapped or marked not applicable
-               (reported as a share; missing clauses are listed)
-  7 fingerprint every source file matches its sha256 in sources/inventory.csv
+               (reported as a share; missing clauses are listed). A coverage entry must point at live requirements
+               that really map that clause, and at clauses that exist; "must"/"should" sources without a coverage
+               file are counted (not a failure until the library is meant to be complete)
+  7 fingerprint every source file matches its sha256 in sources/inventory.csv; mappings to a changed source are
+               flagged for re-verification
+
+The rules are strict on purpose: a false alarm costs a look, a missed error reaches a customer (D28).
 """
 import csv
 import hashlib
@@ -31,11 +36,25 @@ import obligations  # noqa: E402
 from common import CITABLE, CLAUSES, OFFICIAL, normalise  # noqa: E402
 
 RANK = {"optional": 0, "recommended": 1, "mandatory": 2}
-NUMBER = re.compile(r"(?<![\w.])\d+(?:[.,]\d+)?(?![\w.]*\d)")
+SUPERSCRIPT = "⁰¹²³⁴⁵⁶⁷⁸⁹⁻"
+# a number keeps its sign and its exponent: "−20", "10³", "10^6", "10⁻⁶"; "2-8" is 2 and 8
+NUMBER = re.compile(rf"(?<![\w.])[-−]?\d+(?:[.,]\d+)?(?:\^-?\d+|[{SUPERSCRIPT}]+)?(?![\w.]*\d)")
 WORDS = {1: "one", 2: "two", 3: "three", 4: "four", 5: "five", 6: "six", 7: "seven", 8: "eight", 9: "nine",
-         10: "ten", 12: "twelve"}
+         10: "ten", 11: "eleven", 12: "twelve"}
+TIMES = {1: "once", 2: "twice", 3: "thrice"}
+# number words taken from item and addendum text ("one" and "once" are too common to mean a count)
+WORD_NUMBERS = {w: n for n, w in WORDS.items() if n > 1} | {"twice": 2, "thrice": 3}
 UNIT_EQUIVALENTS = {("frequency_max_months", 12): ("once a year", "once in a year", "annually", "yearly",
                                                   "every year", "12 months")}
+# wording that is not the main obligation of a sentence: conditions, relative clauses, the month May
+NOT_MAIN = [re.compile(p, re.I) for p in (
+    r"^(?:where|if|when|whenever|unless|in case|in cases where|as long as)\b[^,]*,",
+    r"\b(?:as|if|where|when|unless)\s+(?:otherwise\s+)?(?:is\s+|are\s+)?required\b",
+    r"\b(?:that|which|who)\s+(?:is|are)\s+required\b",
+    r"\b(?:that|which|who)\s+(?:has|have)\s+to\b",
+)]
+MONTH_MAY = re.compile(r"\bMay\s+\d{4}\b|\b\d{1,2}\s+May\b")
+PROHIBITION = re.compile(r"\b(?:may|can)\s+not\b|\bcannot\b", re.I)
 
 
 def read_csv(path):
@@ -65,35 +84,61 @@ def plant_scope(applies_to):
     return set(model.PLANT_TYPES) if applies_to.strip() == "ALL" else set(applies_to.split(";"))
 
 
-def numbers_in(text):
-    return {n.replace(",", ".") for n in NUMBER.findall(text)}
+def numbers_in(text, words=False):
+    """Numbers in a text, normalised ("−20" -> "-20", "0,5" -> "0.5"); words=True adds number words ("twice")."""
+    out = {n.replace("−", "-").replace(",", ".") for n in NUMBER.findall(text)}
+    if words:
+        out |= {str(WORD_NUMBERS[w]) for w in re.findall(r"[a-z]+", text.lower()) if w in WORD_NUMBERS}
+    return out
 
 
 def number_found(n, quotes):
-    """A number is found when it, or its word form, appears in one of the quotes."""
+    """A number is found when it, or (for a whole number) its word form, appears in one of the quotes."""
     joined = " ".join(quotes).lower()
     if n in numbers_in(joined):
         return True
     try:
-        word = WORDS.get(int(float(n)))
+        value = float(n)
     except ValueError:
-        word = None
-    return bool(word) and re.search(rf"\b{word}\b", joined) is not None
+        return False
+    if not value.is_integer():
+        return False
+    forms = [f for f in (WORDS.get(int(value)), TIMES.get(int(value))) if f]
+    return any(re.search(rf"\b{f}\b", joined) for f in forms)
+
+
+def equivalent_found(phrases, quotes):
+    """A listed phrase as whole words, not part of "semi-annually" or "biannually"."""
+    joined = " ".join(quotes).lower()
+    return any(re.search(rf"(?<![\w-]){re.escape(e)}\b", joined) for e in phrases)
 
 
 def strength_of(quote):
-    """The strictest obligation wording in the quote: mandatory / recommended / optional, or None."""
-    found = [obligations.strength(s) for s in obligations.sentences(quote)]
-    mapping = {"mandatory": "mandatory", "recommended": "recommended", "permissive": "optional"}
-    ranked = [mapping[f] for f in found if f]
-    return max(ranked, key=RANK.get) if ranked else None
+    """The strictest obligation wording of the quote's main clauses: mandatory / recommended / optional, or None.
+    "may not" is a prohibition (mandatory); conditions ("where ... is required,"), relative clauses ("which has
+    to ...") and the month May are not obligations."""
+    found = []
+    for sentence in obligations.sentences(quote):
+        if PROHIBITION.search(sentence):
+            found.append("mandatory")
+            continue
+        main = MONTH_MAY.sub(" ", sentence)
+        for pattern in NOT_MAIN:
+            main = pattern.sub(" ", main)
+        word = obligations.strength(main)
+        if word:
+            found.append({"permissive": "optional"}.get(word, word))
+    return max(found, key=RANK.get) if found else None
 
 
-def check_requirement(req, sources):
-    """Findings for one requirement: (requirement id, mapping number or 0, check, message)."""
+def check_requirement(req, sources, changed=()):
+    """Findings for one requirement: (requirement id, mapping number or 0, check, message).
+    changed: source files whose fingerprint no longer matches the inventory."""
     out = []
     quotes = []
     for n, m in enumerate(req["mappings"], start=1):
+        if m["source"] in changed:
+            out.append((req["id"], n, "fingerprint", f"{m['source']} changed: re-verify"))
         tree = clauses_of(m["source"])
         clause = tree.get(m["clause_ref"])
         if clause is None:
@@ -111,17 +156,23 @@ def check_requirement(req, sources):
         elif words != m["strength"]:
             out.append((req["id"], n, "strength", f"quote reads {words}, mapping says {m['strength']}"))
         scope = plant_scope(sources[m["source"]]["applies_to"])
-        if not set(m["plant_types"]) <= scope:
+        if not set(m["plant_types"]) <= scope and not req["general"]:
             out.append((req["id"], n, "scope", f"plant types {sorted(set(m['plant_types']) - scope)} are outside "
-                                               f"the scope of {m['source']} ({sources[m['source']]['applies_to']})"))
-    texts = [req["item_text"]] + [m["addendum"] for m in req["mappings"]]
-    wanted = set().union(*(numbers_in(t) for t in texts))
+                                               f"the scope of {m['source']} ({sources[m['source']]['applies_to']}) "
+                                               f"and the requirement is not marked general"))
     for key, value in req["parameters"].items():
+        if isinstance(value, bool):
+            continue
         if isinstance(value, (int, float)):
-            equivalents = UNIT_EQUIVALENTS.get((key, value), ())
-            if not (number_found(str(value), quotes) or any(e in " ".join(quotes).lower() for e in equivalents)):
+            if not (number_found(numbers_key(value), quotes)
+                    or equivalent_found(UNIT_EQUIVALENTS.get((key, value), ()), quotes)):
                 out.append((req["id"], 0, "numbers", f"parameter {key}={value} is not in any quote"))
-    for n in sorted(wanted):
+        else:
+            for n in sorted(numbers_in(str(value), words=True)):
+                if not number_found(n, quotes):
+                    out.append((req["id"], 0, "numbers", f"parameter {key}: number {n} is not in any quote"))
+    texts = [req["item_text"]] + [m["addendum"] for m in req["mappings"]]
+    for n in sorted(set().union(*(numbers_in(t, words=True) for t in texts))):
         if not number_found(n, quotes):
             out.append((req["id"], 0, "numbers", f"number {n} in the item or an addendum is not in any quote"))
     strengths = [m["strength"] for m in req["mappings"]]
@@ -134,37 +185,67 @@ def check_requirement(req, sources):
     return out
 
 
-def check_coverage(root):
-    """{source stem: (share covered, missing refs)} for every source with a coverage file."""
+def numbers_key(value):
+    """12 -> "12", 0.5 -> "0.5", 12.0 -> "12": the form numbers_in gives."""
+    return str(int(value)) if float(value).is_integer() else str(value)
+
+
+def check_coverage(root, reqs):
+    """({source stem: (share covered, missing refs)}, findings) for every source with a coverage file.
+    An entry must name a clause that exists and live requirements that map that clause."""
     stems = {Path(f).stem: f for f in catalog()}
-    out = {}
+    by_id = {r["id"]: r for r in reqs}
+    shares, findings = {}, []
     for stem, entries in model.coverage(root).items():
-        tree = clauses_of(stems[stem]) if stem in stems else {}
+        if stem not in stems:
+            findings.append((f"coverage {stem}", 0, "coverage", "no such source in sources/catalog.csv"))
+            continue
+        tree = clauses_of(stems[stem])
+        for ref, entry in entries.items():
+            where = f"coverage {stem} {ref}"
+            if ref not in tree:
+                findings.append((where, 0, "coverage", "no such clause"))
+            for rid in entry.get("requirements", []):
+                req = by_id.get(rid)
+                if req is None:
+                    continue                                    # reported by model.validate
+                if req["status"] == "retired":
+                    findings.append((where, 0, "coverage", f"{rid} is retired"))
+                elif not any(m["source"] == stems[stem] and m["clause_ref"] == ref for m in req["mappings"]):
+                    findings.append((where, 0, "coverage", f"{rid} has no mapping to this clause"))
         refs = [r for r, c in tree.items() if c["kind"] in ("clause", "principle", "section", "table_row")]
         missing = [r for r in refs if r not in entries]
-        out[stem] = ((len(refs) - len(missing)) / len(refs) if refs else 1.0, missing)
-    return out
+        shares[stem] = ((len(refs) - len(missing)) / len(refs) if refs else 1.0, missing)
+    return shares, findings
+
+
+def uncovered_sources(root):
+    """"must" and "should" sources that have no coverage file yet."""
+    have = set(model.coverage(root))
+    return sorted(f for f, r in catalog().items() if r["priority"] in ("must", "should") and Path(f).stem not in have)
 
 
 def check_fingerprints():
     rows = read_csv(model.ROOT / "sources" / "inventory.csv")
-    key = next(k for k in rows[0] if "sha" in k.lower())
     bad = []
     for r in rows:
         path = OFFICIAL / r["file"]
-        if not path.exists() or hashlib.sha256(path.read_bytes()).hexdigest() != r[key]:
+        if not path.exists() or hashlib.sha256(path.read_bytes()).hexdigest() != r["sha256"]:
             bad.append(r["file"])
     return bad
 
 
 def run(root=model.LIBRARY):
+    """(findings, coverage shares, fingerprint mismatches)."""
     errors = model.validate(root)
     if errors:
         return [("library", 0, "structure", e) for e in errors], {}, []
     sources = catalog()
-    findings = [f for req in model.requirements(root) if req["status"] != "retired"
-                for f in check_requirement(req, sources)]
-    return findings, check_coverage(root), check_fingerprints()
+    changed = check_fingerprints()
+    reqs = model.requirements(root)
+    findings = [f for req in reqs if req["status"] != "retired" for f in check_requirement(req, sources, changed)]
+    shares, coverage_findings = check_coverage(root, reqs)
+    return findings + coverage_findings, shares, changed
 
 
 def main():
@@ -176,6 +257,7 @@ def main():
         print(f"coverage {stem}: {share:.1%}" + (f", missing {', '.join(missing[:10])}" if missing else ""))
     for f in fingerprints:
         print(f"fingerprint mismatch: {f}")
+    print(f"{len(uncovered_sources(root))} must/should sources have no coverage file yet")
     print(f"{len(findings)} findings, {len(fingerprints)} fingerprint mismatches")
     sys.exit(1 if findings or fingerprints else 0)
 
