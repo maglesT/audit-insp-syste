@@ -37,13 +37,13 @@ diff. A build step turns the files into a SQLite database for queries and intern
 those regulators that covers the plant type is listed. There is no cross-regulator merging and no "strictest wins":
 - items with the same text, topic and strength (twin clauses, e.g. EU GMP and PIC/S) are shown once, tagged with
   every selected regulator that has one;
-- near-identical items of different regulators share a **display group**, found by text similarity alone (no AI
-  judges stricter or looser), so the app can show them side by side.
+- nothing else is combined across regulators: similar items of different regulators are listed separately
+  (owner, D38: cross-regulator links are not needed).
 
-Customers see only our item text and its tags (regulator names, plant type, topic, group).
+Customers see only our item text and its tags (regulator names, plant type, topic).
 
 **Option A, enforced by a test.** The customer export contains only `item id`, `item text`, `topic`,
-`regulators`, `plant types`, `strength` and `group`. A test fails the build if the export:
+`regulators`, `plant types` and `strength`. A test fails the build if the export:
 - contains any field that names quotes, clauses or sources; or
 - contains any run of 12 or more consecutive words that also appears in a source text.
 
@@ -85,7 +85,8 @@ mappings that needed a stricter/adds/looser/narrower judgement passed both verif
    rehearsal such as S3 takes only the topic's clauses with obligation wording, by rule, D36.)
 4. **Item text:** our own plain words; the option-A test rejects any 12-word overlap with a source and any clause
    or document reference, and an item with such a finding cannot be verified.
-5. **Grouping for display:** near-identical items of different regulators are grouped by text similarity only.
+5. **No cross-regulator links (D38):** items of different regulators are not grouped or compared; only identical
+   texts are drafted once and shown once.
 
 ### 2.4 Stage 3: Layer 1, deterministic checks (no AI, every mapping, every run)
 1. The quote exists word for word at the cited clause's offsets in the fingerprinted source.
@@ -198,7 +199,7 @@ Hosting is decided before launch.
    - Reviewer (QA head, read and approve).
 2. **Compile a checklist:**
    - Pick any combination of regulators, one plant type, and optionally some topic areas.
-   - The server lists the selected regulators' items, twins shown once and near-identical items grouped (D37),
+   - The server lists the selected regulators' items, identical items shown once (D37, D38),
      and saves the result as a named checklist version.
 3. **Custom checklists:**
    - Pick items from the library, add your own items (these are customer data), and order them by area.
