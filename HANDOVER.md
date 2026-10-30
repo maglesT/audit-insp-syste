@@ -1,6 +1,6 @@
 # Handover: read this first in every new session
 
-Last updated: 30 October 2026 (session 3, customer export, D33; S2 complete).
+Last updated: 30 October 2026 (session 3, clause graph, D34).
 
 ## Mutation test results (30 Oct 2026, plan 2.6 / Layer 3, pilot scale)
 `tools/ai/mutate.py` planted errors in the 56 session-pilot mappings and mixed the mutants, shuffled, with the 56
@@ -163,6 +163,11 @@ finished in about 4 minutes in total.
   - Mutation harness done at pilot scale (`tools/ai/mutate.py`, PRs #22, #24).
   - **Customer export done (D33):** `python3 tools/library/export.py check` (in CI) runs the option-A test on every
     compilation; `export.py build --regulators EU,PICS --plant OSD` writes one export. **S2 is complete.**
+  - **Clause graph done (D34):** `python3 tools/library/graph.py report|context <file> <ref>|impact <file>`
+    (needs the parsed clause store: `python3 tools/parse/run.py`, about 9 minutes, not in git). Drafter and
+    verifier context is opt-in (`pilot.py prepare-draft --context`) until measured.
+  - **Next (decided by the owner's rule "decide yourself"):** Layer 1 condition-word check, then S3 calibration on
+    the self-inspection topic across all pilot regulators, which fills the library for real.
 - Brief: `docs/00-brief.md` (the owner's decisions). Small decisions: `docs/decisions.md`.
 - **Deliverable (a), source inventory: done as a draft.** It is in `docs/01-source-inventory.md` and waits for
   owner review.

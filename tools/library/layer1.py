@@ -18,6 +18,8 @@ Per library:
                file are counted (not a failure until the library is meant to be complete)
   7 fingerprint every source file matches its sha256 in sources/inventory.csv; mappings to a changed source are
                flagged for re-verification
+  8 twins      two mapped clauses of different sources with near-identical text (clause graph, D34) map to the
+               same requirements
 
 The rules are strict on purpose: a false alarm costs a look, a missed error reaches a customer (D28).
 """
@@ -253,7 +255,20 @@ def run(root=model.LIBRARY):
     reqs = model.requirements(root)
     findings = [f for req in reqs if req["status"] != "retired" for f in check_requirement(req, sources, changed)]
     shares, coverage_findings = check_coverage(root, reqs)
-    return findings + coverage_findings, shares, changed
+    return findings + coverage_findings + check_twins(reqs), shares, changed
+
+
+def check_twins(reqs, clauses_of=None):
+    """Check 8 (D34): two mapped clauses of different sources with near-identical text (clause graph
+    same_text_as, e.g. EU GMP and PIC/S) must map to the same requirements."""
+    import graph
+    clauses_of = clauses_of or globals()["clauses_of"]
+    mapped = sorted({(m["source"], m["clause_ref"]) for r in reqs if r["status"] != "retired" for m in r["mappings"]})
+    texts = [((s, ref), clauses_of(s)[ref]["text"]) for s, ref in mapped if ref in clauses_of(s)]
+    rows = [("same_text_as", a[0], a[1], b[0], b[1], str(sim)) for a, b, sim in graph.same_text(texts)]
+    live = [r for r in reqs if r["status"] != "retired"]
+    return [(sorted(ra + rb)[0], 0, "twins", f"{fs} {fr} and {ts} {tr} have the same text but map to {ra} and {rb}")
+            for fs, fr, ts, tr, ra, rb in graph.consistency(rows, live)]
 
 
 def main():

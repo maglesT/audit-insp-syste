@@ -86,7 +86,24 @@ def clause_block(source, clause, scope):
             f"Clause {clause['ref']}:\n{clause['text']}")
 
 
-def draft_requests(pilot, sources, clauses_of):
+def with_context(text, source, ref, context_of):
+    """The model input with the clause graph's context block appended (D34), when one is asked for."""
+    block = context_of(source, ref) if context_of else ""
+    return f"{text}\n\n{block}" if block else text
+
+
+def graph_context(files):
+    """context_of(source, ref) from the full clause graph (tools/library/graph.py), so definitions come from
+    every glossary of the source's family, not only from the files being drafted; files is kept for callers."""
+    import graph
+    import layer1
+    rows = graph.links(reqs=[])
+    sources = layer1.catalog()
+    return lambda source, ref: graph.context_block(graph.context(source, ref, rows, layer1.segments_of, sources))
+
+
+def draft_requests(pilot, sources, clauses_of, context_of=None):
+    """One drafting request per clause; context_of(source, ref) adds the clause graph's context (D34)."""
     out = []
     for file, refs in pilot.items():
         tree = clauses_of(file)
@@ -94,7 +111,8 @@ def draft_requests(pilot, sources, clauses_of):
         for ref in refs:
             clause = tree[ref]
             out.append(runner.Request(f"draft-{len(out):03d}", prompt("draft"),
-                                      clause_block(sources[file], clause, scope), DRAFT_SCHEMA,
+                                      with_context(clause_block(sources[file], clause, scope), file, ref,
+                                                   context_of), DRAFT_SCHEMA,
                                       max_tokens=DRAFT_TOKENS, meta={"source": file, "ref": ref, "clause_sha256": clause["sha256"]}))
     return out
 
@@ -120,14 +138,16 @@ def mappings_from(drafts, results, clauses_of):
     return mappings, rejected
 
 
-def verify_requests(mappings, sources, clauses_of):
+def verify_requests(mappings, sources, clauses_of, context_of=None):
+    """Two blind verifier requests per mapping; context_of(source, ref) adds the same context the drafter had."""
     out = []
     for n, m in enumerate(mappings):
         clause = clauses_of(m["source"])[m["ref"]]
         scope = ", ".join(sorted(runner_scope(sources[m["source"]]["applies_to"])))
         item = (f"ITEM: {m['statement']}\nStrength: {m['strength']}\n"
                 f"Plant types: {', '.join(m['plant_types'])}\nCOVERS: {normalise(m['quote'])}")
-        clause_text = clause_block(sources[m["source"]], clause, scope)
+        clause_text = with_context(clause_block(sources[m["source"]], clause, scope), m["source"], m["ref"],
+                                   context_of)
         for role, first, second in (("a", item, clause_text), ("b", clause_text, item)):
             out.append(runner.Request(f"verify-{role}-{n:03d}", prompt(f"verify_{role}"), f"{first}\n\n{second}",
                                       VERIFY_SCHEMA, max_tokens=VERIFY_TOKENS,
@@ -231,10 +251,10 @@ def run(run_with, budget, pilot=PILOT, sources=None, clauses_of=None):
     return rep
 
 
-def prepare_draft(pilot=PILOT, sources=None, clauses_of=None):
+def prepare_draft(pilot=PILOT, sources=None, clauses_of=None, context_of=None):
     """Session stage 1: draft batch files. Returns the draft run dir."""
     import layer1
-    drafts = draft_requests(pilot, sources or layer1.catalog(), clauses_of or layer1.clauses_of)
+    drafts = draft_requests(pilot, sources or layer1.catalog(), clauses_of or layer1.clauses_of, context_of)
     return sessions.prepare(drafts, "session-draft")
 
 
@@ -255,14 +275,14 @@ def ingest_draft(draft_dir, clauses_of=None):
             "quotes_rejected": len(rejected)}
 
 
-def prepare_verify(draft_dir, sources=None, clauses_of=None):
+def prepare_verify(draft_dir, sources=None, clauses_of=None, context_of=None):
     """Session stage 3: verifier batch files for every mapping. Returns the verify run dir."""
     import layer1
     draft_dir = Path(draft_dir)
     if not draft_dir.name.endswith("-session-draft"):
         raise SystemExit(f"{draft_dir} is not a session-draft run")
     mappings = runner.read_jsonl(draft_dir / "mappings.jsonl")
-    verifies = verify_requests(mappings, sources or layer1.catalog(), clauses_of or layer1.clauses_of)
+    verifies = verify_requests(mappings, sources or layer1.catalog(), clauses_of or layer1.clauses_of, context_of)
     verify_dir = sessions.prepare(verifies, "session-verify")
     (verify_dir / "draft-link.json").write_text(json.dumps(
         {"draft_run": draft_dir.name, "mappings_sha256": _sha256(draft_dir / "mappings.jsonl")}) + "\n",
@@ -303,6 +323,8 @@ def main():
     ap.add_argument("dirs", nargs="*", help="run dirs: ingest-draft/prepare-verify <draft dir>; "
                                             "ingest-verify <verify dir> <draft dir>")
     ap.add_argument("--budget", type=float, default=15.0, help="US$; nothing is sent above this worst case")
+    ap.add_argument("--context", action="store_true",
+                    help="prepare-draft/prepare-verify: add the clause graph's context (D34; measure before use)")
     args = ap.parse_args()
     need = {"ingest-draft": 1, "prepare-verify": 1, "ingest-verify": 2}.get(args.command, 0)
     if len(args.dirs) != need:
@@ -312,11 +334,11 @@ def main():
     elif args.command == "run":
         print(json.dumps(run(runner.BatchRunner(), args.budget), indent=1))
     elif args.command == "prepare-draft":
-        print(prepare_draft())
+        print(prepare_draft(context_of=graph_context(sorted(PILOT)) if args.context else None))
     elif args.command == "ingest-draft":
         print(json.dumps(ingest_draft(args.dirs[0]), indent=1))
     elif args.command == "prepare-verify":
-        print(prepare_verify(args.dirs[0]))
+        print(prepare_verify(args.dirs[0], context_of=graph_context(sorted(PILOT)) if args.context else None))
     else:
         print(json.dumps(ingest_verify(*args.dirs), indent=1))
 
