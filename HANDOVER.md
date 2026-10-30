@@ -1,6 +1,6 @@
 # Handover: read this first in every new session
 
-Last updated: 30 October 2026, end of session 3 (D37, D38 merged; source fidelity check D39 in progress).
+Last updated: 30 October 2026, session 4 (source fidelity check 0a done: D39, D40; next 0b parser fixes).
 
 ## Mutation test results (30 Oct 2026, plan 2.6 / Layer 3, pilot scale)
 `tools/ai/mutate.py` planted errors in the 56 session-pilot mappings and mixed the mutants, shuffled, with the 56
@@ -184,26 +184,48 @@ finished in about 4 minutes in total.
     items, the main saving); adjudication of disagreements; reverse test (numbers, conditions, frequencies + 20 %);
     mutation test on the items; then the go/no-go and forecast. The drafter now assigns each obligation's
     sub-topic (S3 took it from the dropped consolidation).
-  - **START HERE (session 4): source fidelity check (0a, D39) is in progress on branch `fidelity-check`.**
-    - Code: `tools/parse/fidelity.py` (rebuilt two-way comparison + coverage pass, see D39 and its docstring),
-      `tests/test_fidelity.py` (all pass except `test_committed_report`, which needs a fresh run),
-      `tools/parse/run.py` (`fidelity_line` for the parse report), CI step `python3 tools/parse/fidelity.py check`.
-    - The committed `library/fidelity-report.*` and `library/fidelity-explanations.csv` are from the REJECTED first
-      version (old format): regenerate with `python3 tools/parse/fidelity.py run --jobs 4` (needs the clause store:
-      `python3 tools/parse/run.py`, about 9 minutes; the fidelity run took about 25 minutes single-process), then
-      rewrite the explanations CSV in the new format (source, ref, discrepancy, reason).
-    - Then: go through every flag and every "uncovered" run. Prototype tuning: `scratchpad` is gone, but the
-      rules are all in fidelity.py. Known noisy source: india-cdsco-circ-2024-03 Table 29 (rotated header cells
-      "Rating", "0 x"), front-matter pages (cover/history tables). Real defects found so far (fix in 0b or explain):
-      Schedule M Part XIII 7 #2 (digital-signature stamp "Manoj Kumar ... digitally signed" in the clause),
-      Schedule M Part XIII 4-6 #2 and CDSCO Table 5 1.3 (words glued across table cells: "areaSuper",
-      "Schedulearea"), Schedule M Part III 9.1 (HVAC figure labels), written-confirmation template clause 2
-      (page footer glued in), PI 011 14.2, 20.1, Table 3 (footnote numbers inside hyphenated words), PI 011 6.2
-      and 9.1 (stored text seems to run into the next clause: check the boundary), WHO TRS 957 Annex 2 Appendix 2
-      1.3 (one insert to check).
-    - Before the PR: one more independent review pass focused on whether the check can MISS wrong stored text
-      (the last review planted errors to measure it; do the same), then PR, merge on green CI, reply to the
-      coordinating session (session_01PybpFuvG6mX9B3zK3YZjZ1) when 0a-0d are done.
+  - **START HERE (session 5): 0a (source fidelity check, D39/D40) is done** (PR from branch `fidelity-check`).
+    Next: **0b parser fixes**, then 0c version currency (`tools/currency.py`, not started), then 0d a 50-clause
+    human spot-check sheet; one PR each, each with an independent review pass, merged on green CI. When 0a-0d are
+    done, reply to the coordinating session (session_01PybpFuvG6mX9B3zK3YZjZ1, send_message) with a short summary.
+    - **Queued after 0a-0d (coordinating session, relayed owner decision "use api credits for eu and pics"):**
+      the EU GMP + PIC/S build on the Claude API (Message Batches via `tools/ai/runner.py` BatchRunner, key from
+      `AUDIT_ANTHROPIC_KEY`, never printed, hard budget US$150, a ~50-clause paid calibration batch first with
+      the cost projection, PIC/S reuses EU items for identical clauses). Record it as the next D-number when
+      started; it spends the owner's money, so confirm with the owner directly before the first paid call.
+    - **0a state:** `python3 tools/parse/fidelity.py check` passes (CI step): 146 PDF sources, 20,562 clauses,
+      1,374 flags, all explained in `library/fidelity-explanations.csv`, which `tools/parse/fidelity_rules.py`
+      writes (mechanical verdicts, then categorised rules; ~3 min). Workflow after a parser change:
+      `python3 tools/parse/run.py` (~9 min), `python3 tools/parse/fidelity.py run --jobs 3` (~15 min),
+      `python3 tools/parse/fidelity_rules.py` (prints any unmatched flag: fix or add a rule), commit report + CSV.
+      When 0b fixes a defect, delete its rule from `fidelity_rules.py` (rules that no longer match are harmless
+      but stale; prune them).
+    - **Planted-error review (D40):** 1,328 mutations over 23 sources: 69.6 % caught before the review fixes,
+      91.4 % after the first round, about 94 % after the second (measured by the reviewer on its variants).
+      Residual: table rows are compared as a bag, so a value dropped from or moved within a row is often missed;
+      per-cell comparison belongs with the 0b table work. Harness: the reviewer's scripts were in the session
+      scratchpad (gone); rebuild from D40's description if needed.
+    - **0b work list** = every explanation starting "Parser defect (0b)" (396 rows; `grep "Parser defect" library/fidelity-explanations.csv`), plus the 10 known parser limits below. Most important first:
+      1. **TEXT LOST (4):** FDA CP 7346.832 and CP 7356.002 Attachment A (first sentence stored as bogus
+         "Table 3" rows, "its inspectional authority" in no clause); FDA nitrosamine guidance 2024 Appendix A
+         bullet (five lines as bogus Table 1 rows, "Preliminary findings from FDA stabil-" lost); CDSCO circular
+         example row 27.4 last column (page 116). Cause in common: the table extractor takes boxed or ruled text
+         that is not a table as table rows and the text around it is lost.
+      2. **Unreadable or misplaced values:** WHO TRS 981 QRM tables stored letter-shifted ("ufdiojrvf");
+         WHO HVAC Annex 8 Table A8.1 on landscape pages stored backwards in 7.11; WHO TRS 1044 A2 / EU Annex 1 /
+         PE 009 Annex 1 cleanroom grade tables stored as one merged row without grades A-D; superscripts lost
+         (10^7 as "107", 10^-5 as "105"); footnote marks glued into numbers ("73.297", "1.896"); equations
+         flattened (Q3C, Q2, Q3D); tables or forms stored as interleaved running text (WHO 1010 A10, 992 A4,
+         1019 A2, 996 model report, 961 A2, PI 030 5).
+      3. **Noise inside clauses:** PIC/S PE 009 page footers ("PE 009-18 (Part I) -1- ..."), EMA nitrosamines
+         running header, FDA analytical-procedures and Part 11 margin line numbers, Schedule M signature stamp and
+         HVAC figure labels, gazette page references, OJ C 95 headers, WHO 1052/1033 footers (stored backwards),
+         CDSCO rotated "Quality Rating" header and merged section-heading rows, footnote text mid-sentence (FDA
+         container closure).
+      4. **Wrong reference / boundaries:** Drugs Rules "Part IV 99" holds Schedules I-M; CDSCO "3 #2" spans
+         pages 16-143; Q3D body clauses carry an "Appendix 5" prefix; footnote or equation numbers start clauses
+         (Q3A "3 #2", Q3C Appendix 1); two-column lists read across columns (Drugs Rules lists, Schedule J);
+         contents entries stored as clauses (WHO TRS 929 A4).
   - **Owner priority from the coordinating session (first, after D37):** source fidelity: 0a second-engine
     re-extraction check (`tools/parse/fidelity.py`), 0b the 10 known parser limits, 0c version currency
     (`tools/currency.py`), 0d a 50-clause human spot-check sheet; one PR each. Then structured obligations and the gold set (coordinator items
