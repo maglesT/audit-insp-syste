@@ -37,6 +37,7 @@ import json
 import re
 import sys
 import unicodedata
+from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -52,6 +53,7 @@ PHRASE_WORDS = 6
 RANK = {"optional": 0, "recommended": 1, "mandatory": 2}
 GROUP_SHINGLE = 3                  # display groups (D37): Jaccard of 3-word runs of the item texts
 GROUP_SIMILARITY = 0.5
+GROUP_COMMON_RUN = 50               # a run held by more items than this proposes no candidates (the Jaccard is exact)
 DISCLAIMER = ("Compiled from official texts with automated multi-step verification. Supports internal audits; "
               "does not replace the site's own judgement.")
 # regulator code in sources/catalog.csv -> the name customers see (a regulator name only, never a document)
@@ -105,25 +107,33 @@ def _shingles(text):
     return {tuple(w[i:i + GROUP_SHINGLE]) for i in range(max(len(w) - GROUP_SHINGLE + 1, 1))}
 
 
-def groups(items):
-    """{item id: group id}: items whose texts share at least GROUP_SIMILARITY of their word runs (Jaccard) are one
-    display group, named by its first item id. Text similarity only, no judgement of stricter or looser (D37)."""
-    runs = {it["id"]: _shingles(it["item_text"]) for it in items}
-    parent = {i: i for i in runs}
+def _order(rid):
+    prefix, _, number = rid.partition("-")
+    return (prefix, int(number) if number.isdigit() else 0)
 
-    def root(i):
-        while parent[i] != i:
-            parent[i] = parent[parent[i]]
-            i = parent[i]
-        return i
-    ids = sorted(runs)
-    for n, a in enumerate(ids):
-        for b in ids[n + 1:]:
-            if runs[a] and runs[b] and len(runs[a] & runs[b]) / len(runs[a] | runs[b]) >= GROUP_SIMILARITY:
-                ra, rb = root(a), root(b)
-                if ra != rb:
-                    parent[max(ra, rb)] = min(ra, rb)
-    return {i: root(i) for i in ids}
+
+def groups(items, sources_of):
+    """{item id: group id}. A display group is a seed item, in id order, and every later ungrouped item from a
+    different source whose text shares at least GROUP_SIMILARITY of its 3-word runs with the seed's (Jaccard).
+    Nothing chains through a third item, items of one source are never grouped with each other, and only items
+    that share a run held by at most GROUP_COMMON_RUN items are compared. Text similarity only, no judgement of stricter or looser (D37)."""
+    runs = {it["id"]: _shingles(it["item_text"]) for it in items}
+    index = defaultdict(set)
+    for rid, r in runs.items():
+        for run in r:
+            index[run].add(rid)
+    group = {}
+    for seed in sorted(runs, key=_order):
+        if seed in group:
+            continue
+        group[seed] = seed
+        candidates = set().union(*(index[run] for run in runs[seed] if len(index[run]) <= GROUP_COMMON_RUN))
+        for other in sorted(candidates, key=_order):
+            if other in group or not sources_of[other].isdisjoint(sources_of[seed]):
+                continue
+            if len(runs[seed] & runs[other]) / len(runs[seed] | runs[other]) >= GROUP_SIMILARITY:
+                group[other] = seed
+    return group
 
 
 def compile_items(reqs, sources, names, plant_type):
@@ -135,7 +145,7 @@ def compile_items(reqs, sources, names, plant_type):
     def name(m):
         return REGULATOR_NAMES[sources[m["source"]]["regulator"]]
 
-    merged = {}
+    merged, sources_of = {}, {}
     for req in reqs:
         if req["status"] != "verified" or plant_type not in req["plant_types"]:
             continue
@@ -147,12 +157,14 @@ def compile_items(reqs, sources, names, plant_type):
         key = (_key(text), req["topic"], req["strength"])
         if key in merged:
             merged[key]["regulators"] = sorted(set(merged[key]["regulators"]) | {name(m) for m in chosen})
+            sources_of[merged[key]["id"]] |= {m["source"] for m in chosen}
             continue
+        sources_of[req["id"]] = {m["source"] for m in chosen}
         merged[key] = {"id": req["id"], "item_text": text, "topic": req["topic"],
                        "regulators": sorted({name(m) for m in chosen}), "plant_types": [plant_type],
                        "strength": req["strength"]}
     items = list(merged.values())
-    group_of = groups(items)
+    group_of = groups(items, sources_of)
     return [{**it, "group": group_of[it["id"]]} for it in items]
 
 
@@ -296,7 +308,8 @@ def compilations():
 
 def check_library(root=model.LIBRARY, sources=None, segments_of=None, all_sources=False, drafts=False):
     """Option-A findings over the library: the item text of every verified item (with drafts=True, of every other
-    live item instead), and the export document of every regulator name alone and all together, per plant type.
+    live item instead; with drafts=None, of every live item), and, unless drafts is given, the export document of
+    every regulator name alone and all together, per plant type.
     Only verified items can be exported; a draft with a finding is fixed before Layer 2 can verify it (verify.py)."""
     if segments_of is None:
         import layer1
@@ -306,11 +319,11 @@ def check_library(root=model.LIBRARY, sources=None, segments_of=None, all_source
     corpus, allow = corpus_for(reqs, sources, segments_of, all_sources), load_allow(root)
     out = []
     for req in reqs:
-        if (req["status"] == "verified") == drafts or req["status"] == "retired":
+        if req["status"] == "retired" or (drafts is not None and (req["status"] == "verified") == drafts):
             continue
         for text in visible_texts(req, sources):
             out += [f"{req['id']}: {f}" for f in check_text(text, corpus, allow)]
-    if drafts:
+    if drafts is not False:
         return sorted(set(out))
     for names_, plant in compilations():
         doc = export(reqs, sources, names_, plant, names)

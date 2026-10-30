@@ -38,7 +38,7 @@ def real_mappings():
             scope = sorted(pilot.runner_scope(sources[file]["applies_to"]))
             out.append({"source": file, "ref": ref, "clause_sha256": clause["sha256"], "draft": "draft-000",
                         "statement": "Carry out self inspections at least once a year.", "quote": quote,
-                        "strength": layer1.strength_of(quote), "plant_types": scope, "numbers": []})
+                        "strength": layer1.strength_of(quote), "plant_types": scope, "numbers": [], "topic": "SI.PROG"})
     return out
 
 

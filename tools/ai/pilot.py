@@ -47,19 +47,26 @@ PILOT = {
     "ich-q7.pdf": ["2.40", "2.41"],
 }
 
+def sub_topics():
+    """[(sub-topic id, area name)] from library/topics.json, for the drafter's topic field (D37)."""
+    tree = json.loads((HERE.parents[1] / "library" / "topics.json").read_text(encoding="utf-8"))
+    return [(sub, t["name"]) for t in tree["topics"] for sub in t["sub"]]
+
+
 DRAFT_SCHEMA = {
     "type": "object", "additionalProperties": False, "required": ["obligations", "no_obligation_reason"],
     "properties": {
         "no_obligation_reason": {"type": "string"},
         "obligations": {"type": "array", "items": {
             "type": "object", "additionalProperties": False,
-            "required": ["statement", "quote", "strength", "plant_types", "numbers"],
+            "required": ["statement", "quote", "strength", "plant_types", "numbers", "topic"],
             "properties": {
                 "statement": {"type": "string"},
                 "quote": {"type": "string"},
                 "strength": {"type": "string", "enum": ["mandatory", "recommended", "optional"]},
                 "plant_types": {"type": "array", "items": {"type": "string", "enum": PLANT_TYPES}},
-                "numbers": {"type": "array", "items": {"type": "string"}}}}}}}
+                "numbers": {"type": "array", "items": {"type": "string"}},
+                "topic": {"type": "string", "enum": [sub for sub, _ in sub_topics()]}}}}}}
 
 VERIFY_SCHEMA = {
     "type": "object", "additionalProperties": False,
@@ -78,6 +85,12 @@ VERIFY_SCHEMA = {
 
 def prompt(name):
     return (PROMPTS / f"{name}.md").read_text(encoding="utf-8")
+
+
+def draft_prompt():
+    """The drafter's instructions with the topic list its topic field takes (D37)."""
+    return prompt("draft") + "\n\nTOPICS (sub-topic id: area):\n" + "\n".join(f"{sub}: {name}"
+                                                                          for sub, name in sub_topics()) + "\n"
 
 
 def clause_block(source, clause, scope):
@@ -110,7 +123,7 @@ def draft_requests(pilot, sources, clauses_of, context_of=None):
         scope = ", ".join(sorted(runner_scope(sources[file]["applies_to"])))
         for ref in refs:
             clause = tree[ref]
-            out.append(runner.Request(f"draft-{len(out):03d}", prompt("draft"),
+            out.append(runner.Request(f"draft-{len(out):03d}", draft_prompt(),
                                       with_context(clause_block(sources[file], clause, scope), file, ref,
                                                    context_of), DRAFT_SCHEMA,
                                       max_tokens=DRAFT_TOKENS, meta={"source": file, "ref": ref, "clause_sha256": clause["sha256"]}))
@@ -200,7 +213,8 @@ def coverage(drafts, mappings, clauses_of):
 
 
 WORD = re.compile(r"\w+")
-LEADING_NUMBER = re.compile(r"\s*(?:[A-Z]?\d+(?:\.\d+)*\.?|\([a-z0-9]+\))?\s*")
+# a clause's own number ("9.3", "10.1.", "(b)", "(A)", "Principle"); not a year or count ("2024 annual review")
+LEADING_NUMBER = re.compile(r"\s*(?:[A-Z]?\d{1,3}(?:\.\d+)*\.?(?!\d)|\([a-zA-Z0-9]+\)|principle\b)?\s*", re.I)
 
 
 def report(mappings, rejected, draft_summary, verify_results, verify_summary):
@@ -277,14 +291,17 @@ def prepare_draft(pilot=PILOT, sources=None, clauses_of=None, context_of=None, t
 
 
 def twin_quote(quote, text):
-    """The twin clause's own span for a quote: word for word, except that a word broken at a line end in one
-    text ("self- inspection") may be whole in the other. None when there is no such span."""
+    """The twin clause's own span for a quote: the same words in the same order, where punctuation and spacing
+    may differ (twins are found on words alone, common.twin_key): "self- inspection", "(b)arran" for "(b) arran",
+    ";" for ".". The span runs from the first to the last word. None when the twin has no such span."""
     text = normalise(text)
     quote = normalise(quote)
     if quote in text:
         return quote
-    parts = [re.escape(w) for w in re.split(r"-\s*", quote)]
-    hit = re.search(r"-\s?".join(parts), text)
+    words = re.findall(r"\w+", quote)
+    if not words:
+        return None
+    hit = re.search(r"(?<!\w)" + r"\W*".join(re.escape(w) for w in words) + r"(?!\w)", text, re.I)
     return hit.group(0) if hit else None
 
 

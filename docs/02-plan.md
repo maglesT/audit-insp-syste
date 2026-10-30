@@ -80,8 +80,9 @@ mappings that needed a stricter/adds/looser/narrower judgement passed both verif
 2. **Reuse:** a clause whose text is the same (leading number and punctuation left out) as a clause already
    drafted, especially EU GMP and PIC/S, takes copies of those items (D36); only the Layer 1 quote and hash
    checks run again, with no new drafting. Identical texts must give identical items (Layer 1 check 8).
-3. **Skip:** contents lines, headings without text and pure definitions are marked not applicable with a reason;
-   every other clause is drafted, including clauses without modal verbs.
+3. **Skip:** in a regulator run, contents lines, headings without text and pure definitions are marked not
+   applicable with a reason; every other clause is drafted, including clauses without modal verbs. (A topic
+   rehearsal such as S3 takes only the topic's clauses with obligation wording, by rule, D36.)
 4. **Item text:** our own plain words; the option-A test rejects any 12-word overlap with a source and any clause
    or document reference, and an item with such a finding cannot be verified.
 5. **Grouping for display:** near-identical items of different regulators are grouped by text similarity only.
@@ -98,6 +99,13 @@ mappings that needed a stricter/adds/looser/narrower judgement passed both verif
 6. Completeness: every clause of every `must`/`should` source is mapped, or marked not applicable with a reason.
 7. Fingerprints: every source's sha256 matches the inventory. A change marks every dependent mapping
    "re-verify".
+8. Twins: clauses of different sources with the same words (leading number and punctuation left out) give
+   identical items (D34, D37).
+9. Conditions: condition and limit wording in a quote ("where applicable", "before", "at least", "within 30
+   days") has a counterpart in the item text (D35).
+
+Findings on draft items are listed for the repair round and do not fail CI; an item with any finding cannot be
+verified. Findings on verified items, structure, coverage and fingerprints fail CI.
 
 ### 2.5 Stage 4: Layer 2, independent AI review of meaning
 1. **Two blind verifiers.**

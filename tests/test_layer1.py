@@ -190,8 +190,12 @@ class Failing(unittest.TestCase):
     def test_draft_findings_do_not_fail(self):
         reqs = [{"id": "SI-001", "status": "draft"}, {"id": "SI-002", "status": "verified"}]
         findings = [("SI-001", 1, "numbers", "x"), ("SI-002", 1, "numbers", "y"), ("SI-001", 0, "twins", "z"),
-                    ("coverage a 1", 0, "coverage", "w")]
-        self.assertEqual(layer1.failing(findings, reqs), findings[1:])
+                    ("SI-002", 0, "twins", "v"), ("coverage a 1", 0, "coverage", "w")]
+        self.assertEqual(layer1.failing(findings, reqs), [findings[1], findings[3], findings[4]])
+
+    def test_id_order(self):
+        self.assertEqual(sorted(["SI-1000", "SI-010", "SI-002", "QS-500"], key=layer1.id_order),
+                         ["QS-500", "SI-002", "SI-010", "SI-1000"])
 
 
 class LeadIn(unittest.TestCase):
@@ -206,6 +210,27 @@ class LeadIn(unittest.TestCase):
         self.assertIsNone(layer1.lead_in_strength("reviews are conducted", "Reviews are conducted yearly."))
         self.assertIsNone(layer1.lead_in_strength("not in the text", text))
         self.assertIsNone(layer1.lead_in_strength("records", "Areas: records and rooms."))
+
+    def test_lead_in_must_open_the_list_the_quote_is_in(self):
+        """Review of D37: an earlier list, a dash in a number range and running text do not lend their strength."""
+        earlier = "The firm shall: (a) keep records; (b) review them. The results are reviewed annually."
+        self.assertIsNone(layer1.lead_in_strength("The results are reviewed annually.", earlier))
+        ranged = "Rooms shall be kept at 15–25 °C. Ensure deviations are investigated"
+        self.assertIsNone(layer1.lead_in_strength("Ensure deviations are investigated", ranged))
+        points = ("The following points should be taken into consideration: (a) remote access. QPs are obliged to "
+                  "keep their knowledge.")
+        self.assertIsNone(layer1.lead_in_strength("QPs are obliged to keep their knowledge.", points))
+        self.assertEqual(layer1.lead_in_strength("logs are kept", "Staff should ensure: a) rooms are clean. b) "
+                                                 "logs are kept."), "recommended")
+
+    def test_bullets(self):
+        text = "The quality manager should ensure that: –– staff are trained; –– records are kept."
+        self.assertEqual(layer1.lead_in_strength("records are kept", text), "recommended")
+        self.assertEqual(layer1.lead_in_strength("records are kept", text.replace("––", "■■")), "recommended")
+
+    def test_each_occurrence_is_tried(self):
+        text = "Doors are locked. Staff shall ensure that: (a) doors are locked; (b) keys are kept."
+        self.assertEqual(layer1.lead_in_strength("doors are locked", text.replace("Doors", "doors")), "mandatory")
 
 
 class Conditions(unittest.TestCase):

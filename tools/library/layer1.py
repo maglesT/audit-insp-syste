@@ -39,7 +39,7 @@ sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(HERE.parent / "parse"))
 import model  # noqa: E402
 import obligations  # noqa: E402
-from common import CITABLE, CLAUSES, OFFICIAL, normalise  # noqa: E402
+from common import CITABLE, CLAUSES, OFFICIAL, normalise, twin_key  # noqa: E402
 
 RANK = {"optional": 0, "recommended": 1, "mandatory": 2}
 # condition and limit wording, by meaning (check 9, D35): a quote that says one of these must have an item that
@@ -207,22 +207,35 @@ def strength_of(quote):
 SENTENCE_END = re.compile(r"(?<![\d(])(?<!\b[a-zA-Z])[.!?]\s+(?=[A-Z(])")
 
 
+# a list opens at ":" or a dash right after a word ("shall ensure that—"), but not at a dash between numbers
+# ("15–25 °C") or a dash used as a bullet ("; –– staff are trained")
+LIST_OPEN = re.compile(r":|(?<=\w)[—–](?![—–]|\s?\d)")
+# a list item starts with "(a)", "1.", "ii)", "■" or "•"
+_MARKER = r"(?:\(?(?:[a-zA-Z]|[ivxIVX]{1,4}|\d{1,3})[.)]|[■•▪\uf0b7]+|––?)"
+
+
 def lead_in_strength(quote, text):
     """The strength of the list lead-in a quote sits under, for a list item that has no obligation word of its own:
     "The quality unit should ...: 6. making sure that deviations are investigated" reads recommended. The lead-in is
-    the sentence ending at the last ":" or dash before the quote; None when there is none or it has no obligation
-    word."""
+    the sentence ending at the last list opening (":" or a dash, not a dash between numbers) before the quote, and
+    the quote must start a list item: right after the opening, after ";" or ",", or after a list marker ("(a)",
+    "11.", "(xi)", "■"); a quote that follows running text ("... review them. The results ...") is not in the list.
+    Each occurrence of the quote is tried in turn. None when no lead-in fits or it has no obligation word."""
     text, quote = normalise(text), normalise(quote)
     at = text.find(quote)
-    if at < 0:
-        return None
-    before = text[:at]
-    mark = max(before.rfind(":"), before.rfind("—"), before.rfind("–"))
-    if mark < 0:
-        return None
-    lead = before[:mark]
-    ends = [m.end() for m in SENTENCE_END.finditer(lead)]
-    return strength_of(lead[ends[-1]:] if ends else lead)
+    while at >= 0:
+        before = text[:at]
+        opens = [m.start() for m in LIST_OPEN.finditer(before)]
+        if opens:
+            tail = before[opens[-1] + 1:]
+            starts_item = (not tail.strip() or tail.rstrip()[-1:] in ";,"
+                           or re.search(rf"(?:^|\s){_MARKER}\s*$", tail))
+            if starts_item:
+                lead = before[:opens[-1]]
+                ends = [m.end() for m in SENTENCE_END.finditer(lead)]
+                return strength_of(lead[ends[-1]:] if ends else lead)
+        at = text.find(quote, at + 1)
+    return None
 
 
 def check_requirement(req, sources, changed=()):
@@ -351,34 +364,44 @@ def run(root=model.LIBRARY):
     return findings + coverage_findings + check_twins(reqs), shares, changed
 
 
-TWIN_LEADING = re.compile(r"^\s*(?:[A-Z]?\d+(?:\.\d+)*\.?|\([a-z0-9]+\)|principle)\s*", re.I)
 
 
-def check_twins(reqs, clauses_of=None):
-    """Check 8 (D34, D37): two mapped clauses of different sources with the same words (leading number and
-    punctuation left out; e.g. EU GMP and PIC/S) must give identical items: the same item texts and strengths.
-    Near twins that differ in a word ("should" in ICH Q7, "shall" in Schedule M) may give different items."""
+def twin_differences(reqs, clauses_of=None):
+    """Check 8 (D34, D37): two mapped clauses of different sources with the same words (common.twin_key: leading
+    number and punctuation left out; e.g. EU GMP and PIC/S) must give identical items: the same item texts and
+    strengths. Near twins that differ in a word ("should" in ICH Q7, "shall" in Schedule M) may differ. Returns
+    (from source, ref, to source, ref, from item ids, to item ids) per differing pair."""
     import graph
     clauses_of = clauses_of or globals()["clauses_of"]
     mapped = sorted({(m["source"], m["clause_ref"]) for r in reqs if r["status"] != "retired" for m in r["mappings"]})
     groups = {}
     for s, ref in mapped:
-        if ref in clauses_of(s):
-            key = " ".join(re.findall(r"\w+", TWIN_LEADING.sub("", normalise(clauses_of(s)[ref]["text"])).lower()))
-            groups.setdefault(key, []).append((s, ref))
+        if ref in (clauses_of(s) or {}):
+            groups.setdefault(twin_key(clauses_of(s)[ref]["text"]), []).append((s, ref))
     rows = [("same_text_as", a[0], a[1], b[0], b[1], "1.0") for members in groups.values()
             for i, a in enumerate(members) for b in members[i + 1:] if a[0] != b[0]]
-    live = [r for r in reqs if r["status"] != "retired"]
-    return [(sorted(ra + rb)[0], 0, "twins", f"{fs} {fr} and {ts} {tr} have the same text but give different items "
-                                             f"{ra} and {rb}")
-            for fs, fr, ts, tr, ra, rb in graph.consistency(rows, live)]
+    return graph.consistency(rows, [r for r in reqs if r["status"] != "retired"])
+
+
+def check_twins(reqs, clauses_of=None):
+    """Check 8 findings, one per differing twin pair, named by the lowest item id of the pair."""
+    return [(min(ra + rb, key=id_order), 0, "twins", f"{fs} {fr} and {ts} {tr} have the same text but give "
+                                                     f"different items {ra} and {rb}")
+            for fs, fr, ts, tr, ra, rb in twin_differences(reqs, clauses_of)]
+
+
+def id_order(rid):
+    """"SI-002" < "SI-010" < "SI-1000": by prefix, then number."""
+    prefix, _, number = rid.partition("-")
+    return (prefix, int(number) if number.isdigit() else 0)
 
 
 def failing(findings, reqs):
-    """The findings that fail the run: all but those on draft or unverified items, which the repair round fixes
-    before Layer 2 may verify them (D37); structure, coverage and twin findings always fail."""
+    """The findings that fail the run: all but those on draft or unverified items (twin pairs included when the
+    item they are named by is open), which the repair round fixes before Layer 2 may verify them (D37); structure
+    and coverage findings always fail. An open item cannot be verified while it has a finding (verify.blocked)."""
     open_items = {r["id"] for r in reqs if r["status"] in ("draft", "unverified")}
-    return [f for f in findings if not (f[2] not in ("twins", "coverage", "structure") and f[0] in open_items)]
+    return [f for f in findings if not (f[2] not in ("coverage", "structure") and f[0] in open_items)]
 
 
 def main():

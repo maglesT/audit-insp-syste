@@ -22,7 +22,7 @@ def draft_answer(clause_text):
     """One obligation whose quote is the clause's first ten words."""
     quote = " ".join(clause_text.split()[:10])
     return {"no_obligation_reason": "", "obligations": [
-        {"statement": "x", "quote": quote, "strength": "recommended", "plant_types": ["OSD"], "numbers": []}]}
+        {"statement": "x", "quote": quote, "strength": "recommended", "plant_types": ["OSD"], "numbers": [], "topic": "SI.PROG"}]}
 
 
 def answer_all(run_dir, make):

@@ -16,6 +16,8 @@ numbers and qualifiers; do not split a single obligation across items. For each 
   LIQ (oral liquids), SEMI (semisolids), INJ (sterile injectables), API (active substances). Use the scope
   given with the clause unless the clause itself narrows it.
 - numbers: every number, limit, frequency or period in the quote, as written.
+- topic: the sub-topic id from the TOPICS list below that the obligation belongs to (an audit area, not the
+  document's chapter: a record-keeping duty in a self-inspection chapter is still about self-inspection).
 
 If the clause states no obligation (a heading, a definition, a statement of purpose), return no obligations
 and say why in no_obligation_reason. Otherwise leave no_obligation_reason empty.

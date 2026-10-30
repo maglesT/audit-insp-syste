@@ -15,10 +15,11 @@ and only clause, principle, table row and unnumbered kinds (not contents lines o
 than MAX_CHARS is a parse blob (a drug price list, a whole compliance-program objective) that only mentions the
 topic; it is listed under "too_long" for the parse flags, not drafted.
 
-Twins (D36): a unit whose text, without its leading number, is the same after normalising as a unit of another
-source is drafted once. The drafted one is the first by CORE_ORDER (plan 2.3: the cores first), and its twins
-take its mappings, each quote still checked word for word against the twin's own clause (Layer 1 rule 1). Near
-twins that differ in any word ("should" in ICH Q7, "shall" in Schedule M Part XII) are drafted on their own.
+Twins (D36): a unit whose words (common.twin_key: leading number and punctuation left out, lowercased) are those
+of a unit of another source is drafted once. The drafted one is the first by CORE_ORDER (plan 2.3: the cores first), and its twins
+take its mappings, each quote mapped to the twin's own wording (pilot.twin_quote) and checked word for word against
+the twin's clause (Layer 1 rule 1). Near twins that differ in any word ("should" in ICH Q7, "shall" in Schedule M
+Part XII) are drafted on their own.
 """
 import argparse
 import json
@@ -31,7 +32,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent / "library"))
 sys.path.insert(0, str(HERE.parent / "parse"))
 import obligations  # noqa: E402
-from common import normalise  # noqa: E402
+from common import twin_key  # noqa: E402
 
 ROOT = HERE.parents[1]
 OUT = ROOT / "library" / "topics"
@@ -44,7 +45,6 @@ TOPICS = {
         "heading": r"self[\s-]*inspect|internal\s+audit|quality\s+audit",
     },
 }
-LEADING = re.compile(r"^\s*(?:[A-Z]?\d+(?:\.\d+)*\.?|\([a-z0-9]+\)|principle)\s*", re.I)
 
 
 def has_obligation(text):
@@ -101,7 +101,7 @@ def select(topic, sources, clauses_of):
 
 
 def text_key(text):
-    return normalise(LEADING.sub("", normalise(text)).replace("- ", "-"))
+    return twin_key(text)
 
 
 def with_twins(units, clauses_of):

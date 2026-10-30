@@ -59,7 +59,10 @@ def prepare(reqs, sources, clauses_of):
 
 
 def passes(answer):
-    return answer["verdict"] == "correct"
+    """Correct on every question (plan 2.5), not only in the verdict."""
+    return (answer["verdict"] == "correct" and answer["required_by_clause"] and answer["plant_types_ok"]
+            and answer["strength_ok"] and answer["strictness"] == "same" and not answer["item_adds"].strip()
+            and not answer["item_omits"].strip())
 
 
 def verdicts(run_dir):
@@ -100,25 +103,32 @@ def statuses(reqs, run_dir):
 
 
 def blocked(reqs, root):
-    """{item id: reasons} for items that may not be verified whatever Layer 2 says: a Layer 1 finding, or an
-    option-A finding in the item text (it would reach a customer)."""
+    """{item id: reasons} for items that may not be verified whatever Layer 2 says: a Layer 1 finding (with changed
+    sources counted, and twin clauses that give different items), or an option-A finding in the item text."""
     import export
     import layer1
     sources = layer1.catalog()
+    changed = layer1.check_fingerprints()
     out = {}
     for req in reqs:
-        for rid, _, check, why in layer1.check_requirement(req, sources):
+        for rid, _, check, why in layer1.check_requirement(req, sources, changed):
             out.setdefault(rid, []).append(f"layer 1 {check}: {why}")
-    for f in export.check_library(root, drafts=True):
+    for fs, fr, ts, tr, ra, rb in layer1.twin_differences(reqs):
+        for rid in ra + rb:
+            out.setdefault(rid, []).append(f"layer 1 twins: {fs} {fr} and {ts} {tr} give different items")
+    for f in export.check_library(root, drafts=None):
         rid, _, why = f.partition(": ")
         out.setdefault(rid, []).append(f"option A: {why}")
     return out
 
 
 def apply(run_dir, root):
-    """Set each judged item's status: verified only when both verifiers pass it and nothing blocks it."""
+    """Set the status of the items judged in this run (keys.jsonl), and of no others: verified only when both
+    verifiers pass the item and nothing blocks it."""
     import model
     reqs = [r for r in model.requirements(root) if r["status"] != "retired"]
+    judged = {row["requirement"] for row in runner.read_jsonl(Path(run_dir) / "keys.jsonl")}
+    reqs = [r for r in reqs if r["id"] in judged]
     st = statuses(reqs, run_dir)
     stop = blocked(reqs, root)
     st = {rid: "unverified" if rid in stop else s for rid, s in st.items()}
@@ -131,7 +141,8 @@ def apply(run_dir, root):
                 changed += 1
         path.write_text(json.dumps(doc, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
     return {"verified": sum(s == "verified" for s in st.values()),
-            "unverified": sum(s == "unverified" for s in st.values()), "blocked": len(stop), "changed": changed}
+            "unverified": sum(s == "unverified" for s in st.values()),
+            "blocked": sum(rid in stop for rid in st), "changed": changed}
 
 
 def main():

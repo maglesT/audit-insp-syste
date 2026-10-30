@@ -48,16 +48,43 @@ class Library(unittest.TestCase):
     def test_passes(self):
         self.assertTrue(verify.passes(answer()))
         self.assertFalse(verify.passes(answer("incorrect", "stricter")))
+        self.assertFalse(verify.passes({**answer(), "strength_ok": False}))     # correct on every question
+        self.assertFalse(verify.passes({**answer(), "item_omits": "the frequency"}))
 
     def test_findings_block_verification(self):
         import export
         import layer1
         with unittest.mock.patch.object(layer1, "check_requirement",
-                                        lambda r, s: [("SI-003", 1, "numbers", "x")] if r["id"] == "SI-003" else []), \
+                                        lambda r, s, c: [("SI-003", 1, "numbers", "x")] if r["id"] == "SI-003" else []), \
                 unittest.mock.patch.object(layer1, "catalog", lambda: {}), \
+                unittest.mock.patch.object(layer1, "check_fingerprints", lambda: []), \
+                unittest.mock.patch.object(layer1, "twin_differences",
+                                           lambda reqs: [("eu.pdf", "9.1", "pics.pdf", "9.1", ["SI-001"], ["SI-002"])]), \
                 unittest.mock.patch.object(export, "check_library", lambda root, drafts: ["SI-004: copies source"]):
-            self.assertEqual(verify.blocked(REQS, "root"), {"SI-003": ["layer 1 numbers: x"],
-                                                            "SI-004": ["option A: copies source"]})
+            self.assertEqual(verify.blocked(REQS, "root"), {
+                "SI-001": ["layer 1 twins: eu.pdf 9.1 and pics.pdf 9.1 give different items"],
+                "SI-002": ["layer 1 twins: eu.pdf 9.1 and pics.pdf 9.1 give different items"],
+                "SI-003": ["layer 1 numbers: x"], "SI-004": ["option A: copies source"]})
+
+    def test_apply_touches_only_judged_items(self):
+        import model
+        with tempfile.TemporaryDirectory() as tmp, unittest.mock.patch.object(runner, "RUNS", Path(tmp)):
+            root = Path(tmp) / "lib"
+            (root / "requirements").mkdir(parents=True)
+            earlier = item("SI-009", "Keep it.", mapping("eu.pdf"))
+            earlier["status"] = "verified"
+            (root / "requirements" / "SI.json").write_text(json.dumps({"requirements": REQS[:1] + [earlier]}))
+            run = verify.prepare(REQS[:1], SOURCES, TREES.get)
+            for batch in sorted((run / "batches").glob("*.json")):
+                items = json.loads(batch.read_text())["items"]
+                (run / "answers" / batch.name).write_text(json.dumps(
+                    {"answers": [{"custom_id": it["custom_id"], "answer": answer()} for it in items]}))
+            verify.ingest(run)
+            with unittest.mock.patch.object(verify, "blocked", lambda reqs, root: {}):
+                rep = verify.apply(run, root)
+            st = {r["id"]: r["status"] for r in model.requirements(root)}
+        self.assertEqual(st, {"SI-001": "verified", "SI-009": "verified"})
+        self.assertEqual((rep["verified"], rep["changed"]), (1, 1))
 
     def test_round_trip(self):
         with tempfile.TemporaryDirectory() as tmp, unittest.mock.patch.object(runner, "RUNS", Path(tmp)):

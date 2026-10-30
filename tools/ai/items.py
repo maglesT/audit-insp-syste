@@ -11,11 +11,11 @@ order, each lead followed by its twins. Status is "draft" until Layer 2 verifies
 The sub-topic of each item: the S3 draft run predates topic drafting, so it is taken from the topic that the
 (dropped) consolidation run gave the obligation's requirement (--topics); later drafts carry their own "topic".
 Coverage: each drafted clause lists its items; a clause the drafter found no obligation in is "na" with the
-drafter's reason, and so are its twins. The written files replace the library's requirement and coverage files.
+drafter's reason, and so are its twins. Writing merges into the library (merge): items keep their ids and
+statuses by source link, new items take new ids, and items of re-drafted clauses that are gone are retired.
 """
 import argparse
 import json
-import shutil
 import sys
 from pathlib import Path
 
@@ -73,22 +73,72 @@ def build(draft_dir, topic_of):
     return items, coverage
 
 
+def link_key(item):
+    m = item["mappings"][0]
+    return (m["source"], m["clause_ref"], " ".join(m["quote"].split()))
+
+
+def merge(old, new):
+    """New items merged into the library's items by source link (source, clause, quote). A matched item keeps its
+    id, and its status when text, strength and plant types are unchanged (else it is a draft again); a new item
+    gets the next id of its prefix after the highest in use; an old item of a re-drafted clause that the new
+    draft no longer has is retired. Items of clauses not in this draft are kept as they are."""
+    by_key = {link_key(r): r for r in old}
+    redrafted = {link_key(r)[:2] for r in new}
+    used = {}
+    for r in old:
+        prefix, _, number = r["id"].partition("-")
+        used[prefix] = max(used.get(prefix, 0), int(number))
+    out, seen = [], set()
+    for r in new:
+        key = link_key(r)
+        seen.add(key)
+        hit = by_key.get(key)
+        if hit:
+            same = all(hit[f] == r[f] for f in ("item_text", "strength", "plant_types", "topic"))
+            out.append({**r, "id": hit["id"], "status": hit["status"] if same else "draft"})
+            continue
+        prefix = r["topic"].split(".")[0]
+        used[prefix] = used.get(prefix, 0) + 1
+        out.append({**r, "id": f"{prefix}-{used[prefix]:03d}"})
+    renamed = {link_key(r): r["id"] for r in out}
+    for r in old:
+        key = link_key(r)
+        if key in seen:
+            continue
+        out.append({**r, "status": "retired"} if key[:2] in redrafted else r)
+    return out, renamed
+
+
 def write(items, coverage, root):
-    """Replace library/requirements/<TOP>.json and library/coverage/<stem>.json with these items."""
+    """Merge these items into library/requirements/<TOP>.json (merge) and their clauses' entries into
+    library/coverage/<stem>.json; everything else in the library is kept."""
+    import model
     root = Path(root)
+    old = model.requirements(root) if (root / "requirements").exists() else []
+    merged, renamed = merge(old, items)
+    ids = {it["id"]: renamed[link_key(it)] for it in items}            # positional build ids -> library ids
     for sub in ("requirements", "coverage"):
-        shutil.rmtree(root / sub, ignore_errors=True)
-        (root / sub).mkdir(parents=True)
+        (root / sub).mkdir(parents=True, exist_ok=True)
     by_top = {}
-    for it in items:
+    for it in merged:
         by_top.setdefault(it["topic"].split(".")[0], []).append(it)
+    for path in (root / "requirements").glob("*.json"):
+        if path.stem not in by_top:
+            path.unlink()                                                # every item it held is in merged
     for top, reqs in by_top.items():
+        reqs.sort(key=lambda r: int(r["id"].partition("-")[2]))
         (root / "requirements" / f"{top}.json").write_text(
             json.dumps({"requirements": reqs}, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
     for stem, entries in coverage.items():
-        (root / "coverage" / f"{stem}.json").write_text(
-            json.dumps({"clauses": entries}, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
-    return {"items": len(items), "topics": sorted(by_top), "coverage_files": len(coverage)}
+        path = root / "coverage" / f"{stem}.json"
+        old_entries = json.loads(path.read_text(encoding="utf-8"))["clauses"] if path.exists() else {}
+        fixed = {ref: ({"requirements": [ids[r] for r in e["requirements"]]} if "requirements" in e else e)
+                 for ref, e in entries.items()}
+        path.write_text(json.dumps({"clauses": {**old_entries, **fixed}}, indent=1, ensure_ascii=False) + "\n",
+                        encoding="utf-8")
+    return {"items": len(items), "library_items": len(merged), "retired": sum(r["status"] == "retired" for r in merged),
+            "topics": sorted(by_top), "coverage_files": len(coverage)}
 
 
 def main():

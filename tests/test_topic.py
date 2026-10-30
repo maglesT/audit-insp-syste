@@ -110,13 +110,20 @@ class Twins(unittest.TestCase):
         self.assertEqual(pilot.twin_quote("The self-inspection shall be documented", "1. The self- inspection shall "
                                           "be documented."), "The self- inspection shall be documented")
         self.assertEqual(pilot.twin_quote("The self- inspection", "The self-inspection is done."), "The self-inspection")
-        self.assertIsNone(pilot.twin_quote("The self inspection shall", "The self-inspection shall"))
+        self.assertEqual(pilot.twin_quote("The self inspection shall", "The self-inspection shall"),
+                         "The self-inspection shall")                          # same words: twins (D37)
+        self.assertEqual(pilot.twin_quote("results; (b) arrangements", "results (b)arrangements apply"),
+                         "results (b)arrangements")
+        self.assertIsNone(pilot.twin_quote("The self inspection should", "The self-inspection shall"))
+        self.assertIsNone(pilot.twin_quote("in spec", "the inspection"))      # whole words only
 
     def test_coverage_ignores_the_clause_number(self):
         req = pilot.runner.Request("draft-000", "s", "u", {}, meta={"source": "x", "ref": "9.3"})
         trees = {"x": {"9.3": {"text": "9.3 All self inspections should be recorded."}}}
         m = {"source": "x", "ref": "9.3", "quote": "All self inspections should be recorded."}
         self.assertEqual(pilot.coverage([req], [m], trees.get), [])
+        self.assertEqual(pilot.LEADING_NUMBER.match("2024 annual review").end(), 0)
+        self.assertEqual(pilot.LEADING_NUMBER.match("(A) Records").end(), 4)
 
     def test_topic_pilot(self):
         self.assertEqual(pilot.topic_pilot([{"source": "a", "ref": "1"}, {"source": "b", "ref": "2"},
