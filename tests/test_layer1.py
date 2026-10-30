@@ -4,6 +4,7 @@ import shutil
 import sys
 import tempfile
 import unittest
+import unittest.mock
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "tools" / "library"))
@@ -183,6 +184,119 @@ class OnDemand(unittest.TestCase):
             layer1.clauses_of.__defaults__[0].pop(source, None)
         self.assertEqual(parsed, layer1.clauses_of(source))
 
+
+
+class Conditions(unittest.TestCase):
+    """Check 9 (D35): condition and limit wording in a quote needs a counterpart in the item."""
+
+    def test_groups(self):
+        c = layer1.conditions_in
+        self.assertEqual(c("Where applicable, proposals should be recorded."), {"condition"})
+        self.assertEqual(c("Samples should be taken prior to release."), {"before"})
+        self.assertEqual(c("At least once a year."), {"at_least"})
+        self.assertEqual(c("Report within 30 days."), {"deadline"})
+        self.assertEqual(c("Not more than 2 batches."), {"at_most"})
+        self.assertEqual(c("Unless justified, test every batch."), {"unless"})
+        self.assertEqual(c("Only authorised persons may enter."), {"only"})
+        self.assertEqual(c("Statements on the actions subsequently taken."), {"after"})
+
+    def test_ordinary_wording_is_not_a_condition(self):
+        for text in ("Areas where products are made should be clean.", "Keep the following documents.",
+                     "Storage within the facility should be dry.", "Inspect at intervals following a programme.",
+                     "Perform them on special occasions, e.g. in the case of recalls, or when an inspection is due.",
+                     "Self-inspection should be carried out once a year."):
+            self.assertEqual(layer1.conditions_in(text), set(), text)
+
+    def test_paraphrases_count(self):
+        self.assertEqual(layer1.conditions_in("Record actions taken afterwards."), {"after"})
+        self.assertEqual(layer1.conditions_in("Test before release.") & layer1.conditions_in("prior to use"), {"before"})
+
+    def test_finding(self):
+        req = {"id": "SI-001", "item_text": "Audit the supplier to confirm GMP conformity.", "strength": "mandatory",
+               "plant_types": ["OSD"], "parameters": {}, "general": False, "mappings": [
+                   {"source": "x", "clause_ref": "1", "clause_sha256": "0", "quote": "Where an audit is required, it "
+                    "shall determine GMP conformity.", "strength": "mandatory", "plant_types": ["OSD"],
+                    "addendum": "", "relation": "same"}]}
+        trees = {"x": {"1": {"text": "Where an audit is required, it shall determine GMP conformity."}}}
+        with unittest.mock.patch.object(layer1, "clauses_of", trees.get):
+            found = [f for f in layer1.check_requirement(req, {"x": {"applies_to": "ALL"}}) if f[2] == "conditions"]
+        self.assertEqual(len(found), 1)
+        self.assertIn("condition", found[0][3])
+        req["item_text"] = "If an audit is required, it must confirm GMP conformity."
+        with unittest.mock.patch.object(layer1, "clauses_of", trees.get):
+            self.assertFalse([f for f in layer1.check_requirement(req, {"x": {"applies_to": "ALL"}})
+                              if f[2] == "conditions"])
+
+    def check(self, req, trees):
+        with unittest.mock.patch.object(layer1, "clauses_of", trees.get):
+            return [f for f in layer1.check_requirement(req, {"x": {"applies_to": "ALL"}}) if f[2] == "conditions"]
+
+    def requirement(self, item, quote, addendum="", relation="same"):
+        req = {"id": "SI-001", "item_text": item, "strength": "mandatory", "plant_types": ["OSD"], "parameters": {},
+               "general": False, "mappings": [
+                   {"source": "x", "clause_ref": "1", "clause_sha256": "0", "quote": quote, "strength": "mandatory",
+                    "plant_types": ["OSD"], "addendum": addendum, "relation": relation}]}
+        return req, {"x": {"1": {"text": quote}}}
+
+    def test_addendum_states_the_condition(self):
+        req, trees = self.requirement("Audit the supplier.", "Where an audit is required, it shall be done.",
+                                      addendum="Where an audit is required.")
+        self.assertFalse(self.check(req, trees))
+
+    def test_looser_narrower_and_bad_quotes_are_skipped(self):
+        for relation in ("looser", "narrower"):
+            req, trees = self.requirement("Audit the supplier.", "Where an audit is required, it shall be done.",
+                                          relation=relation)
+            self.assertFalse(self.check(req, trees), relation)
+        req, trees = self.requirement("Audit the supplier.", "Where an audit is required, it shall be done.")
+        trees["x"]["1"]["text"] = "Something else."
+        self.assertFalse(self.check(req, trees))
+
+    def test_conditions_anywhere(self):
+        c = layer1.conditions_in
+        self.assertEqual(c("Keep records. If a batch fails, investigate."), {"condition"})
+        self.assertEqual(c("Clean it. • Where needed, dry it."), {"condition"})
+        self.assertEqual(c("Test by batches only when it has been shown to work."), {"condition", "only"})
+        self.assertEqual(c("Retest it even if it passed."), set())
+        self.assertEqual(c("Test, as risk requires."), {"condition"})
+
+    def test_words_that_are_not_limits(self):
+        for text in ("Keep information up to date.", "Review not only the alerts but also raw data.",
+                     "Meet both the minimum and peak demand.", "The fan is located after the filters.",
+                     "Report no later than the audit.", "Keep it at grade A at rest and when in operation.",
+                     "Flush with a fluid other than the product.", "Measure particles of 0.5 µm or greater.",
+                     "Allow only the minimum number of people."):
+            groups = layer1.conditions_in(text)
+            self.assertNotIn("at_most", groups, text)
+            self.assertNotIn("at_least", groups, text)
+            self.assertNotIn("after", groups, text)
+            self.assertNotIn("only", groups, text)
+            self.assertNotIn("unless", groups, text)
+        self.assertEqual(layer1.conditions_in("Report no later than the audit."), {"deadline"})
+
+    def test_limits_and_their_synonyms(self):
+        c = layer1.conditions_in
+        self.assertEqual(c("The maximum permissible time should be defined."), {"at_most"})
+        self.assertEqual(c("Define the longest permitted time."), {"at_most"})
+        self.assertEqual(c("Take a minimum of 3 samples."), {"at_least"})
+        self.assertEqual(c("Hold it for 24 hours or longer."), {"at_least"})
+        self.assertEqual(c("Report within one (1) month."), {"deadline"})
+        self.assertEqual(c("Report within 24 h."), {"deadline"})
+        self.assertEqual(c("Report within twenty days."), {"deadline"})
+        self.assertEqual(c("Report as soon as possible."), {"deadline"})
+        self.assertEqual(c("Within the same batch, mix well."), set())
+        self.assertEqual(c("Cleaning should precede use."), {"before"})
+        self.assertEqual(c("Hold it pending release."), {"until"})
+
+    def test_examples_do_not_hide_limits(self):
+        self.assertEqual(layer1.conditions_in("Process APIs, such as milling, to at least the standards."),
+                         {"at_least"})
+        self.assertEqual(layer1.conditions_in("Use tools (e.g. scoops) only after cleaning."), {"only", "after"})
+
+    def test_until_is_said_by_before_or_after(self):
+        self.assertEqual(layer1.conditions_missing("Do not use it until it is released.", {"before"}), [])
+        self.assertEqual(layer1.conditions_missing("Do not use it until it is released.", {"after", "only"}), [])
+        self.assertEqual(layer1.conditions_missing("Test it before use.", {"until"}), ["before"])
 
 if __name__ == "__main__":
     unittest.main()

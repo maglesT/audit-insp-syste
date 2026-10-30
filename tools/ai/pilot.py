@@ -271,8 +271,22 @@ def ingest_draft(draft_dir, clauses_of=None):
     mappings, rejected = mappings_from(drafts, results, clauses_of)
     runner.write_jsonl(Path(draft_dir) / "mappings.jsonl", mappings)
     runner.write_jsonl(Path(draft_dir) / "rejected-quotes.jsonl", rejected)
+    flagged = condition_findings(mappings)
+    runner.write_jsonl(Path(draft_dir) / "condition-findings.jsonl", flagged)
     return {"requests": summary["requests"], "failed": summary["failed"], "mappings": len(mappings),
-            "quotes_rejected": len(rejected)}
+            "quotes_rejected": len(rejected), "condition_findings": len(flagged)}
+
+
+def condition_findings(mappings):
+    """Layer 1 check 9 on drafted items (D35): condition or limit wording in the quote that the statement lacks."""
+    import layer1
+    out = []
+    for n, m in enumerate(mappings):
+        missing = layer1.conditions_missing(m["quote"], layer1.conditions_in(m["statement"]))
+        if missing:
+            out.append({"mapping": n, "source": m["source"], "ref": m["ref"], "missing": missing,
+                        "statement": m["statement"]})
+    return out
 
 
 def prepare_verify(draft_dir, sources=None, clauses_of=None, context_of=None):

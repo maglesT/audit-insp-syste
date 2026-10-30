@@ -145,6 +145,13 @@ class Sessions(unittest.TestCase):
         flagged = [u["text"] for u in part if u["ref"] == "Chapter 9 9.3"]
         self.assertEqual(flagged, [pilot.normalise(s) for s in sentences[1:]])
 
+    def test_condition_findings(self):
+        base = {"source": "x", "ref": "1", "quote": "Where an audit is required, it should be done before approval."}
+        found = pilot.condition_findings([{**base, "statement": "Audit the supplier."},
+                                          {**base, "statement": "If an audit is needed, do it prior to approval."}])
+        self.assertEqual(found, [{"mapping": 0, "source": "x", "ref": "1", "missing": ["before", "condition"],
+                                  "statement": "Audit the supplier."}])
+
     def test_session_pilot_end_to_end(self):
         draft_dir = pilot.prepare_draft(PILOT)
         clauses = {r.custom_id: layer1.clauses_of(r.meta["source"])[r.meta["ref"]]["text"]
@@ -152,6 +159,8 @@ class Sessions(unittest.TestCase):
         answer_all(draft_dir, lambda cid, inp: draft_answer(clauses[cid]))
         d = pilot.ingest_draft(draft_dir)
         self.assertEqual((d["requests"], d["mappings"], d["quotes_rejected"], d["failed"]), (2, 2, 0, []))
+        self.assertTrue((draft_dir / "condition-findings.jsonl").exists())
+        self.assertIn("condition_findings", d)
         verify_dir = pilot.prepare_verify(draft_dir)
         answer_all(verify_dir, lambda cid, inp: {**VERDICT, "verdict": "correct" if "-a-" in cid else "incorrect"})
         rep = pilot.ingest_verify(verify_dir, draft_dir)

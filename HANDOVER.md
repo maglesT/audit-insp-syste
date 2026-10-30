@@ -1,6 +1,6 @@
 # Handover: read this first in every new session
 
-Last updated: 30 October 2026 (session 3, clause graph, D34).
+Last updated: 30 October 2026 (session 3, condition check, D35).
 
 ## Mutation test results (30 Oct 2026, plan 2.6 / Layer 3, pilot scale)
 `tools/ai/mutate.py` planted errors in the 56 session-pilot mappings and mixed the mutants, shuffled, with the 56
@@ -166,8 +166,11 @@ finished in about 4 minutes in total.
   - **Clause graph done (D34):** `python3 tools/library/graph.py report|context <file> <ref>|impact <file>`
     (needs the parsed clause store: `python3 tools/parse/run.py`, about 9 minutes, not in git). Drafter and
     verifier context is opt-in (`pilot.py prepare-draft --context`) until measured.
-  - **Next (decided by the owner's rule "decide yourself"):** Layer 1 condition-word check, then S3 calibration on
-    the self-inspection topic across all pilot regulators, which fills the library for real.
+  - **Layer 1 condition-word check done (D35):** check 9, revised after an independent review; 0 false alarms on 114
+    pilot items, 56 controls and 82 human-style paraphrases; catches the dropped conditions the verifiers missed so
+    far (3 of 15 dropped-condition mutants). One-way: added conditions are left to the verifiers.
+  - **Next (decided by the owner's rule "decide yourself"):** S3 calibration on the self-inspection topic across
+    all pilot regulators, which fills the library for real.
 - Brief: `docs/00-brief.md` (the owner's decisions). Small decisions: `docs/decisions.md`.
 - **Deliverable (a), source inventory: done as a draft.** It is in `docs/01-source-inventory.md` and waits for
   owner review.
