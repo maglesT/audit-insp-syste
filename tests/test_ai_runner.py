@@ -174,6 +174,13 @@ class Batch(unittest.TestCase):
         self.assertEqual((summary["ok"], state["created"]), (1, 0))       # collected, not sent again
         self.assertTrue((run_dir / "results.jsonl").exists())
 
+    def test_api_key_variable(self):
+        self.assertEqual(runner.api_key({"AUDIT_ANTHROPIC_KEY": " k1\n", "ANTHROPIC_API_KEY": "k2"}), "k1")
+        self.assertEqual(runner.api_key({"ANTHROPIC_API_KEY": "k2"}), "k2")
+        with self.assertRaises(SystemExit) as e:
+            runner.api_key({"AUDIT_ANTHROPIC_KEY": "  "})
+        self.assertIn("AUDIT_ANTHROPIC_KEY", str(e.exception))
+
     def test_cost(self):
         u = {"input_tokens": 1_000_000, "cache_read_input_tokens": 1_000_000, "output_tokens": 1_000_000}
         self.assertAlmostEqual(runner.cost(u, batch=False), 24.20)
