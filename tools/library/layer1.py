@@ -66,8 +66,9 @@ def catalog():
     return {r["file"]: r for r in read_csv(model.ROOT / "sources" / "catalog.csv")}
 
 
-def clauses_of(source, cache={}):
-    """{ref: clause dict} of a source, from library/clauses (rebuilt by tools/parse/run.py), or parsed on demand."""
+def segments_of(source, cache={}):
+    """Every parsed segment of a source in document order (all kinds, including unnumbered text and contents
+    entries), from library/clauses (rebuilt by tools/parse/run.py), or parsed on demand."""
     if source not in cache:
         path = CLAUSES / (Path(source).stem + ".jsonl")
         if path.exists():
@@ -76,7 +77,14 @@ def clauses_of(source, cache={}):
             import run
             row = catalog()[source]
             rows = [c.to_json() for c in run.parser_for(row)(OFFICIAL / source)[0]]
-        cache[source] = {c["ref"]: c for c in rows if c["kind"] in CITABLE}
+        cache[source] = rows
+    return cache[source]
+
+
+def clauses_of(source, cache={}):
+    """{ref: clause dict} of the citable clauses of a source."""
+    if source not in cache:
+        cache[source] = {c["ref"]: c for c in segments_of(source) if c["kind"] in CITABLE}
     return cache[source]
 
 
