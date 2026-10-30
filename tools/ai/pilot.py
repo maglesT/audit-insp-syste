@@ -93,10 +93,11 @@ def with_context(text, source, ref, context_of):
 
 
 def graph_context(files):
-    """context_of(source, ref) from the clause graph of the given sources (tools/library/graph.py)."""
+    """context_of(source, ref) from the full clause graph (tools/library/graph.py), so definitions come from
+    every glossary of the source's family, not only from the files being drafted; files is kept for callers."""
     import graph
     import layer1
-    rows = graph.links(files=files, reqs=[])
+    rows = graph.links(reqs=[])
     sources = layer1.catalog()
     return lambda source, ref: graph.context_block(graph.context(source, ref, rows, layer1.segments_of, sources))
 

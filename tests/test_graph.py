@@ -105,10 +105,10 @@ class Definitions(unittest.TestCase):
     def test_glossary_entries_from_layout(self):
         if not (graph.model.ROOT / "sources" / "official" / "eu-glossary.pdf").exists():
             self.skipTest("source not present")
-        entries = dict(graph.glossary_entries("eu-glossary.pdf", "EudraLex Vol 4 Glossary"))
+        entries = {t: d for _, t, d in graph.glossary_entries("eu-glossary.pdf", "EudraLex Vol 4 Glossary")}
         self.assertIn("AIR-LOCK", entries)
         self.assertTrue(entries["AIR-LOCK"].startswith("An enclosed space"))
-        who = dict(graph.glossary_entries("who-trs986-a2-gmp-main.pdf", "WHO GMP main principles"))
+        who = {t: d for _, t, d in graph.glossary_entries("who-trs986-a2-gmp-main.pdf", "WHO GMP main principles")}
         self.assertIn("airlock", who)
 
 
@@ -202,6 +202,120 @@ class Pilot(unittest.TestCase):
         self.assertEqual(pilot.with_context("CLAUSE", "s", "r", lambda s, r: ""), "CLAUSE")
         self.assertEqual(pilot.with_context("CLAUSE", "s", "r", lambda s, r: "CONTEXT x"), "CLAUSE\n\nCONTEXT x")
 
+
+COMBINED = {
+    "an.pdf": {"regulator": "PICS", "title": "PE 009-18 Guide to GMP - Annexes 1-20"},
+    "p1.pdf": {"regulator": "PICS", "title": "PE 009-18 Guide to GMP - Part I"},
+    "a17.pdf": {"regulator": "EU", "title": "Annex 17 Real Time Release Testing"},
+    "qa.html": {"regulator": "EMA", "title": "EMA Questions and answers"},
+    "c5.pdf": {"regulator": "EU", "title": "Part I Chapter 5 Production"},
+    "gdp.pdf": {"regulator": "EU", "title": "Guidelines on GDP of active substances"},
+    "p211.xml": SOURCES["p211.xml"], "p11.xml": {"regulator": "FDA", "title": "21 CFR Part 11 Electronic Records"},
+    "s314.xml": {"regulator": "FDA", "title": "21 CFR 314.70 Supplements"},
+    "sm.pdf": {"regulator": "INDIA", "title": "Schedule M"},
+}
+TREES = {
+    "an.pdf": {r: {} for r in ("Annex 1", "Annex 1 3.2", "Annex 19", "Annex 19 2.2", "Annex 19 3.2", "Annex 2A 3.6",
+                               "Annex 4", "Annex 4 7", "Annex 15", "Annex 15 1")},
+    "p1.pdf": {r: {} for r in ("Part I 3.6", "Part I 5.1")},
+    "a17.pdf": {r: {} for r in ("4.9", "4.10")}, "qa.html": {"Q3": {}}, "c5.pdf": {"Chapter 5 5.1": {}, "4.9": {}},
+    "gdp.pdf": {"5.1": {}}, "p11.xml": {"11.10(a)": {}}, "s314.xml": {"314.70(b)(2)": {}},
+    "p211.xml": {r: {} for r in ("211.84(a)", "211.84(d)", "211.180", "211.182")},
+    "sm.pdf": {r: {} for r in ("Part I 1.1", "Part XII", "Part XII 1.1")},
+}
+
+
+class Resolution(unittest.TestCase):
+    def refs(self, source, ref, text):
+        docs = graph.documents(COMBINED)
+        return {(b, c) for _, b, c, _ in graph.references(source, [seg(ref, text)], COMBINED, docs, TREES.get)}
+
+    def test_combined_file_stays_in_its_own_annex(self):
+        self.assertEqual(self.refs("an.pdf", "Annex 19 2.2", "Keep samples, see 3.2 below."),
+                         {("an.pdf", "Annex 19 3.2")})
+        self.assertEqual(self.refs("an.pdf", "Annex 4 7", "Facilities (point 3.6) may be dispensed with."),
+                         {("p1.pdf", "Part I 3.6")})                  # Part I, not Annex 2A 3.6
+        self.assertEqual(self.refs("an.pdf", "Annex 1 3.2", "Qualify it as set out in Annex 15."),
+                         {("an.pdf", "Annex 15")})
+        self.assertEqual(self.refs("an.pdf", "Annex 19 2.2", "Samples per Annex 19 are kept."), set())
+
+    def test_scope_named_before_the_number(self):
+        self.assertIn(("a17.pdf", "4.9"), self.refs("qa.html", "Q3", "As in annex 17 section 4.9 for release."))
+        self.assertEqual(self.refs("qa.html", "Q3", "Described in CTD section 3.2.P.3.5 of the dossier."), set())
+        self.assertEqual(self.refs("qa.html", "Q3", "Design per clause 7.3 of ISO 13485 applies."), {(None, None)})
+
+    def test_headings_and_other_documents_chapters(self):
+        self.assertEqual(self.refs("an.pdf", "Annex 4 7", "CHAPTER 5 PRODUCTION General text."), set())
+        self.assertEqual(self.refs("gdp.pdf", "5.1", "See also chapter 5 of these guidelines for premises."),
+                         {(None, None)})                              # not the GMP Part I chapter
+
+    def test_cfr_forms(self):
+        found = self.refs("p211.xml", "211.84(a)", "As in §§ 211.180 and 211.182, 21 CFR Part 11, 21 CFR 314.70(b)(2), "
+                          "part 11 of this chapter and paragraph (d) of this section.")
+        self.assertEqual(found, {("p211.xml", "211.180"), ("p211.xml", "211.182"), ("p11.xml", None),
+                                 ("s314.xml", "314.70(b)(2)"), ("p211.xml", "211.84(d)")})
+
+    def test_parts_inside_one_file(self):
+        self.assertEqual(self.refs("sm.pdf", "Part I 1.1", "The requirements of Part XII apply."),
+                         {("sm.pdf", "Part XII")})
+
+    def test_running_headers_are_not_references(self):
+        graph.header_lines.__defaults__[0]["an.pdf"] = ["Annex 1 Manufacture of sterile medicinal products"]
+        self.addCleanup(graph.header_lines.__defaults__[0].pop, "an.pdf")
+        self.assertEqual(self.refs("an.pdf", "Annex 19 2.2", "Where steam is Annex 1 Manufacture of sterile "
+                                   "medicinal products used to condition."), set())
+
+    def test_contents_pages_are_skipped(self):
+        self.assertTrue(graph.looks_like_contents("Annex 1 ...... 4 Annex 2 ...... 9"))
+        self.assertFalse(graph.looks_like_contents("See Annex 15 for qualification."))
+
+
+class GlossaryLayout(unittest.TestCase):
+    def test_entries_without_blank_lines(self):
+        lines = ["GLOSSARY", "", "BULK PRODUCT", "    Any product which has completed all processing stages.",
+                 "CALIBRATION", "    The set of operations which establish the relationship.", "",
+                 "RECORD", "    See Chapter 4."]
+        entries = {t: d for _, t, d in graph._entries(lines, 0, len(lines))}
+        self.assertEqual(entries["BULK PRODUCT"], "Any product which has completed all processing stages.")
+        self.assertIn("CALIBRATION", entries)
+
+    def test_section_ends_at_the_next_part(self):
+        lines = ["Glossary", "", "Acceptance Criteria", "Numerical limits for acceptance of results.", "",
+                 "5 REFERENCES", "", "Spiking studies with impurities", "Table text that is not a definition."]
+        (start, stop), = graph._sections(lines, "ICH Q2")
+        self.assertEqual(stop, 5)
+        self.assertEqual([t for _, t, _ in graph._entries(lines, start, stop)], ["Acceptance Criteria"])
+
+
+class Definitions2(unittest.TestCase):
+    def test_longest_term_wins_and_generic_words_are_out(self):
+        segs = {"g.pdf": [seg("Glossary", "Glossary", "section")],
+                "u.pdf": [seg("1", "Packaging materials should be sampled before use.")]}
+        entries = lambda s, t: [("PACKAGING", "Packing."), ("PACKAGING MATERIALS", "Any material."),
+                                ("MATERIAL", "Stuff.")] if s == "g.pdf" else []
+        src = {"g.pdf": {"regulator": "EU", "title": "EudraLex Vol 4 Glossary"}, "u.pdf": {"regulator": "EU", "title": "x"}}
+        rows = graph.definitions({"EU": ["g.pdf", "u.pdf"]}, segs.get, src, entries)
+        self.assertEqual([r[4] for r in rows], ["PACKAGING MATERIALS"])
+
+    def test_context_shows_every_term_of_one_glossary(self):
+        rows = [("defines", "g.pdf", "Glossary", "u.pdf", "1", "TERM ONE"),
+                ("defines", "g.pdf", "Glossary", "u.pdf", "1", "TERM TWO")]
+        items = graph.context("u.pdf", "1", rows, {"g.pdf": [seg("Glossary", "x")]}.get,
+                              {"g.pdf": {"title": "Glossary"}}, lambda s, t: [("TERM ONE", "first."), ("TERM TWO", "second.")])
+        self.assertEqual([t for _, _, _, t in items], ["first.", "second."])
+
+    def test_long_context_items_are_cut_not_dropped(self):
+        block = graph.context_block([("a", "s", "1", "x " * 5000), ("b", "s", "2", "short")])
+        self.assertIn("[...]", block)
+        self.assertIn("short", block)
+
+
+class SameText2(unittest.TestCase):
+    def test_renumbered_twins_pair(self):
+        text = SHARED
+        pairs = graph.same_text([(("eu", "3.7"), "3.7 " + text), (("who", "12.25"), "12.25 " + text)])
+        self.assertEqual(len(pairs), 1)
+        self.assertEqual(pairs[0][2], 1.0)
 
 if __name__ == "__main__":
     unittest.main()
