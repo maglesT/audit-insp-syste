@@ -13381,7 +13381,7 @@
    "id": "SI-005",
    "topic": "SI.TEAM",
    "item_text": "Self-inspections are carried out in an independent and thorough way by designated, competent staff of the company.",
-   "strength": "recommended",
+   "strength": "mandatory",
    "plant_types": [
     "API",
     "INJ",
@@ -13420,7 +13420,7 @@
    "id": "SI-008",
    "topic": "SI.REPORT",
    "item_text": "Self-inspection reports contain all observations made and, where applicable, proposed corrective measures.",
-   "strength": "recommended",
+   "strength": "mandatory",
    "plant_types": [
     "API",
     "INJ",
@@ -13544,7 +13544,7 @@
    "id": "OUT-002",
    "topic": "OUT.CONTRACT",
    "item_text": "Processes are in place for managing outsourced activities.",
-   "strength": "recommended",
+   "strength": "mandatory",
    "plant_types": [
     "API",
     "INJ",
@@ -14024,9 +14024,13 @@
    "id": "SI-013",
    "topic": "SI.PROG",
    "item_text": "The distributor of active substances carries out self-inspections and records them, to monitor that good distribution practice is put in place and followed.",
-   "strength": "recommended",
+   "strength": "mandatory",
    "plant_types": [
-    "API"
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
    ]
   },
   {
@@ -14228,7 +14232,7 @@
    "id": "SI-017",
    "topic": "SI.PROG",
    "item_text": "Procedures define how audits are run, including scope and method, choice of auditors, and conduct of the audit through audit plans, opening meetings, interviews, closing meetings and reports.",
-   "strength": "recommended",
+   "strength": "mandatory",
    "plant_types": [
     "API",
     "INJ",
@@ -14410,7 +14414,7 @@
    "id": "DIST-002",
    "topic": "DIST.TRANS",
    "item_text": "Medical products are bought, stored, distributed and delivered in a suitable way, in line with legislation, and reach only appropriate recipients.",
-   "strength": "recommended",
+   "strength": "mandatory",
    "plant_types": [
     "API",
     "INJ",
@@ -14423,7 +14427,7 @@
    "id": "DOC-004",
    "topic": "DOC.SOP",
    "item_text": "Operations are clearly described in written procedures.",
-   "strength": "recommended",
+   "strength": "mandatory",
    "plant_types": [
     "API",
     "INJ",
@@ -14436,7 +14440,7 @@
    "id": "PER-003",
    "topic": "PER.ORG",
    "item_text": "Staff responsibilities are clearly defined in job descriptions.",
-   "strength": "recommended",
+   "strength": "mandatory",
    "plant_types": [
     "API",
     "INJ",
@@ -14449,7 +14453,7 @@
    "id": "QS-029",
    "topic": "QS.QRM",
    "item_text": "All risks are identified and the necessary controls are put in place and are effective.",
-   "strength": "recommended",
+   "strength": "mandatory",
    "plant_types": [
     "API",
     "INJ",
@@ -14462,7 +14466,7 @@
    "id": "QS-030",
    "topic": "QS.QRM",
    "item_text": "A quality risk management system is in place.",
-   "strength": "recommended",
+   "strength": "mandatory",
    "plant_types": [
     "API",
     "INJ",
@@ -14475,7 +14479,7 @@
    "id": "CMP-004",
    "topic": "CMP.COMPL",
    "item_text": "Systems are in place for handling returns, complaints and recalls.",
-   "strength": "recommended",
+   "strength": "mandatory",
    "plant_types": [
     "API",
     "INJ",
@@ -14488,7 +14492,7 @@
    "id": "QS-031",
    "topic": "QS.CHANGE",
    "item_text": "Systems are in place for managing changes, deviations and corrective and preventive actions.",
-   "strength": "recommended",
+   "strength": "mandatory",
    "plant_types": [
     "API",
     "INJ",
@@ -15162,8 +15166,9 @@
    "id": "SI-024",
    "topic": "SI.FOLLOW",
    "item_text": "An effective follow-up programme is in place for self-inspection findings.",
-   "strength": "recommended",
+   "strength": "mandatory",
    "plant_types": [
+    "API",
     "INJ",
     "LIQ",
     "OSD",
@@ -15502,6 +15507,136 @@
    "topic": "QS.PQS",
    "item_text": "The site has a means, such as a quality manual, documentation, flowcharts or procedures, that shows management, staff and inspectors in an easily understood way how the pharmaceutical quality system operates across the product lifecycle.",
    "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "REL-025",
+   "topic": "REL.QP",
+   "item_text": "Every electronic action the certifying person takes while working remotely can be seen straight away by regulatory inspectors at the site where batches are approved for release.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "OUT-010",
+   "topic": "OUT.CONTRACT",
+   "item_text": "Where a distributor or its agent hands an activity to a subcontractor, that subcontractor holds the proper authorisation for the activity and works to standards equal to the distributor's own.",
+   "strength": "mandatory",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "PER-020",
+   "topic": "PER.KEY",
+   "item_text": "Distribution and retail activities are supervised by staff who hold the qualifications required by national law.",
+   "strength": "mandatory",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "QS-052",
+   "topic": "QS.PQS",
+   "item_text": "Organisations that store and distribute pharmaceutical products have a fully designed, documented and properly implemented quality system that includes good storage and distribution practice, quality risk management principles and management review.",
+   "strength": "mandatory",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "QS-053",
+   "topic": "QS.MGMT",
+   "item_text": "Senior management holds final responsibility for making sure an effective quality system is set up, given enough resources, put into practice and kept up.",
+   "strength": "mandatory",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "QS-054",
+   "topic": "QS.MGMT",
+   "item_text": "A formally authorised quality policy is in writing and sets out the company's overall intentions and requirements for quality.",
+   "strength": "mandatory",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "QS-055",
+   "topic": "QS.MGMT",
+   "item_text": "The quality policy may be included in a quality manual.",
+   "strength": "optional",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "PER-021",
+   "topic": "PER.ORG",
+   "item_text": "The company has a suitable organisational structure, shown in an organisation chart that has been formally authorised.",
+   "strength": "mandatory",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "PER-022",
+   "topic": "PER.ORG",
+   "item_text": "The responsibilities, authority and working relationships of all staff are clearly set out.",
+   "strength": "mandatory",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "OUT-011",
+   "topic": "OUT.CONTRACT",
+   "item_text": "Contract acceptors are audited at regular intervals.",
+   "strength": "mandatory",
    "plant_types": [
     "API",
     "INJ",
@@ -18229,13 +18364,171 @@
    "relation": "stricter",
    "addendum": "Compliance with the national GMP rules is a condition of the manufacturing licence.",
    "reason": "Requires compliance with national GMP rules as a licence condition, beyond taking guidelines into account."
+  },
+  "O012": {
+   "requirement": "REL-025",
+   "relation": "same",
+   "addendum": "",
+   "reason": "No listed requirement covers real-time visibility of the certifying person's remote electronic actions to inspectors."
+  },
+  "O142": {
+   "requirement": "OUT-010",
+   "relation": "same",
+   "addendum": "",
+   "reason": "No listed requirement covers authorisation and standards of subcontractors of distribution activities."
+  },
+  "O143": {
+   "requirement": "PER-020",
+   "relation": "same",
+   "addendum": "",
+   "reason": "No listed requirement covers supervision of distribution and retail work by legally qualified staff."
+  },
+  "O144": {
+   "requirement": "QS-052",
+   "relation": "same",
+   "addendum": "",
+   "reason": "No listed requirement sets out the quality system expected of storage and distribution entities."
+  },
+  "O145": {
+   "requirement": "QS-053",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Existing requirements do not place final responsibility for the quality system on senior management."
+  },
+  "O146": {
+   "requirement": "DIST-002",
+   "relation": "adds",
+   "addendum": "Good storage and distribution practices are adopted so that product quality is kept throughout the shelf life across the supply chain.",
+   "reason": "It states suitable procurement, storage, distribution and delivery to appropriate recipients, and adds keeping quality across the shelf life through adopted storage and distribution practice."
+  },
+  "O147": {
+   "requirement": "DOC-004",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Both require operations to be clearly described in written procedures."
+  },
+  "O148": {
+   "requirement": "PER-003",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Both require responsibilities to be clearly defined in job descriptions."
+  },
+  "O149": {
+   "requirement": "QS-029",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Both require all risks to be identified and effective controls put in place."
+  },
+  "O150": {
+   "requirement": "OUT-002",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Both require processes for managing outsourced activities."
+  },
+  "O151": {
+   "requirement": "SI-017",
+   "relation": "looser",
+   "addendum": "",
+   "reason": "It only requires a procedure for self-inspection and quality audits, without the detailed contents listed."
+  },
+  "O152": {
+   "requirement": "QS-030",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Both require a quality risk management system."
+  },
+  "O153": {
+   "requirement": "CMP-004",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Both require systems for returns, complaints and recalls."
+  },
+  "O154": {
+   "requirement": "QS-031",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Both require systems for changes, deviations and corrective and preventive actions."
+  },
+  "O155": {
+   "requirement": "QS-054",
+   "relation": "same",
+   "addendum": "",
+   "reason": "No listed requirement covers a written, authorised quality policy."
+  },
+  "O156": {
+   "requirement": "QS-055",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Placing the quality policy in a quality manual is a separate optional point not covered by any listed requirement."
+  },
+  "O157": {
+   "requirement": "PER-021",
+   "relation": "same",
+   "addendum": "",
+   "reason": "No listed requirement covers an appropriate organisational structure shown in an authorised chart."
+  },
+  "O158": {
+   "requirement": "PER-022",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Job descriptions alone do not cover clear indication of authority and relationships between staff."
+  },
+  "O159": {
+   "requirement": "OUT-011",
+   "relation": "same",
+   "addendum": "",
+   "reason": "No listed requirement requires periodic audits of contract acceptors."
+  },
+  "O160": {
+   "requirement": "SI-002",
+   "relation": "looser",
+   "addendum": "",
+   "reason": "It only requires self-inspections to be part of the quality system, without a schedule or regularity."
+  },
+  "O161": {
+   "requirement": "SI-013",
+   "relation": "adds",
+   "addendum": "Where needed, self-inspection findings lead to corrective and preventive measures.",
+   "reason": "It requires self-inspections to monitor good distribution practice and adds triggering corrective and preventive measures where needed."
+  },
+  "O162": {
+   "requirement": "SI-005",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Both require independent, thorough self-inspection by a designated competent person."
+  },
+  "O163": {
+   "requirement": "SI-008",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Both require self-inspection records with all observations and, where needed, proposed corrective measures."
+  },
+  "O164": {
+   "requirement": "SI-024",
+   "relation": "adds",
+   "addendum": "Management evaluates the self-inspection report and the corrective actions taken.",
+   "reason": "It requires an effective follow-up programme and adds management evaluation of the report and actions."
+  },
+  "O165": {
+   "requirement": "SI-002",
+   "relation": "stricter",
+   "addendum": "The schedule is set every year.",
+   "reason": "It requires regular self-inspections to a schedule and fixes the schedule as annual."
+  },
+  "O166": {
+   "requirement": "SI-005",
+   "relation": "looser",
+   "addendum": "",
+   "reason": "Freedom from bias is the independence element of the existing requirement, without its other elements."
+  },
+  "O167": {
+   "requirement": "SI-005",
+   "relation": "looser",
+   "addendum": "",
+   "reason": "Appropriate knowledge and experience of team members is the competence element of the existing requirement, without its other elements."
   }
  },
- "errors": {
-  "O012": [
-   "item text copies source wording: 'for inspection by the competent authorities at the authorised batch release site'"
-  ]
- },
+ "errors": {},
  "rounds": [
   {
    "run": "20261030T173203.372910Z-consolidate",
@@ -18794,6 +19087,62 @@
     "O165",
     "O166",
     "O167"
+   ],
+   "ingested": true
+  },
+  {
+   "run": "20261030T174805.941885Z-consolidate",
+   "obligations": [
+    "O168",
+    "O169",
+    "O170",
+    "O171",
+    "O172",
+    "O173",
+    "O174",
+    "O175",
+    "O176",
+    "O177",
+    "O178",
+    "O179",
+    "O180",
+    "O181",
+    "O182",
+    "O183",
+    "O184",
+    "O185",
+    "O186",
+    "O187",
+    "O188",
+    "O189",
+    "O190",
+    "O191",
+    "O192",
+    "O193",
+    "O194",
+    "O195",
+    "O196",
+    "O197",
+    "O198",
+    "O199",
+    "O200",
+    "O201",
+    "O202",
+    "O203",
+    "O204",
+    "O205",
+    "O206",
+    "O207",
+    "O208",
+    "O209",
+    "O210",
+    "O211",
+    "O212",
+    "O213",
+    "O214",
+    "O215",
+    "O216",
+    "O217"
    ],
    "ingested": false
   }
