@@ -4,6 +4,7 @@ import shutil
 import sys
 import tempfile
 import unittest
+import unittest.mock
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "tools" / "library"))
@@ -183,6 +184,48 @@ class OnDemand(unittest.TestCase):
             layer1.clauses_of.__defaults__[0].pop(source, None)
         self.assertEqual(parsed, layer1.clauses_of(source))
 
+
+
+class Conditions(unittest.TestCase):
+    """Check 9 (D35): condition and limit wording in a quote needs a counterpart in the item."""
+
+    def test_groups(self):
+        c = layer1.conditions_in
+        self.assertEqual(c("Where applicable, proposals should be recorded."), {"condition"})
+        self.assertEqual(c("Samples should be taken prior to release."), {"before"})
+        self.assertEqual(c("At least once a year."), {"at_least"})
+        self.assertEqual(c("Report within 30 days."), {"deadline"})
+        self.assertEqual(c("Not more than 2 batches."), {"at_most"})
+        self.assertEqual(c("Unless justified, test every batch."), {"unless"})
+        self.assertEqual(c("Only authorised persons may enter."), {"only"})
+        self.assertEqual(c("Statements on the actions subsequently taken."), {"after"})
+
+    def test_ordinary_wording_is_not_a_condition(self):
+        for text in ("Areas where products are made should be clean.", "Keep the following documents.",
+                     "Storage within the facility should be dry.", "Inspect at intervals following a programme.",
+                     "Perform them on special occasions, e.g. in the case of recalls, or when an inspection is due.",
+                     "Self-inspection should be carried out once a year."):
+            self.assertEqual(layer1.conditions_in(text), set(), text)
+
+    def test_paraphrases_count(self):
+        self.assertEqual(layer1.conditions_in("Record actions taken afterwards."), {"after"})
+        self.assertEqual(layer1.conditions_in("Test before release.") & layer1.conditions_in("prior to use"), {"before"})
+
+    def test_finding(self):
+        req = {"id": "SI-001", "item_text": "Audit the supplier to confirm GMP conformity.", "strength": "mandatory",
+               "plant_types": ["OSD"], "parameters": {}, "general": False, "mappings": [
+                   {"source": "x", "clause_ref": "1", "clause_sha256": "0", "quote": "Where an audit is required, it "
+                    "shall determine GMP conformity.", "strength": "mandatory", "plant_types": ["OSD"],
+                    "addendum": "", "relation": "same"}]}
+        trees = {"x": {"1": {"text": "Where an audit is required, it shall determine GMP conformity."}}}
+        with unittest.mock.patch.object(layer1, "clauses_of", trees.get):
+            found = [f for f in layer1.check_requirement(req, {"x": {"applies_to": "ALL"}}) if f[2] == "conditions"]
+        self.assertEqual(len(found), 1)
+        self.assertIn("condition", found[0][3])
+        req["item_text"] = "If an audit is required, it must confirm GMP conformity."
+        with unittest.mock.patch.object(layer1, "clauses_of", trees.get):
+            self.assertFalse([f for f in layer1.check_requirement(req, {"x": {"applies_to": "ALL"}})
+                              if f[2] == "conditions"])
 
 if __name__ == "__main__":
     unittest.main()

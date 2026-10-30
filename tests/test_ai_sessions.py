@@ -152,6 +152,8 @@ class Sessions(unittest.TestCase):
         answer_all(draft_dir, lambda cid, inp: draft_answer(clauses[cid]))
         d = pilot.ingest_draft(draft_dir)
         self.assertEqual((d["requests"], d["mappings"], d["quotes_rejected"], d["failed"]), (2, 2, 0, []))
+        self.assertTrue((draft_dir / "condition-findings.jsonl").exists())
+        self.assertIn("condition_findings", d)
         verify_dir = pilot.prepare_verify(draft_dir)
         answer_all(verify_dir, lambda cid, inp: {**VERDICT, "verdict": "correct" if "-a-" in cid else "incorrect"})
         rep = pilot.ingest_verify(verify_dir, draft_dir)

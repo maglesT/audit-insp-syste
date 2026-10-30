@@ -20,6 +20,8 @@ Per library:
                flagged for re-verification
   8 twins      two mapped clauses of different sources with near-identical text (clause graph, D34) map to the
                same requirements
+  9 conditions condition and limit wording in a quote ("where applicable", "before", "at least", "within 30
+               days", "unless", "only") has a counterpart in the item text or an addendum (D35)
 
 The rules are strict on purpose: a false alarm costs a look, a missed error reaches a customer (D28).
 """
@@ -38,6 +40,34 @@ import obligations  # noqa: E402
 from common import CITABLE, CLAUSES, OFFICIAL, normalise  # noqa: E402
 
 RANK = {"optional": 0, "recommended": 1, "mandatory": 2}
+# condition and limit wording, by meaning (check 9, D35): a quote that says one of these must have an item that
+# says it too, in any of the group's words. Only the condition uses count: "where applicable", not "areas where";
+# "within 30 days", not "within the facility"; "after", not "the following".
+_TIME = r"(?:\d+|one|two|three|four|five|six|seven|eight|nine|ten|twelve|a|an|the\s+same)\s*(?:-\s*)?(?:hours?|days?|weeks?|months?|years?|minutes?|working|business|calendar|shift|batch)"
+CONDITIONS = {
+    "condition": r"(?:^|[,;:(]\s*|\band\s+|\bor\s+)(?:where|when|whenever|if)\b|\b(?:where|when|if)\s+(?:applicable|appropriate|necessary|needed|required|relevant|possible|justified|practicable|feasible)\b"
+                 r"|\bin\s+(?:the\s+)?(?:case|event)\s+(?:of|that)\b|\bprovided\s+(?:that|it)\b|\bas\s+long\s+as\b|\bwhenever\b|\beach\s+time\b|\bevery\s+time\b",
+    "before": r"\bbefore\b|\bprior\s+to\b|\bin\s+advance\b|\bbeforehand\b|\bpre-",
+    "after": r"\bafter(?:wards)?\b|(?<!the\s)\bfollowing\s+(?:the|any|each|every|completion|release|use|cleaning|approval|maintenance|repair)\b|\bsubsequent(?:ly)?\b|\bonce\b(?!\s+(?:a|every|per|in)\b)|\bupon\b|\bon\s+completion\b|\blater\b|\bthen\b",
+    "unless": r"\bunless\b|\bexcept\b|\bother\s+than\b|\bapart\s+from\b|\bexempt",
+    "at_least": r"\bat\s+least\b|\bnot\s+less\s+than\b|\bno\s+less\s+than\b|\bminimum\b|\bor\s+more\b|\bat\s+a\s+minimum\b",
+    "at_most": r"\bnot\s+more\s+than\b|\bno\s+more\s+than\b|\bat\s+(?:the\s+)?most\b|\bmaximum\b|\bnot\s+(?:to\s+)?exceed|\bup\s+to\b|\bor\s+less\b|\bor\s+fewer\b",
+    "deadline": rf"\bwithin\s+{_TIME}|\bno\s+later\s+than\b|\bwithin\s+(?:a\s+)?(?:reasonable|defined|specified|agreed|appropriate|predetermined|set)\s+(?:time|period|timeframe|timescale)|\bpromptly\b|\bwithout\s+delay\b|\bimmediately\b",
+    "until": r"\buntil\b|\btill\b",
+    "only": r"\bonly\b|\bsolely\b|\bexclusively\b",
+}
+CONDITION_PATTERNS = {k: re.compile(v, re.I) for k, v in CONDITIONS.items()}
+
+
+# examples are not conditions: "e.g. in the case of product recalls ... or when an inspection is announced"; the
+# example runs to the end of its sentence
+EXAMPLE = re.compile(r"(?:\be\.\s?g\.,?|\bfor\s+example,?|\bfor\s+instance,?|\bsuch\s+as)[^.;]*", re.I)
+
+
+def conditions_in(text):
+    """The condition groups a text uses (check 9)."""
+    text = EXAMPLE.sub("e.g.", text)
+    return {k for k, pattern in CONDITION_PATTERNS.items() if pattern.search(text)}
 SUPERSCRIPT = "⁰¹²³⁴⁵⁶⁷⁸⁹⁻"
 # a number keeps its sign and its exponent: "−20", "10³", "10^6", "10⁻⁶"; "2-8" is 2 and 8
 NUMBER = re.compile(rf"(?<![\w.])[-−]?\d+(?:[.,]\d+)?(?:\^-?\d+|[{SUPERSCRIPT}]+)?(?![\w.]*\d)")
@@ -185,6 +215,12 @@ def check_requirement(req, sources, changed=()):
     for n in sorted(set().union(*(numbers_in(t, words=True) for t in texts))):
         if not number_found(n, quotes):
             out.append((req["id"], 0, "numbers", f"number {n} in the item or an addendum is not in any quote"))
+    said = conditions_in(" ".join(texts))
+    for n, m in enumerate(req["mappings"], start=1):
+        missing = sorted(conditions_in(m["quote"]) - said)
+        if missing:
+            out.append((req["id"], n, "conditions", f"the quote has {', '.join(missing)} wording that the item "
+                                                    f"does not state"))
     strengths = [m["strength"] for m in req["mappings"]]
     if strengths and req["strength"] != max(strengths, key=RANK.get):
         out.append((req["id"], 0, "strength", f"requirement says {req['strength']}, strictest mapping is "
