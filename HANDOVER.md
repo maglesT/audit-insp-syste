@@ -63,7 +63,7 @@ Last updated: 30 October 2026 (session 2, S1 tail branch).
   QRM, EU MAH paper, EU Annex 11), unnumbered trailing annexes and back matter, prefixed numbering ("B 1.1", "I.1",
   "A.1"), margin line numbers (EU Annex 17), wrapped lower-case lines, a heading that replaces a list item with its
   number (Q1B), table rows sharing one ruled cell (PI 038), an FDA level below the contents list (III.B.1) and appendix
-  sections. 180 sources, 23,024 clauses, 51 flagged (all explained), 19 possible misses.
+  sections. 180 sources, 22,783 clauses (reference-list entries are no longer clauses), 51 flagged (all explained).
 - **Remaining limitations (10, text kept, reference coarse):** WFI Q&A Part II list, PI 011 sections 27-29, PI 041
   numbered table rows, PI 030 open table row, PE 009 Annex 2A B 3.3 tail and Annex 3 typo "14..", Drugs Rules form
   items, WHO AMR quoted clauses, CP 7356.002a Attachment A in the page header, WHO TTSP bibliography. They can be
