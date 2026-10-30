@@ -166,6 +166,7 @@ def parse(path, pages=None):
                 ref = f"{section} {chapter} Principle".replace("  ", " ").strip()
                 start("principle", ref, "", line, pno)
                 continue
+            text = line
             mp = PREFIXED.match(line)
             if mp and not DATE.match(mp.group(3)) and not PAGE_END.search(line):
                 # numbering with a prefix ("B 1.1" in Annex 2A Part B, "I.1" in the ICH Q9 annexes): the prefix is a
@@ -176,7 +177,7 @@ def parse(path, pages=None):
                 if section != target:
                     section, prev, seen_in_section, jumps = target, None, set(), []
                 section_prefix = True
-                line = f"{mp.group(2)} {mp.group(3)}"
+                line = f"{mp.group(2)} {mp.group(3)}"      # for numbering only; the clause keeps the text as printed
             m = NUM.match(line)
             if m and DATE.match(m.group(2)) and "." not in m.group(1):
                 m = None                     # "1 July 2018" on a cover page is a date, not clause 1
@@ -225,7 +226,8 @@ def parse(path, pages=None):
                         and cur["number"] == num and len(clauses) > 1):
                     # "2. DRUG SUBSTANCE" after a list item "2. A near UV lamp ..." took number 2: the list item
                     # goes back into the clause before it, and the heading takes the number
-                    first_line = NUM.match(cur["lines"][0]).group(2)
+                    head = NUM.match(cur["lines"][0]) or PREFIXED.match(cur["lines"][0])
+                    first_line = head.groups()[-1] if head else cur["lines"][0]
                     if not (sum(ch.isupper() for ch in first_line) >= 0.8 * max(1, sum(ch.isalpha() for ch in first_line))):
                         clauses.remove(cur)
                         clauses[-1]["lines"] += cur["lines"]
@@ -237,7 +239,7 @@ def parse(path, pages=None):
                         run += 1
                         seen_in_section = set()
                     ref = f"{section} {num}".strip()
-                    start("clause", ref, num, line, pno)
+                    start("clause", ref, num, text, pno)
                     if gap:
                         cur["notes"].append(f"gap before {num} (previous {'.'.join(map(str, prev))})")
                     if prev is not None:
@@ -248,9 +250,9 @@ def parse(path, pages=None):
                     continue
             if cur is None:
                 unnumbered += 1
-                start("unnumbered", f"_unnumbered:{unnumbered}", "", line, pno)
+                start("unnumbered", f"_unnumbered:{unnumbered}", "", text, pno)
             else:
-                cur["lines"].append(line)
+                cur["lines"].append(text)
                 cur["page_end"] = pno
 
     # Where numbering restarted inside a section, keep the run with the most text; the others are contents lists.
