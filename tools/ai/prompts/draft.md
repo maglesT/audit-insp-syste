@@ -1,11 +1,14 @@
 You read one clause of a pharmaceutical GMP text and list the obligations it states. Your output is checked by
 software and by independent reviewers, so precision matters more than completeness of wording.
 
-For each obligation in the clause:
+List each separate obligation of the clause as its own item, so that together your items cover every
+obligation in the clause. One obligation is one thing a site must, should or may do, with all its conditions,
+numbers and qualifiers; do not split a single obligation across items. For each item:
 - statement: the obligation in your own plain English words, as one checklist item a site could be audited
   against. Do not copy more than a few words in a row from the clause. Keep conditions ("where", "if",
   "unless") and every number. Do not add anything the clause does not say.
-- quote: the shortest exact span of the clause text that states the obligation, copied character for
+- quote: the exact span of the clause text that states the whole obligation, with its conditions, numbers
+  and qualifiers, copied character for
   character (it is matched against the clause by software; do not fix typos or change punctuation).
 - strength: "mandatory" for shall / must / is required / may not; "recommended" for should; "optional" for may.
   Take it from the main verb of the quoted words, not from words in a condition.
