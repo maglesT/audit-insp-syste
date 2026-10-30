@@ -13161,9 +13161,13 @@
    "id": "QS-003",
    "topic": "QS.PQR",
    "item_text": "The quality unit carries out product quality reviews.",
-   "strength": "recommended",
+   "strength": "mandatory",
    "plant_types": [
-    "API"
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
    ]
   },
   {
@@ -13183,7 +13187,7 @@
    "id": "SI-003",
    "topic": "SI.REPORT",
    "item_text": "Findings from internal audits and the related corrective actions are documented and brought to the attention of the company's responsible management.",
-   "strength": "recommended",
+   "strength": "mandatory",
    "plant_types": [
     "API",
     "INJ",
@@ -13198,7 +13202,11 @@
    "item_text": "Corrective actions agreed after internal audits are completed on time and effectively.",
    "strength": "mandatory",
    "plant_types": [
-    "API"
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
    ]
   },
   {
@@ -14006,6 +14014,370 @@
    "strength": "recommended",
    "plant_types": [
     "API"
+   ]
+  },
+  {
+   "id": "SI-014",
+   "topic": "SI.REPORT",
+   "item_text": "Where an internal audit is a routine check that the quality system works as intended, its report may be discarded once every correction has been verified.",
+   "strength": "optional",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "SI-015",
+   "topic": "SI.FOLLOW",
+   "item_text": "When an internal audit leads to a process change, such as a new mixing time, every affected procedure, including the master production record, is updated to reflect it.",
+   "strength": "mandatory",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "QS-027",
+   "topic": "QS.DEV",
+   "item_text": "Any investigation into how a problem found in an internal audit affected related batches is kept and made available for regulatory inspection.",
+   "strength": "mandatory",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "DOC-003",
+   "topic": "DOC.RET",
+   "item_text": "Reports of investigations or evaluations for complaints, supplier qualification, periodic record and data reviews and failure investigations are available for regulatory inspection and kept for at least the retention period set by GMP rules.",
+   "strength": "mandatory",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "OUT-003",
+   "topic": "OUT.AGREE",
+   "item_text": "The quality agreement with a contract facility sets out in detail how the quality units of both parties work together so that products are made in compliance with GMP.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "OUT-004",
+   "topic": "OUT.AGREE",
+   "item_text": "The quality agreement with a contract facility is clear about how product release is handled.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "OUT-005",
+   "topic": "OUT.CONTRACT",
+   "item_text": "The contract facility approves or rejects the products and results of its own manufacturing operations, such as test results, in-process materials or finished dosage forms.",
+   "strength": "mandatory",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "REL-004",
+   "topic": "REL.REVIEW",
+   "item_text": "The product owner approves or rejects products made by a contract facility, including final release.",
+   "strength": "mandatory",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "REL-005",
+   "topic": "REL.REVIEW",
+   "item_text": "The product owner never places, or causes to be placed, any adulterated or misbranded drug on the market.",
+   "strength": "mandatory",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "OUT-006",
+   "topic": "OUT.AGREE",
+   "item_text": "The quality agreement describes how and when the owner and contract facility communicate, both verbally and in writing, and names the contact people in each organisation.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "OUT-007",
+   "topic": "OUT.AGREE",
+   "item_text": "The quality agreement covers audits, inspections and how findings are communicated.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "OUT-008",
+   "topic": "OUT.AGREE",
+   "item_text": "The quality agreement allows the owner to evaluate and audit the contract facility for GMP compliance of specific operations, through both routine and for-cause audits.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "OUT-009",
+   "topic": "OUT.AGREE",
+   "item_text": "The quality agreement sets out what the owner and contract facility expect for regulatory pre-approval, routine surveillance and for-cause inspections, taking the products or services involved into account.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "QS-028",
+   "topic": "QS.PQS",
+   "item_text": "Trends are monitored on an ongoing basis and systems are improved in response.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "SI-016",
+   "topic": "SI.TEAM",
+   "item_text": "Procedures describe how auditors are trained in collecting objective evidence, what their responsibilities are, and the audit procedures they follow.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "SI-017",
+   "topic": "SI.PROG",
+   "item_text": "Procedures define how audits are run, including scope and method, choice of auditors, and conduct of the audit through audit plans, opening meetings, interviews, closing meetings and reports.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "CCS-001",
+   "topic": "CCS.STRAT",
+   "item_text": "Procedures are in place for the safe removal of waste, including toxic chemical and biological waste, reagents, samples, solvents and air filters.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "CCS-002",
+   "topic": "CCS.STRAT",
+   "item_text": "Antimicrobial waste from laboratory testing is taken into account in exceptional cases, for example when a quality control laboratory tests very large sample quantities.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "CCS-003",
+   "topic": "CCS.STRAT",
+   "item_text": "Manufacturers of active substances and finished products consider keeping a risk assessment of all contaminants from antimicrobial manufacturing should they reach the environment, including the risk of resistant microorganisms developing.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "CCS-004",
+   "topic": "CCS.STRAT",
+   "item_text": "Based on the environmental risk assessment, active substance and finished product sites consider keeping a waste-stream analysis for each antimicrobial they produce.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "CCS-005",
+   "topic": "CCS.STRAT",
+   "item_text": "Manufacturers consider keeping records of the amount and nature of waste generated, including analytical data and documented analyses and findings on levels of antimicrobials or their precursors.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "CCS-006",
+   "topic": "CCS.STRAT",
+   "item_text": "The methods used to treat antimicrobial waste are documented as effective for each specific antimicrobial or antimicrobial precursor.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "CCS-007",
+   "topic": "CCS.STRAT",
+   "item_text": "Where effective treatment is not yet in place for all waste streams from each active substance or finished product, a documented time-limited strategy with set milestones describes the actions towards treatment that significantly lowers the concentration of the antimicrobial or its precursor, and of its microbial source where relevant.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "CCS-008",
+   "topic": "CCS.STRAT",
+   "item_text": "Manufacturers consider keeping a rationale and risk assessment explaining their choice of decontamination methods for manufacturing waste containing antimicrobials and/or their mitigation strategy.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "CCS-009",
+   "topic": "CCS.STRAT",
+   "item_text": "Incineration may be considered as a treatment for solid or semi-liquid waste.",
+   "strength": "optional",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "CCS-010",
+   "topic": "CCS.STRAT",
+   "item_text": "A zero-liquid-effluent or zero-discharge approach is adopted, especially where the environmental risk is assessed as high or unclear.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "CCS-011",
+   "topic": "CCS.STRAT",
+   "item_text": "Waste-related documentation is kept at the manufacturing site, even where an external contractor is used.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "SI-018",
+   "topic": "SI.PROG",
+   "item_text": "Self-inspections include the environmental aspects of antimicrobial manufacturing to verify continued GMP compliance.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
    ]
   }
  ],
@@ -14933,9 +15305,259 @@
    "relation": "same",
    "addendum": "",
    "reason": "Both state that self-inspections are carried out regularly following an approved schedule."
+  },
+  "O096": {
+   "requirement": "SI-014",
+   "relation": "same",
+   "addendum": "",
+   "reason": "No listed requirement covers discarding routine audit reports."
+  },
+  "O097": {
+   "requirement": "SI-003",
+   "relation": "adds",
+   "addendum": "Records of corrective actions arising from internal audits are retained.",
+   "reason": "Documents audit corrective actions and adds that the records are kept."
+  },
+  "O098": {
+   "requirement": "SI-015",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Updating procedures after audit-driven changes is not listed."
+  },
+  "O099": {
+   "requirement": "QS-027",
+   "relation": "same",
+   "addendum": "",
+   "reason": "No listed requirement covers keeping batch impact investigations."
+  },
+  "O100": {
+   "requirement": "DOC-003",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Retention and availability of these reports is not listed."
+  },
+  "O101": {
+   "requirement": "OUT-003",
+   "relation": "same",
+   "addendum": "",
+   "reason": "No listed requirement covers quality agreement content."
+  },
+  "O102": {
+   "requirement": "OUT-004",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Clarity on release in the agreement is a distinct point not listed."
+  },
+  "O103": {
+   "requirement": "OUT-005",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Contract facility approval duties are not listed."
+  },
+  "O104": {
+   "requirement": "REL-004",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Owner release of contract-made products is not listed."
+  },
+  "O105": {
+   "requirement": "REL-005",
+   "relation": "same",
+   "addendum": "",
+   "reason": "No listed requirement prohibits distributing adulterated or misbranded drugs."
+  },
+  "O106": {
+   "requirement": "OUT-006",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Communication arrangements in the agreement are not listed."
+  },
+  "O107": {
+   "requirement": "OUT-007",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Agreement coverage of audits and inspections is not listed."
+  },
+  "O108": {
+   "requirement": "OUT-008",
+   "relation": "same",
+   "addendum": "",
+   "reason": "The owner's right to audit is a distinct point not listed."
+  },
+  "O109": {
+   "requirement": "OUT-009",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Inspection expectations in the agreement are not listed."
+  },
+  "O110": {
+   "requirement": "OUT-007",
+   "relation": "adds",
+   "addendum": "The agreement also sets out how relevant regulatory actions and correspondence are shared between the parties.",
+   "reason": "Communicating inspection findings, plus regulatory actions and correspondence."
+  },
+  "O111": {
+   "requirement": "OUT-007",
+   "relation": "adds",
+   "addendum": "It states when, how and what the contract facility reports to the owner about objectionable conditions found during inspections and audits of its site.",
+   "reason": "Communicating findings, with specific reporting by the contractor to the owner."
+  },
+  "O112": {
+   "requirement": "QS-028",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Ongoing trend monitoring is not stated by a listed requirement."
+  },
+  "O113": {
+   "requirement": "QS-028",
+   "relation": "adds",
+   "addendum": "Quality system procedures gather data from monitoring, measurement, complaint handling and other activities and track them over time, as appropriate.",
+   "reason": "Trend monitoring with specified data sources tracked over time."
+  },
+  "O114": {
+   "requirement": "QS-003",
+   "relation": "stricter",
+   "addendum": "At least once a year.",
+   "reason": "Product review with a fixed minimum annual frequency."
+  },
+  "O115": {
+   "requirement": "QS-028",
+   "relation": "adds",
+   "addendum": "Data are trended more often than once a year, at a frequency based on risk.",
+   "reason": "Trend monitoring with a risk-based frequency beyond annual."
+  },
+  "O116": {
+   "requirement": "SI-002",
+   "relation": "adds",
+   "addendum": "These audits also evaluate whether the quality system is effectively implemented and maintained and whether processes and products meet established parameters and specifications.",
+   "reason": "Planned audits with additional evaluation aims."
+  },
+  "O117": {
+   "requirement": "SI-002",
+   "relation": "adds",
+   "addendum": "Documented audit procedures make sure the schedule takes into account the relative risk of quality system activities, earlier audit results and corrective actions, and the need to cover the whole system.",
+   "reason": "Scheduled audits with documented, risk-based scheduling criteria."
+  },
+  "O118": {
+   "requirement": "SI-016",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Auditor training procedures are not listed."
+  },
+  "O119": {
+   "requirement": "SI-017",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Procedures defining audit conduct are not listed."
+  },
+  "O120": {
+   "requirement": "SI-003",
+   "relation": "adds",
+   "addendum": "Responsibility for following up each finding is assigned so that problems do not recur.",
+   "reason": "Records of findings plus assignment of follow-up responsibility."
+  },
+  "O121": {
+   "requirement": "SI-004",
+   "relation": "adds",
+   "addendum": "Managers of the audited areas act promptly on findings, and follow-up actions are verified and recorded.",
+   "reason": "Timely completion of follow-up, adding responsible managers and verification records."
+  },
+  "O376": {
+   "requirement": "CCS-001",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Waste removal procedures are not listed."
+  },
+  "O377": {
+   "requirement": "CCS-002",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Laboratory antimicrobial waste is not listed."
+  },
+  "O378": {
+   "requirement": "CCS-003",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Environmental risk assessment for antimicrobials is not listed."
+  },
+  "O379": {
+   "requirement": "CCS-004",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Waste-stream analysis is not listed."
+  },
+  "O380": {
+   "requirement": "CCS-004",
+   "relation": "adds",
+   "addendum": "The waste-stream analysis is repeated whenever a production change affects waste streams.",
+   "reason": "Waste-stream analysis with a repeat trigger."
+  },
+  "O381": {
+   "requirement": "CCS-005",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Waste quantity and analysis records are not listed."
+  },
+  "O383": {
+   "requirement": "CCS-006",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Documented treatment effectiveness is not listed."
+  },
+  "O384": {
+   "requirement": "CCS-006",
+   "relation": "adds",
+   "addendum": "Analytical data showing that these substances and their residues are converted to non-hazardous waste are kept at the site and up to date.",
+   "reason": "Treatment effectiveness with supporting analytical data on site."
+  },
+  "O385": {
+   "requirement": "CCS-007",
+   "relation": "same",
+   "addendum": "",
+   "reason": "An interim waste treatment strategy is not listed."
+  },
+  "O386": {
+   "requirement": "CCS-008",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Rationale for decontamination methods is not listed."
+  },
+  "O387": {
+   "requirement": "CCS-009",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Incineration as an option is not listed."
+  },
+  "O388": {
+   "requirement": "CCS-010",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Zero-discharge approach is not listed."
+  },
+  "O389": {
+   "requirement": "CCS-008",
+   "relation": "adds",
+   "addendum": "The effectiveness and by-products of a treatment approach are considered when it is chosen.",
+   "reason": "Choice of treatment method, adding effectiveness and by-products as criteria."
+  },
+  "O390": {
+   "requirement": "CCS-011",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Location of waste documentation is not listed."
+  },
+  "O391": {
+   "requirement": "SI-018",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Covering these environmental points in self-inspections is not listed."
   }
  },
- "errors": {},
+ "errors": {
+  "O382": [
+   "item text copies source wording: 'regular reports on the collection treatment and disposal of waste and wastewater'"
+  ]
+ },
  "rounds": [
   {
    "run": "20261030T173203.372910Z-consolidate",
@@ -15162,6 +15784,60 @@
     "O389",
     "O390",
     "O391"
+   ],
+   "ingested": true
+  },
+  {
+   "run": "20261030T173836.159461Z-consolidate",
+   "obligations": [
+    "O382",
+    "O392",
+    "O393",
+    "O394",
+    "O395",
+    "O396",
+    "O397",
+    "O398",
+    "O399",
+    "O400",
+    "O401",
+    "O402",
+    "O403",
+    "O404",
+    "O405",
+    "O406",
+    "O407",
+    "O408",
+    "O409",
+    "O410",
+    "O411",
+    "O412",
+    "O413",
+    "O414",
+    "O415",
+    "O416",
+    "O417",
+    "O418",
+    "O419",
+    "O420",
+    "O421",
+    "O422",
+    "O423",
+    "O424",
+    "O425",
+    "O426",
+    "O427",
+    "O428",
+    "O429",
+    "O430",
+    "O431",
+    "O432",
+    "O433",
+    "O434",
+    "O435",
+    "O436",
+    "O437",
+    "O438"
    ],
    "ingested": false
   }
