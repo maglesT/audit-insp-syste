@@ -18,7 +18,9 @@ a sentence with less than COVERED_SHARE of its words inside a quote is reported 
 Output: library/ai-runs/<run>/ (audit trail, D29) and pilot-report.json with cost per mapping and agreement.
 """
 import argparse
+import hashlib
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -124,7 +126,7 @@ def verify_requests(mappings, sources, clauses_of):
         clause = clauses_of(m["source"])[m["ref"]]
         scope = ", ".join(sorted(runner_scope(sources[m["source"]]["applies_to"])))
         item = (f"ITEM: {m['statement']}\nStrength: {m['strength']}\n"
-                f"Plant types: {', '.join(m['plant_types'])}\nCOVERS: {m['quote']}")
+                f"Plant types: {', '.join(m['plant_types'])}\nCOVERS: {normalise(m['quote'])}")
         clause_text = clause_block(sources[m["source"]], clause, scope)
         for role, first, second in (("a", item, clause_text), ("b", clause_text, item)):
             out.append(runner.Request(f"verify-{role}-{n:03d}", prompt(f"verify_{role}"), f"{first}\n\n{second}",
@@ -145,7 +147,8 @@ def _spans(text, part):
 
 def coverage(drafts, mappings, clauses_of):
     """Obligation sentences of the drafted clauses that the clause's mapping quotes do not cover: a sentence is
-    uncovered when less than COVERED_SHARE of its words lie inside some quote's span in the clause text."""
+    uncovered when less than COVERED_SHARE of its words lie inside some quote's span in the clause text. Words are
+    runs of letters and digits, so punctuation or a list marker outside a quote does not count against it."""
     quotes = {}
     for m in mappings:
         quotes.setdefault((m["source"], m["ref"]), []).append(normalise(m["quote"]))
@@ -166,21 +169,15 @@ def coverage(drafts, mappings, clauses_of):
             if start < 0:
                 start = text.find(sentence)
             cursor = max(cursor, start + len(sentence)) if start >= 0 else cursor
-            words = [(start + w_start, len(w)) for w_start, w in _words(sentence)] if start >= 0 else []
-            share = (sum(all(covered[a:a + n]) for a, n in words) / len(words)) if words else 0.0
+            words = [(start + w.start(), start + w.end()) for w in WORD.finditer(sentence)] if start >= 0 else []
+            share = (sum(all(covered[a:b]) for a, b in words) / len(words)) if words else 0.0
             if share < COVERED_SHARE:
                 out.append({"source": key[0], "ref": key[1], "sentence_index": i, "covered_share": round(share, 2),
                             "text": sentence})
     return out
 
 
-def _words(sentence):
-    """(offset, word) of each whitespace-separated word."""
-    out, pos = [], 0
-    for w in sentence.split(" "):
-        out.append((pos, w))
-        pos += len(w) + 1
-    return [(a, w) for a, w in out if w]
+WORD = re.compile(r"\w+")
 
 
 def report(mappings, rejected, draft_summary, verify_results, verify_summary):
@@ -245,8 +242,13 @@ def ingest_draft(draft_dir, clauses_of=None):
     """Session stage 2: validate the draft answers, write mappings.jsonl and rejected-quotes.jsonl."""
     import layer1
     clauses_of = clauses_of or layer1.clauses_of
-    results, summary = sessions.ingest(draft_dir)
-    mappings, rejected = mappings_from(sessions.load_requests(draft_dir), results, clauses_of)
+    drafts = sessions.load_requests(draft_dir)
+    changed = [r.meta["ref"] for r in drafts if clauses_of(r.meta["source"])[r.meta["ref"]]["sha256"]
+               != r.meta["clause_sha256"]]
+    if changed:
+        raise SystemExit(f"clause text changed since prepare-draft: {', '.join(changed)}")
+    results, summary = sessions.ingest(draft_dir, "session-draft")
+    mappings, rejected = mappings_from(drafts, results, clauses_of)
     runner.write_jsonl(Path(draft_dir) / "mappings.jsonl", mappings)
     runner.write_jsonl(Path(draft_dir) / "rejected-quotes.jsonl", rejected)
     return {"requests": summary["requests"], "failed": summary["failed"], "mappings": len(mappings),
@@ -256,9 +258,20 @@ def ingest_draft(draft_dir, clauses_of=None):
 def prepare_verify(draft_dir, sources=None, clauses_of=None):
     """Session stage 3: verifier batch files for every mapping. Returns the verify run dir."""
     import layer1
-    mappings = runner.read_jsonl(Path(draft_dir) / "mappings.jsonl")
+    draft_dir = Path(draft_dir)
+    if not draft_dir.name.endswith("-session-draft"):
+        raise SystemExit(f"{draft_dir} is not a session-draft run")
+    mappings = runner.read_jsonl(draft_dir / "mappings.jsonl")
     verifies = verify_requests(mappings, sources or layer1.catalog(), clauses_of or layer1.clauses_of)
-    return sessions.prepare(verifies, "session-verify")
+    verify_dir = sessions.prepare(verifies, "session-verify")
+    (verify_dir / "draft-link.json").write_text(json.dumps(
+        {"draft_run": draft_dir.name, "mappings_sha256": _sha256(draft_dir / "mappings.jsonl")}) + "\n",
+        encoding="utf-8")
+    return verify_dir
+
+
+def _sha256(path):
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
 def ingest_verify(verify_dir, draft_dir, clauses_of=None):
@@ -266,11 +279,17 @@ def ingest_verify(verify_dir, draft_dir, clauses_of=None):
     import layer1
     clauses_of = clauses_of or layer1.clauses_of
     verify_dir, draft_dir = Path(verify_dir), Path(draft_dir)
-    v_results, v_summary = sessions.ingest(verify_dir)
+    if not (verify_dir / "draft-link.json").exists():
+        raise SystemExit(f"{verify_dir} is not a session-verify run (no draft-link.json)")
+    link = json.loads((verify_dir / "draft-link.json").read_text(encoding="utf-8"))
+    if link != {"draft_run": draft_dir.name, "mappings_sha256": _sha256(draft_dir / "mappings.jsonl")}:
+        raise SystemExit(f"{verify_dir.name} was not prepared from the current mappings of {draft_dir.name}")
+    v_results, v_summary = sessions.ingest(verify_dir, "session-verify")
     d_summary = json.loads((draft_dir / "summary.json").read_text(encoding="utf-8"))
     mappings = runner.read_jsonl(draft_dir / "mappings.jsonl")
     rejected = runner.read_jsonl(draft_dir / "rejected-quotes.jsonl")
     rep = report(mappings, rejected, d_summary, v_results, v_summary)
+    rep["not_verified_budget"] = 0
     rep["uncovered_sentences"] = coverage(sessions.load_requests(draft_dir), mappings, clauses_of)
     rep["runs"] = [draft_dir.name, verify_dir.name]
     (verify_dir / "pilot-report.json").write_text(json.dumps(rep, indent=1) + "\n", encoding="utf-8")
