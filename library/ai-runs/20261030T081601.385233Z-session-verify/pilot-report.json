@@ -1,0 +1,54 @@
+{
+ "clauses": 24,
+ "mappings": 56,
+ "quotes_rejected": 0,
+ "verified_by_both": 56,
+ "both_correct": 56,
+ "both_incorrect": 0,
+ "disagree": 0,
+ "failed_calls": [],
+ "cost_usd": 0.0,
+ "cost_per_mapping_usd": 0.0,
+ "tokens": {
+  "draft": {
+   "input_tokens": 0,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 0,
+   "output_tokens": 0
+  },
+  "verify": {
+   "input_tokens": 0,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 0,
+   "output_tokens": 0
+  }
+ },
+ "not_verified_budget": 0,
+ "uncovered_sentences": [
+  {
+   "source": "eu-cap9_en.pdf",
+   "ref": "Chapter 9 9.3",
+   "sentence_index": 0,
+   "covered_share": 0.75,
+   "text": "9.3 All self inspections should be recorded."
+  },
+  {
+   "source": "who-trs986-a2-gmp-main.pdf",
+   "ref": "8.7",
+   "sentence_index": 3,
+   "covered_share": 0.59,
+   "text": "Such audits may also be extended to suppliers and contractors (see section 7, \u201cContract production and analysis\u201d)."
+  },
+  {
+   "source": "india-schedule-m-2023-GSR922E.pdf",
+   "ref": "Part I 10.6",
+   "sentence_index": 1,
+   "covered_share": 0.73,
+   "text": "Follow-up action- There shall be an effective follow-up programme."
+  }
+ ],
+ "runs": [
+  "20261030T081253.980447Z-session-draft",
+  "20261030T081601.385233Z-session-verify"
+ ]
+}
