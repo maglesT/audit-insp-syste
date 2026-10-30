@@ -61,6 +61,10 @@ class Rounds(unittest.TestCase):
         self.assertIn("SI-001 [SI.PROG] (recommended; OSD) Run a self-inspection programme.", text)
         self.assertIn("O003 | WHO: WHO GMP | strength recommended", text)
         self.assertIn("quote: " + QUOTE_WHO, text)
+        self.assertNotIn("rejected", text)
+        s["errors"] = {"O003": ["item text copies source wording: 'x'"]}
+        text = consolidate.round_input(s, s["obligations"], SOURCES, {"topics": []})
+        self.assertIn("an earlier answer was rejected: item text copies source wording: 'x'", text)
 
 
 class Apply(unittest.TestCase):

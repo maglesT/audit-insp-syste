@@ -120,7 +120,9 @@ def round_input(state, group, sources, topic_tree):
     reqs = [f"{r['id']} [{r['topic']}] ({r['strength']}; {', '.join(r['plant_types'])}) {r['item_text']}"
             for r in state["requirements"]]
     obs = [f"{o['id']} | {o['regulator']}: {sources[o['source']]['title']} | strength {o['strength']} | plant types "
-           f"{', '.join(o['plant_types'])}\n  statement: {o['statement']}\n  quote: {o['quote']}" for o in group]
+           f"{', '.join(o['plant_types'])}\n  statement: {o['statement']}\n  quote: {o['quote']}"
+           + ("".join(f"\n  an earlier answer was rejected: {e}" for e in state["errors"].get(o["id"], [])))
+           for o in group]
     return ("TOPICS:\n" + "\n".join(topic_lines(topic_tree)) + "\n\nREQUIREMENTS SO FAR:\n"
             + ("\n".join(reqs) if reqs else "(none yet)") + "\n\nOBLIGATIONS TO DECIDE:\n" + "\n".join(obs))
 
