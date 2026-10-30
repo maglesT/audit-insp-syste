@@ -1,6 +1,6 @@
 # Handover: read this first in every new session
 
-Last updated: 29 October 2026 (session 2, flags branch: S1 exit reached).
+Last updated: 30 October 2026 (session 2, S1 tail branch).
 
 ## Where we are
 - Brief: `docs/00-brief.md` (the owner's decisions). Small decisions: `docs/decisions.md`.
@@ -59,10 +59,15 @@ Last updated: 29 October 2026 (session 2, flags branch: S1 exit reached).
   appendix sections, stray numbers (footnotes, list items, running headers, wrapped lines) are taken back when the old
   numbering resumes, title-case chapters after subsections, glossaries and annex/appendix intro text are citable
   sections, cover dates, eCFR deep levels and italic definitions, FDA appendices/attachments.
-- **Next (S1 tail, before S2 mapping):** 22 sources carry a "Known parser limitation" explanation (text kept,
-  reference coarse). Most valuable to fix: PE 009 Annex 2A "B 1.1" numbering, EU Annex 17 margin line numbers, ICH Q9
-  annex "I.1" numbering, Schedule M Part VII ":-" headings, unnumbered trailing annexes, table rows without ruling
-  lines (PI 038, PI 030 p11), list items taking over numbering (Q1B, M7, PI 041, WFI Q&A, Drugs Rules forms).
+- **Session 2, done: S1 tail (D27).** Known parser limitations 22 -> 10: chapters without sub-numbers (WHO HVAC,
+  QRM, EU MAH paper, EU Annex 11), unnumbered trailing annexes and back matter, prefixed numbering ("B 1.1", "I.1",
+  "A.1"), margin line numbers (EU Annex 17), wrapped lower-case lines, a heading that replaces a list item with its
+  number (Q1B), table rows sharing one ruled cell (PI 038), an FDA level below the contents list (III.B.1) and appendix
+  sections. 180 sources, 23,024 clauses, 51 flagged (all explained), 19 possible misses.
+- **Remaining limitations (10, text kept, reference coarse):** WFI Q&A Part II list, PI 011 sections 27-29, PI 041
+  numbered table rows, PI 030 open table row, PE 009 Annex 2A B 3.3 tail and Annex 3 typo "14..", Drugs Rules form
+  items, WHO AMR quoted clauses, CP 7356.002a Attachment A in the page header, WHO TTSP bibliography. They can be
+  fixed alongside S2 if mapping needs them.
 - **Then S2:** library schema, Layer 1 checker with the NLP pieces (D19), BM25 plus a pinned embedding model for
   candidate search (D21), mutation harness, customer export and the option-A test.
 
