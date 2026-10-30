@@ -8,8 +8,8 @@ Last updated: 30 October 2026 (session 2, S1 tail branch).
     `library/topics.json`), SQLite build, and the Layer 1 checker (`tools/library/layer1.py`, in CI; D28).
   - **AI checking now runs through the Claude API (D29, replaces D14).** `tools/ai/runner.py` (Batch API, cached
     instructions, JSON-schema answers, audit trail in `library/ai-runs/`) and `tools/ai/pilot.py` (paid pilot,
-    24 self-inspection clauses, hard budget US$15). The key is an environment network secret (`x-api-key` header
-    for `api.anthropic.com`), never in the repo or the chat. Next session: `python3 tools/ai/pilot.py check`,
+    24 self-inspection clauses, hard budget US$15). The key is the environment variable `ANTHROPIC_API_KEY`, set in the
+    cloud environment's settings (the network-secret form had no plain `x-api-key` type), never in the repo or the chat. Next session: `python3 tools/ai/pilot.py check`,
     then `python3 tools/ai/pilot.py run --budget 15`, then report the cost per mapping to the owner.
   - Still to do in S2: mutation harness, customer export with the option-A test, candidate search (BM25 +
     embeddings, D21).
