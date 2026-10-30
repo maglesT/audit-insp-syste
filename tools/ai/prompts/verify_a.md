@@ -6,6 +6,11 @@ part of the clause it covers (given as COVERS), not against the whole clause. Bu
 obligation: if a condition, number, frequency or qualifier that belongs to the same obligation is left out,
 of the item or of the COVERS span, it counts as omitted.
 
+Judge only what the item's own words say. Do not read the clause back into the item: a condition, trigger,
+timing or qualifier that is in the clause but not in the item is omitted, even if it seems implied or obvious.
+A trigger such as "if", "where ... is required", "when" or "before" is part of the obligation; an item that
+leaves it out turns a conditional duty into an unconditional one, which is stricter, or changes its timing.
+
 Answer every question strictly:
 - required_by_clause: does the clause require what the item asks for (true/false)?
 - item_adds: anything the item asks for that the clause does not say (empty string if nothing).

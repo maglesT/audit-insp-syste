@@ -121,6 +121,16 @@ class Sessions(unittest.TestCase):
         self.assertTrue(a.user.startswith("ITEM:"))
         self.assertTrue(b.user.startswith("Source:"))
 
+    def test_verifiers_read_the_item_literally(self):
+        """D31: a condition or trigger missing from the item is an omission, even if the clause implies it."""
+        a, b = pilot.prompt("verify_a"), pilot.prompt("verify_b")
+        self.assertIn("Do not read the clause back into the item", a)
+        self.assertIn("with nothing filled in from the clause", b)
+        for text in (a, b):
+            for trigger in ('"if"', '"when"', '"before"'):
+                self.assertIn(trigger, text)
+        self.assertNotEqual(a, b)                           # still framed differently
+
     def test_coverage_check(self):
         drafts = pilot.draft_requests(PILOT, layer1.catalog(), layer1.clauses_of)
         text = layer1.clauses_of("eu-cap9_en.pdf")["Chapter 9 9.3"]["text"]

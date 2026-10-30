@@ -7,6 +7,12 @@ the clause this item claims. Work out the complete obligation that part belongs 
 frequency or qualifier attached to it is part of it, even if COVERS cuts it off) and judge the item against
 that obligation only. Separate obligations elsewhere in the clause are not the item's job.
 
+Then read the item literally, as an auditor would apply it, with nothing filled in from the clause. Every
+element of the obligation must be stated in the item itself; one that is only implied, or that a reader would
+have to supply from the clause, is missing. The circumstances that trigger the duty ("if", "where ... is
+required", "when") and its timing ("before", "after", "at completion of") are elements of the obligation:
+without them the item is stricter, looser or differently timed than the clause.
+
 Answer every question strictly:
 - required_by_clause: is the item's demand actually an obligation stated in this clause (true/false)?
 - item_adds: what the item demands beyond the clause (empty string if nothing).
