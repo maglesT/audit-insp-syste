@@ -1,6 +1,6 @@
 # Handover: read this first in every new session
 
-Last updated: 30 October 2026 (session 3, S3 rehearsal first pass; owner dropped consolidation, D37).
+Last updated: 30 October 2026 (session 3, S3 rehearsal first pass; owner dropped consolidation and cross-regulator grouping, D37, D38).
 
 ## Mutation test results (30 Oct 2026, plan 2.6 / Layer 3, pilot scale)
 `tools/ai/mutate.py` planted errors in the 56 session-pilot mappings and mixed the mutants, shuffled, with the 56
@@ -169,6 +169,8 @@ finished in about 4 minutes in total.
   - **Layer 1 condition-word check done (D35):** check 9, revised after an independent review; 0 false alarms on 114
     pilot items, 56 controls and 82 human-style paraphrases; catches the dropped conditions the verifiers missed so
     far (3 of 15 dropped-condition mutants). One-way: added conditions are left to the verifiers.
+  - **No cross-regulator links (D38):** the export's similarity grouping is removed; only word-for-word twins are
+    drafted once and shown once.
   - **S3 rehearsal, first pass (D36, D37):** 142 self-inspection clause units by rule (`tools/ai/topic.py`,
     `library/topics/self-inspection.json`), 116 drafted, 26 reuse identical clauses; 610 obligations.
     Consolidation into cross-regulator requirements was built, run and measured (237 requirements; both verifiers

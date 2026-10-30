@@ -4,15 +4,15 @@
   python3 tools/library/export.py build --regulators "EU,PIC/S" --plant OSD [--out FILE] [--library DIR]
 
 The customer app loads only this export. It holds, per item, exactly ITEM_FIELDS: id, item text, topic,
-regulators, plant types, strength and display group; never quotes, clause references or sources (option A).
+regulators, plant types and strength; never quotes, clause references or sources (option A).
 Customers see regulator names (REGULATOR_NAMES), and a selection is made by those names, so "EU" means EU and EMA
 documents. Per-regulator items (D37), for one set of regulator names and one plant type:
 - an item appears when it is verified, covers the plant type, and its mapping is to a selected regulator and
   covers the plant type (for an item marked general, any plant type of the item);
 - items with the same text, topic and strength (twin clauses, EU GMP and PIC/S) are shown once, tagged with every
   selected regulator that has one;
-- near-identical items share a display group (GROUP_SIMILARITY of their 3-word runs); nothing is merged by
-  judgement and there is no "strictest wins" compilation;
+- nothing else is combined across regulators: no merging by judgement, no "strictest wins", and no grouping of
+  similar items (owner, D38);
 - the checklist header lists only regulators that have an item.
 Unverified items are never exported (D13).
 
@@ -37,7 +37,6 @@ import json
 import re
 import sys
 import unicodedata
-from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -45,15 +44,12 @@ if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parent))
 import model  # noqa: E402
 
-ITEM_FIELDS = ("id", "item_text", "topic", "regulators", "plant_types", "strength", "group")
+ITEM_FIELDS = ("id", "item_text", "topic", "regulators", "plant_types", "strength")
 TOP_FIELDS = ("format", "generated", "regulators", "plant_type", "disclaimer", "topics", "items")
 FORBIDDEN_NAME = re.compile(r"quote|clause|source|ref|sha|mapping|addend|page|offset|citation|url", re.I)
 OVERLAP_WORDS = 12
 PHRASE_WORDS = 6
 RANK = {"optional": 0, "recommended": 1, "mandatory": 2}
-GROUP_SHINGLE = 3                  # display groups (D37): Jaccard of 3-word runs of the item texts
-GROUP_SIMILARITY = 0.5
-GROUP_COMMON_RUN = 50               # a run held by more items than this proposes no candidates (the Jaccard is exact)
 DISCLAIMER = ("Compiled from official texts with automated multi-step verification. Supports internal audits; "
               "does not replace the site's own judgement.")
 # regulator code in sources/catalog.csv -> the name customers see (a regulator name only, never a document)
@@ -102,50 +98,16 @@ def _key(text):
     return " ".join(words(text))
 
 
-def _shingles(text):
-    w = words(text)
-    return {tuple(w[i:i + GROUP_SHINGLE]) for i in range(max(len(w) - GROUP_SHINGLE + 1, 1))}
-
-
-def _order(rid):
-    prefix, _, number = rid.partition("-")
-    return (prefix, int(number) if number.isdigit() else 0)
-
-
-def groups(items, sources_of):
-    """{item id: group id}. A display group is a seed item, in id order, and every later ungrouped item from a
-    different source whose text shares at least GROUP_SIMILARITY of its 3-word runs with the seed's (Jaccard).
-    Nothing chains through a third item, items of one source are never grouped with each other, and only items
-    that share a run held by at most GROUP_COMMON_RUN items are compared. Text similarity only, no judgement of stricter or looser (D37)."""
-    runs = {it["id"]: _shingles(it["item_text"]) for it in items}
-    index = defaultdict(set)
-    for rid, r in runs.items():
-        for run in r:
-            index[run].add(rid)
-    group = {}
-    for seed in sorted(runs, key=_order):
-        if seed in group:
-            continue
-        group[seed] = seed
-        candidates = set().union(*(index[run] for run in runs[seed] if len(index[run]) <= GROUP_COMMON_RUN))
-        for other in sorted(candidates, key=_order):
-            if other in group or not sources_of[other].isdisjoint(sources_of[seed]):
-                continue
-            if len(runs[seed] & runs[other]) / len(runs[seed] | runs[other]) >= GROUP_SIMILARITY:
-                group[other] = seed
-    return group
-
-
 def compile_items(reqs, sources, names, plant_type):
     """The items of one compilation (regulator names, one plant type), in library order (D37). Each library item
     is one obligation of one regulator; items of selected regulators with the same text, topic and strength (EU
-    and PIC/S twins) are shown once with all their regulator tags, and near-identical items share a group."""
+    and PIC/S twins) are shown once with all their regulator tags; nothing else is combined (D38)."""
     names = set(names)
 
     def name(m):
         return REGULATOR_NAMES[sources[m["source"]]["regulator"]]
 
-    merged, sources_of = {}, {}
+    merged = {}
     for req in reqs:
         if req["status"] != "verified" or plant_type not in req["plant_types"]:
             continue
@@ -157,15 +119,11 @@ def compile_items(reqs, sources, names, plant_type):
         key = (_key(text), req["topic"], req["strength"])
         if key in merged:
             merged[key]["regulators"] = sorted(set(merged[key]["regulators"]) | {name(m) for m in chosen})
-            sources_of[merged[key]["id"]] |= {m["source"] for m in chosen}
             continue
-        sources_of[req["id"]] = {m["source"] for m in chosen}
         merged[key] = {"id": req["id"], "item_text": text, "topic": req["topic"],
                        "regulators": sorted({name(m) for m in chosen}), "plant_types": [plant_type],
                        "strength": req["strength"]}
-    items = list(merged.values())
-    group_of = groups(items, sources_of)
-    return [{**it, "group": group_of[it["id"]]} for it in items]
+    return list(merged.values())
 
 
 def export(reqs, sources, names, plant_type, topic_names, now=None):
