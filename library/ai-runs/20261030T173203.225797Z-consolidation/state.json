@@ -13012,9 +13012,740 @@
    "lead": "O274"
   }
  ],
- "requirements": [],
- "decisions": {},
- "errors": {},
+ "requirements": [
+  {
+   "id": "PER-001",
+   "topic": "PER.ORG",
+   "item_text": "The core duties of the independent quality unit are kept by that unit and are not handed over to others.",
+   "strength": "recommended",
+   "plant_types": [
+    "API"
+   ]
+  },
+  {
+   "id": "PER-002",
+   "topic": "PER.ORG",
+   "item_text": "The duties of the quality unit are set out in writing and cover at least the minimum set of quality responsibilities.",
+   "strength": "recommended",
+   "plant_types": [
+    "API"
+   ]
+  },
+  {
+   "id": "REL-001",
+   "topic": "REL.REVIEW",
+   "item_text": "The quality unit decides on release or rejection of every active substance, and of any intermediate intended for use outside the manufacturer's control.",
+   "strength": "recommended",
+   "plant_types": [
+    "API"
+   ]
+  },
+  {
+   "id": "MAT-001",
+   "topic": "MAT.STATUS",
+   "item_text": "The quality unit has set up a system for releasing or rejecting raw materials, intermediates, and packaging and labelling materials.",
+   "strength": "recommended",
+   "plant_types": [
+    "API"
+   ]
+  },
+  {
+   "id": "REL-002",
+   "topic": "REL.REVIEW",
+   "item_text": "Before an active substance is released for distribution, the quality unit reviews the completed batch production and laboratory control records for critical process steps.",
+   "strength": "recommended",
+   "plant_types": [
+    "API"
+   ]
+  },
+  {
+   "id": "QS-001",
+   "topic": "QS.DEV",
+   "item_text": "The quality unit makes sure that critical deviations are investigated and resolved.",
+   "strength": "recommended",
+   "plant_types": [
+    "API"
+   ]
+  },
+  {
+   "id": "DOC-001",
+   "topic": "DOC.SPEC",
+   "item_text": "The quality unit approves all specifications and master production instructions.",
+   "strength": "recommended",
+   "plant_types": [
+    "API"
+   ]
+  },
+  {
+   "id": "DOC-002",
+   "topic": "DOC.SOP",
+   "item_text": "The quality unit approves every procedure that can affect the quality of intermediates or active substances.",
+   "strength": "recommended",
+   "plant_types": [
+    "API"
+   ]
+  },
+  {
+   "id": "SI-001",
+   "topic": "SI.PROG",
+   "item_text": "The quality unit makes sure that internal audits (self-inspections) take place.",
+   "strength": "recommended",
+   "plant_types": [
+    "API"
+   ]
+  },
+  {
+   "id": "OUT-001",
+   "topic": "OUT.CONTRACT",
+   "item_text": "The quality unit approves the contract manufacturers used for intermediates and active substances.",
+   "strength": "recommended",
+   "plant_types": [
+    "API"
+   ]
+  },
+  {
+   "id": "QS-002",
+   "topic": "QS.CHANGE",
+   "item_text": "The quality unit approves any change that might affect the quality of an intermediate or active substance.",
+   "strength": "recommended",
+   "plant_types": [
+    "API"
+   ]
+  },
+  {
+   "id": "VAL-001",
+   "topic": "VAL.PLAN",
+   "item_text": "The quality unit reviews and approves validation protocols and validation reports.",
+   "strength": "recommended",
+   "plant_types": [
+    "API"
+   ]
+  },
+  {
+   "id": "CMP-001",
+   "topic": "CMP.COMPL",
+   "item_text": "The quality unit makes sure that quality-related complaints are investigated and resolved.",
+   "strength": "recommended",
+   "plant_types": [
+    "API"
+   ]
+  },
+  {
+   "id": "EQ-001",
+   "topic": "EQ.MAINT",
+   "item_text": "The quality unit makes sure that effective systems are in use for maintaining and calibrating critical equipment.",
+   "strength": "recommended",
+   "plant_types": [
+    "API"
+   ]
+  },
+  {
+   "id": "QC-001",
+   "topic": "QC.TEST",
+   "item_text": "The quality unit makes sure that materials are suitably tested and that the results are reported.",
+   "strength": "recommended",
+   "plant_types": [
+    "API"
+   ]
+  },
+  {
+   "id": "QC-002",
+   "topic": "QC.STAB",
+   "item_text": "Where appropriate, the quality unit makes sure that stability data exist to support the retest or expiry dates and storage conditions of active substances and/or intermediates.",
+   "strength": "recommended",
+   "plant_types": [
+    "API"
+   ]
+  },
+  {
+   "id": "QS-003",
+   "topic": "QS.PQR",
+   "item_text": "The quality unit carries out product quality reviews.",
+   "strength": "recommended",
+   "plant_types": [
+    "API"
+   ]
+  },
+  {
+   "id": "SI-002",
+   "topic": "SI.PROG",
+   "item_text": "Internal audits (self-inspections) are carried out regularly, following an approved schedule, to check compliance with GMP.",
+   "strength": "mandatory",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "SI-003",
+   "topic": "SI.REPORT",
+   "item_text": "Findings from internal audits and the related corrective actions are documented and brought to the attention of the company's responsible management.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "SI-004",
+   "topic": "SI.FOLLOW",
+   "item_text": "Corrective actions agreed after internal audits are completed on time and effectively.",
+   "strength": "mandatory",
+   "plant_types": [
+    "API"
+   ]
+  },
+  {
+   "id": "MAT-002",
+   "topic": "MAT.SUPP",
+   "item_text": "In the risk assessment of each excipient, based on its source, supply chain and intended use, the manufacturing authorisation holder considers at minimum whether an effective pharmaceutical quality system has been set up and put into practice.",
+   "strength": "recommended",
+   "plant_types": [
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "MAT-003",
+   "topic": "MAT.SUPP",
+   "item_text": "In the risk assessment of each excipient, based on its source, supply chain and intended use, the manufacturing authorisation holder considers at minimum whether there are enough competent and suitably qualified staff.",
+   "strength": "recommended",
+   "plant_types": [
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "MAT-004",
+   "topic": "MAT.SUPP",
+   "item_text": "In the risk assessment of each excipient, based on its source, supply chain and intended use, the manufacturing authorisation holder considers at minimum whether managerial and supervisory staff responsible for manufacturing and quality activities have defined job descriptions.",
+   "strength": "recommended",
+   "plant_types": [
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "MAT-005",
+   "topic": "MAT.SUPP",
+   "item_text": "In the risk assessment of each excipient, based on its source, supply chain and intended use, the manufacturing authorisation holder considers at minimum whether there are training programmes on health, hygiene and clothing where the intended operations need them.",
+   "strength": "recommended",
+   "plant_types": [
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "MAT-006",
+   "topic": "MAT.SUPP",
+   "item_text": "In the risk assessment of each excipient, based on its source, supply chain and intended use, the manufacturing authorisation holder considers at minimum whether premises and equipment suited to the intended operations are provided and maintained.",
+   "strength": "recommended",
+   "plant_types": [
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "MAT-007",
+   "topic": "MAT.SUPP",
+   "item_text": "In the risk assessment of each excipient, based on its source, supply chain and intended use, the manufacturing authorisation holder considers at minimum whether documentation systems cover all processes and specifications for the manufacturing and quality operations.",
+   "strength": "recommended",
+   "plant_types": [
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "MAT-008",
+   "topic": "MAT.SUPP",
+   "item_text": "In the risk assessment of each excipient, based on its source, supply chain and intended use, the manufacturing authorisation holder considers at minimum whether starting materials, intermediates and excipients are coded and identified so that they are fully traceable.",
+   "strength": "recommended",
+   "plant_types": [
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "MAT-009",
+   "topic": "MAT.SUPP",
+   "item_text": "In the risk assessment of each excipient, based on its source, supply chain and intended use, the manufacturing authorisation holder considers at minimum whether there is a programme for qualifying suppliers.",
+   "strength": "recommended",
+   "plant_types": [
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "MAT-010",
+   "topic": "MAT.SUPP",
+   "item_text": "In the risk assessment of each excipient, based on its source, supply chain and intended use, the manufacturing authorisation holder considers at minimum whether there is a quality control system for the excipient and a responsible person, independent of production, who releases batches.",
+   "strength": "recommended",
+   "plant_types": [
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "MAT-011",
+   "topic": "MAT.SUPP",
+   "item_text": "In the risk assessment of each excipient, based on its source, supply chain and intended use, the manufacturing authorisation holder considers at minimum whether records of incoming materials and excipients, and samples of excipients, are kept for the required retention periods.",
+   "strength": "recommended",
+   "plant_types": [
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "MAT-012",
+   "topic": "MAT.SUPP",
+   "item_text": "In the risk assessment of each excipient, based on its source, supply chain and intended use, the manufacturing authorisation holder considers at minimum whether there are systems ensuring that every outsourced activity is covered by a written contract.",
+   "strength": "recommended",
+   "plant_types": [
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "MAT-013",
+   "topic": "MAT.SUPP",
+   "item_text": "In the risk assessment of each excipient, based on its source, supply chain and intended use, the manufacturing authorisation holder considers at minimum whether an effective system is maintained for reviewing complaints and recalling excipients.",
+   "strength": "recommended",
+   "plant_types": [
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "MAT-014",
+   "topic": "MAT.SUPP",
+   "item_text": "In the risk assessment of each excipient, based on its source, supply chain and intended use, the manufacturing authorisation holder considers at minimum whether there is a system for managing changes and deviations.",
+   "strength": "recommended",
+   "plant_types": [
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "MAT-015",
+   "topic": "MAT.SUPP",
+   "item_text": "In the risk assessment of each excipient, based on its source, supply chain and intended use, the manufacturing authorisation holder considers at minimum whether environmental control and storage conditions are in place.",
+   "strength": "recommended",
+   "plant_types": [
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "SI-005",
+   "topic": "SI.TEAM",
+   "item_text": "Self-inspections are carried out in an independent and thorough way by designated, competent staff of the company.",
+   "strength": "recommended",
+   "plant_types": [
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "SI-006",
+   "topic": "SI.TEAM",
+   "item_text": "Independent audits by external experts may be used in addition to self-inspections.",
+   "strength": "optional",
+   "plant_types": [
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "SI-007",
+   "topic": "SI.REPORT",
+   "item_text": "A record is kept of every self-inspection.",
+   "strength": "mandatory",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "SI-008",
+   "topic": "SI.REPORT",
+   "item_text": "Self-inspection reports contain all observations made and, where applicable, proposed corrective measures.",
+   "strength": "recommended",
+   "plant_types": [
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "QS-004",
+   "topic": "QS.PQS",
+   "item_text": "The manufacturer takes the applicable GMP guidelines into account so that GMP principles are applied consistently.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "QS-005",
+   "topic": "QS.PQS",
+   "item_text": "For advanced therapy medicinal products, the GMP guideline specific to those products is applied.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  }
+ ],
+ "decisions": {
+  "O020": {
+   "requirement": "PER-001",
+   "relation": "same",
+   "addendum": "",
+   "reason": "No listed requirement covers non-delegation of quality unit duties."
+  },
+  "O021": {
+   "requirement": "PER-002",
+   "relation": "same",
+   "addendum": "",
+   "reason": "No listed requirement covers written quality unit responsibilities."
+  },
+  "O022": {
+   "requirement": "REL-001",
+   "relation": "same",
+   "addendum": "",
+   "reason": "A distinct quality unit responsibility not yet in the library."
+  },
+  "O023": {
+   "requirement": "MAT-001",
+   "relation": "same",
+   "addendum": "",
+   "reason": "A distinct quality unit responsibility not yet in the library."
+  },
+  "O024": {
+   "requirement": "REL-002",
+   "relation": "same",
+   "addendum": "",
+   "reason": "A distinct quality unit responsibility not yet in the library."
+  },
+  "O025": {
+   "requirement": "QS-001",
+   "relation": "same",
+   "addendum": "",
+   "reason": "A distinct quality unit responsibility not yet in the library."
+  },
+  "O026": {
+   "requirement": "DOC-001",
+   "relation": "same",
+   "addendum": "",
+   "reason": "A distinct quality unit responsibility not yet in the library."
+  },
+  "O027": {
+   "requirement": "DOC-002",
+   "relation": "same",
+   "addendum": "",
+   "reason": "A distinct quality unit responsibility not yet in the library."
+  },
+  "O028": {
+   "requirement": "SI-001",
+   "relation": "same",
+   "addendum": "",
+   "reason": "A distinct quality unit responsibility not yet in the library."
+  },
+  "O029": {
+   "requirement": "OUT-001",
+   "relation": "same",
+   "addendum": "",
+   "reason": "A distinct quality unit responsibility not yet in the library."
+  },
+  "O030": {
+   "requirement": "QS-002",
+   "relation": "same",
+   "addendum": "",
+   "reason": "A distinct quality unit responsibility not yet in the library."
+  },
+  "O031": {
+   "requirement": "VAL-001",
+   "relation": "same",
+   "addendum": "",
+   "reason": "A distinct quality unit responsibility not yet in the library."
+  },
+  "O032": {
+   "requirement": "CMP-001",
+   "relation": "same",
+   "addendum": "",
+   "reason": "A distinct quality unit responsibility not yet in the library."
+  },
+  "O033": {
+   "requirement": "EQ-001",
+   "relation": "same",
+   "addendum": "",
+   "reason": "A distinct quality unit responsibility not yet in the library."
+  },
+  "O034": {
+   "requirement": "QC-001",
+   "relation": "same",
+   "addendum": "",
+   "reason": "A distinct quality unit responsibility not yet in the library."
+  },
+  "O035": {
+   "requirement": "QC-002",
+   "relation": "same",
+   "addendum": "",
+   "reason": "A distinct quality unit responsibility not yet in the library."
+  },
+  "O036": {
+   "requirement": "QS-003",
+   "relation": "same",
+   "addendum": "",
+   "reason": "A distinct quality unit responsibility not yet in the library."
+  },
+  "O037": {
+   "requirement": "SI-002",
+   "relation": "same",
+   "addendum": "",
+   "reason": "First obligation stating the self-inspection programme point."
+  },
+  "O038": {
+   "requirement": "SI-003",
+   "relation": "same",
+   "addendum": "",
+   "reason": "No listed requirement covers documenting and reporting audit findings."
+  },
+  "O039": {
+   "requirement": "SI-004",
+   "relation": "same",
+   "addendum": "",
+   "reason": "No listed requirement covers completion of agreed corrective actions."
+  },
+  "O040": {
+   "requirement": "SI-002",
+   "relation": "adds",
+   "addendum": "Each self-inspection is recorded, and for distributors it checks compliance with good distribution practice.",
+   "reason": "States the self-inspection point and adds recording and a distribution-practice focus."
+  },
+  "O041": {
+   "requirement": "SI-002",
+   "relation": "same",
+   "addendum": "",
+   "reason": "States regular self-inspections to an approved schedule."
+  },
+  "O042": {
+   "requirement": "MAT-002",
+   "relation": "same",
+   "addendum": "",
+   "reason": "A distinct element of the excipient risk assessment not yet in the library."
+  },
+  "O043": {
+   "requirement": "MAT-003",
+   "relation": "same",
+   "addendum": "",
+   "reason": "A distinct element of the excipient risk assessment not yet in the library."
+  },
+  "O044": {
+   "requirement": "MAT-004",
+   "relation": "same",
+   "addendum": "",
+   "reason": "A distinct element of the excipient risk assessment not yet in the library."
+  },
+  "O046": {
+   "requirement": "MAT-005",
+   "relation": "same",
+   "addendum": "",
+   "reason": "A distinct element of the excipient risk assessment not yet in the library."
+  },
+  "O047": {
+   "requirement": "MAT-006",
+   "relation": "same",
+   "addendum": "",
+   "reason": "A distinct element of the excipient risk assessment not yet in the library."
+  },
+  "O048": {
+   "requirement": "MAT-007",
+   "relation": "same",
+   "addendum": "",
+   "reason": "A distinct element of the excipient risk assessment not yet in the library."
+  },
+  "O049": {
+   "requirement": "MAT-008",
+   "relation": "same",
+   "addendum": "",
+   "reason": "A distinct element of the excipient risk assessment not yet in the library."
+  },
+  "O050": {
+   "requirement": "MAT-009",
+   "relation": "same",
+   "addendum": "",
+   "reason": "A distinct element of the excipient risk assessment not yet in the library."
+  },
+  "O051": {
+   "requirement": "MAT-010",
+   "relation": "same",
+   "addendum": "",
+   "reason": "A distinct element of the excipient risk assessment not yet in the library."
+  },
+  "O052": {
+   "requirement": "MAT-011",
+   "relation": "same",
+   "addendum": "",
+   "reason": "A distinct element of the excipient risk assessment not yet in the library."
+  },
+  "O053": {
+   "requirement": "MAT-012",
+   "relation": "same",
+   "addendum": "",
+   "reason": "A distinct element of the excipient risk assessment not yet in the library."
+  },
+  "O054": {
+   "requirement": "MAT-013",
+   "relation": "same",
+   "addendum": "",
+   "reason": "A distinct element of the excipient risk assessment not yet in the library."
+  },
+  "O055": {
+   "requirement": "MAT-014",
+   "relation": "same",
+   "addendum": "",
+   "reason": "A distinct element of the excipient risk assessment not yet in the library."
+  },
+  "O056": {
+   "requirement": "MAT-015",
+   "relation": "same",
+   "addendum": "",
+   "reason": "A distinct element of the excipient risk assessment not yet in the library."
+  },
+  "O057": {
+   "requirement": "SI-002",
+   "relation": "adds",
+   "addendum": "Self-inspections also propose any corrective measures needed.",
+   "reason": "States the self-inspection point and adds proposing corrective measures."
+  },
+  "O058": {
+   "requirement": "SI-002",
+   "relation": "adds",
+   "addendum": "The programme covers personnel, premises, equipment, documentation, production, quality control, distribution, complaint and recall handling, and the self-inspection system itself.",
+   "reason": "States the scheduled self-inspection point and adds the areas to be covered."
+  },
+  "O059": {
+   "requirement": "SI-005",
+   "relation": "same",
+   "addendum": "",
+   "reason": "No listed requirement covers who performs self-inspections."
+  },
+  "O060": {
+   "requirement": "SI-006",
+   "relation": "same",
+   "addendum": "",
+   "reason": "No listed requirement covers external expert audits."
+  },
+  "O061": {
+   "requirement": "SI-007",
+   "relation": "same",
+   "addendum": "",
+   "reason": "No listed requirement covers recording each self-inspection."
+  },
+  "O062": {
+   "requirement": "SI-008",
+   "relation": "same",
+   "addendum": "",
+   "reason": "No listed requirement covers report content."
+  },
+  "O063": {
+   "requirement": "SI-003",
+   "relation": "looser",
+   "addendum": "",
+   "reason": "Requires recording of follow-up actions but not reporting to management."
+  },
+  "O064": {
+   "requirement": "QS-004",
+   "relation": "same",
+   "addendum": "",
+   "reason": "No listed requirement covers applying the GMP guidelines."
+  },
+  "O065": {
+   "requirement": "QS-005",
+   "relation": "same",
+   "addendum": "",
+   "reason": "A distinct point for advanced therapy products."
+  },
+  "O066": {
+   "requirement": "SI-002",
+   "relation": "adds",
+   "addendum": "Self-inspections form part of the pharmaceutical quality system and propose any corrective and preventive actions needed.",
+   "reason": "States repeated self-inspections and adds the quality system link and proposing actions."
+  },
+  "O067": {
+   "requirement": "SI-007",
+   "relation": "adds",
+   "addendum": "Records are also kept of any corrective actions taken afterwards.",
+   "reason": "States recording self-inspections and adds recording of later corrective actions."
+  },
+  "O068": {
+   "requirement": "SI-002",
+   "relation": "looser",
+   "addendum": "",
+   "reason": "Requires regular internal audits without an approved schedule."
+  },
+  "O069": {
+   "requirement": "SI-004",
+   "relation": "looser",
+   "addendum": "",
+   "reason": "Requires follow-up of findings without timeliness or effectiveness."
+  }
+ },
+ "errors": {
+  "O045": [
+   "item text copies source wording: 'training programmes for all staff involved in manufacturing and quality activities'"
+  ]
+ },
  "rounds": [
   {
    "run": "20261030T173203.372910Z-consolidate",
@@ -13069,6 +13800,60 @@
     "O067",
     "O068",
     "O069"
+   ],
+   "ingested": true
+  },
+  {
+   "run": "20261030T173351.646641Z-consolidate",
+   "obligations": [
+    "O045",
+    "O070",
+    "O071",
+    "O072",
+    "O073",
+    "O074",
+    "O075",
+    "O076",
+    "O077",
+    "O078",
+    "O079",
+    "O080",
+    "O081",
+    "O082",
+    "O083",
+    "O084",
+    "O085",
+    "O086",
+    "O087",
+    "O088",
+    "O089",
+    "O090",
+    "O091",
+    "O092",
+    "O093",
+    "O094",
+    "O095",
+    "O298",
+    "O299",
+    "O300",
+    "O301",
+    "O302",
+    "O303",
+    "O304",
+    "O305",
+    "O306",
+    "O307",
+    "O308",
+    "O309",
+    "O310",
+    "O311",
+    "O312",
+    "O313",
+    "O314",
+    "O315",
+    "O316",
+    "O317",
+    "O318"
    ],
    "ingested": false
   }
