@@ -1,6 +1,6 @@
 # Handover: read this first in every new session
 
-Last updated: 30 October 2026 (session 3, pilot run).
+Last updated: 30 October 2026 (session 3, session runner, D30).
 
 ## Pilot results (30 Oct 2026, D29)
 Run folders: `library/ai-runs/20261030T074231.724549Z-pilot-draft/` and `.../20261030T074433.157454Z-pilot-verify/`
@@ -32,19 +32,24 @@ finished in about 4 minutes in total.
 - **For pricing the full run:** at about 2.4 mappings per clause and US$0.0125 per mapping, that is about US$0.03 per
   clause, before adjudication of disagreements (17 % here).
 - **Model names in the run folders:** `requests.jsonl`, `batch.json` and `summary.json` record the model ID that was
-  sent to the API. They were committed unchanged, because the audit trail must hold the exact requests (D29).
-  Owner to confirm this is acceptable under the "no model name in the repo" rule (that rule was written for
-  attribution).
+  sent to the API. The owner confirmed that the model ID stays in audit-trail files (D30).
 
 ## Where we are
 - **Latest (30 Oct 2026), read first:**
   - S1 done (PRs #11-#15). S2 part 1 merged (PR #16): library format (`tools/library/model.py`,
     `library/topics.json`), SQLite build, and the Layer 1 checker (`tools/library/layer1.py`, in CI; D28).
-  - **AI checking now runs through the Claude API (D29, replaces D14).** `tools/ai/runner.py` (Batch API, cached
+  - **AI checking runs in Claude Code sessions again (D30, revises D29): no API credits.** `tools/ai/sessions.py`
+    turns requests into batch files of at most 40 (one system prompt per batch, so verifier A and B never mix) that
+    agents answer in the session; `ingest` validates the answers against the schema and keeps the same audit trail.
+    Session pilot: `pilot.py prepare-draft`, `ingest-draft <d>`, `prepare-verify <d>`, `ingest-verify <v> <d>`.
+    Clauses are split into one item per obligation; the verifiers judge each item against its `COVERS:` quote, and a
+    coverage check reports obligation sentences with less than 80 % of their words in a quote. The API runner
+    below stays, unused; `AUDIT_ANTHROPIC_KEY` can be deleted from the environment.
+  - Before D30, AI checking ran through the Claude API (D29). `tools/ai/runner.py` (Batch API, cached
     instructions, JSON-schema answers, audit trail in `library/ai-runs/`) and `tools/ai/pilot.py` (paid pilot,
     24 self-inspection clauses, hard budget US$15). The key is the environment variable `AUDIT_ANTHROPIC_KEY`, set in the
     cloud environment's settings (Claude Code strips `ANTHROPIC_API_KEY` from sessions), never in the repo or the chat. The paid pilot has run (see "Pilot results"
-    below); next: report the cost per mapping to the owner and price the full run.
+    below); it is kept as a reference measurement.
   - Still to do in S2: mutation harness, customer export with the option-A test, candidate search (BM25 +
     embeddings, D21).
 - Brief: `docs/00-brief.md` (the owner's decisions). Small decisions: `docs/decisions.md`.
