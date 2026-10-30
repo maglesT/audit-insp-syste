@@ -21,7 +21,8 @@ from pathlib import Path
 
 if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parent))
-from common import Clause, edge_lines, english_line, line_key, normalise, pdf_pages, repeated_lines  # noqa: E402
+from common import (Clause, edge_lines, english_line, line_key, normalise, pdf_pages,  # noqa: E402
+                    repeated_lines, resolve_duplicates)
 
 ROMAN = {v: i for i, v in enumerate("I II III IV V VI VII VIII IX X XI XII XIII XIV XV XVI XVII XVIII XIX XX".split(),
                                     start=1)}
@@ -30,7 +31,10 @@ MARK = re.compile(r"^(PART\s+[IVX]+|[IVX]{1,5}\.|[A-Z]\.|\d{1,2}(?:\.\d{1,2}){1,
 LEADER = re.compile(r"(?:\.\s?){4,}\s*\d*\s*$|\s{3,}\d{1,3}\s*$")
 DOTS = re.compile(r"(?:\.\s?){4,}\s*\d*\s*$")
 LINE_NO = re.compile(r"^\d{1,4}\s{2,}(?=\S)")
+BACK = re.compile(r"^(?:(APPENDIX|Appendix|ATTACHMENT|Attachment)\s+([IVX]+\b|[A-Z](?![a-z])|\d{1,2}\b)"
+                  r"|(?:REFERENCES|References|GLOSSARY|Glossary|DEFINITIONS|ACRONYMS|ABBREVIATIONS|BIBLIOGRAPHY)\s*:?\s*$)")
 LOOKAHEAD = 4
+LISTING_MAX = 150      # characters; an appendix "heading" this short with a longer copy elsewhere is a list entry
 CONTENTS_ENTRY_MAX = 300   # characters; a "section" this short before the outline restarts is a contents entry
 TOC_GAP = 6            # lines without a leader allowed inside the contents block (wrapped entries)
 
@@ -205,6 +209,17 @@ def parse(path, pages=None):
             else:
                 start("toc", "_toc", line, pno)
             continue
+        b = BACK.match(line)
+        if b and heading_like(line) and not MARK.match(line):
+            # appendices and attachments carry text of their own ("Appendix 1"); references, glossaries and the
+            # like close the last section without becoming part of it
+            listing = any(BACK.match(ln) for _, ln in lines[i + 1:i + 4])   # "Attachment A ..., Attachment B ..."
+            if b.group(1) and not listing:
+                start("clause", f"{b.group(1).title()} {b.group(2)}", line, pno)
+            else:
+                unnumbered += 1
+                start("unnumbered", f"_unnumbered:{unnumbered}", line, pno)
+            continue
         m = MARK.match(line)
         ref = None
         if m and entries:
@@ -243,4 +258,13 @@ def parse(path, pages=None):
                           kind=c["kind"], notes=c["notes"]))
     if out and notes:
         out[-1].notes += notes
-    return out, body, dropped
+    # Compliance programs list their attachments in a short entry ("Attachment A - Inspectional ...") before the
+    # attachment itself: the listing entry is not the attachment.
+    for ref in sorted({c.ref for c in out if c.ref.startswith(("Appendix ", "Attachment "))}):
+        copies = [c for c in out if c.ref == ref]
+        longest = max(copies, key=lambda c: len(c.text))
+        for c in copies:
+            if c is not longest and len(c.text) <= LISTING_MAX:
+                unnumbered += 1
+                c.kind, c.ref, c.number = "unnumbered", f"_unnumbered:{unnumbered}", ""
+    return resolve_duplicates(out), body, dropped
