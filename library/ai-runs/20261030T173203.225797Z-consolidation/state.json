@@ -13396,6 +13396,7 @@
    "item_text": "Independent audits by external experts may be used in addition to self-inspections.",
    "strength": "optional",
    "plant_types": [
+    "API",
     "INJ",
     "LIQ",
     "OSD",
@@ -13594,6 +13595,7 @@
    "item_text": "Quality improvements suited to the current level of process and product knowledge are put in place to support continual improvement.",
    "strength": "recommended",
    "plant_types": [
+    "API",
     "INJ",
     "LIQ",
     "OSD",
@@ -14811,6 +14813,162 @@
    "topic": "REL.REVIEW",
    "item_text": "No batch of a pharmaceutical excipient is released or supplied until the quality unit has released it, having assured itself that the batch was produced and controlled in line with the product specifications, applicable GMP guidance and any other rules on production, control and release.",
    "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "QC-006",
+   "topic": "QC.GEN",
+   "item_text": "The laboratory head makes sure that each certificate of analysis, each test report and any other significant laboratory report or protocol is approved.",
+   "strength": "mandatory",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "PER-018",
+   "topic": "PER.KEY",
+   "item_text": "Preferably, the laboratory head is backed by at least one technical manager or senior analyst, highly experienced in quality control of medicines, who is given responsibility for analytical work and for leading and supervising the analysts and technicians day to day.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "PER-019",
+   "topic": "PER.TRAIN",
+   "item_text": "Training plan inputs may come from internal audit results, management review outcomes, assessments of risks and opportunities, or any other suitable source.",
+   "strength": "optional",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "QS-036",
+   "topic": "QS.MGMT",
+   "item_text": "Management makes sure the quality management system reaches its intended objectives and measures how it is run and how well it performs, in areas such as: risk management; corrective and preventive actions; validation and qualification; maintenance; quality control results, including out-of-specification and out-of-trend findings; batch rejections; deviations and changes; complaints, recalls and returns; and self-inspections, inspections, quality audits and audits of suppliers.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "SI-019",
+   "topic": "SI.TEAM",
+   "item_text": "Members of the self-inspection team may come from within the company or from outside it.",
+   "strength": "optional",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "SI-020",
+   "topic": "SI.PROG",
+   "item_text": "Self-inspections may cover areas including staff, buildings, equipment, its upkeep and calibration, how materials and finished products are stored, manufacturing and in-process checks, quality control, documentation, data generation and data integrity, deviation handling and change control, complaints and recalls, qualification and validation, and cleaning procedures.",
+   "strength": "optional",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "MAT-018",
+   "topic": "MAT.SUPP",
+   "item_text": "When an excipient manufacturer is audited, the intended use of the excipient is considered, especially whether it will go into a sterile dosage form.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "QC-007",
+   "topic": "QC.TEST",
+   "item_text": "If the excipient maker states in its specifications, labelling or drug master file that an excipient is free of pyrogens, it makes sure this is true.",
+   "strength": "mandatory",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "QS-037",
+   "topic": "QS.PQS",
+   "item_text": "Improvement measures may draw on reviews of why nonconformances happened, on how quality complaints were investigated and what they found, and on self-inspection and audit results and other trend data.",
+   "strength": "optional",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "SI-021",
+   "topic": "SI.PROG",
+   "item_text": "Beyond routine self-inspections, extra ones may be held on particular occasions, such as after a product recall, after repeated batch rejections, or once a regulatory inspection has been announced.",
+   "strength": "optional",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "SI-022",
+   "topic": "SI.PROG",
+   "item_text": "Written self-inspection instructions are in place that give a common baseline set of requirements every self-inspection must meet.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "MAT-019",
+   "topic": "MAT.SUPP",
+   "item_text": "Quality audits may also be extended to cover suppliers and contract service providers.",
+   "strength": "optional",
    "plant_types": [
     "API",
     "INJ",
@@ -16542,22 +16700,309 @@
    "relation": "same",
    "addendum": "",
    "reason": "Self-inspections carried out routinely under a programme."
+  },
+  "O450": {
+   "requirement": "QC-006",
+   "relation": "same",
+   "addendum": "",
+   "reason": "No listed requirement covers approval of laboratory result documents."
+  },
+  "O451": {
+   "requirement": "PER-018",
+   "relation": "same",
+   "addendum": "",
+   "reason": "No listed requirement covers technical managers supporting the laboratory head."
+  },
+  "O464": {
+   "requirement": "PER-019",
+   "relation": "same",
+   "addendum": "",
+   "reason": "No listed requirement covers sources of input for the training plan."
+  },
+  "O484": {
+   "requirement": "QS-036",
+   "relation": "same",
+   "addendum": "",
+   "reason": "No listed requirement covers management measuring how the quality system performs."
+  },
+  "O487": {
+   "requirement": "SI-005",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Suitable knowledge and experience is what competent staff means."
+  },
+  "O488": {
+   "requirement": "SI-019",
+   "relation": "same",
+   "addendum": "",
+   "reason": "No listed requirement says team members may come from inside or outside; SI-006 is about separate external audits."
+  },
+  "O489": {
+   "requirement": "SI-005",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Freedom from bias is the independence the requirement already asks for."
+  },
+  "O490": {
+   "requirement": "SI-020",
+   "relation": "same",
+   "addendum": "",
+   "reason": "No listed requirement sets out the areas a self-inspection may cover."
+  },
+  "O491": {
+   "requirement": "MAT-018",
+   "relation": "same",
+   "addendum": "",
+   "reason": "No listed requirement covers considering excipient end use when auditing its manufacturer."
+  },
+  "O492": {
+   "requirement": "QC-007",
+   "relation": "same",
+   "addendum": "",
+   "reason": "No listed requirement covers pyrogen-free claims for excipients."
+  },
+  "O493": {
+   "requirement": "DOC-004",
+   "relation": "adds",
+   "addendum": "Written procedures with associated records exist at least for: equipment and analytical instruments; maintenance and calibration; cleaning and sanitisation; results outside specification; staff training, hygiene and clothing; qualification and validation; self-inspections and audits; complaints, recalls and returns.",
+   "reason": "States that operations are covered by written procedures and adds a minimum list of subjects and records."
+  },
+  "O494": {
+   "requirement": "QS-013",
+   "relation": "adds",
+   "addendum": "Improvement covers the quality management system, manufacturing and testing procedures, and product quality.",
+   "reason": "States continual improvement and adds the areas it must reach."
+  },
+  "O495": {
+   "requirement": "QS-037",
+   "relation": "same",
+   "addendum": "",
+   "reason": "No listed requirement names the inputs that improvement measures may draw on."
+  },
+  "O496": {
+   "requirement": "SI-002",
+   "relation": "adds",
+   "addendum": "The programme is built to reveal any weaknesses in how GMP is applied and to recommend the corrective actions needed.",
+   "reason": "States the self-inspection programme and adds its purpose of finding gaps and recommending corrections."
+  },
+  "O497": {
+   "requirement": "SI-002",
+   "relation": "looser",
+   "addendum": "",
+   "reason": "Asks only for routine self-inspections, without an approved schedule."
+  },
+  "O498": {
+   "requirement": "SI-021",
+   "relation": "same",
+   "addendum": "",
+   "reason": "No listed requirement covers extra self-inspections on special occasions."
+  },
+  "O499": {
+   "requirement": "SI-005",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Objective evaluation is the independence the requirement already asks for."
+  },
+  "O500": {
+   "requirement": "SI-004",
+   "relation": "stricter",
+   "addendum": "Every recommended corrective action is implemented.",
+   "reason": "Asks that every recommended corrective action is implemented, not only agreed ones."
+  },
+  "O501": {
+   "requirement": "SI-017",
+   "relation": "looser",
+   "addendum": "",
+   "reason": "Asks only that the procedure is documented, without the listed contents."
+  },
+  "O502": {
+   "requirement": "SI-004",
+   "relation": "same",
+   "addendum": "",
+   "reason": "An effective follow-up programme is the point of completing corrective actions effectively."
+  },
+  "O503": {
+   "requirement": "SI-022",
+   "relation": "same",
+   "addendum": "",
+   "reason": "No listed requirement covers written instructions setting a baseline standard for self-inspections."
+  },
+  "O504": {
+   "requirement": "SI-020",
+   "relation": "adds",
+   "addendum": "GMP questionnaires may be used, also covering staff facilities, upkeep of buildings, sanitation and hygiene, revalidation, label control, and the outcome of earlier self-inspections with any corrective steps taken.",
+   "reason": "States the areas self-inspections cover and adds questionnaires and further areas."
+  },
+  "O505": {
+   "requirement": "SI-005",
+   "relation": "adds",
+   "addendum": "Management appoints the team, choosing local employees with expertise in their own areas and familiarity with GMP.",
+   "reason": "States designated competent staff and adds appointment by management from local experts familiar with GMP."
+  },
+  "O506": {
+   "requirement": "SI-019",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Same point that team members may come from inside or outside the company."
+  },
+  "O507": {
+   "requirement": "SI-002",
+   "relation": "looser",
+   "addendum": "",
+   "reason": "Lets the company set the frequency by its own needs."
+  },
+  "O508": {
+   "requirement": "SI-007",
+   "relation": "same",
+   "addendum": "",
+   "reason": "A report on completion is the record of each self-inspection."
+  },
+  "O509": {
+   "requirement": "SI-008",
+   "relation": "adds",
+   "addendum": "The report also includes an evaluation and conclusions.",
+   "reason": "States the report contents and adds evaluation and conclusions."
+  },
+  "O510": {
+   "requirement": "SI-003",
+   "relation": "adds",
+   "addendum": "Company management evaluates the report and the corrective actions as needed.",
+   "reason": "States reporting to management and adds that management evaluates it."
+  },
+  "O511": {
+   "requirement": "SI-006",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Same optional point of supplementing self-inspections with an additional audit."
+  },
+  "O512": {
+   "requirement": "MAT-019",
+   "relation": "same",
+   "addendum": "",
+   "reason": "No listed requirement covers extending quality audits to suppliers and contractors."
+  },
+  "O513": {
+   "requirement": "PER-001",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Same point that core quality unit duties are not delegated."
+  },
+  "O514": {
+   "requirement": "PER-002",
+   "relation": "looser",
+   "addendum": "",
+   "reason": "Asks only that duties are written, without the minimum set."
+  },
+  "O515": {
+   "requirement": "REL-001",
+   "relation": "narrower",
+   "addendum": "",
+   "reason": "Covers only release or rejection of active substances."
+  },
+  "O516": {
+   "requirement": "REL-001",
+   "relation": "narrower",
+   "addendum": "",
+   "reason": "Covers only intermediates used outside the manufacturer's control."
+  },
+  "O517": {
+   "requirement": "MAT-001",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Same point."
+  },
+  "O518": {
+   "requirement": "REL-002",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Same point."
+  },
+  "O519": {
+   "requirement": "QS-001",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Same point."
+  },
+  "O520": {
+   "requirement": "DOC-001",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Same point."
+  },
+  "O521": {
+   "requirement": "DOC-002",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Same point."
+  },
+  "O522": {
+   "requirement": "SI-001",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Same point."
+  },
+  "O523": {
+   "requirement": "OUT-001",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Same point."
+  },
+  "O524": {
+   "requirement": "QS-002",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Same point."
+  },
+  "O525": {
+   "requirement": "VAL-001",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Same point."
+  },
+  "O526": {
+   "requirement": "CMP-001",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Same point."
+  },
+  "O527": {
+   "requirement": "EQ-001",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Same point."
+  },
+  "O528": {
+   "requirement": "QC-001",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Same point."
+  },
+  "O529": {
+   "requirement": "QC-002",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Same point."
+  },
+  "O530": {
+   "requirement": "QS-003",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Same point that the quality unit performs product quality reviews."
+  },
+  "O531": {
+   "requirement": "SI-003",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Same point."
+  },
+  "O532": {
+   "requirement": "SI-004",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Same point."
   }
  },
- "errors": {
-  "O450": [
-   "item text copies source wording: 'certificates of analysis analytical test reports and other important reports and protocols'"
-  ],
-  "O451": [
-   "item text copies source wording: 'by one or more technical managers or senior analysts with extensive experience'"
-  ],
-  "O464": [
-   "item text copies source wording: 'from internal audits management reviews risk and opportunity assessments or other available'"
-  ],
-  "O484": [
-   "item text copies source wording: 'audits complaints returns and recalls changes and deviations rejected batches quality control'"
-  ]
- },
+ "errors": {},
  "rounds": [
   {
    "run": "20261030T173203.372910Z-consolidate",
@@ -16948,6 +17393,56 @@
     "O530",
     "O531",
     "O532"
+   ],
+   "ingested": true
+  },
+  {
+   "run": "20261030T174348.570878Z-consolidate",
+   "obligations": [
+    "O533",
+    "O534",
+    "O535",
+    "O536",
+    "O537",
+    "O538",
+    "O539",
+    "O540",
+    "O541",
+    "O542",
+    "O543",
+    "O544",
+    "O545",
+    "O546",
+    "O547",
+    "O548",
+    "O549",
+    "O550",
+    "O551",
+    "O552",
+    "O553",
+    "O554",
+    "O555",
+    "O556",
+    "O557",
+    "O558",
+    "O559",
+    "O560",
+    "O561",
+    "O562",
+    "O563",
+    "O564",
+    "O565",
+    "O566",
+    "O567",
+    "O568",
+    "O569",
+    "O570",
+    "O571",
+    "O572",
+    "O573",
+    "O574",
+    "O575",
+    "O576"
    ],
    "ingested": false
   }
