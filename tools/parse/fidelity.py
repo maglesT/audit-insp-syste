@@ -20,8 +20,8 @@ only in these narrow cases, each of which leaves the words of the regulation unc
     differently ("cross- contamination" / "crosscontamination", "multi- 73 disciplinary" with a margin line
     number inside the split word): the same letters in the same order;
   - footnote marks: small-font tokens in the PDF that do not follow a number (a following small number may be an
-    exponent and is not tolerated), or a one- to three-digit number in the clause that the page prints small or
-    starts a footnote line with;
+    exponent and is not tolerated), or a one- to three-digit number in the clause that the page prints small
+    (a number starting a line is not enough: it may be a list number);
   - text set vertically, read one character at a time (runs of three or more single characters), and headings in
     small capitals read as split words ("s cope of g uideline") at a clause's start or end;
   - a line of five or more words printed on a third of the pages (a running title in the margin, or a reference
@@ -245,7 +245,7 @@ def chain(blocks, free=None):
 ROW_BAND = 4
 
 
-def compare_table(clause, window, covered=None, place=None):
+def compare_table(clause, window, covered=None, place=None, row_span=None):
     """Discrepancies of a table row: its tokens missing from its own stretch of the page, as a bag. The stretch is
     the aligned run of the page text plus, when place gives each window token's (page, height), every token
     printed within the band of heights the aligned tokens span (a row's cells, whatever order the engine read
@@ -275,6 +275,8 @@ def compare_table(clause, window, covered=None, place=None):
             if k not in covered and wanted[window[k]] > 0:
                 wanted[window[k]] -= 1
                 covered.add(k)
+    if row_span is not None and blocks:
+        row_span.extend(span)                                   # the row's stretch, for row-level coverage
     stretch = [window[k] for k in span]
     have, missing = Counter(stretch), []
     for t in clause:
@@ -316,12 +318,12 @@ def letters(toks):
     return unlig("".join(t for t in toks if not t.isdigit()))
 
 
-def spaced(clause_part, window, at):
+def spaced(clause_part, window, at, before=True):
     """Clause tokens at the start or end of the clause that the page prints near that place with the same letters
     split differently: headings in small capitals, which pdfminer reads as "s cope of g uideline"."""
     want = letters(clause_part)
     k = 3 * len(clause_part) + 4
-    region = window[max(at - k, 0):at + k]
+    region = window[max(at - k, 0):at] if before else window[at:at + k]   # outside the clause's stretch
     if any(region[i:i + len(clause_part)] == list(clause_part) for i in range(len(region))):
         return False                                    # the same tokens verbatim: not split capitals
     return len(want) >= 4 and want in letters(region) and any(len(t) == 1 and t.isalpha() for t in region)
@@ -364,16 +366,17 @@ def compare_text(clause, window, small=frozenset(), starts=frozenset(), covered=
         if op == "insert" and all(k in small for k in range(j1, j2)) \
                 and not (j1 > 0 and re.search(r"\d", stretch[j1 - 1])):
             continue                                        # footnote marks (not an exponent after a number)
-        if op == "delete" and (i1 == 0 or i2 == len(clause)) and spaced(a, window, lo if i1 == 0 else hi):
+        if op == "delete" and (i1 == 0 or i2 == len(clause)) and spaced(a, window, lo if i1 == 0 else hi, i1 == 0):
             continue                                        # a heading at the clause's edge set in spaced capitals
         if op == "delete" and len(a) <= 2 and all(
-                t.isdigit() and len(t) <= 3 and (t in starts or any(stretch[k] == t for k in small)) for t in a):
+                t.isdigit() and len(t) <= 3 and any(stretch[k] == t for k in small) for t in a):
             continue                                        # footnote marks the PDF prints small or as a line start
         found.append((op, a, b))
         pos.append(lo + j1)
     def near_at(j):                                     # only the page tokens around the difference
         e = window[max(j - 4, 0):j + 4]
-        return joins(e) | joins([x for x in e if not (x.isdigit() and len(x) <= 3)])
+        e2 = [x for x in e if not (x.isdigit() and len(x) <= 3)]
+        return (joins(e) | joins(e2)) - set(e) - set(e2)   # a join of page tokens, not one whole page token
     def marks(ts):
         return all((t.isdigit() and len(t) <= 3) or t in "<>≤≥±%−" for t in ts)
     inserted = {"".join(b) for op, _, b in found if op == "insert" and marks(b)}   # only marks move (footnote numbers, signs)
@@ -466,10 +469,10 @@ def compare(clauses, reading):
         if c["kind"] in TABLE_KINDS:
             found = compare_table(toks, window, place=place)
             taken = {k for k, (p, i) in enumerate(where) if i in covered[p]}
-            compare_table(toks, ["\0" if k in taken else t for k, t in enumerate(window)], hit, place)  # next copy
-            if hit:                                         # the row's own run, for row-level coverage
-                for k in range(min(hit), max(hit) + 1):
-                    inrow.add(where[k])
+            row_span = []
+            compare_table(toks, ["\0" if k in taken else t for k, t in enumerate(window)], hit, place, row_span)
+            for k in row_span:                              # the row's whole band, for row-level coverage
+                inrow.add(where[k])
         else:                                               # running text: without the running headers
             keep = [k for k in range(len(window)) if k not in head]
             at = {k: n for n, k in enumerate(keep)}
@@ -512,7 +515,7 @@ def compare(clauses, reading):
                 if not 0 <= j < len(page_tokens) or j in covered[p] or j in page_small | page_soft | page_head:
                     break
                 run.append(page_tokens[j])
-            if run and len(run) < UNCOVERED_MIN and any(len(t) > 1 and t.isalpha() for t in run) \
+            if run and len(run) < UNCOVERED_MIN and any((len(t) > 1 and t.isalpha()) or re.fullmatch(r"\d+[.,]\d+|\d{4,}", t) for t in run) \
                     and not spelled(run):
                 uncovered.append((p + 1, f"next to {ref}: " + " ".join(run)))
     twice = sorted(k for k, v in claim.items() if len(v) > 1)  # page text claimed by two text clauses

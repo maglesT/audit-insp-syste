@@ -77,7 +77,7 @@ class Tolerates(unittest.TestCase):
         self.assertEqual(fidelity.describe(fidelity.compare_text(T("requalification of systems"), printed,
                                                                 {printed.index("23")})), "")
         self.assertEqual(text_flags("the annex. 1 Records are kept", "the annex. Records are kept",
-                                    starts={"1"}), "")
+                                    starts={"1"}), "-1")          # a line-start number alone is not a footnote
 
     def test_vertical_text(self):
         self.assertEqual(text_flags("records are kept", "records w h o t r s are kept"), "")
