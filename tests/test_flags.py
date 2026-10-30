@@ -56,6 +56,30 @@ class Duplicates(unittest.TestCase):
         r = [c.ref for c in numbered.parse(common.OFFICIAL / "pics-pe009-18-part2.pdf")[0] if c.kind in common.CITABLE]
         self.assertEqual([x for x in r if "Glossary" in x], ["Part II Glossary"])
 
+    def test_prefixed_numbering(self):
+        """PIC/S Annex 2A Part B ("B 1.1"), ICH Q9 annexes ("I.1"), WHO "A.1": the prefix is a section."""
+        r = {c.ref for c in numbered.parse(common.OFFICIAL / "pics-pe009-18-annexes.pdf")[0]}
+        self.assertTrue({"Annex 2A B 1", "Annex 2A B 1.1"} <= r)
+        r = {c.ref for c in numbered.parse(common.OFFICIAL / "ich-q9r1.pdf")[0]}
+        self.assertTrue({"I 1", "II 1", "5"} <= r)
+
+    def test_review_cases(self):
+        """Wrapped "H13 HEPA filters" is not a prefix; reference lists are not clauses; back matter leaves the
+        prefix section; "24. pH Meter" stays a clause."""
+        r = {c.ref for c in numbered.parse(common.OFFICIAL / "ich-q9r1.pdf")[0] if c.kind == "clause"}
+        self.assertNotIn("9", r)                                   # reference 9 after "8. REFERENCES"
+        r = {c.ref for c in numbered.parse(common.OFFICIAL / "who-trs943-a3-reference-substances.pdf")[0]}
+        self.assertNotIn("Annex 3 B Glossary", r)
+        r = {c.ref for c in numbered.parse(common.OFFICIAL / "who-trs981-a2-qrm.pdf")[0] if c.kind == "clause"}
+        self.assertTrue({"6"} <= r and "10" not in r)
+
+    def test_chapters_without_sub_numbers_and_trailing_annex(self):
+        r = {c.ref for c in numbered.parse(common.OFFICIAL / "who-trs1019-a2-hvac-nonsterile-part2.pdf")[0]}
+        self.assertTrue({"8", "9", "10"} <= r)
+        r = {c.ref: c for c in numbered.parse(common.OFFICIAL / "pics-pi047-1-gdp-active-substances.pdf")[0]}
+        self.assertIn("Annex", r)
+        self.assertNotIn("Glossary of terms", r["8.2"].text)
+
     def test_cover_date_is_not_clause_one(self):
         r = {c.ref: c for c in numbered.parse(common.OFFICIAL / "pics-pi043-1-am-cross-contamination.pdf")[0]}
         self.assertTrue(r["1"].text.startswith("1. DOCUMENT HISTORY"))

@@ -164,6 +164,28 @@ def same_title(body, entry):
     return True
 
 
+CHILD = {"roman": "upper", "upper": "digit", "digit": "lower", "part": None, "decimal": None}
+
+
+def ref_kind(ref):
+    """The marker type of the last level of a reference: "III.B" -> "upper"."""
+    last = ref.split(" ")[-1].split(".")[-1]
+    if last in ROMAN:
+        return "roman"
+    if re.fullmatch(r"[A-Z]", last):
+        return "upper"
+    if last.isdigit():
+        return "digit"
+    return "lower" if re.fullmatch(r"[a-z]", last) else None
+
+
+def sub_heading(rest):
+    """A heading one level below the contents list: short, starts with a capital, no closing full stop. Sentence
+    case is allowed ("R. Significant body of information"), because the marker must also come in sequence."""
+    rest = rest.strip()
+    return 0 < len(rest) < 60 and rest[:1].isupper() and not rest.endswith((".", ";", ",", ":"))
+
+
 def heading_like(rest):
     """Without a contents list: a heading is in capitals or title case and does not end like a sentence; list items
     in the body ("1. For CGMP coverage that may result in ...") do not pass."""
@@ -194,7 +216,7 @@ def parse(path, pages=None):
             m = MARK.match(ln)
             if m and outline.accept(m.group(1)):
                 entries.append((m.group(1).rstrip("."), _words(LEADER.sub("", m.group(2)), 2), outline.ref()))
-    clauses, cur, outline, nxt, unnumbered, body = [], None, Outline(), 0, 0, 0
+    clauses, cur, outline, nxt, unnumbered, body, sub = [], None, Outline(), 0, 0, 0, None
 
     def start(kind, ref, line, pno):
         nonlocal cur
@@ -213,12 +235,18 @@ def parse(path, pages=None):
         if b and heading_like(line) and not MARK.match(line):
             # appendices and attachments carry text of their own ("Appendix 1"); references, glossaries and the
             # like close the last section without becoming part of it
-            listing = any(BACK.match(ln) for _, ln in lines[i + 1:i + 4])   # "Attachment A ..., Attachment B ..."
+            # a listing entry: more appendix lines follow at once, or the same appendix appears again later
+            label = f"{b.group(1).title()} {b.group(2)}" if b.group(1) else ""
+            listing = any(BACK.match(ln) for _, ln in lines[i + 1:i + 4]) or (label and any(
+                (bb := BACK.match(ln)) and bb.group(1) and f"{bb.group(1).title()} {bb.group(2)}" == label
+                for _, ln in lines[i + 1:]))
             if b.group(1) and not listing:
                 start("clause", f"{b.group(1).title()} {b.group(2)}", line, pno)
+                sub = {"parent": cur["ref"], "last": 0, "kind": "upper"}   # appendix sections A., B., ...
             else:
                 unnumbered += 1
                 start("unnumbered", f"_unnumbered:{unnumbered}", line, pno)
+                sub = None
             continue
         m = MARK.match(line)
         ref = None
@@ -242,7 +270,18 @@ def parse(path, pages=None):
         if ref:
             start("clause", ref, line, pno)
             cur["notes"] += [f"gap: contents entry {s} not found in the body" for s in skipped]
+            sub = {"parent": ref, "last": 0, "kind": CHILD.get(ref_kind(ref))} if entries else None
             continue
+        if m and sub and sub["kind"] and sub_heading(m.group(2)) \
+                and not any(e[2].startswith(sub["parent"] + ".") for e in entries):
+            # a level below the contents list ("III.B" lists no "III.B.1"): headings of the next marker type, in
+            # sequence ("1. Suitability", "2. Quality Control")
+            value = next((v for k, v in readings(m.group(1)) if k == sub["kind"]), None)
+            if value == sub["last"] + 1:
+                sub["last"] = value
+                joint = " " if re.fullmatch(r"(Part|Appendix|Attachment) \w+", sub["parent"]) else "."
+                start("clause", f'{sub["parent"]}{joint}{m.group(1).rstrip(".")}', line, pno)
+                continue
         if cur is None or cur["kind"] == "toc":
             unnumbered += 1
             start("unnumbered", f"_unnumbered:{unnumbered}", line, pno)

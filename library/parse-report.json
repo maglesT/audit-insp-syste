@@ -44,7 +44,7 @@
   },
   {
    "source": "fda-aseptic-2004.pdf",
-   "clauses": 62,
+   "clauses": 76,
    "table_rows": 5,
    "unnumbered_segments": 4,
    "toc_segments": 1,
@@ -86,7 +86,7 @@
   },
   {
    "source": "fda-oos-2022.pdf",
-   "clauses": 20,
+   "clauses": 22,
    "table_rows": 0,
    "unnumbered_segments": 2,
    "toc_segments": 1,
@@ -407,7 +407,7 @@
   },
   {
    "source": "eu-annex11_01-2011_en.pdf",
-   "clauses": 34,
+   "clauses": 39,
    "table_rows": 0,
    "unnumbered_segments": 1,
    "toc_segments": 0,
@@ -470,28 +470,24 @@
   },
   {
    "source": "eu-2018_annex17_en.pdf",
-   "clauses": 5,
+   "clauses": 36,
    "table_rows": 0,
    "unnumbered_segments": 1,
-   "toc_segments": 1,
-   "body_chars": 15455,
-   "dropped_chars": 23,
+   "toc_segments": 5,
+   "body_chars": 14876,
+   "dropped_chars": 120,
    "assigned_share": 1.0,
-   "numbered_share": 0.8843,
+   "numbered_share": 0.8744,
    "duplicate_refs": [],
    "gaps": [],
-   "large": [
-    "1"
-   ],
+   "large": [],
    "restarts": 0,
    "obligations": 58,
    "obligations_outside_numbered": 0,
    "missed_obligations": [],
-   "flags": [
-    "large clauses"
-   ],
-   "flag": true,
-   "explanation": "Known parser limitation, text kept (to fix before S2 mapping): the annex prints line numbers in the margin, so its headings (2.1, 3.1 ...) are not seen and the whole body sits in clause 1."
+   "flags": [],
+   "flag": false,
+   "explanation": ""
   },
   {
    "source": "pics-pe009-18-part1.pdf",
@@ -540,10 +536,10 @@
   },
   {
    "source": "pics-pe009-18-annexes.pdf",
-   "clauses": 1284,
+   "clauses": 1316,
    "table_rows": 106,
    "unnumbered_segments": 2,
-   "toc_segments": 76,
+   "toc_segments": 77,
    "body_chars": 610639,
    "dropped_chars": 10144,
    "assigned_share": 1.0,
@@ -555,13 +551,12 @@
    ],
    "large": [
     "Annex 2A 5.23",
-    "Annex 2A 8.3",
+    "Annex 2A B 3.3",
     "Annex 3 13",
     "Annex 13 3 #4",
-    "Annex 20 3 #2",
-    "Annex 20 Appendix I 7"
+    "Annex 20 3 #2"
    ],
-   "restarts": 47,
+   "restarts": 43,
    "obligations": 2590,
    "obligations_outside_numbered": 0,
    "missed_obligations": [
@@ -577,14 +572,14 @@
     "possible misses"
    ],
    "flag": true,
-   "explanation": "Known parser limitation, text kept (to fix before S2 mapping): Annex 2A Part B uses lettered numbers ('B 1.1') that are not recognised (8.3 holds Part B); a source typo '14..' in Annex 3 makes 13 hold 15 onwards. Possible misses are text inside ATMP flowchart figures."
+   "explanation": "Annex 2A Part B is split (B 1 to B 3.3), but Known parser limitation, text kept: B 3.3 still holds the closing Part B text before Annex 2B, and a source typo '14..' in Annex 3 makes 13 hold 15 onwards. Annex 2A 5.23 is a genuine long clause. Possible misses are text inside ATMP flowchart figures."
   },
   {
    "source": "who-trs986-a2-gmp-main.pdf",
    "clauses": 320,
    "table_rows": 0,
    "unnumbered_segments": 2,
-   "toc_segments": 24,
+   "toc_segments": 17,
    "body_chars": 106457,
    "dropped_chars": 3699,
    "assigned_share": 1.0,
@@ -604,12 +599,12 @@
    "source": "who-trs1044-a2-sterile.pdf",
    "clauses": 313,
    "table_rows": 4,
-   "unnumbered_segments": 1,
+   "unnumbered_segments": 2,
    "toc_segments": 10,
    "body_chars": 164930,
    "dropped_chars": 5248,
    "assigned_share": 1.0,
-   "numbered_share": 0.989,
+   "numbered_share": 0.9771,
    "duplicate_refs": [],
    "gaps": [],
    "large": [],
@@ -627,20 +622,20 @@
   },
   {
    "source": "who-trs957-a2-api.pdf",
-   "clauses": 559,
+   "clauses": 555,
    "table_rows": 8,
    "unnumbered_segments": 4,
    "toc_segments": 1,
    "body_chars": 113044,
    "dropped_chars": 186,
    "assigned_share": 1.0,
-   "numbered_share": 0.9903,
+   "numbered_share": 0.9822,
    "duplicate_refs": [],
    "gaps": [
     "gap before 2.3 (previous 2.1.1)"
    ],
    "large": [],
-   "restarts": 6,
+   "restarts": 2,
    "obligations": 550,
    "obligations_outside_numbered": 0,
    "missed_obligations": [],
@@ -650,14 +645,14 @@
   },
   {
    "source": "who-trs1019-a3-validation.pdf",
-   "clauses": 412,
+   "clauses": 399,
    "table_rows": 0,
-   "unnumbered_segments": 5,
-   "toc_segments": 18,
+   "unnumbered_segments": 8,
+   "toc_segments": 17,
    "body_chars": 139584,
    "dropped_chars": 5294,
    "assigned_share": 1.0,
-   "numbered_share": 0.9816,
+   "numbered_share": 0.8729,
    "duplicate_refs": [],
    "gaps": [
     "gap before 4 (previous 2.3)",
@@ -665,18 +660,14 @@
     "gap before 4 (previous 2.5)",
     "gap before 4.10 (previous 4.8)"
    ],
-   "large": [
-    "Appendix 5 2"
-   ],
-   "restarts": 14,
+   "large": [],
+   "restarts": 0,
    "obligations": 565,
    "obligations_outside_numbered": 0,
    "missed_obligations": [],
-   "flags": [
-    "large clauses"
-   ],
-   "flag": true,
-   "explanation": "Genuine: Appendix 5 clause 2 (pages 60-62) is reference item 2 followed by a long 'Further reading' bibliography with bullets and no numbers. No numbered clauses are swallowed, and the text holds no requirements."
+   "flags": [],
+   "flag": false,
+   "explanation": ""
   },
   {
    "source": "india-schedule-m-2023-GSR922E.pdf",
@@ -712,7 +703,7 @@
     "large clauses"
    ],
    "flag": true,
-   "explanation": "Known parser limitation, text kept (to fix before S2 mapping): Part VII headings written as '4. Complaints:-' are not split (3.2 holds 4 to 9); Part I 20.10 and Part XIII 3.4 are genuine long lists."
+   "explanation": "Known parser limitation, text kept: Part VII headings written as '4. Complaints:-' are not split (3.2 holds 4 to 9); Part I 20.10 and Part XIII 3.4 are genuine long lists."
   },
   {
    "source": "ich-q7.pdf",
@@ -740,20 +731,20 @@
   },
   {
    "source": "ich-q7-qa.pdf",
-   "clauses": 206,
+   "clauses": 204,
    "table_rows": 146,
    "unnumbered_segments": 2,
-   "toc_segments": 19,
+   "toc_segments": 0,
    "body_chars": 44321,
    "dropped_chars": 473,
    "assigned_share": 1.0,
-   "numbered_share": 0.9253,
+   "numbered_share": 0.8141,
    "duplicate_refs": [],
    "gaps": [],
    "large": [],
    "restarts": 0,
    "obligations": 115,
-   "obligations_outside_numbered": 5,
+   "obligations_outside_numbered": 8,
    "missed_obligations": [],
    "flags": [],
    "flag": false,
@@ -761,32 +752,33 @@
   },
   {
    "source": "ich-q9r1.pdf",
-   "clauses": 25,
+   "clauses": 44,
    "table_rows": 3,
-   "unnumbered_segments": 2,
+   "unnumbered_segments": 1,
    "toc_segments": 12,
    "body_chars": 59233,
    "dropped_chars": 510,
    "assigned_share": 1.0,
-   "numbered_share": 0.5942,
+   "numbered_share": 0.9506,
    "duplicate_refs": [],
-   "gaps": [],
+   "gaps": [
+    "gap before 8 (previous 6.1)"
+   ],
    "large": [
     "1"
    ],
    "restarts": 3,
    "obligations": 83,
-   "obligations_outside_numbered": 21,
+   "obligations_outside_numbered": 6,
    "missed_obligations": [
     "Risk Assessment Initiate Quality Risk Management Process Hazard Identification Risk Analysis Risk Evaluation Risk Management tools Risk Communication Risk Control Risk Reduction Output / Result of the"
    ],
    "flags": [
     "large clauses",
-    "obligations outside citable clauses",
     "possible misses"
    ],
    "flag": true,
-   "explanation": "Known parser limitation, text kept (to fix before S2 mapping): the Annex I/II sections numbered 'I.1' to 'II.9' are not recognised; the outside obligations are the reference list and annex text; the possible miss is the QRM process flowchart."
+   "explanation": "Genuine: clause 1 (introduction) is one long section; the annex sections I.1 to II.9 are separate clauses. The possible miss is text from the QRM process flowchart."
   },
   {
    "source": "ich-q10.pdf",
@@ -979,7 +971,7 @@
   },
   {
    "source": "fda-guidance-quality-agreements-2016.pdf",
-   "clauses": 13,
+   "clauses": 19,
    "table_rows": 0,
    "unnumbered_segments": 2,
    "toc_segments": 1,
@@ -1021,7 +1013,7 @@
   },
   {
    "source": "fda-guidance-npbl-cross-contamination-2013.pdf",
-   "clauses": 3,
+   "clauses": 7,
    "table_rows": 0,
    "unnumbered_segments": 2,
    "toc_segments": 1,
@@ -1199,7 +1191,7 @@
   },
   {
    "source": "fda-guidance-field-alert-report-qa-2021.pdf",
-   "clauses": 9,
+   "clauses": 14,
    "table_rows": 0,
    "unnumbered_segments": 2,
    "toc_segments": 1,
@@ -1220,7 +1212,7 @@
   },
   {
    "source": "fda-guidance-container-closure-systems-1999.pdf",
-   "clauses": 67,
+   "clauses": 82,
    "table_rows": 41,
    "unnumbered_segments": 4,
    "toc_segments": 1,
@@ -1230,22 +1222,18 @@
    "numbered_share": 0.9568,
    "duplicate_refs": [],
    "gaps": [],
-   "large": [
-    "III.B"
-   ],
+   "large": [],
    "restarts": 0,
    "obligations": 247,
    "obligations_outside_numbered": 2,
    "missed_obligations": [],
-   "flags": [
-    "large clauses"
-   ],
-   "flag": true,
-   "explanation": "Known parser limitation, text kept (to fix before S2 mapping): numbered subsections 1. to 4. under III.B (a fourth outline level) are not split by the contents-based parser."
+   "flags": [],
+   "flag": false,
+   "explanation": ""
   },
   {
    "source": "fda-guidance-sterilization-validation-submission-1994.pdf",
-   "clauses": 72,
+   "clauses": 89,
    "table_rows": 0,
    "unnumbered_segments": 2,
    "toc_segments": 1,
@@ -1350,7 +1338,7 @@
   },
   {
    "source": "fda-guidance-changes-approved-nda-anda-2004.pdf",
-   "clauses": 69,
+   "clauses": 71,
    "table_rows": 18,
    "unnumbered_segments": 3,
    "toc_segments": 1,
@@ -1690,7 +1678,7 @@
   },
   {
    "source": "fda-cp-7356-002a-sterile-drug-process.pdf",
-   "clauses": 49,
+   "clauses": 52,
    "table_rows": 21,
    "unnumbered_segments": 2,
    "toc_segments": 1,
@@ -1705,7 +1693,7 @@
    "large": [
     "Part III 3.6.B",
     "Part III 3.8",
-    "Part VII"
+    "Part VII B"
    ],
    "restarts": 0,
    "obligations": 182,
@@ -1715,7 +1703,7 @@
     "large clauses"
    ],
    "flag": true,
-   "explanation": "3.6.B and 3.8 are genuine long sections built from (1)/(a) item lists. Known parser limitation, text kept (to fix before S2 mapping): Attachment A (inspection questionnaire, pages 39-54) is named only in the running page header, so Part VII holds it."
+   "explanation": "3.6.B and 3.8 are genuine long sections built from (1)/(a) item lists. Known parser limitation, text kept: Attachment A (inspection questionnaire, pages 39-54) is named only in the running page header, so Part VII holds it."
   },
   {
    "source": "fda-cp-7356-002f-api.pdf",
@@ -1744,20 +1732,20 @@
   },
   {
    "source": "fda-cp-7346-832-preapproval-inspections.pdf",
-   "clauses": 70,
+   "clauses": 69,
    "table_rows": 27,
-   "unnumbered_segments": 5,
+   "unnumbered_segments": 6,
    "toc_segments": 1,
    "body_chars": 118757,
    "dropped_chars": 3315,
    "assigned_share": 1.0,
-   "numbered_share": 0.8948,
+   "numbered_share": 0.8686,
    "duplicate_refs": [],
    "gaps": [],
    "large": [
     "Part III 1.B"
    ],
-   "restarts": 1,
+   "restarts": 0,
    "obligations": 154,
    "obligations_outside_numbered": 7,
    "missed_obligations": [],
@@ -2173,14 +2161,14 @@
   },
   {
    "source": "eu-p3-gmp-mah-reflection-paper.pdf",
-   "clauses": 12,
+   "clauses": 15,
    "table_rows": 0,
-   "unnumbered_segments": 2,
+   "unnumbered_segments": 1,
    "toc_segments": 11,
    "body_chars": 91769,
    "dropped_chars": 720,
    "assigned_share": 1.0,
-   "numbered_share": 0.9128,
+   "numbered_share": 0.9789,
    "duplicate_refs": [],
    "gaps": [
     "gap before 5.3 (previous 5.1)"
@@ -2194,7 +2182,9 @@
     "5.4",
     "5.5",
     "5.6",
-    "5.7"
+    "5.7",
+    "6",
+    "8"
    ],
    "restarts": 0,
    "obligations": 186,
@@ -2204,7 +2194,7 @@
     "large clauses"
    ],
    "flag": true,
-   "explanation": "Sections 1, 4 and 5.1-5.6 are genuinely long discursive sections. Known parser limitation, text kept (to fix before S2 mapping): the wrapped heading '6. Falsified Medicines Directive ...' and '7. Conclusion' are folded into 5.7."
+   "explanation": "Genuine: sections 1, 4 and 5.1-5.6 are long discursive sections without sub-numbers; sections 6 and 7 are separate clauses."
   },
   {
    "source": "ema-gmp-gdp-qa.html",
@@ -2236,7 +2226,7 @@
   },
   {
    "source": "ema-hbel-guideline.pdf",
-   "clauses": 23,
+   "clauses": 25,
    "table_rows": 9,
    "unnumbered_segments": 1,
    "toc_segments": 7,
@@ -2282,23 +2272,22 @@
   },
   {
    "source": "ema-process-validation-finished-products.pdf",
-   "clauses": 29,
+   "clauses": 28,
    "table_rows": 15,
    "unnumbered_segments": 2,
    "toc_segments": 8,
    "body_chars": 30466,
    "dropped_chars": 1938,
    "assigned_share": 1.0,
-   "numbered_share": 0.7189,
+   "numbered_share": 0.6682,
    "duplicate_refs": [],
    "gaps": [],
    "large": [
-    "5.2",
-    "5.4"
+    "5.2"
    ],
-   "restarts": 4,
+   "restarts": 0,
    "obligations": 81,
-   "obligations_outside_numbered": 9,
+   "obligations_outside_numbered": 10,
    "missed_obligations": [],
    "flags": [
     "large clauses",
@@ -2311,12 +2300,12 @@
    "source": "ema-sterilisation-guideline.pdf",
    "clauses": 57,
    "table_rows": 37,
-   "unnumbered_segments": 2,
+   "unnumbered_segments": 1,
    "toc_segments": 15,
    "body_chars": 52135,
    "dropped_chars": 2990,
    "assigned_share": 1.0,
-   "numbered_share": 0.8566,
+   "numbered_share": 0.9214,
    "duplicate_refs": [],
    "gaps": [],
    "large": [
@@ -2336,18 +2325,18 @@
   },
   {
    "source": "ema-water-quality-guideline.pdf",
-   "clauses": 78,
+   "clauses": 64,
    "table_rows": 52,
    "unnumbered_segments": 2,
    "toc_segments": 11,
    "body_chars": 19407,
    "dropped_chars": 814,
    "assigned_share": 1.0,
-   "numbered_share": 0.8113,
+   "numbered_share": 0.7558,
    "duplicate_refs": [],
    "gaps": [],
    "large": [],
-   "restarts": 5,
+   "restarts": 0,
    "obligations": 30,
    "obligations_outside_numbered": 0,
    "missed_obligations": [],
@@ -2379,7 +2368,7 @@
     "large clauses"
    ],
    "flag": true,
-   "explanation": "Part I Q3 is one long answer. Known parser limitation, text kept (to fix before S2 mapping): list items 1-4 inside Part II Q1 take over the question numbering, so Part II questions 2-4 sit under '4'."
+   "explanation": "Part I Q3 is one long answer. Known parser limitation, text kept: list items 1-4 inside Part II Q1 take over the question numbering, so Part II questions 2-4 sit under '4'."
   },
   {
    "source": "ema-qa-microbial-contamination-nonsterile.pdf",
@@ -2456,7 +2445,7 @@
     "possible misses"
    ],
    "flag": true,
-   "explanation": "Known parser limitation, text kept (to fix before S2 mapping): the numbered table rows '1. Expectation' / '2. Expectation' start clauses that hold following sections; the possible miss is in table 8.8."
+   "explanation": "Known parser limitation, text kept: the numbered table rows '1. Expectation' / '2. Expectation' start clauses that hold following sections; the possible miss is in table 8.8."
   },
   {
    "source": "pics-pi006-4-qualification-validation.pdf",
@@ -2516,7 +2505,7 @@
    "clauses": 259,
    "table_rows": 78,
    "unnumbered_segments": 1,
-   "toc_segments": 2,
+   "toc_segments": 1,
    "body_chars": 112414,
    "dropped_chars": 1647,
    "assigned_share": 1.0,
@@ -2534,7 +2523,7 @@
     "large clauses"
    ],
    "flag": true,
-   "explanation": "Known parser limitation, text kept (to fix before S2 mapping): after the reference list restarts the numbering, sections 27 (glossary) to 29 (revision history) are held in reference item '15 #2'."
+   "explanation": "Known parser limitation, text kept: after the reference list restarts the numbering, sections 27 (glossary) to 29 (revision history) are held in reference item '15 #2'."
   },
   {
    "source": "pics-pi058-1-annex1-interpretation.pdf",
@@ -2565,7 +2554,7 @@
    "clauses": 112,
    "table_rows": 5,
    "unnumbered_segments": 1,
-   "toc_segments": 1,
+   "toc_segments": 0,
    "body_chars": 45582,
    "dropped_chars": 631,
    "assigned_share": 1.0,
@@ -2587,18 +2576,16 @@
   },
   {
    "source": "pics-pi012-3-sterility-testing.pdf",
-   "clauses": 123,
+   "clauses": 124,
    "table_rows": 8,
-   "unnumbered_segments": 2,
+   "unnumbered_segments": 1,
    "toc_segments": 5,
    "body_chars": 27271,
    "dropped_chars": 375,
    "assigned_share": 1.0,
-   "numbered_share": 0.8645,
+   "numbered_share": 0.8768,
    "duplicate_refs": [],
-   "gaps": [
-    "gap before 15 (previous 13.3)"
-   ],
+   "gaps": [],
    "large": [],
    "restarts": 0,
    "obligations": 123,
@@ -2613,7 +2600,7 @@
    "clauses": 55,
    "table_rows": 44,
    "unnumbered_segments": 1,
-   "toc_segments": 2,
+   "toc_segments": 1,
    "body_chars": 13729,
    "dropped_chars": 281,
    "assigned_share": 1.0,
@@ -2655,7 +2642,7 @@
    "clauses": 113,
    "table_rows": 83,
    "unnumbered_segments": 1,
-   "toc_segments": 1,
+   "toc_segments": 0,
    "body_chars": 31533,
    "dropped_chars": 2209,
    "assigned_share": 1.0,
@@ -2674,22 +2661,20 @@
     "possible misses"
    ],
    "flag": true,
-   "explanation": "Known parser limitation, text kept (to fix before S2 mapping): a table row on page 11 without a bottom rule is read as plain text, not as a row (material status control); the text is in the parse but the row is not clean."
+   "explanation": "Known parser limitation, text kept: a table row on page 11 without a bottom rule is read as plain text, not as a row (material status control); the text is in the parse but the row is not clean."
   },
   {
    "source": "pics-pi043-1-am-cross-contamination.pdf",
-   "clauses": 152,
+   "clauses": 153,
    "table_rows": 113,
-   "unnumbered_segments": 2,
+   "unnumbered_segments": 1,
    "toc_segments": 1,
    "body_chars": 35584,
    "dropped_chars": 431,
    "assigned_share": 1.0,
-   "numbered_share": 0.9543,
+   "numbered_share": 0.9662,
    "duplicate_refs": [],
-   "gaps": [
-    "gap before 7 (previous 5.1.2)"
-   ],
+   "gaps": [],
    "large": [],
    "restarts": 0,
    "obligations": 57,
@@ -2701,18 +2686,16 @@
   },
   {
    "source": "pics-pi052-1-am-hbel.pdf",
-   "clauses": 36,
+   "clauses": 38,
    "table_rows": 22,
-   "unnumbered_segments": 2,
-   "toc_segments": 1,
+   "unnumbered_segments": 1,
+   "toc_segments": 0,
    "body_chars": 14777,
    "dropped_chars": 211,
    "assigned_share": 1.0,
-   "numbered_share": 0.8765,
+   "numbered_share": 0.9214,
    "duplicate_refs": [],
-   "gaps": [
-    "gap before 7 (previous 4.1)"
-   ],
+   "gaps": [],
    "large": [],
    "restarts": 0,
    "obligations": 47,
@@ -2745,8 +2728,8 @@
   },
   {
    "source": "pics-pi038-2-am-qrm.pdf",
-   "clauses": 49,
-   "table_rows": 33,
+   "clauses": 93,
+   "table_rows": 76,
    "unnumbered_segments": 1,
    "toc_segments": 1,
    "body_chars": 14514,
@@ -2759,21 +2742,17 @@
    "restarts": 0,
    "obligations": 28,
    "obligations_outside_numbered": 0,
-   "missed_obligations": [
-    "GMP Guide 1 Principle 3.3 The following areas of operation are examples of where there should be evidence of the implementation of QRM principles: 3.4 - Deviations, OOS-Results, Investigations and CAP"
-   ],
-   "flags": [
-    "possible misses"
-   ],
-   "flag": true,
-   "explanation": "Known parser limitation, text kept (to fix before S2 mapping): table rows without ruling lines are merged ('3.3 3.4 3.5 ...' on page 7), so one row holds several areas; the possible miss is in that row."
+   "missed_obligations": [],
+   "flags": [],
+   "flag": false,
+   "explanation": ""
   },
   {
    "source": "pics-pi028-2-am-packaging.pdf",
    "clauses": 28,
    "table_rows": 14,
    "unnumbered_segments": 1,
-   "toc_segments": 1,
+   "toc_segments": 0,
    "body_chars": 9873,
    "dropped_chars": 468,
    "assigned_share": 1.0,
@@ -2791,7 +2770,7 @@
   },
   {
    "source": "pics-pi054-1-pqs-effectiveness.pdf",
-   "clauses": 123,
+   "clauses": 124,
    "table_rows": 102,
    "unnumbered_segments": 1,
    "toc_segments": 0,
@@ -2856,43 +2835,39 @@
   },
   {
    "source": "pics-pi047-1-gdp-active-substances.pdf",
-   "clauses": 67,
+   "clauses": 68,
    "table_rows": 4,
-   "unnumbered_segments": 1,
+   "unnumbered_segments": 2,
    "toc_segments": 0,
    "body_chars": 20461,
    "dropped_chars": 255,
    "assigned_share": 1.0,
-   "numbered_share": 0.8603,
+   "numbered_share": 0.8595,
    "duplicate_refs": [],
    "gaps": [],
-   "large": [
-    "8.2"
-   ],
+   "large": [],
    "restarts": 0,
    "obligations": 98,
    "obligations_outside_numbered": 1,
    "missed_obligations": [],
-   "flags": [
-    "large clauses"
-   ],
-   "flag": true,
-   "explanation": "Known parser limitation, text kept (to fix before S2 mapping): the unnumbered trailing annex (glossary) and revision history are appended to the last clause 8.2."
+   "flags": [],
+   "flag": false,
+   "explanation": ""
   },
   {
    "source": "pics-pe008-4-site-master-file.pdf",
-   "clauses": 47,
+   "clauses": 46,
    "table_rows": 8,
    "unnumbered_segments": 1,
    "toc_segments": 10,
    "body_chars": 13132,
    "dropped_chars": 161,
    "assigned_share": 1.0,
-   "numbered_share": 0.8246,
+   "numbered_share": 0.7433,
    "duplicate_refs": [],
    "gaps": [],
    "large": [],
-   "restarts": 1,
+   "restarts": 0,
    "obligations": 8,
    "obligations_outside_numbered": 0,
    "missed_obligations": [],
@@ -2902,34 +2877,30 @@
   },
   {
    "source": "who-trs1033-a3-water.pdf",
-   "clauses": 126,
+   "clauses": 118,
    "table_rows": 0,
-   "unnumbered_segments": 2,
+   "unnumbered_segments": 3,
    "toc_segments": 7,
    "body_chars": 40697,
    "dropped_chars": 1549,
    "assigned_share": 1.0,
-   "numbered_share": 0.9434,
+   "numbered_share": 0.8034,
    "duplicate_refs": [],
    "gaps": [],
-   "large": [
-    "8 #2"
-   ],
-   "restarts": 8,
+   "large": [],
+   "restarts": 0,
    "obligations": 179,
-   "obligations_outside_numbered": 3,
+   "obligations_outside_numbered": 8,
    "missed_obligations": [],
-   "flags": [
-    "large clauses"
-   ],
-   "flag": true,
-   "explanation": "Genuine: Ref '8 #2' is the last reference-list entry plus the unnumbered 'Further reading' bibliography (pages 22-24). The unnumbered segment is the background/history text before section 1, describing Expert Committee recommendations, not requirements."
+   "flags": [],
+   "flag": false,
+   "explanation": ""
   },
   {
    "source": "who-trs1025-a3-wfi-non-distillation.pdf",
    "clauses": 36,
    "table_rows": 0,
-   "unnumbered_segments": 2,
+   "unnumbered_segments": 3,
    "toc_segments": 7,
    "body_chars": 6837,
    "dropped_chars": 33,
@@ -2950,7 +2921,7 @@
    "source": "who-trs1010-a8-hvac-nonsterile.pdf",
    "clauses": 118,
    "table_rows": 18,
-   "unnumbered_segments": 2,
+   "unnumbered_segments": 3,
    "toc_segments": 13,
    "body_chars": 35078,
    "dropped_chars": 1397,
@@ -2971,7 +2942,7 @@
   },
   {
    "source": "who-trs1019-a2-hvac-nonsterile-part2.pdf",
-   "clauses": 15,
+   "clauses": 22,
    "table_rows": 0,
    "unnumbered_segments": 2,
    "toc_segments": 1,
@@ -2981,12 +2952,10 @@
    "numbered_share": 0.8893,
    "duplicate_refs": [],
    "gaps": [
-    "gap before 4 (previous 2.2)",
-    "gap before 7 (previous 5.4)"
+    "gap before 4 (previous 2.2)"
    ],
    "large": [
-    "7",
-    "7.1"
+    "7"
    ],
    "restarts": 0,
    "obligations": 129,
@@ -2996,13 +2965,13 @@
     "large clauses"
    ],
    "flag": true,
-   "explanation": "Clause 7 is a genuinely long unnumbered section. Known parser limitation, text kept (to fix before S2 mapping): top-level headings 8 to 13 on pages 21-24 are not started as clauses and sit in 7.1."
+   "explanation": "Genuine: clause 7 (air filtration, airflow direction and pressure differentials) is one long section without sub-numbers; headings 8 to 13 are separate clauses."
   },
   {
    "source": "who-trs1033-a4-data-integrity.pdf",
    "clauses": 85,
    "table_rows": 0,
-   "unnumbered_segments": 2,
+   "unnumbered_segments": 3,
    "toc_segments": 13,
    "body_chars": 45930,
    "dropped_chars": 1557,
@@ -3025,7 +2994,7 @@
    "source": "who-trs1025-a4-chromatography.pdf",
    "clauses": 97,
    "table_rows": 0,
-   "unnumbered_segments": 2,
+   "unnumbered_segments": 3,
    "toc_segments": 14,
    "body_chars": 20995,
    "dropped_chars": 789,
@@ -3050,7 +3019,7 @@
    "clauses": 378,
    "table_rows": 17,
    "unnumbered_segments": 4,
-   "toc_segments": 10,
+   "toc_segments": 2,
    "body_chars": 149505,
    "dropped_chars": 5690,
    "assigned_share": 1.0,
@@ -3072,35 +3041,31 @@
   },
   {
    "source": "who-trs961-a2-micro-labs.pdf",
-   "clauses": 207,
+   "clauses": 201,
    "table_rows": 54,
-   "unnumbered_segments": 3,
+   "unnumbered_segments": 5,
    "toc_segments": 0,
    "body_chars": 40880,
    "dropped_chars": 113,
    "assigned_share": 1.0,
-   "numbered_share": 0.9977,
+   "numbered_share": 0.8824,
    "duplicate_refs": [],
    "gaps": [],
-   "large": [
-    "Annex 2 Appendix 4 8 #2"
-   ],
-   "restarts": 8,
+   "large": [],
+   "restarts": 0,
    "obligations": 195,
-   "obligations_outside_numbered": 0,
+   "obligations_outside_numbered": 3,
    "missed_obligations": [],
-   "flags": [
-    "large clauses"
-   ],
-   "flag": true,
-   "explanation": "Known parser limitation, text kept (to fix before S2 mapping): the unnumbered Appendix 5 (reference-culture flowchart) and the further-reading list follow the last reference item and are filed under it ('8 #2')."
+   "flags": [],
+   "flag": false,
+   "explanation": ""
   },
   {
    "source": "who-trs957-a3-hazardous.pdf",
    "clauses": 91,
    "table_rows": 0,
    "unnumbered_segments": 3,
-   "toc_segments": 7,
+   "toc_segments": 2,
    "body_chars": 27887,
    "dropped_chars": 51,
    "assigned_share": 1.0,
@@ -3126,7 +3091,7 @@
    "source": "who-trs1033-a2-hbel-cleaning.pdf",
    "clauses": 48,
    "table_rows": 8,
-   "unnumbered_segments": 2,
+   "unnumbered_segments": 3,
    "toc_segments": 1,
    "body_chars": 31055,
    "dropped_chars": 997,
@@ -3151,9 +3116,9 @@
   },
   {
    "source": "who-trs981-a2-qrm.pdf",
-   "clauses": 42,
+   "clauses": 43,
    "table_rows": 9,
-   "unnumbered_segments": 2,
+   "unnumbered_segments": 3,
    "toc_segments": 29,
    "body_chars": 58612,
    "dropped_chars": 1981,
@@ -3167,7 +3132,8 @@
    "large": [
     "1.1",
     "1.2",
-    "5.4"
+    "5.4",
+    "6"
    ],
    "restarts": 0,
    "obligations": 184,
@@ -3177,26 +3143,26 @@
     "large clauses"
    ],
    "flag": true,
-   "explanation": "1.1 and 1.2 are genuinely long background sections. Known parser limitation, text kept (to fix before S2 mapping): the top-level heading '6.' on page 27 is not started, so 5.4 holds section 6 (risk management tools)."
+   "explanation": "Genuine: 1.1, 1.2 and 5.4 are long background and application sections without sub-numbers; section 6 (risk management tools) is its own clause and holds the tools table."
   },
   {
    "source": "who-trs1044-a4-tech-transfer.pdf",
-   "clauses": 147,
+   "clauses": 132,
    "table_rows": 0,
-   "unnumbered_segments": 3,
+   "unnumbered_segments": 4,
    "toc_segments": 12,
    "body_chars": 48340,
    "dropped_chars": 1806,
    "assigned_share": 1.0,
-   "numbered_share": 0.9365,
+   "numbered_share": 0.8299,
    "duplicate_refs": [],
    "gaps": [
     "gap before 4 (previous 2.7)"
    ],
    "large": [],
-   "restarts": 11,
+   "restarts": 0,
    "obligations": 174,
-   "obligations_outside_numbered": 0,
+   "obligations_outside_numbered": 1,
    "missed_obligations": [],
    "flags": [],
    "flag": false,
@@ -3204,22 +3170,22 @@
   },
   {
    "source": "who-trs1025-a7-storage-distribution.pdf",
-   "clauses": 225,
+   "clauses": 212,
    "table_rows": 1,
-   "unnumbered_segments": 2,
+   "unnumbered_segments": 3,
    "toc_segments": 21,
    "body_chars": 57485,
    "dropped_chars": 2080,
    "assigned_share": 1.0,
-   "numbered_share": 0.9896,
+   "numbered_share": 0.8609,
    "duplicate_refs": [],
    "gaps": [
     "gap before 4 (previous 2.3)"
    ],
    "large": [],
-   "restarts": 12,
+   "restarts": 0,
    "obligations": 301,
-   "obligations_outside_numbered": 0,
+   "obligations_outside_numbered": 1,
    "missed_obligations": [],
    "flags": [],
    "flag": false,
@@ -3229,12 +3195,12 @@
    "source": "who-trs961-a9-storage-transport-ttsp.pdf",
    "clauses": 140,
    "table_rows": 0,
-   "unnumbered_segments": 1,
+   "unnumbered_segments": 2,
    "toc_segments": 140,
    "body_chars": 81716,
    "dropped_chars": 151,
    "assigned_share": 1.0,
-   "numbered_share": 0.9453,
+   "numbered_share": 0.895,
    "duplicate_refs": [],
    "gaps": [],
    "large": [
@@ -3242,28 +3208,28 @@
    ],
    "restarts": 0,
    "obligations": 89,
-   "obligations_outside_numbered": 0,
+   "obligations_outside_numbered": 1,
    "missed_obligations": [],
    "flags": [
     "large clauses"
    ],
    "flag": true,
-   "explanation": "Known parser limitation, text kept (to fix before S2 mapping): the unnumbered bibliography and contributor list after the last clause are appended to 12.1.2; no requirement text is affected."
+   "explanation": "Known parser limitation, text kept: the bibliography after the last clause is not recognised as back matter and is appended to 12.1.2; no requirement text is affected."
   },
   {
    "source": "who-trs992-a5-ttsp-supplements.pdf",
-   "clauses": 301,
+   "clauses": 284,
    "table_rows": 12,
-   "unnumbered_segments": 17,
-   "toc_segments": 151,
+   "unnumbered_segments": 34,
+   "toc_segments": 175,
    "body_chars": 21031,
    "dropped_chars": 2101,
    "assigned_share": 1.0,
-   "numbered_share": 0.7027,
+   "numbered_share": 0.662,
    "duplicate_refs": [],
    "gaps": [],
    "large": [],
-   "restarts": 109,
+   "restarts": 77,
    "obligations": 0,
    "obligations_outside_numbered": 0,
    "missed_obligations": [],
@@ -3298,21 +3264,20 @@
   },
   {
    "source": "who-trs1060-a3-excipients.pdf",
-   "clauses": 277,
+   "clauses": 268,
    "table_rows": 11,
-   "unnumbered_segments": 3,
+   "unnumbered_segments": 4,
    "toc_segments": 14,
    "body_chars": 86069,
    "dropped_chars": 3424,
    "assigned_share": 1.0,
-   "numbered_share": 0.9633,
+   "numbered_share": 0.8441,
    "duplicate_refs": [],
    "gaps": [],
    "large": [
-    "Appendix 1 2.1",
-    "Appendix 1 6"
+    "Appendix 1 2.1"
    ],
-   "restarts": 37,
+   "restarts": 27,
    "obligations": 372,
    "obligations_outside_numbered": 8,
    "missed_obligations": [],
@@ -3324,21 +3289,21 @@
   },
   {
    "source": "who-trs902-a9-packaging.pdf",
-   "clauses": 132,
+   "clauses": 107,
    "table_rows": 0,
    "unnumbered_segments": 3,
    "toc_segments": 3,
    "body_chars": 68424,
    "dropped_chars": 114,
    "assigned_share": 1.0,
-   "numbered_share": 0.9195,
+   "numbered_share": 0.8476,
    "duplicate_refs": [],
    "gaps": [],
    "large": [
     "Annex 9 Appendix 4 2.2.3",
     "Annex 9 Appendix 4 5.1.2"
    ],
-   "restarts": 6,
+   "restarts": 1,
    "obligations": 170,
    "obligations_outside_numbered": 0,
    "missed_obligations": [],
@@ -3371,20 +3336,20 @@
   },
   {
    "source": "who-trs1060-a2-nitrosamines.pdf",
-   "clauses": 130,
+   "clauses": 126,
    "table_rows": 1,
-   "unnumbered_segments": 3,
+   "unnumbered_segments": 4,
    "toc_segments": 0,
    "body_chars": 43705,
    "dropped_chars": 1440,
    "assigned_share": 1.0,
-   "numbered_share": 0.7731,
+   "numbered_share": 0.7535,
    "duplicate_refs": [],
    "gaps": [
     "gap before 4 (previous 2.1)"
    ],
    "large": [],
-   "restarts": 4,
+   "restarts": 1,
    "obligations": 131,
    "obligations_outside_numbered": 1,
    "missed_obligations": [],
@@ -3420,11 +3385,11 @@
     "large clauses"
    ],
    "flag": true,
-   "explanation": "1.1 is a genuinely long background section. Known parser limitation, text kept (to fix before S2 mapping): the document quotes WHO GMP clauses 7.x and 13.x out of sequence, after which the real heading '4. Expectations' is folded into 7.6."
+   "explanation": "1.1 is a genuinely long background section. Known parser limitation, text kept: the document quotes WHO GMP clauses 7.x and 13.x out of sequence, after which the real heading '4. Expectations' is folded into 7.6."
   },
   {
    "source": "who-trs961-a14-site-master-file.pdf",
-   "clauses": 30,
+   "clauses": 31,
    "table_rows": 0,
    "unnumbered_segments": 1,
    "toc_segments": 4,
@@ -3470,14 +3435,14 @@
   },
   {
    "source": "who-trs1010-a10-stability.pdf",
-   "clauses": 87,
+   "clauses": 79,
    "table_rows": 0,
    "unnumbered_segments": 3,
    "toc_segments": 1,
    "body_chars": 84823,
    "dropped_chars": 2762,
    "assigned_share": 1.0,
-   "numbered_share": 0.9314,
+   "numbered_share": 0.9077,
    "duplicate_refs": [],
    "gaps": [],
    "large": [
@@ -3495,18 +3460,18 @@
   },
   {
    "source": "who-trs943-a3-reference-substances.pdf",
-   "clauses": 15,
+   "clauses": 40,
    "table_rows": 0,
    "unnumbered_segments": 2,
-   "toc_segments": 0,
+   "toc_segments": 36,
    "body_chars": 43787,
    "dropped_chars": 768,
    "assigned_share": 1.0,
-   "numbered_share": 0.9086,
+   "numbered_share": 0.829,
    "duplicate_refs": [],
    "gaps": [],
    "large": [],
-   "restarts": 1,
+   "restarts": 0,
    "obligations": 121,
    "obligations_outside_numbered": 7,
    "missed_obligations": [],
@@ -3537,16 +3502,18 @@
   },
   {
    "source": "ich-q1a-r2.pdf",
-   "clauses": 71,
+   "clauses": 72,
    "table_rows": 33,
-   "unnumbered_segments": 2,
+   "unnumbered_segments": 1,
    "toc_segments": 26,
    "body_chars": 47645,
    "dropped_chars": 855,
    "assigned_share": 1.0,
-   "numbered_share": 0.8672,
+   "numbered_share": 0.8777,
    "duplicate_refs": [],
-   "gaps": [],
+   "gaps": [
+    "gap before 4 (previous 2.2.10)"
+   ],
    "large": [],
    "restarts": 0,
    "obligations": 163,
@@ -3558,16 +3525,18 @@
   },
   {
    "source": "ich-q1b.pdf",
-   "clauses": 9,
+   "clauses": 10,
    "table_rows": 3,
-   "unnumbered_segments": 2,
+   "unnumbered_segments": 1,
    "toc_segments": 6,
    "body_chars": 17979,
    "dropped_chars": 366,
    "assigned_share": 1.0,
-   "numbered_share": 0.8363,
+   "numbered_share": 0.8474,
    "duplicate_refs": [],
-   "gaps": [],
+   "gaps": [
+    "gap before 6 (previous 4)"
+   ],
    "large": [
     "2",
     "3"
@@ -3580,7 +3549,7 @@
     "large clauses"
    ],
    "flag": true,
-   "explanation": "Known parser limitation, text kept (to fix before S2 mapping): a list item '2.' in section 1 (light source options) is taken as clause 2 and holds the real section 2 (drug substance); section 3 is a genuine long section."
+   "explanation": "Genuine: sections 2 (drug substance) and 3 (drug product) are long sections whose parts are lettered or unnumbered in the source."
   },
   {
    "source": "ich-q1d.pdf",
@@ -3605,7 +3574,7 @@
   },
   {
    "source": "ich-q1e.pdf",
-   "clauses": 51,
+   "clauses": 67,
    "table_rows": 3,
    "unnumbered_segments": 1,
    "toc_segments": 0,
@@ -3618,7 +3587,7 @@
    "large": [
     "Appendix A 2.1"
    ],
-   "restarts": 1,
+   "restarts": 7,
    "obligations": 152,
    "obligations_outside_numbered": 2,
    "missed_obligations": [
@@ -3634,20 +3603,23 @@
   },
   {
    "source": "ich-q2-r2.pdf",
-   "clauses": 199,
+   "clauses": 201,
    "table_rows": 155,
-   "unnumbered_segments": 2,
+   "unnumbered_segments": 1,
    "toc_segments": 43,
    "body_chars": 62996,
    "dropped_chars": 650,
    "assigned_share": 1.0,
-   "numbered_share": 0.8691,
+   "numbered_share": 0.8873,
    "duplicate_refs": [],
-   "gaps": [],
+   "gaps": [
+    "gap before 5 (previous 3.4)",
+    "gap before 7 (previous 5)"
+   ],
    "large": [],
    "restarts": 0,
    "obligations": 163,
-   "obligations_outside_numbered": 7,
+   "obligations_outside_numbered": 6,
    "missed_obligations": [],
    "flags": [],
    "flag": false,
@@ -3704,41 +3676,40 @@
   },
   {
    "source": "ich-q3c-r9.pdf",
-   "clauses": 97,
+   "clauses": 61,
    "table_rows": 19,
    "unnumbered_segments": 7,
    "toc_segments": 13,
    "body_chars": 86079,
    "dropped_chars": 81,
    "assigned_share": 1.0,
-   "numbered_share": 0.9378,
+   "numbered_share": 0.6865,
    "duplicate_refs": [],
    "gaps": [],
    "large": [
-    "Part V 15",
-    "Part VI 6",
-    "Part VI 7"
+    "Part VI 6"
    ],
-   "restarts": 17,
+   "restarts": 4,
    "obligations": 84,
-   "obligations_outside_numbered": 6,
+   "obligations_outside_numbered": 9,
    "missed_obligations": [],
    "flags": [
-    "large clauses"
+    "large clauses",
+    "obligations outside citable clauses"
    ],
    "flag": true,
    "explanation": "Part V 15 and Part VI 6-7 are genuine long solvent monographs (PDE derivations). The outside obligations are in the unnumbered PDE appendices."
   },
   {
    "source": "ich-q3d-r2.pdf",
-   "clauses": 361,
+   "clauses": 357,
    "table_rows": 268,
-   "unnumbered_segments": 25,
-   "toc_segments": 14,
+   "unnumbered_segments": 24,
+   "toc_segments": 15,
    "body_chars": 186008,
    "dropped_chars": 1799,
    "assigned_share": 1.0,
-   "numbered_share": 0.4993,
+   "numbered_share": 0.5075,
    "duplicate_refs": [],
    "gaps": [
     "gap before 5 (previous 3.4)",
@@ -3762,23 +3733,23 @@
   },
   {
    "source": "ich-m7-r2.pdf",
-   "clauses": 126,
+   "clauses": 107,
    "table_rows": 65,
    "unnumbered_segments": 2,
    "toc_segments": 28,
    "body_chars": 71630,
    "dropped_chars": 47,
    "assigned_share": 1.0,
-   "numbered_share": 0.9127,
+   "numbered_share": 0.879,
    "duplicate_refs": [],
    "gaps": [
     "gap before 7.1 (previous 5.3)"
    ],
    "large": [
     "3",
-    "1 #2"
+    "9.2"
    ],
-   "restarts": 12,
+   "restarts": 0,
    "obligations": 152,
    "obligations_outside_numbered": 6,
    "missed_obligations": [],
@@ -3786,21 +3757,21 @@
     "large clauses"
    ],
    "flag": true,
-   "explanation": "Known parser limitation, text kept (to fix before S2 mapping): short numbered list items (1., 2., 3.) in the hazard-assessment and acceptable-intake text are taken as clauses '3' and '1 #2', which then hold following text."
+   "explanation": "Genuine: 3 (general principles) and 9.2 (marketing application, a long bulleted section) have no sub-numbers in the source."
   },
   {
    "source": "ich-q6a.pdf",
-   "clauses": 33,
+   "clauses": 34,
    "table_rows": 3,
-   "unnumbered_segments": 2,
+   "unnumbered_segments": 1,
    "toc_segments": 23,
    "body_chars": 60658,
    "dropped_chars": 1634,
    "assigned_share": 1.0,
-   "numbered_share": 0.9235,
+   "numbered_share": 0.9341,
    "duplicate_refs": [],
    "gaps": [
-    "gap before 6 (previous 3.3.2.3)"
+    "gap before 5 (previous 3.3.2.3)"
    ],
    "large": [
     "3.3.1",
@@ -3864,16 +3835,18 @@
   },
   {
    "source": "ich-q12.pdf",
-   "clauses": 135,
+   "clauses": 136,
    "table_rows": 88,
-   "unnumbered_segments": 2,
+   "unnumbered_segments": 1,
    "toc_segments": 32,
    "body_chars": 57875,
    "dropped_chars": 490,
    "assigned_share": 1.0,
-   "numbered_share": 0.9002,
+   "numbered_share": 0.9091,
    "duplicate_refs": [],
-   "gaps": [],
+   "gaps": [
+    "gap before 11 (previous 9)"
+   ],
    "large": [
     "1.3",
     "3.2.3.1"
@@ -3890,14 +3863,14 @@
   },
   {
    "source": "india-drugs-rules-1945-consolidated-2024-07.pdf",
-   "clauses": 3076,
+   "clauses": 2979,
    "table_rows": 628,
    "unnumbered_segments": 2,
    "toc_segments": 240,
    "body_chars": 1564157,
    "dropped_chars": 94572,
    "assigned_share": 1.0,
-   "numbered_share": 0.9752,
+   "numbered_share": 0.8934,
    "duplicate_refs": [],
    "gaps": [
     "gap before 2.4 (previous 2.2)",
@@ -3925,7 +3898,7 @@
     "Part XV 6 #6",
     "Part XV 39",
     "Part XV 3 #30",
-    "Part XV 7 #5",
+    "Part XV 7 #6",
     "Part XV 23",
     "Part XII 5",
     "Part XII 5 #2",
@@ -3951,12 +3924,11 @@
     "Part II Appendix III 1.4",
     "Part II Appendix III 1.6",
     "Part II Appendix III 1.9",
-    "Part II Appendix XI 6",
-    "Part II Appendix XI 99"
+    "Part II Appendix XI 6"
    ],
-   "restarts": 469,
-   "obligations": 5411,
-   "obligations_outside_numbered": 0,
+   "restarts": 465,
+   "obligations": 5410,
+   "obligations_outside_numbered": 121,
    "missed_obligations": [
     "(attached in original).]] Names of drugs Quantity which may be imported Place..................................",
     "DOP Injection Filterintegrity test &De-contamination by-pass duct E Shut- offDamper s VFD Shut- offDampe r EXHAUSTAI RFAN M M M SECONDARYFI LTER VFD=VelocitySensor V=Variable FrequencyDrive M= Filter ",
@@ -3968,7 +3940,7 @@
     "possible misses"
    ],
    "flag": true,
-   "explanation": "Known parser limitation, text kept (to fix before S2 mapping): numbered items of forms and lists inside the Rules (e.g. Part IV 9, Part VII 9) take over the rule numbering and hold following rules; possible misses are amendment footnotes and a drawing. The Drugs Rules are context for Schedule M, not the core GMP text."
+   "explanation": "Known parser limitation, text kept: numbered items of forms and lists inside the Rules (e.g. Part IV 9, Part VII 9) take over the rule numbering and hold following rules; possible misses are amendment footnotes and a drawing. The Drugs Rules are context for Schedule M, not the core GMP text."
   },
   {
    "source": "india-gsr666e-2024-schm-corrigendum.pdf",
@@ -4110,7 +4082,7 @@
   },
   {
    "source": "eu-2015-c95-01-gdp-active-substances.pdf",
-   "clauses": 60,
+   "clauses": 61,
    "table_rows": 0,
    "unnumbered_segments": 1,
    "toc_segments": 0,
@@ -4120,18 +4092,14 @@
    "numbered_share": 0.9349,
    "duplicate_refs": [],
    "gaps": [],
-   "large": [
-    "Chapter 8 8.1"
-   ],
+   "large": [],
    "restarts": 0,
    "obligations": 100,
    "obligations_outside_numbered": 1,
    "missed_obligations": [],
-   "flags": [
-    "large clauses"
-   ],
-   "flag": true,
-   "explanation": "Known parser limitation, text kept (to fix before S2 mapping): the unnumbered trailing annex (glossary) is appended to the last clause, Chapter 8 8.1."
+   "flags": [],
+   "flag": false,
+   "explanation": ""
   },
   {
    "source": "eu-2015-c95-02-excipients-risk-assessment.pdf",

@@ -122,6 +122,11 @@ class Sources(unittest.TestCase):
         self.assertIn("Building and premises", text)
         self.assertNotIn("S acnhd- Mpremises", text)
 
+    def test_row_with_several_numbered_items_is_split(self):
+        clauses, _, _ = tables.parse(common.OFFICIAL / "pics-pi038-2-am-qrm.pdf")
+        refs = {c.ref for c in clauses if c.kind == "table_row"}
+        self.assertTrue({"Table 2 1.2", "Table 2 1.3", "Table 2 1.10"} <= refs)
+
     def test_numbered_text_unchanged_without_tables(self):
         """Without tables, table mode is the plain numbered parse (pinned clauses: test_parse.KnownClauses)."""
         import numbered

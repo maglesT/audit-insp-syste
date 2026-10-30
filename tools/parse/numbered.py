@@ -19,17 +19,29 @@ NUM = re.compile(r"^([1-9]\d?(?:\.(?:0|[1-9]\d{0,2})){0,4})\.?(?=\s|$)\s*(.*)$")
 SECTION = [
     (re.compile(r"^PART[\s-]+([IVXL]+)\b"), "Part {}"),
     (re.compile(r"^ANNEX\s+(\d+[A-Z]?)\*?\s*$", re.I), "Annex {}"),
+    (re.compile(r"^(ANNEX)\s*$"), "Annex"),          # an unnumbered annex at the end ("ANNEX" / glossary)
     (re.compile(r"^CHAPTER\s+(\d+)\b"), "Chapter {}"),
 ]
 PRINCIPLE = re.compile(r"^(Principles?|PRINCIPLES?)\.?\s*$")
-BACK_MATTER = re.compile(r"^(\d{1,2}\.?\s+)?(Glossary|GLOSSARY|Definitions|DEFINITIONS|Abbreviations|ABBREVIATIONS|References|REFERENCES|Bibliography)\s*$")
+BACK_MATTER = re.compile(r"^(\d{1,2}\.?\s+)?(Glossary|GLOSSARY|Definitions|DEFINITIONS|Abbreviations|ABBREVIATIONS|"
+                         r"References|REFERENCES|Bibliography|BIBLIOGRAPHY|Further reading|FURTHER READING|"
+                         r"Revision history|REVISION HISTORY|Acknowledgements|ACKNOWLEDGEMENTS)\s*$")
+NOT_CITABLE = ("references", "bibliography", "further reading", "revision history", "acknowledgements")
 APPENDIX = re.compile(r"^(?:Appendix|APPENDIX)\s+([0-9IVX]+|[A-Z])\b")
 DOT_LEADER = re.compile(r"(\.\s?){4,}\s*\d*\s*$|\s\d{1,3}\s*$")
 MAX_GAP = 3
 PAGE_END = re.compile(r"(\.\s?){4,}\s*\d*\s*$|\s{3,}\d{1,3}\s*$")   # a contents entry: leaders or a page number
+PREFIXED = re.compile(r"^([A-H]|I{1,3}|IV)(\s?\.\s?|\s)?(\d{1,2}(?:\.\d{1,3}){0,3})(\.)?\s+([A-Z].*)$")
+MARGIN_NO = re.compile(r"^\d{1,4}\s{2,}(?=\S)")
+UNIT = re.compile(r"(mg|g|kg|µg|mcg|ml|mL|l|L|cm|mm|nm|µm|m|per|percent|ppm|ppb|days?|hours?|minutes?|times|x|in|of|to|or|and)\b")
 UNDO_LINES = 60         # stray numbers are taken back only if the old numbering resumes within this many lines
 DATE = re.compile(r"^(January|February|March|April|May|June|July|August|September|October|November|December)"
                   r"\s+\d{4}\b")
+
+
+def prefix_target(root, prefix):
+    """The section of a prefixed number: "Annex 2A" + "B" -> "Annex 2A B"; "Appendix B" + "B" stays "Appendix B"."""
+    return root if root.endswith(f" {prefix}") else f"{root} {prefix}".strip()
 
 
 def parse_number(s):
@@ -71,7 +83,8 @@ def parse(path, pages=None):
     noise = repeated_lines([p for p, e in zip(pages, english) if e])
     running = running_lines([p for p, e in zip(pages, english) if e])
     clauses, cur, section, prev = [], None, "", None
-    seen_in_section, unnumbered, run, jumps = set(), 0, 0, []
+    seen_in_section, unnumbered, run, jumps, section_prefix, prefix_root = set(), 0, 0, [], False, ""
+    in_back = False                  # after "References" / "Revision history": numbers there are list items
     body_chars = 0
 
     def start(kind, ref, number, line, page):
@@ -81,12 +94,20 @@ def parse(path, pages=None):
         clauses.append(cur)
 
     lines, dropped = [], 0
+    every = [ln.strip() for pg in pages for ln in pg.splitlines() if ln.strip()]
+    # Draft-style documents (EU Annex 17) print a line number in the margin of every line: strip it
+    margin_numbers = sum(1 for ln in every if MARGIN_NO.match(ln)) > 0.3 * max(1, len(every))
     for pno, (page, is_en) in enumerate(zip(pages, english), start=1):
         if not is_en:
             continue
         edges = {ln.strip() for ln in edge_lines(page)}
         for raw in page.splitlines():
             line = raw.strip()
+            if margin_numbers:
+                if re.fullmatch(r"\d{1,4}", line):
+                    dropped += len(line)
+                    continue
+                line = MARGIN_NO.sub("", line)
             if not line or not english_line(line):
                 continue
             masked = line_key(line)
@@ -121,34 +142,66 @@ def parse(path, pages=None):
             if sec and sec.startswith("Chapter") and section.startswith(("Annex", "Part")):
                 sec = None   # a chapter heading inside an annex or part does not restart numbering
             if sec:
-                section, prev, seen_in_section, jumps = sec, None, set(), []
+                section, prev, seen_in_section, jumps, section_prefix, in_back = sec, None, set(), [], False, False
                 start("section", sec, "", line, pno)     # text under the heading, before clause 1, is citable
                 continue
             ma = APPENDIX.match(line)
             if ma and heading_like(line) and not PAGE_END.search(line):
-                base = re.sub(r"\s*Appendix \S+$", "", section)
+                base = re.sub(r"\s*Appendix \S+$", "", prefix_root if section_prefix else section)
+                section_prefix, in_back = False, False
                 section, prev, seen_in_section = f"{base} Appendix {ma.group(1)}".strip(), None, set()
                 jumps = []
                 start("section", section, "", line, pno)
                 continue
+            back_heading = False
             mb = BACK_MATTER.match(line)
+            if mb and section_prefix:                # back matter after prefixed numbering belongs to the root
+                section, section_prefix = prefix_root, False
+            if mb and mb.group(1) and mb.group(2).lower() in NOT_CITABLE:
+                mb = None                    # "9. REVISION HISTORY" keeps its number like any other clause,
+                in_back = True               # but the list below it is not numbered clauses
+                back_heading = True
             if mb and cur is not None and cur["ref"] == f"{section} {mb.group(2).title()}".strip():
                 mb = None                    # the glossary's own running header: its text goes on
             if mb:
                 jumps = []
-                if mb.group(2).lower() in ("references", "bibliography"):
+                if mb.group(2).lower() in NOT_CITABLE:
+                    in_back = True
                     unnumbered += 1
                     start("unnumbered", f"_unnumbered:{unnumbered}", "", line, pno)
                 else:                                  # definitions often carry "should" / "may": citable
+                    in_back = False
                     start("section", f"{section} {mb.group(2).title()}".strip(), "", line, pno)
                 continue
             if PRINCIPLE.match(line):
+                if section_prefix:
+                    section, section_prefix = prefix_root, False
                 # one Principle per chapter: "Part I 1 Principle" when the chapter's numbering follows
                 nxt = next(((parse_number(mm.group(1))) for _, ln in lines[i + 1:i + 80] if (mm := NUM.match(ln))), None)
                 chapter = (str(nxt[0]) if nxt and len(nxt) > 1 and not section.endswith(f" {nxt[0]}") else "")
                 ref = f"{section} {chapter} Principle".replace("  ", " ").strip()
                 start("principle", ref, "", line, pno)
                 continue
+            text = line
+            mp = PREFIXED.match(line)
+            if mp and not DATE.match(mp.group(5)) and not PAGE_END.search(line):
+                # numbering with a prefix ("B 1.1" in Annex 2A Part B, "I.1" in the ICH Q9 annexes): the prefix is a
+                # section inside the current one, the rest is numbered as usual. A prefix glued to a whole number
+                # ("H13 HEPA filters") is ordinary text; a new prefix must start its numbering ("B1.", "A2.1").
+                prefix, number = mp.group(1), mp.group(3)
+                glued = not mp.group(2)
+                first_numbers = parse_number(number)
+                new_prefix = not (section_prefix and section == prefix_target(prefix_root, prefix))
+                if not (glued and "." not in number and not mp.group(4)) and not (
+                        new_prefix and first_numbers[0] != 1 and first_numbers[-1] != 1):
+                    if not section_prefix:
+                        prefix_root = section
+                    target = prefix_target(prefix_root, prefix)
+                    if section != target:
+                        section, prev, seen_in_section, jumps = target, None, set(), []
+                        in_back = False          # a new prefixed numbering (ICH Q9 "I.1") ends the reference list
+                    section_prefix = True
+                    line = f"{number} {mp.group(5)}"      # for numbering only; the clause keeps the printed text
             m = NUM.match(line)
             if m and DATE.match(m.group(2)) and "." not in m.group(1):
                 m = None                     # "1 July 2018" on a cover page is a date, not clause 1
@@ -186,17 +239,38 @@ def parse(path, pages=None):
                 # "8. Personnel" after 7.x: a new chapter in title case, unless the old chapter's numbering goes on
                 # below it (then "8." was a list item)
                 titled = (rest[:1].isupper() and prev is not None and len(prev) > 1 and cand == [prev[0] + 1]
-                          and len(rest) < 70 and next_multi(i) not in (None,) and next_multi(i)[0] != prev[0])
+                          and len(rest) < 70 and (next_multi(i) is None or next_multi(i)[0] != prev[0]))
                 as_heading = heading_like(rest) and (follows or upper or titled)
                 as_paragraph = single_run and not follows
                 if len(cand) == 1 and not (as_heading or as_paragraph or restart):
                     ok = restart = False
+                if len(cand) == 1 and rest[:1].islower() and (UNIT.match(rest) or not single_run):
+                    ok = restart = False         # "1 mg, no further testing ..." is a wrapped line, not clause 1
+                if (in_back and not back_heading and len(cand) == 1
+                        and not (heading_like(rest) and (upper or follows))):
+                    ok = restart = False         # a reference list after "References" is not numbered clauses
+                if (not ok and len(cand) == 1 and prev == cand and upper and heading_like(rest) and cur is not None
+                        and cur["number"] == num and len(clauses) > 1):
+                    # "2. DRUG SUBSTANCE" after a list item "2. A near UV lamp ..." took number 2: the list item
+                    # goes back into the clause before it, and the heading takes the number
+                    head = NUM.match(cur["lines"][0]) or PREFIXED.match(cur["lines"][0])
+                    first_line = head.groups()[-1] if head else cur["lines"][0]
+                    if not (sum(ch.isupper() for ch in first_line) >= 0.8 * max(1, sum(ch.isalpha() for ch in first_line))):
+                        clauses.remove(cur)
+                        clauses[-1]["lines"] += cur["lines"]
+                        clauses[-1]["page_end"] = cur["page_end"]
+                        prev = parse_number(clauses[-1]["number"]) if clauses[-1]["number"] else None
+                        ok = True
                 if ok or restart:
                     if restart:   # numbering starts again: one of the runs is a table of contents
                         run += 1
                         seen_in_section = set()
                     ref = f"{section} {num}".strip()
-                    start("clause", ref, num, line, pno)
+                    start("clause", ref, num, text, pno)
+                    if back_heading:
+                        cur["back"] = True       # "9. Revision history": not body text when runs are compared
+                    elif in_back:
+                        in_back = False          # "27. GLOSSARY OF TERMS" after the references: the body goes on
                     if gap:
                         cur["notes"].append(f"gap before {num} (previous {'.'.join(map(str, prev))})")
                     if prev is not None:
@@ -207,9 +281,9 @@ def parse(path, pages=None):
                     continue
             if cur is None:
                 unnumbered += 1
-                start("unnumbered", f"_unnumbered:{unnumbered}", "", line, pno)
+                start("unnumbered", f"_unnumbered:{unnumbered}", "", text, pno)
             else:
-                cur["lines"].append(line)
+                cur["lines"].append(text)
                 cur["page_end"] = pno
 
     # Where numbering restarted inside a section, keep the run with the most text; the others are contents lists.
@@ -217,7 +291,7 @@ def parse(path, pages=None):
     for c in clauses:
         if c["kind"] == "clause":
             key = (c["section"], c["run"])
-            runs[key] = runs.get(key, 0) + sum(len(x) for x in c["lines"])
+            runs[key] = runs.get(key, 0) + (0 if c.get("back") else sum(len(x) for x in c["lines"]))
     best = {}
     for (sec, r), size in runs.items():
         if sec not in best or size > runs[(sec, best[sec])]:
