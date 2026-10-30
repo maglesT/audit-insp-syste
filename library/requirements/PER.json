@@ -1,0 +1,956 @@
+{
+ "requirements": [
+  {
+   "id": "PER-001",
+   "topic": "PER.ORG",
+   "item_text": "The core duties of the independent quality unit are kept by that unit and are not handed over to others.",
+   "strength": "mandatory",
+   "plant_types": [
+    "API"
+   ],
+   "parameters": {},
+   "general": false,
+   "status": "draft",
+   "mappings": [
+    {
+     "source": "eu-2014-08_gmp_part1.pdf",
+     "clause_ref": "2.32",
+     "clause_sha256": "0b4bb90e13329b6dc145643b47a6d2c1e920c368b926aff2bcb837c40f454cca",
+     "quote": "The main responsibilities of the independent quality unit(s) should not be delegated.",
+     "strength": "recommended",
+     "relation": "same",
+     "plant_types": [
+      "API"
+     ],
+     "addendum": ""
+    },
+    {
+     "source": "ich-q7.pdf",
+     "clause_ref": "2.22",
+     "clause_sha256": "62ee43e161005d7f4a9fd3e5a4ec352e027c3d4a60372b8848a04f56d569e6cf",
+     "quote": "The main responsibilities of the independent quality unit(s) should not be delegated.",
+     "strength": "recommended",
+     "relation": "same",
+     "plant_types": [
+      "API"
+     ],
+     "addendum": ""
+    },
+    {
+     "source": "india-drugs-rules-1945-consolidated-2024-07.pdf",
+     "clause_ref": "Part XII 2.2.3",
+     "clause_sha256": "a8d70413cee6917e5fcb5148314c52f9f392417937e9130071788b686eae4659",
+     "quote": "The main responsibilities of the independent quality units shall not be delegated.",
+     "strength": "mandatory",
+     "relation": "same",
+     "plant_types": [
+      "API"
+     ],
+     "addendum": ""
+    },
+    {
+     "source": "india-schedule-m-2023-GSR922E.pdf",
+     "clause_ref": "Part XII 2.2.3",
+     "clause_sha256": "a8d70413cee6917e5fcb5148314c52f9f392417937e9130071788b686eae4659",
+     "quote": "The main responsibilities of the independent quality units shall not be delegated.",
+     "strength": "mandatory",
+     "relation": "same",
+     "plant_types": [
+      "API"
+     ],
+     "addendum": ""
+    },
+    {
+     "source": "pics-pe009-18-part2.pdf",
+     "clause_ref": "Part II 2.32",
+     "clause_sha256": "995923b7afbbe76da28ab3f0d5c77da6d79ace4b73c05920edf8c2580a342036",
+     "quote": "The main responsibilities of the independent quality unit(s) should not be delegated.",
+     "strength": "recommended",
+     "relation": "same",
+     "plant_types": [
+      "API"
+     ],
+     "addendum": ""
+    },
+    {
+     "source": "who-trs957-a2-api.pdf",
+     "clause_ref": "Annex 2 Appendix 2 2.22",
+     "clause_sha256": "09851d6444388b28e44ebd3e212ab3b467fa521c6d772d63fa4033f63d5ed559",
+     "quote": "The main responsibilities of the independent quality unit(s) should not be delegated.",
+     "strength": "recommended",
+     "relation": "same",
+     "plant_types": [
+      "API"
+     ],
+     "addendum": ""
+    }
+   ]
+  },
+  {
+   "id": "PER-002",
+   "topic": "PER.ORG",
+   "item_text": "The duties of the quality unit are set out in writing and cover at least the minimum set of quality responsibilities.",
+   "strength": "mandatory",
+   "plant_types": [
+    "API"
+   ],
+   "parameters": {},
+   "general": false,
+   "status": "draft",
+   "mappings": [
+    {
+     "source": "eu-2014-08_gmp_part1.pdf",
+     "clause_ref": "2.32",
+     "clause_sha256": "0b4bb90e13329b6dc145643b47a6d2c1e920c368b926aff2bcb837c40f454cca",
+     "quote": "These responsibilities should be described in writing",
+     "strength": "recommended",
+     "relation": "same",
+     "plant_types": [
+      "API"
+     ],
+     "addendum": ""
+    },
+    {
+     "source": "ich-q7.pdf",
+     "clause_ref": "2.22",
+     "clause_sha256": "62ee43e161005d7f4a9fd3e5a4ec352e027c3d4a60372b8848a04f56d569e6cf",
+     "quote": "These responsibilities should be described in writing",
+     "strength": "recommended",
+     "relation": "same",
+     "plant_types": [
+      "API"
+     ],
+     "addendum": ""
+    },
+    {
+     "source": "india-drugs-rules-1945-consolidated-2024-07.pdf",
+     "clause_ref": "Part XII 2.2.3",
+     "clause_sha256": "a8d70413cee6917e5fcb5148314c52f9f392417937e9130071788b686eae4659",
+     "quote": "These responsibilities shall be described in writing",
+     "strength": "mandatory",
+     "relation": "looser",
+     "plant_types": [
+      "API"
+     ],
+     "addendum": ""
+    },
+    {
+     "source": "india-schedule-m-2023-GSR922E.pdf",
+     "clause_ref": "Part XII 2.2.3",
+     "clause_sha256": "a8d70413cee6917e5fcb5148314c52f9f392417937e9130071788b686eae4659",
+     "quote": "These responsibilities shall be described in writing",
+     "strength": "mandatory",
+     "relation": "looser",
+     "plant_types": [
+      "API"
+     ],
+     "addendum": ""
+    },
+    {
+     "source": "pics-pe009-18-part2.pdf",
+     "clause_ref": "Part II 2.32",
+     "clause_sha256": "995923b7afbbe76da28ab3f0d5c77da6d79ace4b73c05920edf8c2580a342036",
+     "quote": "These responsibilities should be described in writing",
+     "strength": "recommended",
+     "relation": "looser",
+     "plant_types": [
+      "API"
+     ],
+     "addendum": ""
+    },
+    {
+     "source": "who-trs957-a2-api.pdf",
+     "clause_ref": "Annex 2 Appendix 2 2.22",
+     "clause_sha256": "09851d6444388b28e44ebd3e212ab3b467fa521c6d772d63fa4033f63d5ed559",
+     "quote": "These responsibilities should be described in writing",
+     "strength": "recommended",
+     "relation": "looser",
+     "plant_types": [
+      "API"
+     ],
+     "addendum": ""
+    }
+   ]
+  },
+  {
+   "id": "PER-003",
+   "topic": "PER.ORG",
+   "item_text": "Staff responsibilities are clearly defined in job descriptions.",
+   "strength": "mandatory",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ],
+   "parameters": {},
+   "general": false,
+   "status": "draft",
+   "mappings": [
+    {
+     "source": "india-cdsco-gdp-guidelines-2024.pdf",
+     "clause_ref": "5.5",
+     "clause_sha256": "a4d8d7dedf007aca05e4a0cf598c198022b4fee487d67c87d416b7dae84aa037",
+     "quote": "responsibilities are clearly specified in job descriptions",
+     "strength": "mandatory",
+     "relation": "same",
+     "plant_types": [
+      "API",
+      "INJ",
+      "LIQ",
+      "OSD",
+      "SEMI"
+     ],
+     "addendum": ""
+    },
+    {
+     "source": "who-trs1025-a7-storage-distribution.pdf",
+     "clause_ref": "5.3",
+     "clause_sha256": "82c2a4c5f30e51e28e144a8694c0b6cc6adccc44566693f4f7b736e20431b365",
+     "quote": "responsibilities are clearly specified in job descriptions",
+     "strength": "recommended",
+     "relation": "same",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "addendum": ""
+    },
+    {
+     "source": "who-trs1060-a3-excipients.pdf",
+     "clause_ref": "Appendix 1 3.8",
+     "clause_sha256": "fbf56879ab7262765edaddd1652f5c1d535bf47a00ecb30d5353e911816aac4d",
+     "quote": "managerial roles, responsibilities and authorities are clearly specified in job descriptions",
+     "strength": "recommended",
+     "relation": "narrower",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "addendum": ""
+    }
+   ]
+  },
+  {
+   "id": "PER-004",
+   "topic": "PER.KEY",
+   "item_text": "The laboratory is headed by a director (or equivalent) who holds a university degree in a suitable discipline, has supervisory experience in pharmaceutical analysis gained in a quality control laboratory, the regulatory sector or industry, and carries full responsibility for all analytical, organisational, administrative and educational operations.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ],
+   "parameters": {},
+   "general": false,
+   "status": "draft",
+   "mappings": [
+    {
+     "source": "who-trs1052-a4-qc-labs.pdf",
+     "clause_ref": "Appendix 3 5.3",
+     "clause_sha256": "9e5388daf832085dad712d60bfaa4b929dd959200926598ec5c48d983e97965a",
+     "quote": "The laboratory should have the following managerial and technical personnel: ■■ A laboratory director (or manager or head of the laboratory, or an appropriate job title) with appropriate qualiﬁcations (university degree in an appropriate discipline) for the position, with experience in a supervisory role in pharmaceutical analysis in a quality control laboratory, in the regulatory sector or in industry, who assumes full responsibility for all operations, including analytical, organizational, administrative and educational.",
+     "strength": "recommended",
+     "relation": "same",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "addendum": ""
+    }
+   ]
+  },
+  {
+   "id": "PER-005",
+   "topic": "PER.TRAIN",
+   "item_text": "The laboratory head makes sure that laboratory staff have the competence and qualifications their functions need and that their grades match their responsibilities.",
+   "strength": "mandatory",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ],
+   "parameters": {},
+   "general": false,
+   "status": "draft",
+   "mappings": [
+    {
+     "source": "who-trs1052-a4-qc-labs.pdf",
+     "clause_ref": "Appendix 3 5.3",
+     "clause_sha256": "9e5388daf832085dad712d60bfaa4b929dd959200926598ec5c48d983e97965a",
+     "quote": "This person is also responsible for ensuring that: –– members of the laboratory staff have the competencies and qualifications appropriate to their required functions and their grades reﬂect their responsibilities",
+     "strength": "mandatory",
+     "relation": "same",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "addendum": ""
+    }
+   ]
+  },
+  {
+   "id": "PER-006",
+   "topic": "PER.TRAIN",
+   "item_text": "The laboratory head makes sure that the adequacy of the existing staff training procedures is reviewed periodically.",
+   "strength": "mandatory",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ],
+   "parameters": {},
+   "general": false,
+   "status": "draft",
+   "mappings": [
+    {
+     "source": "who-trs1052-a4-qc-labs.pdf",
+     "clause_ref": "Appendix 3 5.3",
+     "clause_sha256": "9e5388daf832085dad712d60bfaa4b929dd959200926598ec5c48d983e97965a",
+     "quote": "the adequacy of existing training procedures for staff is reviewed periodically",
+     "strength": "mandatory",
+     "relation": "same",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "addendum": ""
+    }
+   ]
+  },
+  {
+   "id": "PER-007",
+   "topic": "PER.KEY",
+   "item_text": "The laboratory head makes sure that technical management is adequately supervised.",
+   "strength": "mandatory",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ],
+   "parameters": {},
+   "general": false,
+   "status": "draft",
+   "mappings": [
+    {
+     "source": "who-trs1052-a4-qc-labs.pdf",
+     "clause_ref": "Appendix 3 5.3",
+     "clause_sha256": "9e5388daf832085dad712d60bfaa4b929dd959200926598ec5c48d983e97965a",
+     "quote": "the technical management is adequately supervised",
+     "strength": "mandatory",
+     "relation": "same",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "addendum": ""
+    }
+   ]
+  },
+  {
+   "id": "PER-008",
+   "topic": "PER.KEY",
+   "item_text": "The laboratory has a quality manager with the responsibility and authority to put the quality management system and quality control activities in place and to make sure they are complied with.",
+   "strength": "mandatory",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ],
+   "parameters": {},
+   "general": false,
+   "status": "draft",
+   "mappings": [
+    {
+     "source": "who-trs1052-a4-qc-labs.pdf",
+     "clause_ref": "Appendix 3 5.3",
+     "clause_sha256": "9e5388daf832085dad712d60bfaa4b929dd959200926598ec5c48d983e97965a",
+     "quote": "A quality manager who shall have the responsibility and authority to implement and ensure compliance with the QMS and quality control activities.",
+     "strength": "mandatory",
+     "relation": "same",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "addendum": ""
+    }
+   ]
+  },
+  {
+   "id": "PER-009",
+   "topic": "PER.ORG",
+   "item_text": "Depending on the size of the laboratory, the quality manager is kept independent of routine analytical work.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ],
+   "parameters": {},
+   "general": false,
+   "status": "draft",
+   "mappings": [
+    {
+     "source": "who-trs1052-a4-qc-labs.pdf",
+     "clause_ref": "Appendix 3 5.3",
+     "clause_sha256": "9e5388daf832085dad712d60bfaa4b929dd959200926598ec5c48d983e97965a",
+     "quote": "The quality manager should remain independent of routine laboratory analytical activities, depending on the size of the laboratory.",
+     "strength": "recommended",
+     "relation": "same",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "addendum": ""
+    }
+   ]
+  },
+  {
+   "id": "PER-010",
+   "topic": "PER.TRAIN",
+   "item_text": "The quality manager, with technical managers' support where needed, makes sure that staff who operate specific equipment, instruments or other devices are competent for those tasks.",
+   "strength": "mandatory",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ],
+   "parameters": {},
+   "general": false,
+   "status": "draft",
+   "mappings": [
+    {
+     "source": "who-trs1052-a4-qc-labs.pdf",
+     "clause_ref": "Appendix 3 5.3",
+     "clause_sha256": "9e5388daf832085dad712d60bfaa4b929dd959200926598ec5c48d983e97965a",
+     "quote": "The quality manager, with the support of technical managers whenever necessary, ensures that: –– personnel operating speciﬁc equipment, instruments or other devices are competent for the tasks they are performing",
+     "strength": "mandatory",
+     "relation": "same",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "addendum": ""
+    }
+   ]
+  },
+  {
+   "id": "PER-011",
+   "topic": "PER.TRAIN",
+   "item_text": "The quality manager makes sure that staff who carry out tests, calibrations, validations or verifications are competent for those tasks.",
+   "strength": "mandatory",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ],
+   "parameters": {},
+   "general": false,
+   "status": "draft",
+   "mappings": [
+    {
+     "source": "who-trs1052-a4-qc-labs.pdf",
+     "clause_ref": "Appendix 3 5.3",
+     "clause_sha256": "9e5388daf832085dad712d60bfaa4b929dd959200926598ec5c48d983e97965a",
+     "quote": "personnel involved in tests or calibrations, validations or veriﬁcations are competent for the tasks they are performing",
+     "strength": "mandatory",
+     "relation": "same",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "addendum": ""
+    }
+   ]
+  },
+  {
+   "id": "PER-012",
+   "topic": "PER.TRAIN",
+   "item_text": "The quality manager makes sure that regular in-service training is arranged to update and extend the skills of analysts and technicians.",
+   "strength": "mandatory",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ],
+   "parameters": {},
+   "general": false,
+   "status": "draft",
+   "mappings": [
+    {
+     "source": "who-trs1052-a4-qc-labs.pdf",
+     "clause_ref": "Appendix 3 5.3",
+     "clause_sha256": "9e5388daf832085dad712d60bfaa4b929dd959200926598ec5c48d983e97965a",
+     "quote": "regular in-service training programmes are arranged to update and extend the skills of both analysts and technicians",
+     "strength": "mandatory",
+     "relation": "same",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "addendum": ""
+    }
+   ]
+  },
+  {
+   "id": "PER-013",
+   "topic": "PER.TRAIN",
+   "item_text": "The laboratory has qualified analysts, normally holding a degree in pharmacy, analytical chemistry or another relevant subject, with the knowledge, skills and ability to perform the tasks given to them.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ],
+   "parameters": {},
+   "general": false,
+   "status": "draft",
+   "mappings": [
+    {
+     "source": "who-trs1052-a4-qc-labs.pdf",
+     "clause_ref": "Appendix 3 5.3",
+     "clause_sha256": "9e5388daf832085dad712d60bfaa4b929dd959200926598ec5c48d983e97965a",
+     "quote": "Qualified analysts, who normally should be graduates in pharmacy, analytical chemistry or other relevant subject, with the requisite knowledge, skills and ability to adequately perform the tasks assigned to them by managers or supervisors.",
+     "strength": "recommended",
+     "relation": "same",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "addendum": ""
+    }
+   ]
+  },
+  {
+   "id": "PER-014",
+   "topic": "PER.KEY",
+   "item_text": "Suitably qualified and experienced analysts are available to act as laboratory supervisors, with a thorough understanding of the management system, including reviewing, interpreting and reporting results, keeping an internal chain of custody, and applying corrective and preventive actions for analytical problems.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ],
+   "parameters": {},
+   "general": false,
+   "status": "draft",
+   "mappings": [
+    {
+     "source": "who-trs1052-a4-qc-labs.pdf",
+     "clause_ref": "Appendix 3 5.3",
+     "clause_sha256": "9e5388daf832085dad712d60bfaa4b929dd959200926598ec5c48d983e97965a",
+     "quote": "Appropriately qualified and experienced analysts with a thorough understanding of the management system, including the review, interpretation and reporting of test results, the maintenance of an internal chain of custody, and proper implementation of corrective and preventive actions in response to analytical problems, should also be available to serve as laboratory supervisors.",
+     "strength": "recommended",
+     "relation": "same",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "addendum": ""
+    }
+   ]
+  },
+  {
+   "id": "PER-015",
+   "topic": "PER.TRAIN",
+   "item_text": "Technicians hold a diploma in their subject from a technical or vocational school, or have the hands-on experience their assigned activities need.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ],
+   "parameters": {},
+   "general": false,
+   "status": "draft",
+   "mappings": [
+    {
+     "source": "who-trs1052-a4-qc-labs.pdf",
+     "clause_ref": "Appendix 3 5.3",
+     "clause_sha256": "9e5388daf832085dad712d60bfaa4b929dd959200926598ec5c48d983e97965a",
+     "quote": "Technicians should hold diplomas in their subjects awarded by technical or vocational schools or have the requisite hands-on experience to perform the assigned activities.",
+     "strength": "recommended",
+     "relation": "same",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "addendum": ""
+    }
+   ]
+  },
+  {
+   "id": "PER-016",
+   "topic": "PER.TRAIN",
+   "item_text": "The laboratory has a suitable training schedule for its staff, in particular for those who meet its technical and managerial needs.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ],
+   "parameters": {},
+   "general": false,
+   "status": "draft",
+   "mappings": [
+    {
+     "source": "who-trs1052-a4-qc-labs.pdf",
+     "clause_ref": "Appendix 3 5.11",
+     "clause_sha256": "a2aaf049241a810734c7a0dab7af342d93a8f54fe323fa7e142ef235fcf57910",
+     "quote": "The laboratory should have an appropriate training schedule for staff, particularly for those staff who respond to the technical and managerial needs of the laboratory.",
+     "strength": "recommended",
+     "relation": "same",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "addendum": ""
+    }
+   ]
+  },
+  {
+   "id": "PER-017",
+   "topic": "PER.TRAIN",
+   "item_text": "When training is completed successfully, the evaluation results are recorded and made available, and the competency matrix or master list is updated.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ],
+   "parameters": {},
+   "general": false,
+   "status": "draft",
+   "mappings": [
+    {
+     "source": "who-trs1052-a4-qc-labs.pdf",
+     "clause_ref": "Appendix 3 5.11",
+     "clause_sha256": "a2aaf049241a810734c7a0dab7af342d93a8f54fe323fa7e142ef235fcf57910",
+     "quote": "On successful completion of training, the results of evaluation should be recorded and made available, and the information should be added to the competency matrix or master list.",
+     "strength": "recommended",
+     "relation": "same",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "addendum": ""
+    }
+   ]
+  },
+  {
+   "id": "PER-018",
+   "topic": "PER.KEY",
+   "item_text": "Preferably, the laboratory head is backed by at least one technical manager or senior analyst, highly experienced in quality control of medicines, who is given responsibility for analytical work and for leading and supervising the analysts and technicians day to day.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ],
+   "parameters": {},
+   "general": false,
+   "status": "draft",
+   "mappings": [
+    {
+     "source": "who-trs1052-a4-qc-labs.pdf",
+     "clause_ref": "Appendix 3 5.3",
+     "clause_sha256": "9e5388daf832085dad712d60bfaa4b929dd959200926598ec5c48d983e97965a",
+     "quote": "The laboratory director should preferably be supported and complemented by one or more technical managers (or senior analysts) with extensive experience in pharmaceutical analysis in a quality control laboratory, who have been designated responsibility for the analytical operations and for direct management and supervision of the team of analysts and technicians.",
+     "strength": "recommended",
+     "relation": "same",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "addendum": ""
+    }
+   ]
+  },
+  {
+   "id": "PER-019",
+   "topic": "PER.TRAIN",
+   "item_text": "Training plan inputs may come from internal audit results, management review outcomes, assessments of risks and opportunities, or any other suitable source.",
+   "strength": "optional",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ],
+   "parameters": {},
+   "general": false,
+   "status": "draft",
+   "mappings": [
+    {
+     "source": "who-trs1052-a4-qc-labs.pdf",
+     "clause_ref": "Appendix 3 5.11",
+     "clause_sha256": "a2aaf049241a810734c7a0dab7af342d93a8f54fe323fa7e142ef235fcf57910",
+     "quote": "Inputs to the training plan can be gathered from internal audits, management reviews, risk and opportunity assessments, or other available options.",
+     "strength": "optional",
+     "relation": "same",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "addendum": ""
+    }
+   ]
+  },
+  {
+   "id": "PER-020",
+   "topic": "PER.KEY",
+   "item_text": "Distribution and retail activities are supervised by staff who hold the qualifications required by national law.",
+   "strength": "mandatory",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ],
+   "parameters": {},
+   "general": false,
+   "status": "draft",
+   "mappings": [
+    {
+     "source": "india-cdsco-gdp-guidelines-2024.pdf",
+     "clause_ref": "5.5",
+     "clause_sha256": "a4d8d7dedf007aca05e4a0cf598c198022b4fee487d67c87d416b7dae84aa037",
+     "quote": "The activity of distributor and retailer shall be taken under supervision of qualified staff as specified in Drugs Rules 1945.",
+     "strength": "mandatory",
+     "relation": "same",
+     "plant_types": [
+      "API",
+      "INJ",
+      "LIQ",
+      "OSD",
+      "SEMI"
+     ],
+     "addendum": ""
+    }
+   ]
+  },
+  {
+   "id": "PER-021",
+   "topic": "PER.ORG",
+   "item_text": "The company has a suitable organisational structure, shown in an organisation chart that has been formally authorised.",
+   "strength": "mandatory",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ],
+   "parameters": {},
+   "general": false,
+   "status": "draft",
+   "mappings": [
+    {
+     "source": "india-cdsco-gdp-guidelines-2024.pdf",
+     "clause_ref": "5.5",
+     "clause_sha256": "a4d8d7dedf007aca05e4a0cf598c198022b4fee487d67c87d416b7dae84aa037",
+     "quote": "There shall be an appropriate organizational structure. This shall be presented in an authorized organizational chart.",
+     "strength": "mandatory",
+     "relation": "same",
+     "plant_types": [
+      "API",
+      "INJ",
+      "LIQ",
+      "OSD",
+      "SEMI"
+     ],
+     "addendum": ""
+    }
+   ]
+  },
+  {
+   "id": "PER-022",
+   "topic": "PER.ORG",
+   "item_text": "The responsibilities, authority and working relationships of all staff are clearly set out.",
+   "strength": "mandatory",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ],
+   "parameters": {},
+   "general": false,
+   "status": "draft",
+   "mappings": [
+    {
+     "source": "india-cdsco-gdp-guidelines-2024.pdf",
+     "clause_ref": "5.5",
+     "clause_sha256": "a4d8d7dedf007aca05e4a0cf598c198022b4fee487d67c87d416b7dae84aa037",
+     "quote": "The responsibility, authority and interrelationships of personnel shall be clearly indicated.",
+     "strength": "mandatory",
+     "relation": "same",
+     "plant_types": [
+      "API",
+      "INJ",
+      "LIQ",
+      "OSD",
+      "SEMI"
+     ],
+     "addendum": ""
+    }
+   ]
+  },
+  {
+   "id": "PER-023",
+   "topic": "PER.TRAIN",
+   "item_text": "Staff in production and quality assurance of the Rasaushadhi manufacturing section have received adequate training specific to making Rasaushadhis.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ],
+   "parameters": {},
+   "general": false,
+   "status": "draft",
+   "mappings": [
+    {
+     "source": "india-drugs-rules-1945-consolidated-2024-07.pdf",
+     "clause_ref": "Part II 6 #5",
+     "clause_sha256": "162f84b5b60c926c6cb56ea5f667716b290712d8410b71f869cd8e2566879ba9",
+     "quote": "Personnel dealing with the production and quality assurance of Rasaushadhis manufacturing section should have an adequate training in the specific subject of Rasaushadhis manufacturing.",
+     "strength": "recommended",
+     "relation": "same",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "addendum": ""
+    }
+   ]
+  },
+  {
+   "id": "PER-024",
+   "topic": "PER.KEY",
+   "item_text": "The responsible person holds, as a minimum, a degree in Ayurveda, Siddha or Unani medicine, or a pharmacy degree in one of these systems of medicine.",
+   "strength": "mandatory",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ],
+   "parameters": {},
+   "general": false,
+   "status": "draft",
+   "mappings": [
+    {
+     "source": "india-drugs-rules-1945-consolidated-2024-07.pdf",
+     "clause_ref": "Part II 6 #5",
+     "clause_sha256": "162f84b5b60c926c6cb56ea5f667716b290712d8410b71f869cd8e2566879ba9",
+     "quote": "He will be at least a degree holder in Ayurveda/ Siddha/Unani medicine or B. Pharma degree holder in Ayurveda/Siddha/Unani medicine.",
+     "strength": "mandatory",
+     "relation": "same",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "addendum": ""
+    }
+   ]
+  }
+ ]
+}

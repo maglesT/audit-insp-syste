@@ -8,7 +8,8 @@ Checks, per mapping:
                (a changed source text means "re-verify")
   3 numbers    every number in the item text, the addendum and the parameters appears in one of the quotes
   4 strength   the mapping's strength matches the quote's words (shall/must -> mandatory, should ->
-               recommended, may -> optional), and the requirement's strength is the strictest of its mappings
+               recommended, may -> optional; a list item without such words takes its lead-in's), and the
+               requirement's strength is the strictest of its mappings
   5 scope      the mapping's plant types are within the source's applies_to (catalog), and the requirement's
                plant types are covered by its mappings
 Per library:
@@ -201,6 +202,28 @@ def strength_of(quote):
     return max(found, key=RANK.get) if found else None
 
 
+# a sentence ends at ". " before a capital, but not after a list number or a single letter ("1.", "a.")
+SENTENCE_END = re.compile(r"(?<![\d(])(?<!\b[a-zA-Z])[.!?]\s+(?=[A-Z(])")
+
+
+def lead_in_strength(quote, text):
+    """The strength of the list lead-in a quote sits under, for a list item that has no obligation word of its own:
+    "The quality unit should ...: 6. making sure that deviations are investigated" reads recommended. The lead-in is
+    the sentence ending at the last ":" or dash before the quote; None when there is none or it has no obligation
+    word."""
+    text, quote = normalise(text), normalise(quote)
+    at = text.find(quote)
+    if at < 0:
+        return None
+    before = text[:at]
+    mark = max(before.rfind(":"), before.rfind("—"), before.rfind("–"))
+    if mark < 0:
+        return None
+    lead = before[:mark]
+    ends = [m.end() for m in SENTENCE_END.finditer(lead)]
+    return strength_of(lead[ends[-1]:] if ends else lead)
+
+
 def check_requirement(req, sources, changed=()):
     """Findings for one requirement: (requirement id, mapping number or 0, check, message).
     changed: source files whose fingerprint no longer matches the inventory."""
@@ -220,7 +243,7 @@ def check_requirement(req, sources, changed=()):
             out.append((req["id"], n, "quote", f"quote not found word for word in {m['clause_ref']}"))
         else:
             quotes.append(m["quote"])
-        words = strength_of(m["quote"])
+        words = strength_of(m["quote"]) or lead_in_strength(m["quote"], clause["text"])
         if words is None:
             out.append((req["id"], n, "strength", "quote has no obligation wording (shall/should/may)"))
         elif words != m["strength"]:

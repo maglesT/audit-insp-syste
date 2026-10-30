@@ -1,0 +1,198 @@
+{
+ "requirements": [
+  {
+   "id": "PROD-001",
+   "topic": "PROD.IPC",
+   "item_text": "Every necessary check on intermediate products, together with other in-process controls and validations, is performed.",
+   "strength": "mandatory",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ],
+   "parameters": {},
+   "general": false,
+   "status": "draft",
+   "mappings": [
+    {
+     "source": "eu-vol4-chap1_2013-01_en.pdf",
+     "clause_ref": "1.4",
+     "clause_sha256": "34a6a4aa754c7acb90f6bd16175bfdfb6023feef0ce9bf4e646f5a8007d311fc",
+     "quote": "All necessary controls on intermediate products, and any other in-process controls and validations are carried out",
+     "strength": "recommended",
+     "relation": "same",
+     "plant_types": [
+      "INJ",
+      "LIQ",
+      "OSD",
+      "SEMI"
+     ],
+     "addendum": ""
+    },
+    {
+     "source": "india-drugs-rules-1945-consolidated-2024-07.pdf",
+     "clause_ref": "Part I 1.5",
+     "clause_sha256": "5b4649ef19a193e30c5cc96bce66aae0326a1eab82c5c38befeb55fb5649a79f",
+     "quote": "all necessary controls on starting materials, intermediate products, and bulk products and other in-process controls, calibrations and validations are carried out",
+     "strength": "mandatory",
+     "relation": "adds",
+     "plant_types": [
+      "API",
+      "INJ",
+      "LIQ",
+      "OSD",
+      "SEMI"
+     ],
+     "addendum": "Controls also cover starting materials and bulk products, and calibrations are carried out."
+    },
+    {
+     "source": "india-schedule-m-2023-GSR922E.pdf",
+     "clause_ref": "Part I 1.5",
+     "clause_sha256": "7ffbfeeb80d06ef0f86ba6e3200c9d2c00c198d5beb130cebab17bcbc980d8a4",
+     "quote": "all necessary controls on starting materials, intermediate products, and bulk products and other in- process controls, calibrations and validations are carried out",
+     "strength": "mandatory",
+     "relation": "adds",
+     "plant_types": [
+      "API",
+      "INJ",
+      "LIQ",
+      "OSD",
+      "SEMI"
+     ],
+     "addendum": "Controls also cover starting materials and bulk products, and calibrations are carried out."
+    },
+    {
+     "source": "pics-pe009-18-part1.pdf",
+     "clause_ref": "Part I 1.4",
+     "clause_sha256": "1096ce97117ba1c805b23af95fe5774964420bd6b5c4772457a07767204730d4",
+     "quote": "All necessary controls on intermediate products, and any other in-process controls and validations are carried out",
+     "strength": "recommended",
+     "relation": "same",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "addendum": ""
+    },
+    {
+     "source": "who-trs986-a2-gmp-main.pdf",
+     "clause_ref": "1.5",
+     "clause_sha256": "1286c9a924d0c1bfc67ebdcde326370078276713c59d4ae6fef6095446ea9e6d",
+     "quote": "all necessary controls on starting materials, intermediate products, and bulk products and other in-process controls, calibrations and validations are carried out",
+     "strength": "recommended",
+     "relation": "adds",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "addendum": "This also covers controls on starting materials and bulk products, and calibrations."
+    }
+   ]
+  },
+  {
+   "id": "PROD-002",
+   "topic": "PROD.GEN",
+   "item_text": "Each excipient is processed and checked correctly, following the defined procedures and specifications.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ],
+   "parameters": {},
+   "general": false,
+   "status": "draft",
+   "mappings": [
+    {
+     "source": "who-trs1060-a3-excipients.pdf",
+     "clause_ref": "Appendix 1 3.8",
+     "clause_sha256": "fbf56879ab7262765edaddd1652f5c1d535bf47a00ecb30d5353e911816aac4d",
+     "quote": "the excipient for pharmaceutical use is correctly processed and checked according to the defined procedures and specifications",
+     "strength": "recommended",
+     "relation": "same",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "addendum": ""
+    }
+   ]
+  },
+  {
+   "id": "PROD-003",
+   "topic": "PROD.GEN",
+   "item_text": "The finished product is processed and checked correctly, in line with the defined procedures.",
+   "strength": "mandatory",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ],
+   "parameters": {},
+   "general": false,
+   "status": "draft",
+   "mappings": [
+    {
+     "source": "india-drugs-rules-1945-consolidated-2024-07.pdf",
+     "clause_ref": "Part I 1.5",
+     "clause_sha256": "5b4649ef19a193e30c5cc96bce66aae0326a1eab82c5c38befeb55fb5649a79f",
+     "quote": "the finished product is correctly processed and checked, according to the defined procedures",
+     "strength": "mandatory",
+     "relation": "same",
+     "plant_types": [
+      "API",
+      "INJ",
+      "LIQ",
+      "OSD",
+      "SEMI"
+     ],
+     "addendum": ""
+    },
+    {
+     "source": "india-schedule-m-2023-GSR922E.pdf",
+     "clause_ref": "Part I 1.5",
+     "clause_sha256": "7ffbfeeb80d06ef0f86ba6e3200c9d2c00c198d5beb130cebab17bcbc980d8a4",
+     "quote": "the finished product is correctly processed and checked, according to the defined procedures",
+     "strength": "mandatory",
+     "relation": "same",
+     "plant_types": [
+      "API",
+      "INJ",
+      "LIQ",
+      "OSD",
+      "SEMI"
+     ],
+     "addendum": ""
+    },
+    {
+     "source": "who-trs986-a2-gmp-main.pdf",
+     "clause_ref": "1.5",
+     "clause_sha256": "1286c9a924d0c1bfc67ebdcde326370078276713c59d4ae6fef6095446ea9e6d",
+     "quote": "the finished product is correctly processed and checked, according to the defined procedures",
+     "strength": "recommended",
+     "relation": "same",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "addendum": ""
+    }
+   ]
+  }
+ ]
+}

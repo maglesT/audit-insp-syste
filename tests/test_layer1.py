@@ -186,6 +186,20 @@ class OnDemand(unittest.TestCase):
 
 
 
+class LeadIn(unittest.TestCase):
+    """Check 4 for list items (S3): the strength of the lead-in the item sits under."""
+
+    def test_lead_in(self):
+        text = ("2.22 The main duties should not be delegated. These responsibilities should include: 1. Releasing "
+                "materials; 2. Making sure that deviations are investigated.")
+        self.assertEqual(layer1.lead_in_strength("Making sure that deviations are investigated", text), "recommended")
+        dash = "1.5. The system shall ensure that— (a) products are designed well; (b) reviews are conducted."
+        self.assertEqual(layer1.lead_in_strength("reviews are conducted", dash), "mandatory")
+        self.assertIsNone(layer1.lead_in_strength("reviews are conducted", "Reviews are conducted yearly."))
+        self.assertIsNone(layer1.lead_in_strength("not in the text", text))
+        self.assertIsNone(layer1.lead_in_strength("records", "Areas: records and rooms."))
+
+
 class Conditions(unittest.TestCase):
     """Check 9 (D35): condition and limit wording in a quote needs a counterpart in the item."""
 

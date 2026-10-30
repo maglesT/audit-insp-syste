@@ -1,0 +1,678 @@
+{
+ "requirements": [
+  {
+   "id": "CSV-001",
+   "topic": "CSV.DI",
+   "item_text": "The data governance system applies controls across the whole data lifecycle that are proportionate to quality risk.",
+   "strength": "mandatory",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ],
+   "parameters": {},
+   "general": false,
+   "status": "draft",
+   "mappings": [
+    {
+     "source": "pics-pi041-1-data-integrity.pdf",
+     "clause_ref": "5.2.3",
+     "clause_sha256": "391bd719f474f6b979ced3bc4c239b0f4405bcd16dac216067eae785a4c6d2f6",
+     "quote": "The data governance system should ensure controls over the data lifecycle which are commensurate with the principles of quality risk management.",
+     "strength": "recommended",
+     "relation": "same",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "addendum": ""
+    },
+    {
+     "source": "who-trs1033-a4-data-integrity.pdf",
+     "clause_ref": "4.8",
+     "clause_sha256": "dc76a02a6437b183e49fff4d606bfa5d08130c3708f2374313371ce2e646fa9f",
+     "quote": "Data governance control strategies using quality risk management (QRM) principles (5) are required to prevent or mitigate risks.",
+     "strength": "mandatory",
+     "relation": "same",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "addendum": ""
+    }
+   ]
+  },
+  {
+   "id": "CSV-002",
+   "topic": "CSV.DI",
+   "item_text": "Data lifecycle controls may combine organisational measures (record completion and retention procedures, staff training and documented authority to generate and approve data, a governance design that controls risks in how data are generated, recorded, processed, kept and used, routine daily, batch or activity checks of data, periodic surveillance such as self-inspection, and staff skilled in data integrity and security) with technical measures (validation, qualification and control of computerised systems, automation, or technologies that give tighter control of data).",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ],
+   "parameters": {},
+   "general": false,
+   "status": "draft",
+   "mappings": [
+    {
+     "source": "pics-pi041-1-data-integrity.pdf",
+     "clause_ref": "5.2.3",
+     "clause_sha256": "391bd719f474f6b979ced3bc4c239b0f4405bcd16dac216067eae785a4c6d2f6",
+     "quote": "These controls may be:  Organisational o procedures, e.g. instructions for completion of records and retention of completed records; o training of staff and documented authorisation for data generation and approval; o data governance system design, considering how data is generated, recorded, processed, retained and used, and risks or vulnerabilities are controlled effectively; o routine (e.g. daily, batch- or activity-related) data verification; o periodic surveillance, e.g. self-inspection processes seek to verify the effectiveness of the data governance system; or o the use of personnel with expertise in data management and integrity, including expertise in data security measures.  Technical o computerised system validation, qualification and control; o automation; or o the use of technologies that provide greater controls for data management and integrity.",
+     "strength": "optional",
+     "relation": "same",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "addendum": ""
+    },
+    {
+     "source": "who-trs1033-a4-data-integrity.pdf",
+     "clause_ref": "4.8",
+     "clause_sha256": "dc76a02a6437b183e49fff4d606bfa5d08130c3708f2374313371ce2e646fa9f",
+     "quote": "The control strategy should aim to implement appropriate technical, organizational and procedural controls.",
+     "strength": "recommended",
+     "relation": "stricter",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "addendum": "The control strategy should include suitable technical, organisational and procedural controls rather than merely allowing them."
+    },
+    {
+     "source": "who-trs1033-a4-data-integrity.pdf",
+     "clause_ref": "4.8",
+     "clause_sha256": "dc76a02a6437b183e49fff4d606bfa5d08130c3708f2374313371ce2e646fa9f",
+     "quote": "Examples of controls may include, but are not limited to: ■■ the establishment and implementation of procedures that will facilitate compliance with data integrity requirements and expectations; ■■ the adoption of a quality culture within the company that encourages personnel to be transparent about failures, which includes a reporting mechanism inclusive of investigation and follow-up processes; ■■ the implementation of appropriate controls to eliminate or reduce risks to an acceptable level throughout the life cycle of the data; ■■ ensuring sufficient time and resources are available to implement and complete a data integrity programme; to monitor compliance with data integrity policies, procedures and processes through e.g. audits and self-inspections; and to facilitate continuous improvement of both; ■■ the assignment of qualified and trained personnel and provision of regular training for personnel in, for example, GxP, and the principles of data integrity in computerized systems and manual/ paper based systems; ■■ the implementation and validation of computerized systems appropriate for their intended use, including all relevant data integrity requirements in order to ensure that the computerized system has the necessary controls to protect the electronic data (3); and ■■ the definition and management of the appropriate roles and responsibilities for contract givers and contract acceptors, entered into quality agreements and contracts including a focus on data integrity requirements.",
+     "strength": "optional",
+     "relation": "adds",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "addendum": "Controls may also include a quality culture in which staff report failures openly with investigation and follow-up, enough time and resources for a data integrity programme, and data integrity duties defined in contracts and quality agreements between contract givers and acceptors."
+    }
+   ]
+  },
+  {
+   "id": "CSV-003",
+   "topic": "CSV.DI",
+   "item_text": "The effectiveness of data integrity controls is assessed periodically, through self-inspection or another periodic review, to confirm that data lifecycle controls work as intended.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ],
+   "parameters": {},
+   "general": false,
+   "status": "draft",
+   "mappings": [
+    {
+     "source": "ema-gmp-gdp-qa.html",
+     "clause_ref": "Data integrity Q18",
+     "clause_sha256": "85a6938fd9e1d2f1eb080b00395033ae7bac7412daee83da5b6718a178461435",
+     "quote": "Ongoing compliance with the company's data governance policy/procedures should be reviewed during self-inspection, to ensure that they remain effective.",
+     "strength": "recommended",
+     "relation": "stricter",
+     "plant_types": [
+      "API",
+      "INJ",
+      "LIQ",
+      "OSD",
+      "SEMI"
+     ],
+     "addendum": "Self-inspections review ongoing compliance with the data governance policy and procedures to confirm they remain effective."
+    },
+    {
+     "source": "ema-gmp-gdp-qa.html",
+     "clause_ref": "Data integrity Q18",
+     "clause_sha256": "85a6938fd9e1d2f1eb080b00395033ae7bac7412daee83da5b6718a178461435",
+     "quote": "This may also include elements of the Data lifecycle discussed in Q3-Q9.",
+     "strength": "optional",
+     "relation": "looser",
+     "plant_types": [
+      "API",
+      "INJ",
+      "LIQ",
+      "OSD",
+      "SEMI"
+     ],
+     "addendum": ""
+    },
+    {
+     "source": "pics-pi041-1-data-integrity.pdf",
+     "clause_ref": "5.6.1",
+     "clause_sha256": "551d1a6102924c7955ab9287ea91d8ed88733671577a88d0ec8f0d5da1d686a5",
+     "quote": "The effectiveness of data integrity control measures should be assessed periodically as part of self-inspection (internal audit) or other periodic review processes. This should ensure that controls over the data lifecycle are operating as intended.",
+     "strength": "recommended",
+     "relation": "same",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "addendum": ""
+    },
+    {
+     "source": "who-trs1033-a4-data-integrity.pdf",
+     "clause_ref": "6.3",
+     "clause_sha256": "f818de6b1c20c2aa38e9937e26b702e7157767d7ad5e164b29782b475ff17225",
+     "quote": "The effectiveness of the controls implemented should be evaluated through, for example: ■■ the tracking and trending of data; ■■ a review of data, metadata and audit trails (e.g. in warehouse and material management, production, quality control, case report forms and data processing); and ■■ routine audits and/or self-inspections, including data integrity and computerized systems.",
+     "strength": "recommended",
+     "relation": "adds",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "addendum": "Effectiveness is also evaluated by tracking and trending data and by reviewing data, metadata and audit trails in areas such as warehouse, production and quality control."
+    }
+   ]
+  },
+  {
+   "id": "CSV-004",
+   "topic": "CSV.AUDIT",
+   "item_text": "Self-inspections examine a risk-based sample of computerised system logs and audit trails to confirm that GMP or GDP relevant information is reported correctly, especially where routine system data are reviewed by hand or through a validated exception report.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ],
+   "parameters": {},
+   "general": false,
+   "status": "draft",
+   "mappings": [
+    {
+     "source": "pics-pi041-1-data-integrity.pdf",
+     "clause_ref": "5.6.2",
+     "clause_sha256": "58b4c2daab8a12f19157b8f575ab3486a11a362cd1b2c18d060dbf9637dc3b92",
+     "quote": "A risk-based sample of computerised system logs / audit trails to ensure that information of relevance to GMP/GDP activity is reported accurately. This is relevant to situations where routine computerised system data is reviewed manually or by a validated ‘exception report’",
+     "strength": "recommended",
+     "relation": "same",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "addendum": ""
+    }
+   ]
+  },
+  {
+   "id": "CSV-005",
+   "topic": "CSV.DI",
+   "item_text": "The quality system is able to prevent, detect and correct weaknesses in systems or processes that could lead to data integrity failures.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ],
+   "parameters": {},
+   "general": false,
+   "status": "draft",
+   "mappings": [
+    {
+     "source": "pics-pi041-1-data-integrity.pdf",
+     "clause_ref": "6.4.2",
+     "clause_sha256": "f4168af51d338813a98b62e934c25deb365ac167417657908b2157b9e1620676",
+     "quote": "The company’s Pharmaceutical Quality System should be able to prevent, detect and correct weaknesses in the system or their processes that may lead to data integrity lapses.",
+     "strength": "recommended",
+     "relation": "same",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "addendum": ""
+    }
+   ]
+  },
+  {
+   "id": "CSV-006",
+   "topic": "CSV.DI",
+   "item_text": "The company understands its data lifecycle and builds in suitable controls and procedures so that the data it generates are valid, complete and reliable.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ],
+   "parameters": {},
+   "general": false,
+   "status": "draft",
+   "mappings": [
+    {
+     "source": "pics-pi041-1-data-integrity.pdf",
+     "clause_ref": "6.4.2",
+     "clause_sha256": "f4168af51d338813a98b62e934c25deb365ac167417657908b2157b9e1620676",
+     "quote": "The company should know their data life cycle and integrate the appropriate controls and procedures such that the data generated will be valid, complete and reliable.",
+     "strength": "recommended",
+     "relation": "same",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "addendum": ""
+    }
+   ]
+  },
+  {
+   "id": "CSV-007",
+   "topic": "CSV.DI",
+   "item_text": "Control and procedure changes for data integrity may cover quality risk management, investigations, data review practice, computerised system validation, physical and virtual IT infrastructure, services and security, vendor and contractor management, training on the company's data governance approach and procedures, storage, processing, transfer and retrieval of completed records (including decentralised or cloud-based activities), oversight of buying GMP or GDP critical equipment and IT with data integrity requirements such as user requirement specifications, a self-inspection programme that includes data quality and integrity, and quality metrics reported to senior management.",
+   "strength": "optional",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ],
+   "parameters": {},
+   "general": false,
+   "status": "draft",
+   "mappings": [
+    {
+     "source": "pics-pi041-1-data-integrity.pdf",
+     "clause_ref": "6.4.2",
+     "clause_sha256": "f4168af51d338813a98b62e934c25deb365ac167417657908b2157b9e1620676",
+     "quote": "Specifically, such control and procedural changes may be in the following areas:  Quality Risk Management,  Investigation programs,  Data review practices (section 9),  Computerised system validation,  IT infrastructure, services and security (physical and virtual),  Vendor/contractor management,  Training program to include company’s approach to data governance and data governance SOPs,  Storage, processing, transfer and retrieval of completed records, including decentralised/cloud-based data storage, processing and transfer activities,  Appropriate oversight of the purchase of GMP/GDP critical equipment and IT infrastructure that incorporate requirements designed to meet data integrity expectations, e.g. User Requirement Specifications, (Refer section 9.2)  Self-inspection program to include data quality and integrity, and  Performance indicators (quality metrics) and reporting to senior management.",
+     "strength": "optional",
+     "relation": "same",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "addendum": ""
+    }
+   ]
+  },
+  {
+   "id": "CSV-008",
+   "topic": "CSV.DI",
+   "item_text": "Where summary data are passed between sites of the same organisation, the supplying site's compliance may be evaluated by other means, such as evidence that corporate procedures are followed or internal audit reports.",
+   "strength": "optional",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ],
+   "parameters": {},
+   "general": false,
+   "status": "draft",
+   "mappings": [
+    {
+     "source": "pics-pi041-1-data-integrity.pdf",
+     "clause_ref": "7.8.4.2",
+     "clause_sha256": "ad26377d324511c2021cdc848d55931acb60a605d01ebaf943bcf343ae86121d",
+     "quote": "Where summary data is distributed between different sites of the same organisation, the evaluation of the supplying site’s compliance may be determined through alternative means (e.g. evidence of compliance with corporate procedures, internal audit reports, etc.).",
+     "strength": "optional",
+     "relation": "same",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "addendum": ""
+    }
+   ]
+  },
+  {
+   "id": "CSV-009",
+   "topic": "CSV.AUDIT",
+   "item_text": "The quality unit sets up a programme and schedule for ongoing audit trail reviews, based on criticality and system complexity, to confirm current controls are working and to detect possible non-compliance.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ],
+   "parameters": {},
+   "general": false,
+   "status": "draft",
+   "mappings": [
+    {
+     "source": "pics-pi041-1-data-integrity.pdf",
+     "clause_ref": "Table 26 2. #2",
+     "clause_sha256": "f5e090302366c3cf619c0fd850d38c6fc62ecb0356bd78453f3ba4d9ce802484",
+     "quote": "The company’s quality unit should establish a program and schedule to conduct ongoing reviews of audit trails based upon their criticality and the system’s complexity in order to verify the effective implementation of current controls and to detect potential non-compliance issues.",
+     "strength": "recommended",
+     "relation": "same",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "addendum": ""
+    }
+   ]
+  },
+  {
+   "id": "CSV-010",
+   "topic": "CSV.AUDIT",
+   "item_text": "Audit trail reviews form part of the company's self-inspection programme.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ],
+   "parameters": {},
+   "general": false,
+   "status": "draft",
+   "mappings": [
+    {
+     "source": "pics-pi041-1-data-integrity.pdf",
+     "clause_ref": "Table 26 2. #2",
+     "clause_sha256": "f5e090302366c3cf619c0fd850d38c6fc62ecb0356bd78453f3ba4d9ce802484",
+     "quote": "These reviews should be incorporated into the company’s self-inspection programme.",
+     "strength": "recommended",
+     "relation": "same",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "addendum": ""
+    }
+   ]
+  },
+  {
+   "id": "CSV-011",
+   "topic": "CSV.AUDIT",
+   "item_text": "Procedures are in place to deal with and investigate any audit trail discrepancy, including escalation to senior management and to national authorities where necessary.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ],
+   "parameters": {},
+   "general": false,
+   "status": "draft",
+   "mappings": [
+    {
+     "source": "pics-pi041-1-data-integrity.pdf",
+     "clause_ref": "Table 26 2. #2",
+     "clause_sha256": "f5e090302366c3cf619c0fd850d38c6fc62ecb0356bd78453f3ba4d9ce802484",
+     "quote": "Procedures should be in place to address and investigate any audit trail discrepancies, including escalation processes for the notification of senior management and national authorities where necessary.",
+     "strength": "recommended",
+     "relation": "same",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "addendum": ""
+    }
+   ]
+  },
+  {
+   "id": "CSV-012",
+   "topic": "CSV.AUDIT",
+   "item_text": "Audit trail reviews use both random selections and selections targeted by criticality or risk.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ],
+   "parameters": {},
+   "general": false,
+   "status": "draft",
+   "mappings": [
+    {
+     "source": "pics-pi041-1-data-integrity.pdf",
+     "clause_ref": "Table 26 2. #2",
+     "clause_sha256": "f5e090302366c3cf619c0fd850d38c6fc62ecb0356bd78453f3ba4d9ce802484",
+     "quote": "Audit trail reviews should be both random (selected based on chance) and targeted (selected based on criticality or risk).",
+     "strength": "recommended",
+     "relation": "same",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "addendum": ""
+    }
+   ]
+  },
+  {
+   "id": "CSV-013",
+   "topic": "CSV.DI",
+   "item_text": "A system is in place for regularly reviewing data against ALCOA+ principles, covering paper and electronic records both in routine daily work and during system and facility audits and self-inspections.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ],
+   "parameters": {},
+   "general": false,
+   "status": "draft",
+   "mappings": [
+    {
+     "source": "who-trs1033-a4-data-integrity.pdf",
+     "clause_ref": "4.11",
+     "clause_sha256": "614dbc8f54e36c85c268d8f03da1dd541af32983be29f9262d1e858b5c9941c5",
+     "quote": "There should be a system for the regular review of data for consistency with ALCOA+ principles. This includes paper records and electronic records in day-to-day work, system and facility audits and self-inspections.",
+     "strength": "recommended",
+     "relation": "same",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "addendum": ""
+    }
+   ]
+  },
+  {
+   "id": "CSV-014",
+   "topic": "CSV.VAL",
+   "item_text": "IT systems used for remote batch release meet the GMP requirements for computerised systems.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ],
+   "parameters": {},
+   "general": false,
+   "status": "draft",
+   "mappings": [
+    {
+     "source": "ema-gmp-gdp-qa.html",
+     "clause_ref": "Questions and answers on remote batch certification / confirmation by the qualified… Q2",
+     "clause_sha256": "ecd7238ae3d109bb5769cbcc136964a8cc4904e8a1b678eb5519b712f5202b60",
+     "quote": "IT systems used for remote batch release should comply with requirements of EU GMP Annex 11.",
+     "strength": "recommended",
+     "relation": "same",
+     "plant_types": [
+      "API",
+      "INJ",
+      "LIQ",
+      "OSD",
+      "SEMI"
+     ],
+     "addendum": ""
+    }
+   ]
+  },
+  {
+   "id": "CSV-015",
+   "topic": "CSV.ACCESS",
+   "item_text": "The manufacturing authorisation holder ensures that only the certifying person can edit entries in the batch certification function.",
+   "strength": "mandatory",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ],
+   "parameters": {},
+   "general": false,
+   "status": "draft",
+   "mappings": [
+    {
+     "source": "ema-gmp-gdp-qa.html",
+     "clause_ref": "Questions and answers on remote batch certification / confirmation by the qualified… Q2",
+     "clause_sha256": "ecd7238ae3d109bb5769cbcc136964a8cc4904e8a1b678eb5519b712f5202b60",
+     "quote": "It is the responsibility of the MIA holder to guarantee that a) only the QP has editing access to the batch certification function",
+     "strength": "mandatory",
+     "relation": "same",
+     "plant_types": [
+      "API",
+      "INJ",
+      "LIQ",
+      "OSD",
+      "SEMI"
+     ],
+     "addendum": ""
+    }
+   ]
+  },
+  {
+   "id": "CSV-016",
+   "topic": "CSV.DI",
+   "item_text": "The manufacturing authorisation holder ensures that data transferred for remote batch certification arrive complete and unaltered.",
+   "strength": "mandatory",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ],
+   "parameters": {},
+   "general": false,
+   "status": "draft",
+   "mappings": [
+    {
+     "source": "ema-gmp-gdp-qa.html",
+     "clause_ref": "Questions and answers on remote batch certification / confirmation by the qualified… Q2",
+     "clause_sha256": "ecd7238ae3d109bb5769cbcc136964a8cc4904e8a1b678eb5519b712f5202b60",
+     "quote": "that data being transferred are complete and unchanged",
+     "strength": "mandatory",
+     "relation": "same",
+     "plant_types": [
+      "API",
+      "INJ",
+      "LIQ",
+      "OSD",
+      "SEMI"
+     ],
+     "addendum": ""
+    }
+   ]
+  },
+  {
+   "id": "CSV-017",
+   "topic": "CSV.ESIG",
+   "item_text": "The manufacturing authorisation holder ensures that remote batch certification uses an electronic signature that meets the GMP requirements for computerised systems.",
+   "strength": "mandatory",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ],
+   "parameters": {},
+   "general": false,
+   "status": "draft",
+   "mappings": [
+    {
+     "source": "ema-gmp-gdp-qa.html",
+     "clause_ref": "Questions and answers on remote batch certification / confirmation by the qualified… Q2",
+     "clause_sha256": "ecd7238ae3d109bb5769cbcc136964a8cc4904e8a1b678eb5519b712f5202b60",
+     "quote": "an electronic signature, reflecting requirements in annex 11, is in place",
+     "strength": "mandatory",
+     "relation": "same",
+     "plant_types": [
+      "API",
+      "INJ",
+      "LIQ",
+      "OSD",
+      "SEMI"
+     ],
+     "addendum": ""
+    }
+   ]
+  }
+ ]
+}
