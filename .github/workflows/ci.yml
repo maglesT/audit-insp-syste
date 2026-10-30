@@ -15,4 +15,5 @@ jobs:
       - run: python3 -m pip install -q -r requirements.txt
       - run: python3 tools/inventory.py check
       - run: python3 tools/library/layer1.py
+      - run: python3 tools/library/export.py check
       - run: python3 -m unittest discover -s tests

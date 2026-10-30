@@ -1,6 +1,6 @@
 # Handover: read this first in every new session
 
-Last updated: 30 October 2026 (session 3, candidate search, D32).
+Last updated: 30 October 2026 (session 3, customer export, D33; S2 complete).
 
 ## Mutation test results (30 Oct 2026, plan 2.6 / Layer 3, pilot scale)
 `tools/ai/mutate.py` planted errors in the 56 session-pilot mappings and mixed the mutants, shuffled, with the 56
@@ -161,7 +161,8 @@ finished in about 4 minutes in total.
     little only where the wording differs, as in ICH Q7 "internal audits"), so it is off by default.
     Re-measure it with `candidates.py evaluate` once Stage 2 has real cross-regulator pairings.
   - Mutation harness done at pilot scale (`tools/ai/mutate.py`, PRs #22, #24).
-  - Still to do in S2: customer export with the option-A test.
+  - **Customer export done (D33):** `python3 tools/library/export.py check` (in CI) runs the option-A test on every
+    compilation; `export.py build --regulators EU,PICS --plant OSD` writes one export. **S2 is complete.**
 - Brief: `docs/00-brief.md` (the owner's decisions). Small decisions: `docs/decisions.md`.
 - **Deliverable (a), source inventory: done as a draft.** It is in `docs/01-source-inventory.md` and waits for
   owner review.
