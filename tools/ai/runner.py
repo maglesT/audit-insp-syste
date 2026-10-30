@@ -136,13 +136,24 @@ class MockRunner:
         return out
 
 
-def client():
-    """An API client. The key is never in the repo: either ANTHROPIC_API_KEY is set in the environment, or the
-    environment's network secret adds the x-api-key header on the way to api.anthropic.com (the SDK then sends
-    a placeholder that the proxy replaces)."""
+KEY_VARIABLES = ("AUDIT_ANTHROPIC_KEY", "ANTHROPIC_API_KEY")
+
+
+def api_key(environ=None):
+    """The API key from the environment, never from the repo. Claude Code cloud sessions reserve
+    ANTHROPIC_API_KEY and strip it from the session, so the environment settings use AUDIT_ANTHROPIC_KEY."""
     import os
+    environ = os.environ if environ is None else environ
+    key = next((environ[v].strip() for v in KEY_VARIABLES if environ.get(v, "").strip()), "")
+    if not key:
+        raise SystemExit("no API key: add AUDIT_ANTHROPIC_KEY=<key> to the cloud environment's environment "
+                         "variables and start a new session")
+    return key
+
+
+def client():
     import anthropic
-    return anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY") or "set-by-network-secret")
+    return anthropic.Anthropic(api_key=api_key())
 
 
 def check_access(model=MODEL):
