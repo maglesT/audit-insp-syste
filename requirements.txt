@@ -4,3 +4,8 @@ pdfminer.six==20260107
 pypdfium2==5.13.0
 pillow==12.3.0
 anthropic==2.3.0
+# candidate search (D21, D32): the embedding model runs locally as ONNX; the model files are pinned in
+# tools/search/embed.py and fetched into models/ (not in git)
+numpy==2.5.3
+onnxruntime==1.29.0
+tokenizers==0.23.3

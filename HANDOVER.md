@@ -1,6 +1,6 @@
 # Handover: read this first in every new session
 
-Last updated: 30 October 2026 (session 3, mutation re-run with D31 prompts).
+Last updated: 30 October 2026 (session 3, candidate search, D32).
 
 ## Mutation test results (30 Oct 2026, plan 2.6 / Layer 3, pilot scale)
 `tools/ai/mutate.py` planted errors in the 56 session-pilot mappings and mixed the mutants, shuffled, with the 56
@@ -155,8 +155,12 @@ finished in about 4 minutes in total.
     24 self-inspection clauses, hard budget US$15). The key is the environment variable `AUDIT_ANTHROPIC_KEY`, set in the
     cloud environment's settings (Claude Code strips `ANTHROPIC_API_KEY` from sessions), never in the repo or the chat. The paid pilot has run (see "Pilot results"
     below); it is kept as a reference measurement.
-  - Still to do in S2: mutation harness, customer export with the option-A test, candidate search (BM25 +
-    embeddings, D21).
+  - **Candidate search done (D32):** `tools/search/candidates.py query "<text>" --source <file>` shortlists the
+    obligation clauses of other sources (BM25 by default). The embedding model (`python3 tools/search/embed.py
+    fetch`, pinned and sha256-checked) did not measurably help on the pilot evaluation, so it is off by default.
+    Re-measure it with `candidates.py evaluate` once Stage 2 has real cross-regulator pairings.
+  - Mutation harness done at pilot scale (`tools/ai/mutate.py`, PRs #22, #24).
+  - Still to do in S2: customer export with the option-A test.
 - Brief: `docs/00-brief.md` (the owner's decisions). Small decisions: `docs/decisions.md`.
 - **Deliverable (a), source inventory: done as a draft.** It is in `docs/01-source-inventory.md` and waits for
   owner review.

@@ -1,0 +1,140 @@
+{
+ "bm25": {
+  "topic": {
+   "all": {
+    "queries": 168,
+    "hit@10": 0.845,
+    "recall@10": 0.611,
+    "mrr": 0.733
+   },
+   "by_target": {
+    "eu-cap9_en.pdf": {
+     "clauses": 4,
+     "queries": 49,
+     "hit@10": 1.0,
+     "recall@10": 1.0,
+     "mrr": 1.0
+    },
+    "ich-q7.pdf": {
+     "clauses": 320,
+     "queries": 53,
+     "hit@10": 0.528,
+     "recall@10": 0.33,
+     "mrr": 0.198
+    },
+    "india-schedule-m-2023-GSR922E.pdf": {
+     "clauses": 1265,
+     "queries": 33,
+     "hit@10": 0.97,
+     "recall@10": 0.508,
+     "mrr": 0.929
+    },
+    "who-trs986-a2-gmp-main.pdf": {
+     "clauses": 293,
+     "queries": 33,
+     "hit@10": 1.0,
+     "recall@10": 0.589,
+     "mrr": 1.0
+    }
+   }
+  },
+  "own_clause": {
+   "queries": 56,
+   "hit@1": 0.929,
+   "hit@10": 1.0,
+   "mrr": 0.964
+  }
+ },
+ "embed": {
+  "topic": {
+   "all": {
+    "queries": 168,
+    "hit@10": 0.821,
+    "recall@10": 0.527,
+    "mrr": 0.743
+   },
+   "by_target": {
+    "eu-cap9_en.pdf": {
+     "clauses": 4,
+     "queries": 49,
+     "hit@10": 1.0,
+     "recall@10": 1.0,
+     "mrr": 1.0
+    },
+    "ich-q7.pdf": {
+     "clauses": 320,
+     "queries": 53,
+     "hit@10": 0.491,
+     "recall@10": 0.245,
+     "mrr": 0.279
+    },
+    "india-schedule-m-2023-GSR922E.pdf": {
+     "clauses": 1265,
+     "queries": 33,
+     "hit@10": 0.939,
+     "recall@10": 0.367,
+     "mrr": 0.905
+    },
+    "who-trs986-a2-gmp-main.pdf": {
+     "clauses": 293,
+     "queries": 33,
+     "hit@10": 0.97,
+     "recall@10": 0.438,
+     "mrr": 0.945
+    }
+   }
+  },
+  "own_clause": {
+   "queries": 56,
+   "hit@1": 0.857,
+   "hit@10": 0.982,
+   "mrr": 0.91
+  }
+ },
+ "fused": {
+  "topic": {
+   "all": {
+    "queries": 168,
+    "hit@10": 0.839,
+    "recall@10": 0.574,
+    "mrr": 0.739
+   },
+   "by_target": {
+    "eu-cap9_en.pdf": {
+     "clauses": 4,
+     "queries": 49,
+     "hit@10": 1.0,
+     "recall@10": 1.0,
+     "mrr": 1.0
+    },
+    "ich-q7.pdf": {
+     "clauses": 320,
+     "queries": 53,
+     "hit@10": 0.509,
+     "recall@10": 0.274,
+     "mrr": 0.254
+    },
+    "india-schedule-m-2023-GSR922E.pdf": {
+     "clauses": 1265,
+     "queries": 33,
+     "hit@10": 0.97,
+     "recall@10": 0.434,
+     "mrr": 0.912
+    },
+    "who-trs986-a2-gmp-main.pdf": {
+     "clauses": 293,
+     "queries": 33,
+     "hit@10": 1.0,
+     "recall@10": 0.562,
+     "mrr": 0.959
+    }
+   }
+  },
+  "own_clause": {
+   "queries": 56,
+   "hit@1": 0.929,
+   "hit@10": 1.0,
+   "mrr": 0.954
+  }
+ }
+}
