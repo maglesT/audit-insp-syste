@@ -13383,6 +13383,7 @@
    "item_text": "Self-inspections are carried out in an independent and thorough way by designated, competent staff of the company.",
    "strength": "recommended",
    "plant_types": [
+    "API",
     "INJ",
     "LIQ",
     "OSD",
@@ -13420,6 +13421,7 @@
    "item_text": "Self-inspection reports contain all observations made and, where applicable, proposed corrective measures.",
    "strength": "recommended",
    "plant_types": [
+    "API",
     "INJ",
     "LIQ",
     "OSD",
@@ -13542,6 +13544,7 @@
    "item_text": "Processes are in place for managing outsourced activities.",
    "strength": "recommended",
    "plant_types": [
+    "API",
     "INJ",
     "LIQ",
     "OSD",
@@ -13674,6 +13677,7 @@
    "item_text": "The effectiveness of corrective and preventive actions is monitored and assessed in line with quality risk management principles.",
    "strength": "recommended",
    "plant_types": [
+    "API",
     "INJ",
     "LIQ",
     "OSD",
@@ -13698,6 +13702,7 @@
    "item_text": "Arrangements are in place to make sure, as far as possible, that medicinal products are stored, distributed and handled afterwards in a way that keeps their quality throughout their shelf life.",
    "strength": "recommended",
    "plant_types": [
+    "API",
     "INJ",
     "LIQ",
     "OSD",
@@ -13804,7 +13809,7 @@
    "id": "CSV-001",
    "topic": "CSV.DI",
    "item_text": "The data governance system applies controls across the whole data lifecycle that are proportionate to quality risk.",
-   "strength": "recommended",
+   "strength": "mandatory",
    "plant_types": [
     "API",
     "INJ",
@@ -13817,7 +13822,7 @@
    "id": "CSV-002",
    "topic": "CSV.DI",
    "item_text": "Data lifecycle controls may combine organisational measures (record completion and retention procedures, staff training and documented authority to generate and approve data, a governance design that controls risks in how data are generated, recorded, processed, kept and used, routine daily, batch or activity checks of data, periodic surveillance such as self-inspection, and staff skilled in data integrity and security) with technical measures (validation, qualification and control of computerised systems, automation, or technologies that give tighter control of data).",
-   "strength": "optional",
+   "strength": "recommended",
    "plant_types": [
     "API",
     "INJ",
@@ -14372,6 +14377,162 @@
    "topic": "SI.PROG",
    "item_text": "Self-inspections include the environmental aspects of antimicrobial manufacturing to verify continued GMP compliance.",
    "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "CCS-012",
+   "topic": "CCS.STRAT",
+   "item_text": "Manufacturers consider keeping periodic reports on how waste and wastewater are collected, treated and disposed of, at a frequency set by risk and consistent with any applicable local, regional or international regulatory requirements.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "DIST-002",
+   "topic": "DIST.TRANS",
+   "item_text": "Medical products are bought, stored, distributed and delivered in a suitable way, in line with legislation, and reach only appropriate recipients.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "DOC-004",
+   "topic": "DOC.SOP",
+   "item_text": "Operations are clearly described in written procedures.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "PER-003",
+   "topic": "PER.ORG",
+   "item_text": "Staff responsibilities are clearly defined in job descriptions.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "QS-029",
+   "topic": "QS.QRM",
+   "item_text": "All risks are identified and the necessary controls are put in place and are effective.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "QS-030",
+   "topic": "QS.QRM",
+   "item_text": "A quality risk management system is in place.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "CMP-004",
+   "topic": "CMP.COMPL",
+   "item_text": "Systems are in place for handling returns, complaints and recalls.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "QS-031",
+   "topic": "QS.CHANGE",
+   "item_text": "Systems are in place for managing changes, deviations and corrective and preventive actions.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "CSV-013",
+   "topic": "CSV.DI",
+   "item_text": "A system is in place for regularly reviewing data against ALCOA+ principles, covering paper and electronic records both in routine daily work and during system and facility audits and self-inspections.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "QC-003",
+   "topic": "QC.GEN",
+   "item_text": "The quality manager makes sure that standard operating procedures exist, are applied and are kept up to date for every administrative and technical laboratory operation.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "QS-032",
+   "topic": "QS.CAPA",
+   "item_text": "Situations that could cause a deviation or nonconformity are properly dealt with through preventive action.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "QS-033",
+   "topic": "QS.CAPA",
+   "item_text": "Preventive actions may be handled either as a risk or as an opportunity, depending on the kind of impact they could have.",
+   "strength": "optional",
    "plant_types": [
     "API",
     "INJ",
@@ -15551,13 +15712,297 @@
    "relation": "same",
    "addendum": "",
    "reason": "Covering these environmental points in self-inspections is not listed."
+  },
+  "O382": {
+   "requirement": "CCS-012",
+   "relation": "same",
+   "addendum": "",
+   "reason": "No listed requirement covers periodic reporting on waste collection, treatment and disposal; existing waste records cover amount and nature only."
+  },
+  "O392": {
+   "requirement": "DIST-001",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Both require storage and distribution practices that keep product quality throughout shelf life."
+  },
+  "O393": {
+   "requirement": "DIST-002",
+   "relation": "same",
+   "addendum": "",
+   "reason": "No listed requirement covers lawful procurement and delivery to appropriate recipients."
+  },
+  "O394": {
+   "requirement": "DOC-004",
+   "relation": "same",
+   "addendum": "",
+   "reason": "No listed requirement states that operations are set out in written procedures."
+  },
+  "O395": {
+   "requirement": "PER-003",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Existing requirements define management responsibilities generally, not job descriptions for responsibilities."
+  },
+  "O396": {
+   "requirement": "QS-029",
+   "relation": "same",
+   "addendum": "",
+   "reason": "No listed requirement covers identifying all risks and implementing effective controls."
+  },
+  "O397": {
+   "requirement": "OUT-002",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Both require processes for managing outsourced activities."
+  },
+  "O398": {
+   "requirement": "SI-017",
+   "relation": "looser",
+   "addendum": "",
+   "reason": "Requires a self-inspection and audit procedure without the detailed contents the requirement lists."
+  },
+  "O399": {
+   "requirement": "QS-030",
+   "relation": "same",
+   "addendum": "",
+   "reason": "No listed requirement states that a quality risk management system exists."
+  },
+  "O400": {
+   "requirement": "CMP-004",
+   "relation": "same",
+   "addendum": "",
+   "reason": "No listed requirement covers having systems for returns, complaints and recalls together."
+  },
+  "O401": {
+   "requirement": "QS-031",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Existing requirements cover parts of change and deviation handling but not the existence of these management systems."
+  },
+  "O402": {
+   "requirement": "SI-002",
+   "relation": "looser",
+   "addendum": "",
+   "reason": "Only requires self-inspections to be part of the quality system, without regular scheduled performance."
+  },
+  "O403": {
+   "requirement": "SI-002",
+   "relation": "adds",
+   "addendum": "Self-inspections also check that procedures are implemented, followed and effective, and that storage, distribution and other applicable rules are complied with.",
+   "reason": "States the self-inspection point and adds procedure effectiveness and wider regulatory scope."
+  },
+  "O404": {
+   "requirement": "SI-002",
+   "relation": "stricter",
+   "addendum": "The self-inspection schedule is drawn up annually.",
+   "reason": "Same point with a fixed annual schedule."
+  },
+  "O405": {
+   "requirement": "SI-005",
+   "relation": "looser",
+   "addendum": "",
+   "reason": "Covers only freedom from bias, fewer elements than the requirement."
+  },
+  "O406": {
+   "requirement": "SI-005",
+   "relation": "looser",
+   "addendum": "",
+   "reason": "Covers only team competence, fewer elements than the requirement."
+  },
+  "O407": {
+   "requirement": "SI-007",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Both require every self-inspection to be recorded."
+  },
+  "O408": {
+   "requirement": "SI-008",
+   "relation": "adds",
+   "addendum": "Reports are presented to the relevant staff and to management.",
+   "reason": "States report contents and adds presentation to staff and management."
+  },
+  "O409": {
+   "requirement": "SI-004",
+   "relation": "looser",
+   "addendum": "",
+   "reason": "Requires necessary corrective actions after self-inspection without the timeliness and effectiveness terms."
+  },
+  "O410": {
+   "requirement": "QS-020",
+   "relation": "stricter",
+   "addendum": "The effectiveness review takes place within a defined timeframe.",
+   "reason": "Same point on reviewing action effectiveness, with a defined timeframe."
+  },
+  "O411": {
+   "requirement": "SI-002",
+   "relation": "narrower",
+   "addendum": "",
+   "reason": "Regular self-inspection limited to water systems."
+  },
+  "O412": {
+   "requirement": "SI-007",
+   "relation": "narrower",
+   "addendum": "",
+   "reason": "Self-inspection records limited to water systems."
+  },
+  "O413": {
+   "requirement": "CSV-001",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Both require risk-based data governance controls."
+  },
+  "O414": {
+   "requirement": "CSV-002",
+   "relation": "stricter",
+   "addendum": "The control strategy should include suitable technical, organisational and procedural controls rather than merely allowing them.",
+   "reason": "Same point on combining types of controls, with a stronger verb and procedural controls."
+  },
+  "O415": {
+   "requirement": "CSV-002",
+   "relation": "adds",
+   "addendum": "Controls may also include a quality culture in which staff report failures openly with investigation and follow-up, enough time and resources for a data integrity programme, and data integrity duties defined in contracts and quality agreements between contract givers and acceptors.",
+   "reason": "Optional examples of data integrity controls that add elements beyond the listed ones."
+  },
+  "O416": {
+   "requirement": "CSV-013",
+   "relation": "same",
+   "addendum": "",
+   "reason": "No listed requirement covers a regular review of data against ALCOA+ principles."
+  },
+  "O417": {
+   "requirement": "CSV-003",
+   "relation": "adds",
+   "addendum": "Effectiveness is also evaluated by tracking and trending data and by reviewing data, metadata and audit trails in areas such as warehouse, production and quality control.",
+   "reason": "States the effectiveness evaluation point and adds trending and data, metadata and audit trail review."
+  },
+  "O418": {
+   "requirement": "QC-003",
+   "relation": "same",
+   "addendum": "",
+   "reason": "No listed requirement covers laboratory procedures for all operations under the quality manager."
+  },
+  "O419": {
+   "requirement": "QC-003",
+   "relation": "narrower",
+   "addendum": "",
+   "reason": "Laboratory procedure requirement limited to one operation: personnel qualifications and training."
+  },
+  "O420": {
+   "requirement": "QC-003",
+   "relation": "narrower",
+   "addendum": "",
+   "reason": "Laboratory procedure requirement limited to one operation: control of documents, records and data integrity."
+  },
+  "O421": {
+   "requirement": "QC-003",
+   "relation": "narrower",
+   "addendum": "",
+   "reason": "Laboratory procedure requirement limited to one operation: corrective and preventive actions."
+  },
+  "O422": {
+   "requirement": "QC-003",
+   "relation": "narrower",
+   "addendum": "",
+   "reason": "Laboratory procedure requirement limited to one operation: purchase and receipt of supplies."
+  },
+  "O423": {
+   "requirement": "QC-003",
+   "relation": "narrower",
+   "addendum": "",
+   "reason": "Laboratory procedure requirement limited to one operation: reference substances and materials."
+  },
+  "O424": {
+   "requirement": "QC-003",
+   "relation": "narrower",
+   "addendum": "",
+   "reason": "Laboratory procedure requirement limited to one operation: equipment qualification and calibration."
+  },
+  "O425": {
+   "requirement": "QC-003",
+   "relation": "narrower",
+   "addendum": "",
+   "reason": "Laboratory procedure requirement limited to one operation: preventive maintenance and verification of equipment."
+  },
+  "O426": {
+   "requirement": "QC-003",
+   "relation": "narrower",
+   "addendum": "",
+   "reason": "Laboratory procedure requirement limited to one operation: internal labelling and storage of materials and solutions."
+  },
+  "O427": {
+   "requirement": "QC-003",
+   "relation": "narrower",
+   "addendum": "",
+   "reason": "Laboratory procedure requirement limited to one operation: sampling by the laboratory."
+  },
+  "O428": {
+   "requirement": "QC-003",
+   "relation": "narrower",
+   "addendum": "",
+   "reason": "Laboratory procedure requirement limited to one operation: sample testing."
+  },
+  "O429": {
+   "requirement": "QC-003",
+   "relation": "narrower",
+   "addendum": "",
+   "reason": "Laboratory procedure requirement limited to one operation: validation and verification of analytical procedures."
+  },
+  "O430": {
+   "requirement": "QC-003",
+   "relation": "narrower",
+   "addendum": "",
+   "reason": "Laboratory procedure requirement limited to one operation: validity of test results."
+  },
+  "O431": {
+   "requirement": "QC-003",
+   "relation": "narrower",
+   "addendum": "",
+   "reason": "Laboratory procedure requirement limited to one operation: atypical and out-of-specification results."
+  },
+  "O432": {
+   "requirement": "QC-003",
+   "relation": "narrower",
+   "addendum": "",
+   "reason": "Laboratory procedure requirement limited to one operation: risks and opportunities."
+  },
+  "O433": {
+   "requirement": "QC-003",
+   "relation": "narrower",
+   "addendum": "",
+   "reason": "Laboratory procedure requirement limited to one operation: cleaning of laboratory facilities."
+  },
+  "O434": {
+   "requirement": "QC-003",
+   "relation": "narrower",
+   "addendum": "",
+   "reason": "Laboratory procedure requirement limited to one operation: monitoring of environmental conditions."
+  },
+  "O435": {
+   "requirement": "QC-003",
+   "relation": "narrower",
+   "addendum": "",
+   "reason": "Laboratory procedure requirement limited to one operation: monitoring of storage conditions."
+  },
+  "O436": {
+   "requirement": "QC-003",
+   "relation": "narrower",
+   "addendum": "",
+   "reason": "Laboratory procedure requirement limited to one operation: disposal of reagents, standards and samples."
+  },
+  "O437": {
+   "requirement": "QS-032",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Existing CAPA requirements respond to investigations; none covers proactive handling of potential deviations."
+  },
+  "O438": {
+   "requirement": "QS-033",
+   "relation": "same",
+   "addendum": "",
+   "reason": "No listed requirement covers classifying preventive actions as risks or opportunities."
   }
  },
- "errors": {
-  "O382": [
-   "item text copies source wording: 'regular reports on the collection treatment and disposal of waste and wastewater'"
-  ]
- },
+ "errors": {},
  "rounds": [
   {
    "run": "20261030T173203.372910Z-consolidate",
@@ -15838,6 +16283,60 @@
     "O436",
     "O437",
     "O438"
+   ],
+   "ingested": true
+  },
+  {
+   "run": "20261030T174009.556477Z-consolidate",
+   "obligations": [
+    "O439",
+    "O440",
+    "O441",
+    "O442",
+    "O443",
+    "O444",
+    "O445",
+    "O446",
+    "O447",
+    "O448",
+    "O449",
+    "O450",
+    "O451",
+    "O452",
+    "O453",
+    "O454",
+    "O455",
+    "O456",
+    "O457",
+    "O458",
+    "O459",
+    "O460",
+    "O461",
+    "O462",
+    "O463",
+    "O464",
+    "O465",
+    "O466",
+    "O467",
+    "O468",
+    "O469",
+    "O470",
+    "O471",
+    "O472",
+    "O473",
+    "O474",
+    "O475",
+    "O476",
+    "O477",
+    "O478",
+    "O479",
+    "O480",
+    "O481",
+    "O482",
+    "O483",
+    "O484",
+    "O485",
+    "O486"
    ],
    "ingested": false
   }
