@@ -13767,6 +13767,225 @@
     "OSD",
     "SEMI"
    ]
+  },
+  {
+   "id": "CMP-002",
+   "topic": "CMP.RECALL",
+   "item_text": "Besides recall, other actions to reduce the risk from quality defects may be considered, such as warning healthcare professionals about the use of a batch that may be defective.",
+   "strength": "optional",
+   "plant_types": [
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "CMP-003",
+   "topic": "CMP.RECALL",
+   "item_text": "Risk-reducing actions other than recall are judged case by case and discussed with the competent authorities concerned.",
+   "strength": "recommended",
+   "plant_types": [
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "CSV-001",
+   "topic": "CSV.DI",
+   "item_text": "The data governance system applies controls across the whole data lifecycle that are proportionate to quality risk.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "CSV-002",
+   "topic": "CSV.DI",
+   "item_text": "Data lifecycle controls may combine organisational measures (record completion and retention procedures, staff training and documented authority to generate and approve data, a governance design that controls risks in how data are generated, recorded, processed, kept and used, routine daily, batch or activity checks of data, periodic surveillance such as self-inspection, and staff skilled in data integrity and security) with technical measures (validation, qualification and control of computerised systems, automation, or technologies that give tighter control of data).",
+   "strength": "optional",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "CSV-003",
+   "topic": "CSV.DI",
+   "item_text": "The effectiveness of data integrity controls is assessed periodically, through self-inspection or another periodic review, to confirm that data lifecycle controls work as intended.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "SI-010",
+   "topic": "SI.PROG",
+   "item_text": "Beyond routine data checks (daily, per batch or per activity), self-inspections take a wider look at data controls, including whether staff still understand good data management as a way of protecting patients and whether the workplace stays focused on quality with open reporting of problems, for example by reviewing ongoing data management training.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "SI-011",
+   "topic": "SI.PROG",
+   "item_text": "Self-inspections compare reported data and results with the raw entries, looking at data not covered by routine checks where risk justifies it and/or at a sample of data already checked, to confirm the routine check still works.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "CSV-004",
+   "topic": "CSV.AUDIT",
+   "item_text": "Self-inspections examine a risk-based sample of computerised system logs and audit trails to confirm that GMP or GDP relevant information is reported correctly, especially where routine system data are reviewed by hand or through a validated exception report.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "SI-012",
+   "topic": "SI.PROG",
+   "item_text": "Self-inspections include a review of trends in quality system metrics, which may also show how effective data governance is.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "CSV-005",
+   "topic": "CSV.DI",
+   "item_text": "The quality system is able to prevent, detect and correct weaknesses in systems or processes that could lead to data integrity failures.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "CSV-006",
+   "topic": "CSV.DI",
+   "item_text": "The company understands its data lifecycle and builds in suitable controls and procedures so that the data it generates are valid, complete and reliable.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "CSV-007",
+   "topic": "CSV.DI",
+   "item_text": "Control and procedure changes for data integrity may cover quality risk management, investigations, data review practice, computerised system validation, physical and virtual IT infrastructure, services and security, vendor and contractor management, training on the company's data governance approach and procedures, storage, processing, transfer and retrieval of completed records (including decentralised or cloud-based activities), oversight of buying GMP or GDP critical equipment and IT with data integrity requirements such as user requirement specifications, a self-inspection programme that includes data quality and integrity, and quality metrics reported to senior management.",
+   "strength": "optional",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "CSV-008",
+   "topic": "CSV.DI",
+   "item_text": "Where summary data are passed between sites of the same organisation, the supplying site's compliance may be evaluated by other means, such as evidence that corporate procedures are followed or internal audit reports.",
+   "strength": "optional",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "CSV-009",
+   "topic": "CSV.AUDIT",
+   "item_text": "The quality unit sets up a programme and schedule for ongoing audit trail reviews, based on criticality and system complexity, to confirm current controls are working and to detect possible non-compliance.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "CSV-010",
+   "topic": "CSV.AUDIT",
+   "item_text": "Audit trail reviews form part of the company's self-inspection programme.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "CSV-011",
+   "topic": "CSV.AUDIT",
+   "item_text": "Procedures are in place to deal with and investigate any audit trail discrepancy, including escalation to senior management and to national authorities where necessary.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "CSV-012",
+   "topic": "CSV.AUDIT",
+   "item_text": "Audit trail reviews use both random selections and selections targeted by criticality or risk.",
+   "strength": "recommended",
+   "plant_types": [
+    "API",
+    "INJ",
+    "LIQ",
+    "OSD",
+    "SEMI"
+   ]
   }
  ],
  "decisions": {
@@ -14351,9 +14570,247 @@
    "relation": "same",
    "addendum": "",
    "reason": "States the same quality system appraisal point."
+  },
+  "O319": {
+   "requirement": "QS-021",
+   "relation": "same",
+   "addendum": "",
+   "reason": "States the same evaluation of review results and assessment of CAPA or revalidation."
+  },
+  "O320": {
+   "requirement": "QS-022",
+   "relation": "adds",
+   "addendum": "The effectiveness of these procedures is checked during self-inspection.",
+   "reason": "States the management procedures and adds verification of their effectiveness in self-inspection."
+  },
+  "O321": {
+   "requirement": "QS-024",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Same optional grouping of quality reviews by product type where scientifically justified."
+  },
+  "O322": {
+   "requirement": "QS-025",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Same technical agreement on review responsibilities where the authorisation holder is not the manufacturer."
+  },
+  "O324": {
+   "requirement": "CMP-002",
+   "relation": "same",
+   "addendum": "",
+   "reason": "No listed requirement covers risk-reducing actions other than recall."
+  },
+  "O325": {
+   "requirement": "CMP-003",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Distinct point on case-by-case handling and authority discussion of such actions."
+  },
+  "O326": {
+   "requirement": "PER-001",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Same point that core quality unit duties are not delegated."
+  },
+  "O327": {
+   "requirement": "PER-002",
+   "relation": "looser",
+   "addendum": "",
+   "reason": "Requires written duties but does not state the minimum set of responsibilities."
+  },
+  "O328": {
+   "requirement": "REL-001",
+   "relation": "narrower",
+   "addendum": "",
+   "reason": "Covers release or rejection of active substances only, not intermediates."
+  },
+  "O329": {
+   "requirement": "REL-001",
+   "relation": "narrower",
+   "addendum": "",
+   "reason": "Covers release or rejection of intermediates for use outside the manufacturer's control only."
+  },
+  "O330": {
+   "requirement": "MAT-001",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Same release and rejection system for materials."
+  },
+  "O331": {
+   "requirement": "REL-002",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Same review of batch and laboratory records before release."
+  },
+  "O332": {
+   "requirement": "QS-001",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Same investigation and resolution of critical deviations."
+  },
+  "O333": {
+   "requirement": "DOC-001",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Same approval of specifications and master production instructions."
+  },
+  "O334": {
+   "requirement": "DOC-002",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Same approval of procedures affecting quality."
+  },
+  "O335": {
+   "requirement": "SI-001",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Same duty to make sure internal audits take place."
+  },
+  "O336": {
+   "requirement": "OUT-001",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Same approval of contract manufacturers."
+  },
+  "O337": {
+   "requirement": "QS-002",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Same approval of changes that may affect quality."
+  },
+  "O338": {
+   "requirement": "VAL-001",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Same review and approval of validation protocols and reports."
+  },
+  "O339": {
+   "requirement": "CMP-001",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Same investigation and resolution of quality complaints."
+  },
+  "O340": {
+   "requirement": "EQ-001",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Same assurance of maintenance and calibration systems for critical equipment."
+  },
+  "O341": {
+   "requirement": "QC-001",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Same assurance of suitable testing and reporting of results."
+  },
+  "O342": {
+   "requirement": "QC-002",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Same assurance of stability data where appropriate."
+  },
+  "O343": {
+   "requirement": "QS-003",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Same duty to perform product quality reviews."
+  },
+  "O344": {
+   "requirement": "CSV-001",
+   "relation": "same",
+   "addendum": "",
+   "reason": "No listed requirement covers risk-based data lifecycle controls."
+  },
+  "O345": {
+   "requirement": "CSV-002",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Optional list of control types is a distinct point not covered by listed requirements."
+  },
+  "O346": {
+   "requirement": "CSV-003",
+   "relation": "same",
+   "addendum": "",
+   "reason": "No listed requirement covers periodic assessment of data integrity controls."
+  },
+  "O347": {
+   "requirement": "SI-010",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Self-inspection content on staff understanding of data management is not listed."
+  },
+  "O348": {
+   "requirement": "SI-011",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Self-inspection review of reported data against raw entries is not listed."
+  },
+  "O349": {
+   "requirement": "CSV-004",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Self-inspection sampling of logs and audit trails is not listed."
+  },
+  "O350": {
+   "requirement": "SI-012",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Self-inspection review of quality metrics trends is not listed."
+  },
+  "O351": {
+   "requirement": "CSV-005",
+   "relation": "same",
+   "addendum": "",
+   "reason": "No listed requirement covers the quality system's role against data integrity lapses."
+  },
+  "O352": {
+   "requirement": "CSV-006",
+   "relation": "same",
+   "addendum": "",
+   "reason": "No listed requirement covers knowledge of the data lifecycle with built-in controls."
+  },
+  "O353": {
+   "requirement": "CSV-007",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Optional list of areas for data integrity improvements is not listed."
+  },
+  "O354": {
+   "requirement": "CSV-008",
+   "relation": "same",
+   "addendum": "",
+   "reason": "No listed requirement covers evaluation of sister sites supplying summary data."
+  },
+  "O355": {
+   "requirement": "CSV-009",
+   "relation": "same",
+   "addendum": "",
+   "reason": "No listed requirement covers a programme of audit trail reviews."
+  },
+  "O356": {
+   "requirement": "CSV-010",
+   "relation": "same",
+   "addendum": "",
+   "reason": "Distinct point that audit trail reviews are included in self-inspection."
+  },
+  "O357": {
+   "requirement": "CSV-011",
+   "relation": "same",
+   "addendum": "",
+   "reason": "No listed requirement covers handling of audit trail discrepancies."
+  },
+  "O358": {
+   "requirement": "CSV-012",
+   "relation": "same",
+   "addendum": "",
+   "reason": "No listed requirement covers how audit trail entries are selected for review."
   }
  },
- "errors": {},
+ "errors": {
+  "O323": [
+   "item text copies source wording: 'person responsible for final batch certification together with the marketing authorisation holder'"
+  ]
+ },
  "rounds": [
   {
    "run": "20261030T173203.372910Z-consolidate",
@@ -14508,6 +14965,30 @@
     "O356",
     "O357",
     "O358"
+   ],
+   "ingested": true
+  },
+  {
+   "run": "20261030T173625.222543Z-consolidate",
+   "obligations": [
+    "O323",
+    "O359",
+    "O360",
+    "O361",
+    "O362",
+    "O363",
+    "O364",
+    "O365",
+    "O366",
+    "O367",
+    "O368",
+    "O369",
+    "O370",
+    "O371",
+    "O372",
+    "O373",
+    "O374",
+    "O375"
    ],
    "ingested": false
   }
