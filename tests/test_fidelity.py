@@ -13,8 +13,9 @@ def clause(ref, text, kind="clause", pages=(1, 1)):
 
 class Fidelity(unittest.TestCase):
     def test_words_are_normalised(self):
-        self.assertEqual(fidelity.words("Manufac- turing ﬁles, SOFT­WARE; 9.3"),
-                         ["manufacturing", "files", "software", "9", "3"])
+        self.assertEqual(fidelity.words("Manufac- turing ﬁles, SOFT\u00adWARE; 9.3"),
+                         ["manufacturing", "les", "software", "9", "3"])
+        self.assertEqual(fidelity.words("qualification"), fidelity.words("qualication"))   # dropped ligature
 
     def test_share(self):
         page = fidelity.words("Header line. 9.3 All self inspections should be recorded. Footer 12")
@@ -22,6 +23,10 @@ class Fidelity(unittest.TestCase):
         self.assertEqual(fidelity.share(fidelity.words("All self inspections must be recorded."), page), 5 / 6)
         self.assertEqual(fidelity.share(fidelity.words("recorded be should"), page), 1 / 3)       # order counts
         self.assertEqual(fidelity.share(fidelity.words("recorded be should"), page, bag=True), 1.0)  # tables
+        self.assertEqual(fidelity.share(fidelity.words("the PD50 value"), fidelity.words("the PD 50 value")), 1.0)
+        self.assertEqual(fidelity.share(fidelity.words("the ab value"), fidelity.words("the a b value")), 2 / 3)
+        self.assertEqual(fidelity.share(fidelity.words("the PD50 value"), fidelity.words("the PD 50 value")), 1.0)
+        self.assertEqual(fidelity.share(fidelity.words("the ab value"), fidelity.words("the a b value")), 2 / 3)
 
     def test_compare_uses_the_clause_pages_with_a_margin(self):
         pages = [fidelity.words("intro"), fidelity.words("A B C"), fidelity.words("D E"), fidelity.words("far away")]

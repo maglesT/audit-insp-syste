@@ -8,7 +8,9 @@ pdfplumber's page text), which is a separate code base, and compares each clause
 the clause's pages (one page of margin either side, since a clause's page numbers come from the first engine).
 Both texts are normalised the same way first: Unicode NFKC (ligatures, full-width letters), soft hyphens dropped,
 a word broken at a line end joined ("manufac- turing" -> "manufacturing"), letters case-folded, punctuation and
-spacing ignored. A clause's match share is the share of its words found, in order, in the second engine's words
+spacing ignored, and the letters of ligatures (fi, fl, ff, ffi, ffl) left out, since pdfminer drops some ligature
+glyphs. A clause word of three or more characters that the second engine split ("PD50" as "PD 50") counts as
+found when it is not a whole word on the pages but appears in their words run together. A clause's match share is the share of its words found, in order, in the second engine's words
 (difflib longest matching blocks). Table rows (kind table_row) are compared as a bag of words, since the two
 engines may read table cells in different orders.
 
@@ -41,22 +43,39 @@ SOURCE_MIN = 0.995
 MARGIN = 1
 
 
+# pdfminer drops some ligature glyphs ("qualiﬁcation" -> "qualication"): the letters a ligature stands for are
+# left out of every word on both sides before comparing
+LIGATURES = re.compile(r"ffi|ffl|ff|fi|fl")
+
+
 def words(text):
     """The comparable words of a text (see the module docstring)."""
-    text = unicodedata.normalize("NFKC", text).replace("­", "")
+    text = unicodedata.normalize("NFKC", text).replace("\u00ad", "")
     text = re.sub(r"(\w)-\s+(\w)", r"\1\2", text)
-    return re.findall(r"\w+", text.casefold())
+    return [LIGATURES.sub("", w) or w for w in re.findall(r"\w+", text.casefold())]
 
 
 def share(clause_words, page_words, bag=False):
-    """Share of the clause's words found in the page words: in order, or as a bag of words."""
+    """Share of the clause's words found in the page words: in order, or as a bag of words. A clause word of three
+    or more characters that the second engine split ("PD50" read as "PD 50", subscripts and superscripts) counts as
+    found when it is not a whole word there but appears in the page's words run together (a word that is there
+    but out of order still counts as missing)."""
     if not clause_words:
         return 1.0
     if bag:
         have = Counter(page_words)
-        return sum(min(n, have[w]) for w, n in Counter(clause_words).items()) / len(clause_words)
-    sm = SequenceMatcher(None, clause_words, page_words, autojunk=False)
-    return sum(b.size for b in sm.get_matching_blocks()) / len(clause_words)
+        found = sum(min(n, have[w]) for w, n in Counter(clause_words).items())
+        missing = [w for w, n in Counter(clause_words).items() for _ in range(max(n - have[w], 0))]
+    else:
+        sm = SequenceMatcher(None, clause_words, page_words, autojunk=False)
+        got = set()
+        for b in sm.get_matching_blocks():
+            got.update(range(b.a, b.a + b.size))
+        found = len(got)
+        missing = [w for n, w in enumerate(clause_words) if n not in got]
+    whole, joined = set(page_words), "".join(page_words)
+    found += sum(1 for w in missing if len(w) > 2 and w not in whole and w in joined)
+    return found / len(clause_words)
 
 
 def second_engine_pages(path):
