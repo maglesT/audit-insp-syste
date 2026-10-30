@@ -1,6 +1,7 @@
 """Source fidelity check (tools/parse/fidelity.py, D39): the comparison must catch wrong stored text."""
 import sys
 import unittest
+from collections import Counter
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools" / "parse"))
@@ -136,6 +137,85 @@ class Check(unittest.TestCase):
         doc = json.loads(fidelity.REPORT.read_text(encoding="utf-8"))
         self.assertEqual(fidelity.problems(doc, fidelity.explanations(), fidelity.inventory_hashes(),
                                            fidelity.pilot_pdfs()), [])
+
+
+class Rework(unittest.TestCase):
+    """Session 4 rework: alignment, tables, repeated lines, page edges; each tolerance next to an error it must
+    still catch."""
+
+    def test_a_far_stray_match_does_not_stretch_the_clause(self):
+        window = T("9.1 The URS should be complete. " + "Unrelated text follows here. " * 40 + "16")
+        self.assertEqual(text_flags("9.1 The URS should be complete. 16", " ".join(window)), "-16")
+
+    def test_chain_restarts_on_a_better_block(self):
+        clause = T("4 considerations for marketed products this guideline is not intended to be applied retrospectively")
+        window = T("for marketed products " + "filler words " * 60 + clause_text())
+        self.assertEqual(fidelity.describe(fidelity.compare_text(clause, window)), "")
+
+    def test_text_held_by_another_clause_is_not_this_clauses(self):
+        clause = T("Samples are kept. Records are kept for five years.")
+        window = T("Samples are kept. 12 Refer to the annex on storage periods. Records are kept for five years.")
+        held = fidelity.grams(T("Refer to the annex on storage periods."))
+        self.assertEqual(fidelity.describe(fidelity.compare_text(clause, window, elsewhere=held)), "")
+        self.assertEqual(fidelity.describe(fidelity.compare_text(clause, window)), "+12 refer to the annex on storage periods")
+        dropped = T("Samples are kept. Records are kept for years.")
+        self.assertEqual(fidelity.describe(fidelity.compare_text(dropped, T("Samples are kept. Records are kept for "
+                                                                             "five years."), elsewhere=held)), "+five")
+
+    def test_a_table_inside_the_text_is_held_by_its_rows(self):
+        clause = T("The limits are given below. Monitoring is continuous.")
+        window = T("The limits are given below. Grade A 3 520 Grade B 352 000 Monitoring is continuous.")
+        rows = [Counter(T("A | 3 520 | Grade")) + Counter(T("Grade B | 352 000"))]
+        self.assertEqual(fidelity.describe(fidelity.compare_text(clause, window, tables=rows)), "")
+        self.assertTrue(fidelity.describe(fidelity.compare_text(clause, T("The limits are given below. Grade A 3 521 "
+                                                                         "Grade B 352 000 Monitoring is continuous."),
+                                                                tables=rows)))
+
+    def test_optional_repeated_lines(self):
+        clause = T("records are kept")
+        window = T("records who expert committee report are kept")
+        soft = {1, 2, 3, 4}
+        self.assertEqual(fidelity.describe(fidelity.compare_text(clause, window, soft=soft)), "")
+        self.assertIn("are", fidelity.describe(fidelity.compare_text(T("records kept"), window, soft=soft)))
+
+    def test_spaced_capitals_at_the_clause_edge(self):
+        window = T("text before 3 d rug p roduct the samples should be tested")
+        self.assertEqual(text_flags("3 Drug product The samples should be tested", " ".join(window)), "")
+        self.assertIn("-drug substance", text_flags("3 Drug substance The samples should be tested", " ".join(window)))
+
+    def test_table_row_band(self):
+        window = T("does the manufacturer have a procedure 4.1 1.12 is it approved")
+        place = [(0, 100)] * 6 + [(0, 102), (0, 102), (0, 112), (0, 112), (0, 112)]
+        self.assertEqual(fidelity.compare_table(T("1.12 | does the manufacturer have a procedure | 4.1"), window,
+                                                place=place), [])
+        self.assertTrue(fidelity.compare_table(T("1.21 | does the manufacturer have a procedure | 4.1"), window,
+                                               place=place))
+
+    def test_footnote_number_before_held_text(self):
+        held = fidelity.grams(T("Refer to compliance program 7356.002F for samples"))
+        self.assertTrue(fidelity.stored_elsewhere(T("29 Refer to compliance program 7356.002F for samples"), held))
+        self.assertFalse(fidelity.stored_elsewhere(T("29 25 Refer to compliance"), held))
+
+    def test_page_numbers_and_running_lines(self):
+        pages = [[[("Article", False, 50.0), (str(n), False, 50.0)], [("Body", False, 300.0), ("text", False, 300.0)],
+                  [("iv", False, 780.0)]] for n in range(1, 7)]
+        reading, _ = fidelity.read_pages(pages)
+        self.assertEqual(reading[0][0], ["article", "1", "body", "text"])  # "Article #" differs by number: kept;
+        # the roman page number at the page edge is dropped
+
+    def test_numbered_lines_read_last(self):
+        pages = [[[(w, False, 100.0 + 12 * n) for w in f"line of guidance text {n}".split()] for n in range(1, 30)]]
+        reading, numbered = fidelity.read_pages(pages)
+        self.assertTrue(numbered)
+        self.assertNotIn("7", reading[0][0])
+
+    def test_spelled_runs(self):
+        self.assertTrue(fidelity.spelled(T("d o c u m e n a n d r ec o r")))
+        self.assertFalse(fidelity.spelled(T("samples should not be released")))
+
+
+def clause_text():
+    return "4 c onsiderations f or m arketed p roducts this guideline is not intended to be applied retrospectively"
 
 
 if __name__ == "__main__":
