@@ -1,6 +1,40 @@
 # Handover: read this first in every new session
 
-Last updated: 30 October 2026 (session 2, S1 tail branch).
+Last updated: 30 October 2026 (session 3, pilot run).
+
+## Pilot results (30 Oct 2026, D29)
+Run folders: `library/ai-runs/20261030T074231.724549Z-pilot-draft/` and `.../20261030T074433.157454Z-pilot-verify/`
+(the report is `pilot-report.json` in the verify folder). Prompts and budget unchanged (`--budget 15`). Both batches
+finished in about 4 minutes in total.
+- **Cost:** US$0.73 in total (drafting US$0.14, verification US$0.59), **US$0.0125 per mapping** (drafting plus both
+  verifiers). Output tokens dominate: 38,305 output tokens against 157,659 input tokens (cached and uncached).
+- **Counts:** 24 clauses -> **58 mappings**; **0 rejected quotes**; **0 failed calls** (24 + 116 requests, all
+  `end_turn`); 0 mappings left unverified for budget.
+- **Verifiers:** both correct **43**; both incorrect **5**; disagree **10** (A incorrect / B correct 9, the reverse 1).
+  The 5 both-incorrect are all items that keep one half of a clause and drop the half that the clause treats as one
+  requirement (WHO 8.5 and Schedule M 10.5: report on completion vs report contents; WHO 8.9 and Schedule M 10.8.2:
+  supplier evaluation without its criteria; Schedule M 10.4: annual minimum without "stated in the procedure").
+- **Pattern in the disagreements:** nearly all are the same split question. When the drafter splits a clause into
+  several items, verifier A judges each item against the whole clause and calls it "looser". Verifier B accepts it
+  because the other parts are "separate obligations" for other items. This is a granularity rule the prompts leave
+  open, not a factual error. It belongs to adjudication or a prompt decision for the owner. Examples:
+  1. *EU Ch 9 9.3*, item "Keep a record of every self inspection performed." A: incorrect, it leaves out what the
+     record should contain (observations, corrective proposals, follow-up), so it is looser. B: correct, it reflects
+     the first sentence, and report content and follow-up are separate obligations for their own items.
+  2. *Schedule M Part I 10.4*, item "The self-inspection procedure must state how often self-inspections are carried
+     out." A: incorrect, it drops the at-least-once-a-year minimum, so the stated frequency could be less than annual.
+     B: correct, the clause's "stated in the procedure" is captured exactly, and the annual minimum is a distinct
+     obligation for another item.
+  3. *WHO TRS 986 8.5* (the one reverse case), item "The self-inspection report should include the results ... and
+     the recommended corrective actions." A: correct, it matches the three report contents, strength and plant types.
+     B: incorrect, it presupposes a report and drops the duty to make one at the completion of each self-inspection.
+     Note that verifier A treated the same split in Schedule M 10.5 as incorrect, so A is not fully consistent either.
+- **For pricing the full run:** at about 2.4 mappings per clause and US$0.0125 per mapping, that is about US$0.03 per
+  clause, before adjudication of disagreements (17 % here).
+- **Model names in the run folders:** `requests.jsonl`, `batch.json` and `summary.json` record the model ID that was
+  sent to the API. They were committed unchanged, because the audit trail must hold the exact requests (D29).
+  Owner to confirm this is acceptable under the "no model name in the repo" rule (that rule was written for
+  attribution).
 
 ## Where we are
 - **Latest (30 Oct 2026), read first:**
@@ -9,8 +43,8 @@ Last updated: 30 October 2026 (session 2, S1 tail branch).
   - **AI checking now runs through the Claude API (D29, replaces D14).** `tools/ai/runner.py` (Batch API, cached
     instructions, JSON-schema answers, audit trail in `library/ai-runs/`) and `tools/ai/pilot.py` (paid pilot,
     24 self-inspection clauses, hard budget US$15). The key is the environment variable `AUDIT_ANTHROPIC_KEY`, set in the
-    cloud environment's settings (Claude Code strips `ANTHROPIC_API_KEY` from sessions), never in the repo or the chat. Next session: `python3 tools/ai/pilot.py check`,
-    then `python3 tools/ai/pilot.py run --budget 15`, then report the cost per mapping to the owner.
+    cloud environment's settings (Claude Code strips `ANTHROPIC_API_KEY` from sessions), never in the repo or the chat. The paid pilot has run (see "Pilot results"
+    below); next: report the cost per mapping to the owner and price the full run.
   - Still to do in S2: mutation harness, customer export with the option-A test, candidate search (BM25 +
     embeddings, D21).
 - Brief: `docs/00-brief.md` (the owner's decisions). Small decisions: `docs/decisions.md`.
