@@ -126,9 +126,9 @@ class SameText(unittest.TestCase):
         self.assertEqual(graph.same_text([(("a", "1"), SHARED), (("b", "1"), other)]), [])
 
 
-def req(rid, mappings):
-    return {"id": rid, "status": "verified", "mappings": [
-        {"source": s, "clause_ref": r, "relation": rel} for s, r, rel in mappings]}
+def req(rid, mappings, text="Keep records.", strength="recommended"):
+    return {"id": rid, "status": "verified", "item_text": text, "mappings": [
+        {"source": s, "clause_ref": r, "strength": strength} for s, r in mappings]}
 
 
 class Uses(unittest.TestCase):
@@ -142,9 +142,9 @@ class Uses(unittest.TestCase):
         self.assertTrue(all(len(r) == 6 and all(isinstance(x, str) for x in r) for r in self.rows))
 
     def test_library_links(self):
-        rows = graph.library_links([req("SI-001", [("ch1.pdf", "1.4", "same"), ("p211.xml", "211.84", "stricter")])])
-        self.assertIn(("maps_to", "", "SI-001", "ch1.pdf", "1.4", "same"), rows)
-        self.assertIn(("stricter_than", "p211.xml", "211.84", "ch1.pdf", "1.4", "SI-001"), rows)
+        rows = graph.library_links([req("SI-001", [("ch1.pdf", "1.4")]), req("SI-002", [("p211.xml", "211.84")])])
+        self.assertEqual(rows, [("maps_to", "", "SI-001", "ch1.pdf", "1.4", ""),
+                                ("maps_to", "", "SI-002", "p211.xml", "211.84", "")])
 
     def test_context(self):
         items = graph.context("ch1.pdf", "1.9", self.rows, SEGMENTS.get, SOURCES, entries_of)
@@ -160,21 +160,24 @@ class Uses(unittest.TestCase):
         self.assertEqual(graph.context_block([]), "")
 
     def test_impact(self):
-        reqs = [req("SI-001", [("ch5.pdf", "Chapter 5 5.21", "same")]), req("SI-002", [("ch1.pdf", "1.9", "same")]),
-                req("SI-003", [("an15.pdf", "1", "same")])]
+        reqs = [req("SI-001", [("ch5.pdf", "Chapter 5 5.21")]), req("SI-002", [("ch1.pdf", "1.9")]),
+                req("SI-003", [("an15.pdf", "1")])]
         hit = graph.impact("ch5.pdf", self.rows, reqs)
         self.assertEqual(set(hit), {"SI-001", "SI-002"})                       # 1.9 refers to 5.21
         self.assertEqual(set(graph.impact("gl.pdf", self.rows, reqs)), {"SI-002"})   # uses a defined term
 
     def test_consistency(self):
-        reqs = [req("SI-001", [("ch1.pdf", "1.10", "same")]), req("SI-002", [("pics.pdf", "Part I 1.10", "same")])]
+        """D37: twin clauses (EU and PIC/S) must give identical items, one per regulator."""
+        reqs = [req("SI-001", [("ch1.pdf", "1.10")]), req("SI-002", [("pics.pdf", "Part I 1.10")], text="Other.")]
         self.assertEqual(len(graph.consistency(self.rows, reqs)), 1)
-        reqs = [req("SI-001", [("ch1.pdf", "1.10", "same"), ("pics.pdf", "Part I 1.10", "same")])]
+        reqs[1]["item_text"] = "Keep  records."                               # same text after normalising
         self.assertEqual(graph.consistency(self.rows, reqs), [])
+        reqs[1]["mappings"][0]["strength"] = "mandatory"
+        self.assertEqual(len(graph.consistency(self.rows, reqs)), 1)
 
     def test_layer1_twins(self):
         texts = {"ch1.pdf": clauses_of("ch1.pdf"), "pics.pdf": clauses_of("pics.pdf")}
-        reqs = [req("SI-001", [("ch1.pdf", "1.10", "same")]), req("SI-002", [("pics.pdf", "Part I 1.10", "same")])]
+        reqs = [req("SI-001", [("ch1.pdf", "1.10")]), req("SI-002", [("pics.pdf", "Part I 1.10")], text="Other.")]
         found = layer1.check_twins(reqs, texts.get)
         self.assertEqual([f[2] for f in found], ["twins"])
 

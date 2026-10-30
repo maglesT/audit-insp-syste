@@ -186,6 +186,14 @@ class OnDemand(unittest.TestCase):
 
 
 
+class Failing(unittest.TestCase):
+    def test_draft_findings_do_not_fail(self):
+        reqs = [{"id": "SI-001", "status": "draft"}, {"id": "SI-002", "status": "verified"}]
+        findings = [("SI-001", 1, "numbers", "x"), ("SI-002", 1, "numbers", "y"), ("SI-001", 0, "twins", "z"),
+                    ("coverage a 1", 0, "coverage", "w")]
+        self.assertEqual(layer1.failing(findings, reqs), findings[1:])
+
+
 class LeadIn(unittest.TestCase):
     """Check 4 for list items (S3): the strength of the lead-in the item sits under."""
 
@@ -230,7 +238,7 @@ class Conditions(unittest.TestCase):
                "plant_types": ["OSD"], "parameters": {}, "general": False, "mappings": [
                    {"source": "x", "clause_ref": "1", "clause_sha256": "0", "quote": "Where an audit is required, it "
                     "shall determine GMP conformity.", "strength": "mandatory", "plant_types": ["OSD"],
-                    "addendum": "", "relation": "same"}]}
+                    }]}
         trees = {"x": {"1": {"text": "Where an audit is required, it shall determine GMP conformity."}}}
         with unittest.mock.patch.object(layer1, "clauses_of", trees.get):
             found = [f for f in layer1.check_requirement(req, {"x": {"applies_to": "ALL"}}) if f[2] == "conditions"]
@@ -245,23 +253,14 @@ class Conditions(unittest.TestCase):
         with unittest.mock.patch.object(layer1, "clauses_of", trees.get):
             return [f for f in layer1.check_requirement(req, {"x": {"applies_to": "ALL"}}) if f[2] == "conditions"]
 
-    def requirement(self, item, quote, addendum="", relation="same"):
+    def requirement(self, item, quote):
         req = {"id": "SI-001", "item_text": item, "strength": "mandatory", "plant_types": ["OSD"], "parameters": {},
                "general": False, "mappings": [
                    {"source": "x", "clause_ref": "1", "clause_sha256": "0", "quote": quote, "strength": "mandatory",
-                    "plant_types": ["OSD"], "addendum": addendum, "relation": relation}]}
+                    "plant_types": ["OSD"]}]}
         return req, {"x": {"1": {"text": quote}}}
 
-    def test_addendum_states_the_condition(self):
-        req, trees = self.requirement("Audit the supplier.", "Where an audit is required, it shall be done.",
-                                      addendum="Where an audit is required.")
-        self.assertFalse(self.check(req, trees))
-
-    def test_looser_narrower_and_bad_quotes_are_skipped(self):
-        for relation in ("looser", "narrower"):
-            req, trees = self.requirement("Audit the supplier.", "Where an audit is required, it shall be done.",
-                                          relation=relation)
-            self.assertFalse(self.check(req, trees), relation)
+    def test_rejected_quotes_are_skipped(self):
         req, trees = self.requirement("Audit the supplier.", "Where an audit is required, it shall be done.")
         trees["x"]["1"]["text"] = "Something else."
         self.assertFalse(self.check(req, trees))

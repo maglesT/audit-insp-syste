@@ -22,7 +22,7 @@ CREATE TABLE requirement_plant (requirement TEXT NOT NULL REFERENCES requirement
     PRIMARY KEY (requirement, plant_type));
 CREATE TABLE mapping (requirement TEXT NOT NULL REFERENCES requirement(id), n INTEGER NOT NULL, source TEXT NOT NULL,
     clause_ref TEXT NOT NULL, clause_sha256 TEXT NOT NULL, quote TEXT NOT NULL, strength TEXT NOT NULL,
-    relation TEXT NOT NULL, plant_types TEXT NOT NULL, addendum TEXT NOT NULL, PRIMARY KEY (requirement, n));
+    plant_types TEXT NOT NULL, PRIMARY KEY (requirement, n));
 CREATE TABLE coverage (source TEXT NOT NULL, clause_ref TEXT NOT NULL, requirement TEXT, na_reason TEXT);
 CREATE TABLE link (kind TEXT NOT NULL, from_source TEXT NOT NULL, from_ref TEXT NOT NULL, to_source TEXT NOT NULL,
     to_ref TEXT NOT NULL, detail TEXT NOT NULL);
@@ -32,8 +32,8 @@ CREATE INDEX link_to ON link (to_source, to_ref);
 
 
 def build(root=model.LIBRARY, out=None, links=None):
-    """links: clause-graph rows (graph.links()); by default only the links from the library mappings (maps_to,
-    stricter_than), since the full graph needs every parsed source (build.py --graph)."""
+    """links: clause-graph rows (graph.links()); by default only the links from the library mappings (maps_to),
+    since the full graph needs every parsed source (build.py --graph)."""
     errors = model.validate(root)
     if errors:
         raise ValueError("invalid library:\n" + "\n".join(errors[:20]))
@@ -49,9 +49,9 @@ def build(root=model.LIBRARY, out=None, links=None):
                     int(r["general"])))
         db.executemany("INSERT INTO requirement_plant VALUES (?, ?)", [(r["id"], p) for p in r["plant_types"]])
         for n, m in enumerate(r["mappings"], start=1):
-            db.execute("INSERT INTO mapping VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            db.execute("INSERT INTO mapping VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
                        (r["id"], n, m["source"], m["clause_ref"], m["clause_sha256"], m["quote"], m["strength"],
-                        m["relation"], ",".join(m["plant_types"]), m["addendum"]))
+                        ",".join(m["plant_types"])))
     for stem, clauses in model.coverage(root).items():
         for ref, entry in clauses.items():
             if "na" in entry:

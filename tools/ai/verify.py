@@ -4,18 +4,13 @@
   python3 tools/ai/verify.py ingest <verify run dir>              # verdicts -> verdicts.jsonl and a report
   python3 tools/ai/verify.py apply <verify run dir>               # requirement status: verified / unverified
 
-Each mapping is judged as the customer would read it for that regulator: the requirement's item text plus the
-mapping's addendum when its relation is "stricter" or "adds", with the mapping's own strength and plant types,
-and the COVERS line naming the quote (the same verifier prompts A and B as the session pilot, D30, D31).
-Mappings with the same judged text, quote and plant types (twins, D36) are judged once.
+Each item is judged against its own source clause (D37): the item text with the mapping's strength and plant
+types, and the COVERS line naming the quote (the same verifier prompts A and B as the session pilot, D30, D31).
+Items with the same text, quote, strength and plant types (twins, D36) are judged once.
 
-A mapping passes when both verifiers pass it:
-  - relation same, stricter or adds: verdict "correct" (the compiled item says exactly what the clause says);
-  - relation looser or narrower: the item may ask for more than the clause, which is what the relation says, so
-    it passes when the verifier finds strictness "stricter", nothing omitted, and plant types and strength
-    right.
-A requirement is "verified" when every mapping passes, "unverified" otherwise (adjudication and repair rounds,
-D13, take the unverified ones). Verdicts never change the library except through `apply`.
+An item passes when both verifiers answer "correct". It is "verified" when it passes and has no Layer 1 finding
+and no option-A finding in its text (`blocked`), "unverified" otherwise
+(adjudication and repair rounds, D13, take the unverified ones). Verdicts change the library only through `apply`.
 """
 import argparse
 import json
@@ -31,26 +26,22 @@ import runner  # noqa: E402
 import sessions  # noqa: E402
 from common import normalise  # noqa: E402
 
-ADDS = ("stricter", "adds")
-
-
 def judged_text(req, m):
-    text = req["item_text"].strip()
-    return f"{text} {m['addendum'].strip()}" if m["relation"] in ADDS and m["addendum"].strip() else text
+    return req["item_text"].strip()
 
 
 def units(reqs):
-    """[(key, req id, mapping index, judged mapping)]: one entry per distinct (text, quote, plant types, source
-    scope) and every library mapping's key, so twins share one verdict."""
+    """[(key, item id, mapping index, judged mapping)] for every library mapping; twins share a key and so one
+    verdict."""
     out = []
     for req in reqs:
         for i, m in enumerate(req["mappings"]):
             text = judged_text(req, m)
-            key = json.dumps([text, normalise(m["quote"]), sorted(m["plant_types"]), m["strength"], m["relation"]])
+            key = json.dumps([text, normalise(m["quote"]), sorted(m["plant_types"]), m["strength"]])
             out.append((key, req["id"], i, {"statement": text, "quote": m["quote"], "strength": m["strength"],
                                             "plant_types": m["plant_types"], "source": m["source"],
                                             "ref": m["clause_ref"], "clause_sha256": m["clause_sha256"],
-                                            "relation": m["relation"], "draft": f"{req['id']}#{i}"}))
+                                            "draft": f"{req['id']}#{i}"}))
     return out
 
 
@@ -67,10 +58,7 @@ def prepare(reqs, sources, clauses_of):
     return run_dir
 
 
-def passes(answer, relation):
-    if relation in ("looser", "narrower"):
-        return (answer["strictness"] == "stricter" and not answer["item_omits"].strip()
-                and answer["plant_types_ok"] and answer["strength_ok"])
+def passes(answer):
     return answer["verdict"] == "correct"
 
 
@@ -82,9 +70,8 @@ def verdicts(run_dir):
         role, n = r["custom_id"].split("-")[1], int(r["custom_id"].rsplit("-", 1)[1])
         out[n][role] = r["answer"] if r["ok"] else None
     for n, v in out.items():
-        rel = judged[n]["relation"]
-        v["pass"] = bool(v["a"] and v["b"] and passes(v["a"], rel) and passes(v["b"], rel))
-        v["agree"] = bool(v["a"] and v["b"] and passes(v["a"], rel) == passes(v["b"], rel))
+        v["pass"] = bool(v["a"] and v["b"] and passes(v["a"]) and passes(v["b"]))
+        v["agree"] = bool(v["a"] and v["b"] and passes(v["a"]) == passes(v["b"]))
     return out
 
 
@@ -112,10 +99,29 @@ def statuses(reqs, run_dir):
     return out
 
 
+def blocked(reqs, root):
+    """{item id: reasons} for items that may not be verified whatever Layer 2 says: a Layer 1 finding, or an
+    option-A finding in the item text (it would reach a customer)."""
+    import export
+    import layer1
+    sources = layer1.catalog()
+    out = {}
+    for req in reqs:
+        for rid, _, check, why in layer1.check_requirement(req, sources):
+            out.setdefault(rid, []).append(f"layer 1 {check}: {why}")
+    for f in export.check_library(root, drafts=True):
+        rid, _, why = f.partition(": ")
+        out.setdefault(rid, []).append(f"option A: {why}")
+    return out
+
+
 def apply(run_dir, root):
+    """Set each judged item's status: verified only when both verifiers pass it and nothing blocks it."""
     import model
-    reqs = model.requirements(root)
-    st = statuses([r for r in reqs if r["status"] != "retired"], run_dir)
+    reqs = [r for r in model.requirements(root) if r["status"] != "retired"]
+    st = statuses(reqs, run_dir)
+    stop = blocked(reqs, root)
+    st = {rid: "unverified" if rid in stop else s for rid, s in st.items()}
     changed = 0
     for path in sorted((Path(root) / "requirements").glob("*.json")):
         doc = model.load_json(path)
@@ -125,7 +131,7 @@ def apply(run_dir, root):
                 changed += 1
         path.write_text(json.dumps(doc, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
     return {"verified": sum(s == "verified" for s in st.values()),
-            "unverified": sum(s == "unverified" for s in st.values()), "changed": changed}
+            "unverified": sum(s == "unverified" for s in st.values()), "blocked": len(stop), "changed": changed}
 
 
 def main():

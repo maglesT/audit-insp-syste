@@ -1,17 +1,18 @@
 """Layer 1: deterministic checks of every mapping, every run, no AI (plan section 2.4).
 
-  python3 tools/library/layer1.py [library dir]       # prints findings; exit 1 if any check fails
+  python3 tools/library/layer1.py [library dir]       # prints findings; exit 1 if a check fails on a verified
+                                                      # item, or on structure, coverage, twins or fingerprints
 
 Checks, per mapping:
   1 quote      the quote appears word for word in the cited clause (whitespace-normalised)
   2 clause     the clause reference exists in the parsed clause tree, and its text hash matches clause_sha256
                (a changed source text means "re-verify")
-  3 numbers    every number in the item text, the addendum and the parameters appears in one of the quotes
+  3 numbers    every number in the item text and the parameters appears in the quote
   4 strength   the mapping's strength matches the quote's words (shall/must -> mandatory, should ->
                recommended, may -> optional; a list item without such words takes its lead-in's), and the
-               requirement's strength is the strictest of its mappings
-  5 scope      the mapping's plant types are within the source's applies_to (catalog), and the requirement's
-               plant types are covered by its mappings
+               item's strength is its mapping's
+  5 scope      the mapping's plant types are within the source's applies_to (catalog), and the item's plant
+               types are its mapping's
 Per library:
   6 coverage   for every source with a coverage file, every citable clause is mapped or marked not applicable
                (reported as a share; missing clauses are listed). A coverage entry must point at live requirements
@@ -19,10 +20,10 @@ Per library:
                file are counted (not a failure until the library is meant to be complete)
   7 fingerprint every source file matches its sha256 in sources/inventory.csv; mappings to a changed source are
                flagged for re-verification
-  8 twins      two mapped clauses of different sources with near-identical text (clause graph, D34) map to the
-               same requirements
+  8 twins      two mapped clauses of different sources with the same text (EU GMP and PIC/S) give identical
+               items (D34, D37)
   9 conditions condition and limit wording in a quote ("where applicable", "before", "at least", "within 30
-               days", "unless", "only") has a counterpart in the item text or an addendum (D35)
+               days", "unless", "only") has a counterpart in the item text (D35)
 
 The rules are strict on purpose: a false alarm costs a look, a missed error reaches a customer (D28).
 """
@@ -105,7 +106,7 @@ NUMBER = re.compile(rf"(?<![\w.])[-−]?\d+(?:[.,]\d+)?(?:\^-?\d+|[{SUPERSCRIPT}
 WORDS = {1: "one", 2: "two", 3: "three", 4: "four", 5: "five", 6: "six", 7: "seven", 8: "eight", 9: "nine",
          10: "ten", 11: "eleven", 12: "twelve"}
 TIMES = {1: "once", 2: "twice", 3: "thrice"}
-# number words taken from item and addendum text ("one" and "once" are too common to mean a count)
+# number words taken from item text ("one" and "once" are too common to mean a count)
 WORD_NUMBERS = {w: n for n, w in WORDS.items() if n > 1} | {"twice": 2, "thrice": 3}
 UNIT_EQUIVALENTS = {("frequency_max_months", 12): ("once a year", "once in a year", "annually", "yearly",
                                                   "every year", "12 months")}
@@ -264,14 +265,14 @@ def check_requirement(req, sources, changed=()):
             for n in sorted(numbers_in(str(value), words=True)):
                 if not number_found(n, quotes):
                     out.append((req["id"], 0, "numbers", f"parameter {key}: number {n} is not in any quote"))
-    texts = [req["item_text"]] + [m["addendum"] for m in req["mappings"]]
+    texts = [req["item_text"]]
     for n in sorted(set().union(*(numbers_in(t, words=True) for t in texts))):
         if not number_found(n, quotes):
-            out.append((req["id"], 0, "numbers", f"number {n} in the item or an addendum is not in any quote"))
-    # a looser or narrower mapping leaves some of the quote out on purpose; a quote not found is already reported
+            out.append((req["id"], 0, "numbers", f"number {n} in the item is not in the quote"))
+    # a quote not found is already reported
     said = set().union(*(conditions_in(t) for t in texts))
     for n, m in enumerate(req["mappings"], start=1):
-        if m["relation"] in ("looser", "narrower") or m["quote"] not in quotes:
+        if m["quote"] not in quotes:
             continue
         missing = conditions_missing(m["quote"], said)
         if missing:
@@ -279,7 +280,7 @@ def check_requirement(req, sources, changed=()):
                                                     f"does not state"))
     strengths = [m["strength"] for m in req["mappings"]]
     if strengths and req["strength"] != max(strengths, key=RANK.get):
-        out.append((req["id"], 0, "strength", f"requirement says {req['strength']}, strictest mapping is "
+        out.append((req["id"], 0, "strength", f"item says {req['strength']}, its mapping is "
                                               f"{max(strengths, key=RANK.get)}"))
     covered = set().union(*(set(m["plant_types"]) for m in req["mappings"])) if req["mappings"] else set()
     if not set(req["plant_types"]) <= covered:
@@ -350,17 +351,34 @@ def run(root=model.LIBRARY):
     return findings + coverage_findings + check_twins(reqs), shares, changed
 
 
+TWIN_LEADING = re.compile(r"^\s*(?:[A-Z]?\d+(?:\.\d+)*\.?|\([a-z0-9]+\)|principle)\s*", re.I)
+
+
 def check_twins(reqs, clauses_of=None):
-    """Check 8 (D34): two mapped clauses of different sources with near-identical text (clause graph
-    same_text_as, e.g. EU GMP and PIC/S) must map to the same requirements."""
+    """Check 8 (D34, D37): two mapped clauses of different sources with the same words (leading number and
+    punctuation left out; e.g. EU GMP and PIC/S) must give identical items: the same item texts and strengths.
+    Near twins that differ in a word ("should" in ICH Q7, "shall" in Schedule M) may give different items."""
     import graph
     clauses_of = clauses_of or globals()["clauses_of"]
     mapped = sorted({(m["source"], m["clause_ref"]) for r in reqs if r["status"] != "retired" for m in r["mappings"]})
-    texts = [((s, ref), clauses_of(s)[ref]["text"]) for s, ref in mapped if ref in clauses_of(s)]
-    rows = [("same_text_as", a[0], a[1], b[0], b[1], str(sim)) for a, b, sim in graph.same_text(texts)]
+    groups = {}
+    for s, ref in mapped:
+        if ref in clauses_of(s):
+            key = " ".join(re.findall(r"\w+", TWIN_LEADING.sub("", normalise(clauses_of(s)[ref]["text"])).lower()))
+            groups.setdefault(key, []).append((s, ref))
+    rows = [("same_text_as", a[0], a[1], b[0], b[1], "1.0") for members in groups.values()
+            for i, a in enumerate(members) for b in members[i + 1:] if a[0] != b[0]]
     live = [r for r in reqs if r["status"] != "retired"]
-    return [(sorted(ra + rb)[0], 0, "twins", f"{fs} {fr} and {ts} {tr} have the same text but map to {ra} and {rb}")
+    return [(sorted(ra + rb)[0], 0, "twins", f"{fs} {fr} and {ts} {tr} have the same text but give different items "
+                                             f"{ra} and {rb}")
             for fs, fr, ts, tr, ra, rb in graph.consistency(rows, live)]
+
+
+def failing(findings, reqs):
+    """The findings that fail the run: all but those on draft or unverified items, which the repair round fixes
+    before Layer 2 may verify them (D37); structure, coverage and twin findings always fail."""
+    open_items = {r["id"] for r in reqs if r["status"] in ("draft", "unverified")}
+    return [f for f in findings if not (f[2] not in ("twins", "coverage", "structure") and f[0] in open_items)]
 
 
 def main():
@@ -373,8 +391,10 @@ def main():
     for f in fingerprints:
         print(f"fingerprint mismatch: {f}")
     print(f"{len(uncovered_sources(root))} must/should sources have no coverage file yet")
-    print(f"{len(findings)} findings, {len(fingerprints)} fingerprint mismatches")
-    sys.exit(1 if findings or fingerprints else 0)
+    blocking = failing(findings, model.requirements(root))
+    print(f"{len(findings)} findings ({len(findings) - len(blocking)} on draft items, to fix before verification), "
+          f"{len(fingerprints)} fingerprint mismatches")
+    sys.exit(1 if blocking or fingerprints else 0)
 
 
 if __name__ == "__main__":

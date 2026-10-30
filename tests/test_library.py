@@ -40,12 +40,12 @@ class Library(unittest.TestCase):
             reqs[0]["strength"] = "must"
             reqs[0]["plant_types"] = ["TABLETS"]
             reqs[1]["id"] = "SI-001"
-            reqs[1]["mappings"][0]["relation"] = "stricter"           # stricter needs an addendum
-            reqs[1]["mappings"][1]["source"] = "unknown.pdf"
-            reqs[1]["mappings"][1]["extra"] = 1
+            reqs[1]["mappings"][0]["source"] = "unknown.pdf"
+            reqs[1]["mappings"][0]["extra"] = 1
+            reqs[2]["mappings"].append(dict(reqs[2]["mappings"][0]))  # one item, one source clause (D37)
         self.edit(break_it)
         errors = "\n".join(model.validate(self.dir))
-        for text in ("strength must be", "plant_types", "duplicate id", "needs an addendum", "unknown source",
+        for text in ("strength must be", "plant_types", "duplicate id", "exactly one mapping", "unknown source",
                      "unknown field 'extra'"):
             self.assertIn(text, errors)
         with self.assertRaises(ValueError):

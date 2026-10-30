@@ -190,8 +190,8 @@ def layer1_findings(m, sources):
     req = {"id": "MUT-001", "item_text": m["statement"], "strength": m["strength"], "plant_types": m["plant_types"],
            "parameters": {}, "general": False,
            "mappings": [{"source": m["source"], "clause_ref": m["ref"], "clause_sha256": m["clause_sha256"],
-                         "quote": m["quote"], "strength": m["strength"], "relation": "same",
-                         "plant_types": m["plant_types"], "addendum": ""}]}
+                         "quote": m["quote"], "strength": m["strength"],
+                         "plant_types": m["plant_types"]}]}
     return [[check, msg] for _, _, check, msg in layer1.check_requirement(req, sources)]
 
 
