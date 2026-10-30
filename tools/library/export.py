@@ -1,29 +1,42 @@
 """Customer export and the option-A test (plan section 1; brief "Two separate systems").
 
-  python3 tools/library/export.py check                                   # option-A test on every compilation
-  python3 tools/library/export.py build --regulators EU,PICS --plant OSD [--out FILE]
+  python3 tools/library/export.py check [--library DIR] [--all-sources]    # option-A test, in CI
+  python3 tools/library/export.py build --regulators "EU,PIC/S" --plant OSD [--out FILE] [--library DIR]
 
 The customer app loads only this export. It holds, per item, exactly ITEM_FIELDS: id, item text, topic,
-regulators, plant types and strength; never quotes, clause references or sources (option A). "Strictest wins"
-for one set of regulators and one plant type:
-- a requirement applies when it is verified, covers the plant type, and has a mapping to a selected regulator
-  that covers the plant type (or the requirement is marked general);
-- the item text is the base text plus the addenda of the selected regulators' mappings whose relation is
-  "stricter" or "adds";
-- the strength is the strictest of the selected mappings.
+regulators, plant types and strength; never quotes, clause references or sources (option A). Customers see
+regulator names (REGULATOR_NAMES), and a selection is made by those names, so "EU" means EU and EMA documents.
+"Strictest wins" for one set of regulator names and one plant type:
+- a requirement appears when it is verified, covers the plant type, and has a mapping to a selected regulator
+  that covers the plant type (for a requirement marked general, any mapping to a selected regulator);
+- its item text is the base text plus the addenda of the selected mappings that cover the plant type and whose
+  relation is "stricter" or "adds"; its strength is the strictest of those mappings (the requirement's own
+  strength when none covers the plant type);
+- its regulator tags are the selected regulators it is mapped to; the checklist header lists only regulators
+  that have an item.
 Unverified requirements are never exported (D13).
 
 The option-A test fails when the export
-- has a field other than the allowed ones, or any field whose name speaks of quotes, clauses or sources;
-- contains a run of OVERLAP_WORDS or more consecutive words that also appears in a source text;
-- contains something that reads as a clause reference ("§", "Annex 15", "Chapter 4", "21 CFR", "10.8.2").
-The source texts are every citable clause of every source the library maps to (all sources with --all-sources).
+- has a field other than the allowed ones, a field name about quotes, clauses or sources, or a value of the wrong
+  kind (unknown regulator name, plant type, strength or topic);
+- contains OVERLAP_WORDS or more consecutive words that also appear in a source text (all parsed text of the
+  source in document order, numbered or not, contents entries excepted), or a whole short source segment or a
+  mapping's quote of at least PHRASE_WORDS words. Text is compared after Unicode normalisation (ligatures, soft
+  hyphens, full-width and look-alike letters);
+- contains clause-reference or document-name wording ("§", "Annex 15", "Art. 5", "21 CFR", "211.68", "ICH Q9",
+  "PE 009", "TRS", "EudraLex", "Schedule M", "10.8.2"). Ordinary wording that trips this ("Section 1 of the batch
+  record") goes in library/export-allow.json after a person has looked at it.
+Every text a customer could see is checked: each base text and addendum on its own, and the compiled item text
+for every subset of the regulators a requirement maps to, for every plant type. The sources compared are those
+the library maps to (all sources with --all-sources; too slow for CI while clauses are parsed on demand).
 """
 import argparse
 import csv
+import itertools
 import json
 import re
 import sys
+import unicodedata
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -35,6 +48,7 @@ ITEM_FIELDS = ("id", "item_text", "topic", "regulators", "plant_types", "strengt
 TOP_FIELDS = ("format", "generated", "regulators", "plant_type", "disclaimer", "topics", "items")
 FORBIDDEN_NAME = re.compile(r"quote|clause|source|ref|sha|mapping|addend|page|offset|citation|url", re.I)
 OVERLAP_WORDS = 12
+PHRASE_WORDS = 6
 RANK = {"optional": 0, "recommended": 1, "mandatory": 2}
 ADDS = ("stricter", "adds")
 DISCLAIMER = ("Compiled from official texts with automated multi-step verification. Supports internal audits; "
@@ -42,10 +56,33 @@ DISCLAIMER = ("Compiled from official texts with automated multi-step verificati
 # regulator code in sources/catalog.csv -> the name customers see (a regulator name only, never a document)
 REGULATOR_NAMES = {"EU": "EU", "EMA": "EU", "PICS": "PIC/S", "FDA": "US FDA", "WHO": "WHO", "ICH": "ICH",
                    "INDIA": "India", "JAPAN": "Japan", "BRAZIL": "Brazil"}
+NAMES = sorted(set(REGULATOR_NAMES.values()))
+_KEYWORD = (r"(?i:\b(?:annex(?:es)?|appendix|appendices|chapters?|articles?|art|sections?|sect|clauses?|"
+            r"paragraphs?|para|parts?|points?|schedules?)\.?\s*[-–]?\s*)")
 REFERENCE = re.compile(
-    r"§|\b(?:annex|appendix|chapter|article|section|clause|paragraph|part|schedule)\s+[0-9IVXLC]+\b"
-    r"|\bschedule\s+m\b|\bCFR\b|\b\d+(?:\.\d+){2,}\b|\b\d{3}\.\d{1,3}\s*\([a-z0-9]+\)", re.I)
-WORD = re.compile(r"[a-z0-9]+")
+    r"§"
+    rf"|{_KEYWORD}(?:\d|[IVXLC]+\b)"               # Roman numerals in capitals only: "Part I", not "part i"
+    r"|(?i:cfr)|(?i:eudralex)|(?i:\bschedule\s+m\b)"
+    r"|\b\d+(?:\.\d+){2,}\b|\b\d{3}\.\d{1,3}\b"     # 10.8.2; 211.68
+    r"|\bQ\d{1,2}[A-Z]?\b|\b(?:PE|PI|PS)\s*0\d\d\b|\bTRS\b|\b[A-Z]{2,}/[A-Z0-9]{2,}/")
+WORD = re.compile(r"\w+")
+# look-alike letters from other scripts, folded to Latin before comparing
+CONFUSABLES = str.maketrans("аеорсухіјѕԁԛԝοαεικνρτυχ", "aeopcyxijsdqwoaeikvptux")
+ALLOW_FILE = "export-allow.json"
+# the number or letter a segment starts with ("9.3", "(b)", "1.", "a)"): left out so a copied run can cross
+# from one clause into the next
+MARKER = re.compile(r"^\s*(?:\(?[0-9]{1,3}[a-z]?\)|\(?[a-z]{1,4}\)|\d+(?:\.\d+)*\.?)\s+", re.I)
+
+
+def unify(text):
+    """NFKC (ligatures, full-width letters) without soft hyphens, look-alike letters folded; case kept."""
+    text = unicodedata.normalize("NFKC", text).replace("\u00ad", "")
+    return text.translate(CONFUSABLES).translate(str.maketrans(
+        {k.upper(): v.upper() for k, v in zip("аеорсухіјѕ", "aeopcyxijs")}))
+
+
+def words(text):
+    return WORD.findall(unify(text).casefold())
 
 
 def catalog():
@@ -53,52 +90,117 @@ def catalog():
         return {r["file"]: r for r in csv.DictReader(f)}
 
 
-def compile_items(reqs, sources, regulators, plant_type):
-    """The items of one compilation (regulator codes, one plant type), in library order."""
-    regulators = set(regulators)
+def _sentence(text):
+    text = text.strip()
+    return text if not text or text[-1] in ".!?" else text + "."
+
+
+def _key(text):
+    return " ".join(words(text))
+
+
+def compile_items(reqs, sources, names, plant_type):
+    """The items of one compilation (regulator names, one plant type), in library order."""
+    names = set(names)
+
+    def name(m):
+        return REGULATOR_NAMES[sources[m["source"]]["regulator"]]
+
     items = []
     for req in reqs:
         if req["status"] != "verified" or plant_type not in req["plant_types"]:
             continue
-        chosen = [m for m in req["mappings"] if sources[m["source"]]["regulator"] in regulators
+        chosen = [m for m in req["mappings"] if name(m) in names
                   and (plant_type in m["plant_types"] or req["general"])]
         if not chosen:
             continue
-        addenda = []
-        for m in chosen:
+        covering = [m for m in chosen if plant_type in m["plant_types"]]
+        parts, seen = [_sentence(req["item_text"])], set()
+        for m in covering:
             text = m["addendum"].strip()
-            if m["relation"] in ADDS and text and text not in addenda:
-                addenda.append(text)
+            if m["relation"] in ADDS and text and _key(text) not in seen:
+                seen.add(_key(text))
+                parts.append(_sentence(text))
         items.append({
             "id": req["id"],
-            "item_text": " ".join([req["item_text"].strip()] + addenda),
+            "item_text": " ".join(parts),
             "topic": req["topic"],
-            "regulators": sorted({REGULATOR_NAMES[sources[m["source"]]["regulator"]] for m in chosen}),
+            "regulators": sorted({name(m) for m in chosen}),
             "plant_types": [plant_type],
-            "strength": max((m["strength"] for m in chosen), key=RANK.get),
+            "strength": max((m["strength"] for m in covering), key=RANK.get) if covering else req["strength"],
         })
     return items
 
 
-def export(reqs, sources, regulators, plant_type, topic_names, now=None):
-    items = compile_items(reqs, sources, regulators, plant_type)
-    used = {it["topic"] for it in items}
+def export(reqs, sources, names, plant_type, topic_names, now=None):
+    unknown = set(names) - set(NAMES)
+    if unknown:
+        raise ValueError(f"unknown regulator name(s): {', '.join(sorted(unknown))}")
+    items = compile_items(reqs, sources, names, plant_type)
     return {"format": 1, "generated": (now or datetime.now(timezone.utc)).isoformat(timespec="seconds"),
-            "regulators": sorted({REGULATOR_NAMES[r] for r in regulators}), "plant_type": plant_type,
-            "disclaimer": DISCLAIMER, "topics": {t: topic_names[t] for t in sorted(used)}, "items": items}
+            "regulators": sorted({r for it in items for r in it["regulators"]}), "plant_type": plant_type,
+            "disclaimer": DISCLAIMER, "topics": {t: topic_names[t] for t in sorted({it["topic"] for it in items})},
+            "items": items}
 
 
-def words(text):
-    return WORD.findall(text.lower())
+class Corpus:
+    """What customer text must not copy: every OVERLAP_WORDS-word run of the source texts, and whole short
+    segments and mapping quotes of PHRASE_WORDS or more words."""
 
+    def __init__(self, texts_by_source, quotes=()):
+        self.runs = set()
+        self.phrases = set()
+        for texts in texts_by_source.values():
+            texts = [MARKER.sub("", t) for t in texts]
+            w = words(" ".join(texts))                       # document order, across segment boundaries
+            self.runs.update(tuple(w[i:i + OVERLAP_WORDS]) for i in range(len(w) - OVERLAP_WORDS + 1))
+            for t in texts:
+                tw = tuple(words(t))
+                if PHRASE_WORDS <= len(tw) < OVERLAP_WORDS:
+                    self.phrases.add(tw)
+        for q in quotes:
+            qw = tuple(words(q))
+            if PHRASE_WORDS <= len(qw) < OVERLAP_WORDS:     # a longer quote is caught by the runs
+                self.phrases.add(qw)
+        self.lengths = sorted({len(p) for p in self.phrases})
 
-def shingles(texts, n=OVERLAP_WORDS):
-    """Every run of n consecutive words in the texts (as hashes)."""
-    out = set()
-    for text in texts:
+    def copied(self, text):
+        """The first copied run or phrase in a text, or None."""
         w = words(text)
-        out.update(hash(tuple(w[i:i + n])) for i in range(len(w) - n + 1))
+        for i in range(len(w) - OVERLAP_WORDS + 1):
+            if tuple(w[i:i + OVERLAP_WORDS]) in self.runs:
+                return " ".join(w[i:i + OVERLAP_WORDS])
+        for n in self.lengths:
+            for i in range(len(w) - n + 1):
+                if tuple(w[i:i + n]) in self.phrases:
+                    return " ".join(w[i:i + n])
+        return None
+
+
+def check_text(text, corpus, allow=()):
+    """Option-A findings for one piece of customer-visible text."""
+    out = []
+    plain = unify(text)
+    for phrase in allow:
+        plain = re.sub(re.escape(unify(phrase)), " ", plain, flags=re.I)
+    hit = REFERENCE.search(plain)
+    if hit:
+        out.append(f"reads as a clause or document reference ({hit.group(0)!r})")
+    copied = corpus.copied(text)
+    if copied:
+        out.append(f"copies source wording: {copied!r}")
     return out
+
+
+def _keys(value, path):
+    if isinstance(value, dict):
+        for k, v in value.items():
+            yield f"{path}.{k}", k
+            if path != "$" or k != "topics":                # topic ids are data, not field names
+                yield from _keys(v, f"{path}.{k}")
+    elif isinstance(value, list):
+        for i, v in enumerate(value):
+            yield from _keys(v, f"{path}[{i}]")
 
 
 def _strings(value, path):
@@ -112,98 +214,122 @@ def _strings(value, path):
             yield from _strings(v, f"{path}[{i}]")
 
 
-def _keys(value, path):
-    if isinstance(value, dict):
-        if path == "$.topics":                      # {topic id: name}: the keys are data, not field names
-            return
-        for k, v in value.items():
-            yield f"{path}.{k}", k
-            yield from _keys(v, f"{path}.{k}")
-    elif isinstance(value, list):
-        for i, v in enumerate(value):
-            yield from _keys(v, f"{path}[{i}]")
-
-
-def check(doc, source_shingles, n=OVERLAP_WORDS):
+def check(doc, corpus, allow=()):
     """Option-A findings for one export document (an empty list means it may ship)."""
-    out = []
-    extra = set(doc) - set(TOP_FIELDS)
-    out += [f"$: field {k!r} is not allowed" for k in sorted(extra)]
-    for i, item in enumerate(doc.get("items", [])):
-        if set(item) != set(ITEM_FIELDS):
-            out.append(f"$.items[{i}]: fields must be exactly {list(ITEM_FIELDS)}, got {sorted(item)}")
+    out = [f"$: field {k!r} is not allowed" for k in sorted(set(doc) - set(TOP_FIELDS))]
     out += [f"{path}: field name speaks of sources or quotes" for path, k in _keys(doc, "$")
             if FORBIDDEN_NAME.search(k)]
-    for path, text in _strings(doc, "$"):
-        if path in ("$.generated",):
+    topics = doc.get("topics", {})
+    if not isinstance(topics, dict) or not all(isinstance(k, str) and isinstance(v, str) for k, v in topics.items()):
+        out.append("$.topics: must map topic ids to names")
+        topics = {}
+    if not set(doc.get("regulators", [])) <= set(NAMES):
+        out.append("$.regulators: unknown regulator name")
+    for i, item in enumerate(doc.get("items", [])):
+        where = f"$.items[{i}]"
+        if not isinstance(item, dict) or set(item) != set(ITEM_FIELDS):
+            out.append(f"{where}: fields must be exactly {list(ITEM_FIELDS)}")
             continue
-        if REFERENCE.search(text):
-            out.append(f"{path}: reads as a clause reference ({REFERENCE.search(text).group(0)!r})")
-        w = words(text)
-        for j in range(len(w) - n + 1):
-            if hash(tuple(w[j:j + n])) in source_shingles:
-                out.append(f"{path}: {n} consecutive words also appear in a source: {' '.join(w[j:j + n])!r}")
-                break
+        if not isinstance(item["regulators"], list) or not set(item["regulators"]) <= set(NAMES):
+            out.append(f"{where}.regulators: unknown regulator name")
+        if not isinstance(item["plant_types"], list) or not set(item["plant_types"]) <= set(model.PLANT_TYPES):
+            out.append(f"{where}.plant_types: unknown plant type")
+        if item["strength"] not in RANK:
+            out.append(f"{where}.strength: unknown strength")
+        if item["topic"] not in topics:
+            out.append(f"{where}.topic: not in $.topics")
+        if not isinstance(item["item_text"], str):
+            out.append(f"{where}.item_text: must be text")
+    for path, text in _strings(doc, "$"):
+        if path != "$.generated":
+            out += [f"{path}: {f}" for f in check_text(text, corpus, allow)]
     return out
 
 
-def source_texts(reqs, sources, clauses_of, all_sources=False):
+def corpus_for(reqs, sources, segments_of, all_sources=False):
     files = sorted(sources) if all_sources else sorted({m["source"] for r in reqs for m in r["mappings"]})
-    return [c["text"] for f in files for c in clauses_of(f).values()]
+    texts = {f: [s["text"] for s in segments_of(f) if s["kind"] != "toc"] for f in files}
+    return Corpus(texts, [m["quote"] for r in reqs for m in r["mappings"]])
 
 
-def compilations(sources):
-    """Every compilation the app can ask for: all regulators together, and each regulator alone, per plant type."""
-    codes = sorted({r["regulator"] for r in sources.values()})
+def visible_texts(req, sources):
+    """Every text of one requirement a customer could see: its base text, each addendum, and the compiled item
+    text for every subset of the regulators it maps to, for every plant type."""
+    out = {req["item_text"]} | {m["addendum"] for m in req["mappings"] if m["addendum"].strip()}
+    mapped = sorted({REGULATOR_NAMES[sources[m["source"]]["regulator"]] for m in req["mappings"]})
+    for n in range(1, len(mapped) + 1):
+        for subset in itertools.combinations(mapped, n):
+            for plant in model.PLANT_TYPES:
+                out |= {it["item_text"] for it in compile_items([req], sources, subset, plant)}
+    return sorted(out)
+
+
+def load_allow(root):
+    path = Path(root) / ALLOW_FILE
+    return model.load_json(path)["phrases"] if path.exists() else []
+
+
+def compilations():
+    """All regulator names together and each alone, per plant type."""
     for plant in model.PLANT_TYPES:
-        yield codes, plant
-        for code in codes:
-            yield [code], plant
+        yield NAMES, plant
+        for name in NAMES:
+            yield [name], plant
 
 
-def check_library(root=model.LIBRARY, sources=None, clauses_of=None, all_sources=False):
-    """Option-A findings over every compilation of the library."""
-    if clauses_of is None:
+def check_library(root=model.LIBRARY, sources=None, segments_of=None, all_sources=False):
+    """Option-A findings over the whole library: every customer-visible text, and the export document of every
+    regulator name alone and all together, per plant type."""
+    if segments_of is None:
         import layer1
-        clauses_of = layer1.clauses_of
+        segments_of = layer1.segments_of
     sources = sources or catalog()
     reqs, names = model.requirements(root), model.topics(root)
-    known = shingles(source_texts(reqs, sources, clauses_of, all_sources))
+    corpus, allow = corpus_for(reqs, sources, segments_of, all_sources), load_allow(root)
     out = []
-    for regulators, plant in compilations(sources):
-        doc = export(reqs, sources, regulators, plant, names)
-        out += [f"{'+'.join(regulators)}/{plant} {f}" for f in check(doc, known)]
+    for req in reqs:
+        for text in visible_texts(req, sources):
+            out += [f"{req['id']}: {f}" for f in check_text(text, corpus, allow)]
+    for names_, plant in compilations():
+        doc = export(reqs, sources, names_, plant, names)
+        out += [f"{'+'.join(names_)}/{plant} {f}" for f in check(doc, corpus, allow)]
     return sorted(set(out))
 
 
-def main():
+def selection(arg):
+    """Regulator names from a comma-separated list of names or catalog codes."""
+    out = []
+    for part in (p.strip() for p in arg.split(",") if p.strip()):
+        name = REGULATOR_NAMES.get(part.upper(), part)
+        if name not in NAMES:
+            raise SystemExit(f"unknown regulator {part!r}; use one of: {', '.join(NAMES)}")
+        out.append(name)
+    return sorted(set(out))
+
+
+def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("command", choices=["check", "build"])
-    ap.add_argument("--regulators", help="build: regulator codes from sources/catalog.csv, comma-separated")
+    ap.add_argument("--regulators", help="build: regulator names or catalog codes, comma-separated")
     ap.add_argument("--plant", choices=model.PLANT_TYPES, help="build: one plant type")
     ap.add_argument("--out", help="build: output file (default: print)")
+    ap.add_argument("--library", default=str(model.LIBRARY), help="library folder (default: library/)")
     ap.add_argument("--all-sources", action="store_true", help="compare with every source, not only mapped ones")
-    a = ap.parse_args()
+    a = ap.parse_args(argv)
     sources = catalog()
     if a.command == "check":
-        findings = check_library(sources=sources, all_sources=a.all_sources)
+        findings = check_library(a.library, sources, all_sources=a.all_sources)
         for f in findings:
             print(f)
-        n = len(model.requirements())
-        print(f"option A: {len(findings)} findings ({n} requirements)")
+        print(f"option A: {len(findings)} findings ({len(model.requirements(a.library))} requirements)")
         sys.exit(1 if findings else 0)
     if not a.regulators or not a.plant:
         ap.error("build needs --regulators and --plant")
-    codes = a.regulators.split(",")
-    unknown = set(codes) - {r["regulator"] for r in sources.values()}
-    if unknown:
-        ap.error(f"unknown regulator code(s): {', '.join(sorted(unknown))}")
-    import layer1
-    reqs = model.requirements()
-    doc = export(reqs, sources, codes, a.plant, model.topics())
-    findings = check(doc, shingles(source_texts(reqs, sources, layer1.clauses_of, a.all_sources)))
+    names = selection(a.regulators)
+    findings = check_library(a.library, sources, all_sources=a.all_sources)
     if findings:
         sys.exit("refused, option A:\n" + "\n".join(findings))
+    doc = export(model.requirements(a.library), sources, names, a.plant, model.topics(a.library))
     text = json.dumps(doc, indent=1, ensure_ascii=False) + "\n"
     if a.out:
         Path(a.out).write_text(text, encoding="utf-8")
