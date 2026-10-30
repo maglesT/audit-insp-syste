@@ -4,7 +4,7 @@
   python3 tools/ai/pilot.py run [--budget 15]     # draft + two blind verifiers on the self-inspection clauses
 
 In Claude Code sessions (D30; the API commands above stay, unused), agents answer the batch files in between:
-  python3 tools/ai/pilot.py prepare-draft
+  python3 tools/ai/pilot.py prepare-draft [--topic self-inspection]   # S3: units of topic.py; twins by D36
   python3 tools/ai/pilot.py ingest-draft <draft dir>
   python3 tools/ai/pilot.py prepare-verify <draft dir>
   python3 tools/ai/pilot.py ingest-verify <verify dir> <draft dir>
@@ -251,15 +251,52 @@ def run(run_with, budget, pilot=PILOT, sources=None, clauses_of=None):
     return rep
 
 
-def prepare_draft(pilot=PILOT, sources=None, clauses_of=None, context_of=None):
-    """Session stage 1: draft batch files. Returns the draft run dir."""
+def topic_pilot(units):
+    """{file: [refs]} for the units of a topic file (tools/ai/topic.py) that are drafted; twins are not."""
+    out = {}
+    for u in units:
+        out.setdefault(u["source"], []).append(u["ref"])
+    return out
+
+
+def prepare_draft(pilot=PILOT, sources=None, clauses_of=None, context_of=None, topic=None):
+    """Session stage 1: draft batch files. Returns the draft run dir. With topic (a topic.py file's content), the
+    topic's units are drafted and the file is kept in the run dir, so ingest can give each twin its mappings."""
     import layer1
+    if topic:
+        pilot = topic_pilot(topic["units"])
     drafts = draft_requests(pilot, sources or layer1.catalog(), clauses_of or layer1.clauses_of, context_of)
-    return sessions.prepare(drafts, "session-draft")
+    run_dir = sessions.prepare(drafts, "session-draft")
+    if topic:
+        (Path(run_dir) / "topic.json").write_text(json.dumps(topic, indent=1, ensure_ascii=False) + "\n",
+                                                  encoding="utf-8")
+    return run_dir
 
 
-def ingest_draft(draft_dir, clauses_of=None):
-    """Session stage 2: validate the draft answers, write mappings.jsonl and rejected-quotes.jsonl."""
+def twin_mappings(mappings, units, sources, clauses_of):
+    """D36: each drafted unit's mappings copied to its twins (same text in another source). The quote is checked
+    word for word against the twin's own clause and the plant types are cut to the twin source's scope; a copy
+    that fails either is rejected, never kept. Returns (copies, rejected)."""
+    twins = {(u["source"], u["ref"]): u["twins"] for u in units if u["twins"]}
+    copies, rejected = [], []
+    for n, m in enumerate(mappings):
+        for t in twins.get((m["source"], m["ref"]), []):
+            clause = clauses_of(t["source"])[t["ref"]]
+            scope = runner_scope(sources[t["source"]]["applies_to"])
+            copy = {**m, "source": t["source"], "ref": t["ref"], "clause_sha256": clause["sha256"],
+                    "plant_types": [p for p in m["plant_types"] if p in scope], "twin_of": n}
+            if normalise(m["quote"]) not in normalise(clause["text"]):
+                rejected.append({**copy, "reason": "quote not found in the twin clause"})
+            elif not copy["plant_types"]:
+                rejected.append({**copy, "reason": "no plant type inside the twin source's scope"})
+            else:
+                copies.append(copy)
+    return copies, rejected
+
+
+def ingest_draft(draft_dir, clauses_of=None, sources=None):
+    """Session stage 2: validate the draft answers, write mappings.jsonl and rejected-quotes.jsonl; for a topic
+    run also twin-mappings.jsonl and twin-rejected.jsonl (D36)."""
     import layer1
     clauses_of = clauses_of or layer1.clauses_of
     drafts = sessions.load_requests(draft_dir)
@@ -269,12 +306,20 @@ def ingest_draft(draft_dir, clauses_of=None):
         raise SystemExit(f"clause text changed since prepare-draft: {', '.join(changed)}")
     results, summary = sessions.ingest(draft_dir, "session-draft")
     mappings, rejected = mappings_from(drafts, results, clauses_of)
+    out = {}
+    topic_file = Path(draft_dir) / "topic.json"
+    if topic_file.exists():
+        units = json.loads(topic_file.read_text(encoding="utf-8"))["units"]
+        copies, twin_rejected = twin_mappings(mappings, units, sources or layer1.catalog(), clauses_of)
+        runner.write_jsonl(Path(draft_dir) / "twin-mappings.jsonl", copies)
+        runner.write_jsonl(Path(draft_dir) / "twin-rejected.jsonl", twin_rejected)
+        out = {"twin_mappings": len(copies), "twin_rejected": len(twin_rejected)}
     runner.write_jsonl(Path(draft_dir) / "mappings.jsonl", mappings)
     runner.write_jsonl(Path(draft_dir) / "rejected-quotes.jsonl", rejected)
     flagged = condition_findings(mappings)
     runner.write_jsonl(Path(draft_dir) / "condition-findings.jsonl", flagged)
     return {"requests": summary["requests"], "failed": summary["failed"], "mappings": len(mappings),
-            "quotes_rejected": len(rejected), "condition_findings": len(flagged)}
+            "quotes_rejected": len(rejected), "condition_findings": len(flagged), **out}
 
 
 def condition_findings(mappings):
@@ -337,6 +382,7 @@ def main():
     ap.add_argument("dirs", nargs="*", help="run dirs: ingest-draft/prepare-verify <draft dir>; "
                                             "ingest-verify <verify dir> <draft dir>")
     ap.add_argument("--budget", type=float, default=15.0, help="US$; nothing is sent above this worst case")
+    ap.add_argument("--topic", help="prepare-draft: draft the units of library/topics/<topic>.json (topic.py write)")
     ap.add_argument("--context", action="store_true",
                     help="prepare-draft/prepare-verify: add the clause graph's context (D34; measure before use)")
     args = ap.parse_args()
@@ -348,7 +394,10 @@ def main():
     elif args.command == "run":
         print(json.dumps(run(runner.BatchRunner(), args.budget), indent=1))
     elif args.command == "prepare-draft":
-        print(prepare_draft(context_of=graph_context(sorted(PILOT)) if args.context else None))
+        topic = (json.loads((HERE.parents[1] / "library" / "topics" / f"{args.topic}.json").read_text(encoding="utf-8"))
+                 if args.topic else None)
+        files = sorted(topic_pilot(topic["units"]) if topic else PILOT)
+        print(prepare_draft(context_of=graph_context(files) if args.context else None, topic=topic))
     elif args.command == "ingest-draft":
         print(json.dumps(ingest_draft(args.dirs[0]), indent=1))
     elif args.command == "prepare-verify":
