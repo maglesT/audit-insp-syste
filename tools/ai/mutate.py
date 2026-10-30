@@ -1,15 +1,19 @@
 """Mutation test (plan 2.6, Layer 3) at pilot scale: do Layer 1 and the two blind verifiers catch planted errors?
 
   python3 tools/ai/mutate.py prepare-text <draft dir>                  # mutator batch for the text mutants
-  python3 tools/ai/mutate.py prepare-verify <draft dir> <mutator dir>  # mutants + controls, shuffled, verifier batches
-  python3 tools/ai/mutate.py agents <run dir> <model>                  # record which model answered the batches
+  python3 tools/ai/mutate.py prepare-verify <draft dir> <mutator dir> [--accepted <session-verify dir>]
+                                                                       # mutants + controls, shuffled, verifier batches
+  python3 tools/ai/mutate.py agents <run dir> <model> [batch ...]      # record which model answered which batches
   python3 tools/ai/mutate.py report <verify dir>                       # ingest verifier answers, mutation-report.json
 
 Mutants are made from the correct mappings of a session-draft run, PER_TYPE per error type where the mappings
 allow. Four types are made by code (changed number, strength, plant type, wrong clause); three are rewritten by a
 mutator agent that sees only the item and its clause (dropped condition, added condition, looser wording). Every
 untouched mapping is a control. Mutants and controls are shuffled together and go to the verifiers with exactly
-the pilot's prompts and inputs, so the verifiers cannot tell them apart. The key (which item is which) is kept in
+the pilot's prompts and inputs, so the verifiers cannot tell them apart. No batch holds two variants of the same
+original (its control or any of its mutants), so a verifier never sees an item next to its own mutant. Only
+originals that pass Layer 1 (and, with --accepted, that both verifiers accepted in the session pilot) are used.
+A Layer 1 catch counts only findings the original did not have. The key (which item is which) is kept in
 mutation-key.jsonl in the verify run folder; the verifier agents only ever see their own batch file.
 """
 import argparse
@@ -49,8 +53,11 @@ MODAL = {"recommended": {"should": "must"}, "mandatory": {"must": "should", "sha
 NUMBER_WORDS = {"once": "twice", "twice": "once", "one": "two", "two": "three", "three": "four", "four": "five",
                 "five": "six", "six": "seven", "seven": "eight", "eight": "nine", "nine": "ten", "ten": "twelve",
                 "twelve": "ten", "fifteen": "twenty"}
-DIGITS = re.compile(r"(?<![\w.])\d+(?![\w.]*\d)")
-WORD = re.compile(r"\b(" + "|".join(NUMBER_WORDS) + r")\b", re.I)
+NUMBER = re.compile(r"(?<![\w.])\d+(?![\w.]*\d)|\b(?:" + "|".join(NUMBER_WORDS) + r")\b", re.I)
+REFERENCE = re.compile(r"\b(?:chapter|annex|section|part|clause|article|table|appendix|item|no\.?)\s*$", re.I)
+NOT_A_COUNT = {"once": re.compile(r"^\s+(?:a|an|per|every|each|in)\b", re.I),    # "once a year", not "once approved"
+               "one": re.compile(r"^(?!\s+(?:of|another)\b)", re.I)}
+PRONOUN_BEFORE = re.compile(r"\b(?:no|any|some|every|each)\s*$", re.I)              # "no one", "any one"
 
 
 def _case(new, old):
@@ -58,13 +65,19 @@ def _case(new, old):
 
 
 def change_number(statement):
-    """The statement with its first number changed, or None when it has no number."""
-    m = DIGITS.search(statement)
-    if m:
-        return statement[:m.start()] + str(int(m.group()) + 1) + statement[m.end():]
-    m = WORD.search(statement)
-    if m:
-        return statement[:m.start()] + _case(NUMBER_WORDS[m.group().lower()], m.group()) + statement[m.end():]
+    """The statement with its first number (digits or a number word) changed, or None when it has none. A number
+    that names a part of a text ("Chapter 9"), "once" that is not a frequency and "one" as a pronoun are skipped."""
+    for m in NUMBER.finditer(statement):
+        before, after, word = statement[:m.start()], statement[m.end():], m.group()
+        if REFERENCE.search(before):
+            continue
+        low = word.lower()
+        if low == "once" and not NOT_A_COUNT["once"].search(after):
+            continue
+        if low == "one" and PRONOUN_BEFORE.search(before):
+            continue
+        new = str(int(word) + 1) if word.isdigit() else _case(NUMBER_WORDS[low], word)
+        return before + new + after
     return None
 
 
@@ -94,11 +107,11 @@ def other_clause(m, clauses_of, rng, avoid):
     return ref, tree[ref]
 
 
-def code_mutants(mappings, sources, clauses_of, rng):
-    """{type: [mutant]} for the four types made by code."""
+def code_mutants(mappings, sources, clauses_of, rng, eligible=None):
+    """{type: [mutant]} for the four types made by code, from the eligible (correct) mappings only."""
     out = {t: [] for t in CODE_TYPES}
     drafted = {m["ref"] for m in mappings}
-    order = list(range(len(mappings)))
+    order = [i for i in range(len(mappings)) if eligible is None or i in eligible]
     rng.shuffle(order)
     for i in order:
         m = mappings[i]
@@ -111,7 +124,7 @@ def code_mutants(mappings, sources, clauses_of, rng):
             out["strength"].append(mutant("strength", i, {**m, "strength": strength, "statement": statement},
                                           f"strength {m['strength']} -> {strength}"))
         extra = outside_scope(sources[m["source"]]["applies_to"])
-        if extra and len(out["plant_type"]) < PER_TYPE:
+        if extra and extra not in m["plant_types"] and len(out["plant_type"]) < PER_TYPE:
             out["plant_type"].append(mutant("plant_type", i, {**m, "plant_types": sorted(m["plant_types"] + [extra])},
                                             f"plant type {extra} added"))
         other = other_clause(m, clauses_of, rng, drafted) if len(out["wrong_clause"]) < PER_TYPE else None
@@ -146,15 +159,18 @@ def text_requests(mappings, sources, clauses_of, rng=None):
     return out
 
 
-def text_mutants(mappings, results, requests):
-    """{type: [mutant]} from the mutator answers: possible, non-empty and really different from the item."""
+def text_mutants(mappings, results, requests, eligible=None):
+    """{type: [mutant]} from the mutator answers: possible, non-empty and really different from the item. Each
+    request must name the same source and clause as the mapping it points at."""
     by_id = {r.custom_id: r for r in results}
     candidates = {t: [] for t in TEXT_TYPES}
     for req in requests:
-        res = by_id.get(req.custom_id)
-        if not res or not res.ok or not res.answer["possible"]:
-            continue
         i, kind = req.meta["mapping"], req.meta["type"]
+        if i >= len(mappings) or (mappings[i]["source"], mappings[i]["ref"]) != (req.meta["source"], req.meta["ref"]):
+            raise SystemExit(f"{req.custom_id} was made for another mapping list (mapping {i} does not match)")
+        res = by_id.get(req.custom_id)
+        if not res or not res.ok or not res.answer["possible"] or (eligible is not None and i not in eligible):
+            continue
         statement = res.answer["statement"].strip()
         if not statement or pilot.normalise(statement) == pilot.normalise(mappings[i]["statement"]):
             continue
@@ -179,19 +195,48 @@ def layer1_findings(m, sources):
     return [[check, msg] for _, _, check, msg in layer1.check_requirement(req, sources)]
 
 
-def build(mappings, code, text, sources, rng):
-    """Mutants and controls, shuffled, each with its Layer 1 findings: the key rows."""
-    items = [{"type": "control", "original": i, "mapping": m, "change": ""} for i, m in enumerate(mappings)]
+def build(mappings, code, text, sources, rng, eligible=None, size=sessions.BATCH_SIZE):
+    """Mutants and controls, shuffled, each with its Layer 1 findings (only those the original did not have) and
+    a batch number such that no batch holds two variants of one original: the key rows."""
+    items = [{"type": "control", "original": i, "mapping": m, "change": ""} for i, m in enumerate(mappings)
+             if eligible is None or i in eligible]
     for group in list(code.values()) + list(text.values()):
         items += group
     rng.shuffle(items)
-    counts = {}
+    counts, base = {}, {}
     for n, it in enumerate(items):
         counts[it["type"]] = counts.get(it["type"], 0) + 1
         it["id"] = f"{it['type']}-{counts[it['type']]:03d}"
         it["position"] = n
-        it["layer1"] = layer1_findings(it["mapping"], sources)
+        if it["original"] not in base:
+            base[it["original"]] = layer1_findings(mappings[it["original"]], sources)
+        it["layer1"] = [f for f in layer1_findings(it["mapping"], sources) if f not in base[it["original"]]]
+    assign_batches(items, rng, size)
     return items
+
+
+def assign_batches(items, rng, size):
+    """Give each item a batch number: at most size per batch, and never two variants of one original together."""
+    per_original = {}
+    for it in items:
+        per_original[it["original"]] = per_original.get(it["original"], 0) + 1
+    n = max(math.ceil(len(items) / size), max(per_original.values(), default=1))
+    while True:
+        cap = math.ceil(len(items) / n)
+        load, used = [0] * n, [set() for _ in range(n)]
+        ok = True
+        for it in sorted(items, key=lambda it: -per_original[it["original"]]):   # crowded originals first
+            free = [b for b in range(n) if load[b] < cap and it["original"] not in used[b]]
+            if not free:
+                ok = False
+                break
+            b = min(free, key=lambda b: (load[b], rng.random()))
+            it["batch"] = b
+            load[b] += 1
+            used[b].add(it["original"])
+        if ok:
+            return n
+        n += 1
 
 
 def _sha256(path):
@@ -200,36 +245,80 @@ def _sha256(path):
 
 def prepare_text(draft_dir, sources=None, clauses_of=None):
     import layer1
-    mappings = runner.read_jsonl(Path(draft_dir) / "mappings.jsonl")
+    draft_dir = Path(draft_dir)
+    if not draft_dir.name.endswith("-session-draft"):
+        raise SystemExit(f"{draft_dir} is not a session-draft run")
+    mappings = runner.read_jsonl(draft_dir / "mappings.jsonl")
     reqs = text_requests(mappings, sources or layer1.catalog(), clauses_of or layer1.clauses_of)
-    return sessions.prepare(reqs, "mutator")
+    mutator_dir = sessions.prepare(reqs, "mutator")
+    (mutator_dir / "mutator-link.json").write_text(json.dumps(
+        {"draft_run": draft_dir.name, "mappings_sha256": _sha256(draft_dir / "mappings.jsonl")}) + "\n",
+        encoding="utf-8")
+    return mutator_dir
 
 
-def prepare_verify(draft_dir, mutator_dir, sources=None, clauses_of=None):
-    """Ingest the mutator answers, build mutants and controls, and write the verifier batches."""
+def accepted_by_both(verify_dir):
+    """Mapping numbers that both verifiers called correct in a session-verify run."""
+    verdicts = {}
+    for r in runner.read_jsonl(Path(verify_dir) / "results.jsonl"):
+        if r["ok"]:
+            role, n = r["custom_id"].split("-")[1], int(r["custom_id"].rsplit("-", 1)[1])
+            verdicts.setdefault(n, {})[role] = r["answer"]["verdict"]
+    return {n for n, v in verdicts.items() if v.get("a") == v.get("b") == "correct"}
+
+
+def prepare_verify(draft_dir, mutator_dir, accepted=None, sources=None, clauses_of=None):
+    """Ingest the mutator answers, build mutants and controls from the correct mappings, and write the verifier
+    batches. accepted: a session-verify run of the same draft; only mappings both verifiers accepted are used."""
     import layer1
     sources, clauses_of = sources or layer1.catalog(), clauses_of or layer1.clauses_of
     draft_dir, mutator_dir = Path(draft_dir), Path(mutator_dir)
+    if not draft_dir.name.endswith("-session-draft"):
+        raise SystemExit(f"{draft_dir} is not a session-draft run")
     mappings = runner.read_jsonl(draft_dir / "mappings.jsonl")
+    link = mutator_dir / "mutator-link.json"
+    if link.exists() and json.loads(link.read_text(encoding="utf-8")) != {
+            "draft_run": draft_dir.name, "mappings_sha256": _sha256(draft_dir / "mappings.jsonl")}:
+        raise SystemExit(f"{mutator_dir.name} was not prepared from the current mappings of {draft_dir.name}")
+    eligible = {i for i, m in enumerate(mappings) if not layer1_findings(m, sources)}
+    if accepted:
+        verify_link = json.loads((Path(accepted) / "draft-link.json").read_text(encoding="utf-8"))
+        if verify_link != {"draft_run": draft_dir.name, "mappings_sha256": _sha256(draft_dir / "mappings.jsonl")}:
+            raise SystemExit(f"{Path(accepted).name} did not verify the current mappings of {draft_dir.name}")
+        eligible &= accepted_by_both(accepted)
     results, _ = sessions.ingest(mutator_dir, "mutator")
     rng = random.Random(SEED)
-    code = code_mutants(mappings, sources, clauses_of, rng)
-    text = text_mutants(mappings, results, sessions.load_requests(mutator_dir))
-    items = build(mappings, code, text, sources, rng)
-    verify_dir = sessions.prepare(pilot.verify_requests([it["mapping"] for it in items], sources, clauses_of),
-                                  "mutation-verify")
+    code = code_mutants(mappings, sources, clauses_of, rng, eligible)
+    text = text_mutants(mappings, results, sessions.load_requests(mutator_dir), eligible)
+    items = build(mappings, code, text, sources, rng, eligible)
+    verifies = pilot.verify_requests([it["mapping"] for it in items], sources, clauses_of)
+    for r in verifies:
+        r.meta["batch"] = items[r.meta["mapping"]]["batch"]
+    verify_dir = sessions.prepare(verifies, "mutation-verify")
     runner.write_jsonl(verify_dir / "mutation-key.jsonl", items)
     (verify_dir / "mutation-link.json").write_text(json.dumps(
         {"draft_run": draft_dir.name, "mappings_sha256": _sha256(draft_dir / "mappings.jsonl"),
-         "mutator_run": mutator_dir.name, "seed": SEED}) + "\n", encoding="utf-8")
+         "mutator_run": mutator_dir.name, "accepted_run": Path(accepted).name if accepted else None,
+         "originals": sorted(eligible), "excluded": sorted(set(range(len(mappings))) - eligible),
+         "seed": SEED}) + "\n", encoding="utf-8")
     return verify_dir
 
 
-def record_agents(run_dir, model):
-    """agents.json: the model that answered each batch file of a session run."""
+def record_agents(run_dir, model, batches=None):
+    """agents.json: the model that answered each batch file of a session run. batches (names like batch_003.json,
+    or 3) limits it to those; earlier entries for other batches are kept."""
     run_dir = Path(run_dir)
-    rows = {b.name: model for b in sorted((run_dir / "batches").glob("batch_*.json"))}
-    (run_dir / "agents.json").write_text(json.dumps(rows, indent=1) + "\n", encoding="utf-8")
+    names = [b.name for b in sorted((run_dir / "batches").glob("batch_*.json"))]
+    if batches:
+        wanted = {b if str(b).endswith(".json") else f"batch_{int(b):03d}.json" for b in batches}
+        unknown = wanted - set(names)
+        if unknown:
+            raise SystemExit(f"no such batch: {', '.join(sorted(unknown))}")
+        names = [n for n in names if n in wanted]
+    path = run_dir / "agents.json"
+    rows = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
+    rows.update({n: model for n in names})
+    path.write_text(json.dumps(dict(sorted(rows.items())), indent=1) + "\n", encoding="utf-8")
     return rows
 
 
@@ -244,35 +333,45 @@ def wilson_lower(k, n, z=1.96):
 
 
 def summarise(items, verdicts):
-    """Per type: n, caught by Layer 1 / A / B / any, missed rows; controls: false alarms. verdicts:
-    {position: {"a": answer, "b": answer}} (an answer may be missing when its call failed)."""
-    rows, missed = {}, {}
+    """Per type: caught by Layer 1, A, B, the verifiers and anyone, missed rows; for controls, false alarms.
+    verdicts: {position: {"a": answer, "b": answer}}; an answer is missing when its call failed. A verifier's rate
+    counts only the items it answered; "any" and "missed" count only items both verifiers answered, and items
+    that are not fully verified are listed under unverified, never as misses."""
+    rows, missed, unverified = {}, {}, []
     for it in items:
         v = verdicts.get(it["position"], {})
-        flags = {"layer1": bool(it["layer1"]),
-                 "a": v.get("a", {}).get("verdict") == "incorrect",
-                 "b": v.get("b", {}).get("verdict") == "incorrect"}
-        flags["any"] = any(flags.values())
-        flags["verifiers"] = flags["a"] or flags["b"]
-        complete = "a" in v and "b" in v
-        row = rows.setdefault(it["type"], {"n": 0, "verified": 0, "layer1": 0, "a": 0, "b": 0, "verifiers": 0,
-                                           "any": 0})
+        row = rows.setdefault(it["type"], {"n": 0, "layer1": 0, "answered_a": 0, "a": 0, "answered_b": 0, "b": 0,
+                                           "verified": 0, "verifiers": 0, "any": 0})
         row["n"] += 1
-        row["verified"] += complete
-        for k in ("layer1", "a", "b", "verifiers", "any"):
-            row[k] += flags[k]
-        if it["type"] != "control" and not flags["any"]:
+        row["layer1"] += bool(it["layer1"])
+        flags = {}
+        for role in ("a", "b"):
+            if role in v:
+                row[f"answered_{role}"] += 1
+                flags[role] = v[role]["verdict"] == "incorrect"
+                row[role] += flags[role]
+        if len(flags) < 2:
+            unverified.append({"id": it["id"], "type": it["type"], "answered": sorted(flags)})
+            continue
+        row["verified"] += 1
+        row["verifiers"] += flags["a"] or flags["b"]
+        caught = bool(it["layer1"]) or flags["a"] or flags["b"]
+        row["any"] += caught
+        if it["type"] != "control" and not caught:
             missed.setdefault(it["type"], []).append({
                 "id": it["id"], "source": it["mapping"]["source"], "ref": it["mapping"]["ref"],
                 "change": it["change"], "statement": it["mapping"]["statement"],
-                "reason_a": v.get("a", {}).get("reason", ""), "reason_b": v.get("b", {}).get("reason", "")})
+                "reason_a": v["a"].get("reason", ""), "reason_b": v["b"].get("reason", "")})
+    rate = lambda k, n: round(k / n, 3) if n else None
     for kind, row in rows.items():
-        k = row["n"] - row["any"] if kind == "control" else row["any"]
-        row["any_rate" if kind != "control" else "clean_rate"] = round(k / row["n"], 3)
-        if kind != "control":
-            row["any_lower95"] = wilson_lower(row["any"], row["n"])
-            row["verifiers_rate"] = round(row["verifiers"] / row["n"], 3)
-    return rows, missed
+        row["a_rate"], row["b_rate"] = rate(row["a"], row["answered_a"]), rate(row["b"], row["answered_b"])
+        row["verifiers_rate"] = rate(row["verifiers"], row["verified"])
+        if kind == "control":
+            row["clean_rate"] = rate(row["verified"] - row["any"], row["verified"])
+        else:
+            row["any_rate"] = rate(row["any"], row["verified"])
+            row["any_lower95"] = wilson_lower(row["any"], row["verified"])
+    return rows, missed, unverified
 
 
 def report(verify_dir):
@@ -284,11 +383,14 @@ def report(verify_dir):
         if r.ok:
             role, n = r.custom_id.split("-")[1], int(r.custom_id.rsplit("-", 1)[1])
             verdicts.setdefault(n, {})[role] = r.answer
-    rows, missed = summarise(items, verdicts)
-    control = rows.get("control", {"n": 0, "a": 0, "b": 0, "verifiers": 0, "layer1": 0})
+    rows, missed, unverified = summarise(items, verdicts)
+    c = rows.get("control", {"n": 0, "layer1": 0, "a": 0, "answered_a": 0, "b": 0, "answered_b": 0, "verifiers": 0,
+                             "verified": 0})
+    share = lambda k, n: round(k / n, 3) if n else None
     rep = {"by_type": {t: rows[t] for t in TYPES + ("control",) if t in rows}, "missed": missed,
-           "false_alarms": {k: round(control[k] / control["n"], 3) if control["n"] else None
-                            for k in ("layer1", "a", "b", "verifiers")},
+           "unverified": unverified,
+           "false_alarms": {"layer1": share(c["layer1"], c["n"]), "a": share(c["a"], c["answered_a"]),
+                            "b": share(c["b"], c["answered_b"]), "verifiers": share(c["verifiers"], c["verified"])},
            "failed_calls": summary["failed"], "items": len(items)}
     (verify_dir / "mutation-report.json").write_text(json.dumps(rep, indent=1, ensure_ascii=False) + "\n",
                                                      encoding="utf-8")
@@ -299,16 +401,19 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("command", choices=["prepare-text", "prepare-verify", "agents", "report"])
     ap.add_argument("args", nargs="*")
+    ap.add_argument("--accepted", help="prepare-verify: session-verify run whose both-correct mappings are used")
     a = ap.parse_args()
     need = {"prepare-text": 1, "prepare-verify": 2, "agents": 2, "report": 1}[a.command]
-    if len(a.args) != need:
+    if len(a.args) != need and not (a.command == "agents" and len(a.args) > need):
         ap.error(f"{a.command} takes {need} argument(s)")
+    if a.accepted and a.command != "prepare-verify":
+        ap.error("--accepted is for prepare-verify")
     if a.command == "prepare-text":
         print(prepare_text(a.args[0]))
     elif a.command == "prepare-verify":
-        print(prepare_verify(*a.args))
+        print(prepare_verify(*a.args, accepted=a.accepted))
     elif a.command == "agents":
-        print(json.dumps(record_agents(*a.args), indent=1))
+        print(json.dumps(record_agents(a.args[0], a.args[1], a.args[2:]), indent=1))
     else:
         rep = report(a.args[0])
         print(json.dumps({k: rep[k] for k in ("by_type", "false_alarms", "failed_calls", "items")}, indent=1))

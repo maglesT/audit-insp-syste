@@ -49,6 +49,12 @@ class Mutants(unittest.TestCase):
         self.assertEqual(mutate.change_number("within 30 days, then 5"), "within 31 days, then 5")
         self.assertIsNone(mutate.change_number("Keep a record of every self inspection."))
         self.assertIsNone(mutate.change_number("Section 9.3 applies"))   # a reference is not a number to change
+        self.assertIsNone(mutate.change_number("Follow Chapter 9 of the guide."))
+        self.assertIsNone(mutate.change_number("Once approved, the report is filed."))   # "once" = after
+        self.assertIsNone(mutate.change_number("No one may change the record."))
+        self.assertEqual(mutate.change_number("Keep for ten years; review 5 times."), "Keep for twelve years; review 5 times.")
+        self.assertEqual(mutate.change_number("Once approved, review it once a year."),
+                         "Once approved, review it twice a year.")
 
     def test_change_strength(self):
         m = {"strength": "recommended", "statement": "Reports should list all findings."}
@@ -88,7 +94,8 @@ class Mutants(unittest.TestCase):
         maps = [{"source": "who-trs986-a2-gmp-main.pdf", "ref": r, "statement": f"item {r}"} for r in
                 ("8.1", "8.9", "8.2")]
         reqs = [runner.Request(f"mutate-dropped_condition-{i:03d}", "s", "u", {},
-                               meta={"type": "dropped_condition", "mapping": i}) for i in range(3)]
+                               meta={"type": "dropped_condition", "mapping": i, "source": maps[i]["source"],
+                                     "ref": maps[i]["ref"]}) for i in range(3)]
         results = [runner.Result(reqs[0].custom_id, True, {"possible": True, "statement": "item 8.1", "change": "c"},
                                  "end_turn", {}),                                       # unchanged: dropped
                    runner.Result(reqs[1].custom_id, True, {"possible": True, "statement": "new", "change": "c"},
@@ -104,20 +111,72 @@ class Mutants(unittest.TestCase):
         self.assertIsNone(mutate.wilson_lower(0, 0))
 
     def test_summarise(self):
-        items = [{"type": "control", "position": 0, "layer1": [], "id": "control-001", "change": "",
-                  "mapping": {"source": "s", "ref": "r", "statement": "x"}},
+        mapping = {"source": "s", "ref": "r", "statement": "x"}
+        items = [{"type": "control", "position": 0, "layer1": [], "id": "control-001", "change": "", "mapping": mapping},
+                 {"type": "control", "position": 3, "layer1": [], "id": "control-002", "change": "", "mapping": mapping},
                  {"type": "strength", "position": 1, "layer1": [["strength", "m"]], "id": "strength-001",
-                  "change": "c", "mapping": {"source": "s", "ref": "r", "statement": "x"}},
+                  "change": "c", "mapping": mapping},
                  {"type": "looser_wording", "position": 2, "layer1": [], "id": "looser_wording-001", "change": "c",
-                  "mapping": {"source": "s", "ref": "r", "statement": "x"}}]
+                  "mapping": mapping},
+                 {"type": "looser_wording", "position": 4, "layer1": [], "id": "looser_wording-002", "change": "c",
+                  "mapping": mapping}]
         bad = {**VERDICT, "verdict": "incorrect"}
-        rows, missed = mutate.summarise(items, {0: {"a": bad, "b": VERDICT}, 1: {"a": VERDICT, "b": VERDICT},
-                                                2: {"a": VERDICT}})
-        self.assertEqual((rows["control"]["a"], rows["control"]["clean_rate"]), (1, 0.0))
-        self.assertEqual((rows["strength"]["layer1"], rows["strength"]["any"], rows["strength"]["verifiers"]),
-                         (1, 1, 0))
-        self.assertEqual(rows["looser_wording"]["verified"], 0)
-        self.assertEqual([m["id"] for m in missed["looser_wording"]], ["looser_wording-001"])
+        rows, missed, unverified = mutate.summarise(items, {0: {"a": bad, "b": VERDICT}, 1: {"a": VERDICT, "b": VERDICT},
+                                                            2: {"a": VERDICT}, 4: {"a": VERDICT, "b": VERDICT}})
+        c = rows["control"]
+        self.assertEqual((c["verified"], c["a"], c["answered_a"], c["clean_rate"]), (1, 1, 1, 0.0))   # 3 not answered
+        self.assertEqual((rows["strength"]["layer1"], rows["strength"]["any"], rows["strength"]["verifiers"]), (1, 1, 0))
+        lw = rows["looser_wording"]
+        self.assertEqual((lw["n"], lw["verified"], lw["answered_a"], lw["answered_b"], lw["any_rate"]), (2, 1, 2, 1, 0.0))
+        self.assertEqual([m["id"] for m in missed["looser_wording"]], ["looser_wording-002"])   # -001 is unverified
+        self.assertEqual([u["id"] for u in unverified], ["control-002", "looser_wording-001"])
+        rows, missed, unverified = mutate.summarise(items[:1], {})
+        self.assertEqual((rows["control"]["clean_rate"], rows["control"]["a_rate"], missed), (None, None, {}))
+
+    def test_layer1_credit_is_only_new_findings(self):
+        maps, sources = real_mappings(), layer1.catalog()
+        wrong = {**maps[0], "strength": "mandatory"}               # the quote reads "should"
+        self.assertTrue(mutate.layer1_findings(wrong, sources))
+        items = mutate.build([wrong], {"looser_wording": [mutate.mutant("looser_wording", 0,
+                                                                        {**wrong, "statement": "y"}, "c")]},
+                             {}, sources, random.Random(1))
+        self.assertEqual({it["type"]: it["layer1"] for it in items}, {"control": [], "looser_wording": []})
+
+    def test_only_correct_originals_are_used(self):
+        maps, sources = real_mappings(), layer1.catalog()
+        maps[0] = {**maps[0], "strength": "mandatory"}
+        code = mutate.code_mutants(maps, sources, layer1.clauses_of, random.Random(1), eligible={1, 2})
+        self.assertTrue(all(m["original"] in {1, 2} for g in code.values() for m in g))
+
+    def test_no_batch_holds_two_variants_of_one_original(self):
+        items = [{"original": o, "type": t} for o in range(3) for t in range(6)] + \
+                [{"original": o, "type": 0} for o in range(3, 40)]
+        n = mutate.assign_batches(items, random.Random(1), size=10)
+        self.assertGreaterEqual(n, 6)
+        for b in range(n):
+            members = [it["original"] for it in items if it["batch"] == b]
+            self.assertEqual(len(members), len(set(members)))
+            self.assertLessEqual(len(members), 10)
+
+    def test_text_requests_sizes(self):
+        maps = real_mappings() * 10
+        reqs = mutate.text_requests(maps, layer1.catalog(), layer1.clauses_of)
+        count = {}
+        for r in reqs:
+            count[r.meta["type"]] = count.get(r.meta["type"], 0) + 1
+        self.assertEqual(count, {"dropped_condition": 30, "added_condition": 18, "looser_wording": 18})
+
+    def test_forced_mutants_beyond_per_type(self):
+        maps = [{"source": "who-trs986-a2-gmp-main.pdf", "ref": "8.9", "statement": f"item {i}"} for i in range(20)]
+        reqs = [runner.Request(f"mutate-dropped_condition-{i:03d}", "s", "u", {},
+                               meta={"type": "dropped_condition", "mapping": i, "source": m["source"], "ref": "8.9"})
+                for i, m in enumerate(maps)]
+        results = [runner.Result(r.custom_id, True, {"possible": True, "statement": f"new {i}", "change": "c"},
+                                 "end_turn", {}) for i, r in enumerate(reqs)]
+        self.assertEqual(len(mutate.text_mutants(maps, results, reqs)["dropped_condition"]), 20)
+        reqs[3].meta["ref"] = "8.1"                               # answers made for another mapping list
+        with self.assertRaises(SystemExit):
+            mutate.text_mutants(maps, results, reqs)
 
 
 class EndToEnd(unittest.TestCase):
@@ -158,8 +217,17 @@ class EndToEnd(unittest.TestCase):
                 self.assertNotIn(word, text)
             roles = {i["custom_id"].split("-")[1] for i in json.loads(b.read_text())["items"]}
             self.assertEqual(len(roles), 1)
-        self.assertEqual(mutate.record_agents(verify_dir, "m"), {b.name: "m" for b in
-                                                                 sorted((verify_dir / "batches").glob("*.json"))})
+        names = sorted(b.name for b in (verify_dir / "batches").glob("*.json"))
+        self.assertEqual(mutate.record_agents(verify_dir, "m", [0]), {names[0]: "m"})
+        self.assertEqual(mutate.record_agents(verify_dir, "n"), {n: "n" for n in names})
+        with self.assertRaises(SystemExit):
+            mutate.record_agents(verify_dir, "m", [99])
+        # no batch holds two variants of one original
+        where = {}
+        for r in reqs:
+            where.setdefault(r.meta["batch"], []).append(key[r.meta["mapping"]]["original"])
+        for originals in where.values():
+            self.assertEqual(len(originals), 2 * len(set(originals)))      # each original once, for A and for B
         # verifier A rejects every mutant, B accepts everything: A catches all, controls stay clean
         kind = {it["position"]: it["type"] for it in key}
         answer_all(verify_dir, lambda cid, inp: {**VERDICT, "verdict": "incorrect" if "-a-" in cid and
@@ -172,6 +240,44 @@ class EndToEnd(unittest.TestCase):
             self.assertEqual(rep["by_type"][t]["b"], 0, t)
         self.assertEqual(rep["missed"], {})
         self.assertTrue((verify_dir / "mutation-report.json").exists())
+        self.assertEqual(rep["unverified"], [])
+        # same inputs, same key (seeded)
+        again = mutate.prepare_verify(draft_dir, mutator_dir)
+        strip = lambda rows: [{k: v for k, v in r.items()} for r in rows]
+        self.assertEqual(strip(runner.read_jsonl(again / "mutation-key.jsonl")), strip(key))
+
+    def test_mutator_run_is_tied_to_its_draft_run(self):
+        draft_dir = runner.new_run("session-draft")
+        runner.write_jsonl(draft_dir / "mappings.jsonl", real_mappings())
+        mutator_dir = mutate.prepare_text(draft_dir)
+        answer_all(mutator_dir, lambda cid, inp: {"possible": False, "statement": "", "change": "no"})
+        runner.write_jsonl(draft_dir / "mappings.jsonl", real_mappings()[::-1])     # mappings changed
+        with self.assertRaises(SystemExit):
+            mutate.prepare_verify(draft_dir, mutator_dir)
+        with self.assertRaises(SystemExit):
+            mutate.prepare_text(mutator_dir)                                       # not a draft run
+
+    def test_accepted_filter(self):
+        draft_dir = runner.new_run("session-draft")
+        runner.write_jsonl(draft_dir / "mappings.jsonl", real_mappings())
+        vdir = pilot.prepare_verify(draft_dir)
+        answer_all(vdir, lambda cid, inp: {**VERDICT, "verdict": "incorrect" if cid == "verify-b-001" else "correct"})
+        sessions.ingest(vdir)
+        self.assertEqual(mutate.accepted_by_both(vdir), {0, 2})
+        mutator_dir = mutate.prepare_text(draft_dir)
+        answer_all(mutator_dir, lambda cid, inp: {"possible": False, "statement": "", "change": "no"})
+        verify_dir = mutate.prepare_verify(draft_dir, mutator_dir, accepted=vdir)
+        key = runner.read_jsonl(verify_dir / "mutation-key.jsonl")
+        self.assertEqual({it["original"] for it in key}, {0, 2})
+        self.assertEqual(json.loads((verify_dir / "mutation-link.json").read_text())["excluded"], [1])
+
+    def test_cli_checks_arguments(self):
+        import unittest.mock
+        for argv in (["mutate.py", "report"], ["mutate.py", "prepare-verify", "x"],
+                     ["mutate.py", "report", "x", "--accepted", "y"]):
+            with self.assertRaises(SystemExit), unittest.mock.patch.object(sys, "argv", argv), \
+                    unittest.mock.patch("sys.stderr"):
+                mutate.main()
 
 
 if __name__ == "__main__":

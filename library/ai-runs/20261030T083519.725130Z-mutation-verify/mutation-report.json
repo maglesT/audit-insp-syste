@@ -1,0 +1,119 @@
+{
+ "by_type": {
+  "changed_number": {
+   "n": 2,
+   "verified": 2,
+   "layer1": 2,
+   "a": 2,
+   "b": 2,
+   "verifiers": 2,
+   "any": 2,
+   "any_rate": 1.0,
+   "any_lower95": 0.342,
+   "verifiers_rate": 1.0
+  },
+  "strength": {
+   "n": 15,
+   "verified": 15,
+   "layer1": 15,
+   "a": 15,
+   "b": 15,
+   "verifiers": 15,
+   "any": 15,
+   "any_rate": 1.0,
+   "any_lower95": 0.796,
+   "verifiers_rate": 1.0
+  },
+  "plant_type": {
+   "n": 15,
+   "verified": 15,
+   "layer1": 15,
+   "a": 15,
+   "b": 15,
+   "verifiers": 15,
+   "any": 15,
+   "any_rate": 1.0,
+   "any_lower95": 0.796,
+   "verifiers_rate": 1.0
+  },
+  "wrong_clause": {
+   "n": 15,
+   "verified": 15,
+   "layer1": 15,
+   "a": 15,
+   "b": 15,
+   "verifiers": 15,
+   "any": 15,
+   "any_rate": 1.0,
+   "any_lower95": 0.796,
+   "verifiers_rate": 1.0
+  },
+  "dropped_condition": {
+   "n": 15,
+   "verified": 15,
+   "layer1": 0,
+   "a": 14,
+   "b": 14,
+   "verifiers": 14,
+   "any": 14,
+   "any_rate": 0.933,
+   "any_lower95": 0.702,
+   "verifiers_rate": 0.933
+  },
+  "added_condition": {
+   "n": 15,
+   "verified": 15,
+   "layer1": 6,
+   "a": 15,
+   "b": 15,
+   "verifiers": 15,
+   "any": 15,
+   "any_rate": 1.0,
+   "any_lower95": 0.796,
+   "verifiers_rate": 1.0
+  },
+  "looser_wording": {
+   "n": 15,
+   "verified": 15,
+   "layer1": 0,
+   "a": 15,
+   "b": 15,
+   "verifiers": 15,
+   "any": 15,
+   "any_rate": 1.0,
+   "any_lower95": 0.796,
+   "verifiers_rate": 1.0
+  },
+  "control": {
+   "n": 56,
+   "verified": 56,
+   "layer1": 0,
+   "a": 0,
+   "b": 0,
+   "verifiers": 0,
+   "any": 0,
+   "clean_rate": 1.0
+  }
+ },
+ "missed": {
+  "dropped_condition": [
+   {
+    "id": "dropped_condition-012",
+    "source": "india-schedule-m-2023-GSR922E.pdf",
+    "ref": "Part I 10.8.2",
+    "change": "Dropped the condition that this applies where an audit is required.",
+    "statement": "A supplier audit determines whether the supplier can conform with GMP standards.",
+    "reason_a": "The item matches the clause: a required supplier audit must determine ability to conform with GMP; mandatory matches 'shall'.",
+    "reason_b": "The item faithfully states that a supplier audit, where carried out, determines the supplier's ability to conform with GMP; mandatory matches shall."
+   }
+  ]
+ },
+ "false_alarms": {
+  "layer1": 0.0,
+  "a": 0.0,
+  "b": 0.0,
+  "verifiers": 0.0
+ },
+ "failed_calls": [],
+ "items": 148
+}
