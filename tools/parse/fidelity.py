@@ -133,7 +133,8 @@ def read_pages(lines_per_page):
     numbered lines, from page_lines() of every page (see the module docstring for what is dropped)."""
     pages = [[ln for ln in (latin_line(ln) for ln in pl) if ln] for pl in lines_per_page]
     texts = ["\n".join(" ".join(w[0] for w in ln) for ln in pl) for pl in pages]
-    running = common.repeated_lines(texts)
+    placed = ["\n".join(" ".join(w[0] for w in ln) for ln in sorted(pl, key=lambda ln: ln[0][2] or 0)) for pl in pages]
+    running = common.repeated_lines(texts) | common.repeated_lines(placed)   # page edges by reading order or place
     anywhere = Counter(k for t in texts for k in {common.line_key(ln) for ln in t.splitlines()} if len(k.split()) >= 5)
     anywhere = {k for k, n in anywhere.items() if n >= max(3, int(len(texts) * 0.3))} - running
     exact = common.repeated_lines(["\n".join(re.sub(r"\d", "@", ln) for ln in t.splitlines()) for t in texts])
@@ -156,14 +157,16 @@ def read_pages(lines_per_page):
     out = []
     for pl in pages:
         toks, small, starts, height, soft, head = [], set(), set(), [], set(), set()
+        ys = sorted({ln[0][2] for ln in pl if ln and ln[0][2] is not None})
+        edges = set(ys[:2] + ys[-2:])
         for n, ln in enumerate(pl):
             line = " ".join(w[0] for w in ln)
             optional = common.line_key(line) in anywhere
             if len(ln) > 1 and all(re.fullmatch(r"[^\W\d_]", w[0]) for w in ln):
                 continue
             running_line = header(line)
-            if (n < 2 or n >= len(pl) - 2) and PAGE_NUMBER.fullmatch(line):
-                continue
+            if (n < 2 or n >= len(pl) - 2 or ln[0][2] in edges) and PAGE_NUMBER.fullmatch(line):
+                continue                                    # a page number: at a page edge by reading order or place
             words = list(ln)
             if numbered is not None and words and re.fullmatch(r"\d{1,4}", words[numbered][0]):
                 words.pop(numbered)
@@ -291,6 +294,8 @@ def stored_elsewhere(run, elsewhere, tables=()):
     """A run of ELSEWHERE or more page tokens that other clauses of these pages hold word for word (every token
     lies in a run of ELSEWHERE tokens found in one of them: grams()), or that one table of these pages holds as a
     bag (tables: a Counter of each table's row tokens; the engines read cells in different orders)."""
+    if re.fullmatch(r"\d{1,3}", run[0]) and len(run) > ELSEWHERE:
+        run = run[1:]                                       # a footnote's number, then its text held elsewhere
     if len(run) < ELSEWHERE:
         return False
     if any(not Counter(run) - t for t in tables):

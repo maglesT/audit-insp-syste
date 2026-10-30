@@ -2,7 +2,7 @@
 
 Built by `python3 tools/parse/fidelity.py run` (D39): every parsed clause of every PDF source compared in both directions with a second reading (pdfminer.six via pdfplumber); the rules are in the module docstring. Every flagged clause is fixed or explained in `library/fidelity-explanations.csv`.
 
-Sources: 146; clauses: 20562; tokens: 1593633; flagged clauses: 940; unexplained: 940.
+Sources: 146; clauses: 20562; tokens: 1593633; flagged clauses: 911; unexplained: 911.
 
 | Source | Clauses | Flagged |
 |---|---|---|
@@ -53,13 +53,13 @@ Sources: 146; clauses: 20562; tokens: 1593633; flagged clauses: 940; unexplained
 | fda-guidance-anda-stability-2013.pdf | 5 | 2 |
 | fda-guidance-benzene-carbomers-2023.pdf | 10 | 1 |
 | fda-guidance-cci-in-lieu-of-sterility-2008.pdf | 9 | 1 |
-| fda-guidance-changes-approved-nda-anda-2004.pdf | 74 | 27 |
-| fda-guidance-container-closure-systems-1999.pdf | 86 | 31 |
+| fda-guidance-changes-approved-nda-anda-2004.pdf | 74 | 1 |
+| fda-guidance-container-closure-systems-1999.pdf | 86 | 29 |
 | fda-guidance-deg-eg-high-risk-components-2023.pdf | 6 | 3 |
 | fda-guidance-delaying-denying-inspection-2024.pdf | 15 | 2 |
 | fda-guidance-dissolution-mechanical-calibration-2010.pdf | 5 | 3 |
 | fda-guidance-elemental-impurities-2018.pdf | 15 | 3 |
-| fda-guidance-field-alert-report-qa-2021.pdf | 16 | 4 |
+| fda-guidance-field-alert-report-qa-2021.pdf | 16 | 3 |
 | fda-guidance-melamine-components-2009.pdf | 6 | 2 |
 | fda-guidance-methanol-testing-alcohol-2023.pdf | 7 | 2 |
 | fda-guidance-nitrosamine-control-2024.pdf | 58 | 9 |
@@ -91,11 +91,11 @@ Sources: 146; clauses: 20562; tokens: 1593633; flagged clauses: 940; unexplained
 | ich-q6a.pdf | 35 | 3 |
 | ich-q7-qa.pdf | 206 | 7 |
 | ich-q7.pdf | 446 | 3 |
-| ich-q8-q9-q10-qa-r4.pdf | 89 | 13 |
+| ich-q8-q9-q10-qa-r4.pdf | 89 | 11 |
 | ich-q9r1.pdf | 45 | 2 |
 | india-cdsco-circ-2024-03-risk-based-inspection.pdf | 1314 | 126 |
 | india-cdsco-gdp-guidelines-2024.pdf | 217 | 0 |
-| india-drugs-rules-1945-consolidated-2024-07.pdf | 2981 | 90 |
+| india-drugs-rules-1945-consolidated-2024-07.pdf | 2981 | 91 |
 | india-gsr127e-2025-schm-timeline.pdf | 14 | 6 |
 | india-gsr666e-2024-schm-corrigendum.pdf | 1 | 3 |
 | india-schedule-m-2023-GSR922E.pdf | 1593 | 18 |
@@ -151,7 +151,7 @@ Sources: 146; clauses: 20562; tokens: 1593633; flagged clauses: 940; unexplained
 | who-trs986-a2-gmp-main.pdf | 322 | 0 |
 | who-trs992-a4-hold-time.pdf | 6 | 1 |
 | who-trs992-a5-ttsp-supplements.pdf | 318 | 27 |
-| who-trs996-a4-app1-model-inspection-report.pdf | 84 | 10 |
+| who-trs996-a4-app1-model-inspection-report.pdf | 84 | 11 |
 
 ## Flagged clauses
 
@@ -161,21 +161,21 @@ Sources: 146; clauses: 20562; tokens: 1593633; flagged clauses: 940; unexplained
 - ema-manufacture-finished-dosage-form.pdf _unnumbered:1 (unnumbered): `-4 july 2017 ema chmp qwp 245074 2015 committee for human medicinal products chmp guideline on manufacture of the finished dosage form this guideline replaces the note for guidance on manufacture of the finished dosage form cpmp qwp 486 95 | -an agency of the european union | -table of contents exec` - NOT EXPLAINED
 - ema-manufacture-finished-dosage-form.pdf Table 4 6/ Wet massing (table_row): `-cpp cpp cpp 150 190 1800 2500 3 7` - NOT EXPLAINED
 - ema-manufacture-finished-dosage-form.pdf Table 4 7/ Wet screening mass (table_row): `-screening` - NOT EXPLAINED
-- ema-nitrosamines-qa-mah-rev23-2025.pdf _unnumbered:1 (unnumbered): `-official address domenico scarlattilaan 6 1083 hs amsterdam the netherlands address for visits and deliveries refer to www | -europa eu how to find us send us a question go to www ema europa eu contact telephone 31 0 88 781 6000 an agency of the european union european medicines agency 2025 reprodu` - NOT EXPLAINED
-- ema-nitrosamines-qa-mah-rev23-2025.pdf _unnumbered:2 (unnumbered): `-revision history questions and answers for marketing authorisation holders applicants on the chmp questions and answers for marketing authorisation holders applicants on the chmp | -questions and answers for marketing authorisation holders applicants on the chmp | +ema 409815 2020 page 5 27` - NOT EXPLAINED
-- ema-nitrosamines-qa-mah-rev23-2025.pdf Q1 (clause): `-questions and answers for marketing authorisation holders applicants on the chmp | +ema 409815 2020 page 6 27` - NOT EXPLAINED
-- ema-nitrosamines-qa-mah-rev23-2025.pdf Q2 (clause): `-questions | +ema 409815 2020 page 7 27 3 for the call for review for chemically synthesised | -answers for marketing authorisation holders applicants on the chmp` - NOT EXPLAINED
-- ema-nitrosamines-qa-mah-rev23-2025.pdf Q3 (clause): `-questions and answers for marketing authorisation holders applicants on the chmp | +ema 409815 2020 page 8 27 | -questions and answers for marketing authorisation holders applicants on the chmp | +ema 409815 2020 page 9 27` - NOT EXPLAINED
-- ema-nitrosamines-qa-mah-rev23-2025.pdf Q4 (clause): `-questions and answers for marketing authorisation holders applicants on the chmp | +ema 409815 2020 page 10 27 | -questions and answers for marketing authorisation holders applicants on the chmp | +ema 409815 2020 page 11 27` - NOT EXPLAINED
-- ema-nitrosamines-qa-mah-rev23-2025.pdf Q5 (clause): `-questions and answers for marketing authorisation holders applicants on the chmp | +ema 409815 2020 page 12 27` - NOT EXPLAINED
-- ema-nitrosamines-qa-mah-rev23-2025.pdf Q7 (clause): `-questions and answers for marketing authorisation holders applicants on the chmp | +ema 409815 2020 page 13 27` - NOT EXPLAINED
-- ema-nitrosamines-qa-mah-rev23-2025.pdf Q8 (clause): `-questions and answers for marketing authorisation holders applicants on the chmp | +ema 409815 2020 page 14 27 | -questions | +ema 409815 2020 page 15 27 9 what are the requirements of the analytical method s the analytical methods need to be sufficiently sensitive in order to adequately detect | -` - NOT EXPLAINED
-- ema-nitrosamines-qa-mah-rev23-2025.pdf Q10 (clause): `-questions and answers for marketing authorisation holders applicants on the chmp | +ema 409815 2020 page 16 27 | -questions and answers for marketing authorisation holders applicants on the chmp | +ema 409815 2020 page 17 27 | +xi aii | -xi | +i 2 | -aii i 2 questions and answers for marketing auth` - NOT EXPLAINED
-- ema-nitrosamines-qa-mah-rev23-2025.pdf Q12 (clause): `-questions and answers for marketing authorisation holders applicants on the chmp | +ema 409815 2020 page 21 27` - NOT EXPLAINED
-- ema-nitrosamines-qa-mah-rev23-2025.pdf Q14 (clause): `-questions and answers for marketing authorisation holders applicants on the chmp | +ema 409815 2020 page 22 27 | -questions and answers for marketing authorisation holders applicants on the chmp` - NOT EXPLAINED
+- ema-nitrosamines-qa-mah-rev23-2025.pdf _unnumbered:1 (unnumbered): `-official address domenico scarlattilaan 6 1083 hs amsterdam the netherlands address for visits and deliveries refer to www ema europa eu how to find us send us a question go to www ema europa eu contact telephone 31 0 88 781 6000 an agency of the european union european medicines agency 2025 reprod` - NOT EXPLAINED
+- ema-nitrosamines-qa-mah-rev23-2025.pdf _unnumbered:2 (unnumbered): `-revision history questions and answers for marketing authorisation holders applicants on the chmp questions and answers for marketing authorisation holders applicants on the chmp | -questions and answers for marketing authorisation holders applicants on the chmp` - NOT EXPLAINED
+- ema-nitrosamines-qa-mah-rev23-2025.pdf Q1 (clause): `-questions and answers for marketing authorisation holders applicants on the chmp` - NOT EXPLAINED
+- ema-nitrosamines-qa-mah-rev23-2025.pdf Q2 (clause): `-questions | +3 for the call for review for chemically synthesised | -answers for marketing authorisation holders applicants on the chmp` - NOT EXPLAINED
+- ema-nitrosamines-qa-mah-rev23-2025.pdf Q3 (clause): `-questions and answers for marketing authorisation holders applicants on the chmp | -questions and answers for marketing authorisation holders applicants on the chmp` - NOT EXPLAINED
+- ema-nitrosamines-qa-mah-rev23-2025.pdf Q4 (clause): `-questions and answers for marketing authorisation holders applicants on the chmp | -questions and answers for marketing authorisation holders applicants on the chmp` - NOT EXPLAINED
+- ema-nitrosamines-qa-mah-rev23-2025.pdf Q5 (clause): `-questions and answers for marketing authorisation holders applicants on the chmp` - NOT EXPLAINED
+- ema-nitrosamines-qa-mah-rev23-2025.pdf Q7 (clause): `-questions and answers for marketing authorisation holders applicants on the chmp` - NOT EXPLAINED
+- ema-nitrosamines-qa-mah-rev23-2025.pdf Q8 (clause): `-questions and answers for marketing authorisation holders applicants on the chmp | -questions | +9 what are the requirements of the analytical method s the analytical methods need to be sufficiently sensitive in order to adequately detect | -answers for marketing authorisation holders applicants on` - NOT EXPLAINED
+- ema-nitrosamines-qa-mah-rev23-2025.pdf Q10 (clause): `-questions and answers for marketing authorisation holders applicants on the chmp | -questions and answers for marketing authorisation holders applicants on the chmp | +xi aii | -xi | +i 2 | -aii i 2 questions and answers for marketing authorisation holders applicants on the chmp | -320 ppb 88 ppb |` - NOT EXPLAINED
+- ema-nitrosamines-qa-mah-rev23-2025.pdf Q12 (clause): `-questions and answers for marketing authorisation holders applicants on the chmp` - NOT EXPLAINED
+- ema-nitrosamines-qa-mah-rev23-2025.pdf Q14 (clause): `-questions and answers for marketing authorisation holders applicants on the chmp | -questions and answers for marketing authorisation holders applicants on the chmp` - NOT EXPLAINED
 - ema-nitrosamines-qa-mah-rev23-2025.pdf Q16 (clause): `-questions and answers for marketing authorisation holders applicants on the chmp` - NOT EXPLAINED
-- ema-nitrosamines-qa-mah-rev23-2025.pdf Q20 (clause): `-questions and answers for marketing authorisation holders applicants on the chmp | +ema 409815 2020 page 25 27` - NOT EXPLAINED
-- ema-nitrosamines-qa-mah-rev23-2025.pdf Q22 (clause): `-questions and answers for marketing authorisation holders applicants on the chmp | +ema 409815 2020 page 26 27 | -questions and answers for marketing authorisation holders applicants on the chmp | +ema 409815 2020 page 27 27 | -questions and answers for marketing authorisation holders applicants on` - NOT EXPLAINED
+- ema-nitrosamines-qa-mah-rev23-2025.pdf Q20 (clause): `-questions and answers for marketing authorisation holders applicants on the chmp` - NOT EXPLAINED
+- ema-nitrosamines-qa-mah-rev23-2025.pdf Q22 (clause): `-questions and answers for marketing authorisation holders applicants on the chmp | -questions and answers for marketing authorisation holders applicants on the chmp | -questions and answers for marketing authorisation holders applicants on the chmp` - NOT EXPLAINED
 - ema-nitrosamines-qa-mah-rev23-2025.pdf Table 1 4* (table_row): `-4 updates 3 on when perform step 2 confirmatory testing in order meet the established deadline step 3 and nmor 29 th june` - NOT EXPLAINED
 - ema-nitrosamines-qa-mah-rev23-2025.pdf Table 1 6 (table_row): `-guidance on confirmatory testing requirements marketed q a 8 and on going applications q a 14 to include cases where a potential nitrosamine impurity cannot be synthesised and when a product available in multiple strengths of same dosage form 14 th october 2021 14 th october 2021` - NOT EXPLAINED
 - ema-nitrosamines-qa-mah-rev23-2025.pdf Table 4 row 1 (table_row): `-results 2 fixed example 20 80 ratio results 2 flexible results` - NOT EXPLAINED
@@ -245,7 +245,7 @@ Sources: 146; clauses: 20562; tokens: 1593633; flagged clauses: 940; unexplained
 - fda-cp-7356-002-drug-manufacturing-inspections.pdf Attachment A (clause): `+in addition to its inspectional authority fda may conduct remote regulatory assessments rras under certain circumstances to support oversight of fda regulated products and establishments 1 an rra is an examination of an fda regulated establishment and or its` - NOT EXPLAINED
 - fda-cp-7356-002-drug-manufacturing-inspections.pdf page 38 (uncovered): `+opq office of pharmaceutical quality oqs office of quality surveillance ora office of regulatory affairs ors office of regulatory science pac product assignment code pam preapproval program manager pet positron emission tomography plcm product lifecycle management poai potential official action ind` - NOT EXPLAINED
 - fda-cp-7356-002a-sterile-drug-process.pdf Part II 2.2.C (clause): `-end part ii` - NOT EXPLAINED
-- fda-cp-7356-002a-sterile-drug-process.pdf Part VII B (clause): `+moist heat sterilization att a page 2 of 16 | -dry heat sterilization depyrogenation | +dry heat sterilization depyrogenation att a page 4 of 16 | +aseptic filling att a page 6 of 16 | +lyophilization freeze drying att a page 9 of 16 | +isolator barrier technology att a page 11 of 16 | -environment` - NOT EXPLAINED
+- fda-cp-7356-002a-sterile-drug-process.pdf Part VII B (clause): `-sterilization depyrogenation dry heat | +dry heat sterilization depyrogenation` - NOT EXPLAINED
 - fda-cp-7356-002a-sterile-drug-process.pdf page 6 (uncovered): `+end part i` - NOT EXPLAINED
 - fda-cp-7356-002f-api.pdf Part I 2 (clause): `+7 | +10` - NOT EXPLAINED
 - fda-cp-7356-002f-api.pdf Part III 1.B (clause): `+28 | +35` - NOT EXPLAINED
@@ -293,43 +293,17 @@ Sources: 146; clauses: 20562; tokens: 1593633; flagged clauses: 940; unexplained
 - fda-guidance-anda-stability-2013.pdf _unnumbered:2 (unnumbered): `-guidance for industry` - NOT EXPLAINED
 - fda-guidance-benzene-carbomers-2023.pdf III (clause): `+11 | -cbe 30 changes being effected in 30 days pas prior approval supplement` - NOT EXPLAINED
 - fda-guidance-cci-in-lieu-of-sterility-2008.pdf V (clause): `+4` - NOT EXPLAINED
-- fda-guidance-changes-approved-nda-anda-2004.pdf _unnumbered:1 (unnumbered): `+15 20 25` - NOT EXPLAINED
-- fda-guidance-changes-approved-nda-anda-2004.pdf I (clause): `+2 2` - NOT EXPLAINED
-- fda-guidance-changes-approved-nda-anda-2004.pdf II (clause): `+3` - NOT EXPLAINED
-- fda-guidance-changes-approved-nda-anda-2004.pdf III (clause): `+4` - NOT EXPLAINED
-- fda-guidance-changes-approved-nda-anda-2004.pdf IV.A.1 (clause): `+5` - NOT EXPLAINED
-- fda-guidance-changes-approved-nda-anda-2004.pdf IV.B (clause): `+6` - NOT EXPLAINED
-- fda-guidance-changes-approved-nda-anda-2004.pdf V (clause): `+7` - NOT EXPLAINED
-- fda-guidance-changes-approved-nda-anda-2004.pdf VI.A (clause): `+8` - NOT EXPLAINED
-- fda-guidance-changes-approved-nda-anda-2004.pdf VI.B (clause): `+9` - NOT EXPLAINED
-- fda-guidance-changes-approved-nda-anda-2004.pdf VI.C.1 (clause): `+10` - NOT EXPLAINED
-- fda-guidance-changes-approved-nda-anda-2004.pdf VII.B (clause): `+12 16 for the purposes of this guidance natural product refers to materials e g drug substance excipients that are derived from plants animals or microorganisms and that are subject to approval under section 505 of the act the specific recommendations for natural products are not applicable to inor` - NOT EXPLAINED
-- fda-guidance-changes-approved-nda-anda-2004.pdf VII.C.1 (clause): `+14` - NOT EXPLAINED
-- fda-guidance-changes-approved-nda-anda-2004.pdf VII.D (clause): `+15` - NOT EXPLAINED
-- fda-guidance-changes-approved-nda-anda-2004.pdf VIII.A (clause): `+16` - NOT EXPLAINED
-- fda-guidance-changes-approved-nda-anda-2004.pdf VIII.B (clause): `+17` - NOT EXPLAINED
-- fda-guidance-changes-approved-nda-anda-2004.pdf VIII.C.2 (clause): `+18` - NOT EXPLAINED
-- fda-guidance-changes-approved-nda-anda-2004.pdf IX.A (clause): `+19` - NOT EXPLAINED
-- fda-guidance-changes-approved-nda-anda-2004.pdf IX.B (clause): `+20 20` - NOT EXPLAINED
-- fda-guidance-changes-approved-nda-anda-2004.pdf IX.C.2 (clause): `+21` - NOT EXPLAINED
-- fda-guidance-changes-approved-nda-anda-2004.pdf IX.D (clause): `+22 | +23` - NOT EXPLAINED
-- fda-guidance-changes-approved-nda-anda-2004.pdf X.B (clause): `+24` - NOT EXPLAINED
-- fda-guidance-changes-approved-nda-anda-2004.pdf X.C (clause): `+25` - NOT EXPLAINED
-- fda-guidance-changes-approved-nda-anda-2004.pdf XI.A (clause): `+26` - NOT EXPLAINED
-- fda-guidance-changes-approved-nda-anda-2004.pdf XI.C (clause): `+27` - NOT EXPLAINED
-- fda-guidance-changes-approved-nda-anda-2004.pdf Attachment A (clause): `+29` - NOT EXPLAINED
-- fda-guidance-changes-approved-nda-anda-2004.pdf Attachment B (clause): `+31 | +32` - NOT EXPLAINED
-- fda-guidance-changes-approved-nda-anda-2004.pdf _unnumbered:3 (unnumbered): `+35` - NOT EXPLAINED
+- fda-guidance-changes-approved-nda-anda-2004.pdf _unnumbered:1 (unnumbered): `+15 20` - NOT EXPLAINED
 - fda-guidance-container-closure-systems-1999.pdf _unnumbered:2 (unnumbered): `-guidance for industry 1 container closure systems for packaging human drugs and biologics chemistry manufacturing and controls documentation` - NOT EXPLAINED
 - fda-guidance-container-closure-systems-1999.pdf I (clause): `-i introduction this document is intended to provide guidance on general principles 2 for submitting information on packaging materials used for human drugs and biologics 3 this guidance supersedes the fda guideline for submitting documentation for packaging for human drugs and biologics issued in f` - NOT EXPLAINED
 - fda-guidance-container-closure-systems-1999.pdf II.A (clause): `-5 these definitions are intended to clarify | -use | +materials | -certain terms in this guidance only and are not intended to supersede the definitions of container and package as provided for in 21 cfr 600.3 6 this term is | +construction | +the labeling are | -general sense for | +concern from a` - NOT EXPLAINED
 - fda-guidance-container-closure-systems-1999.pdf II.B (clause): `-7 the materials of construction used in the labeling are a concern from a packaging perspective if they affect the protection and or safety of the drug product` - NOT EXPLAINED
 - fda-guidance-container-closure-systems-1999.pdf II.C.2 (clause): `+this discussion does not apply to the repackaging of drug products for dispensing under the practice of pharmacy 8 fda compliance policy guides expiration dating of unit repackaged drugs 480.200 february 1 1984 rev 9 march 1995 cpg 7132 b 11 fda compliance policy guides regulatory action regarding ` - NOT EXPLAINED
 - fda-guidance-container-closure-systems-1999.pdf III.A (clause): `-8 this discussion does not apply to the repackaging of drug products for dispensing under the practice of pharmacy 9 fda compliance policy guides expiration dating of unit repackaged drugs 480.200 february 1 1984 rev march 1995 cpg 7132 b 11 10 fda compliance policy guides regulatory action regardi` - NOT EXPLAINED
-- fda-guidance-container-closure-systems-1999.pdf III.B.1 (clause): `+for further information regarding photostability studies see the fda guideline for the photostability testing of new 11 drug substances and products may 1997 8 | -11 for further information regarding photostability studies see the fda guideline for the photostability testing of new drug substances ` - NOT EXPLAINED
-- fda-guidance-container-closure-systems-1999.pdf III.B.2 (clause): `+these are substances not previously determined to be safe by extraction toxicological evaluation studies e g the usp 14 biological reactivity tests or another appropriate method conducted on the packaging component as part of the qualifying process 14 | -these are substances not previously determin` - NOT EXPLAINED
-- fda-guidance-container-closure-systems-1999.pdf III.C.2 (clause): `-2 information about suitability 15 see table 3 for additional information this section applies to primary packaging components and to those associated | +17 c information that should be submitted in support of an original application for any drug product 15 additional discussion and information reg` - NOT EXPLAINED
-- fda-guidance-container-closure-systems-1999.pdf III.C.3 (clause): `+statistical process control is defined as t he application of statistical techniques for measuring and analyzing the 18 variation in processes juran j m ed 1988 quality control handbook 4 th ed mcgraw hill p 24.2 20` - NOT EXPLAINED
+- fda-guidance-container-closure-systems-1999.pdf III.B.1 (clause): `+for further information regarding photostability studies see the fda guideline for the photostability testing of new 11 drug substances and products may 1997 | -11 for further information regarding photostability studies see the fda guideline for the photostability testing of new drug substances an` - NOT EXPLAINED
+- fda-guidance-container-closure-systems-1999.pdf III.B.2 (clause): `+these are substances not previously determined to be safe by extraction toxicological evaluation studies e g the usp 14 biological reactivity tests or another appropriate method conducted on the packaging component as part of the qualifying process | -these are substances not previously determined ` - NOT EXPLAINED
+- fda-guidance-container-closure-systems-1999.pdf III.C.2 (clause): `-2 information about suitability 15 see table 3 for additional information this section applies to primary packaging components and to those associated | +c information that should be submitted in support of an original application for any drug product 15 additional discussion and information regard` - NOT EXPLAINED
+- fda-guidance-container-closure-systems-1999.pdf III.C.3 (clause): `+statistical process control is defined as t he application of statistical techniques for measuring and analyzing the 18 variation in processes juran j m ed 1988 quality control handbook 4 th ed mcgraw hill p 24.2` - NOT EXPLAINED
 - fda-guidance-container-closure-systems-1999.pdf III.C.4 (clause): `-4 stability data packaging concerns stability testing of the drug product should be conducted using the container 18 statistical process control is defined as t he application of statistical techniques for measuring and analyzing the variation in processes juran j m ed 1988 quality control handbook` - NOT EXPLAINED
 - fda-guidance-container-closure-systems-1999.pdf III.E.1 (clause): `-19 the terms svp and lvp as used in this guidance correspond to the definitions of small volume injection and large volume injection respectively in usp 23 page 1650` - NOT EXPLAINED
 - fda-guidance-container-closure-systems-1999.pdf III.E.2 (clause): `-a including any additives used in the manufacture of a packaging component b testing for plastics should be performed on the packaging component not on the unformed resin c note that applicant s acceptance tests may include among others test parameters indicated under the description suitability an` - NOT EXPLAINED
@@ -337,8 +311,8 @@ Sources: 146; clauses: 20562; tokens: 1593633; flagged clauses: 940; unexplained
 - fda-guidance-container-closure-systems-1999.pdf III.F.1 (clause): `-a | +c | -listing | +discussion | -the fda regulations for indirect food additives | +extraction studies 21` - NOT EXPLAINED
 - fda-guidance-container-closure-systems-1999.pdf III.F.2 (clause): `-see attachment c for a discussion of extraction studies` - NOT EXPLAINED
 - fda-guidance-container-closure-systems-1999.pdf III.F.3 (clause): `-a including any additives used in the manufacture of a packaging component b the materials of construction should be acceptable for contact with foods that have extraction characteristics similar to those of the drug product e g aqueous acidic alcoholic or fatty c plastics testing should be perform` - NOT EXPLAINED
-- fda-guidance-container-closure-systems-1999.pdf III.G (clause): `+hartauer k j et al the effects of rayon coiler on the dissolution stability of hard shelled gelatin capsules 22 pharmaceutical technology 17 76 83 1993 34 | -22 hartauer k j et al the effects of rayon coiler on the dissolution stability of hard shelled gelatin capsules pharmaceutical technology 17 ` - NOT EXPLAINED
-- fda-guidance-container-closure-systems-1999.pdf VI.A (clause): `+the 1987 stability guidance will be superseded by the fda guidance for industry stability testing of drug 23 substances and drug products issued in draft for comment in june 1998 once it is issued in final form 40` - NOT EXPLAINED
+- fda-guidance-container-closure-systems-1999.pdf III.G (clause): `+hartauer k j et al the effects of rayon coiler on the dissolution stability of hard shelled gelatin capsules 22 pharmaceutical technology 17 76 83 1993 | -22 hartauer k j et al the effects of rayon coiler on the dissolution stability of hard shelled gelatin capsules pharmaceutical technology 17 76 ` - NOT EXPLAINED
+- fda-guidance-container-closure-systems-1999.pdf VI.A (clause): `+the 1987 stability guidance will be superseded by the fda guidance for industry stability testing of drug 23 substances and drug products issued in draft for comment in june 1998 once it is issued in final form` - NOT EXPLAINED
 - fda-guidance-container-closure-systems-1999.pdf VI.B (clause): `-23 the 1987 stability guidance will be superseded by the | -guidance for industry stability testing of drug substances | +compliance policy guides regulatory action regarding approved new drugs | +antibiotic | -issued in draft for comment in june 1998 once it is issued in final form | +24 subjected` - NOT EXPLAINED
 - fda-guidance-container-closure-systems-1999.pdf Attachment A (clause): `-applicants should check the appropriate sources directly for the most up to date information | -1 | +2 | +federal register volume 49 march 5 1984 page 8008 49 fr 8008 prescribed drugs distributed to prescribing 26 practitioners withdrawal of proposed statement of policy and interpretation | -2 | +3` - NOT EXPLAINED
 - fda-guidance-container-closure-systems-1999.pdf Attachment B (clause): `-1 | +2` - NOT EXPLAINED
@@ -349,25 +323,22 @@ Sources: 146; clauses: 20562; tokens: 1593633; flagged clauses: 940; unexplained
 - fda-guidance-container-closure-systems-1999.pdf Table 2 Route of Administration/ Dosage Form (table_row): `-delivery` - NOT EXPLAINED
 - fda-guidance-container-closure-systems-1999.pdf Table 2 Oral Tablets and Oral (Hard and Soft… (table_row): `-capsules` - NOT EXPLAINED
 - fda-guidance-container-closure-systems-1999.pdf page 4 (uncovered): `+guidance for industry 1 container closure systems for packaging human drugs and biologics chemistry manufacturing and controls documentation i introduction this document is intended to provide guidance on general principles for submitting information` - NOT EXPLAINED
-- fda-guidance-container-closure-systems-1999.pdf page 5 (uncovered): `+specific chemical composition for a given drug application e g the specific polymer and any additives used to make the material 2` - NOT EXPLAINED
-- fda-guidance-container-closure-systems-1999.pdf page 26 (uncovered): `+volume injection respectively in usp 23 page 1650 23` - NOT EXPLAINED
 - fda-guidance-deg-eg-high-risk-components-2023.pdf _unnumbered:1 (unnumbered): `+i` - NOT EXPLAINED
 - fda-guidance-deg-eg-high-risk-components-2023.pdf _unnumbered:2 (unnumbered): `+table of contents i introduction 1 ii background 2 iii regulatory requirements 3 iv recommendations to safeguard the quality and safety of medicines from deg and eg contamination 6` - NOT EXPLAINED
 - fda-guidance-deg-eg-high-risk-components-2023.pdf I (clause): `+1` - NOT EXPLAINED
 - fda-guidance-delaying-denying-inspection-2024.pdf _unnumbered:2 (unnumbered): `-this guidance represents the current thinking of the food and drug administration fda or agency on this topic it does not establish any rights for any person and is not binding on fda or the public you can use an alternative approach if it satisfies the requirements of the applicable statutes and r` - NOT EXPLAINED
 - fda-guidance-delaying-denying-inspection-2024.pdf II (clause): `+6` - NOT EXPLAINED
 - fda-guidance-dissolution-mechanical-calibration-2010.pdf _unnumbered:1 (unnumbered): `-guidance for industry | -guidance for industry | +the use of mechanical calibration` - NOT EXPLAINED
-- fda-guidance-dissolution-mechanical-calibration-2010.pdf _unnumbered:2 (unnumbered): `-guidance for industry | +ii background 2 iii recommendations 3 1 the use of mechanical calibration` - NOT EXPLAINED
+- fda-guidance-dissolution-mechanical-calibration-2010.pdf _unnumbered:2 (unnumbered): `-guidance for industry | +ii background 2 iii recommendations 3 the use of mechanical calibration` - NOT EXPLAINED
 - fda-guidance-dissolution-mechanical-calibration-2010.pdf II (clause): `-2005,3 | +2005 3` - NOT EXPLAINED
 - fda-guidance-elemental-impurities-2018.pdf _unnumbered:1 (unnumbered): `-9073135 fnl 8 1 2018 | +i` - NOT EXPLAINED
 - fda-guidance-elemental-impurities-2018.pdf _unnumbered:2 (unnumbered): `+table of contents i introduction 1 ii background 2 a ich q 3 d 2 b usp general chapters < 232 > and < 233 > 2 iii implementation 3 a new compendial nda or anda drug products 4 b new noncompendial nda and anda drug products 4 c compendial drug products not approved under an nda or anda 4 d noncompen` - NOT EXPLAINED
 - fda-guidance-elemental-impurities-2018.pdf I (clause): `+1 | +6` - NOT EXPLAINED
-- fda-guidance-field-alert-report-qa-2021.pdf _unnumbered:1 (unnumbered): `+questions and answers | +questions and answers | +i` - NOT EXPLAINED
-- fda-guidance-field-alert-report-qa-2021.pdf _unnumbered:2 (unnumbered): `-i | -guidance for industry 1 this guidance represents the current thinking of the food and drug administration fda or agency on this topic it does not establish any rights for any person and is not binding on fda or the public you can use an alternative approach if it satisfies the requirements of ` - NOT EXPLAINED
+- fda-guidance-field-alert-report-qa-2021.pdf _unnumbered:1 (unnumbered): `+i` - NOT EXPLAINED
+- fda-guidance-field-alert-report-qa-2021.pdf _unnumbered:2 (unnumbered): `+table of contents i introduction 1 ii background 1 iii questions and answers 2 1 what is a far and what triggers its submission 2 2 who is responsible for submitting the far 6 3 when should i submit a far 6 4 how do i submit a far 7 5 where do i submit a far 8 6 should i submit a follow up or final` - NOT EXPLAINED
 - fda-guidance-field-alert-report-qa-2021.pdf III.1.b (clause): `+13` - NOT EXPLAINED
-- fda-guidance-field-alert-report-qa-2021.pdf page 4 (uncovered): `+field alert report submission questions and answers guidance for industry 1 this guidance represents the current thinking of the food and drug administration fda or agency on this topic it does not establish any rights for any person and is not binding on fda or the public you can use an alternativ` - NOT EXPLAINED
 - fda-guidance-melamine-components-2009.pdf _unnumbered:1 (unnumbered): `+pharmaceutical components | +pharmaceutical components` - NOT EXPLAINED
-- fda-guidance-melamine-components-2009.pdf _unnumbered:2 (unnumbered): `+pharmaceutical components` - NOT EXPLAINED
+- fda-guidance-melamine-components-2009.pdf _unnumbered:2 (unnumbered): `-1 | +pharmaceutical components` - NOT EXPLAINED
 - fda-guidance-methanol-testing-alcohol-2023.pdf II (clause): `+19` - NOT EXPLAINED
 - fda-guidance-methanol-testing-alcohol-2023.pdf III.A (clause): `+34` - NOT EXPLAINED
 - fda-guidance-nitrosamine-control-2024.pdf _unnumbered:1 (unnumbered): `+i` - NOT EXPLAINED
@@ -383,7 +354,7 @@ Sources: 146; clauses: 20562; tokens: 1593633; flagged clauses: 940; unexplained
 - fda-guidance-nitrosamine-ndsri-ai-limits-2023.pdf IV.A (clause): `+23` - NOT EXPLAINED
 - fda-guidance-nitrosamine-ndsri-ai-limits-2023.pdf Appendix A (clause): `-potency score α hydrogen score deactivating feature score sum all scores for features present in ndsri activating feature score sum all scores for features present in ndsri | +count of hydrogen atoms on each α carbon lowest first example α hydrogen score 0,2 3 0,3 2 1,2 3 1,3 3 2,2 1 potency score ` - NOT EXPLAINED
 - fda-guidance-npbl-cross-contamination-2013.pdf _unnumbered:1 (unnumbered): `-guidance for industry | -guidance for industry` - NOT EXPLAINED
-- fda-guidance-npbl-cross-contamination-2013.pdf _unnumbered:2 (unnumbered): `-guidance for industry | +introduction 1 ii background 2 iii recommendations 7 i` - NOT EXPLAINED
+- fda-guidance-npbl-cross-contamination-2013.pdf _unnumbered:2 (unnumbered): `-guidance for industry | +introduction | +ii background 2 iii recommendations 7 i` - NOT EXPLAINED
 - fda-guidance-npbl-cross-contamination-2013.pdf II.A (clause): `+4` - NOT EXPLAINED
 - fda-guidance-part11-scope-application-2003.pdf _unnumbered:1 (unnumbered): `-guidance for industry | -2003 | -guidance for industry | -2003` - NOT EXPLAINED
 - fda-guidance-part11-scope-application-2003.pdf _unnumbered:2 (unnumbered): `-guidance for industry 1 part 11 electronic records electronic signatures scope and application 4 5 6 | -13 14 15` - NOT EXPLAINED
@@ -456,7 +427,7 @@ Sources: 146; clauses: 20562; tokens: 1593633; flagged clauses: 940; unexplained
 - ich-q10.pdf Table 2 Q10 (table_row): `-2008` - NOT EXPLAINED
 - ich-q11-qa-pmda.pdf _unnumbered:1 (unnumbered): `-implementation working group ich q 11 guideline development and manufacture of drug substances chemical entities and biotechnological biological entities questions and answers version 23 august 2017 | +implementation working group ich q 11 guideline development and manufacture of drug substances ch` - NOT EXPLAINED
 - ich-q11-qa-pmda.pdf _unnumbered:2 (unnumbered): `-ii | +iii` - NOT EXPLAINED
-- ich-q11-qa-pmda.pdf 12 (clause): `-iii | +4` - NOT EXPLAINED
+- ich-q11-qa-pmda.pdf 12 (clause): `-iii` - NOT EXPLAINED
 - ich-q12.pdf 2 (clause): `+for reporting according to risk the mah may propose reporting categories for changes to ecs based on risk and knowledge gained through enhanced pharmaceutical development a system with risk based reporting categories also facilitates the use of post approval change management protocols which provid` - NOT EXPLAINED
 - ich-q12.pdf 3 (clause): `-established conditions ecs` - NOT EXPLAINED
 - ich-q12.pdf 4 (clause): `-change management protocol pacmp` - NOT EXPLAINED
@@ -476,7 +447,7 @@ Sources: 146; clauses: 20562; tokens: 1593633; flagged clauses: 940; unexplained
 - ich-q1d.pdf _unnumbered:1 (unnumbered): `-bracketing | +q 1 d approval by the steering committee under step 4 | -matrixing designs | +recommendation | -stability testing | +adoption to the three ich regulatory bodies 7 february 2002 q 1 d b racketing and m atrixing d esigns for s tability t esting` - NOT EXPLAINED
 - ich-q1d.pdf Table 3 Container size (table_row): `-15` - NOT EXPLAINED
 - ich-q1e.pdf Appendix A (section): `-evaluation of stability data` - NOT EXPLAINED
-- ich-q1e.pdf Appendix A #2 (section): `+significant change at accelerated condition within 3 months yes no | -tabulate and or plot | -stability data on all | -attributes at all storage yes | +show variability tabulate and or plot stability data on all attributes at all storage conditions and evaluate | -show variability | +8 | -3 | +6 | ` - NOT EXPLAINED
+- ich-q1e.pdf Appendix A #2 (section): `+significant change at accelerated condition within 3 months yes no | -tabulate and or plot | -stability data on all | -attributes at all storage yes | +show variability tabulate and or plot stability data on all attributes at all storage conditions and evaluate | -3 | +6 | -significant significant ` - NOT EXPLAINED
 - ich-q1e.pdf Appendix B 8 (clause): `+80 85 90 95 100 105 110 115 | -115 assay % of label claim 110 105 raw data 100 upper confidence limit 95 lower confidence limit regression line 90 upper acceptance 85 criterion 105 lower acceptance 80 criterion 95 | +a s s a y % o f l a b e l c l a i m raw data upper confidence limit lower confiden` - NOT EXPLAINED
 - ich-q1e.pdf page 5 (uncovered): `+e valuation of s tability d ata` - NOT EXPLAINED
 - ich-q2-r2.pdf _unnumbered:1 (unnumbered): `+i` - NOT EXPLAINED
@@ -553,7 +524,7 @@ Sources: 146; clauses: 20562; tokens: 1593633; flagged clauses: 940; unexplained
 - ich-q6a.pdf Table 2 Q6A (table_row): `-1999` - NOT EXPLAINED
 - ich-q6a.pdf page 5 (uncovered): `+s pecifications t est p rocedures and a cceptance c riteria for n ew d rug s ubstances and n ew d rug p roducts c hemical s ubstances 1 introduction` - NOT EXPLAINED
 - ich-q7-qa.pdf _unnumbered:1 (unnumbered): `-q 7 implementation working group ich q 7 guideline good manufacturing practice guide for active pharmaceutical ingredients questions and answers current version dated 10 june 2015 | +q 7 implementation working group ich q 7 guideline good manufacturing practice guide for active pharmaceutical ingre` - NOT EXPLAINED
-- ich-q7-qa.pdf _unnumbered:2 (unnumbered): `-i | +ii | -ii | +1` - NOT EXPLAINED
+- ich-q7-qa.pdf _unnumbered:2 (unnumbered): `-i | +ii` - NOT EXPLAINED
 - ich-q7-qa.pdf Glossary (section): `-21 annex q as linked to the respective sections of ich q 7` - NOT EXPLAINED
 - ich-q7-qa.pdf Table 18 header (table_header): `-questions answers` - NOT EXPLAINED
 - ich-q7-qa.pdf Table 19 header (table_header): `-questions answers` - NOT EXPLAINED
@@ -563,18 +534,16 @@ Sources: 146; clauses: 20562; tokens: 1593633; flagged clauses: 940; unexplained
 - ich-q7.pdf 1.3 (clause): `-increasing gmp requirements` - NOT EXPLAINED
 - ich-q7.pdf Table 2 Q7A (table_row): `-2000` - NOT EXPLAINED
 - ich-q8-q9-q10-qa-r4.pdf _unnumbered:1 (unnumbered): `-table of contents 1 introduction 1` - NOT EXPLAINED
-- ich-q8-q9-q10-qa-r4.pdf 6 (clause): `+1` - NOT EXPLAINED
 - ich-q8-q9-q10-qa-r4.pdf _unnumbered:2 (unnumbered): `-approved nov 10 2005 | -approved nov 13 2008 | +approved aug 2009 approved nov 10 2005 approved nov 13 2008 | -approved jun 04 2008` - NOT EXPLAINED
-- ich-q8-q9-q10-qa-r4.pdf page 3 (uncovered): `+0 table of contents 1 introduction 1` - NOT EXPLAINED
-- ich-q8-q9-q10-qa-r4.pdf page 7 (uncovered): `+4 date of approval questions answers` - NOT EXPLAINED
-- ich-q8-q9-q10-qa-r4.pdf page 9 (uncovered): `+date of approval questions answers` - NOT EXPLAINED
-- ich-q8-q9-q10-qa-r4.pdf page 11 (uncovered): `+date of approval questions answers` - NOT EXPLAINED
-- ich-q8-q9-q10-qa-r4.pdf page 12 (uncovered): `+9 date of approval questions answers` - NOT EXPLAINED
-- ich-q8-q9-q10-qa-r4.pdf page 12 (uncovered): `+date of approval questions answers` - NOT EXPLAINED
-- ich-q8-q9-q10-qa-r4.pdf page 13 (uncovered): `+10 date of approval questions answers` - NOT EXPLAINED
-- ich-q8-q9-q10-qa-r4.pdf page 15 (uncovered): `+date of approval questions answers` - NOT EXPLAINED
-- ich-q8-q9-q10-qa-r4.pdf page 16 (uncovered): `+13 date of approval questions answers` - NOT EXPLAINED
-- ich-q8-q9-q10-qa-r4.pdf page 18 (uncovered): `+date of approval questions answers` - NOT EXPLAINED
+- ich-q8-q9-q10-qa-r4.pdf page 7 (uncovered): `+approval questions answers` - NOT EXPLAINED
+- ich-q8-q9-q10-qa-r4.pdf page 9 (uncovered): `+approval questions answers` - NOT EXPLAINED
+- ich-q8-q9-q10-qa-r4.pdf page 11 (uncovered): `+approval questions answers` - NOT EXPLAINED
+- ich-q8-q9-q10-qa-r4.pdf page 12 (uncovered): `+approval questions answers` - NOT EXPLAINED
+- ich-q8-q9-q10-qa-r4.pdf page 12 (uncovered): `+approval questions answers` - NOT EXPLAINED
+- ich-q8-q9-q10-qa-r4.pdf page 13 (uncovered): `+approval questions answers` - NOT EXPLAINED
+- ich-q8-q9-q10-qa-r4.pdf page 15 (uncovered): `+approval questions answers` - NOT EXPLAINED
+- ich-q8-q9-q10-qa-r4.pdf page 16 (uncovered): `+approval questions answers` - NOT EXPLAINED
+- ich-q8-q9-q10-qa-r4.pdf page 18 (uncovered): `+approval questions answers` - NOT EXPLAINED
 - ich-q9r1.pdf _unnumbered:1 (unnumbered): `+i` - NOT EXPLAINED
 - ich-q9r1.pdf 4 (clause): `-initiate quality risk management process risk assessment hazard identification risk analysis risk evaluation unacceptable risk management tools risk control risk communication risk reduction risk acceptance output result of the quality risk management process risk review review events` - NOT EXPLAINED
 - india-cdsco-circ-2024-03-risk-based-inspection.pdf 12 (clause): `-s` - NOT EXPLAINED
@@ -695,7 +664,7 @@ Sources: 146; clauses: 20562; tokens: 1593633; flagged clauses: 940; unexplained
 - india-cdsco-circ-2024-03-risk-based-inspection.pdf Table 29 50.3 (table_row): `-relevant equipment utilities` - NOT EXPLAINED
 - india-cdsco-circ-2024-03-risk-based-inspection.pdf Table 29 51.1 (table_row): `-quality rating` - NOT EXPLAINED
 - india-cdsco-circ-2024-03-risk-based-inspection.pdf Table 29 52.7 (table_row): `-quality rating` - NOT EXPLAINED
-- india-cdsco-circ-2024-03-risk-based-inspection.pdf Table 29 54.9 (table_row): `-quality rating` - NOT EXPLAINED
+- india-cdsco-circ-2024-03-risk-based-inspection.pdf Table 29 54.9 (table_row): `-988 quality rating` - NOT EXPLAINED
 - india-cdsco-circ-2024-03-risk-based-inspection.pdf Table 29 55.4 (table_row): `-rating` - NOT EXPLAINED
 - india-cdsco-circ-2024-03-risk-based-inspection.pdf Table 29 1 and premises: - 56 Building… (table_row): `-56 pharmaceutical development` - NOT EXPLAINED
 - india-cdsco-circ-2024-03-risk-based-inspection.pdf Table 29 59.2 (table_row): `-rating` - NOT EXPLAINED
@@ -771,6 +740,7 @@ Sources: 146; clauses: 20562; tokens: 1593633; flagged clauses: 940; unexplained
 - india-drugs-rules-1945-consolidated-2024-07.pdf Table 11 (xi) (table_row): `-xi` - NOT EXPLAINED
 - india-drugs-rules-1945-consolidated-2024-07.pdf Table 11 (xiii) (table_row): `-xiii` - NOT EXPLAINED
 - india-drugs-rules-1945-consolidated-2024-07.pdf Table 11 (xiv) (table_row): `-xiv` - NOT EXPLAINED
+- india-drugs-rules-1945-consolidated-2024-07.pdf Table 29 D (table_row): `-3` - NOT EXPLAINED
 - india-drugs-rules-1945-consolidated-2024-07.pdf Table 32 row 1 (table_row): `-glove print` - NOT EXPLAINED
 - india-drugs-rules-1945-consolidated-2024-07.pdf Table 33 API derived from animal sources (table_row): `-material into process` - NOT EXPLAINED
 - india-drugs-rules-1945-consolidated-2024-07.pdf Table 35 43. (table_row): `-24` - NOT EXPLAINED
@@ -878,9 +848,9 @@ Sources: 146; clauses: 20562; tokens: 1593633; flagged clauses: 940; unexplained
 - pics-pi023-2-am-qc-labs.pdf Table 3 5.2. (table_row): `-premises continued area operation items note 5.4 below notes crucial questions show me supporting` - NOT EXPLAINED
 - pics-pi023-2-am-qc-labs.pdf Table 3 6.1. (table_row): `-supplies continued area operation items notes show me crucial questions supporting documents` - NOT EXPLAINED
 - pics-pi023-2-am-qc-labs.pdf Table 3 7.2. (table_row): `-3.2` - NOT EXPLAINED
-- pics-pi023-2-am-qc-labs.pdf page 9 (uncovered): `+operation items notes crucial questions show me supporting documents` - NOT EXPLAINED
-- pics-pi023-2-am-qc-labs.pdf page 10 (uncovered): `+operation items notes crucial questions show me supporting documents` - NOT EXPLAINED
-- pics-pi023-2-am-qc-labs.pdf page 18 (uncovered): `+operation items notes crucial questions show me supporting documents` - NOT EXPLAINED
+- pics-pi023-2-am-qc-labs.pdf page 9 (uncovered): `+show me supporting documents` - NOT EXPLAINED
+- pics-pi023-2-am-qc-labs.pdf page 10 (uncovered): `+show me supporting documents` - NOT EXPLAINED
+- pics-pi023-2-am-qc-labs.pdf page 18 (uncovered): `+show me supporting documents` - NOT EXPLAINED
 - pics-pi028-2-am-packaging.pdf Table 2 1.2 (table_row): `-material material received de dusting cleaning on outside separate area` - NOT EXPLAINED
 - pics-pi028-2-am-packaging.pdf Table 2 1.7 (table_row): `-documented` - NOT EXPLAINED
 - pics-pi028-2-am-packaging.pdf page 5 (uncovered): `+items notes crucial questions supporting documents` - NOT EXPLAINED
@@ -909,12 +879,12 @@ Sources: 146; clauses: 20562; tokens: 1593633; flagged clauses: 940; unexplained
 - who-trs1010-a10-stability.pdf Appendix 3 1.2 (clause): `+1.3` - NOT EXPLAINED
 - who-trs1010-a10-stability.pdf Appendix 3 1.3 (clause): `+general principles 312 2 guidelines 313 2.1 active pharmaceutical ingredient 313 2.1.1 general 313 2.1.2 stress testing 313 2.1.3 selection of batches 314 2.1.4 container closure system 314 2.1.5 specification 315 2.1.6 testing frequency 315 2.1.7 storage conditions 315 2.1.8 stability commitments ` - NOT EXPLAINED
 - who-trs1010-a10-stability.pdf Appendix 3 2.1.7.1 (clause): `-12 months or 6 months as | -described in point 2.1.7 | +12 months or 6 months as described in point 2.1.7` - NOT EXPLAINED
-- who-trs1010-a10-stability.pdf Appendix 3 2.2.7.1 (clause): `-12 months or 6 months as | -referred to in section 2.2.7 | +12 months or 6 months as referred to in section 2.2.7 o t e c h r e p o r t s e s n o 1 0 1 0 2 0 1 8 who expert committee on specifications for pharmaceutical preparations fifty second report` - NOT EXPLAINED
+- who-trs1010-a10-stability.pdf Appendix 3 2.2.7.1 (clause): `-12 months or 6 months as | -referred to in section 2.2.7 | +12 months or 6 months as referred to in section 2.2.7 o t e c h r e p o r t s e s n o 1 0 1 0 2 0 1 8` - NOT EXPLAINED
 - who-trs1010-a10-stability.pdf Appendix 3 2.2.7.3 (clause): `-12 months or 6 months as | +testing conditions | +condition | -calculation testing conditions condition | +calculation` - NOT EXPLAINED
 - who-trs1010-a10-stability.pdf Appendix 2 1 (clause): `-intermediate failure during accelerated stability studies 30 c 65 % rh` - NOT EXPLAINED
 - who-trs1010-a10-stability.pdf Appendix 2 2 (clause): `-intermediate failure during accelerated stability studies 30 c 65 % rh | -store in the original package | +blister store in the original package` - NOT EXPLAINED
 - who-trs1010-a10-stability.pdf Appendix 3 (section): `+products approved in zone ii | -who recommended products approved in | +are based who recommended | -zone ii are based | +does not require any special storage conditions or similar i e no temperature mentioned eu | +finished pharmaceutical product fpp is stable at long term conditions with no signi` - NOT EXPLAINED
-- who-trs1010-a8-hvac-nonsterile.pdf 7.11 (clause): `-1.8 | +annex 263 table | -elbat aseicnelaviuqe etamixorppa sdradnats tset retlfi fo nosirapmoc 0101 on seires troper lacinhcet ohw deunitnoc 1.8 a elbat deunitnoc 1.8 a elbat tnerruc si noitacfiissalc eht taht erusne a ezis elcitrap gnitartenep tsom sppm retlfi ot setaler | +8.1 comparison of filte` - NOT EXPLAINED
+- who-trs1010-a8-hvac-nonsterile.pdf 7.11 (clause): `-1.8 | +annex table | -elbat aseicnelaviuqe etamixorppa sdradnats tset retlfi fo nosirapmoc 0101 on seires troper lacinhcet ohw deunitnoc 1.8 a elbat deunitnoc 1.8 a elbat tnerruc si noitacfiissalc eht taht erusne a ezis elcitrap gnitartenep tsom sppm retlfi ot setaler | +8.1 comparison of filter te` - NOT EXPLAINED
 - who-trs1010-a8-hvac-nonsterile.pdf Table 1 ISO 29463 (table_row): `-iso 29463` - NOT EXPLAINED
 - who-trs1010-a8-hvac-nonsterile.pdf Table 1 EN 779 & EN 1822 (table_row): `-779 1822 mpps integral 1822 2009 u 17 99.999995 u 16 99.99995 u 15 99.9995 h 14 99.995 h 13 99.95 e 99.5 e e 85 779 2012 f 9 f 8 f 7` - NOT EXPLAINED
 - who-trs1010-a8-hvac-nonsterile.pdf Table 1 Eurovent 4/5 ASHRAE 52.1 BS6540 Part 1 (table_row): `-> 95 95 90 85 80` - NOT EXPLAINED
@@ -945,7 +915,7 @@ Sources: 146; clauses: 20562; tokens: 1593633; flagged clauses: 940; unexplained
 - who-trs1010-a8-hvac-nonsterile.pdf page 16 (uncovered): `+> 90 30 g` - NOT EXPLAINED
 - who-trs1010-a8-hvac-nonsterile.pdf page 16 (uncovered): `+90 25 eu 3` - NOT EXPLAINED
 - who-trs1010-a8-hvac-nonsterile.pdf page 16 (uncovered): `+85 20 g 3 80 < 20` - NOT EXPLAINED
-- who-trs1010-a8-hvac-nonsterile.pdf page 17 (uncovered): `+annex 265 table a 8.1 continued` - NOT EXPLAINED
+- who-trs1010-a8-hvac-nonsterile.pdf page 17 (uncovered): `+annex table a 8.1 continued` - NOT EXPLAINED
 - who-trs1010-a8-hvac-nonsterile.pdf page 17 (uncovered): `+36492 osi superseded` - NOT EXPLAINED
 - who-trs1010-a8-hvac-nonsterile.pdf page 17 (uncovered): `+2102 977 ne eu 2` - NOT EXPLAINED
 - who-trs1010-a8-hvac-nonsterile.pdf page 17 (uncovered): `+ensure that the classification is current` - NOT EXPLAINED
@@ -973,8 +943,8 @@ Sources: 146; clauses: 20562; tokens: 1593633; flagged clauses: 940; unexplained
 - who-trs1044-a2-sterile.pdf Table 7 Grade (table_row): `-hours a` - NOT EXPLAINED
 - who-trs1044-a4-tech-transfer.pdf Appendix 1 (section): `+aspect related documentation | +pharmaceutical ingredients apis and excipients` - NOT EXPLAINED
 - who-trs1044-a4-tech-transfer.pdf _unnumbered:4 (unnumbered): `+aspect related documentation` - NOT EXPLAINED
-- who-trs1052-a4-qc-labs.pdf Appendix 1 (section): `-who technical report series no 1052 2024 | +o t e c h r e p o r t s e s n o 1 0 5 2 2 0 2 4 who expert committee on specifications for pharmaceutical preparations fifty seventh report first stage laboratory continued optional items quantity | +o t e c h r e p o r t s e s n o 1 0 5 2 2 0 2 4 who exp` - NOT EXPLAINED
-- who-trs1052-a4-qc-labs.pdf Appendix 2 (section): `-tg | +o t e c h r e p o r t s e s n o 1 0 5 2 2 0 2 4 who expert committee on specifications for pharmaceutical preparations fifty seventh report | -uitg | +tg` - NOT EXPLAINED
+- who-trs1052-a4-qc-labs.pdf Appendix 1 (section): `-who technical report series no 1052 2024 | +o t e c h r e p o r t s e s n o 1 0 5 2 2 0 2 4 first stage laboratory continued optional items quantity | +o t e c h r e p o r t s e s n o 1 0 5 2 2 0 2 4 medium sized laboratory continued equipment and major instruments quantity | +1 | +2 | +equipment f` - NOT EXPLAINED
+- who-trs1052-a4-qc-labs.pdf Appendix 2 (section): `-tg | +o t e c h r e p o r t s e s n o 1 0 5 2 2 0 2 4 | -uitg | +tg` - NOT EXPLAINED
 - who-trs1052-a4-qc-labs.pdf Appendix 3 1 #2 (clause): `-umeas | +u tg meas | +u | -umeas | +meas` - NOT EXPLAINED
 - who-trs1052-a4-qc-labs.pdf Appendix 3 8 (clause): `-4202 2501 on who technical report series | +test solution` - NOT EXPLAINED
 - who-trs1060-a2-nitrosamines.pdf _unnumbered:2 (unnumbered): `+7` - NOT EXPLAINED
@@ -1050,7 +1020,7 @@ Sources: 146; clauses: 20562; tokens: 1593633; flagged clauses: 940; unexplained
 - who-trs961-a9-storage-transport-ttsp.pdf page 21 (uncovered): `+4.7 qualifi cation of temperature controlled stores qualify new temperature controlled storage areas and new refrigeration equipment before it becomes operational the qualifi cation` - NOT EXPLAINED
 - who-trs961-a9-storage-transport-ttsp.pdf page 28 (uncovered): `+6.6 qualifi cation of temperature controlled road vehicles where temperature controlled vehicles are directly owned and or operated qualify each vehicle before it becomes operational wherever possible the qualifi cation` - NOT EXPLAINED
 - who-trs981-a2-qrm.pdf 6 (clause): `+4 8 12 16 20 | +3 6 9 12 15 | +2 4 6 8 10 | -t 4 ffo fwfsz 1 negligible t p sfhvmbupsz jttvf | -t p fõfdu po boe opu | +1 negligible | -t 4 ffo fwfsz 2 marginal t bz sfrvjsf 3 | +2 marginal | -t % fdjtjpo up sfmfbtf | -t 4 ffo fwfsz 3 moderate t 3 jotqfdujpo | +3 moderate | -efmdjfodz rvjuf | -t jn` - NOT EXPLAINED
-- who-trs981-a2-qrm.pdf _unnumbered:2 (unnumbered): `+table 3 continued o t e c h r e p o r t s e s n o 9 8 1 2 0 1 3 who expert committee on specifications for pharmaceutical preparations forty seventh report` - NOT EXPLAINED
+- who-trs981-a2-qrm.pdf _unnumbered:2 (unnumbered): `+table 3 continued o t e c h r e p o r t s e s n o 9 8 1 2 0 1 3` - NOT EXPLAINED
 - who-trs981-a2-qrm.pdf Table 3 Hazard operability analysis (HAZOP) (table_row): `-t tool t uses ufdiojrvf up ifmq jefoujgz t gbdjmjujft boe frvjqnfou t` - NOT EXPLAINED
 - who-trs981-a2-qrm.pdf Table 3 Hazard analysis and critical control… (table_row): `-t identify fõfdujwfmz qsfwfou ib bse t bottom up t nqibtj ft tusfohui pg t t valuable t assessment` - NOT EXPLAINED
 - who-trs981-a2-qrm.pdf Table 3 'BJMVSFNPEFTFõFDUT BOBMZTJT '.&" (table_row): `-bjmvsf npeft fõfdut bobmztjt assumes assesses uif qspcbcmf fõfdu wbmvbuf frvjqnfou` - NOT EXPLAINED
@@ -1060,22 +1030,22 @@ Sources: 146; clauses: 20562; tokens: 1593633; flagged clauses: 940; unexplained
 - who-trs992-a4-hold-time.pdf Glossary (section): `+including granulation pastes coating solution and coating suspension | +gravity viscosity sedimentation ph microbial test | -including granulation gravity viscosity sedimentation | -pastes coating solution ph microbial test and coating suspension | -initial 15 th day | -30 th day 45 th day | +initi` - NOT EXPLAINED
 - who-trs992-a5-ttsp-supplements.pdf 1.1 (clause): `+1 | -table a 5.1 continued title section s` - NOT EXPLAINED
 - who-trs992-a5-ttsp-supplements.pdf 5 (clause): `+table a 5.1 continued` - NOT EXPLAINED
-- who-trs992-a5-ttsp-supplements.pdf 7 (clause): `+2 | +o t e c h r e p o r t s e s n o 9 9 2 2 0 1 5 who expert committee on specifications for pharmaceutical preparations forty ninth report supplement 1` - NOT EXPLAINED
+- who-trs992-a5-ttsp-supplements.pdf 7 (clause): `+2 | +o t e c h r e p o r t s e s n o 9 9 2 2 0 1 5 supplement 1` - NOT EXPLAINED
 - who-trs992-a5-ttsp-supplements.pdf _unnumbered:3 (unnumbered): `+supplement 2` - NOT EXPLAINED
 - who-trs992-a5-ttsp-supplements.pdf Annex 2 A 2.3 (clause): `+supplement 3` - NOT EXPLAINED
-- who-trs992-a5-ttsp-supplements.pdf _unnumbered:7 (unnumbered): `+o t e c h r e p o r t s e s n o 9 9 2 2 0 1 5 who expert committee on specifications for pharmaceutical preparations forty ninth report supplement 4` - NOT EXPLAINED
+- who-trs992-a5-ttsp-supplements.pdf _unnumbered:7 (unnumbered): `+o t e c h r e p o r t s e s n o 9 9 2 2 0 1 5 supplement 4` - NOT EXPLAINED
 - who-trs992-a5-ttsp-supplements.pdf Annex 3 (section): `-3 sop fire drills` - NOT EXPLAINED
-- who-trs992-a5-ttsp-supplements.pdf Annex 3 A 3.5 (clause): `+o t e c h r e p o r t s e s n o 9 9 2 2 0 1 5 who expert committee on specifications for pharmaceutical preparations forty ninth report supplement 5` - NOT EXPLAINED
+- who-trs992-a5-ttsp-supplements.pdf Annex 3 A 3.5 (clause): `+o t e c h r e p o r t s e s n o 9 9 2 2 0 1 5 supplement 5` - NOT EXPLAINED
 - who-trs992-a5-ttsp-supplements.pdf Annex 2 (section): `-annex 2 checklist for building weatherproofing` - NOT EXPLAINED
 - who-trs992-a5-ttsp-supplements.pdf Annex 1 (section): `-annex 1 example of form for monitoring system start up` - NOT EXPLAINED
 - who-trs992-a5-ttsp-supplements.pdf _unnumbered:16 (unnumbered): `-revision` - NOT EXPLAINED
 - who-trs992-a5-ttsp-supplements.pdf Annex 1 #2 (section): `-annex 1 form for reporting deviations and corrective action` - NOT EXPLAINED
-- who-trs992-a5-ttsp-supplements.pdf Annex 1 A 1.3 #2 (clause): `+o t e c h r e p o r t s e s n o 9 9 2 2 0 1 5 who expert committee on specifications for pharmaceutical preparations forty ninth report supplement 9` - NOT EXPLAINED
+- who-trs992-a5-ttsp-supplements.pdf Annex 1 A 1.3 #2 (clause): `+o t e c h r e p o r t s e s n o 9 9 2 2 0 1 5 supplement 9` - NOT EXPLAINED
 - who-trs992-a5-ttsp-supplements.pdf Annex 1 #3 (section): `-annex 1 generic temperature accuracy check form` - NOT EXPLAINED
 - who-trs992-a5-ttsp-supplements.pdf _unnumbered:24 (unnumbered): `+supplement 12` - NOT EXPLAINED
 - who-trs992-a5-ttsp-supplements.pdf Annex 1 #4 (section): `-annex 1 packing a refrigerated vehicle` - NOT EXPLAINED
 - who-trs992-a5-ttsp-supplements.pdf _unnumbered:28 (unnumbered): `-transport route profiling qualification technical supplement to model guidance for the storage and transport of time and temperature sensitive pharmaceutical products who technical report series no 961 2011 annex 9 contents` - NOT EXPLAINED
-- who-trs992-a5-ttsp-supplements.pdf Annex 1 A 1.3.2 (clause): `+o t e c h r e p o r t s e s n o 9 9 2 2 0 1 5 who expert committee on specifications for pharmaceutical preparations forty ninth report supplement 15` - NOT EXPLAINED
+- who-trs992-a5-ttsp-supplements.pdf Annex 1 A 1.3.2 (clause): `+o t e c h r e p o r t s e s n o 9 9 2 2 0 1 5 supplement 15` - NOT EXPLAINED
 - who-trs992-a5-ttsp-supplements.pdf _unnumbered:32 (unnumbered): `-environmental management of refrigeration equipment technical supplement to model guidance for the storage and transport of time and temperature sensitive pharmaceutical products who technical report series no 961 2011 annex 9 contents` - NOT EXPLAINED
 - who-trs992-a5-ttsp-supplements.pdf Annex 1 #5 (section): `+9 contents acknowledgements abbreviations glossary | -montreal protocol non article 5 countries` - NOT EXPLAINED
 - who-trs992-a5-ttsp-supplements.pdf page 13 (uncovered): `+acknowledgements abbreviations glossary 1 introduction 1.1 requirements` - NOT EXPLAINED
@@ -1085,13 +1055,14 @@ Sources: 146; clauses: 20562; tokens: 1593633; flagged clauses: 940; unexplained
 - who-trs992-a5-ttsp-supplements.pdf page 25 (uncovered): `+supplement 14 transport route profiling qualification technical supplement to` - NOT EXPLAINED
 - who-trs992-a5-ttsp-supplements.pdf page 27 (uncovered): `+supplement 16 environmental management of refrigeration equipment technical supplement to` - NOT EXPLAINED
 - who-trs992-a5-ttsp-supplements.pdf page 27 (uncovered): `+contents acknowledgements abbreviations glossary 1 introduction 1.1 requirements 1.2 objectives 1.3 target readership 2 guidance` - NOT EXPLAINED
-- who-trs996-a4-app1-model-inspection-report.pdf Appendix 1 (section): `+o t e c h r e p o r t s e s n o 9 9 6 2 0 1 6 who expert committee on specifications for pharmaceutical preparations fiftieth report part 1 general information | +used for assessing compliance` - NOT EXPLAINED
-- who-trs996-a4-app1-model-inspection-report.pdf Appendix 1 1 (clause): `+introduction | +the manufacturing activities` - NOT EXPLAINED
+- who-trs996-a4-app1-model-inspection-report.pdf Appendix 1 (section): `+o t e c h r e p o r t s e s n o 9 9 6 2 0 1 6 part 1 general information | +used for assessing compliance` - NOT EXPLAINED
+- who-trs996-a4-app1-model-inspection-report.pdf Appendix 1 1 (clause): `+introduction | +the manufacturing activities | +where applicable` - NOT EXPLAINED
 - who-trs996-a4-app1-model-inspection-report.pdf Appendix 1 1 #2 (clause): `-1 pharmaceutical describe the pharmaceutical quality system pqs in quality system` - NOT EXPLAINED
 - who-trs996-a4-app1-model-inspection-report.pdf Appendix 1 2 #2 (clause): `+practices for pharmaceutical products | -practices | +implemented 3 sanitation and hygiene describe procedures and records relating to sanitation and hygiene | -implemented pharmaceutical products` - NOT EXPLAINED
 - who-trs996-a4-app1-model-inspection-report.pdf Appendix 1 7 (clause): `+analysis and other activities` - NOT EXPLAINED
 - who-trs996-a4-app1-model-inspection-report.pdf Appendix 1 8 (clause): `-self inspection a | +suppliers audits and approval a self inspection` - NOT EXPLAINED
-- who-trs996-a4-app1-model-inspection-report.pdf Appendix 1 3 #3 (clause): `+part 4 outcome | +o t e c h r e p o r t s e s n o 9 9 6 2 0 1 6 who expert committee on specifications for pharmaceutical preparations fiftieth report part 5 list of gmp guidelines referenced in the inspection` - NOT EXPLAINED
+- who-trs996-a4-app1-model-inspection-report.pdf Appendix 1 17 (clause): `+where applicable` - NOT EXPLAINED
+- who-trs996-a4-app1-model-inspection-report.pdf Appendix 1 3 #3 (clause): `+part 4 outcome | +o t e c h r e p o r t s e s n o 9 9 6 2 0 1 6 part 5 list of gmp guidelines referenced in the inspection` - NOT EXPLAINED
 - who-trs996-a4-app1-model-inspection-report.pdf Annex 3 (section): `-annex 3 who technical report series no 937 http www who int medicines publications pharmprep en index html | +due for planning purposes` - NOT EXPLAINED
-- who-trs996-a4-app1-model-inspection-report.pdf page 9 (uncovered): `+pharmaceutical quality system describe the pharmaceutical quality system pqs in` - NOT EXPLAINED
+- who-trs996-a4-app1-model-inspection-report.pdf page 9 (uncovered): `+1 pharmaceutical quality system describe the pharmaceutical quality system pqs in` - NOT EXPLAINED
 - who-trs996-a4-app1-model-inspection-report.pdf page 16 (uncovered): `+risk category of the site` - NOT EXPLAINED
