@@ -1,6 +1,44 @@
 # Handover: read this first in every new session
 
-Last updated: 30 October 2026 (session 3, session runner, D30).
+Last updated: 30 October 2026 (session 3, session pilot, D30).
+
+## Session pilot results (30 Oct 2026, D30)
+Same 24 clauses, run in this session with the D30 prompts. Run folders: `library/ai-runs/20261030T081253.980447Z-session-draft/`
+and `.../20261030T081601.385233Z-session-verify/` (`pilot-report.json` in the verify folder). One agent answered the draft batch.
+Four verifier agents, two at a time, each answered one batch (A: 40 + 16 items, B: 40 + 16) and saw only its own batch file.
+
+| | API pilot (D29, old prompts) | Session pilot (D30 prompts) |
+|---|---|---|
+| Mappings | 58 | 56 |
+| Rejected quotes / failed calls | 0 / 0 | 0 / 0 |
+| Both correct | 43 | **56** |
+| Both incorrect | 5 | 0 |
+| Disagree | 10 | 0 |
+| Uncovered obligation sentences (80 % rule) | 6 | 3 |
+| Cost | US$0.73 | none (Max plan) |
+
+- **Uncovered sentences: all 3 are covered in substance.** Each is a short sentence where text outside the quote
+  pushes it under 80 %: the clause number in "9.3 All self inspections should be recorded." (EU Ch 9 9.3, 0.75), the
+  cross-reference "(see section 7, ...)" in WHO 8.7 (0.59), and the heading "Follow-up action-" in Schedule M 10.6
+  (0.73). Possible refinement: drop a leading clause number, heading or cross-reference before measuring.
+- **Examples (the clauses the API verifiers disputed):**
+  1. *EU Ch 9 9.3*: the drafter now gives three items (record every self inspection; reports hold all observations and,
+     where applicable, corrective proposals; record the actions taken afterwards). The API pilot gave two of these,
+     and verifier A rejected both as "looser". Now both verifiers accept all three, each against its own COVERS span.
+  2. *Schedule M Part I 10.4*: two items (frequency by company needs but at least once a year; frequency stated in
+     the procedure). The annual minimum now stays with the frequency item, which was the API pilot's both-incorrect
+     and disagreement case. Both verifiers accept both items.
+  3. *WHO TRS 986 8.5 and 8.9*: the report duty and the report contents are still two items, and so are the supplier
+     evaluation and its criteria (history, nature of materials). In the API pilot both verifiers rejected those
+     splits. Now both accept them, because each part is a separate COVERS span.
+- **Caution, for the owner: zero rejections may be too good.** The prompts say a condition or qualifier of the same
+  obligation must not be split off (example 3 is arguably such a split), and still nobody objected. Possible causes:
+  - the COVERS framing makes each part look whole;
+  - an agent answering 40 items in one pass may be less strict than one call per item;
+  - session agents are less independent than separate API calls.
+
+  Before the full run, seed a few known-bad items (a mutation test: dropped number, dropped condition, wrong
+  strength, a split obligation) into a verify batch and check that both verifiers reject them.
 
 ## Pilot results (30 Oct 2026, D29)
 Run folders: `library/ai-runs/20261030T074231.724549Z-pilot-draft/` and `.../20261030T074433.157454Z-pilot-verify/`

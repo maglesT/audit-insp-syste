@@ -1,0 +1,163 @@
+{
+ "instructions": "You read one clause of a pharmaceutical GMP text and list the obligations it states. Your output is checked by\nsoftware and by independent reviewers, so precision matters more than completeness of wording.\n\nList each separate obligation of the clause as its own item, so that together your items cover every\nobligation in the clause. One obligation is one thing a site must, should or may do, with all its conditions,\nnumbers and qualifiers; do not split a single obligation across items. For each item:\n- statement: the obligation in your own plain English words, as one checklist item a site could be audited\n  against. Do not copy more than a few words in a row from the clause. Keep conditions (\"where\", \"if\",\n  \"unless\") and every number. Do not add anything the clause does not say.\n- quote: the exact span of the clause text that states the whole obligation, with its conditions, numbers\n  and qualifiers, copied character for\n  character (it is matched against the clause by software; do not fix typos or change punctuation).\n- strength: \"mandatory\" for shall / must / is required / may not; \"recommended\" for should; \"optional\" for may.\n  Take it from the main verb of the quoted words, not from words in a condition.\n- plant_types: the kinds of manufacturing site the obligation applies to, from OSD (oral solid dosage),\n  LIQ (oral liquids), SEMI (semisolids), INJ (sterile injectables), API (active substances). Use the scope\n  given with the clause unless the clause itself narrows it.\n- numbers: every number, limit, frequency or period in the quote, as written.\n\nIf the clause states no obligation (a heading, a definition, a statement of purpose), return no obligations\nand say why in no_obligation_reason. Otherwise leave no_obligation_reason empty.\n",
+ "schema": {
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+   "obligations",
+   "no_obligation_reason"
+  ],
+  "properties": {
+   "no_obligation_reason": {
+    "type": "string"
+   },
+   "obligations": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "statement",
+      "quote",
+      "strength",
+      "plant_types",
+      "numbers"
+     ],
+     "properties": {
+      "statement": {
+       "type": "string"
+      },
+      "quote": {
+       "type": "string"
+      },
+      "strength": {
+       "type": "string",
+       "enum": [
+        "mandatory",
+        "recommended",
+        "optional"
+       ]
+      },
+      "plant_types": {
+       "type": "array",
+       "items": {
+        "type": "string",
+        "enum": [
+         "OSD",
+         "LIQ",
+         "SEMI",
+         "INJ",
+         "API"
+        ]
+       }
+      },
+      "numbers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   }
+  }
+ },
+ "items": [
+  {
+   "custom_id": "draft-000",
+   "input": "Source: EU - Part I Chapter 9 Self Inspection\nApplies to plant types: INJ, LIQ, OSD, SEMI\nSection: Chapter 9\nClause Chapter 9 Principle:\nPrinciple Self inspections should be conducted in order to monitor the implementation and compliance with Good Manufacturing Practice principles and to propose necessary corrective measures."
+  },
+  {
+   "custom_id": "draft-001",
+   "input": "Source: EU - Part I Chapter 9 Self Inspection\nApplies to plant types: INJ, LIQ, OSD, SEMI\nSection: Chapter 9\nClause Chapter 9 9.1:\n9.1 Personnel matters, premises, equipment, documentation, production, quality control, distribution of the medicinal products, arrangements for dealing with complaints and recalls, and self inspection, should be examined at intervals following a pre-arranged programme in order to verify their conformity with the principles of Quality Assurance."
+  },
+  {
+   "custom_id": "draft-002",
+   "input": "Source: EU - Part I Chapter 9 Self Inspection\nApplies to plant types: INJ, LIQ, OSD, SEMI\nSection: Chapter 9\nClause Chapter 9 9.2:\n9.2 Self inspections should be conducted in an independent and detailed way by designated competent person(s) from the company. Independent audits by external experts may also be useful."
+  },
+  {
+   "custom_id": "draft-003",
+   "input": "Source: EU - Part I Chapter 9 Self Inspection\nApplies to plant types: INJ, LIQ, OSD, SEMI\nSection: Chapter 9\nClause Chapter 9 9.3:\n9.3 All self inspections should be recorded. Reports should contain all the observations made during the inspections and, where applicable, proposals for corrective measures. Statements on the actions subsequently taken should also be recorded."
+  },
+  {
+   "custom_id": "draft-004",
+   "input": "Source: WHO - TRS 986 Annex 2 GMP for pharmaceutical products: main principles\nApplies to plant types: INJ, LIQ, OSD, SEMI\nClause 8.1:\n8.1 Principle. The purpose of self-inspection is to evaluate the manufacturer’s compliance with GMP in all aspects of production and QC. The self- inspection programme should be designed to detect any shortcomings in the implementation of GMP and to recommend the necessary corrective actions. Self-inspections should be performed routinely, and may be, in addition, performed on special occasions, e.g. in the case of product recalls or repeated rejections, or when an inspection by the health authorities is announced. The team responsible for self-inspection should consist of personnel who can evaluate the implementation of GMP objectively. All recommendations for corrective action should be implemented. The procedure for self-inspection should be documented, and there should be an effective follow-up programme. Items for self-inspection"
+  },
+  {
+   "custom_id": "draft-005",
+   "input": "Source: WHO - TRS 986 Annex 2 GMP for pharmaceutical products: main principles\nApplies to plant types: INJ, LIQ, OSD, SEMI\nClause 8.2:\n8.2 Written instructions for self-inspection should be established to provide a minimum and uniform standard of requirements. These may include questionnaires on GMP requirements covering at least the following items: (a) personnel; (b) premises including personnel facilities; (c) maintenance of buildings and equipment; (d) storage of starting materials and finished products; (e) equipment; (f) production and in-process controls; (g) QC; (h) documentation; (i) sanitation and hygiene; (j) validation and revalidation programmes; (k) calibration of instruments or measurement systems; (l) recall procedures; (m) complaints management; (n) labels control; (o) results of previous self-inspections and any corrective steps taken. Self-inspection team"
+  },
+  {
+   "custom_id": "draft-006",
+   "input": "Source: WHO - TRS 986 Annex 2 GMP for pharmaceutical products: main principles\nApplies to plant types: INJ, LIQ, OSD, SEMI\nClause 8.3:\n8.3 Management should appoint a self-inspection team consisting of experts in their respective fields who are familiar with GMP. The members of the team may be appointed from inside or outside the company. Frequency of self-inspection"
+  },
+  {
+   "custom_id": "draft-007",
+   "input": "Source: WHO - TRS 986 Annex 2 GMP for pharmaceutical products: main principles\nApplies to plant types: INJ, LIQ, OSD, SEMI\nClause 8.4:\n8.4 The frequency with which self-inspections are conducted may depend on company requirements but should preferably be at least once a year. The frequency should be stated in the procedure. Self-inspection report"
+  },
+  {
+   "custom_id": "draft-008",
+   "input": "Source: WHO - TRS 986 Annex 2 GMP for pharmaceutical products: main principles\nApplies to plant types: INJ, LIQ, OSD, SEMI\nClause 8.5:\n8.5 A report should be made at the completion of a self-inspection. The report should include: (a) self-inspection results; (b) evaluation and conclusions; (c) recommended corrective actions. Follow-up action"
+  },
+  {
+   "custom_id": "draft-009",
+   "input": "Source: WHO - TRS 986 Annex 2 GMP for pharmaceutical products: main principles\nApplies to plant types: INJ, LIQ, OSD, SEMI\nClause 8.6:\n8.6 There should be an effective follow-up programme. The company management should evaluate both the self-inspection report and the corrective actions as necessary. Quality audit"
+  },
+  {
+   "custom_id": "draft-010",
+   "input": "Source: WHO - TRS 986 Annex 2 GMP for pharmaceutical products: main principles\nApplies to plant types: INJ, LIQ, OSD, SEMI\nClause 8.7:\n8.7 It may be useful to supplement self-inspections with a quality audit. A quality audit consists of an examination and assessment of all or part of a quality system with the specific purpose of improving it. A quality audit is usually conducted by outside or independent specialists or a team designated by the management for this purpose. Such audits may also be extended to suppliers and contractors (see section 7, “Contract production and analysis”). Suppliers’ audits and approval"
+  },
+  {
+   "custom_id": "draft-011",
+   "input": "Source: WHO - TRS 986 Annex 2 GMP for pharmaceutical products: main principles\nApplies to plant types: INJ, LIQ, OSD, SEMI\nClause 8.8:\n8.8 The person responsible for QC should have responsibility, together with other relevant departments, for approving suppliers who can reliably supply starting and packaging materials that meet established specifications."
+  },
+  {
+   "custom_id": "draft-012",
+   "input": "Source: WHO - TRS 986 Annex 2 GMP for pharmaceutical products: main principles\nApplies to plant types: INJ, LIQ, OSD, SEMI\nClause 8.9:\n8.9 Before suppliers are approved and included in the approved suppliers’ list or specifications, they should be evaluated. The evaluation should take into account a supplier’s history and the nature of the materials to be supplied. If an audit is required, it should determine the supplier’s ability to conform with GMP standards."
+  },
+  {
+   "custom_id": "draft-013",
+   "input": "Source: INDIA - Revised Schedule M (G.S.R. 922(E)) Parts I-XIII\nApplies to plant types: API, INJ, LIQ, OSD, SEMI\nSection: Part I\nClause Part I 10.1:\n10.1. The purpose of self-inspection is to evaluate the manufacturer’s compliance with good manufacturing practices in all aspects of production and QC. The self-inspection programme shall be designed to detect any shortcomings in the implementation of good manufacturing practices and to recommend the necessary corrective actions. Self-inspections shall be performed routinely, and may be, in addition, performed on special occasions e.g., in the case of product recall or repeated rejections, or when an inspection by the regulatory authorities is announced. The team responsible for self-inspection shall consist of personnel who can evaluate the implementation of good manufacturing practices objectively. All recommendations for corrective action shall be implemented. The procedure for self-inspection shall be documented and there shall be an effective follow-up programme."
+  },
+  {
+   "custom_id": "draft-014",
+   "input": "Source: INDIA - Revised Schedule M (G.S.R. 922(E)) Parts I-XIII\nApplies to plant types: API, INJ, LIQ, OSD, SEMI\nSection: Part I\nClause Part I 10.2:\n10.2. Items for self-inspection-Written instructions for self-inspection shall be established to provide a minimum and uniform standard of requirements. These may include questionnaires on good manufacturing practices requirements covering at least the following items, namely:- (a) personnel; (b) premises including personnel facilities; (c) maintenance of buildings and equipment; (d) storage of starting materials and finished products; (e) equipment; (f) production and in-process controls; (g) quality control (QC); (h) documentation; (i) sanitation and hygiene; (j) validation and revalidation programmes; (k) calibration of instruments or measurement systems; (l) recall procedures; (m) complaints management; (n) labels control; and (o) results of previous self-inspections and any corrective steps taken."
+  },
+  {
+   "custom_id": "draft-015",
+   "input": "Source: INDIA - Revised Schedule M (G.S.R. 922(E)) Parts I-XIII\nApplies to plant types: API, INJ, LIQ, OSD, SEMI\nSection: Part I\nClause Part I 10.3:\n10.3. Self-inspection team- Management shall appoint a self-inspection team consisting of experts in their respective fields who are familiar with GMP. The members of the team may be appointed from inside or outside the company."
+  },
+  {
+   "custom_id": "draft-016",
+   "input": "Source: INDIA - Revised Schedule M (G.S.R. 922(E)) Parts I-XIII\nApplies to plant types: API, INJ, LIQ, OSD, SEMI\nSection: Part I\nClause Part I 10.4:\n10.4. Frequency of self-inspection- The frequency with which self-inspections are conducted may depend on company requirements but shall be at least once in a year. The frequency shall be stated in the procedure."
+  },
+  {
+   "custom_id": "draft-017",
+   "input": "Source: INDIA - Revised Schedule M (G.S.R. 922(E)) Parts I-XIII\nApplies to plant types: API, INJ, LIQ, OSD, SEMI\nSection: Part I\nClause Part I 10.5:\n10.5. Self-inspection report- A report shall be made at the completion of a self-inspection. The report shall include the following, namely:- (a) self-inspection results; (b) evaluation and conclusions; and (c) recommended corrective actions."
+  },
+  {
+   "custom_id": "draft-018",
+   "input": "Source: INDIA - Revised Schedule M (G.S.R. 922(E)) Parts I-XIII\nApplies to plant types: API, INJ, LIQ, OSD, SEMI\nSection: Part I\nClause Part I 10.6:\n10.6. Follow-up action- There shall be an effective follow-up programme. The company management shall evaluate both the self-inspection report and the corrective actions as necessary."
+  },
+  {
+   "custom_id": "draft-019",
+   "input": "Source: INDIA - Revised Schedule M (G.S.R. 922(E)) Parts I-XIII\nApplies to plant types: API, INJ, LIQ, OSD, SEMI\nSection: Part I\nClause Part I 10.7:\n10.7. Quality audit- It may be useful to supplement self-inspections with a quality audit. A quality audit consists of an examination and assessment of all or part of a quality system with the specific purpose of improving it. A quality audit is usually conducted by outside or independent specialists or a team designated by the management for this purpose. Such audits may also be extended to suppliers and contractors."
+  },
+  {
+   "custom_id": "draft-020",
+   "input": "Source: INDIA - Revised Schedule M (G.S.R. 922(E)) Parts I-XIII\nApplies to plant types: API, INJ, LIQ, OSD, SEMI\nSection: Part I\nClause Part I 10.8.1:\n10.8.1. The person responsible for quality control shall have responsibility, together with other relevant departments, for approving suppliers who can reliably supply starting and packaging materials that meet established specifications."
+  },
+  {
+   "custom_id": "draft-021",
+   "input": "Source: INDIA - Revised Schedule M (G.S.R. 922(E)) Parts I-XIII\nApplies to plant types: API, INJ, LIQ, OSD, SEMI\nSection: Part I\nClause Part I 10.8.2:\n10.8.2. Before suppliers are approved and included in the approved suppliers’ list or specifications, they shall be evaluated. The evaluation shall take into account a supplier’s history and the nature of the materials to be supplied. If an audit is required, it shall determine the supplier’s ability to conform with good manufacturing practices standards. 11. Personnel:"
+  },
+  {
+   "custom_id": "draft-022",
+   "input": "Source: ICH - Q7 GMP Guide for Active Pharmaceutical Ingredients\nApplies to plant types: API\nClause 2.40:\n2.40 In order to verify compliance with the principles of GMP for APIs, regular internal audits should be performed in accordance with an approved schedule."
+  },
+  {
+   "custom_id": "draft-023",
+   "input": "Source: ICH - Q7 GMP Guide for Active Pharmaceutical Ingredients\nApplies to plant types: API\nClause 2.41:\n2.41 Audit findings and corrective actions should be documented and brought to the attention of responsible management of the firm. Agreed corrective actions should be completed in a timely and effective manner."
+  }
+ ]
+}

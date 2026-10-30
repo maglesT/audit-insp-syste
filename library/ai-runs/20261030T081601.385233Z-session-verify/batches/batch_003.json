@@ -1,0 +1,118 @@
+{
+ "instructions": "You review whether a regulatory clause has been faithfully turned into a checklist item. Start from the\nCLAUSE: work out exactly what it obliges a manufacturer to do (who, what, how often, under which conditions,\nhow strongly), then judge whether the item captures that and nothing more.\n\nA clause often holds several separate obligations, and each becomes its own item. COVERS shows which part of\nthe clause this item claims. Work out the complete obligation that part belongs to (a condition, number,\nfrequency or qualifier attached to it is part of it, even if COVERS cuts it off) and judge the item against\nthat obligation only. Separate obligations elsewhere in the clause are not the item's job.\n\nAnswer every question strictly:\n- required_by_clause: is the item's demand actually an obligation stated in this clause (true/false)?\n- item_adds: what the item demands beyond the clause (empty string if nothing).\n- item_omits: what the covered obligation includes that is missing from the item: any condition, number,\n  frequency or qualifier (empty string if nothing).\n- strictness: compared with the clause the item is \"same\", \"stricter\" or \"looser\".\n- plant_types_ok: does the clause cover every plant type the item is tagged with (true/false)?\n- strength_ok: does the item's strength label match the clause's verb (shall/must = mandatory,\n  should = recommended, may = optional) (true/false)?\n- verdict: \"correct\" only when the item is faithful on every point above; otherwise \"incorrect\".\n- reason: one or two sentences.\n",
+ "schema": {
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+   "required_by_clause",
+   "item_adds",
+   "item_omits",
+   "strictness",
+   "plant_types_ok",
+   "strength_ok",
+   "verdict",
+   "reason"
+  ],
+  "properties": {
+   "required_by_clause": {
+    "type": "boolean"
+   },
+   "item_adds": {
+    "type": "string"
+   },
+   "item_omits": {
+    "type": "string"
+   },
+   "strictness": {
+    "type": "string",
+    "enum": [
+     "same",
+     "stricter",
+     "looser"
+    ]
+   },
+   "plant_types_ok": {
+    "type": "boolean"
+   },
+   "strength_ok": {
+    "type": "boolean"
+   },
+   "verdict": {
+    "type": "string",
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "items": [
+  {
+   "custom_id": "verify-b-040",
+   "input": "Source: INDIA - Revised Schedule M (G.S.R. 922(E)) Parts I-XIII\nApplies to plant types: API, INJ, LIQ, OSD, SEMI\nSection: Part I\nClause Part I 10.3:\n10.3. Self-inspection team- Management shall appoint a self-inspection team consisting of experts in their respective fields who are familiar with GMP. The members of the team may be appointed from inside or outside the company.\n\nITEM: Team members can be appointed from within the company or from outside it.\nStrength: optional\nPlant types: API, INJ, LIQ, OSD, SEMI\nCOVERS: The members of the team may be appointed from inside or outside the company."
+  },
+  {
+   "custom_id": "verify-b-041",
+   "input": "Source: INDIA - Revised Schedule M (G.S.R. 922(E)) Parts I-XIII\nApplies to plant types: API, INJ, LIQ, OSD, SEMI\nSection: Part I\nClause Part I 10.4:\n10.4. Frequency of self-inspection- The frequency with which self-inspections are conducted may depend on company requirements but shall be at least once in a year. The frequency shall be stated in the procedure.\n\nITEM: Set self-inspection frequency according to company needs, but conduct them at least once a year.\nStrength: mandatory\nPlant types: API, INJ, LIQ, OSD, SEMI\nCOVERS: The frequency with which self-inspections are conducted may depend on company requirements but shall be at least once in a year."
+  },
+  {
+   "custom_id": "verify-b-042",
+   "input": "Source: INDIA - Revised Schedule M (G.S.R. 922(E)) Parts I-XIII\nApplies to plant types: API, INJ, LIQ, OSD, SEMI\nSection: Part I\nClause Part I 10.4:\n10.4. Frequency of self-inspection- The frequency with which self-inspections are conducted may depend on company requirements but shall be at least once in a year. The frequency shall be stated in the procedure.\n\nITEM: State the self-inspection frequency in the procedure.\nStrength: mandatory\nPlant types: API, INJ, LIQ, OSD, SEMI\nCOVERS: The frequency shall be stated in the procedure."
+  },
+  {
+   "custom_id": "verify-b-043",
+   "input": "Source: INDIA - Revised Schedule M (G.S.R. 922(E)) Parts I-XIII\nApplies to plant types: API, INJ, LIQ, OSD, SEMI\nSection: Part I\nClause Part I 10.5:\n10.5. Self-inspection report- A report shall be made at the completion of a self-inspection. The report shall include the following, namely:- (a) self-inspection results; (b) evaluation and conclusions; and (c) recommended corrective actions.\n\nITEM: Prepare a report when each self-inspection is completed.\nStrength: mandatory\nPlant types: API, INJ, LIQ, OSD, SEMI\nCOVERS: A report shall be made at the completion of a self-inspection."
+  },
+  {
+   "custom_id": "verify-b-044",
+   "input": "Source: INDIA - Revised Schedule M (G.S.R. 922(E)) Parts I-XIII\nApplies to plant types: API, INJ, LIQ, OSD, SEMI\nSection: Part I\nClause Part I 10.5:\n10.5. Self-inspection report- A report shall be made at the completion of a self-inspection. The report shall include the following, namely:- (a) self-inspection results; (b) evaluation and conclusions; and (c) recommended corrective actions.\n\nITEM: The self-inspection report covers the results, the evaluation and conclusions, and the recommended corrective actions.\nStrength: mandatory\nPlant types: API, INJ, LIQ, OSD, SEMI\nCOVERS: The report shall include the following, namely:- (a) self-inspection results; (b) evaluation and conclusions; and (c) recommended corrective actions."
+  },
+  {
+   "custom_id": "verify-b-045",
+   "input": "Source: INDIA - Revised Schedule M (G.S.R. 922(E)) Parts I-XIII\nApplies to plant types: API, INJ, LIQ, OSD, SEMI\nSection: Part I\nClause Part I 10.6:\n10.6. Follow-up action- There shall be an effective follow-up programme. The company management shall evaluate both the self-inspection report and the corrective actions as necessary.\n\nITEM: Maintain an effective follow-up programme for self-inspection outcomes.\nStrength: mandatory\nPlant types: API, INJ, LIQ, OSD, SEMI\nCOVERS: There shall be an effective follow-up programme."
+  },
+  {
+   "custom_id": "verify-b-046",
+   "input": "Source: INDIA - Revised Schedule M (G.S.R. 922(E)) Parts I-XIII\nApplies to plant types: API, INJ, LIQ, OSD, SEMI\nSection: Part I\nClause Part I 10.6:\n10.6. Follow-up action- There shall be an effective follow-up programme. The company management shall evaluate both the self-inspection report and the corrective actions as necessary.\n\nITEM: Company management reviews the self-inspection report and, as necessary, the corrective actions.\nStrength: mandatory\nPlant types: API, INJ, LIQ, OSD, SEMI\nCOVERS: The company management shall evaluate both the self-inspection report and the corrective actions as necessary."
+  },
+  {
+   "custom_id": "verify-b-047",
+   "input": "Source: INDIA - Revised Schedule M (G.S.R. 922(E)) Parts I-XIII\nApplies to plant types: API, INJ, LIQ, OSD, SEMI\nSection: Part I\nClause Part I 10.7:\n10.7. Quality audit- It may be useful to supplement self-inspections with a quality audit. A quality audit consists of an examination and assessment of all or part of a quality system with the specific purpose of improving it. A quality audit is usually conducted by outside or independent specialists or a team designated by the management for this purpose. Such audits may also be extended to suppliers and contractors.\n\nITEM: Optionally supplement self-inspections with a quality audit.\nStrength: optional\nPlant types: API, INJ, LIQ, OSD, SEMI\nCOVERS: It may be useful to supplement self-inspections with a quality audit."
+  },
+  {
+   "custom_id": "verify-b-048",
+   "input": "Source: INDIA - Revised Schedule M (G.S.R. 922(E)) Parts I-XIII\nApplies to plant types: API, INJ, LIQ, OSD, SEMI\nSection: Part I\nClause Part I 10.7:\n10.7. Quality audit- It may be useful to supplement self-inspections with a quality audit. A quality audit consists of an examination and assessment of all or part of a quality system with the specific purpose of improving it. A quality audit is usually conducted by outside or independent specialists or a team designated by the management for this purpose. Such audits may also be extended to suppliers and contractors.\n\nITEM: Optionally extend quality audits to suppliers and contractors.\nStrength: optional\nPlant types: API, INJ, LIQ, OSD, SEMI\nCOVERS: Such audits may also be extended to suppliers and contractors."
+  },
+  {
+   "custom_id": "verify-b-049",
+   "input": "Source: INDIA - Revised Schedule M (G.S.R. 922(E)) Parts I-XIII\nApplies to plant types: API, INJ, LIQ, OSD, SEMI\nSection: Part I\nClause Part I 10.8.1:\n10.8.1. The person responsible for quality control shall have responsibility, together with other relevant departments, for approving suppliers who can reliably supply starting and packaging materials that meet established specifications.\n\nITEM: The person responsible for quality control, with other relevant departments, is responsible for approving suppliers able to reliably provide starting and packaging materials meeting established specifications.\nStrength: mandatory\nPlant types: API, INJ, LIQ, OSD, SEMI\nCOVERS: The person responsible for quality control shall have responsibility, together with other relevant departments, for approving suppliers who can reliably supply starting and packaging materials that meet established specifications."
+  },
+  {
+   "custom_id": "verify-b-050",
+   "input": "Source: INDIA - Revised Schedule M (G.S.R. 922(E)) Parts I-XIII\nApplies to plant types: API, INJ, LIQ, OSD, SEMI\nSection: Part I\nClause Part I 10.8.2:\n10.8.2. Before suppliers are approved and included in the approved suppliers’ list or specifications, they shall be evaluated. The evaluation shall take into account a supplier’s history and the nature of the materials to be supplied. If an audit is required, it shall determine the supplier’s ability to conform with good manufacturing practices standards. 11. Personnel:\n\nITEM: Evaluate suppliers before approving them and adding them to the approved supplier list or specifications.\nStrength: mandatory\nPlant types: API, INJ, LIQ, OSD, SEMI\nCOVERS: Before suppliers are approved and included in the approved suppliers’ list or specifications, they shall be evaluated."
+  },
+  {
+   "custom_id": "verify-b-051",
+   "input": "Source: INDIA - Revised Schedule M (G.S.R. 922(E)) Parts I-XIII\nApplies to plant types: API, INJ, LIQ, OSD, SEMI\nSection: Part I\nClause Part I 10.8.2:\n10.8.2. Before suppliers are approved and included in the approved suppliers’ list or specifications, they shall be evaluated. The evaluation shall take into account a supplier’s history and the nature of the materials to be supplied. If an audit is required, it shall determine the supplier’s ability to conform with good manufacturing practices standards. 11. Personnel:\n\nITEM: Supplier evaluation considers the supplier's history and the nature of the materials it will supply.\nStrength: mandatory\nPlant types: API, INJ, LIQ, OSD, SEMI\nCOVERS: The evaluation shall take into account a supplier’s history and the nature of the materials to be supplied."
+  },
+  {
+   "custom_id": "verify-b-052",
+   "input": "Source: INDIA - Revised Schedule M (G.S.R. 922(E)) Parts I-XIII\nApplies to plant types: API, INJ, LIQ, OSD, SEMI\nSection: Part I\nClause Part I 10.8.2:\n10.8.2. Before suppliers are approved and included in the approved suppliers’ list or specifications, they shall be evaluated. The evaluation shall take into account a supplier’s history and the nature of the materials to be supplied. If an audit is required, it shall determine the supplier’s ability to conform with good manufacturing practices standards. 11. Personnel:\n\nITEM: If a supplier audit is required, it determines whether the supplier can conform with GMP standards.\nStrength: mandatory\nPlant types: API, INJ, LIQ, OSD, SEMI\nCOVERS: If an audit is required, it shall determine the supplier’s ability to conform with good manufacturing practices standards."
+  },
+  {
+   "custom_id": "verify-b-053",
+   "input": "Source: ICH - Q7 GMP Guide for Active Pharmaceutical Ingredients\nApplies to plant types: API\nClause 2.40:\n2.40 In order to verify compliance with the principles of GMP for APIs, regular internal audits should be performed in accordance with an approved schedule.\n\nITEM: Perform regular internal audits on an approved schedule to verify compliance with GMP principles for APIs.\nStrength: recommended\nPlant types: API\nCOVERS: In order to verify compliance with the principles of GMP for APIs, regular internal audits should be performed in accordance with an approved schedule."
+  },
+  {
+   "custom_id": "verify-b-054",
+   "input": "Source: ICH - Q7 GMP Guide for Active Pharmaceutical Ingredients\nApplies to plant types: API\nClause 2.41:\n2.41 Audit findings and corrective actions should be documented and brought to the attention of responsible management of the firm. Agreed corrective actions should be completed in a timely and effective manner.\n\nITEM: Document audit findings and corrective actions and bring them to the attention of the firm's responsible management.\nStrength: recommended\nPlant types: API\nCOVERS: Audit findings and corrective actions should be documented and brought to the attention of responsible management of the firm."
+  },
+  {
+   "custom_id": "verify-b-055",
+   "input": "Source: ICH - Q7 GMP Guide for Active Pharmaceutical Ingredients\nApplies to plant types: API\nClause 2.41:\n2.41 Audit findings and corrective actions should be documented and brought to the attention of responsible management of the firm. Agreed corrective actions should be completed in a timely and effective manner.\n\nITEM: Complete agreed corrective actions in a timely and effective way.\nStrength: recommended\nPlant types: API\nCOVERS: Agreed corrective actions should be completed in a timely and effective manner."
+  }
+ ]
+}
