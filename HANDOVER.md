@@ -1,6 +1,51 @@
 # Handover: read this first in every new session
 
-Last updated: 30 October 2026 (session 3, session pilot, D30).
+Last updated: 30 October 2026 (session 3, mutation test).
+
+## Mutation test results (30 Oct 2026, plan 2.6 / Layer 3, pilot scale)
+`tools/ai/mutate.py` planted errors in the 56 session-pilot mappings and mixed them, shuffled, with the 56 untouched
+mappings as controls. The verifiers used the pilot prompts and inputs unchanged; the key is in `mutation-key.jsonl`.
+Run folders: `library/ai-runs/20261030T083158.816182Z-mutator/` (text mutants; 85 of 92 requested changes possible) and
+`.../20261030T083519.725130Z-mutation-verify/` (`mutation-report.json`, `agents.json`). Eight verifier agents, at
+most 3 at a time, each saw only its own batch file. A transcript scan confirmed that none opened the key, the link
+file or another batch.
+
+| Error type | n | Layer 1 | A | B | at least one | 95 % lower bound |
+|---|---|---|---|---|---|---|
+| changed number | 2 | 2 | 2 | 2 | 2 (100 %) | 0.34 |
+| should/shall (strength) | 15 | 15 | 15 | 15 | 15 (100 %) | 0.80 |
+| wrong plant type | 15 | 15 | 15 | 15 | 15 (100 %) | 0.80 |
+| wrong clause | 15 | 15 | 15 | 15 | 15 (100 %) | 0.80 |
+| dropped condition | 15 | 0 | 14 | 14 | **14 (93 %)** | 0.70 |
+| added condition | 15 | 6 | 15 | 15 | 15 (100 %) | 0.80 |
+| looser wording | 15 | 0 | 15 | 15 | 15 (100 %) | 0.80 |
+| **controls: false alarms** | 56 | 0 | 0 | 0 | **0 %** | |
+
+- **The one miss (dropped condition):** in *Schedule M Part I 10.8.2*, the item "A supplier audit determines whether
+  the supplier can conform with GMP standards." drops "where an audit is required". Both verifiers accepted it.
+  B read the condition back in ("where carried out"). A dropped trigger ("if", "where ... required", "when") makes
+  the item unconditional, so it is stricter or wrong, but neither prompt says so.
+- **WHO 8.9 with its criteria dropped is caught:** "Supplier evaluation considers the supplier's history." (the
+  nature of the materials is dropped). Both verifiers rejected it ("the evaluation must consider both supplier history
+  and nature of materials"). So the session pilot's 56/56 was not just leniency: the verifiers do check whole
+  obligations when one is cut.
+- **Layer 1** caught every wrong clause, changed number, strength and plant-type mutant, as the plan expects. It
+  also caught 6 added conditions that brought in a number ("within 30 days", "every six months").
+- **Against the plan 2.6 thresholds:**
+  - **Met:** Layer 1 error types detected 100 %; false alarms 0 % (limit 10 %).
+  - **Not met:** meaning types need ≥ 95 % with a 95 % lower bound ≥ 90 %. Dropped condition reached 93 %, and with
+    15 mutants per type the lower bound cannot pass 0.80 even at 100 %. The plan's 100 per type per regulator is
+    needed to show it.
+  - **Changed number** has only 2 mutants, because only 2 pilot items carry a number.
+- **Where the prompts need tightening (owner decision; not changed here):** add to both verifier prompts that a
+  condition that triggers the obligation ("if", "where ... required", "when") is part of it. An item that leaves it
+  out makes the duty unconditional and counts as stricter.
+- **Limits of this test:**
+  - The mutants are single, fairly visible edits.
+  - Drafting, mutating and verifying all use the same model.
+  - The 56 controls are the same items the session pilot already accepted.
+
+  Next: the full-scale Layer 3 (100 per type per regulator, subtler mutants).
 
 ## Session pilot results (30 Oct 2026, D30)
 Same 24 clauses, run in this session with the D30 prompts. Run folders: `library/ai-runs/20261030T081253.980447Z-session-draft/`
