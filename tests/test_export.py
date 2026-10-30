@@ -59,34 +59,20 @@ class Compile(unittest.TestCase):
         eu = export.compile_items(reqs, SOURCES, ["EU"], "OSD")
         self.assertEqual(eu, [{"id": "SI-001", "item_text": "Keep a written record of every self-inspection.",
                                "topic": "SI.REPORT", "regulators": ["EU"], "plant_types": ["OSD"],
-                               "strength": "recommended", "group": "SI-001"}])
+                               "strength": "recommended"}])
         both = export.compile_items(reqs, SOURCES, ["EU", "PIC/S", "WHO"], "OSD")
         self.assertEqual([(i["id"], i["regulators"], i["strength"]) for i in both],
                          [("SI-001", ["EU", "PIC/S"], "recommended"), ("SI-003", ["WHO"], "mandatory")])
         self.assertEqual(export.compile_items(reqs, SOURCES, ["PIC/S"], "OSD")[0]["id"], "SI-002")
 
-    def test_near_identical_items_share_a_group(self):
+    def test_similar_items_are_not_combined(self):
+        """D38: items of different regulators stay separate unless their text, topic and strength are the same."""
         reqs = [requirement("SI-001", [mapping("eu.pdf")], text="Keep a written record of every self-inspection."),
                 requirement("SI-002", [mapping("who.pdf")], text="Keep a written record of every self-inspection "
-                                                                  "carried out."),
-                requirement("SI-003", [mapping("who.pdf")], text="Appoint an independent team.")]
+                                                                  "carried out.")]
         items = export.compile_items(reqs, SOURCES, ["EU", "WHO"], "OSD")
-        self.assertEqual([i["group"] for i in items], ["SI-001", "SI-001", "SI-003"])
-
-    def test_groups_do_not_chain_or_join_one_source(self):
-        items = [{"id": "SI-001", "item_text": "a b c d e f g h"}, {"id": "SI-002", "item_text": "c d e f g h i j"},
-                 {"id": "SI-003", "item_text": "e f g h i j k l"}, {"id": "SI-004", "item_text": "a b c d e f g h"}]
-        src = {"SI-001": {"eu"}, "SI-002": {"who"}, "SI-003": {"fda"}, "SI-004": {"eu"}}
-        self.assertEqual(export.groups(items, src), {"SI-001": "SI-001", "SI-002": "SI-001", "SI-003": "SI-003",
-                                                     "SI-004": "SI-004"})   # 003 is like 002, not like 001
-
-    def test_groups_scale(self):
-        import time
-        items = [{"id": f"SI-{n:04d}", "item_text": f"keep record number {n} of item {n % 97} in file {n % 13}"}
-                 for n in range(1, 5001)]
-        start = time.time()
-        export.groups(items, {it["id"]: {it["id"]} for it in items})
-        self.assertLess(time.time() - start, 20)
+        self.assertEqual([(i["id"], i["regulators"]) for i in items], [("SI-001", ["EU"]), ("SI-002", ["WHO"])])
+        self.assertNotIn("group", items[0])
 
     def test_what_is_left_out(self):
         reqs = [requirement("SI-001", [mapping("eu.pdf")], status="draft"),            # not verified
