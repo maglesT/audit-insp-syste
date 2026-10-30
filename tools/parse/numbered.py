@@ -31,6 +31,7 @@ APPENDIX = re.compile(r"^(?:Appendix|APPENDIX)\s+([0-9IVX]+|[A-Z])\b")
 DOT_LEADER = re.compile(r"(\.\s?){4,}\s*\d*\s*$|\s\d{1,3}\s*$")
 MAX_GAP = 3
 PAGE_END = re.compile(r"(\.\s?){4,}\s*\d*\s*$|\s{3,}\d{1,3}\s*$")   # a contents entry: leaders or a page number
+PREFIXED = re.compile(r"^((?:[A-H]|I{1,3}|IV)\s?\.?\s?)(\d{1,2}(?:\.\d{1,3}){0,3})\.?\s+([A-Z].*)$")
 UNDO_LINES = 60         # stray numbers are taken back only if the old numbering resumes within this many lines
 DATE = re.compile(r"^(January|February|March|April|May|June|July|August|September|October|November|December)"
                   r"\s+\d{4}\b")
@@ -75,7 +76,7 @@ def parse(path, pages=None):
     noise = repeated_lines([p for p, e in zip(pages, english) if e])
     running = running_lines([p for p, e in zip(pages, english) if e])
     clauses, cur, section, prev = [], None, "", None
-    seen_in_section, unnumbered, run, jumps = set(), 0, 0, []
+    seen_in_section, unnumbered, run, jumps, section_prefix = set(), 0, 0, [], False
     body_chars = 0
 
     def start(kind, ref, number, line, page):
@@ -125,12 +126,13 @@ def parse(path, pages=None):
             if sec and sec.startswith("Chapter") and section.startswith(("Annex", "Part")):
                 sec = None   # a chapter heading inside an annex or part does not restart numbering
             if sec:
-                section, prev, seen_in_section, jumps = sec, None, set(), []
+                section, prev, seen_in_section, jumps, section_prefix = sec, None, set(), [], False
                 start("section", sec, "", line, pno)     # text under the heading, before clause 1, is citable
                 continue
             ma = APPENDIX.match(line)
             if ma and heading_like(line) and not PAGE_END.search(line):
-                base = re.sub(r"\s*Appendix \S+$", "", section)
+                base = re.sub(r"\s*Appendix \S+( (?:[A-H]|I{1,3}|IV))?$", "", section)
+                section_prefix = False
                 section, prev, seen_in_section = f"{base} Appendix {ma.group(1)}".strip(), None, set()
                 jumps = []
                 start("section", section, "", line, pno)
@@ -155,6 +157,17 @@ def parse(path, pages=None):
                 ref = f"{section} {chapter} Principle".replace("  ", " ").strip()
                 start("principle", ref, "", line, pno)
                 continue
+            mp = PREFIXED.match(line)
+            if mp and not DATE.match(mp.group(3)) and not PAGE_END.search(line):
+                # numbering with a prefix ("B 1.1" in Annex 2A Part B, "I.1" in the ICH Q9 annexes): the prefix is a
+                # section inside the current one, the rest is numbered as usual
+                prefix = mp.group(1).replace(" ", "").rstrip(".")
+                root = re.sub(r"(?:^| )(?:[A-H]|I{1,3}|IV)$", "", section).strip() if section_prefix else section
+                target = root if root.endswith(f" {prefix}") else f"{root} {prefix}".strip()   # "Appendix B" + "B.1"
+                if section != target:
+                    section, prev, seen_in_section, jumps = target, None, set(), []
+                section_prefix = True
+                line = f"{mp.group(2)} {mp.group(3)}"
             m = NUM.match(line)
             if m and DATE.match(m.group(2)) and "." not in m.group(1):
                 m = None                     # "1 July 2018" on a cover page is a date, not clause 1
