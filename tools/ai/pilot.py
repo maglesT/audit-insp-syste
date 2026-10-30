@@ -3,10 +3,18 @@
   python3 tools/ai/pilot.py check                 # one tiny call: is the API key accepted?
   python3 tools/ai/pilot.py run [--budget 15]     # draft + two blind verifiers on the self-inspection clauses
 
+In Claude Code sessions (D30; the API commands above stay, unused), agents answer the batch files in between:
+  python3 tools/ai/pilot.py prepare-draft
+  python3 tools/ai/pilot.py ingest-draft <draft dir>
+  python3 tools/ai/pilot.py prepare-verify <draft dir>
+  python3 tools/ai/pilot.py ingest-verify <verify dir> <draft dir>
+
 Stage 1 (plan 2.2): Opus reads ONE clause and returns its obligations (statement, exact quote, strength, plant
 types, numbers). Each quote is checked word for word against the clause (Layer 1 rule 1) before verification.
 Stage 4 (plan 2.5): two blind verifiers with differently framed prompts (A: item -> clause, B: clause -> item)
 judge every drafted mapping. The run stops before sending anything if the worst-case cost exceeds the budget.
+Coverage (D30): every obligation sentence of a drafted clause must be covered by that clause's mapping quotes;
+a sentence with less than COVERED_SHARE of its words inside a quote is reported as uncovered.
 Output: library/ai-runs/<run>/ (audit trail, D29) and pilot-report.json with cost per mapping and agreement.
 """
 import argparse
@@ -18,12 +26,15 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(HERE.parent / "library"))
 sys.path.insert(0, str(HERE.parent / "parse"))
+import obligations  # noqa: E402
 import runner  # noqa: E402
+import sessions  # noqa: E402
 from common import normalise  # noqa: E402
 
 PROMPTS = HERE / "prompts"
 PLANT_TYPES = ["OSD", "LIQ", "SEMI", "INJ", "API"]
 MIN_QUOTE_WORDS = 3                                 # an empty or one-word "quote" is always found; it proves nothing
+COVERED_SHARE = 0.8                                 # share of a sentence's words that must lie inside a quote
 DRAFT_TOKENS, VERIFY_TOKENS = 8000, 6000           # output caps, thinking included; a cut-off answer is a failure
 # the self-inspection clauses of the pilot regulators: about 25 clauses, about 50 mappings
 PILOT = {
@@ -113,7 +124,7 @@ def verify_requests(mappings, sources, clauses_of):
         clause = clauses_of(m["source"])[m["ref"]]
         scope = ", ".join(sorted(runner_scope(sources[m["source"]]["applies_to"])))
         item = (f"ITEM: {m['statement']}\nStrength: {m['strength']}\n"
-                f"Plant types: {', '.join(m['plant_types'])}")
+                f"Plant types: {', '.join(m['plant_types'])}\nCOVERS: {m['quote']}")
         clause_text = clause_block(sources[m["source"]], clause, scope)
         for role, first, second in (("a", item, clause_text), ("b", clause_text, item)):
             out.append(runner.Request(f"verify-{role}-{n:03d}", prompt(f"verify_{role}"), f"{first}\n\n{second}",
@@ -121,6 +132,55 @@ def verify_requests(mappings, sources, clauses_of):
                                       meta={"mapping": n, "verifier": role, "source": m["source"], "ref": m["ref"],
                                             "clause_sha256": m["clause_sha256"], "draft": m["draft"]}))
     return out
+
+
+def _spans(text, part):
+    """Start offsets of every occurrence of part in text."""
+    out, i = [], text.find(part)
+    while part and i >= 0:
+        out.append(i)
+        i = text.find(part, i + 1)
+    return out
+
+
+def coverage(drafts, mappings, clauses_of):
+    """Obligation sentences of the drafted clauses that the clause's mapping quotes do not cover: a sentence is
+    uncovered when less than COVERED_SHARE of its words lie inside some quote's span in the clause text."""
+    quotes = {}
+    for m in mappings:
+        quotes.setdefault((m["source"], m["ref"]), []).append(normalise(m["quote"]))
+    out = []
+    for req in drafts:
+        key = (req.meta["source"], req.meta["ref"])
+        text = normalise(clauses_of(key[0])[key[1]]["text"])
+        covered = [False] * len(text)
+        for q in quotes.get(key, []):
+            for start in _spans(text, q):
+                covered[start:start + len(q)] = [True] * len(q)
+        cursor = 0
+        for i, sentence in enumerate(obligations.sentences(text)):
+            if not obligations.strength(sentence):
+                continue
+            sentence = normalise(sentence)
+            start = text.find(sentence, cursor)
+            if start < 0:
+                start = text.find(sentence)
+            cursor = max(cursor, start + len(sentence)) if start >= 0 else cursor
+            words = [(start + w_start, len(w)) for w_start, w in _words(sentence)] if start >= 0 else []
+            share = (sum(all(covered[a:a + n]) for a, n in words) / len(words)) if words else 0.0
+            if share < COVERED_SHARE:
+                out.append({"source": key[0], "ref": key[1], "sentence_index": i, "covered_share": round(share, 2),
+                            "text": sentence})
+    return out
+
+
+def _words(sentence):
+    """(offset, word) of each whitespace-separated word."""
+    out, pos = [], 0
+    for w in sentence.split(" "):
+        out.append((pos, w))
+        pos += len(w) + 1
+    return [(a, w) for a, w in out if w]
 
 
 def report(mappings, rejected, draft_summary, verify_results, verify_summary):
@@ -168,20 +228,78 @@ def run(run_with, budget, pilot=PILOT, sources=None, clauses_of=None):
     v_dir, v_results, v_summary = runner.execute(run_with, verifies, "pilot-verify")
     rep = report(mappings, rejected, d_summary, v_results, v_summary)
     rep["not_verified_budget"] = skipped
+    rep["uncovered_sentences"] = coverage(drafts, mappings, clauses_of)
     rep["runs"] = [d_dir.name, v_dir.name]
     (v_dir / "pilot-report.json").write_text(json.dumps(rep, indent=1) + "\n", encoding="utf-8")
     return rep
 
 
+def prepare_draft(pilot=PILOT, sources=None, clauses_of=None):
+    """Session stage 1: draft batch files. Returns the draft run dir."""
+    import layer1
+    drafts = draft_requests(pilot, sources or layer1.catalog(), clauses_of or layer1.clauses_of)
+    return sessions.prepare(drafts, "session-draft")
+
+
+def ingest_draft(draft_dir, clauses_of=None):
+    """Session stage 2: validate the draft answers, write mappings.jsonl and rejected-quotes.jsonl."""
+    import layer1
+    clauses_of = clauses_of or layer1.clauses_of
+    results, summary = sessions.ingest(draft_dir)
+    mappings, rejected = mappings_from(sessions.load_requests(draft_dir), results, clauses_of)
+    runner.write_jsonl(Path(draft_dir) / "mappings.jsonl", mappings)
+    runner.write_jsonl(Path(draft_dir) / "rejected-quotes.jsonl", rejected)
+    return {"requests": summary["requests"], "failed": summary["failed"], "mappings": len(mappings),
+            "quotes_rejected": len(rejected)}
+
+
+def prepare_verify(draft_dir, sources=None, clauses_of=None):
+    """Session stage 3: verifier batch files for every mapping. Returns the verify run dir."""
+    import layer1
+    mappings = runner.read_jsonl(Path(draft_dir) / "mappings.jsonl")
+    verifies = verify_requests(mappings, sources or layer1.catalog(), clauses_of or layer1.clauses_of)
+    return sessions.prepare(verifies, "session-verify")
+
+
+def ingest_verify(verify_dir, draft_dir, clauses_of=None):
+    """Session stage 4: validate the verifier answers and write pilot-report.json into the verify dir."""
+    import layer1
+    clauses_of = clauses_of or layer1.clauses_of
+    verify_dir, draft_dir = Path(verify_dir), Path(draft_dir)
+    v_results, v_summary = sessions.ingest(verify_dir)
+    d_summary = json.loads((draft_dir / "summary.json").read_text(encoding="utf-8"))
+    mappings = runner.read_jsonl(draft_dir / "mappings.jsonl")
+    rejected = runner.read_jsonl(draft_dir / "rejected-quotes.jsonl")
+    rep = report(mappings, rejected, d_summary, v_results, v_summary)
+    rep["uncovered_sentences"] = coverage(sessions.load_requests(draft_dir), mappings, clauses_of)
+    rep["runs"] = [draft_dir.name, verify_dir.name]
+    (verify_dir / "pilot-report.json").write_text(json.dumps(rep, indent=1) + "\n", encoding="utf-8")
+    return rep
+
+
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("command", choices=["check", "run"])
+    ap.add_argument("command", choices=["check", "run", "prepare-draft", "ingest-draft", "prepare-verify",
+                                        "ingest-verify"])
+    ap.add_argument("dirs", nargs="*", help="run dirs: ingest-draft/prepare-verify <draft dir>; "
+                                            "ingest-verify <verify dir> <draft dir>")
     ap.add_argument("--budget", type=float, default=15.0, help="US$; nothing is sent above this worst case")
     args = ap.parse_args()
+    need = {"ingest-draft": 1, "prepare-verify": 1, "ingest-verify": 2}.get(args.command, 0)
+    if len(args.dirs) != need:
+        ap.error(f"{args.command} takes {need} run dir(s)")
     if args.command == "check":
         print("API key accepted; model:", runner.check_access())
-        return
-    print(json.dumps(run(runner.BatchRunner(), args.budget), indent=1))
+    elif args.command == "run":
+        print(json.dumps(run(runner.BatchRunner(), args.budget), indent=1))
+    elif args.command == "prepare-draft":
+        print(prepare_draft())
+    elif args.command == "ingest-draft":
+        print(json.dumps(ingest_draft(args.dirs[0]), indent=1))
+    elif args.command == "prepare-verify":
+        print(prepare_verify(args.dirs[0]))
+    else:
+        print(json.dumps(ingest_verify(*args.dirs), indent=1))
 
 
 if __name__ == "__main__":
