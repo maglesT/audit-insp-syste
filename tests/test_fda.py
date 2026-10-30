@@ -96,6 +96,14 @@ class Guidances(unittest.TestCase):
         self.assertNotIn("Attachment A #2", r)
 
 
+    def test_level_below_the_contents_list(self):
+        r = refs(headings.parse, "fda-guidance-container-closure-systems-1999.pdf")
+        self.assertTrue({"III.B.1", "III.B.4"} <= set(r))
+        r = refs(headings.parse, "fda-aseptic-2004.pdf")
+        self.assertIn("Appendix 1 A", r)
+        self.assertNotIn("XII.A", r)
+
+
 class Pages(unittest.TestCase):
     def test_qa_page_questions_in_order(self):
         clauses, _, _ = fdahtml.parse(common.OFFICIAL / "fda-cgmp-qa-laboratory-controls.html")
