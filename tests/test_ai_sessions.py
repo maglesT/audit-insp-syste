@@ -22,7 +22,7 @@ def draft_answer(clause_text):
     """One obligation whose quote is the clause's first ten words."""
     quote = " ".join(clause_text.split()[:10])
     return {"no_obligation_reason": "", "obligations": [
-        {"statement": "x", "quote": quote, "strength": "recommended", "plant_types": ["OSD"], "numbers": []}]}
+        {"statement": "x", "quote": quote, "strength": "recommended", "plant_types": ["OSD"], "numbers": [], "topic": "SI.PROG"}]}
 
 
 def answer_all(run_dir, make):
@@ -137,7 +137,7 @@ class Sessions(unittest.TestCase):
         base = {"source": "eu-cap9_en.pdf", "ref": "Chapter 9 9.3"}
         whole = pilot.coverage(drafts, [{**base, "quote": text}], layer1.clauses_of)
         self.assertEqual([u["ref"] for u in whole], ["Chapter 9 9.1"])      # 9.3 fully quoted, 9.1 not at all
-        self.assertTrue(all(u["covered_share"] == 0 for u in whole))
+        self.assertTrue(all(u["covered_share"] < 0.2 for u in whole))     # only the clause number counts
         sentences = [s for s in pilot.obligations.sentences(pilot.normalise(text))
                      if pilot.obligations.strength(s)]
         self.assertGreater(len(sentences), 1)
@@ -224,7 +224,7 @@ class Sessions(unittest.TestCase):
         self.assertEqual(uncovered("Records must be kept", "Audits should be done", "done yearly, by staff"), [])
         # a quote across a sentence boundary covers the first copy only; the repeated sentence is found in place
         self.assertEqual(uncovered("Records must be kept. Audits should be done yearly, by staff"), [(2, 0.0)])
-        self.assertEqual(uncovered("Records must"), [(0, 0.4), (1, 0.0), (2, 0.0)])   # "(a)" is a word
+        self.assertEqual(uncovered("Records must"), [(0, 0.6), (1, 0.0), (2, 0.0)])   # "(a)" leads: not counted
 
     def test_verify_run_is_tied_to_its_draft_run(self):
         draft_dir = pilot.prepare_draft(PILOT)

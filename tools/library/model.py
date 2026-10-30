@@ -1,12 +1,15 @@
-"""The internal library: topics, requirements with their mappings to clauses, coverage (plan section 1).
+"""The internal library: topics, checklist items with their source clause, coverage (plan section 1, D37).
 
 Plain JSON files in git, so every change is a reviewable diff (D12):
 - library/topics.json                      the fixed topic tree (about 20 audit areas with sub-topics)
 - library/requirements/<TOPIC>.json        {"requirements": [Requirement, ...]} for one topic
 - library/coverage/<source stem>.json      {"clauses": {clause ref: {"requirements": [...]} | {"na": reason}}}
 
-A requirement holds the plain-language item text (the only text customers ever see), and its mappings hold the
-exact quotes and clause references (never exported, option A). Standard library only.
+Per-regulator items (D37): a requirement record is one checklist item for one obligation of one regulator. It holds
+the plain-language item text (the only text customers ever see) and exactly one mapping, its internal source link:
+source, clause reference, clause sha256, exact quote, strength and plant types (never exported, option A). There is
+no cross-regulator merging: near-identical items of different regulators are grouped for display by the export.
+Standard library only.
 """
 import json
 import re
@@ -17,7 +20,6 @@ LIBRARY = ROOT / "library"
 
 PLANT_TYPES = ("OSD", "LIQ", "SEMI", "INJ", "API")          # D6; "ALL" in sources means every type
 STRENGTHS = ("mandatory", "recommended", "optional")
-RELATIONS = ("same", "stricter", "adds", "looser", "narrower")
 STATUSES = ("draft", "verified", "unverified", "retired")
 ID = re.compile(r"^[A-Z]{2,5}-\d{3,4}$")                       # "SI-001": topic + running number
 SHA256 = re.compile(r"^[0-9a-f]{64}$")
@@ -25,7 +27,7 @@ SHA256 = re.compile(r"^[0-9a-f]{64}$")
 REQUIREMENT_FIELDS = {"id": str, "topic": str, "item_text": str, "strength": str, "plant_types": list,
                       "parameters": dict, "general": bool, "status": str, "mappings": list}
 MAPPING_FIELDS = {"source": str, "clause_ref": str, "clause_sha256": str, "quote": str, "strength": str,
-                  "relation": str, "plant_types": list, "addendum": str}
+                  "plant_types": list}
 
 
 def load_json(path):
@@ -100,8 +102,8 @@ def validate(root=LIBRARY, sources=None):
         for k, v in (req.get("parameters") or {}).items():
             if not isinstance(v, (int, float, str)):
                 errors.append(f"{where}: parameter {k!r} must be a number or a short string")
-        if not req.get("mappings") and req.get("status") != "retired":
-            errors.append(f"{where}: no mappings")
+        if len(req.get("mappings") or []) != 1 and req.get("status") != "retired":
+            errors.append(f"{where}: an item has exactly one mapping (D37)")
         for n, m in enumerate(req.get("mappings") or [], start=1):
             mw = f"{where} mapping {n}"
             if not isinstance(m, dict):
@@ -114,15 +116,11 @@ def validate(root=LIBRARY, sources=None):
                 errors.append(f"{mw}: clause_sha256 must be a sha256 hex digest")
             if m.get("strength") not in STRENGTHS:
                 errors.append(f"{mw}: strength must be one of {STRENGTHS}")
-            if m.get("relation") not in RELATIONS:
-                errors.append(f"{mw}: relation must be one of {RELATIONS}")
             if not isinstance(m.get("plant_types"), list) or not m["plant_types"] \
                     or any(p not in PLANT_TYPES for p in m["plant_types"]):
                 errors.append(f"{mw}: plant_types must be a non-empty subset of {PLANT_TYPES}")
             if not str(m.get("quote", "")).strip():
                 errors.append(f"{mw}: empty quote")
-            if m.get("relation") in ("stricter", "adds") and not str(m.get("addendum", "")).strip():
-                errors.append(f"{mw}: relation {m.get('relation')!r} needs an addendum")
     for stem, clauses in coverage(root).items():
         for ref, entry in clauses.items():
             where = f"coverage {stem} {ref}"

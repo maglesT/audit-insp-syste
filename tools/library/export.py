@@ -4,17 +4,17 @@
   python3 tools/library/export.py build --regulators "EU,PIC/S" --plant OSD [--out FILE] [--library DIR]
 
 The customer app loads only this export. It holds, per item, exactly ITEM_FIELDS: id, item text, topic,
-regulators, plant types and strength; never quotes, clause references or sources (option A). Customers see
-regulator names (REGULATOR_NAMES), and a selection is made by those names, so "EU" means EU and EMA documents.
-"Strictest wins" for one set of regulator names and one plant type:
-- a requirement appears when it is verified, covers the plant type, and has a mapping to a selected regulator
-  that covers the plant type (for a requirement marked general, any mapping to a selected regulator);
-- its item text is the base text plus the addenda of the selected mappings that cover the plant type and whose
-  relation is "stricter" or "adds"; its strength is the strictest of those mappings (the requirement's own
-  strength when none covers the plant type);
-- its regulator tags are the selected regulators it is mapped to; the checklist header lists only regulators
-  that have an item.
-Unverified requirements are never exported (D13).
+regulators, plant types, strength and display group; never quotes, clause references or sources (option A).
+Customers see regulator names (REGULATOR_NAMES), and a selection is made by those names, so "EU" means EU and EMA
+documents. Per-regulator items (D37), for one set of regulator names and one plant type:
+- an item appears when it is verified, covers the plant type, and its mapping is to a selected regulator and
+  covers the plant type (for an item marked general, any plant type of the item);
+- items with the same text, topic and strength (twin clauses, EU GMP and PIC/S) are shown once, tagged with every
+  selected regulator that has one;
+- near-identical items share a display group (GROUP_SIMILARITY of their 3-word runs); nothing is merged by
+  judgement and there is no "strictest wins" compilation;
+- the checklist header lists only regulators that have an item.
+Unverified items are never exported (D13).
 
 The option-A test fails when the export
 - has a field other than the allowed ones, a field name about quotes, clauses or sources, or a value of the wrong
@@ -26,8 +26,8 @@ The option-A test fails when the export
 - contains clause-reference or document-name wording ("§", "Annex 15", "Art. 5", "21 CFR", "211.68", "ICH Q9",
   "PE 009", "TRS", "EudraLex", "Schedule M", "10.8.2"). Ordinary wording that trips this ("Section 1 of the batch
   record") goes in library/export-allow.json after a person has looked at it.
-Every text a customer could see is checked: each base text and addendum on its own, and the compiled item text
-for every subset of the regulators a requirement maps to, for every plant type. The sources compared are those
+Every text a customer could see is checked: each item text, and the export of every regulator name alone and all
+together, for every plant type. The sources compared are those
 the library maps to (all sources with --all-sources; too slow for CI while clauses are parsed on demand).
 """
 import argparse
@@ -37,6 +37,7 @@ import json
 import re
 import sys
 import unicodedata
+from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -44,13 +45,15 @@ if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parent))
 import model  # noqa: E402
 
-ITEM_FIELDS = ("id", "item_text", "topic", "regulators", "plant_types", "strength")
+ITEM_FIELDS = ("id", "item_text", "topic", "regulators", "plant_types", "strength", "group")
 TOP_FIELDS = ("format", "generated", "regulators", "plant_type", "disclaimer", "topics", "items")
 FORBIDDEN_NAME = re.compile(r"quote|clause|source|ref|sha|mapping|addend|page|offset|citation|url", re.I)
 OVERLAP_WORDS = 12
 PHRASE_WORDS = 6
 RANK = {"optional": 0, "recommended": 1, "mandatory": 2}
-ADDS = ("stricter", "adds")
+GROUP_SHINGLE = 3                  # display groups (D37): Jaccard of 3-word runs of the item texts
+GROUP_SIMILARITY = 0.5
+GROUP_COMMON_RUN = 50               # a run held by more items than this proposes no candidates (the Jaccard is exact)
 DISCLAIMER = ("Compiled from official texts with automated multi-step verification. Supports internal audits; "
               "does not replace the site's own judgement.")
 # regulator code in sources/catalog.csv -> the name customers see (a regulator name only, never a document)
@@ -99,14 +102,50 @@ def _key(text):
     return " ".join(words(text))
 
 
+def _shingles(text):
+    w = words(text)
+    return {tuple(w[i:i + GROUP_SHINGLE]) for i in range(max(len(w) - GROUP_SHINGLE + 1, 1))}
+
+
+def _order(rid):
+    prefix, _, number = rid.partition("-")
+    return (prefix, int(number) if number.isdigit() else 0)
+
+
+def groups(items, sources_of):
+    """{item id: group id}. A display group is a seed item, in id order, and every later ungrouped item from a
+    different source whose text shares at least GROUP_SIMILARITY of its 3-word runs with the seed's (Jaccard).
+    Nothing chains through a third item, items of one source are never grouped with each other, and only items
+    that share a run held by at most GROUP_COMMON_RUN items are compared. Text similarity only, no judgement of stricter or looser (D37)."""
+    runs = {it["id"]: _shingles(it["item_text"]) for it in items}
+    index = defaultdict(set)
+    for rid, r in runs.items():
+        for run in r:
+            index[run].add(rid)
+    group = {}
+    for seed in sorted(runs, key=_order):
+        if seed in group:
+            continue
+        group[seed] = seed
+        candidates = set().union(*(index[run] for run in runs[seed] if len(index[run]) <= GROUP_COMMON_RUN))
+        for other in sorted(candidates, key=_order):
+            if other in group or not sources_of[other].isdisjoint(sources_of[seed]):
+                continue
+            if len(runs[seed] & runs[other]) / len(runs[seed] | runs[other]) >= GROUP_SIMILARITY:
+                group[other] = seed
+    return group
+
+
 def compile_items(reqs, sources, names, plant_type):
-    """The items of one compilation (regulator names, one plant type), in library order."""
+    """The items of one compilation (regulator names, one plant type), in library order (D37). Each library item
+    is one obligation of one regulator; items of selected regulators with the same text, topic and strength (EU
+    and PIC/S twins) are shown once with all their regulator tags, and near-identical items share a group."""
     names = set(names)
 
     def name(m):
         return REGULATOR_NAMES[sources[m["source"]]["regulator"]]
 
-    items = []
+    merged, sources_of = {}, {}
     for req in reqs:
         if req["status"] != "verified" or plant_type not in req["plant_types"]:
             continue
@@ -114,22 +153,19 @@ def compile_items(reqs, sources, names, plant_type):
                   and (plant_type in m["plant_types"] or req["general"])]
         if not chosen:
             continue
-        covering = [m for m in chosen if plant_type in m["plant_types"]]
-        parts, seen = [_sentence(req["item_text"])], set()
-        for m in covering:
-            text = m["addendum"].strip()
-            if m["relation"] in ADDS and text and _key(text) not in seen:
-                seen.add(_key(text))
-                parts.append(_sentence(text))
-        items.append({
-            "id": req["id"],
-            "item_text": " ".join(parts),
-            "topic": req["topic"],
-            "regulators": sorted({name(m) for m in chosen}),
-            "plant_types": [plant_type],
-            "strength": max((m["strength"] for m in covering), key=RANK.get) if covering else req["strength"],
-        })
-    return items
+        text = _sentence(req["item_text"])
+        key = (_key(text), req["topic"], req["strength"])
+        if key in merged:
+            merged[key]["regulators"] = sorted(set(merged[key]["regulators"]) | {name(m) for m in chosen})
+            sources_of[merged[key]["id"]] |= {m["source"] for m in chosen}
+            continue
+        sources_of[req["id"]] = {m["source"] for m in chosen}
+        merged[key] = {"id": req["id"], "item_text": text, "topic": req["topic"],
+                       "regulators": sorted({name(m) for m in chosen}), "plant_types": [plant_type],
+                       "strength": req["strength"]}
+    items = list(merged.values())
+    group_of = groups(items, sources_of)
+    return [{**it, "group": group_of[it["id"]]} for it in items]
 
 
 def export(reqs, sources, names, plant_type, topic_names, now=None):
@@ -253,15 +289,8 @@ def corpus_for(reqs, sources, segments_of, all_sources=False):
 
 
 def visible_texts(req, sources):
-    """Every text of one requirement a customer could see: its base text, each addendum, and the compiled item
-    text for every subset of the regulators it maps to, for every plant type."""
-    out = {req["item_text"]} | {m["addendum"] for m in req["mappings"] if m["addendum"].strip()}
-    mapped = sorted({REGULATOR_NAMES[sources[m["source"]]["regulator"]] for m in req["mappings"]})
-    for n in range(1, len(mapped) + 1):
-        for subset in itertools.combinations(mapped, n):
-            for plant in model.PLANT_TYPES:
-                out |= {it["item_text"] for it in compile_items([req], sources, subset, plant)}
-    return sorted(out)
+    """Every text of one item a customer could see: its item text (D37: no addenda, no compiled text)."""
+    return [req["item_text"]]
 
 
 def load_allow(root):
@@ -277,9 +306,11 @@ def compilations():
             yield [name], plant
 
 
-def check_library(root=model.LIBRARY, sources=None, segments_of=None, all_sources=False):
-    """Option-A findings over the whole library: every customer-visible text, and the export document of every
-    regulator name alone and all together, per plant type."""
+def check_library(root=model.LIBRARY, sources=None, segments_of=None, all_sources=False, drafts=False):
+    """Option-A findings over the library: the item text of every verified item (with drafts=True, of every other
+    live item instead; with drafts=None, of every live item), and, unless drafts is given, the export document of
+    every regulator name alone and all together, per plant type.
+    Only verified items can be exported; a draft with a finding is fixed before Layer 2 can verify it (verify.py)."""
     if segments_of is None:
         import layer1
         segments_of = layer1.segments_of
@@ -288,8 +319,12 @@ def check_library(root=model.LIBRARY, sources=None, segments_of=None, all_source
     corpus, allow = corpus_for(reqs, sources, segments_of, all_sources), load_allow(root)
     out = []
     for req in reqs:
+        if req["status"] == "retired" or (drafts is not None and (req["status"] == "verified") == drafts):
+            continue
         for text in visible_texts(req, sources):
             out += [f"{req['id']}: {f}" for f in check_text(text, corpus, allow)]
+    if drafts is not False:
+        return sorted(set(out))
     for names_, plant in compilations():
         doc = export(reqs, sources, names_, plant, names)
         out += [f"{'+'.join(names_)}/{plant} {f}" for f in check(doc, corpus, allow)]
@@ -321,7 +356,11 @@ def main(argv=None):
         findings = check_library(a.library, sources, all_sources=a.all_sources)
         for f in findings:
             print(f)
-        print(f"option A: {len(findings)} findings ({len(model.requirements(a.library))} requirements)")
+        reqs = model.requirements(a.library)
+        drafts = check_library(a.library, sources, all_sources=a.all_sources, drafts=True)
+        print(f"option A: {len(findings)} findings ({sum(r['status'] == 'verified' for r in reqs)} verified items "
+              f"of {len(reqs)}); not yet verified items with findings, to fix before verification: "
+              f"{len({f.split(':')[0] for f in drafts})}")
         sys.exit(1 if findings else 0)
     if not a.regulators or not a.plant:
         ap.error("build needs --regulators and --plant")

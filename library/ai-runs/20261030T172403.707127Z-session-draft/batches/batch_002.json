@@ -1,0 +1,211 @@
+{
+ "instructions": "You read one clause of a pharmaceutical GMP text and list the obligations it states. Your output is checked by\nsoftware and by independent reviewers, so precision matters more than completeness of wording.\n\nList each separate obligation of the clause as its own item, so that together your items cover every\nobligation in the clause. One obligation is one thing a site must, should or may do, with all its conditions,\nnumbers and qualifiers; do not split a single obligation across items. For each item:\n- statement: the obligation in your own plain English words, as one checklist item a site could be audited\n  against. Do not copy more than a few words in a row from the clause. Keep conditions (\"where\", \"if\",\n  \"unless\") and every number. Do not add anything the clause does not say.\n- quote: the exact span of the clause text that states the whole obligation, with its conditions, numbers\n  and qualifiers, copied character for\n  character (it is matched against the clause by software; do not fix typos or change punctuation).\n- strength: \"mandatory\" for shall / must / is required / may not; \"recommended\" for should; \"optional\" for may.\n  Take it from the main verb of the quoted words, not from words in a condition.\n- plant_types: the kinds of manufacturing site the obligation applies to, from OSD (oral solid dosage),\n  LIQ (oral liquids), SEMI (semisolids), INJ (sterile injectables), API (active substances). Use the scope\n  given with the clause unless the clause itself narrows it.\n- numbers: every number, limit, frequency or period in the quote, as written.\n\nIf the clause states no obligation (a heading, a definition, a statement of purpose), return no obligations\nand say why in no_obligation_reason. Otherwise leave no_obligation_reason empty.\n",
+ "schema": {
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+   "obligations",
+   "no_obligation_reason"
+  ],
+  "properties": {
+   "no_obligation_reason": {
+    "type": "string"
+   },
+   "obligations": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "statement",
+      "quote",
+      "strength",
+      "plant_types",
+      "numbers"
+     ],
+     "properties": {
+      "statement": {
+       "type": "string"
+      },
+      "quote": {
+       "type": "string"
+      },
+      "strength": {
+       "type": "string",
+       "enum": [
+        "mandatory",
+        "recommended",
+        "optional"
+       ]
+      },
+      "plant_types": {
+       "type": "array",
+       "items": {
+        "type": "string",
+        "enum": [
+         "OSD",
+         "LIQ",
+         "SEMI",
+         "INJ",
+         "API"
+        ]
+       }
+      },
+      "numbers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   }
+  }
+ },
+ "items": [
+  {
+   "custom_id": "draft-080",
+   "input": "Source: WHO - WHO good manufacturing practices for excipients used in pharmaceutical products\nApplies to plant types: API, INJ, LIQ, OSD, SEMI\nSection: Appendix 1\nClause Appendix 1 3.16:\n3.16 Management should ensure that the quality management system achieves its intended objectives and measures managing and performance in areas such as: ■ self-inspections, inspections, quality audits and supplier’s audits ■ complaints, returns and recalls ■ changes and deviations ■ rejected batches ■ quality control, out-of-specification results and out-of-trend results ■ maintenance ■ qualification and validation ■ corrective and preventive actions ■ risk management."
+  },
+  {
+   "custom_id": "draft-081",
+   "input": "Source: WHO - WHO good manufacturing practices for excipients used in pharmaceutical products\nApplies to plant types: API, INJ, LIQ, OSD, SEMI\nSection: Appendix 1\nClause Appendix 1 7.1:\n7.1 There should be written standard operating procedures and programmes for periodic self-inspections, quality audits and supplier audits."
+  },
+  {
+   "custom_id": "draft-082",
+   "input": "Source: WHO - WHO good manufacturing practices for excipients used in pharmaceutical products\nApplies to plant types: API, INJ, LIQ, OSD, SEMI\nSection: Appendix 1\nClause Appendix 1 7.2:\n7.2 Self-inspections should be performed routinely in accordance with a self- inspection programme."
+  },
+  {
+   "custom_id": "draft-083",
+   "input": "Source: WHO - WHO good manufacturing practices for excipients used in pharmaceutical products\nApplies to plant types: API, INJ, LIQ, OSD, SEMI\nSection: Appendix 1\nClause Appendix 1 7.3:\n7.3 The team responsible for self-inspection should consist of personnel with the appropriate knowledge and experience. Team members may be from inside or outside the manufacturer, but members of the team should be free from bias."
+  },
+  {
+   "custom_id": "draft-084",
+   "input": "Source: WHO - WHO good manufacturing practices for excipients used in pharmaceutical products\nApplies to plant types: API, INJ, LIQ, OSD, SEMI\nSection: Appendix 1\nClause Appendix 1 7.4:\n7.4 Areas to be covered in self-inspections may include: ■ premises ■ personnel ■ equipment ■ maintenance and calibration ■ storage conditions of materials and finished products ■ production and in-process controls ■ quality control ■ documentation, data generation and data integrity ■ change control and deviations management ■ complaints and recalls ■ qualification and validation ■ cleaning procedures."
+  },
+  {
+   "custom_id": "draft-085",
+   "input": "Source: WHO - WHO good manufacturing practices for excipients used in pharmaceutical products\nApplies to plant types: API, INJ, LIQ, OSD, SEMI\nSection: Appendix 1\nClause Appendix 1 7.5:\n7.5 The excipient’s end use should be considered during inspection of excipient manufacturers. It is particularly important to know whether the excipient will be used in the preparation of a sterile dosage form. The excipient manufacturer is responsible for ensuring that excipients are pyrogen free if the manufacturer makes such a representation in specifications, labels or a drug master file."
+  },
+  {
+   "custom_id": "draft-086",
+   "input": "Source: WHO - WHO good manufacturing practices for excipients used in pharmaceutical products\nApplies to plant types: API, INJ, LIQ, OSD, SEMI\nSection: Appendix 1\nClause Appendix 1 10.7:\n10.7 Standard operating procedures and associated records should be available for at least the following: ■ equipment ■ analytical apparatus and instruments ■ out-of-specification results ■ maintenance and calibration ■ cleaning and sanitization ■ personnel matters, such as training, clothing and hygiene ■ qualification and validation ■ self-inspection and audits ■ complaints ■ recalls ■ returns."
+  },
+  {
+   "custom_id": "draft-087",
+   "input": "Source: WHO - WHO good manufacturing practices for excipients used in pharmaceutical products\nApplies to plant types: API, INJ, LIQ, OSD, SEMI\nSection: Appendix 1\nClause Appendix 1 17.2:\n17.2 Manufacturers should implement measures to continuously improve the quality management system, manufacturing and testing procedures, and the quality of their products. These measures may include the review of root causes of nonconformances, quality complaint investigations and outcomes, and results from self-inspections, audits and other trends."
+  },
+  {
+   "custom_id": "draft-088",
+   "input": "Source: WHO - WHO good manufacturing practices for excipients used in pharmaceutical products\nApplies to plant types: API, INJ, LIQ, OSD, SEMI\nSection: Appendix 1\nClause Appendix 1 7.3 #2:\n7.3 Risk statement: Are pieces of equipment appropriately designed, located and maintained for the manufacture of excipients used in pharmaceutical products? Design Residue accumulate Access to all surfaces restricted Inappropriate design but still being used as there is no alternative on site and primarily used for other excipients – risk of contamination Location Equipment located in unsuitable location in facility Located in unsuitable environment Located in areas where other materials or products are produced Inappropriate location, with restricted access for use and cleaning Materials of Not smooth and impervious construction Absorb and adsorb material Not easily cleanable May result in risk of cross-contamination"
+  },
+  {
+   "custom_id": "draft-089",
+   "input": "Source: WHO - WHO good manufacturing practices for excipients used in pharmaceutical products\nApplies to plant types: API, INJ, LIQ, OSD, SEMI\nSection: Appendix 1\nClause Appendix 1 7.4 #2:\n7.4 Risk statement: Are the materials used in the production of the excipient of appropriate quality and purity, or is there a risk of formation of impurities and undesired contaminants that may be present in pharmaceutical products? Raw material Contains nitrite or nitrate No supplier qualification Obtained through repacker, agent May be contaminated Inappropriate sampling plan and sampling procedure Sampling area may result in contamination Inappropriate storage of materials may result in contamination and interaction Containers used not appropriate, not sealed Repackaging taking place Certificate of analysis not original, or not available Solvent Fresh or recovered solvents are used, but are not of appropriate quality or purity"
+  },
+  {
+   "custom_id": "draft-090",
+   "input": "Source: WHO - WHO good manufacturing practices for excipients used in pharmaceutical products\nApplies to plant types: API, INJ, LIQ, OSD, SEMI\nSection: Appendix 1\nClause Appendix 1 7.6:\n7.6 Risk statement: Are the personnel appropriately trained and qualified to ensure that their actions and conduct do not present a risk of contamination of materials? Education Does every person have the appropriate education to handle excipients, including production, storage, distribution? Qualification, validation Is every person qualified to perform the required procedure, where validated activities are required? Training Does every person have appropriate on-the-job and good practice training? Gowning Is there a gowning procedure? Are garments appropriately cleaned? Is the cleaning done by an outside vendor? How is this controlled? Are garments a possible source of contamination?"
+  },
+  {
+   "custom_id": "draft-091",
+   "input": "Source: WHO - WHO good manufacturing practices for excipients used in pharmaceutical products\nApplies to plant types: API, INJ, LIQ, OSD, SEMI\nSection: Appendix 1\nClause Appendix 1 7.7:\n7.7 Risk statement: Is the production process appropriately developed and controlled to ensure that interaction between materials, or any step in production and purification, will not result in contamination of the excipient, resulting in a material of unacceptable quality and purity? Production process Processing steps include reactions between materials containing nitrate Materials containing vulnerable (especially secondary) amines in process Nitrosating agents are used in the process Materials are inappropriately stored Above aspects may result in contamination of the material with impurities (nitrosamine)"
+  },
+  {
+   "custom_id": "draft-092",
+   "input": "Source: WHO - WHO good manufacturing practices for excipients used in pharmaceutical products\nApplies to plant types: API, INJ, LIQ, OSD, SEMI\nSection: Appendix 1\nClause Appendix 1 7.8:\n7.8 Risk statement: Is the repackaging process appropriately controlled to prevent any risk of contamination, mix-up or substitution of materials that may result in a material of unacceptable quality and purity? Repackaging process Insufficient sampling and testing of incoming material for resale No certificate of analysis obtained from suppliers Mix-up of materials for repackaging Contamination of material with other material such as diethylene glycol (DEG) or ethylene glycol (EG) because of repacking into dirty or contaminated containers or the use of dirty contaminated equipment (such as pumps and transfer lines) Substitution of material with a cheaper, lower- quality material (not appropriate grade) Risk of contamination of material with unwanted material or product, such as methanol, DEG or EG"
+  },
+  {
+   "custom_id": "draft-093",
+   "input": "Source: WHO - WHO good manufacturing practices for excipients used in pharmaceutical products\nApplies to plant types: API, INJ, LIQ, OSD, SEMI\nSection: Appendix 1\nClause Appendix 1 7.9:\n7.9 Risk statement: Is the storage process appropriately controlled, in accordance with storage requirements, to prevent any risk of uncontrolled degradation, increase in level of impurity, contamination, mix-up or substitution of materials that may result in a material of unacceptable quality and purity? Storage process Use of inappropriate storage containers that are not suitably sealed of cleaned Unsuitable storage conditions, including temperature, humidity Degradation of material resulting in increase in degradation of product Risk of interaction of an amine group with nitrite may result in formation of nitrosamine Degradation may occur during storage, resulting in an increase in degradation of product"
+  },
+  {
+   "custom_id": "draft-094",
+   "input": "Source: WHO - WHO good manufacturing practices for excipients used in pharmaceutical products\nApplies to plant types: API, INJ, LIQ, OSD, SEMI\nSection: Appendix 1\nClause Appendix 1 7.10:\n7.10 Risk statement: Is the distribution process appropriately controlled, in accordance with good practices, to prevent any risk of uncontrolled degradation, increase in level of impurity, contamination, mix-up or substitution of materials that may result in a material of unacceptable quality and purity? Distribution process Inappropriate packaging of materials Spillage during distribution Inappropriate conditions during distribution, including temperature and humidity Loss in identification of materials, as labels are lost or damaged Inappropriate seals of containers, with exposure to the environment"
+  },
+  {
+   "custom_id": "draft-095",
+   "input": "Source: WHO - Guidelines on packaging for pharmaceutical products\nApplies to plant types: API, INJ, LIQ, OSD, SEMI\nSection: Annex 9 Appendix 3\nClause Annex 9 Appendix 3 1:\n1. Principle. The purpose of self-inspection is to evaluate the manufacturer’s compliance with GMP in all aspects of production and quality control. The self-inspection programme should be designed to detect any shortcomings in the implementation of GMP and to rec- ommend the necessary corrective actions. Self-inspections should be performed routinely, and may be, in addition, performed on special occasions, e.g. in the case of product recalls or repeated rejections, or when an inspection by the health authorities is announced. The team responsible for self-inspection should consist of personnel who can evaluate the implementation of GMP objectively; all recommenda- tions for corrective action should be implemented. The procedure for self-inspection should be documented, and there should be an effec- tive follow-up programme. Items for self-inspection"
+  },
+  {
+   "custom_id": "draft-096",
+   "input": "Source: WHO - Guidelines on packaging for pharmaceutical products\nApplies to plant types: API, INJ, LIQ, OSD, SEMI\nSection: Annex 9 Appendix 3\nClause Annex 9 Appendix 3 2:\n2. Written instructions for self-inspection should be established to provide a minimum and uniform standard of requirements. These may include questionnaires on GMP requirements covering at least the following items: (a) personnel (b) premises including personnel facilities (c) maintenance of buildings and equipment (d) storage of starting materials and finished products (e) equipment (f) production and in-process controls (g) quality control (h) documentation (i) sanitation and hygiene (j) validation and revalidation programmes (k) calibration of instruments or measurements systems (l) recall procedures (m) complaints management (n) labels control (o) results of previous self-inspections and any corrective steps taken. 1 Previously published in “Good manufacturing practices for pharmaceutical products”. In: WHO Expert Committee on Specifications for Pharmaceutical Preparations. Thirty- second report. Geneva, World Health Organization, 1992, Annex 1 (WHO Technical Report Series, No. 823). Self-inspection team"
+  },
+  {
+   "custom_id": "draft-097",
+   "input": "Source: WHO - Guidelines on packaging for pharmaceutical products\nApplies to plant types: API, INJ, LIQ, OSD, SEMI\nSection: Annex 9 Appendix 3\nClause Annex 9 Appendix 3 3:\n3. Management should appoint a self-inspection team from local staff who are expert in their own fields and familiar with GMP. The members of the team may be appointed from inside or outside the company. Frequency of self-inspection"
+  },
+  {
+   "custom_id": "draft-098",
+   "input": "Source: WHO - Guidelines on packaging for pharmaceutical products\nApplies to plant types: API, INJ, LIQ, OSD, SEMI\nSection: Annex 9 Appendix 3\nClause Annex 9 Appendix 3 4:\n4. The frequency at which self-inspections are conducted may de- pend on company requirements. Self-inspection report"
+  },
+  {
+   "custom_id": "draft-099",
+   "input": "Source: WHO - Guidelines on packaging for pharmaceutical products\nApplies to plant types: API, INJ, LIQ, OSD, SEMI\nSection: Annex 9 Appendix 3\nClause Annex 9 Appendix 3 5:\n5. A report should be made at the completion of a self-inspection. The report should include: (a) self-inspection results (b) evaluation and conclusions (c) recommended corrective actions. Follow-up action"
+  },
+  {
+   "custom_id": "draft-100",
+   "input": "Source: WHO - Guidelines on packaging for pharmaceutical products\nApplies to plant types: API, INJ, LIQ, OSD, SEMI\nSection: Annex 9 Appendix 3\nClause Annex 9 Appendix 3 6:\n6. The company management should evaluate both the self- inspection report and the corrective actions as necessary. Quality audit"
+  },
+  {
+   "custom_id": "draft-101",
+   "input": "Source: WHO - Guidelines on packaging for pharmaceutical products\nApplies to plant types: API, INJ, LIQ, OSD, SEMI\nSection: Annex 9 Appendix 3\nClause Annex 9 Appendix 3 7:\n7. It may be useful to supplement self-inspections with a quality audit. A quality audit consists of an examination and assessment of all or part of a quality system with the specific purpose of improving it. A quality audit is usually conducted by outside or independent special- ists or a team designated by the management for this purpose. Such audits may also be extended to suppliers and contractors. Suppliers’ audits"
+  },
+  {
+   "custom_id": "draft-102",
+   "input": "Source: WHO - TRS 957 Annex 2 GMP for active pharmaceutical ingredients\nApplies to plant types: API\nSection: Annex 2 Appendix 2\nClause Annex 2 Appendix 2 2.22:\n2.22 The main responsibilities of the independent quality unit(s) should not be delegated. These responsibilities should be described in writing and should include but not necessarily be limited to: 1. Releasing or rejecting all APIs. Releasing or rejecting intermediates for use outside the control of the manufacturing company. 2. Establishing a system to release or reject raw materials, intermediates, packaging and labelling materials. 3. Reviewing completed batch production and laboratory control records of critical process steps before release of the API for distribution. 4. Making sure that critical deviations are investigated and resolved. 5. Approving all speciﬁcations and master production instructions. 6. Approving all procedures impacting the quality of intermediates or APIs. 7. Making sure that internal audits (self-inspections) are performed. 8. Approving intermediate and API contract manufacturers. 9. Approving changes that potentially impact quality of intermediates or APIs. 10. Reviewing and approving validation protocols and reports. 11. Making sure that quality-related complaints are investigated and resolved. 12. Making sure that effective systems are used for maintaining and calibrating critical equipment. 13. Making sure that materials are appropriately tested and the results are reported. 14. Making sure that there are stability data to support retest or expiry dates and storage conditions on APIs and/or intermediates where appropriate. 15. Performing product quality reviews (as deﬁned in section 2.5)."
+  },
+  {
+   "custom_id": "draft-103",
+   "input": "Source: WHO - TRS 957 Annex 2 GMP for active pharmaceutical ingredients\nApplies to plant types: API\nSection: Annex 2 Appendix 2\nClause Annex 2 Appendix 2 2.41:\n2.41 Audit ﬁndings and corrective actions should be documented and brought to the attention of the responsible management of the ﬁrm. Agreed corrective actions should be completed in a timely and effective manner."
+  },
+  {
+   "custom_id": "draft-104",
+   "input": "Source: WHO - TRS 986 Annex 2 GMP for pharmaceutical products: main principles\nApplies to plant types: INJ, LIQ, OSD, SEMI\nClause 1.5:\n1.5 The PQS appropriate to the manufacture of pharmaceutical products should ensure that: a) product realization is achieved by designing, qualifying, planning, implementing, maintaining and continuously improving a system that allows the consistent delivery of products with appropriate quality attributes; b) product and process knowledge is managed throughout all life- cycle stages; c) pharmaceutical products are designed and developed in a way that takes account of the requirements of GMP and other associated codes such as those of good laboratory practice (GLP) and good clinical practice (GCP); d) production and control operations are clearly specified in a written form and GMP requirements are adopted; e) managerial responsibilities are clearly specified in job descriptions; f) arrangements are made for the manufacture, supply and use of the correct starting and packaging materials, the selection and monitoring of suppliers and for verifying that each delivery is the correct material from the approved supply chain; g) all necessary controls on starting materials, intermediate products, and bulk products and other in-process controls, calibrations and validations are carried out; h) the finished product is correctly processed and checked, according to the defined procedures; i) pharmaceutical products are not sold or supplied before the authorized persons (see also sections 9.11 and 9.12) have certified that each production batch has been produced and controlled in accordance with the requirements of the marketing authorization and any other regulations relevant to the production, control and release of pharmaceutical products; j) processes are in place to assure the management of outsourced activities; k) satisfactory arrangements exist to ensure, as far as possible, that the pharmaceutical products are stored, distributed and subsequently handled so that quality is maintained throughout their shelf-life; l) there is a procedure for self-inspection and/or quality audit that regularly appraises the effectiveness and applicability of the PQS; m) product and processes are monitored and the results taken into account in batch release, in the investigation of deviations and, with a view to taking preventive action to avoid potential deviations occurring in the future; n) arrangements are in place for the prospective evaluation and approval of planned changes and their approval prior to implementation taking into account regulatory notification and approval where required. After implementation of any change, an evaluation is undertaken to confirm that the quality objectives were achieved and that there was no unintended adverse impact on product quality; o) regular reviews of the quality of pharmaceutical products are conducted with the objective of verifying the consistency of the process and identifying where there is a need for improvement; p) a state of control is established and maintained by developing and using effective monitoring and control systems for process performance and product quality; q) continual improvement is facilitated through the implementation of quality improvements appropriate to the current level of process and product knowledge; r) there is a system for QRM; s) deviations, suspected product defects and other problems are reported, investigated and recorded. An appropriate level of root cause analysis is applied during such investigations. The most likely root cause(s) should be identified and appropriate corrective actions and/or preventive actions (CAPAs) should be identified and taken. The effectiveness of CAPAs should be monitored."
+  },
+  {
+   "custom_id": "draft-105",
+   "input": "Source: WHO - TRS 986 Annex 2 GMP for pharmaceutical products: main principles\nApplies to plant types: INJ, LIQ, OSD, SEMI\nClause 1.10:\n1.10 Regular, periodic or rolling quality reviews of all pharmaceutical products, including export-only products, should be conducted with the objective of verifying the consistency of the existing process and the appropriateness of current specifications for both starting materials and finished product, to highlight any trends and to identify product and process improvements. Such reviews should normally be conducted and documented annually, taking into account previous reviews, and should include at least: a) review of starting materials and packaging materials used for the product, especially those from new sources and in particular the review of supply chain traceability of active substances; b) a review of critical in-process controls, and finished product results; c) a review of all batches that failed to meet established specification(s) and their investigation; d) a review of all significant deviations or non-conformances, the related investigations and the effectiveness of resultant CAPAs taken; e) a review of all changes made to the processes or analytical methods; f) a review of dossier variations submitted, granted or refused; g) a review of the results of the stability monitoring programme and any adverse trends; h) a review of all quality-related returns, complaints and recalls and the investigations performed at the time; i) a review of adequacy of any other previous corrective actions on product processes or equipment; j) post-marketing commitments for new dossiers and variations to the dossiers; k) the qualification status of relevant equipment and utilities, e.g. heating, ventilation and air-conditioning (HVAC), water or compressed gases and a review of the results of monitoring the output of such equipment and utilities; l) a review of technical agreements to ensure that they are up to date. The manufacturer and, where different, marketing authorization holder, should evaluate the results of the review and an assessment should be made as to whether CAPA or any revalidation should be undertaken, under the PQS. CAPAs should be completed in a timely and effective manner, according to documented procedures. There should be procedures for the ongoing management and review of these actions, and the effectiveness of these procedures should be verified during self-inspection. Quality reviews may be grouped by product type, e.g. solid dosage forms, liquid dosage forms, or sterile products, where scientifically justified. Where the marketing authorization holder is not the manufacturer, there should be a technical agreement in place between the various parties that defines their respective responsibilities in producing the quality review. The authorized person responsible for final batch certification, together with the marketing authorization holder, should ensure that the quality review is performed in a timely manner and is accurate."
+  },
+  {
+   "custom_id": "draft-106",
+   "input": "Source: WHO - TRS 986 Annex 2 GMP for pharmaceutical products: main principles\nApplies to plant types: INJ, LIQ, OSD, SEMI\nClause 8.1:\n8.1 Principle. The purpose of self-inspection is to evaluate the manufacturer’s compliance with GMP in all aspects of production and QC. The self- inspection programme should be designed to detect any shortcomings in the implementation of GMP and to recommend the necessary corrective actions. Self-inspections should be performed routinely, and may be, in addition, performed on special occasions, e.g. in the case of product recalls or repeated rejections, or when an inspection by the health authorities is announced. The team responsible for self-inspection should consist of personnel who can evaluate the implementation of GMP objectively. All recommendations for corrective action should be implemented. The procedure for self-inspection should be documented, and there should be an effective follow-up programme. Items for self-inspection"
+  },
+  {
+   "custom_id": "draft-107",
+   "input": "Source: WHO - TRS 986 Annex 2 GMP for pharmaceutical products: main principles\nApplies to plant types: INJ, LIQ, OSD, SEMI\nClause 8.2:\n8.2 Written instructions for self-inspection should be established to provide a minimum and uniform standard of requirements. These may include questionnaires on GMP requirements covering at least the following items: (a) personnel; (b) premises including personnel facilities; (c) maintenance of buildings and equipment; (d) storage of starting materials and finished products; (e) equipment; (f) production and in-process controls; (g) QC; (h) documentation; (i) sanitation and hygiene; (j) validation and revalidation programmes; (k) calibration of instruments or measurement systems; (l) recall procedures; (m) complaints management; (n) labels control; (o) results of previous self-inspections and any corrective steps taken. Self-inspection team"
+  },
+  {
+   "custom_id": "draft-108",
+   "input": "Source: WHO - TRS 986 Annex 2 GMP for pharmaceutical products: main principles\nApplies to plant types: INJ, LIQ, OSD, SEMI\nClause 8.3:\n8.3 Management should appoint a self-inspection team consisting of experts in their respective fields who are familiar with GMP. The members of the team may be appointed from inside or outside the company. Frequency of self-inspection"
+  },
+  {
+   "custom_id": "draft-109",
+   "input": "Source: WHO - TRS 986 Annex 2 GMP for pharmaceutical products: main principles\nApplies to plant types: INJ, LIQ, OSD, SEMI\nClause 8.4:\n8.4 The frequency with which self-inspections are conducted may depend on company requirements but should preferably be at least once a year. The frequency should be stated in the procedure. Self-inspection report"
+  },
+  {
+   "custom_id": "draft-110",
+   "input": "Source: WHO - TRS 986 Annex 2 GMP for pharmaceutical products: main principles\nApplies to plant types: INJ, LIQ, OSD, SEMI\nClause 8.5:\n8.5 A report should be made at the completion of a self-inspection. The report should include: (a) self-inspection results; (b) evaluation and conclusions; (c) recommended corrective actions. Follow-up action"
+  },
+  {
+   "custom_id": "draft-111",
+   "input": "Source: WHO - TRS 986 Annex 2 GMP for pharmaceutical products: main principles\nApplies to plant types: INJ, LIQ, OSD, SEMI\nClause 8.6:\n8.6 There should be an effective follow-up programme. The company management should evaluate both the self-inspection report and the corrective actions as necessary. Quality audit"
+  },
+  {
+   "custom_id": "draft-112",
+   "input": "Source: WHO - TRS 986 Annex 2 GMP for pharmaceutical products: main principles\nApplies to plant types: INJ, LIQ, OSD, SEMI\nClause 8.7:\n8.7 It may be useful to supplement self-inspections with a quality audit. A quality audit consists of an examination and assessment of all or part of a quality system with the specific purpose of improving it. A quality audit is usually conducted by outside or independent specialists or a team designated by the management for this purpose. Such audits may also be extended to suppliers and contractors (see section 7, “Contract production and analysis”). Suppliers’ audits and approval"
+  },
+  {
+   "custom_id": "draft-113",
+   "input": "Source: WHO - TRS 986 Annex 2 GMP for pharmaceutical products: main principles\nApplies to plant types: INJ, LIQ, OSD, SEMI\nClause 8.8:\n8.8 The person responsible for QC should have responsibility, together with other relevant departments, for approving suppliers who can reliably supply starting and packaging materials that meet established specifications."
+  },
+  {
+   "custom_id": "draft-114",
+   "input": "Source: WHO - TRS 986 Annex 2 GMP for pharmaceutical products: main principles\nApplies to plant types: INJ, LIQ, OSD, SEMI\nClause 8.9:\n8.9 Before suppliers are approved and included in the approved suppliers’ list or specifications, they should be evaluated. The evaluation should take into account a supplier’s history and the nature of the materials to be supplied. If an audit is required, it should determine the supplier’s ability to conform with GMP standards."
+  },
+  {
+   "custom_id": "draft-115",
+   "input": "Source: WHO - TRS 986 Annex 2 GMP for pharmaceutical products: main principles\nApplies to plant types: INJ, LIQ, OSD, SEMI\nClause 9.14:\n9.14 The authorized person responsible for approving a batch for release should always ensure that the following requirements have been met: (a) the marketing authorization and the manufacturing authorization requirements for the product have been met for the batch concerned; (b) the principles and guidelines of GMP, as laid down in the guidelines published by WHO, have been followed; (c) the principal manufacturing and testing processes have been validated; (d) all the necessary checks and tests have been performed and account taken of the production conditions and manufacturing records; (e) any planned changes or deviations in manufacturing or QC have been notified in accordance with a well-defined reporting system before any product is released. Such changes may need notification to, and approval by, the medicines regulatory authority; (f) any additional sampling, inspection, tests and checks have been carried out or initiated, as appropriate, to cover planned changes and deviations; (g) all necessary production and QC documentation has been completed and endorsed by supervisors trained in appropriate disciplines; (h) appropriate audits, self-inspections and spot-checks are carried out by experienced and trained staff; (i) approval has been given by the head of QC; (j) all relevant factors have been considered, including any not specifically associated with the output batch directly under review (e.g. subdivision of output batches from a common input, factors associated with continuous production runs)."
+  }
+ ]
+}

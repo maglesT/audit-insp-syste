@@ -43,6 +43,16 @@ def normalise(text):
     return re.sub(r"\s+", " ", text).strip()
 
 
+# a clause's own number at its start ("9.3", "10.1.", "(b)", "Principle"): left out when twins are compared
+TWIN_LEADING = re.compile(r"^\s*(?:[A-Z]?\d+(?:\.\d+)*\.?|\([a-zA-Z0-9]+\)|principle)\s*", re.I)
+
+
+def twin_key(text):
+    """The words of a clause, lowercased, without its leading number and without punctuation: two clauses of
+    different sources with the same key are twins (D36, D37; Layer 1 check 8 and topic.py use this one key)."""
+    return " ".join(re.findall(r"\w+", TWIN_LEADING.sub("", normalise(text)).lower()))
+
+
 def pdf_pages(path):
     """Layout-preserving text, one string per page."""
     out = subprocess.run(["pdftotext", "-layout", str(path), "-"], capture_output=True, text=True, check=True).stdout

@@ -20,7 +20,7 @@ def answer(req):
     if req.custom_id.startswith("draft"):
         clause = layer1.clauses_of(req.meta["source"])[req.meta["ref"]]
         real = " ".join(clause["text"].split()[2:12])
-        ob = {"statement": "x", "strength": "recommended", "plant_types": ["OSD"], "numbers": []}
+        ob = {"statement": "x", "strength": "recommended", "plant_types": ["OSD"], "numbers": [], "topic": "SI.PROG"}
         return {"no_obligation_reason": "", "obligations": [{**ob, "quote": real},
                                                             {**ob, "quote": "words that are not in the clause"}]}
     verdict = "correct" if req.meta["verifier"] == "a" else "incorrect"

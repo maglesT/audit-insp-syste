@@ -186,6 +186,53 @@ class OnDemand(unittest.TestCase):
 
 
 
+class Failing(unittest.TestCase):
+    def test_draft_findings_do_not_fail(self):
+        reqs = [{"id": "SI-001", "status": "draft"}, {"id": "SI-002", "status": "verified"}]
+        findings = [("SI-001", 1, "numbers", "x"), ("SI-002", 1, "numbers", "y"), ("SI-001", 0, "twins", "z"),
+                    ("SI-002", 0, "twins", "v"), ("coverage a 1", 0, "coverage", "w")]
+        self.assertEqual(layer1.failing(findings, reqs), [findings[1], findings[3], findings[4]])
+
+    def test_id_order(self):
+        self.assertEqual(sorted(["SI-1000", "SI-010", "SI-002", "QS-500"], key=layer1.id_order),
+                         ["QS-500", "SI-002", "SI-010", "SI-1000"])
+
+
+class LeadIn(unittest.TestCase):
+    """Check 4 for list items (S3): the strength of the lead-in the item sits under."""
+
+    def test_lead_in(self):
+        text = ("2.22 The main duties should not be delegated. These responsibilities should include: 1. Releasing "
+                "materials; 2. Making sure that deviations are investigated.")
+        self.assertEqual(layer1.lead_in_strength("Making sure that deviations are investigated", text), "recommended")
+        dash = "1.5. The system shall ensure that— (a) products are designed well; (b) reviews are conducted."
+        self.assertEqual(layer1.lead_in_strength("reviews are conducted", dash), "mandatory")
+        self.assertIsNone(layer1.lead_in_strength("reviews are conducted", "Reviews are conducted yearly."))
+        self.assertIsNone(layer1.lead_in_strength("not in the text", text))
+        self.assertIsNone(layer1.lead_in_strength("records", "Areas: records and rooms."))
+
+    def test_lead_in_must_open_the_list_the_quote_is_in(self):
+        """Review of D37: an earlier list, a dash in a number range and running text do not lend their strength."""
+        earlier = "The firm shall: (a) keep records; (b) review them. The results are reviewed annually."
+        self.assertIsNone(layer1.lead_in_strength("The results are reviewed annually.", earlier))
+        ranged = "Rooms shall be kept at 15–25 °C. Ensure deviations are investigated"
+        self.assertIsNone(layer1.lead_in_strength("Ensure deviations are investigated", ranged))
+        points = ("The following points should be taken into consideration: (a) remote access. QPs are obliged to "
+                  "keep their knowledge.")
+        self.assertIsNone(layer1.lead_in_strength("QPs are obliged to keep their knowledge.", points))
+        self.assertEqual(layer1.lead_in_strength("logs are kept", "Staff should ensure: a) rooms are clean. b) "
+                                                 "logs are kept."), "recommended")
+
+    def test_bullets(self):
+        text = "The quality manager should ensure that: –– staff are trained; –– records are kept."
+        self.assertEqual(layer1.lead_in_strength("records are kept", text), "recommended")
+        self.assertEqual(layer1.lead_in_strength("records are kept", text.replace("––", "■■")), "recommended")
+
+    def test_each_occurrence_is_tried(self):
+        text = "Doors are locked. Staff shall ensure that: (a) doors are locked; (b) keys are kept."
+        self.assertEqual(layer1.lead_in_strength("doors are locked", text.replace("Doors", "doors")), "mandatory")
+
+
 class Conditions(unittest.TestCase):
     """Check 9 (D35): condition and limit wording in a quote needs a counterpart in the item."""
 
@@ -216,7 +263,7 @@ class Conditions(unittest.TestCase):
                "plant_types": ["OSD"], "parameters": {}, "general": False, "mappings": [
                    {"source": "x", "clause_ref": "1", "clause_sha256": "0", "quote": "Where an audit is required, it "
                     "shall determine GMP conformity.", "strength": "mandatory", "plant_types": ["OSD"],
-                    "addendum": "", "relation": "same"}]}
+                    }]}
         trees = {"x": {"1": {"text": "Where an audit is required, it shall determine GMP conformity."}}}
         with unittest.mock.patch.object(layer1, "clauses_of", trees.get):
             found = [f for f in layer1.check_requirement(req, {"x": {"applies_to": "ALL"}}) if f[2] == "conditions"]
@@ -231,23 +278,14 @@ class Conditions(unittest.TestCase):
         with unittest.mock.patch.object(layer1, "clauses_of", trees.get):
             return [f for f in layer1.check_requirement(req, {"x": {"applies_to": "ALL"}}) if f[2] == "conditions"]
 
-    def requirement(self, item, quote, addendum="", relation="same"):
+    def requirement(self, item, quote):
         req = {"id": "SI-001", "item_text": item, "strength": "mandatory", "plant_types": ["OSD"], "parameters": {},
                "general": False, "mappings": [
                    {"source": "x", "clause_ref": "1", "clause_sha256": "0", "quote": quote, "strength": "mandatory",
-                    "plant_types": ["OSD"], "addendum": addendum, "relation": relation}]}
+                    "plant_types": ["OSD"]}]}
         return req, {"x": {"1": {"text": quote}}}
 
-    def test_addendum_states_the_condition(self):
-        req, trees = self.requirement("Audit the supplier.", "Where an audit is required, it shall be done.",
-                                      addendum="Where an audit is required.")
-        self.assertFalse(self.check(req, trees))
-
-    def test_looser_narrower_and_bad_quotes_are_skipped(self):
-        for relation in ("looser", "narrower"):
-            req, trees = self.requirement("Audit the supplier.", "Where an audit is required, it shall be done.",
-                                          relation=relation)
-            self.assertFalse(self.check(req, trees), relation)
+    def test_rejected_quotes_are_skipped(self):
         req, trees = self.requirement("Audit the supplier.", "Where an audit is required, it shall be done.")
         trees["x"]["1"]["text"] = "Something else."
         self.assertFalse(self.check(req, trees))

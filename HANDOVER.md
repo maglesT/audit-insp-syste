@@ -1,6 +1,6 @@
 # Handover: read this first in every new session
 
-Last updated: 30 October 2026 (session 3, condition check, D35).
+Last updated: 30 October 2026 (session 3, S3 rehearsal first pass; owner dropped consolidation, D37).
 
 ## Mutation test results (30 Oct 2026, plan 2.6 / Layer 3, pilot scale)
 `tools/ai/mutate.py` planted errors in the 56 session-pilot mappings and mixed the mutants, shuffled, with the 56
@@ -169,8 +169,23 @@ finished in about 4 minutes in total.
   - **Layer 1 condition-word check done (D35):** check 9, revised after an independent review; 0 false alarms on 114
     pilot items, 56 controls and 82 human-style paraphrases; catches the dropped conditions the verifiers missed so
     far (3 of 15 dropped-condition mutants). One-way: added conditions are left to the verifiers.
-  - **Next (decided by the owner's rule "decide yourself"):** S3 calibration on the self-inspection topic across
-    all pilot regulators, which fills the library for real.
+  - **S3 rehearsal, first pass (D36, D37):** 142 self-inspection clause units by rule (`tools/ai/topic.py`,
+    `library/topics/self-inspection.json`), 116 drafted, 26 reuse identical clauses; 610 obligations.
+    Consolidation into cross-regulator requirements was built, run and measured (237 requirements; both verifiers
+    passed 66 %; merged relations 0-36 %), then **dropped by the owner (D37)**: the library now holds **716
+    per-regulator items** (`tools/ai/items.py`), one per obligation per regulator, each with one source link.
+    Layer 1: 101 findings on drafts (71 strength, mostly present-tense duties such as "ensures" or "is responsible
+    for"; 23 conditions; 7 numbers); option A: 48 draft items with copied wording or a document name. All items are
+    "draft"; draft findings are listed, not failed, and block verification. Usage measured: plan section 4.
+  - **Next:** S3 per-item pass: repair round for the 101 Layer 1 and 48 option-A findings and the 6 rejected list
+    quotes; Layer 2 on the items (`tools/ai/verify.py prepare|ingest|apply`; try one call per clause for all its
+    items, the main saving); adjudication of disagreements; reverse test (numbers, conditions, frequencies + 20 %);
+    mutation test on the items; then the go/no-go and forecast. The drafter now assigns each obligation's
+    sub-topic (S3 took it from the dropped consolidation).
+  - **Owner priority from the coordinating session (first, after D37):** source fidelity: 0a second-engine
+    re-extraction check (`tools/parse/fidelity.py`), 0b the 10 known parser limits, 0c version currency
+    (`tools/currency.py`), 0d a 50-clause human spot-check sheet; one PR each. Then structured obligations and the gold set (coordinator items
+    4-5), then S4 EU GMP with PIC/S reuse, OSD + INJ first.
 - Brief: `docs/00-brief.md` (the owner's decisions). Small decisions: `docs/decisions.md`.
 - **Deliverable (a), source inventory: done as a draft.** It is in `docs/01-source-inventory.md` and waits for
   owner review.

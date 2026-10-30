@@ -12,8 +12,7 @@ Link kinds (one row each: kind, from source, from ref, to source, to ref, detail
 - defines       a glossary or definition entry -> each clause of the same family that uses the term.
 - same_text_as  two clauses of different sources whose word runs are near-identical (Jaccard >= SAME_TEXT), e.g.
                 EU GMP and PIC/S PE 009, or WHO and Schedule M.
-- maps_to       requirement -> clause, from the library mappings.
-- stricter_than clause of a "stricter" mapping -> clause of a "same" mapping of the same requirement.
+- maps_to       item -> its source clause, from the library mappings (D37: one per item; no stricter_than).
 """
 import argparse
 import csv
@@ -471,16 +470,8 @@ def same_text(clauses, threshold=SAME_TEXT):
 
 
 def library_links(reqs):
-    """maps_to and stricter_than rows from the library mappings."""
-    out = []
-    for req in reqs:
-        same = [m for m in req["mappings"] if m["relation"] == "same"]
-        for m in req["mappings"]:
-            out.append(("maps_to", "", req["id"], m["source"], m["clause_ref"], m["relation"]))
-            if m["relation"] == "stricter":
-                out += [("stricter_than", m["source"], m["clause_ref"], s["source"], s["clause_ref"], req["id"])
-                        for s in same]
-    return out
+    """maps_to rows from the library mappings: item -> its source clause."""
+    return [("maps_to", "", req["id"], m["source"], m["clause_ref"], "") for req in reqs for m in req["mappings"]]
 
 
 def links(sources=None, segments_of=None, clauses_of=None, reqs=None, files=None, entries_of=None):
@@ -570,16 +561,19 @@ def impact(source, rows, reqs):
 
 
 def consistency(rows, reqs):
-    """same_text_as pairs whose clauses are both mapped but to different requirements (Layer 1 finding)."""
-    mapped = defaultdict(set)
+    """same_text_as pairs whose clauses are both mapped but whose items differ (Layer 1 finding; D37: identical
+    texts must produce identical items): (from source, ref, to source, ref, from item ids, to item ids)."""
+    from common import normalise
+    texts, ids = defaultdict(set), defaultdict(set)
     for req in reqs:
         for m in req["mappings"]:
-            mapped[(m["source"], m["clause_ref"])].add(req["id"])
+            texts[(m["source"], m["clause_ref"])].add((normalise(req["item_text"]), m["strength"]))
+            ids[(m["source"], m["clause_ref"])].add(req["id"])
     out = []
     for kind, fs, fr, ts, tr, _ in rows:
-        if kind == "same_text_as" and mapped.get((fs, fr)) and mapped.get((ts, tr)) \
-                and mapped[(fs, fr)] != mapped[(ts, tr)]:
-            out.append((fs, fr, ts, tr, sorted(mapped[(fs, fr)]), sorted(mapped[(ts, tr)])))
+        if kind == "same_text_as" and texts.get((fs, fr)) and texts.get((ts, tr)) \
+                and texts[(fs, fr)] != texts[(ts, tr)]:
+            out.append((fs, fr, ts, tr, sorted(ids[(fs, fr)]), sorted(ids[(ts, tr)])))
     return out
 
 
@@ -597,7 +591,7 @@ def report(rows):
         elif kind == "same_text_as":
             per[fs]["same_text_as"] += 1
             per[ts]["same_text_as"] += 1
-        elif kind in ("maps_to", "stricter_than"):
+        elif kind == "maps_to":
             per[ts][kind] += 1
     totals = Counter(r[0] for r in rows)
     lines = ["# Clause graph report", "", "Built by `python3 tools/library/graph.py report` from the parsed clauses "

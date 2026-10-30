@@ -14,10 +14,12 @@ import model  # noqa: E402
 SOURCES = {"eu.pdf": {"regulator": "EU", "applies_to": "OSD;LIQ;SEMI;INJ"},
            "ema.pdf": {"regulator": "EMA", "applies_to": "ALL"},
            "who.pdf": {"regulator": "WHO", "applies_to": "OSD;LIQ;SEMI;INJ"},
-           "cfr.xml": {"regulator": "FDA", "applies_to": "OSD;LIQ;SEMI;INJ"}}
+           "cfr.xml": {"regulator": "FDA", "applies_to": "OSD;LIQ;SEMI;INJ"},
+           "pics.pdf": {"regulator": "PICS", "applies_to": "ALL"}}
 CLAUSE_TEXT = ("9.3 All self inspections should be recorded. Reports should contain all the observations made "
                "during the inspections and, where applicable, proposals for corrective measures.")
 SEGMENTS = {
+    "pics.pdf": [],
     "eu.pdf": [{"kind": "toc", "text": "Contents Chapter 9 Self inspection page 1"},
                {"kind": "clause", "text": CLAUSE_TEXT},
                {"kind": "unnumbered", "text": "Weigh and delump the required amount of active substance and "
@@ -32,10 +34,9 @@ SEGMENTS = {
 }
 
 
-def mapping(source, relation="same", addendum="", strength="recommended", plant_types=("OSD", "INJ"),
-            quote="All self inspections should be recorded"):
+def mapping(source, strength="recommended", plant_types=("OSD", "INJ"), quote="All self inspections should be recorded"):
     return {"source": source, "clause_ref": "9.3", "clause_sha256": "0" * 64, "quote": quote, "strength": strength,
-            "relation": relation, "plant_types": list(plant_types), "addendum": addendum}
+            "plant_types": list(plant_types)}
 
 
 def requirement(rid, mappings, status="verified", plant_types=("OSD", "INJ"), general=False, text=None,
@@ -50,29 +51,51 @@ def corpus(reqs=()):
 
 
 class Compile(unittest.TestCase):
-    def test_strictest_wins(self):
-        req = requirement("SI-001", [mapping("eu.pdf"),
-                                     mapping("who.pdf", "stricter", "Sign each record within one week",
-                                             "mandatory")])
-        eu = export.compile_items([req], SOURCES, ["EU"], "OSD")
+    def test_one_item_per_regulator_and_twins_shown_once(self):
+        """D37: each item is one regulator's obligation; identical items of selected regulators show once."""
+        reqs = [requirement("SI-001", [mapping("eu.pdf")]), requirement("SI-002", [mapping("pics.pdf")]),
+                requirement("SI-003", [mapping("who.pdf", "mandatory")], text="Sign each record within one week.",
+                            strength="mandatory")]
+        eu = export.compile_items(reqs, SOURCES, ["EU"], "OSD")
         self.assertEqual(eu, [{"id": "SI-001", "item_text": "Keep a written record of every self-inspection.",
                                "topic": "SI.REPORT", "regulators": ["EU"], "plant_types": ["OSD"],
-                               "strength": "recommended"}])
-        both = export.compile_items([req], SOURCES, ["EU", "WHO"], "OSD")[0]
-        self.assertEqual(both["item_text"], "Keep a written record of every self-inspection. Sign each record "
-                                            "within one week.")              # a full stop is added
-        self.assertEqual((both["regulators"], both["strength"]), (["EU", "WHO"], "mandatory"))
+                               "strength": "recommended", "group": "SI-001"}])
+        both = export.compile_items(reqs, SOURCES, ["EU", "PIC/S", "WHO"], "OSD")
+        self.assertEqual([(i["id"], i["regulators"], i["strength"]) for i in both],
+                         [("SI-001", ["EU", "PIC/S"], "recommended"), ("SI-003", ["WHO"], "mandatory")])
+        self.assertEqual(export.compile_items(reqs, SOURCES, ["PIC/S"], "OSD")[0]["id"], "SI-002")
+
+    def test_near_identical_items_share_a_group(self):
+        reqs = [requirement("SI-001", [mapping("eu.pdf")], text="Keep a written record of every self-inspection."),
+                requirement("SI-002", [mapping("who.pdf")], text="Keep a written record of every self-inspection "
+                                                                  "carried out."),
+                requirement("SI-003", [mapping("who.pdf")], text="Appoint an independent team.")]
+        items = export.compile_items(reqs, SOURCES, ["EU", "WHO"], "OSD")
+        self.assertEqual([i["group"] for i in items], ["SI-001", "SI-001", "SI-003"])
+
+    def test_groups_do_not_chain_or_join_one_source(self):
+        items = [{"id": "SI-001", "item_text": "a b c d e f g h"}, {"id": "SI-002", "item_text": "c d e f g h i j"},
+                 {"id": "SI-003", "item_text": "e f g h i j k l"}, {"id": "SI-004", "item_text": "a b c d e f g h"}]
+        src = {"SI-001": {"eu"}, "SI-002": {"who"}, "SI-003": {"fda"}, "SI-004": {"eu"}}
+        self.assertEqual(export.groups(items, src), {"SI-001": "SI-001", "SI-002": "SI-001", "SI-003": "SI-003",
+                                                     "SI-004": "SI-004"})   # 003 is like 002, not like 001
+
+    def test_groups_scale(self):
+        import time
+        items = [{"id": f"SI-{n:04d}", "item_text": f"keep record number {n} of item {n % 97} in file {n % 13}"}
+                 for n in range(1, 5001)]
+        start = time.time()
+        export.groups(items, {it["id"]: {it["id"]} for it in items})
+        self.assertLess(time.time() - start, 20)
 
     def test_what_is_left_out(self):
         reqs = [requirement("SI-001", [mapping("eu.pdf")], status="draft"),            # not verified
                 requirement("SI-002", [mapping("eu.pdf")], plant_types=("INJ",)),      # other plant type
                 requirement("SI-003", [mapping("who.pdf")]),                            # other regulator
                 requirement("SI-004", [mapping("eu.pdf", plant_types=("INJ",))]),       # mapping not for OSD
-                requirement("SI-005", [mapping("eu.pdf", plant_types=("INJ",))], general=True),
-                requirement("SI-006", [mapping("eu.pdf", "looser", "Less is fine.")])]  # looser: no addendum
+                requirement("SI-005", [mapping("eu.pdf", plant_types=("INJ",))], general=True)]
         items = export.compile_items(reqs, SOURCES, ["EU"], "OSD")
-        self.assertEqual([i["id"] for i in items], ["SI-005", "SI-006"])
-        self.assertNotIn("Less is fine", items[1]["item_text"])
+        self.assertEqual([i["id"] for i in items], ["SI-005"])
 
     def test_eu_includes_ema(self):
         req = requirement("SI-001", [mapping("ema.pdf")])
@@ -82,21 +105,6 @@ class Compile(unittest.TestCase):
             export.selection("Mars")
         with self.assertRaises(ValueError):
             export.export([req], SOURCES, ["eu"], "OSD", {})
-
-    def test_general_requirement_takes_only_matching_addenda(self):
-        req = requirement("SI-001", [mapping("eu.pdf", plant_types=("INJ",)),
-                                     mapping("who.pdf", "stricter", "Add this for API only.", "mandatory",
-                                             plant_types=("API",))], general=True)
-        item = export.compile_items([req], SOURCES, ["EU", "WHO"], "OSD")[0]
-        self.assertEqual(item["item_text"], "Keep a written record of every self-inspection.")
-        self.assertEqual((item["strength"], item["regulators"]), ("recommended", ["EU", "WHO"]))
-
-    def test_duplicate_addenda_merge(self):
-        req = requirement("SI-001", [mapping(s, "adds", a) for s, a in
-                                     (("eu.pdf", "Sign each record."), ("who.pdf", "sign  each record"),
-                                      ("ema.pdf", "Sign each record"))])
-        text = export.compile_items([req], SOURCES, ["EU", "WHO"], "OSD")[0]["item_text"]
-        self.assertEqual(text.count("ign each record"), 1)
 
     def test_export_document(self):
         req = requirement("SI-001", [mapping("eu.pdf")])
@@ -213,13 +221,9 @@ class Library(unittest.TestCase):
         self.assertTrue(any(f.startswith("SI-001: ") for f in found))
         self.assertTrue(any(f.startswith("EU/OSD") for f in found))
 
-    def test_every_regulator_subset_and_addendum_is_checked(self):
-        req = requirement("SI-001", [mapping("eu.pdf", "adds", "Keep it for one year, see"),
-                                     mapping("who.pdf", "adds", "Annex 15 has more.")])
-        texts = export.visible_texts(req, SOURCES)
-        self.assertIn("Keep it for one year, see", texts)
-        self.assertIn("Keep a written record of every self-inspection. Keep it for one year, see. "
-                      "Annex 15 has more.", texts)
+    def test_every_item_text_is_checked(self):
+        req = requirement("SI-001", [mapping("eu.pdf")], text="Keep it for one year; Annex 15 has more.")
+        self.assertEqual(export.visible_texts(req, SOURCES), ["Keep it for one year; Annex 15 has more."])
         self.write([req])
         self.assertTrue(any("reference" in f for f in self.check()))
         self.write([req], allow=["Annex 15 has more"])
@@ -237,7 +241,7 @@ class Library(unittest.TestCase):
         with contextlib.redirect_stdout(out), self.assertRaises(SystemExit) as stop:
             export.main(["check", "--library", str(self.root)])
         self.assertEqual(stop.exception.code, 0)
-        self.assertIn("option A: 0 findings (0 requirements)", out.getvalue())
+        self.assertIn("option A: 0 findings (0 verified items of 0)", out.getvalue())
         out = io.StringIO()
         with contextlib.redirect_stdout(out):
             export.main(["build", "--library", str(self.root), "--regulators", "EU,PICS", "--plant", "OSD"])
@@ -245,6 +249,13 @@ class Library(unittest.TestCase):
         self.assertEqual((doc["items"], doc["plant_type"]), ([], "OSD"))
         with self.assertRaises(SystemExit), contextlib.redirect_stderr(io.StringIO()):
             export.main(["build", "--library", str(self.root), "--plant", "OSD"])
+
+    def test_drafts_are_listed_not_failed(self):
+        draft = requirement("SI-001", [mapping("eu.pdf")], status="draft", text="Ensure all self inspections should "
+                            "be recorded and reports contain all the observations made during the inspections.")
+        self.write([draft])
+        self.assertEqual(self.check(), [])
+        self.assertTrue(export.check_library(self.root, SOURCES, SEGMENTS.get, all_sources=True, drafts=True))
 
     def test_real_library_passes(self):
         self.assertEqual(export.check_library(), [])
