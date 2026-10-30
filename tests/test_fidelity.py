@@ -39,8 +39,13 @@ class Fidelity(unittest.TestCase):
 
     def test_classify(self):
         page, doc, raw = ["a", "b", "word"], ["a", "b", "word", "label"], ["a", "b", "word", "label", "pdfgap"]
-        self.assertEqual(fidelity.classify(["12", "th"], page, doc, raw), ("minor", []))
-        self.assertEqual(fidelity.classify(["word", "12"], page, doc, raw), ("order", []))
+        self.assertEqual(fidelity.classify(["th", "st"], page, doc, raw), ("minor", []))
+        # a number no reading has is never minor: "store at 25 °C" stored, "52 °C" printed
+        self.assertEqual(fidelity.classify(["25"], ["store", "at", "52", "c"], ["store", "at", "52", "c"],
+                                           ["store", "at", "52", "c"]), ("unconfirmed", ["25"]))
+        self.assertEqual(fidelity.classify(["25"], ["store", "at", "52", "c"], ["store", "at", "52", "c", "25"],
+                                           ["25"]), ("unconfirmed", ["25"]))   # "25" elsewhere does not count
+        self.assertEqual(fidelity.classify(["word", "th"], page, doc, raw), ("order", []))
         self.assertEqual(fidelity.classify(["label", "word"], page, doc, raw), ("elsewhere", []))
         self.assertEqual(fidelity.classify(["pdfgap", "label"], page, doc, raw), ("engine", []))
         self.assertEqual(fidelity.classify(["glued23", "word"], page, doc, raw), ("unconfirmed", ["glued23"]))

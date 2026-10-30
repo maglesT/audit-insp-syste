@@ -86,7 +86,9 @@ def share(clause_words, page_words, bag=False):
 def classify(missing, page_words, doc_words, raw_words):
     """Why a flagged clause's missing words are missing, or which are not explained by rule:
     (category, unconfirmed words). Categories, checked in this order for every missing word:
-      minor      a number or a token of one or two characters (footnote marks, superscripts, units, list letters)
+      minor      one or two letters (superscripts such as "th", units, list letters); never a number: a number
+                 must be on the clause's own pages in the second reading, so a changed limit ("25" stored,
+                 "52" printed) is flagged even when "25" appears elsewhere in the document
       order      on the clause's pages, in another order (columns, table cells, headers read differently)
       elsewhere  elsewhere in the second engine's text of the document (a table row repeating a spanned cell's
                  label, a clause whose page numbers are off)
@@ -97,8 +99,10 @@ def classify(missing, page_words, doc_words, raw_words):
     doc_joined, raw, raw_joined = "".join(doc_words), set(raw_words), "".join(raw_words)
     seen, unconfirmed = set(), []
     for w in missing:
-        if w.isdigit() or len(w) <= 2:
+        if len(w) <= 2 and not w.isdigit():
             seen.add("minor")
+        elif w.isdigit() and w not in page:
+            unconfirmed.append(w)                   # a number counts only where the clause is printed
         elif w in page:
             seen.add("order")
         elif w in doc or w in doc_joined:
