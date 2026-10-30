@@ -110,10 +110,12 @@ def _cells(table, words):
             continue
         labels = sorted({round(w[1], 1) for w in words if ROW_LABEL.fullmatch(w[4]) and _centre_in(w, first)
                          and w[0] - first[0] < 25})
-        cuts = [row.bbox[1]] + labels[1:] + [row.bbox[3]] if len(labels) >= 2 else [row.bbox[1], row.bbox[3]]
+        if len(labels) < 2:
+            rows.append([_text(box, words) if box else "" for box in row.cells])
+            continue
+        cuts = [None] + [y - 0.5 for y in labels[1:]] + [None]       # cut just above each further label
         for top, bottom in zip(cuts, cuts[1:]):
-            rows.append([_text((box[0], max(box[1], top - 0.5), box[2], min(box[3], bottom - 0.5)), words)
-                         if box else "" for box in row.cells])
+            rows.append([_text(box, words, top, bottom) if box else "" for box in row.cells])
     return rows
 
 
@@ -121,8 +123,13 @@ def _centre_in(w, box):
     return box[0] <= (w[0] + w[2]) / 2 <= box[2] and box[1] <= (w[1] + w[3]) / 2 <= box[3]
 
 
-def _text(box, words):
-    return normalise(" ".join(w[4] for w in words if _centre_in(w, box)))
+def _text(box, words, top=None, bottom=None):
+    """Words of a cell, optionally only those whose centre lies in [top, bottom) (half-open: a word on a cut
+    line belongs to exactly one slice)."""
+    def inside(w):
+        y = (w[1] + w[3]) / 2
+        return _centre_in(w, box) and (top is None or y >= top) and (bottom is None or y < bottom)
+    return normalise(" ".join(w[4] for w in words if inside(w)))
 
 
 def _lines(text):

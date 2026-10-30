@@ -63,6 +63,16 @@ class Duplicates(unittest.TestCase):
         r = {c.ref for c in numbered.parse(common.OFFICIAL / "ich-q9r1.pdf")[0]}
         self.assertTrue({"I 1", "II 1", "5"} <= r)
 
+    def test_review_cases(self):
+        """Wrapped "H13 HEPA filters" is not a prefix; reference lists are not clauses; back matter leaves the
+        prefix section; "24. pH Meter" stays a clause."""
+        r = {c.ref for c in numbered.parse(common.OFFICIAL / "ich-q9r1.pdf")[0] if c.kind == "clause"}
+        self.assertNotIn("9", r)                                   # reference 9 after "8. REFERENCES"
+        r = {c.ref for c in numbered.parse(common.OFFICIAL / "who-trs943-a3-reference-substances.pdf")[0]}
+        self.assertNotIn("Annex 3 B Glossary", r)
+        r = {c.ref for c in numbered.parse(common.OFFICIAL / "who-trs981-a2-qrm.pdf")[0] if c.kind == "clause"}
+        self.assertTrue({"6"} <= r and "10" not in r)
+
     def test_chapters_without_sub_numbers_and_trailing_annex(self):
         r = {c.ref for c in numbered.parse(common.OFFICIAL / "who-trs1019-a2-hvac-nonsterile-part2.pdf")[0]}
         self.assertTrue({"8", "9", "10"} <= r)
