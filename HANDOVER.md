@@ -1,6 +1,6 @@
 # Handover: read this first in every new session
 
-Last updated: 30 October 2026 (session 3, S3 rehearsal first pass; owner dropped consolidation and cross-regulator grouping, D37, D38).
+Last updated: 30 October 2026 (session 3; D37, D38; source fidelity check D39).
 
 ## Mutation test results (30 Oct 2026, plan 2.6 / Layer 3, pilot scale)
 `tools/ai/mutate.py` planted errors in the 56 session-pilot mappings and mixed the mutants, shuffled, with the 56
