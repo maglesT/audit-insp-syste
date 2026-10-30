@@ -48,6 +48,7 @@ if __package__ in (None, ""):
 from common import CITABLE, Clause, devanagari_share, english_page, normalise, pdf_pages  # noqa: E402
 
 LABEL_MAX = 40
+ROW_LABEL = re.compile(r"\d{1,2}\.\d{1,2}(?:\.\d{1,2})?\.?")
 HEADER_CELL_MAX = 40
 GAP_LINES = 3          # lines allowed between two tables that continue each other (running header and footer)
 MARKER = "[[TABLE {}]]"
@@ -96,19 +97,32 @@ def _words(path, pno):
 
 
 def _cells(table, words):
-    """Cell texts of a table, row by row; a word belongs to the cell that holds its centre."""
+    """Cell texts of a table, row by row; a word belongs to the cell that holds its centre.
+
+    A ruled row whose first cell holds several numbered labels ("3.3", "3.4", ... with no rule between them, PIC/S
+    PI 038) is split at the height of each label, so every item becomes a row of its own.
+    """
     rows = []
     for row in table.rows:
-        cells = []
-        for box in row.cells:
-            if box is None:
-                cells.append("")
-                continue
-            inside = [w for w in words
-                      if box[0] <= (w[0] + w[2]) / 2 <= box[2] and box[1] <= (w[1] + w[3]) / 2 <= box[3]]
-            cells.append(normalise(" ".join(w[4] for w in inside)))
-        rows.append(cells)
+        first = row.cells[0] if row.cells else None
+        if first is None:
+            rows.append([_text(box, words) if box else "" for box in row.cells])
+            continue
+        labels = sorted({round(w[1], 1) for w in words if ROW_LABEL.fullmatch(w[4]) and _centre_in(w, first)
+                         and w[0] - first[0] < 25})
+        cuts = [row.bbox[1]] + labels[1:] + [row.bbox[3]] if len(labels) >= 2 else [row.bbox[1], row.bbox[3]]
+        for top, bottom in zip(cuts, cuts[1:]):
+            rows.append([_text((box[0], max(box[1], top - 0.5), box[2], min(box[3], bottom - 0.5)), words)
+                         if box else "" for box in row.cells])
     return rows
+
+
+def _centre_in(w, box):
+    return box[0] <= (w[0] + w[2]) / 2 <= box[2] and box[1] <= (w[1] + w[3]) / 2 <= box[3]
+
+
+def _text(box, words):
+    return normalise(" ".join(w[4] for w in words if _centre_in(w, box)))
 
 
 def _lines(text):
