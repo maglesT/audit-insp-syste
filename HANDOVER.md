@@ -166,8 +166,9 @@ finished in about 4 minutes in total.
   - **Clause graph done (D34):** `python3 tools/library/graph.py report|context <file> <ref>|impact <file>`
     (needs the parsed clause store: `python3 tools/parse/run.py`, about 9 minutes, not in git). Drafter and
     verifier context is opt-in (`pilot.py prepare-draft --context`) until measured.
-  - **Layer 1 condition-word check done (D35):** check 9; 0 false alarms on 114 pilot items; catches the dropped
-    conditions the verifiers missed so far.
+  - **Layer 1 condition-word check done (D35):** check 9, revised after an independent review; 0 false alarms on 114
+    pilot items, 56 controls and 82 human-style paraphrases; catches the dropped conditions the verifiers missed so
+    far (3 of 15 dropped-condition mutants). One-way: added conditions are left to the verifiers.
   - **Next (decided by the owner's rule "decide yourself"):** S3 calibration on the self-inspection topic across
     all pilot regulators, which fills the library for real.
 - Brief: `docs/00-brief.md` (the owner's decisions). Small decisions: `docs/decisions.md`.

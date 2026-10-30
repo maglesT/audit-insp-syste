@@ -145,6 +145,13 @@ class Sessions(unittest.TestCase):
         flagged = [u["text"] for u in part if u["ref"] == "Chapter 9 9.3"]
         self.assertEqual(flagged, [pilot.normalise(s) for s in sentences[1:]])
 
+    def test_condition_findings(self):
+        base = {"source": "x", "ref": "1", "quote": "Where an audit is required, it should be done before approval."}
+        found = pilot.condition_findings([{**base, "statement": "Audit the supplier."},
+                                          {**base, "statement": "If an audit is needed, do it prior to approval."}])
+        self.assertEqual(found, [{"mapping": 0, "source": "x", "ref": "1", "missing": ["before", "condition"],
+                                  "statement": "Audit the supplier."}])
+
     def test_session_pilot_end_to_end(self):
         draft_dir = pilot.prepare_draft(PILOT)
         clauses = {r.custom_id: layer1.clauses_of(r.meta["source"])[r.meta["ref"]]["text"]

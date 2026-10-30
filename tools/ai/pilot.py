@@ -282,7 +282,7 @@ def condition_findings(mappings):
     import layer1
     out = []
     for n, m in enumerate(mappings):
-        missing = sorted(layer1.conditions_in(m["quote"]) - layer1.conditions_in(m["statement"]))
+        missing = layer1.conditions_missing(m["quote"], layer1.conditions_in(m["statement"]))
         if missing:
             out.append({"mapping": n, "source": m["source"], "ref": m["ref"], "missing": missing,
                         "statement": m["statement"]})
