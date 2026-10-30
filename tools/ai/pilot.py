@@ -23,6 +23,7 @@ from common import normalise  # noqa: E402
 
 PROMPTS = HERE / "prompts"
 PLANT_TYPES = ["OSD", "LIQ", "SEMI", "INJ", "API"]
+MIN_QUOTE_WORDS = 3                                 # an empty or one-word "quote" is always found; it proves nothing
 DRAFT_TOKENS, VERIFY_TOKENS = 8000, 6000           # output caps, thinking included; a cut-off answer is a failure
 # the self-inspection clauses of the pilot regulators: about 25 clauses, about 50 mappings
 PILOT = {
@@ -100,7 +101,9 @@ def mappings_from(drafts, results, clauses_of):
         clause = clauses_of(req.meta["source"])[req.meta["ref"]]
         for ob in res.answer["obligations"]:
             m = {**req.meta, **ob, "draft": req.custom_id}
-            (mappings if normalise(ob["quote"]) in normalise(clause["text"]) else rejected).append(m)
+            quote = normalise(ob["quote"])
+            found = len(quote.split()) >= MIN_QUOTE_WORDS and quote in normalise(clause["text"])
+            (mappings if found else rejected).append(m)
     return mappings, rejected
 
 
@@ -115,7 +118,8 @@ def verify_requests(mappings, sources, clauses_of):
         for role, first, second in (("a", item, clause_text), ("b", clause_text, item)):
             out.append(runner.Request(f"verify-{role}-{n:03d}", prompt(f"verify_{role}"), f"{first}\n\n{second}",
                                       VERIFY_SCHEMA, max_tokens=VERIFY_TOKENS,
-                                      meta={"mapping": n, "verifier": role}))
+                                      meta={"mapping": n, "verifier": role, "source": m["source"], "ref": m["ref"],
+                                            "clause_sha256": m["clause_sha256"], "draft": m["draft"]}))
     return out
 
 
@@ -145,27 +149,25 @@ def run(run_with, budget, pilot=PILOT, sources=None, clauses_of=None):
     import layer1
     sources = sources or layer1.catalog()
     clauses_of = clauses_of or layer1.clauses_of
-    model = getattr(run_with, "model", runner.MODEL)
     drafts = draft_requests(pilot, sources, clauses_of)
     # verification is two calls per obligation; assume up to 3 obligations per clause for the bound
     per_verify = runner.cost({"input_tokens": 2000, "output_tokens": VERIFY_TOKENS})
     bound = runner.worst_case(drafts) + len(drafts) * 3 * 2 * per_verify
     if bound > budget:
         raise SystemExit(f"worst-case cost US${bound:.2f} is over the budget US${budget:.2f}; nothing was sent")
-    d_dir = runner.new_run("pilot-draft")
-    d_results = run_with.run(drafts)
-    d_summary = runner.record(d_dir, drafts, d_results, model, run_with.batch)
+    d_dir, d_results, d_summary = runner.execute(run_with, drafts, "pilot-draft")
     mappings, rejected = mappings_from(drafts, d_results, clauses_of)
     runner.write_jsonl(d_dir / "mappings.jsonl", mappings)
     runner.write_jsonl(d_dir / "rejected-quotes.jsonl", rejected)
     verifies = verify_requests(mappings, sources, clauses_of)
-    spent = d_summary["cost_usd"]
-    if spent + runner.worst_case(verifies) > budget:
-        raise SystemExit(f"drafting cost US${spent:.2f}; verification could exceed the budget; stopped before it")
-    v_dir = runner.new_run("pilot-verify")
-    v_results = run_with.run(verifies)
-    v_summary = runner.record(v_dir, verifies, v_results, model, run_with.batch)
+    # if drafting found more obligations than the bound assumed, verify as many whole mappings as the budget allows
+    left = budget - d_summary["cost_usd"]
+    while verifies and runner.worst_case(verifies) > left:
+        verifies = verifies[:-2]
+    skipped = len(mappings) - len(verifies) // 2
+    v_dir, v_results, v_summary = runner.execute(run_with, verifies, "pilot-verify")
     rep = report(mappings, rejected, d_summary, v_results, v_summary)
+    rep["not_verified_budget"] = skipped
     rep["runs"] = [d_dir.name, v_dir.name]
     (v_dir / "pilot-report.json").write_text(json.dumps(rep, indent=1) + "\n", encoding="utf-8")
     return rep

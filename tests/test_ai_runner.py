@@ -73,6 +73,32 @@ class Pilot(unittest.TestCase):
         self.assertEqual(rep["failed_calls"], ["draft-001"])
         self.assertEqual(rep["mappings"], 1)
 
+    def test_short_or_empty_quotes_are_rejected(self):
+        def short(req):
+            a = answer(req)
+            if req.custom_id.startswith("draft"):
+                for ob, q in zip(a["obligations"], ("", "the")):
+                    ob["quote"] = q
+            return a
+        rep = pilot.run(runner.MockRunner(short), budget=15, pilot=PILOT)
+        self.assertEqual((rep["mappings"], rep["quotes_rejected"]), (0, 4))
+
+    def test_verify_calls_carry_their_trace(self):
+        rep = pilot.run(runner.MockRunner(answer), budget=15, pilot=PILOT)
+        row = json.loads((self.runs / rep["runs"][1] / "requests.jsonl").read_text().splitlines()[0])
+        self.assertEqual({"source", "ref", "clause_sha256", "draft"} - set(row["meta"]), set())
+
+    def test_many_obligations_verify_what_the_budget_allows(self):
+        def many(req):
+            a = answer(req)
+            if req.custom_id.startswith("draft"):
+                a["obligations"] = [a["obligations"][0]] * 40
+            return a
+        rep = pilot.run(runner.MockRunner(many), budget=2.0, pilot=PILOT)
+        self.assertEqual(rep["mappings"], 80)
+        self.assertGreater(rep["not_verified_budget"], 0)
+        self.assertEqual(rep["verified_by_both"] + rep["not_verified_budget"], 80)
+
     def test_full_pilot_fits_the_budget(self):
         drafts = pilot.draft_requests(pilot.PILOT, layer1.catalog(), layer1.clauses_of)
         self.assertGreaterEqual(len(drafts), 20)
@@ -81,36 +107,72 @@ class Pilot(unittest.TestCase):
         self.assertLess(bound, 15)
 
 
+def sdk_result(custom_id, text=None, stop="end_turn", error=None):
+    """A real SDK batch result object, built from the API's JSON shape."""
+    from anthropic.types.messages import MessageBatchIndividualResponse
+    if error:
+        result = {"type": "errored", "error": {"type": "error", "error": {"type": error, "message": "Overloaded"},
+                                               "request_id": "req_1"}}
+    else:
+        result = {"type": "succeeded", "message": {
+            "id": "msg_1", "type": "message", "role": "assistant", "model": "claude-opus-5-5", "stop_sequence": None,
+            "content": [{"type": "text", "text": text}], "stop_reason": stop,
+            "usage": {"input_tokens": 100, "cache_read_input_tokens": 900, "output_tokens": 50}}}
+    return MessageBatchIndividualResponse.model_validate({"custom_id": custom_id, "result": result})
+
+
+def fake_api(results, fail_retrieve=False):
+    state = {"polls": 0, "created": 0}
+
+    def create(requests):
+        state["created"] += 1
+        return NS(id="b1", processing_status="in_progress", request_counts=NS(processing=len(requests)))
+
+    def retrieve(batch_id):
+        state["polls"] += 1
+        if fail_retrieve:
+            raise ConnectionError("network down")
+        return NS(id=batch_id, processing_status="ended", request_counts=NS(processing=0))
+    api = NS(messages=NS(batches=NS(create=create, retrieve=retrieve, results=lambda batch_id: iter(results))))
+    return api, state
+
+
 class Batch(unittest.TestCase):
-    """BatchRunner against a fake client: no network."""
+    """BatchRunner against a fake client with real SDK result objects: no network."""
+
+    def setUp(self):
+        self.runs = Path(tempfile.mkdtemp())
+        self.addCleanup(shutil.rmtree, self.runs)
+        self.original, runner.RUNS = runner.RUNS, self.runs
+        self.addCleanup(setattr, runner, "RUNS", self.original)
 
     def test_results_by_custom_id_and_failures(self):
-        def msg(text, stop="end_turn"):
-            usage = NS(input_tokens=100, cache_creation_input_tokens=0, cache_read_input_tokens=900, output_tokens=50)
-            return NS(id="msg_1", stop_reason=stop, usage=usage, content=[NS(type="thinking"), NS(type="text", text=text)])
-        results = [  # any order
-            NS(custom_id="c", result=NS(type="succeeded", message=msg("{not json"))),
-            NS(custom_id="a", result=NS(type="succeeded", message=msg('{"v": 1}'))),
-            NS(custom_id="d", result=NS(type="succeeded", message=msg('{"v"', stop="max_tokens"))),
-            NS(custom_id="b", result=NS(type="errored", error=NS(type="overloaded_error"))),
-        ]
-        state = {"polls": 0}
-
-        def retrieve(batch_id):
-            state["polls"] += 1
-            return NS(id=batch_id, processing_status="ended", request_counts=NS(processing=0))
-        fake = NS(messages=NS(batches=NS(
-            create=lambda requests: NS(id="b1", processing_status="in_progress", request_counts=NS(processing=4)),
-            retrieve=retrieve, results=lambda batch_id: iter(results))))
+        results = [sdk_result("c", "{not json"), sdk_result("a", '{"v": 1}'),     # any order
+                   sdk_result("d", '{"v"', stop="max_tokens"), sdk_result("b", error="overloaded_error")]
+        api, state = fake_api(results)
         reqs = [runner.Request(i, "s", "u", {"type": "object"}) for i in "abcde"]
-        out = runner.BatchRunner(poll_seconds=0, api=fake).run(reqs)
+        out = runner.BatchRunner(poll_seconds=0, api=api).run(reqs)
         self.assertEqual([r.custom_id for r in out], list("abcde"))
-        self.assertEqual(out[0].answer, {"v": 1})
+        self.assertEqual((out[0].answer, out[0].message_id), ({"v": 1}, "msg_1"))
+        self.assertEqual(out[0].usage["cache_read_input_tokens"], 900)
         self.assertEqual([r.ok for r in out], [True, False, False, False, False])
-        self.assertEqual(out[1].error, "overloaded_error")
+        self.assertEqual((out[1].error, out[1].request_id), ("overloaded_error: Overloaded", "req_1"))
+        self.assertTrue(out[2].error.startswith("answer is not JSON"))
         self.assertEqual(out[3].stop_reason, "max_tokens")
         self.assertEqual(out[4].error, "no result")
-        self.assertEqual(state["polls"], 1)
+
+    def test_interrupted_run_keeps_its_trail_and_can_be_collected(self):
+        api, state = fake_api([sdk_result("a", '{"v": 1}')], fail_retrieve=True)
+        reqs = [runner.Request("a", "s", "u", {"type": "object"})]
+        with self.assertRaises(ConnectionError):
+            runner.execute(runner.BatchRunner(poll_seconds=0, api=api), reqs, "x")
+        run_dir = next(self.runs.iterdir())
+        self.assertTrue((run_dir / "requests.jsonl").exists())
+        self.assertEqual(json.loads((run_dir / "batch.json").read_text())["batch_id"], "b1")
+        api, state = fake_api([sdk_result("a", '{"v": 1}')])
+        summary = runner.collect(run_dir, api=api)
+        self.assertEqual((summary["ok"], state["created"]), (1, 0))       # collected, not sent again
+        self.assertTrue((run_dir / "results.jsonl").exists())
 
     def test_cost(self):
         u = {"input_tokens": 1_000_000, "cache_read_input_tokens": 1_000_000, "output_tokens": 1_000_000}
