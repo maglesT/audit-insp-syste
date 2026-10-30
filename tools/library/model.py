@@ -8,7 +8,7 @@ Plain JSON files in git, so every change is a reviewable diff (D12):
 Per-regulator items (D37): a requirement record is one checklist item for one obligation of one regulator. It holds
 the plain-language item text (the only text customers ever see) and exactly one mapping, its internal source link:
 source, clause reference, clause sha256, exact quote, strength and plant types (never exported, option A). There is
-no cross-regulator merging: near-identical items of different regulators are grouped for display by the export.
+no cross-regulator merging or grouping (D37, D38); only identical items are shown once by the export.
 Standard library only.
 """
 import json
