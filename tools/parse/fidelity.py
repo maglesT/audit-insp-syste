@@ -89,15 +89,26 @@ def same(a, b):
 
 
 def page_lines(page):
-    """[[(word, small font)]] per line of a pdfplumber page, words in reading order, lines by baseline."""
-    words = page.extract_words(extra_attrs=["size"], keep_blank_chars=False, use_text_flow=True)
+    """[[(word, small font)]] per line of a pdfplumber page, words in reading order, lines by baseline (landscape
+    pages, whose text is set turned by 90 degrees, are read along their own lines)."""
+    turned = [c for c in page.chars if not c["upright"]]
+    if len(turned) > len(page.chars) / 2:                  # a landscape page: lines run up (or down) the page
+        up = sum(c["matrix"][1] > 0 for c in turned) > len(turned) / 2
+        words = page.extract_words(keep_blank_chars=False, line_dir_rotated="ltr" if up else "rtl",
+                                   char_dir_rotated="btt" if up else "ttb")
+        for w in words:                                     # turned glyphs report odd sizes: use the line height
+            w["size"] = w["x1"] - w["x0"] if not w["upright"] else w["bottom"] - w["top"]
+        start, end = "x0", "x1"
+    else:
+        words = page.extract_words(extra_attrs=["size"], keep_blank_chars=False, use_text_flow=True)
+        start, end = "top", "bottom"
     if not words:
         return []
     sizes = sorted(w["size"] for w in words)
     body = sizes[len(sizes) // 2]
     lines, line = [], []
     for w in words:
-        if line and abs(w["top"] - line[-1]["top"]) > 2.5 and abs(w["bottom"] - line[-1]["bottom"]) > 2.5:
+        if line and abs(w[start] - line[-1][start]) > 2.5 and abs(w[end] - line[-1][end]) > 2.5:
             lines.append(line)
             line = []
         line.append(w)
@@ -123,11 +134,14 @@ def read_pages(lines_per_page):
     running = common.repeated_lines(texts)
     anywhere = Counter(k for t in texts for k in {common.line_key(ln) for ln in t.splitlines()} if len(k.split()) >= 5)
     running |= {k for k, n in anywhere.items() if n >= max(3, int(len(texts) * 0.3))}
+    exact = common.repeated_lines(["\n".join(re.sub(r"\d", "@", ln) for ln in t.splitlines()) for t in texts])
 
     def header(line):
         key = common.line_key(line)
         if re.fullmatch(r"[#\s]*", key):
             return False                                    # numbers alone: page numbers are taken at the edges
+        if len(re.findall(r"[^\W\d_]{2,}", key)) < 2 and common.line_key(re.sub(r"\d", "@", line)) not in exact:
+            return False                                    # "Article #": headings differ by number, not repeated
         return bool(key in running or common.SIDE_HEADER.match(key)
                     or common.SIDE_HEADER.match(common.line_key(line[::-1])))
     all_lines = [" ".join(t for t, _ in ln) for pl in pages for ln in pl]
@@ -182,15 +196,42 @@ def joins(words):
     return out | {unlig(x) for x in out}
 
 
+CHAIN_SLACK = 20
+
+
+def chain(blocks):
+    """The clause's place on the page: the run of consecutive matching blocks with the best score (tokens matched
+    minus half the page tokens skipped beyond the clause's own gap and CHAIN_SLACK), so that a few tokens matched far away (a
+    number, a common word) do not stretch the clause over unrelated text; clause tokens outside the run are then
+    compared as missing."""
+    blocks = [b for b in blocks if b.size]
+    best, best_score, start, score = (0, 0), -1.0, 0, 0.0
+    for k, b in enumerate(blocks):
+        if k == 0 or score <= 0:
+            start, score = k, float(b.size)
+        else:
+            p = blocks[k - 1]
+            score += b.size - 0.5 * max(0, (b.b - p.b - p.size) - (b.a - p.a - p.size) - CHAIN_SLACK)
+        if score > best_score:
+            best, best_score = (start, k + 1), score
+    return blocks[best[0]:best[1]]
+
+
 def compare_table(clause, window, covered=None):
     """Discrepancies of a table row: its tokens missing from its own stretch of the page, as a bag. covered (a
     set) receives the window positions of tokens the row accounts for."""
-    blocks = [b for b in SequenceMatcher(None, clause, window, autojunk=False).get_matching_blocks() if b.size]
+    blocks = chain(SequenceMatcher(None, clause, window, autojunk=False).get_matching_blocks())
     lo, hi = (blocks[0].b, blocks[-1].b + blocks[-1].size) if blocks else (0, len(window))
     if covered is not None and blocks:
         wanted = Counter(clause)
-        for k in range(max(lo - len(clause), 0), min(hi + len(clause), len(window))):
-            if wanted[window[k]] > 0:
+        for b in blocks:                                    # the aligned tokens first, then the nearest others
+            for k in range(b.b, b.b + b.size):
+                wanted[window[k]] -= 1
+                covered.add(k)
+        order = sorted(range(max(lo - len(clause), 0), min(hi + len(clause), len(window))),
+                       key=lambda k: 0 if lo <= k < hi else min(abs(k - lo), abs(k - hi)))
+        for k in order:
+            if k not in covered and wanted[window[k]] > 0:
                 wanted[window[k]] -= 1
                 covered.add(k)
     stretch = window[max(lo - len(clause), 0):hi + len(clause)]
@@ -206,11 +247,30 @@ def compare_table(clause, window, covered=None):
     return [("missing", missing, [])] if missing else []
 
 
-def compare_text(clause, window, small=frozenset(), starts=frozenset(), covered=None):
+ELSEWHERE = 5
+
+
+def grams(toks, n=ELSEWHERE):
+    return {tuple(toks[k:k + n]) for k in range(len(toks) - n + 1)}
+
+
+def stored_elsewhere(run, elsewhere):
+    """A run of ELSEWHERE or more page tokens that other clauses of these pages hold word for word: every token
+    lies in a run of ELSEWHERE tokens found in one of them (grams())."""
+    if len(run) < ELSEWHERE or not elsewhere:
+        return False
+    hit = set()
+    for k in range(len(run) - ELSEWHERE + 1):
+        if tuple(run[k:k + ELSEWHERE]) in elsewhere:
+            hit.update(range(k, k + ELSEWHERE))
+    return len(hit) == len(run)
+
+
+def compare_text(clause, window, small=frozenset(), starts=frozenset(), covered=None, elsewhere=frozenset()):
     """Discrepancies of running text: (op, clause tokens, page tokens) for every difference in the clause's
     stretch of the page that no rule of the module docstring tolerates. covered (a set) receives the window
     positions of the stretch, for the coverage check."""
-    blocks = [b for b in SequenceMatcher(None, clause, window, autojunk=False).get_matching_blocks() if b.size]
+    blocks = chain(SequenceMatcher(None, clause, window, autojunk=False).get_matching_blocks())
     if not blocks:
         return [("missing", clause, [])]
     lo, hi = blocks[0].b, blocks[-1].b + blocks[-1].size
@@ -232,6 +292,8 @@ def compare_text(clause, window, small=frozenset(), starts=frozenset(), covered=
             continue                                        # ligatures, split or joined words, margin numbers
         if op == "insert" and len(b) >= 3 and all(len(x) == 1 for x in b):
             continue                                        # vertical text read character by character
+        if op == "insert" and stored_elsewhere(b, elsewhere):
+            continue                                        # another clause holds it (a table row, a footnote)
         if op == "insert" and all(k in small for k in range(j1, j2)) \
                 and not (j1 > 0 and re.search(r"\d", stretch[j1 - 1])):
             continue                                        # footnote marks (not an exponent after a number)
@@ -269,6 +331,28 @@ def describe(discrepancies):
 UNCOVERED_MIN = 3
 
 
+def spelled(run):
+    """Vertical text read a character or two at a time ("d o c u m e n a n d r ec o r"): seven in ten tokens
+    of one or two letters (table header cells set upright; the clause comparison tolerates them too)."""
+    return sum(len(t) <= 2 and t.isalpha() for t in run) >= 0.7 * len(run)
+
+
+def held_nearby(run, page, clauses):
+    """A run the alignment left uncovered that a clause of the page or the pages next to it holds word for word
+    (every token in a run of min(len, ELSEWHERE) tokens found there): repeated table rows ("N/A | No Q&A drafted")
+    align to their first copy, and a clause read in another order leaves its text elsewhere on the page."""
+    n = min(len(run), ELSEWHERE)
+    near = set()
+    for c in clauses:
+        if c["page_start"] - 1 <= page <= c["page_end"] + 1:
+            near |= grams(tokens(c["text"]), n)
+    hit = set()
+    for k in range(len(run) - n + 1):
+        if tuple(run[k:k + n]) in near:
+            hit.update(range(k, k + n))
+    return len(hit) == len(run)
+
+
 def compare(clauses, reading):
     """([(ref, kind, tokens, discrepancy text)] for every clause but contents entries ("" when it matches),
     [(page, uncovered text)]): runs of UNCOVERED_MIN or more tokens of the second reading that no clause's
@@ -277,6 +361,7 @@ def compare(clauses, reading):
     pages, _ = reading
     covered = [set() for _ in pages]
     out = []
+    held = [(c, grams(tokens(c["text"]))) for c in clauses]
     for c in clauses:
         toks = tokens(c["text"])
         if not toks:
@@ -291,9 +376,13 @@ def compare(clauses, reading):
             starts |= page_starts
         hit = set()
         if c["kind"] in TABLE_KINDS:
-            found = compare_table(toks, window, hit)
+            found = compare_table(toks, window)
+            taken = {k for k, (p, i) in enumerate(where) if i in covered[p]}
+            compare_table(toks, ["\0" if k in taken else t for k, t in enumerate(window)], hit)  # next free copy
         else:
-            found = compare_text(toks, window, small, starts, hit)
+            elsewhere = set().union(*[g for o, g in held if o is not c and o["page_start"] - 1 <= c["page_end"]
+                                      and o["page_end"] + 1 >= c["page_start"]])
+            found = compare_text(toks, window, small, starts, hit, elsewhere)
         for k in hit:
             covered[where[k][0]].add(where[k][1])
         if c["kind"] != "toc":
@@ -305,7 +394,7 @@ def compare(clauses, reading):
             if t is not None and k not in covered[p] and k not in page_small:
                 run.append(t)
                 continue
-            if len(run) >= UNCOVERED_MIN:
+            if len(run) >= UNCOVERED_MIN and not held_nearby(run, p + 1, clauses) and not spelled(run):
                 uncovered.append((p + 1, " ".join(run)))
             run = []
     return out, uncovered
