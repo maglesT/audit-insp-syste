@@ -182,6 +182,9 @@ finished in about 4 minutes in total.
     items, the main saving); adjudication of disagreements; reverse test (numbers, conditions, frequencies + 20 %);
     mutation test on the items; then the go/no-go and forecast. The drafter now assigns each obligation's
     sub-topic (S3 took it from the dropped consolidation).
+  - **Source fidelity check done (0a, D39):** `python3 tools/parse/fidelity.py run|check` (check in CI); 20,562
+    clauses of 146 PDFs re-read with pdfminer.six; every flag explained by rule or in
+    `library/fidelity-explanations.csv`; four minor real defects passed to 0b.
   - **Owner priority from the coordinating session (first, after D37):** source fidelity: 0a second-engine
     re-extraction check (`tools/parse/fidelity.py`), 0b the 10 known parser limits, 0c version currency
     (`tools/currency.py`), 0d a 50-clause human spot-check sheet; one PR each. Then structured obligations and the gold set (coordinator items

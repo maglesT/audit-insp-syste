@@ -16,6 +16,8 @@ class Fidelity(unittest.TestCase):
         self.assertEqual(fidelity.words("Manufac- turing ﬁles, SOFT\u00adWARE; 9.3"),
                          ["manufacturing", "les", "software", "9", "3"])
         self.assertEqual(fidelity.words("qualification"), fidelity.words("qualication"))   # dropped ligature
+        self.assertEqual(fidelity.words("3,5,8- pyrene multi\u2010 disciplinary"), ["3", "5", "8", "pyrene",
+                                                                                 "multidisciplinary"])
 
     def test_share(self):
         page = fidelity.words("Header line. 9.3 All self inspections should be recorded. Footer 12")

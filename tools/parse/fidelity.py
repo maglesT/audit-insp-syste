@@ -7,7 +7,7 @@ The parser reads PDFs with poppler (`pdftotext -layout`). This check reads them 
 pdfplumber's page text), which is a separate code base, and compares each clause with the second engine's words on
 the clause's pages (one page of margin either side, since a clause's page numbers come from the first engine).
 Both texts are normalised the same way first: Unicode NFKC (ligatures, full-width letters), soft hyphens dropped,
-a word broken at a line end joined ("manufac- turing" -> "manufacturing"), letters case-folded, punctuation and
+a word broken at a line end joined ("manufac- turing" -> "manufacturing"; letters on both sides, any hyphen), letters case-folded, punctuation and
 spacing ignored, and the letters of ligatures (fi, fl, ff, ffi, ffl) left out, since pdfminer drops some ligature
 glyphs. A clause word of three or more characters that the second engine split ("PD50" as "PD 50") counts as
 found when it is not a whole word on the pages but appears in their words run together. A clause's match share is the share of its words found, in order, in the second engine's words
@@ -54,7 +54,7 @@ LIGATURES = re.compile(r"ffi|ffl|ff|fi|fl")
 def words(text):
     """The comparable words of a text (see the module docstring)."""
     text = unicodedata.normalize("NFKC", text).replace("\u00ad", "")
-    text = re.sub(r"(\w)-\s+(\w)", r"\1\2", text)
+    text = re.sub(r"([^\W\d_])[-\u2010\u2011]\s+([^\W\d_])", r"\1\2", text)   # letters only: "3,5,8- pyrene" stays
     return [LIGATURES.sub("", w) or w for w in re.findall(r"\w+", text.casefold())]
 
 

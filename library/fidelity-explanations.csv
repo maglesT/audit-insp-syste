@@ -1,0 +1,8 @@
+source,ref,reason
+eu-written-confirmation-template-2013.pdf,2,"Real parse defect, outside the obligation: the page footer (the Commission's address in French and Dutch) is interleaved line by line with footnote 2 and glued onto the end of the clause (""Writteneuropéenne"", ""basedCommissie""). The clause's own sentence is intact. Fix in the parser-limits work (0b): drop the page footer before the footnote."
+india-schedule-m-2023-GSR922E.pdf,Part III 9.1,"Labels of the HVAC schematic figure (""Shut- off Damper"", ""VFD"", ""EXHAUSTAI"") taken into the clause in layout order and glued; figure text, not regulatory prose. 0b: mark figure text as such."
+pics-pi011-3-computerised-systems.pdf,14.2,"A footnote reference number sits between the halves of a word broken at a line end (""re- 23 qualification""): the words are right, the footnote mark is out of place. 0b: drop footnote marks inside hyphenated words."
+pics-pi011-3-computerised-systems.pdf,20.1,"Same as 14.2: ""inter- 32 alia"" (footnote 32 inside ""inter alia"")."
+pics-pi011-3-computerised-systems.pdf,Table 3 2. Implementing #2,"Same as 14.2: ""guaran- 56 teed"" (footnote 56 inside ""guaranteed"")."
+india-gsr666e-2024-schm-corrigendum.pdf,*,"One parsed clause (a bilingual gazette corrigendum); every word pdfminer misses is in poppler's raw reading (category engine), so the stored English text is confirmed by a second reading."
+eu-2018_annex17_en.pdf,3.6,"Stored text is right (""cross-functional/multi- disciplinary""): the document has numbered lines, and the second engine reads the margin line number 74 between ""multi-"" and ""disciplinary"", which the parser leaves out."

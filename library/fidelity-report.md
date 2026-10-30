@@ -1,8 +1,20 @@
 # Source fidelity report
 
-Built by `python3 tools/parse/fidelity.py run` (D38): every parsed clause of every PDF source compared word by word with a second engine (pdfminer.six via pdfplumber). Flags: a clause under 99% of its words matched, a source median under 99.5%. Explanations: `library/fidelity-explanations.csv`.
+Built by `python3 tools/parse/fidelity.py run` (D39): every parsed clause of every PDF source compared word by word with a second engine (pdfminer.six via pdfplumber). Flags: a clause under 99% of its words matched, a source median under 99.5%.
 
-Sources: 146; clauses: 20562; flagged clauses: 629; sources under the median threshold: 1.
+Sources: 146; clauses: 20562; flagged clauses: 590 (elsewhere 227, engine 78, minor 165, order 114, unconfirmed 6); sources under the median threshold: 1.
+
+Categories (`classify`): minor = only numbers or one- or two-character tokens differ (footnote marks, superscripts); order = the words are on the clause's pages in another order; elsewhere = the words are elsewhere in the document (a table row repeating a spanned cell's label); engine = pdfminer misses them but poppler's raw reading has them; unconfirmed = no reading of the PDF has a word, so the flag is fixed or explained in `library/fidelity-explanations.csv`.
+
+## Unconfirmed words and low medians
+
+- india-gsr666e-2024-schm-corrigendum.pdf: median 0.9110. One parsed clause (a bilingual gazette corrigendum); every word pdfminer misses is in poppler's raw reading (category engine), so the stored English text is confirmed by a second reading.
+- eu-2018_annex17_en.pdf 3.6 (clause, 0.9808): multidisciplinary. Stored text is right ("cross-functional/multi- disciplinary"): the document has numbered lines, and the second engine reads the margin line number 74 between "multi-" and "disciplinary", which the parser leaves out.
+- eu-written-confirmation-template-2013.pdf 2 (clause, 0.9448): writteneuropéenne basedcommissie. Real parse defect, outside the obligation: the page footer (the Commission's address in French and Dutch) is interleaved line by line with footnote 2 and glued onto the end of the clause ("Writteneuropéenne", "basedCommissie"). The clause's own sentence is intact. Fix in the parser-limits work (0b): drop the page footer before the footnote.
+- india-schedule-m-2023-GSR922E.pdf Part III 9.1 (clause, 0.9884): shutvfd. Labels of the HVAC schematic figure ("Shut- off Damper", "VFD", "EXHAUSTAI") taken into the clause in layout order and glued; figure text, not regulatory prose. 0b: mark figure text as such.
+- pics-pi011-3-computerised-systems.pdf 14.2 (clause, 0.9890): re23. A footnote reference number sits between the halves of a word broken at a line end ("re- 23 qualification"): the words are right, the footnote mark is out of place. 0b: drop footnote marks inside hyphenated words.
+- pics-pi011-3-computerised-systems.pdf 20.1 (clause, 0.9684): inter32. Same as 14.2: "inter- 32 alia" (footnote 32 inside "inter alia").
+- pics-pi011-3-computerised-systems.pdf Table 3 2. Implementing #2 (table_row, 0.9756): guaran56. Same as 14.2: "guaran- 56 teed" (footnote 56 inside "guaranteed").
 
 | Source | Clauses | Median | Lowest | Flagged |
 |---|---|---|---|---|
@@ -95,7 +107,7 @@ Sources: 146; clauses: 20562; flagged clauses: 629; sources under the median thr
 | ich-q9r1.pdf | 45 | 1.0000 | 0.8889 | 1 |
 | india-cdsco-circ-2024-03-risk-based-inspection.pdf | 1314 | 1.0000 | 0.7800 | 220 |
 | india-cdsco-gdp-guidelines-2024.pdf | 217 | 1.0000 | 1.0000 | 0 |
-| india-drugs-rules-1945-consolidated-2024-07.pdf | 2981 | 1.0000 | 0.4615 | 63 |
+| india-drugs-rules-1945-consolidated-2024-07.pdf | 2981 | 1.0000 | 0.4615 | 24 |
 | india-gsr127e-2025-schm-timeline.pdf | 14 | 1.0000 | 0.8800 | 2 |
 | india-gsr666e-2024-schm-corrigendum.pdf | 1 | 0.9110 | 0.9110 | 1 |
 | india-schedule-m-2023-GSR922E.pdf | 1593 | 1.0000 | 0.6667 | 8 |
