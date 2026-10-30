@@ -171,8 +171,9 @@ def read_pages(lines_per_page):
             words = list(ln)
             if numbered is not None and words and re.fullmatch(r"\d{1,4}", words[numbered][0]):
                 words.pop(numbered)
-            if words and re.fullmatch(r"\d{1,3}", words[0][0]):
-                starts.add(words[0][0])
+            if words and re.fullmatch(r"\d{1,3}", words[0][0]) and (
+                    words[0][2] is None or not ys or words[0][2] >= ys[0] + 0.6 * (ys[-1] - ys[0])):
+                starts.add(words[0][0])                     # a footnote's number: low on the page
             for t, is_small, y in words:
                 for tok in tokens(t):
                     if is_small:
@@ -320,7 +321,10 @@ def spaced(clause_part, window, at):
     split differently: headings in small capitals, which pdfminer reads as "s cope of g uideline"."""
     want = letters(clause_part)
     k = 3 * len(clause_part) + 4
-    return len(want) >= 4 and want in letters(window[max(at - k, 0):at + k])
+    region = window[max(at - k, 0):at + k]
+    if any(region[i:i + len(clause_part)] == list(clause_part) for i in range(len(region))):
+        return False                                    # the same tokens verbatim: not split capitals
+    return len(want) >= 4 and want in letters(region) and any(len(t) == 1 and t.isalpha() for t in region)
 
 
 def compare_text(clause, window, small=frozenset(), starts=frozenset(), covered=None, elsewhere=frozenset(),
@@ -337,15 +341,15 @@ def compare_text(clause, window, small=frozenset(), starts=frozenset(), covered=
         covered.update(range(lo, hi))
     stretch = window[lo:hi]
     small = {k - lo for k in small if lo <= k < hi}
-    found = []
+    found, pos = [], []
     for op, i1, i2, j1, j2 in SequenceMatcher(None, clause, stretch, autojunk=False).get_opcodes():
         if op == "equal":
             continue
         a, b = clause[i1:i2], stretch[j1:j2]
         letters = [x for x in b if not (x.isdigit() and len(x) <= 4)]
         if op == "replace" and (
-                (len(a) == len(b) and all(same(x, y) for x, y in zip(a, b)))
-                or unlig("".join(a)) == unlig("".join(b))
+                (len(a) == len(b) and all(x == y or unlig(x) == y for x, y in zip(a, b)))
+                or unlig("".join(a)) == "".join(b) or "".join(a) == "".join(b)
                 or (2 <= len(letters) < len(b) and all(x.isalpha() for x in letters)
                     and unlig("".join(a)) == unlig("".join(letters)))):
             continue                                        # ligatures, split or joined words, margin numbers
@@ -366,12 +370,16 @@ def compare_text(clause, window, small=frozenset(), starts=frozenset(), covered=
                 t.isdigit() and len(t) <= 3 and (t in starts or any(stretch[k] == t for k in small)) for t in a):
             continue                                        # footnote marks the PDF prints small or as a line start
         found.append((op, a, b))
-    edges = window[max(lo - 4, 0):hi + 4]
-    near = joins(edges) | joins([x for x in edges if not (x.isdigit() and len(x) <= 3)])
-    inserted = {"".join(b) for op, _, b in found if op == "insert"}
-    deleted = {"".join(a) for op, a, _ in found if op == "delete"}
-    found = [f for f in found
-             if not (f[0] == "delete" and (unlig("".join(f[1])) in near or "".join(f[1]) in inserted))
+        pos.append(lo + j1)
+    def near_at(j):                                     # only the page tokens around the difference
+        e = window[max(j - 4, 0):j + 4]
+        return joins(e) | joins([x for x in e if not (x.isdigit() and len(x) <= 3)])
+    def marks(ts):
+        return all((t.isdigit() and len(t) <= 3) or t in "<>≤≥±%−" for t in ts)
+    inserted = {"".join(b) for op, _, b in found if op == "insert" and marks(b)}   # only marks move (footnote numbers, signs)
+    deleted = {"".join(a) for op, a, _ in found if op == "delete" and marks(a)}
+    found = [f for f, j in zip(found, pos)
+             if not (f[0] == "delete" and (unlig("".join(f[1])) in near_at(j) or "".join(f[1]) in inserted))
              and not (f[0] == "insert" and "".join(f[2]) in deleted)]
     moved = Counter(t for op, _, b in found if op == "insert" for t in b) & \
         Counter(t for op, a, _ in found if op == "delete" for t in a)
@@ -438,6 +446,7 @@ def compare(clauses, reading):
     covered = [set() for _ in pages]
     out = []
     held = [(c, grams(tokens(c["text"]))) for c in clauses]
+    inrow, claim, ends = set(), {}, []
     for c in clauses:
         toks = tokens(c["text"])
         if not toks:
@@ -458,6 +467,9 @@ def compare(clauses, reading):
             found = compare_table(toks, window, place=place)
             taken = {k for k, (p, i) in enumerate(where) if i in covered[p]}
             compare_table(toks, ["\0" if k in taken else t for k, t in enumerate(window)], hit, place)  # next copy
+            if hit:                                         # the row's own run, for row-level coverage
+                for k in range(min(hit), max(hit) + 1):
+                    inrow.add(where[k])
         else:                                               # running text: without the running headers
             keep = [k for k in range(len(window)) if k not in head]
             at = {k: n for n, k in enumerate(keep)}
@@ -471,6 +483,10 @@ def compare(clauses, reading):
             found = compare_text(toks, [window[k] for k in keep], {at[k] for k in small if k in at}, starts,
                                  text_hit, elsewhere, {at[k] for k in soft if k in at}, list(tables.values()))
             hit = {keep[n] for n in text_hit}
+            if hit and c["kind"] != "toc":
+                for k in hit:
+                    claim.setdefault(where[k], []).append(c["ref"])
+                ends.append((c["ref"], where[min(hit)], where[max(hit)]))
         for k in hit:
             covered[where[k][0]].add(where[k][1])
         if c["kind"] != "toc":
@@ -485,7 +501,31 @@ def compare(clauses, reading):
                 continue
             if len(run) >= UNCOVERED_MIN and not held_nearby(run, p + 1, clauses) and not spelled(run):
                 uncovered.append((p + 1, " ".join(run)))
+            elif run and all((p, j) in inrow for j in range(k - len(run), k)) and not spelled(run):
+                uncovered.append((p + 1, "in table row: " + " ".join(run)))
             run = []
+    for ref, (p0, i0), (p1, i1) in ends:                    # a clause's first or last words left on the page
+        for p, side in ((p0, range(i0 - 1, i0 - 1 - UNCOVERED_MIN, -1)), (p1, range(i1 + 1, i1 + 1 + UNCOVERED_MIN))):
+            page_tokens, page_small, _, _, page_soft, page_head = page_parts(pages[p])
+            run = []
+            for j in side:
+                if not 0 <= j < len(page_tokens) or j in covered[p] or j in page_small | page_soft | page_head:
+                    break
+                run.append(page_tokens[j])
+            if run and len(run) < UNCOVERED_MIN and any(len(t) > 1 and t.isalpha() for t in run) \
+                    and not spelled(run):
+                uncovered.append((p + 1, f"next to {ref}: " + " ".join(run)))
+    twice = sorted(k for k, v in claim.items() if len(v) > 1)  # page text claimed by two text clauses
+    run, prev = [], None
+    for k in twice + [None]:
+        if k is not None and prev is not None and k[0] == prev[0] and k[1] == prev[1] + 1:
+            run.append(k)
+        else:
+            if len(run) >= UNCOVERED_MIN:
+                uncovered.append((run[0][0] + 1, "in two clauses " + " and ".join(sorted(set(claim[run[0]])))
+                                  + ": " + " ".join(page_parts(pages[run[0][0]])[0][i] for _, i in run)))
+            run = [k] if k is not None else []
+        prev = k
     return out, uncovered
 
 
