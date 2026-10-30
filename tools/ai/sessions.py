@@ -22,13 +22,14 @@ BATCH_SIZE = 40
 
 def prepare(requests, stage, size=BATCH_SIZE):
     """Record the requests and split them into batch files. Returns the run dir. Checks come first, so a bad
-    request list leaves no run dir behind."""
+    request list leaves no run dir behind. A request whose meta has a "batch" key goes into a batch with only
+    the requests of the same key (and system prompt), so a caller can keep chosen requests apart."""
     ids = [r.custom_id for r in requests]
     if len(set(ids)) != len(ids):
         raise ValueError("duplicate custom_id in requests")
     groups = {}
     for r in requests:
-        groups.setdefault(r.system, []).append(r)
+        groups.setdefault((r.system, r.meta.get("batch")), []).append(r)
     for group in groups.values():
         if len({json.dumps(r.schema, sort_keys=True) for r in group}) != 1:
             raise ValueError("requests with one system prompt must share one schema")

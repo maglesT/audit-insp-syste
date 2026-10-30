@@ -1,6 +1,64 @@
 # Handover: read this first in every new session
 
-Last updated: 30 October 2026 (session 3, session pilot, D30).
+Last updated: 30 October 2026 (session 3, mutation test).
+
+## Mutation test results (30 Oct 2026, plan 2.6 / Layer 3, pilot scale)
+`tools/ai/mutate.py` planted errors in the 56 session-pilot mappings and mixed the mutants, shuffled, with the 56
+untouched mappings as controls. Originals were limited to mappings that are Layer 1 clean and that both pilot
+verifiers accepted (all 56). The verifiers used the pilot prompts and inputs unchanged. No batch held two variants
+of one original, so no verifier saw an item next to its own mutant. The key is in `mutation-key.jsonl`.
+
+Run folders in `library/ai-runs/`:
+- `20261030T083158.816182Z-mutator/`: the text mutants; 85 of 92 requested changes were possible.
+- **`20261030T084816.917722Z-mutation-verify/`: the result** (`mutation-report.json`, `agents.json`). Ten verifier
+  agents, at most 3 at a time, each saw only its own batch file. One B agent left 2 of 30 items unanswered; they were
+  recorded as failed calls, then answered by a fresh agent (the first pass is kept as `batch_009.first-pass-28.json`).
+  A transcript scan confirmed that no verifier opened the key, the link files, the mutator run or another batch.
+- `20261030T083519.725130Z-mutation-verify/`: a **superseded** first run. Its batches let an original and its mutants
+  sit together (37 of 92 mutants did); the review pass found this. Its numbers were almost the same (91 of 92
+  caught; mutants alone in a batch were caught 54 of 55).
+
+| Error type | n | Layer 1 | A | B | at least one | 95 % lower bound |
+|---|---|---|---|---|---|---|
+| changed number | 2 | 2 | 2 | 2 | 2 (100 %) | 0.34 |
+| should/shall (strength) | 15 | 15 | 15 | 15 | 15 (100 %) | 0.80 |
+| wrong plant type | 15 | 15 | 15 | 15 | 15 (100 %) | 0.80 |
+| wrong clause | 15 | 15 | 15 | 15 | 15 (100 %) | 0.80 |
+| dropped condition | 15 | 0 | 15 | **14** | 15 (100 %) | 0.80 |
+| added condition | 15 | 6 | 15 | 15 | 15 (100 %) | 0.80 |
+| looser wording | 15 | 0 | 15 | 15 | 15 (100 %) | 0.80 |
+| **controls: false alarms** | 56 | 0 | 0 | 0 | **0 %** | |
+
+- **Misses: every mutant was caught by at least one check.**
+  - B's one miss is *WHO TRS 986 8.9*: "Evaluate suppliers and add them to the approved supplier list or
+    specifications." This drops "before approval". B read the condition back into the item ("evaluated before being
+    approved and included"); A caught it.
+  - In the superseded run, both verifiers missed *Schedule M 10.8.2* with "where an audit is required" dropped. Here
+    both caught it.
+  - So the weak spot is the same in both runs: a verifier silently restores a dropped condition from the clause.
+    Which mutant trips it changes from run to run.
+- **WHO 8.9 with its criteria dropped is caught** by both verifiers ("Supplier evaluation considers the supplier's
+  history." without the nature of the materials). So the session pilot's 56/56 was not just leniency: the verifiers
+  check whole obligations when part of one is cut.
+- **Layer 1** caught every wrong clause, changed number, strength and plant-type mutant, as the plan expects. It
+  also caught 6 added conditions that brought in a number ("within 30 days", "every six months"). It raised no false
+  alarm.
+- **Against the plan 2.6 thresholds:**
+  - **Met:** Layer 1 error types detected 100 %; meaning types detected 100 % by at least one check; false alarms 0 %
+    (limit 10 %).
+  - **Not shown yet:** the 95 % lower bound of ≥ 90 %. With 15 mutants per type it cannot pass 0.80 even at 100 %; the
+    plan's 100 per type per regulator is needed. Changed number has only 2 mutants, because only 2 pilot items carry
+    a number.
+- **Where the prompts need tightening (owner decision; not changed here):** tell both verifiers to judge only what
+  the item's own words say. A condition that is in the clause but missing from the item is an omission, even if it
+  seems implied. A trigger such as "if / where ... required / before" is part of the obligation. Both misses across
+  the two runs are of this kind, and both came from a verifier reading the clause into the item.
+- **Limits of this test:**
+  - The mutants are single, fairly visible edits.
+  - Drafting, mutating and verifying all use the same model.
+  - The controls are the items the session pilot already accepted.
+
+  Next: the full-scale Layer 3 (100 per type per regulator, subtler and combined mutants).
 
 ## Session pilot results (30 Oct 2026, D30)
 Same 24 clauses, run in this session with the D30 prompts. Run folders: `library/ai-runs/20261030T081253.980447Z-session-draft/`
