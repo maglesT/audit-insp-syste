@@ -19,10 +19,14 @@ NUM = re.compile(r"^([1-9]\d?(?:\.(?:0|[1-9]\d{0,2})){0,4})\.?(?=\s|$)\s*(.*)$")
 SECTION = [
     (re.compile(r"^PART[\s-]+([IVXL]+)\b"), "Part {}"),
     (re.compile(r"^ANNEX\s+(\d+[A-Z]?)\*?\s*$", re.I), "Annex {}"),
+    (re.compile(r"^(ANNEX)\s*$"), "Annex"),          # an unnumbered annex at the end ("ANNEX" / glossary)
     (re.compile(r"^CHAPTER\s+(\d+)\b"), "Chapter {}"),
 ]
 PRINCIPLE = re.compile(r"^(Principles?|PRINCIPLES?)\.?\s*$")
-BACK_MATTER = re.compile(r"^(\d{1,2}\.?\s+)?(Glossary|GLOSSARY|Definitions|DEFINITIONS|Abbreviations|ABBREVIATIONS|References|REFERENCES|Bibliography)\s*$")
+BACK_MATTER = re.compile(r"^(\d{1,2}\.?\s+)?(Glossary|GLOSSARY|Definitions|DEFINITIONS|Abbreviations|ABBREVIATIONS|"
+                         r"References|REFERENCES|Bibliography|BIBLIOGRAPHY|Further reading|FURTHER READING|"
+                         r"Revision history|REVISION HISTORY|Acknowledgements|ACKNOWLEDGEMENTS)\s*$")
+NOT_CITABLE = ("references", "bibliography", "further reading", "revision history", "acknowledgements")
 APPENDIX = re.compile(r"^(?:Appendix|APPENDIX)\s+([0-9IVX]+|[A-Z])\b")
 DOT_LEADER = re.compile(r"(\.\s?){4,}\s*\d*\s*$|\s\d{1,3}\s*$")
 MAX_GAP = 3
@@ -132,11 +136,13 @@ def parse(path, pages=None):
                 start("section", section, "", line, pno)
                 continue
             mb = BACK_MATTER.match(line)
+            if mb and mb.group(1) and mb.group(2).lower() in NOT_CITABLE:
+                mb = None                    # "9. REVISION HISTORY" keeps its number like any other clause
             if mb and cur is not None and cur["ref"] == f"{section} {mb.group(2).title()}".strip():
                 mb = None                    # the glossary's own running header: its text goes on
             if mb:
                 jumps = []
-                if mb.group(2).lower() in ("references", "bibliography"):
+                if mb.group(2).lower() in NOT_CITABLE:
                     unnumbered += 1
                     start("unnumbered", f"_unnumbered:{unnumbered}", "", line, pno)
                 else:                                  # definitions often carry "should" / "may": citable
@@ -186,7 +192,7 @@ def parse(path, pages=None):
                 # "8. Personnel" after 7.x: a new chapter in title case, unless the old chapter's numbering goes on
                 # below it (then "8." was a list item)
                 titled = (rest[:1].isupper() and prev is not None and len(prev) > 1 and cand == [prev[0] + 1]
-                          and len(rest) < 70 and next_multi(i) not in (None,) and next_multi(i)[0] != prev[0])
+                          and len(rest) < 70 and (next_multi(i) is None or next_multi(i)[0] != prev[0]))
                 as_heading = heading_like(rest) and (follows or upper or titled)
                 as_paragraph = single_run and not follows
                 if len(cand) == 1 and not (as_heading or as_paragraph or restart):
