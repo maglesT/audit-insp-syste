@@ -32,7 +32,7 @@ Columns: items = checklist items drafted; auto = items passing the automatic rou
 | 14 | Guide to Inspections of Pharmaceutical QC Laboratories | `fda-ora-guide-pharma-qc-labs-1993.html` | must | ALL | - | not started | | | |
 | 15 | Guide to Inspections of Sterile Drug Substance Manufacturers | `fda-ora-guide-sterile-drug-substance-1994.html` | must | API, INJ | - | not started | | | |
 | 16 | Guide to Inspections: Validation of Cleaning Processes | `fda-ora-guide-cleaning-validation-1993.html` | must | ALL | - | not started | | | |
-| 17 | Questions and Answers on CGMP for Drugs: Buildings and Facilities | `fda-cgmp-qa-buildings-facilities.html` | must | ALL | - | verified | 16 | 13 | 3 |
+| 17 | Questions and Answers on CGMP for Drugs: Buildings and Facilities | `fda-cgmp-qa-buildings-facilities.html` | must | ALL | - | verified | 16 | 14 | 2 |
 | 18 | Questions and Answers on CGMP for Drugs: Control of Components and Drug Product Containers and Closures | `fda-cgmp-qa-components-containers-closures.html` | must | ALL | - | verified | 92 | 76 | 16 |
 | 19 | Questions and Answers on CGMP for Drugs: Equipment | `fda-cgmp-qa-equipment.html` | must | ALL | - | verified | 57 | 51 | 6 |
 | 20 | Questions and Answers on CGMP for Drugs: General Provisions | `fda-cgmp-qa-general-provisions.html` | must | ALL | - | verified | 0 | 0 | 0 |
@@ -40,7 +40,7 @@ Columns: items = checklist items drafted; auto = items passing the automatic rou
 | 22 | Questions and Answers on CGMP for Drugs: Laboratory Controls | `fda-cgmp-qa-laboratory-controls.html` | must | ALL | - | verified | 80 | 67 | 13 |
 | 23 | Questions and Answers on CGMP for Drugs: Production and Process Controls | `fda-cgmp-qa-production-process-controls.html` | must | ALL | - | not started | | | |
 | 24 | Questions and Answers on CGMP for Drugs: Records and Reports | `fda-cgmp-qa-records-reports.html` | must | ALL | - | verified | 31 | 26 | 5 |
-| 25 | Questions and Answers on CGMP for Drugs: Returned and Salvaged Drug Products | `fda-cgmp-qa-returned-salvaged.html` | must | ALL | - | verified | 15 | 9 | 6 |
+| 25 | Questions and Answers on CGMP for Drugs: Returned and Salvaged Drug Products | `fda-cgmp-qa-returned-salvaged.html` | must | ALL | - | verified | 15 | 10 | 5 |
 | 26 | CPG Sec. 490.200 Parametric Release of Parenteral Drug Products Terminally Sterilized by Moist Heat | `fda-cpg-490-200-parametric-release.html` | should | INJ | - | not started | | | |
 | 27 | FDA alert to drug manufacturers on risk of benzene contamination | `fda-alert-benzene-contamination.html` | should | OSD, LIQ, SEMI | - | not started | | | |
 | 28 | Guide to Inspections of Foreign Pharmaceutical Manufacturers | `fda-ora-guide-foreign-pharma-manufacturers-1996.html` | should | ALL | - | not started | | | |

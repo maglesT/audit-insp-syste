@@ -1,8 +1,65 @@
 {
  "items": 143,
- "both_correct": 0,
- "both_incorrect": 0,
- "disagree": 0,
- "unanswered": 143,
- "cases": []
+ "both_correct": 135,
+ "both_incorrect": 6,
+ "disagree": 2,
+ "unanswered": 0,
+ "cases": [
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q6#1",
+   "a": "correct",
+   "a_reason": "The quote is exact. The statement captures the whole obligation of the cited paragraph, including its conditions, with matching strength (recommended), and the text applies to the listed plant types.",
+   "b": "incorrect",
+   "b_reason": "The text says relying solely on ISO 14644-1/-2 is \"generally\" not acceptable; the statement drops the qualifier \"generally\" and states an absolute prohibition."
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q14#6",
+   "a": "correct",
+   "a_reason": "The quote is exact. The statement captures the whole obligation of the cited paragraph, including its conditions, with matching strength (recommended), and the text applies to the listed plant types.",
+   "b": "incorrect",
+   "b_reason": "The list item sits under the lead-in condition \"if leptospiral contamination is considered possible, or has occurred\" (Q14.7), which the statement omits; it only carries the newly-identified-risk condition."
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q14#7",
+   "a": "incorrect",
+   "a_reason": "The quote is exact and the example is optional, but the lead-in condition (if leptospiral contamination is considered possible or has occurred) appears only in the condition field, not in the statement, so it is omitted.",
+   "b": "incorrect",
+   "b_reason": "The list item sits under the lead-in condition \"if leptospiral contamination is considered possible, or has occurred\" (Q14.7), which the statement omits; the condition appears only in the condition field."
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q14#8",
+   "a": "incorrect",
+   "a_reason": "The quote is exact, but the lead-in condition (if leptospiral contamination is considered possible or has occurred) appears only in the condition field and is missing from the statement.",
+   "b": "incorrect",
+   "b_reason": "The list item sits under the lead-in condition \"if leptospiral contamination is considered possible, or has occurred\" (Q14.7), which the statement omits; the condition appears only in the condition field."
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q14#9",
+   "a": "incorrect",
+   "a_reason": "The quote is exact, but the statement leaves out the lead-in condition (if leptospiral contamination is considered possible or has occurred), which appears only in the condition field.",
+   "b": "incorrect",
+   "b_reason": "The list item sits under the lead-in condition \"if leptospiral contamination is considered possible, or has occurred\" (Q14.7), which the statement omits; the condition appears only in the condition field."
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q14#10",
+   "a": "incorrect",
+   "a_reason": "Q14.14 is a list item under the lead-in 'if leptospiral contamination is considered possible, or has occurred, ... should include at least the following', and the statement omits that condition.",
+   "b": "incorrect",
+   "b_reason": "The list item sits under the lead-in condition \"if leptospiral contamination is considered possible, or has occurred\" (Q14.7), which the statement omits; the statement is presented as an unconditional practice."
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q14#11",
+   "a": "incorrect",
+   "a_reason": "This list item sits under the leptospiral-contamination lead-in, but the statement drops that condition (it is not in the statement or even in the condition field).",
+   "b": "incorrect",
+   "b_reason": "The list item sits under the lead-in condition \"if leptospiral contamination is considered possible, or has occurred\" (Q14.7), which the statement omits; the statement only mentions cell culture."
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q21#3",
+   "a": "incorrect",
+   "a_reason": "The quote is exact, but the paragraph uses 'Firms may then apply the analytical tests', which makes this optional, while the item is marked recommended and phrased as an instruction.",
+   "b": "incorrect",
+   "b_reason": "The quoted sentence says firms \"may\" apply the analytical tests (optional) and follows from establishing specifications after the minimally effective level is determined; the item rates it recommended and drops that sequence."
+  }
+ ]
 }

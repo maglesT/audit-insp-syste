@@ -155,13 +155,21 @@ def lead_in(ref, source):
     pos = next(k for k, p in enumerate(paras) if p["ref"] == ref)
     if not paras[pos]["li"]:
         return ""
-    for p in reversed(paras[:pos]):
+    for k in range(pos - 1, -1, -1):
+        p = paras[k]
         if not p["li"]:
             t = p["text"].rstrip()
             if not t.endswith(":"):
                 return ""
             sents = obligations.sentences(t) or [t]
-            return " ".join([x for x in sents[:-1] if not obligations.strength(x)] + [sents[-1]])
+            own = " ".join([x for x in sents[:-1] if not obligations.strength(x)] + [sents[-1]])
+            if len(t) < 60:                       # "Examples include:" inside a list: the outer lead-in goes on
+                outer = next((q["text"].rstrip() for q in reversed(paras[:k]) if q["text"].rstrip().endswith(":")
+                              and len(q["text"].rstrip()) >= 60), "")
+                if outer:
+                    o = obligations.sentences(outer) or [outer]
+                    own = o[-1] + " " + own
+            return own
     return ""
 
 
