@@ -1,0 +1,153 @@
+{
+ "role": "b",
+ "instructions": "You are a second, independent auditor. Check one checklist item against the FDA web page paragraph it claims to come from. You get\nthe unit's paragraphs (reference and exact text of the page; \"context\" entries are headings) and the item. Start from the TEXT:\nread the cited paragraph, the paragraphs its quote runs into, and its lead-in fully, then compare the item.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the lead-in above a list\nitem (the paragraph ending \":\" above it). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph expects what the statement asks for (an instruction\n  to the investigator, \"Determine whether the firm validated ...\", expects the firm to have that practice), the statement\n  adds nothing and omits nothing of that obligation, the strength (a legal requirement: shall/must/required = mandatory;\n  should, FDA expects/recommends, an inspection point = recommended; may/acceptable = optional; a list item takes\n  its lead-in's) matches, and the text applies to every listed plant\n  type (INJ = sterile injectables: text limited to non-sterile products does not apply to\n  INJ; text limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+ "units": [
+  {
+   "unit": "Q23",
+   "paragraphs": [
+    {
+     "ref": "Q23",
+     "text": "Does FDA consider ophthalmic drug products1 to be adulterated when they are not manufactured under conditions that ensure sterility throughout their shelf life and, in the case of multidose products, that prevent harmful microbial contamination throughout their in-use period?"
+    },
+    {
+     "ref": "Q23.1",
+     "text": "Product sterility is a critical quality attribute (CQA) for ophthalmic drug products.2Recent cases of microbially contaminated ophthalmic drug products leading to serious injury and death, as well as recent recalls, highlight the importance of product sterility.3 Manufacturers of drug products, including sterile products offered or intended for ophthalmic use, must comply with CGMP requirements in 21 CFR parts 210 and 211. Failure to comply with these requirements will cause affected products to be deemed adulterated under section 501(a)(2)(B) of the FD&C Act."
+    },
+    {
+     "ref": "Q23.2",
+     "text": "Sterile drug products must meet specific CGMP requirements for personnel, buildings and facilities, materials, production and controls, and testing, as appropriate, to ensure product sterility at the time of manufacture and throughout the product’s shelf life. FDA has published guidance4 to provide clarity on how manufacturers can meet CGMP requirements in 21 CFR parts 210 and 211 when manufacturing sterile drug and biological ophthalmic products using aseptic processing. Some of the relevant regulations and guidance applicable to products for ophthalmic use are summarized below."
+    },
+    {
+     "ref": "Q23.3",
+     "text": "Per 21 CFR 211.113(b), there must be appropriate written procedures designed to prevent microbiological contamination that must be established and followed, including the validation of aseptic and sterilization processes.",
+     "list_item": true
+    },
+    {
+     "ref": "Q23.4",
+     "text": "Per 21 CFR 211.94(b), drug product container closure systems must provide adequate protection against foreseeable external factors in storage and use that can cause deterioration or contamination of the drug product.",
+     "list_item": true
+    },
+    {
+     "ref": "Q23.5",
+     "text": "As explained in guidance for industry Sterile Drug Products Produced by Aseptic Processing—Current Good Manufacturing Practice, a container closure system that does not maintain adequate container integrity after it is sealed is unsuitable for sterile products, and safeguards should be implemented to strictly preclude shipment of product that may lack container closure integrity and lead to product nonsterility. Such safeguards could include ensuring suitability and incoming quality of container closure systems, including dose delivery mechanisms, and ensuring that manufacturing equipment for container closure systems is fit for purpose. Validation of container closure system integrity should demonstrate no penetration of microbial contaminants or chemical or physical impurities.5",
+     "list_item": true
+    },
+    {
+     "ref": "Q23.6",
+     "text": "Per 21 CFR 211.160, 211.165, and 211.166, there must be appropriate testing to demonstrate conformance to product specifications. When preservatives are used to maintain sterility of ophthalmic products in multidose containers,6 manufacturers should (1) demonstrate that the preservatives have sufficient bactericidal and fungistatic activity to inhibit growth of microorganisms over the product’s shelf life and during use; and (2) test drug products at release and throughout the product’s shelf life to confirm they have a sufficient amount of the preservatives to maintain sterility.7",
+     "list_item": true
+    },
+    {
+     "ref": "Q23.7",
+     "text": "Per 21 CFR 211.167, there are special testing requirements for products purporting to be sterile and/or pyrogen free, specifically use of appropriate laboratory testing to determine conformance to requirements for sterility. This includes testing for microbial contamination and pyrogens or bacterial endotoxins (e.g., release and stability testing of the drug product in the commercially marketed container closure system).",
+     "list_item": true
+    },
+    {
+     "ref": "Q23.8",
+     "text": "FDA assesses compliance with these and other applicable CGMP requirements through facility inspections under section 704(a)(1) of the FD&C Act, records requests under section 704(a)(4) of the FD&C Act, and other oversight tools. Manufacturers can find additional insight in the guidance for industry Submission Documentation for Sterilization Process Validation in Applications for Human and Veterinary Drug Products, which, although focused on application submission, includes information about the efficacy of sterilization processes."
+    },
+    {
+     "ref": "Q23.9",
+     "text": "1 As defined in guidance for industry Quality Considerations for Topical Ophthalmic Drug Products (December 2023)."
+    },
+    {
+     "ref": "Q23.10",
+     "text": "2 See 21 CFR 200.50(a)(1)."
+    },
+    {
+     "ref": "Q23.11",
+     "text": "3 See FDA’s alerts and warnings about eye drops at https://www.fda.gov/drugs/buying-using-medicine-safely/what-you-should-know-about-eye-drops."
+    },
+    {
+     "ref": "Q23.12",
+     "text": "4 See FDA’s 2004 guidance for industry Sterile Drug Products Produced by Aseptic Processing—Current Good Manufacturing Practice."
+    },
+    {
+     "ref": "Q23.13",
+     "text": "5 This is consistent with USP General Chapter <771> Ophthalmic Products–Quality Tests."
+    },
+    {
+     "ref": "Q23.14",
+     "text": "6 Liquid ophthalmic products in multidose containers should contain one or more suitable and harmless substances that will inhibit the growth of microorganisms; see 21 CFR 200.50(b). See also USP General Chapter <51> Antimicrobial Effectiveness Testing."
+    },
+    {
+     "ref": "Q23.15",
+     "text": "7 USP General Chapter <51> Antimicrobial Effectiveness Testing."
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q23#1",
+   "unit": "Q23",
+   "hash": "3f33dd251e3a9ed3",
+   "item": {
+    "statement": "Do not use for sterile products a container closure system that does not maintain adequate container integrity after it is sealed.",
+    "quote": "a container closure system that does not maintain adequate container integrity after it is sealed is unsuitable for sterile products",
+    "clause_number": "Q23.5",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q23#2",
+   "unit": "Q23",
+   "hash": "f4696e3aefea01d9",
+   "item": {
+    "statement": "Implement safeguards that strictly prevent shipment of sterile product that may lack container closure integrity and lead to product nonsterility.",
+    "quote": "safeguards should be implemented to strictly preclude shipment of product that may lack container closure integrity and lead to product nonsterility.",
+    "clause_number": "Q23.5",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,199 @@
+{
+ "role": "a",
+ "instructions": "You are an auditor checking one checklist item against the FDA web page paragraph it claims to come from. You get\nthe unit's paragraphs (reference and exact text of the page; \"context\" entries are headings) and the item. Start from the ITEM:\nread it, then find in the cited paragraph what it covers.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the lead-in above a list\nitem (the paragraph ending \":\" above it). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph expects what the statement asks for (an instruction\n  to the investigator, \"Determine whether the firm validated ...\", expects the firm to have that practice), the statement\n  adds nothing and omits nothing of that obligation, the strength (a legal requirement: shall/must/required = mandatory;\n  should, FDA expects/recommends, an inspection point = recommended; may/acceptable = optional; a list item takes\n  its lead-in's) matches, and the text applies to every listed plant\n  type (INJ = sterile injectables: text limited to non-sterile products does not apply to\n  INJ; text limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+ "units": [
+  {
+   "unit": "Q9",
+   "paragraphs": [
+    {
+     "ref": "Q9",
+     "text": "Should laboratory glassware be included in a firm's equipment cleaning validation program?"
+    },
+    {
+     "ref": "Q9.1",
+     "text": "No. FDA does not expect laboratory glassware to be included in the processing equipment cleaning validation program. Glassware must, of course, be clean, and CGMP regulations consider laboratory equipment to be included within the scope of 21 CFR 211.67. Cleanliness is best assessed by inspecting laboratory procedures for the following:"
+    },
+    {
+     "ref": "Q9.2",
+     "text": "Use of nondedicated glassware and other equipment",
+     "list_item": true
+    },
+    {
+     "ref": "Q9.3",
+     "text": "Method validation (e.g., ruggedness)",
+     "list_item": true
+    },
+    {
+     "ref": "Q9.4",
+     "text": "Absence of extraneous or interfering data in the results of sample analyses",
+     "list_item": true
+    },
+    {
+     "ref": "Q9.5",
+     "text": "Laboratory cleaning procedures may include repetitive rinses with the solvent used to prepare the analyte, followed by oven drying. The equipment need not be swabbed or otherwise tested to ensure removal of potentially contaminating residues. A firm may elect to sample its glassware for residual contamination to exclude or explore the possibility of interference in the case of particularly sensitive analyses or difficult-to-clean compounds."
+    },
+    {
+     "ref": "Q9.6",
+     "text": "The possibility of carryover contamination affecting a method’s performance or integrity of the results is generally considered of low risk to the product and consumers, with the exception of potent compounds. Contaminated laboratory equipment, however, should not be a frequent excuse for rejecting or discarding aberrant results. Glassware that is not properly cleaned can make it difficult to determine if the source of aberrant analytical results is related to the unclean glassware or residues from manufacturing equipment. We expect firms to maintain laboratory equipment in a clean and sanitary manner to provide confidence in the analytical results."
+    }
+   ]
+  },
+  {
+   "unit": "Q10",
+   "paragraphs": [
+    {
+     "ref": "Q10",
+     "text": "What is an acceptable level of detergent residue, and what is the basis for arriving at this level, if any?"
+    },
+    {
+     "ref": "Q10.1",
+     "text": "It is the firm’s responsibility to establish acceptance limits and to be prepared to provide the basis for those limits to FDA. Thus, there is no universal standard for levels of detergent residue. Residues must not exceed their established acceptance limits and must not adversely alter drug product safety, efficacy, quality, or stability (see references below)."
+    },
+    {
+     "ref": "Q10.2",
+     "text": "21 CFR 211.67: Equipment cleaning and maintenance"
+    },
+    {
+     "ref": "Q10.3",
+     "text": "FDA Guide to Inspections:Validation of Cleaning Processes"
+    }
+   ]
+  },
+  {
+   "unit": "Q12",
+   "paragraphs": [
+    {
+     "ref": "Q12",
+     "text": "Is testing rinse solution enough to support residue determinations for cleaning validation?"
+    },
+    {
+     "ref": "Q12.1",
+     "text": "No. For cleaning validation, rinse samples alone would not be acceptable; firms should also measure the residue or contaminant on the equipment surface using a direct method (if feasible). One disadvantage of rinse samples is that the rinse solvent may not remove the residue or contaminant. Rinse samples are capable of sampling large surface areas, particularly ones that are difficult to access; therefore, some firms use both swab and rinse samples during the course of their cleaning validation. This is acceptable if the rinse solvent has been demonstrated to dissolve residues of concern and is otherwise suitable for use on the surfaces to be sampled."
+    },
+    {
+     "ref": "Q12.2",
+     "text": "For routine equipment cleaning after validation, a residue-monitoring program whose frequency and methods have been determined by risk assessment is recommended to demonstrate that the validated process continues to consistently clean the equipment."
+    },
+    {
+     "ref": "Q12.3",
+     "text": "The purpose of cleaning validation is to demonstrate that a particular cleaning process will consistently clean the equipment to a predetermined standard; the sampling and analytical test methods should be scientifically sound and should provide adequate scientific rationale to support the validation."
+    },
+    {
+     "ref": "Q12.4",
+     "text": "21 CFR 211.67: Equipment cleaning and maintenance"
+    },
+    {
+     "ref": "Q12.5",
+     "text": "FDA Guide to Inspections:Validation of Cleaning Processes"
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "fda-cgmp-qa-equipment.html:Q9#1",
+   "unit": "Q9",
+   "hash": "34312206b5919332",
+   "item": {
+    "statement": "Keep laboratory glassware clean, treating laboratory equipment as falling within the scope of the equipment cleaning and maintenance requirements.",
+    "quote": "Glassware must, of course, be clean, and CGMP regulations consider laboratory equipment to be included within the scope of 21 CFR 211.67.",
+    "clause_number": "Q9.1",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-equipment.html:Q10#1",
+   "unit": "Q10",
+   "hash": "7f40a643781180e7",
+   "item": {
+    "statement": "Ensure residues stay within their established acceptance limits and do not adversely affect the safety, efficacy, quality or stability of the drug product.",
+    "quote": "Residues must not exceed their established acceptance limits and must not adversely alter drug product safety, efficacy, quality, or stability (see references below).",
+    "clause_number": "Q10.1",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-equipment.html:Q12#1",
+   "unit": "Q12",
+   "hash": "92fdf0e45b08c24e",
+   "item": {
+    "statement": "Use scientifically sound sampling and analytical test methods for cleaning validation that give an adequate scientific rationale supporting the validation.",
+    "quote": "the sampling and analytical test methods should be scientifically sound and should provide adequate scientific rationale to support the validation.",
+    "clause_number": "Q12.3",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  }
+ ]
+}

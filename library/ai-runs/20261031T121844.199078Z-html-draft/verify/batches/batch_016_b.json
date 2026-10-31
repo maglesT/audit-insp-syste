@@ -1,0 +1,723 @@
+{
+ "role": "b",
+ "instructions": "You are a second, independent auditor. Check one checklist item against the FDA web page paragraph it claims to come from. You get\nthe unit's paragraphs (reference and exact text of the page; \"context\" entries are headings) and the item. Start from the TEXT:\nread the cited paragraph, the paragraphs its quote runs into, and its lead-in fully, then compare the item.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the lead-in above a list\nitem (the paragraph ending \":\" above it). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph expects what the statement asks for (an instruction\n  to the investigator, \"Determine whether the firm validated ...\", expects the firm to have that practice), the statement\n  adds nothing and omits nothing of that obligation, the strength (a legal requirement: shall/must/required = mandatory;\n  should, FDA expects/recommends, an inspection point = recommended; may/acceptable = optional; a list item takes\n  its lead-in's) matches, and the text applies to every listed plant\n  type (INJ = sterile injectables: text limited to non-sterile products does not apply to\n  INJ; text limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences saying what you checked for THIS item, in this item's own words: name the\n  condition, number, list or scope you compared with the text (e.g. \"the 30-day limit and 'each lot' are both in\n  the statement\", \"the list of components, containers and closures is complete\", \"drops the lead-in's 'for\n  sterile products'\"). Write each reason fresh for its item: a reason that would fit any item (\"quote exact,\n  strength matches, nothing added or omitted\") or that repeats another answer's reason is not an answer, and the\n  item then counts as unchecked.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+ "units": [
+  {
+   "unit": "¶27-¶44",
+   "paragraphs": [
+    {
+     "ref": "¶27",
+     "text": "Review the design, capacity, construction, and location of equipment used in the manufacturing, processing, packaging, labeling, and laboratories. Describe the manufacturing equipment including brief descriptions of operating principles. Consider the use of photographs, flow charts, and diagrams to supplement written descriptions.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶28",
+     "text": "New equipment must be properly installed, and operate as designed. Determine if the equipment change would require FDA pre-approval and/or revalidation of the manufacturing process. The equipment must be cleaned before use according to written procedures. The cleaning must be documented and validated.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶29",
+     "text": "The equipment should not adversely effect the identity, strength, quality, or purity of the drug. The material used to manufacture the equipment must not react with the drug. Also, lubricants or coolants must not contaminate the drug.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶30",
+     "text": "The equipment should be constructed and located to ease cleaning, adjustments, and maintenance. Also, it should prevent contamination from other or previous manufacturing operations. Equipment must be identified as to its cleaning status and content. The cleaning and maintenance of the equipment are usually documented in a log book maintained in the immediate area. Determine if the equipment is of suitable capacity and accuracy for use in measuring, weighing, or mixing operations. If the equipment requires calibration, they must have a written procedure for calibrating the equipment and document the calibration.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶31",
+     "text": "Components and Product Containers [21 CFR 211 Subpart E]",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶32",
+     "text": "Inspect the warehouse and determine how components, drug product containers, and closures are received, identified, stored, handled, sampled, tested, and approved or rejected. They must have written procedures which describe how these operations are done. Challenge the system to decide if it is functioning correctly. If the handling and storage of components are computer controlled, the program must be validated.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶33",
+     "text": "The receiving records must provide traceability to the component manufacturer and supplier. The receiving records for components should contain the name of the component, manufacturer, supplier if different from the manufacturer, and carrier. In addition, it should include the receiving date, manufacturer's lot number, quantity received, and control number assigned by the firm.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶34",
+     "text": "Check sanitary conditions in the storage area, stock rotation practices, retest dates, and special storage conditions (protection from light, moisture, temperature, air, etc.). Inspect glandular and botanical components for insect infestation.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶35",
+     "text": "Components or finished product adulterated by rodents, insects, or chemicals must be documented and submitted for seizure.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶36",
+     "text": "Collect the evidence even if the firm plans to voluntarily destroy the product. Be alert for components, colors, and food additives that may be new drug substances, appear to have no use in the plant or appear to be from an unknown supplier. Check the colors against the Color Additives Status List in the IOM Determine if the color is approved for its intended use, and required statements are declared on the drug label.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶37",
+     "text": "Components might be received at more than one location. Components must be handled in accordance with the drug CGMP's including components used in the research and development lab. Determine how components are identified after receipt and quarantined until released. Components must be identified so the status (quarantine, approved, or rejected) is known. Review the criteria for removing components from quarantine and challenge the system. Determine what records are maintained in the storage area to document the movement of components to other areas, and how rejected components handled. The component container has an identification code affixed to it. This unique code provides traceability from the component manufacturer to its use in the finished product.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶38",
+     "text": "Review the sampling and testing procedures for components, and the process by which approved materials are released for use. Decide if these practices are adequate and followed.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶39",
+     "text": "Determine the validity, and accuracy of the firm's inventory system for drug components, containers, closures and labeling. Challenge the component inventory records by weighing a lot and comparing the results against the quantity remaining on the inventory record. Significant discrepancies in these records should be investigated.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶40",
+     "text": "Evaluate the following to determine whether the firm has shown that the containers and closures are compatible with the product, will provide adequate protection for the drug against deterioration or contamination, are not additive or absorptive, and are suitable for use:",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶41",
+     "text": "Specifications for containers, closures, cotton filler, and desiccant, etc.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶42",
+     "text": "What tests or checks are made (cracks, glass particles, durability of material, metal particles in ointment tubes, compliance with compendium specifications, etc.).",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶43",
+     "text": "Cleaning procedures and how containers are stored.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶44",
+     "text": "Handling of preprinted containers. Are these controlled as labeling, or as containers? The firm must review the labeling for accuracy.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    }
+   ]
+  },
+  {
+   "unit": "¶45-¶63",
+   "paragraphs": [
+    {
+     "ref": "¶45",
+     "text": "Production and Process Controls [21 CFR Subpart F]",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶46",
+     "text": "1. Critical Manufacturing Steps [21 CFR 211.101]",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶47",
+     "text": "Each critical step in the manufacturing process shall be done by a responsible individual and checked by a second responsible individual. If such steps in the processing are controlled by automatic mechanical or electronic equipment, its performance should be verified.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶48",
+     "text": "Critical manufacturing steps include the selection, weighing, measuring and identifying of components, and addition of components during processing. It includes the recording of deviations from the batch record, mixing time and testing of in-process material, and the determination of actual yield and percent of theoretical yield. These manufacturing steps are documented when done, and not before or after the fact.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶49",
+     "text": "2. Equipment Identification [21 CFR 211.105]",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶50",
+     "text": "All containers and equipment used in to manufacture a drug should be labeled at all times. The label should identify the contents of the container or equipment including the batch number, and stage of processing. Previous identification labels should be removed. The batch should be handled and stored to prevent mixups or contamination.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶51",
+     "text": "3. In-Line and Bulk Testing [21 CFR 211.110]",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶52",
+     "text": "To ensure the uniformity and integrity of products, there shall be adequate in-process controls, such as checking the weights and disintegration time of tablets, the fill of liquids, the adequacy of mixing, the homogeneity of suspensions, and the clarity of solutions.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶53",
+     "text": "Determine if in-process test equipment is on site and the specified tests are done. Be alert for prerecording of test results such as tablet weight determinations.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶54",
+     "text": "The bulk drug is usually held in quarantine until all tests are completed before it is released to the packaging and labeling department. However, the testing might be done after packaging. product.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "4. Actual Yield [21 CFR 211.103]"
+    },
+    {
+     "ref": "¶55",
+     "text": "Determine if personnel check the actual against the theoretical yield of each batch of drug manufactured. In the event of any significant unexplained discrepancies, determine if there is a procedure to prevent distribution of the batch in question, and related batches.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "5. Personnel Habits"
+    },
+    {
+     "ref": "¶56",
+     "text": "Observe the work habits of plant personnel. Determine:",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶57",
+     "text": "Their attitudes and actions involving the jobs they perform. (Careless, lackadaisical, disgruntled, etc.).",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶58",
+     "text": "Their dress. (Clean dresses, coats, shirts and pants, head coverings, etc.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶59",
+     "text": "If proper equipment is used for a given job or whether short cuts are taken (i.e. use of hands and arms to mix or empty trays of drug components).",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶60",
+     "text": "If there are significant written or verbal language barriers that could affect their job performance.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "Tablet and Capsule Products"
+    },
+    {
+     "ref": "¶61",
+     "text": "Become familiar with the type of equipment and its location in the tableting operation. The equipment may include rotary tableting machines, coating and polishing pans, punches and dies, etc. The equipment should be constructed and located to facilitate maintenance and cleaning at the end of each batch or at suitable intervals in the case of a continuous batch operation. If possible, observe the cleaning and determine if the cleaning procedure is followed.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶62",
+     "text": "The ingredients in a tablet are the active ingredient, binders, disintegrators, bases, and lubricants. The binder is added to the batch to keep the tablet together. Excess binder will make the tablet too hard for use. The disintegrator is used to help disintegration of the tablet after administration. The base should be an inert substance which is compatible with the active ingredient and is added to provide size and weight. The lubricant helps in the flow of granulated material, prevents adhesion of the tablet material to the surface of punches and dies, and helps in tablet ejection from the machine.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶63",
+     "text": "Tablets and capsules are susceptible to airborne contamination because of the manipulation of large quantities of dry ingredients. To prevent cross-contamination in the tableting department, pay close attention to the maintenance, cleaning, and location of equipment, and the storage of granulations and tablets. To prevent cross-contamination, the mixing, granulation, drying and/or tableting operation should be segregated in enclosed areas with its own air handling system. Determine what precautions are taken to prevent cross-contamination. When cross-contamination is suspect, investigate the problem and collect in-line samples(INV) and official samples of the suspect product. Determine what temperature, humidity, and dust collecting controls are used by the firm in manufacturing operations. Lack of temperature and humidity controls can affect the quality of the tablet.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶27-¶44#21",
+   "unit": "¶27-¶44",
+   "hash": "375c5935d062fd09",
+   "item": {
+    "statement": "Identify components so their status (quarantine, approved or rejected) is known.",
+    "quote": "Components must be identified so the status (quarantine, approved, or rejected) is known.",
+    "clause_number": "¶37",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶27-¶44#22",
+   "unit": "¶27-¶44",
+   "hash": "6b04c631a09a5aac",
+   "item": {
+    "statement": "Have adequate component sampling and testing procedures and an adequate process for releasing approved materials for use, and follow them.",
+    "quote": "Review the sampling and testing procedures for components, and the process by which approved materials are released for use. Decide if these practices are adequate and followed.",
+    "clause_number": "¶38",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶27-¶44#23",
+   "unit": "¶27-¶44",
+   "hash": "d54a4d46f6b5196a",
+   "item": {
+    "statement": "Keep a valid and accurate inventory system for drug components, containers, closures and labeling.",
+    "quote": "Determine the validity, and accuracy of the firm's inventory system for drug components, containers, closures and labeling.",
+    "clause_number": "¶39",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶27-¶44#24",
+   "unit": "¶27-¶44",
+   "hash": "8d15e5e6cc57dc11",
+   "item": {
+    "statement": "Investigate significant discrepancies in inventory records.",
+    "quote": "Significant discrepancies in these records should be investigated.",
+    "clause_number": "¶39",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "significant discrepancies"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶27-¶44#25",
+   "unit": "¶27-¶44",
+   "hash": "d8709543a1dd9b4d",
+   "item": {
+    "statement": "Show that containers and closures are compatible with the product, adequately protect the drug against deterioration or contamination, are not additive or absorptive, and are suitable for use.",
+    "quote": "Evaluate the following to determine whether the firm has shown that the containers and closures are compatible with the product, will provide adequate protection for the drug against deterioration or contamination, are not additive or absorptive, and are suitable for use:",
+    "clause_number": "¶40",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶27-¶44#26",
+   "unit": "¶27-¶44",
+   "hash": "13c0b5d9aa4b2fe0",
+   "item": {
+    "statement": "To show containers and closures are compatible, protective, not additive or absorptive and suitable, have specifications for containers, closures, cotton filler, desiccant and similar items.",
+    "quote": "Specifications for containers, closures, cotton filler, and desiccant, etc.",
+    "clause_number": "¶41",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶27-¶44#27",
+   "unit": "¶27-¶44",
+   "hash": "97331d9bd2ac5f75",
+   "item": {
+    "statement": "To show containers and closures are compatible, protective, not additive or absorptive and suitable, carry out tests or checks on them (for example cracks, glass particles, durability of material, metal particles in ointment tubes, compliance with compendial specifications).",
+    "quote": "What tests or checks are made (cracks, glass particles, durability of material, metal particles in ointment tubes, compliance with compendium specifications, etc.).",
+    "clause_number": "¶42",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶27-¶44#28",
+   "unit": "¶27-¶44",
+   "hash": "458d5bfcfdc0b1a8",
+   "item": {
+    "statement": "To show containers and closures are compatible, protective, not additive or absorptive and suitable, have cleaning procedures for containers and control how containers are stored.",
+    "quote": "Cleaning procedures and how containers are stored.",
+    "clause_number": "¶43",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶27-¶44#29",
+   "unit": "¶27-¶44",
+   "hash": "c4c2e12e06c39236",
+   "item": {
+    "statement": "Review the labeling on preprinted containers for accuracy.",
+    "quote": "The firm must review the labeling for accuracy.",
+    "clause_number": "¶44",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶45-¶63#1",
+   "unit": "¶45-¶63",
+   "hash": "618da7893a45dce8",
+   "item": {
+    "statement": "Have each critical manufacturing step performed by a responsible person and checked by a second responsible person.",
+    "quote": "Each critical step in the manufacturing process shall be done by a responsible individual and checked by a second responsible individual.",
+    "clause_number": "¶47",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶45-¶63#2",
+   "unit": "¶45-¶63",
+   "hash": "b4fb136717ceafb3",
+   "item": {
+    "statement": "Where critical processing steps are controlled by automatic mechanical or electronic equipment, verify the equipment's performance.",
+    "quote": "If such steps in the processing are controlled by automatic mechanical or electronic equipment, its performance should be verified.",
+    "clause_number": "¶47",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "critical steps controlled by automatic equipment"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶45-¶63#3",
+   "unit": "¶45-¶63",
+   "hash": "834587347c6a6c01",
+   "item": {
+    "statement": "Document critical manufacturing steps at the time they are performed, not before or after the fact.",
+    "quote": "These manufacturing steps are documented when done, and not before or after the fact.",
+    "clause_number": "¶48",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶45-¶63#4",
+   "unit": "¶45-¶63",
+   "hash": "bc18a7faac9adf68",
+   "item": {
+    "statement": "Label all containers and equipment used to manufacture a drug at all times.",
+    "quote": "All containers and equipment used in to manufacture a drug should be labeled at all times.",
+    "clause_number": "¶50",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶45-¶63#5",
+   "unit": "¶45-¶63",
+   "hash": "1dbd42cb7b035bb9",
+   "item": {
+    "statement": "Show on the label of containers and equipment their contents, including batch number and stage of processing.",
+    "quote": "The label should identify the contents of the container or equipment including the batch number, and stage of processing.",
+    "clause_number": "¶50",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶45-¶63#6",
+   "unit": "¶45-¶63",
+   "hash": "f667d9f52456e902",
+   "item": {
+    "statement": "Remove previous identification labels from containers and equipment.",
+    "quote": "Previous identification labels should be removed.",
+    "clause_number": "¶50",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶45-¶63#7",
+   "unit": "¶45-¶63",
+   "hash": "49e8e48ad636f3c9",
+   "item": {
+    "statement": "Handle and store the batch so as to prevent mix-ups or contamination.",
+    "quote": "The batch should be handled and stored to prevent mixups or contamination.",
+    "clause_number": "¶50",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶45-¶63#8",
+   "unit": "¶45-¶63",
+   "hash": "2209c87c5bf8a213",
+   "item": {
+    "statement": "Have adequate in-process controls to ensure product uniformity and integrity, for example checking tablet weights and disintegration time, liquid fill, adequacy of mixing, homogeneity of suspensions and clarity of solutions.",
+    "quote": "To ensure the uniformity and integrity of products, there shall be adequate in-process controls, such as checking the weights and disintegration time of tablets, the fill of liquids, the adequacy of mixing, the homogeneity of suspensions, and the clarity of solutions.",
+    "clause_number": "¶52",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶45-¶63#9",
+   "unit": "¶45-¶63",
+   "hash": "f8c1bac4e1a9beef",
+   "item": {
+    "statement": "Have in-process test equipment on site and perform the specified in-process tests.",
+    "quote": "Determine if in-process test equipment is on site and the specified tests are done.",
+    "clause_number": "¶53",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶45-¶63#10",
+   "unit": "¶45-¶63",
+   "hash": "cf782cbb721c4884",
+   "item": {
+    "statement": "Have personnel check the actual yield against the theoretical yield for each batch manufactured.",
+    "quote": "Determine if personnel check the actual against the theoretical yield of each batch of drug manufactured.",
+    "clause_number": "¶55",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶45-¶63#11",
+   "unit": "¶45-¶63",
+   "hash": "f1d8ae586cd4d5af",
+   "item": {
+    "statement": "Have a procedure that, in the event of any significant unexplained yield discrepancy, prevents distribution of the batch concerned and of related batches.",
+    "quote": "In the event of any significant unexplained discrepancies, determine if there is a procedure to prevent distribution of the batch in question, and related batches.",
+    "clause_number": "¶55",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "significant unexplained yield discrepancy"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  }
+ ]
+}

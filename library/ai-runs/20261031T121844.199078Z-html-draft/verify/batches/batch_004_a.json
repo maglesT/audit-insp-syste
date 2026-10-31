@@ -1,0 +1,655 @@
+{
+ "role": "a",
+ "instructions": "You are an auditor checking one checklist item against the FDA web page paragraph it claims to come from. You get\nthe unit's paragraphs (reference and exact text of the page; \"context\" entries are headings) and the item. Start from the ITEM:\nread it, then find in the cited paragraph what it covers.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the lead-in above a list\nitem (the paragraph ending \":\" above it). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph expects what the statement asks for (an instruction\n  to the investigator, \"Determine whether the firm validated ...\", expects the firm to have that practice), the statement\n  adds nothing and omits nothing of that obligation, the strength (a legal requirement: shall/must/required = mandatory;\n  should, FDA expects/recommends, an inspection point = recommended; may/acceptable = optional; a list item takes\n  its lead-in's) matches, and the text applies to every listed plant\n  type (INJ = sterile injectables: text limited to non-sterile products does not apply to\n  INJ; text limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences saying what you checked for THIS item, in this item's own words: name the\n  condition, number, list or scope you compared with the text (e.g. \"the 30-day limit and 'each lot' are both in\n  the statement\", \"the list of components, containers and closures is complete\", \"drops the lead-in's 'for\n  sterile products'\"). Write each reason fresh for its item: a reason that would fit any item (\"quote exact,\n  strength matches, nothing added or omitted\") or that repeats another answer's reason is not an answer, and the\n  item then counts as unchecked.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+ "units": [
+  {
+   "unit": "¶45-¶63",
+   "paragraphs": [
+    {
+     "ref": "¶45",
+     "text": "Production and Process Controls [21 CFR Subpart F]",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶46",
+     "text": "1. Critical Manufacturing Steps [21 CFR 211.101]",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶47",
+     "text": "Each critical step in the manufacturing process shall be done by a responsible individual and checked by a second responsible individual. If such steps in the processing are controlled by automatic mechanical or electronic equipment, its performance should be verified.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶48",
+     "text": "Critical manufacturing steps include the selection, weighing, measuring and identifying of components, and addition of components during processing. It includes the recording of deviations from the batch record, mixing time and testing of in-process material, and the determination of actual yield and percent of theoretical yield. These manufacturing steps are documented when done, and not before or after the fact.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶49",
+     "text": "2. Equipment Identification [21 CFR 211.105]",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶50",
+     "text": "All containers and equipment used in to manufacture a drug should be labeled at all times. The label should identify the contents of the container or equipment including the batch number, and stage of processing. Previous identification labels should be removed. The batch should be handled and stored to prevent mixups or contamination.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶51",
+     "text": "3. In-Line and Bulk Testing [21 CFR 211.110]",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶52",
+     "text": "To ensure the uniformity and integrity of products, there shall be adequate in-process controls, such as checking the weights and disintegration time of tablets, the fill of liquids, the adequacy of mixing, the homogeneity of suspensions, and the clarity of solutions.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶53",
+     "text": "Determine if in-process test equipment is on site and the specified tests are done. Be alert for prerecording of test results such as tablet weight determinations.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶54",
+     "text": "The bulk drug is usually held in quarantine until all tests are completed before it is released to the packaging and labeling department. However, the testing might be done after packaging. product.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "4. Actual Yield [21 CFR 211.103]"
+    },
+    {
+     "ref": "¶55",
+     "text": "Determine if personnel check the actual against the theoretical yield of each batch of drug manufactured. In the event of any significant unexplained discrepancies, determine if there is a procedure to prevent distribution of the batch in question, and related batches.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "5. Personnel Habits"
+    },
+    {
+     "ref": "¶56",
+     "text": "Observe the work habits of plant personnel. Determine:",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶57",
+     "text": "Their attitudes and actions involving the jobs they perform. (Careless, lackadaisical, disgruntled, etc.).",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶58",
+     "text": "Their dress. (Clean dresses, coats, shirts and pants, head coverings, etc.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶59",
+     "text": "If proper equipment is used for a given job or whether short cuts are taken (i.e. use of hands and arms to mix or empty trays of drug components).",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶60",
+     "text": "If there are significant written or verbal language barriers that could affect their job performance.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "Tablet and Capsule Products"
+    },
+    {
+     "ref": "¶61",
+     "text": "Become familiar with the type of equipment and its location in the tableting operation. The equipment may include rotary tableting machines, coating and polishing pans, punches and dies, etc. The equipment should be constructed and located to facilitate maintenance and cleaning at the end of each batch or at suitable intervals in the case of a continuous batch operation. If possible, observe the cleaning and determine if the cleaning procedure is followed.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶62",
+     "text": "The ingredients in a tablet are the active ingredient, binders, disintegrators, bases, and lubricants. The binder is added to the batch to keep the tablet together. Excess binder will make the tablet too hard for use. The disintegrator is used to help disintegration of the tablet after administration. The base should be an inert substance which is compatible with the active ingredient and is added to provide size and weight. The lubricant helps in the flow of granulated material, prevents adhesion of the tablet material to the surface of punches and dies, and helps in tablet ejection from the machine.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶63",
+     "text": "Tablets and capsules are susceptible to airborne contamination because of the manipulation of large quantities of dry ingredients. To prevent cross-contamination in the tableting department, pay close attention to the maintenance, cleaning, and location of equipment, and the storage of granulations and tablets. To prevent cross-contamination, the mixing, granulation, drying and/or tableting operation should be segregated in enclosed areas with its own air handling system. Determine what precautions are taken to prevent cross-contamination. When cross-contamination is suspect, investigate the problem and collect in-line samples(INV) and official samples of the suspect product. Determine what temperature, humidity, and dust collecting controls are used by the firm in manufacturing operations. Lack of temperature and humidity controls can affect the quality of the tablet.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    }
+   ]
+  },
+  {
+   "unit": "¶64-¶76",
+   "paragraphs": [
+    {
+     "ref": "¶64",
+     "text": "Observe the actual operation of the equipment and determine whether powders or granulations are processed according to the firm's specifications. The mixing process must be validated. The drying ovens should have their own air handling system which will prevent cross-contamination. Does the firm record drying time/temperature and maintain recording charts including loss on drying test results? Review the in-line tests performed by production and/or quality control. Some in-process tests are tablet weight, thickness, hardness, disintegration , and friability. Evaluate the disposition of in-process samples.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶65",
+     "text": "Capsules may be either hard, or soft type. They are filled with powder, beads, or liquid by machine. The manufacturing operation of powders for capsules should follow the same practice as for tablets. Determine manufacturing controls used, in-line testing, and basis for evaluating test results for the filling operations.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "Sterile Products"
+    },
+    {
+     "ref": "¶66",
+     "text": "Typically, a sterile drug contains no viable microorganisms and is non-pyrogenic. Drugs for intravenous injection, irrigation, and as ophthalmic preparations, etc., meet this criteria. In addition, other dosage forms might be labeled as sterile. For instance, an ointment applied to a puncture wound or skin abrasion.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶67",
+     "text": "Parenteral drugs must be non-pyrogenic, because the presence of pyrogens can cause a febrile reaction in human beings. Pyrogens are the products of the growth of microorganisms. Therefore, any condition that permits bacterial growth should be avoided in the manufacturing process. Pyrogens may develop in water located in stills, storage tanks, dead legs, and piping, or from surface contamination of containers, closures, or other equipment. Parenterals may also contain chemical contaminants that will produce a pyretic response in humans or animals although there are no pyrogens present.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶68",
+     "text": "There are many excellent reference materials which should be reviewed before the inspection. Some of these are the \"Guideline on Sterile Drug Products Produced by Aseptic Processing,\" and chapter 84 on pyrogens in the Remington's Pharmaceutical Sciences.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶69",
+     "text": "Determine and evaluate the procedures used to minimize the hazard of contamination with microorganisms and particulates of sterile drugs.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "Personnel"
+    },
+    {
+     "ref": "¶70",
+     "text": "Review the training program to ensure that personnel performing production and control procedures have experience and training commensurate with their intended duties. It is important that personnel be trained in aseptic procedures. The employees must be properly gowned and use good aseptic techniques.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "Buildings"
+    },
+    {
+     "ref": "¶71",
+     "text": "The non-sterile preparation areas for sterile drugs should be controlled. Refer to Subpart C of the proposed CGMPR's for LVP's; however, deviations from these proposed regulations are not necessarily deviations from the CGMPR's. Evaluate the air cleanliness classification of the area. For guidance in this area, review Federal Standard #209E entitled \"Airborne Particulate Cleanliness Classes in Cleanrooms and Clean Zones.\" Observe the formulation practices or procedures used in the preparation areas. Be alert for routes of contamination. Determine how the firm minimizes traffic and unnecessary activity in the preparation area. Determine if filling rooms and other aseptic areas are constructed to eliminate possible areas for microbiological/particulate contamination. For instance, dust-collecting ledges, porous surfaces, etc. Determine how aseptic areas are cleaned and maintained.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "1. Air"
+    },
+    {
+     "ref": "¶72",
+     "text": "Air supplied to the non-sterile preparation or formulation area for manufacturing solutions prior to sterilization should be filtered as necessary to control particulates. Air being supplied to product exposure areas where sterile drugs are processed and handled should be high efficiency particulate air (HEPA) filtered under positive pressure.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶73",
+     "text": "Review the firm's system for HEPA filters, determine if they are certified and/or Dioctyl Phthalate (DOP) tested and frequency of testing.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶74",
+     "text": "Review the compressed air system and determine if it is filtered at the point of use to control particulates. Diagrams of the HEPA filtered and compressed air systems should be reviewed and evaluated.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "2. Environmental Controls"
+    },
+    {
+     "ref": "¶75",
+     "text": "Specifications for viable and non-viable particulates must be established. Specifications for viable particulates must include provisions for both air and surface sampling of aseptic processing areas and equipment. Review the firm's environmental control program, specifications, and test data. Determine if the firm follows its procedure for reviewing out-of-limit test results. Also, determine if review of environmental test data is included as a part of the firm's release procedures.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶76",
+     "text": "Note: In the preparation of media for environmental air and surface sampling, suitable inactivating agents should be added. For example, the addition of penicillinase to media used for monitoring sterile penicillin operations and cephalosporin products.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "<>"
+    },
+    {
+     "context": "Equipment"
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶45-¶63#12",
+   "unit": "¶45-¶63",
+   "hash": "bd1fe242fbc03d24",
+   "item": {
+    "statement": "Construct and locate tableting equipment to make maintenance and cleaning easy at the end of each batch, or at suitable intervals for a continuous batch operation.",
+    "quote": "The equipment should be constructed and located to facilitate maintenance and cleaning at the end of each batch or at suitable intervals in the case of a continuous batch operation.",
+    "clause_number": "¶61",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶45-¶63#13",
+   "unit": "¶45-¶63",
+   "hash": "d4e4a6eb9bb65585",
+   "item": {
+    "statement": "Follow the cleaning procedure for tableting equipment.",
+    "quote": "determine if the cleaning procedure is followed",
+    "clause_number": "¶61",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶45-¶63#14",
+   "unit": "¶45-¶63",
+   "hash": "1fddbff898fc52bc",
+   "item": {
+    "statement": "To prevent cross-contamination, segregate mixing, granulation, drying and/or tableting operations in enclosed areas, each with its own air handling system.",
+    "quote": "To prevent cross-contamination, the mixing, granulation, drying and/or tableting operation should be segregated in enclosed areas with its own air handling system.",
+    "clause_number": "¶63",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶64-¶76#1",
+   "unit": "¶64-¶76",
+   "hash": "32b0f58109f8c49f",
+   "item": {
+    "statement": "Process powders and granulations according to the firm's specifications.",
+    "quote": "determine whether powders or granulations are processed according to the firm's specifications",
+    "clause_number": "¶64",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶64-¶76#2",
+   "unit": "¶64-¶76",
+   "hash": "b9496bb0c4cd7a91",
+   "item": {
+    "statement": "Validate the mixing process.",
+    "quote": "The mixing process must be validated.",
+    "clause_number": "¶64",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶64-¶76#3",
+   "unit": "¶64-¶76",
+   "hash": "96c1339f31dd7911",
+   "item": {
+    "statement": "Give drying ovens their own air handling system to prevent cross-contamination.",
+    "quote": "The drying ovens should have their own air handling system which will prevent cross-contamination.",
+    "clause_number": "¶64",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶64-¶76#4",
+   "unit": "¶64-¶76",
+   "hash": "94a209ea1d458536",
+   "item": {
+    "statement": "Record drying time and temperature and keep the recording charts, including loss on drying test results.",
+    "quote": "Does the firm record drying time/temperature and maintain recording charts including loss on drying test results?",
+    "clause_number": "¶64",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶64-¶76#5",
+   "unit": "¶64-¶76",
+   "hash": "afe439fcea5a6db0",
+   "item": {
+    "statement": "Follow the same practices for manufacturing powders for capsules as for tablets.",
+    "quote": "The manufacturing operation of powders for capsules should follow the same practice as for tablets.",
+    "clause_number": "¶65",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶64-¶76#6",
+   "unit": "¶64-¶76",
+   "hash": "006bcc658437e8a7",
+   "item": {
+    "statement": "Make sure parenteral drugs are non-pyrogenic.",
+    "quote": "Parenteral drugs must be non-pyrogenic, because the presence of pyrogens can cause a febrile reaction in human beings.",
+    "clause_number": "¶67",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶64-¶76#7",
+   "unit": "¶64-¶76",
+   "hash": "7559385ba5a277d3",
+   "item": {
+    "statement": "Avoid any condition in the parenteral manufacturing process that permits bacterial growth.",
+    "quote": "Therefore, any condition that permits bacterial growth should be avoided in the manufacturing process.",
+    "clause_number": "¶67",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶64-¶76#8",
+   "unit": "¶64-¶76",
+   "hash": "101cdffd51d05fc2",
+   "item": {
+    "statement": "Have procedures to minimize the hazard of contaminating sterile drugs with microorganisms and particulates.",
+    "quote": "Determine and evaluate the procedures used to minimize the hazard of contamination with microorganisms and particulates of sterile drugs.",
+    "clause_number": "¶69",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶64-¶76#9",
+   "unit": "¶64-¶76",
+   "hash": "25ae1401cf7ea890",
+   "item": {
+    "statement": "Make sure personnel performing production and control procedures for sterile drugs have experience and training matching their intended duties.",
+    "quote": "Review the training program to ensure that personnel performing production and control procedures have experience and training commensurate with their intended duties.",
+    "clause_number": "¶70",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶64-¶76#10",
+   "unit": "¶64-¶76",
+   "hash": "a8a23ac9b56190b0",
+   "item": {
+    "statement": "Train personnel in aseptic procedures.",
+    "quote": "It is important that personnel be trained in aseptic procedures.",
+    "clause_number": "¶70",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶64-¶76#11",
+   "unit": "¶64-¶76",
+   "hash": "3ef964808c5e26ea",
+   "item": {
+    "statement": "Make sure employees are properly gowned and use good aseptic technique.",
+    "quote": "The employees must be properly gowned and use good aseptic techniques.",
+    "clause_number": "¶70",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶64-¶76#12",
+   "unit": "¶64-¶76",
+   "hash": "401dd9478bbc6140",
+   "item": {
+    "statement": "Control the non-sterile preparation areas for sterile drugs.",
+    "quote": "The non-sterile preparation areas for sterile drugs should be controlled.",
+    "clause_number": "¶71",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶64-¶76#13",
+   "unit": "¶64-¶76",
+   "hash": "209d69dc545e0af6",
+   "item": {
+    "statement": "Minimize traffic and unnecessary activity in the preparation area.",
+    "quote": "Determine how the firm minimizes traffic and unnecessary activity in the preparation area.",
+    "clause_number": "¶71",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶64-¶76#14",
+   "unit": "¶64-¶76",
+   "hash": "40b52a7e62a35408",
+   "item": {
+    "statement": "Construct filling rooms and other aseptic areas to eliminate possible sites of microbiological or particulate contamination, for example dust-collecting ledges and porous surfaces.",
+    "quote": "Determine if filling rooms and other aseptic areas are constructed to eliminate possible areas for microbiological/particulate contamination. For instance, dust-collecting ledges, porous surfaces, etc.",
+    "clause_number": "¶71",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶64-¶76#15",
+   "unit": "¶64-¶76",
+   "hash": "85b405437ea231ef",
+   "item": {
+    "statement": "Filter air supplied to non-sterile preparation or formulation areas for solutions made before sterilization as necessary to control particulates.",
+    "quote": "Air supplied to the non-sterile preparation or formulation area for manufacturing solutions prior to sterilization should be filtered as necessary to control particulates.",
+    "clause_number": "¶72",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶64-¶76#16",
+   "unit": "¶64-¶76",
+   "hash": "90e1c90238dbc2cb",
+   "item": {
+    "statement": "Supply HEPA-filtered air under positive pressure to product exposure areas where sterile drugs are processed and handled.",
+    "quote": "Air being supplied to product exposure areas where sterile drugs are processed and handled should be high efficiency particulate air (HEPA) filtered under positive pressure.",
+    "clause_number": "¶72",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶64-¶76#17",
+   "unit": "¶64-¶76",
+   "hash": "3e18c5d498473ecd",
+   "item": {
+    "statement": "Have HEPA filters certified and/or DOP tested, with a set frequency of testing.",
+    "quote": "determine if they are certified and/or Dioctyl Phthalate (DOP) tested and frequency of testing",
+    "clause_number": "¶73",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  }
+ ]
+}

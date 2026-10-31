@@ -1,6 +1,6 @@
 {
  "role": "a",
- "instructions": "You are an auditor checking one checklist item against the US regulation paragraph it claims to come from. You get\nthe section's paragraphs (reference and exact text, from the official eCFR XML) and the item. Start from the ITEM:\nread it, then find in the cited paragraph what it covers.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the parent paragraph's\nlead-in (including a qualifier such as \"as are necessary to prevent contamination or mixups\"). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph requires what the statement asks for, the statement\n  adds nothing and omits nothing of that obligation, the strength (shall/must = mandatory, should = recommended,\n  may = optional; a sub-paragraph takes its lead-in's) matches, and the regulation applies to every listed plant\n  type (INJ = sterile injectables: a paragraph limited to products not required to be sterile does not apply to\n  INJ; one limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "instructions": "You are an auditor checking one checklist item against the US regulation paragraph it claims to come from. You get\nthe section's paragraphs (reference and exact text, from the official eCFR XML) and the item. Start from the ITEM:\nread it, then find in the cited paragraph what it covers.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the parent paragraph's\nlead-in (including a qualifier such as \"as are necessary to prevent contamination or mixups\"). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph requires what the statement asks for, the statement\n  adds nothing and omits nothing of that obligation, the strength (shall/must = mandatory, should = recommended,\n  may = optional; a sub-paragraph takes its lead-in's) matches, and the regulation applies to every listed plant\n  type (INJ = sterile injectables: a paragraph limited to products not required to be sterile does not apply to\n  INJ; one limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences saying what you checked for THIS item, in this item's own words: name the\n  condition, number, list or scope you compared with the text (e.g. \"the 30-day limit and 'each lot' are both in\n  the statement\", \"the list of components, containers and closures is complete\", \"drops the lead-in's 'for\n  sterile products'\"). Write each reason fresh for its item: a reason that would fit any item (\"quote exact,\n  strength matches, nothing added or omitted\") or that repeats another answer's reason is not an answer, and the\n  item then counts as unchecked.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
  "schema": {
   "type": "object",
   "required": [
@@ -29,152 +29,158 @@
  },
  "sections": [
   {
-   "section": "211.101",
+   "section": "211.80",
    "paragraphs": [
     {
-     "ref": "211.101",
-     "text": "§ 211.101 Charge-in of components. Written production and control procedures shall include the following, which are designed to assure that the drug products produced have the identity, strength, quality, and purity they purport or are represented to possess:"
+     "ref": "211.80",
+     "text": "§ 211.80 General requirements."
     },
     {
-     "ref": "211.101(a)",
-     "text": "(a) The batch shall be formulated with the intent to provide not less than 100 percent of the labeled or established amount of active ingredient."
+     "ref": "211.80(a)",
+     "text": "(a) There shall be written procedures describing in sufficient detail the receipt, identification, storage, handling, sampling, testing, and approval or rejection of components and drug product containers and closures; such written procedures shall be followed."
     },
     {
-     "ref": "211.101(b)",
-     "text": "(b) Components for drug product manufacturing shall be weighed, measured, or subdivided as appropriate. If a component is removed from the original container to another, the new container shall be identified with the following information:"
+     "ref": "211.80(b)",
+     "text": "(b) Components and drug product containers and closures shall at all times be handled and stored in a manner to prevent contamination."
     },
     {
-     "ref": "211.101(b)(1)",
-     "text": "(1) Component name or item code;"
+     "ref": "211.80(c)",
+     "text": "(c) Bagged or boxed components of drug product containers, or closures shall be stored off the floor and suitably spaced to permit cleaning and inspection."
     },
     {
-     "ref": "211.101(b)(2)",
-     "text": "(2) Receiving or control number;"
-    },
-    {
-     "ref": "211.101(b)(3)",
-     "text": "(3) Weight or measure in new container;"
-    },
-    {
-     "ref": "211.101(b)(4)",
-     "text": "(4) Batch for which component was dispensed, including its product name, strength, and lot number."
-    },
-    {
-     "ref": "211.101(c)",
-     "text": "(c) Weighing, measuring, or subdividing operations for components shall be adequately supervised. Each container of component dispensed to manufacturing shall be examined by a second person to assure that:"
-    },
-    {
-     "ref": "211.101(c)(1)",
-     "text": "(1) The component was released by the quality control unit;"
-    },
-    {
-     "ref": "211.101(c)(2)",
-     "text": "(2) The weight or measure is correct as stated in the batch production records;"
-    },
-    {
-     "ref": "211.101(c)(3)",
-     "text": "(3) The containers are properly identified. If the weighing, measuring, or subdividing operations are performed by automated equipment under § 211.68, only one person is needed to assure paragraphs (c)(1), (c)(2), and (c)(3) of this section."
-    },
-    {
-     "ref": "211.101(d)",
-     "text": "(d) Each component shall either be added to the batch by one person and verified by a second person or, if the components are added by automated equipment under § 211.68, only verified by one person."
+     "ref": "211.80(d)",
+     "text": "(d) Each container or grouping of containers for components or drug product containers, or closures shall be identified with a distinctive code for each lot in each shipment received. This code shall be used in recording the disposition of each lot. Each lot shall be appropriately identified as to its status (i.e., quarantined, approved, or rejected)."
     }
    ]
   },
   {
-   "section": "211.103",
+   "section": "211.82",
    "paragraphs": [
     {
-     "ref": "211.103",
-     "text": "§ 211.103 Calculation of yield. Actual yields and percentages of theoretical yield shall be determined at the conclusion of each appropriate phase of manufacturing, processing, packaging, or holding of the drug product. Such calculations shall either be performed by one person and independently verified by a second person, or, if the yield is calculated by automated equipment under § 211.68, be independently verified by one person."
+     "ref": "211.82",
+     "text": "§ 211.82 Receipt and storage of untested components, drug product containers, and closures."
+    },
+    {
+     "ref": "211.82(a)",
+     "text": "(a) Upon receipt and before acceptance, each container or grouping of containers of components, drug product containers, and closures shall be examined visually for appropriate labeling as to contents, container damage or broken seals, and contamination."
+    },
+    {
+     "ref": "211.82(b)",
+     "text": "(b) Components, drug product containers, and closures shall be stored under quarantine until they have been tested or examined, whichever is appropriate, and released. Storage within the area shall conform to the requirements of § 211.80."
     }
    ]
   },
   {
-   "section": "211.105",
+   "section": "211.84",
    "paragraphs": [
     {
-     "ref": "211.105",
-     "text": "§ 211.105 Equipment identification."
+     "ref": "211.84",
+     "text": "§ 211.84 Testing and approval or rejection of components, drug product containers, and closures."
     },
     {
-     "ref": "211.105(a)",
-     "text": "(a) All compounding and storage containers, processing lines, and major equipment used during the production of a batch of a drug product shall be properly identified at all times to indicate their contents and, when necessary, the phase of processing of the batch."
+     "ref": "211.84(a)",
+     "text": "(a) Each lot of components, drug product containers, and closures shall be withheld from use until the lot has been sampled, tested, or examined, as appropriate, and released for use by the quality control unit."
     },
     {
-     "ref": "211.105(b)",
-     "text": "(b) Major equipment shall be identified by a distinctive identification number or code that shall be recorded in the batch production record to show the specific equipment used in the manufacture of each batch of a drug product. In cases where only one of a particular type of equipment exists in a manufacturing facility, the name of the equipment may be used in lieu of a distinctive identification number or code."
-    }
-   ]
-  },
-  {
-   "section": "211.110",
-   "paragraphs": [
-    {
-     "ref": "211.110",
-     "text": "§ 211.110 Sampling and testing of in-process materials and drug products."
+     "ref": "211.84(b)",
+     "text": "(b) Representative samples of each shipment of each lot shall be collected for testing or examination. The number of containers to be sampled, and the amount of material to be taken from each container, shall be based upon appropriate criteria such as statistical criteria for component variability, confidence levels, and degree of precision desired, the past quality history of the supplier, and the quantity needed for analysis and reserve where required by § 211.170."
     },
     {
-     "ref": "211.110(a)",
-     "text": "(a) To assure batch uniformity and integrity of drug products, written procedures shall be established and followed that describe the in-process controls, and tests, or examinations to be conducted on appropriate samples of in-process materials of each batch. Such control procedures shall be established to monitor the output and to validate the performance of those manufacturing processes that may be responsible for causing variability in the characteristics of in-process material and the drug product. Such control procedures shall include, but are not limited to, the following, where appropriate:"
+     "ref": "211.84(c)",
+     "text": "(c) Samples shall be collected in accordance with the following procedures:"
     },
     {
-     "ref": "211.110(a)(1)",
-     "text": "(1) Tablet or capsule weight variation;"
+     "ref": "211.84(c)(1)",
+     "text": "(1) The containers of components selected shall be cleaned when necessary in a manner to prevent introduction of contaminants into the component."
     },
     {
-     "ref": "211.110(a)(2)",
-     "text": "(2) Disintegration time;"
+     "ref": "211.84(c)(2)",
+     "text": "(2) The containers shall be opened, sampled, and resealed in a manner designed to prevent contamination of their contents and contamination of other components, drug product containers, or closures."
     },
     {
-     "ref": "211.110(a)(3)",
-     "text": "(3) Adequacy of mixing to assure uniformity and homogeneity;"
+     "ref": "211.84(c)(3)",
+     "text": "(3) Sterile equipment and aseptic sampling techniques shall be used when necessary."
     },
     {
-     "ref": "211.110(a)(4)",
-     "text": "(4) Dissolution time and rate;"
+     "ref": "211.84(c)(4)",
+     "text": "(4) If it is necessary to sample a component from the top, middle, and bottom of its container, such sample subdivisions shall not be composited for testing."
     },
     {
-     "ref": "211.110(a)(5)",
-     "text": "(5) Clarity, completeness, or pH of solutions."
+     "ref": "211.84(c)(5)",
+     "text": "(5) Sample containers shall be identified so that the following information can be determined: name of the material sampled, the lot number, the container from which the sample was taken, the date on which the sample was taken, and the name of the person who collected the sample."
     },
     {
-     "ref": "211.110(a)(6)",
-     "text": "(6) Bioburden testing."
+     "ref": "211.84(c)(6)",
+     "text": "(6) Containers from which samples have been taken shall be marked to show that samples have been removed from them."
     },
     {
-     "ref": "211.110(b)",
-     "text": "(b) Valid in-process specifications for such characteristics shall be consistent with drug product final specifications and shall be derived from previous acceptable process average and process variability estimates where possible and determined by the application of suitable statistical procedures where appropriate. Examination and testing of samples shall assure that the drug product and in-process material conform to specifications."
+     "ref": "211.84(d)",
+     "text": "(d) Samples shall be examined and tested as follows:"
     },
     {
-     "ref": "211.110(c)",
-     "text": "(c) In-process materials shall be tested for identity, strength, quality, and purity as appropriate, and approved or rejected by the quality control unit, during the production process, e.g., at commencement or completion of significant phases or after storage for long periods."
+     "ref": "211.84(d)(1)",
+     "text": "(1) At least one test shall be conducted to verify the identity of each component of a drug product. Specific identity tests, if they exist, shall be used."
     },
     {
-     "ref": "211.110(d)",
-     "text": "(d) Rejected in-process materials shall be identified and controlled under a quarantine system designed to prevent their use in manufacturing or processing operations for which they are unsuitable."
-    }
-   ]
-  },
-  {
-   "section": "211.111",
-   "paragraphs": [
+     "ref": "211.84(d)(2)",
+     "text": "(2) Each component shall be tested for conformity with all appropriate written specifications for purity, strength, and quality. In lieu of such testing by the manufacturer, a report of analysis may be accepted from the supplier of a component, provided that at least one specific identity test is conducted on such component by the manufacturer, and provided that the manufacturer establishes the reliability of the supplier's analyses through appropriate validation of the supplier's test results at appropriate intervals."
+    },
     {
-     "ref": "211.111",
-     "text": "§ 211.111 Time limitations on production. When appropriate, time limits for the completion of each phase of production shall be established to assure the quality of the drug product. Deviation from established time limits may be acceptable if such deviation does not compromise the quality of the drug product. Such deviation shall be justified and documented."
+     "ref": "211.84(d)(3)",
+     "text": "(3) Containers and closures shall be tested for conformity with all appropriate written specifications. In lieu of such testing by the manufacturer, a certificate of testing may be accepted from the supplier, provided that at least a visual identification is conducted on such containers/closures by the manufacturer and provided that the manufacturer establishes the reliability of the supplier's test results through appropriate validation of the supplier's test results at appropriate intervals."
+    },
+    {
+     "ref": "211.84(d)(4)",
+     "text": "(4) When appropriate, components shall be microscopically examined."
+    },
+    {
+     "ref": "211.84(d)(5)",
+     "text": "(5) Each lot of a component, drug product container, or closure that is liable to contamination with filth, insect infestation, or other extraneous adulterant shall be examined against established specifications for such contamination."
+    },
+    {
+     "ref": "211.84(d)(6)",
+     "text": "(6) Each lot of a component, drug product container, or closure with potential for microbiological contamination that is objectionable in view of its intended use shall be subjected to microbiological tests before use."
+    },
+    {
+     "ref": "211.84(e)",
+     "text": "(e) Any lot of components, drug product containers, or closures that meets the appropriate written specifications of identity, strength, quality, and purity and related tests under paragraph (d) of this section may be approved and released for use. Any lot of such material that does not meet such specifications shall be rejected."
     }
    ]
   }
  ],
  "items": [
   {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.101#1",
-   "section": "211.101",
-   "hash": "51a39facf3fe112c",
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.80#3",
+   "section": "211.80",
+   "hash": "7436b64871a5cbe5",
    "item": {
-    "statement": "Make written production and control procedures cover the charge-in of components (batch formulation, weighing and dispensing, labelling of dispensed containers, second-person checks and addition verification), designed to assure the drug products have their purported identity, strength, quality and purity.",
-    "quote": "Written production and control procedures shall include the following, which are designed to assure that the drug products produced have the identity, strength, quality, and purity they purport or are represented to possess:",
-    "clause_number": "211.101",
+    "statement": "Store bagged or boxed components, drug product containers or closures off the floor and suitably spaced to allow cleaning and inspection.",
+    "quote": "Bagged or boxed components of drug product containers, or closures shall be stored off the floor and suitably spaced to permit cleaning and inspection.",
+    "clause_number": "211.80(c)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "bagged or boxed materials"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.80#4",
+   "section": "211.80",
+   "hash": "ae2d7d5dbf08f1e0",
+   "item": {
+    "statement": "Identify each container or group of containers of components, drug product containers or closures with a distinctive code for each lot in each shipment received.",
+    "quote": "Each container or grouping of containers for components or drug product containers, or closures shall be identified with a distinctive code for each lot in each shipment received.",
+    "clause_number": "211.80(d)",
     "strength": "mandatory",
     "plant_types": [
      "OSD",
@@ -192,13 +198,13 @@
    ]
   },
   {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.101#2",
-   "section": "211.101",
-   "hash": "88f78a8f05ba6066",
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.80#5",
+   "section": "211.80",
+   "hash": "bb099aff5c77f078",
    "item": {
-    "statement": "Written production and control procedures include the following, designed to assure the drug products have their purported identity, strength, quality and purity: formulate each batch with the intent of providing not less than 100 percent of the labeled or established amount of active ingredient.",
-    "quote": "The batch shall be formulated with the intent to provide not less than 100 percent of the labeled or established amount of active ingredient.",
-    "clause_number": "211.101(a)",
+    "statement": "Use the distinctive lot code when recording the disposition of each lot of components, drug product containers or closures.",
+    "quote": "This code shall be used in recording the disposition of each lot.",
+    "clause_number": "211.80(d)",
     "strength": "mandatory",
     "plant_types": [
      "OSD",
@@ -216,13 +222,13 @@
    ]
   },
   {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.101#3",
-   "section": "211.101",
-   "hash": "77d0bb9e90814408",
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.80#6",
+   "section": "211.80",
+   "hash": "05adcfc538e7a6a5",
    "item": {
-    "statement": "Written production and control procedures include the following, designed to assure the drug products have their purported identity, strength, quality and purity: weigh, measure or subdivide components for drug product manufacturing as appropriate.",
-    "quote": "Components for drug product manufacturing shall be weighed, measured, or subdivided as appropriate.",
-    "clause_number": "211.101(b)",
+    "statement": "Identify each lot of components, drug product containers or closures appropriately with its status: quarantined, approved or rejected.",
+    "quote": "Each lot shall be appropriately identified as to its status (i.e., quarantined, approved, or rejected).",
+    "clause_number": "211.80(d)",
     "strength": "mandatory",
     "plant_types": [
      "OSD",
@@ -240,13 +246,13 @@
    ]
   },
   {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.101#4",
-   "section": "211.101",
-   "hash": "5ab7f937f05f16e1",
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.82#1",
+   "section": "211.82",
+   "hash": "e2b359e558c95c87",
    "item": {
-    "statement": "Written production and control procedures include the following, designed to assure the drug products have their purported identity, strength, quality and purity: if a component is transferred from its original container to another, label the new container with the component name or item code.",
-    "quote": "Component name or item code;",
-    "clause_number": "211.101(b)(1)",
+    "statement": "On receipt and before acceptance, visually examine each container or group of containers of components, drug product containers and closures for correct labeling of contents, container damage or broken seals, and contamination.",
+    "quote": "Upon receipt and before acceptance, each container or grouping of containers of components, drug product containers, and closures shall be examined visually for appropriate labeling as to contents, container damage or broken seals, and contamination.",
+    "clause_number": "211.82(a)",
     "strength": "mandatory",
     "plant_types": [
      "OSD",
@@ -254,7 +260,7 @@
      "SEMI",
      "INJ"
     ],
-    "condition": "component moved to a new container"
+    "condition": "upon receipt, before acceptance"
    },
    "plant_scope": [
     "OSD",
@@ -264,13 +270,13 @@
    ]
   },
   {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.101#5",
-   "section": "211.101",
-   "hash": "a127e37dd84f1329",
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.82#2",
+   "section": "211.82",
+   "hash": "fb0f4ba2ef2e5494",
    "item": {
-    "statement": "Written production and control procedures include the following, designed to assure the drug products have their purported identity, strength, quality and purity: if a component is transferred from its original container to another, label the new container with the receiving or control number.",
-    "quote": "Receiving or control number;",
-    "clause_number": "211.101(b)(2)",
+    "statement": "Keep components, drug product containers and closures in quarantine until they have been tested or examined, as appropriate, and released.",
+    "quote": "Components, drug product containers, and closures shall be stored under quarantine until they have been tested or examined, whichever is appropriate, and released.",
+    "clause_number": "211.82(b)",
     "strength": "mandatory",
     "plant_types": [
      "OSD",
@@ -278,7 +284,7 @@
      "SEMI",
      "INJ"
     ],
-    "condition": "component moved to a new container"
+    "condition": "until tested or examined and released"
    },
    "plant_scope": [
     "OSD",
@@ -288,61 +294,13 @@
    ]
   },
   {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.101#6",
-   "section": "211.101",
-   "hash": "8bf3b7b637f65059",
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.82#3",
+   "section": "211.82",
+   "hash": "e03735af35b14205",
    "item": {
-    "statement": "Written production and control procedures include the following, designed to assure the drug products have their purported identity, strength, quality and purity: if a component is transferred from its original container to another, label the new container with the weight or measure it holds.",
-    "quote": "Weight or measure in new container;",
-    "clause_number": "211.101(b)(3)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": "component moved to a new container"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.101#7",
-   "section": "211.101",
-   "hash": "f66ae39d1506e946",
-   "item": {
-    "statement": "Written production and control procedures include the following, designed to assure the drug products have their purported identity, strength, quality and purity: if a component is transferred from its original container to another, label the new container with the batch it was dispensed for, including that batch's product name, strength and lot number.",
-    "quote": "Batch for which component was dispensed, including its product name, strength, and lot number.",
-    "clause_number": "211.101(b)(4)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": "component moved to a new container"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.101#8",
-   "section": "211.101",
-   "hash": "9a60ff630c2a11c9",
-   "item": {
-    "statement": "Written production and control procedures include the following, designed to assure the drug products have their purported identity, strength, quality and purity: adequately supervise weighing, measuring and subdividing operations for components.",
-    "quote": "Weighing, measuring, or subdividing operations for components shall be adequately supervised.",
-    "clause_number": "211.101(c)",
+    "statement": "Store quarantined components, drug product containers and closures in the quarantine area in line with the general handling and storage requirements for these materials.",
+    "quote": "Storage within the area shall conform to the requirements of § 211.80.",
+    "clause_number": "211.82(b)",
     "strength": "mandatory",
     "plant_types": [
      "OSD",
@@ -360,13 +318,13 @@
    ]
   },
   {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.101#9",
-   "section": "211.101",
-   "hash": "4367d1624bd7225b",
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.84#1",
+   "section": "211.84",
+   "hash": "f6ceffa363fcc949",
    "item": {
-    "statement": "Written production and control procedures include the following, designed to assure the drug products have their purported identity, strength, quality and purity: have a second person examine each container of component dispensed to manufacturing to confirm the component was released by the quality control unit (one person suffices where the dispensing is done by qualified automated equipment).",
-    "quote": "The component was released by the quality control unit;",
-    "clause_number": "211.101(c)(1)",
+    "statement": "Withhold each lot of components, drug product containers and closures from use until it has been sampled, tested or examined, as appropriate, and released for use by the quality control unit.",
+    "quote": "Each lot of components, drug product containers, and closures shall be withheld from use until the lot has been sampled, tested, or examined, as appropriate, and released for use by the quality control unit.",
+    "clause_number": "211.84(a)",
     "strength": "mandatory",
     "plant_types": [
      "OSD",
@@ -374,7 +332,7 @@
      "SEMI",
      "INJ"
     ],
-    "condition": "each dispensed component container; one person if automated equipment"
+    "condition": "until released by quality control unit"
    },
    "plant_scope": [
     "OSD",
@@ -384,13 +342,13 @@
    ]
   },
   {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.101#10",
-   "section": "211.101",
-   "hash": "d0806b40961817e3",
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.84#2",
+   "section": "211.84",
+   "hash": "a519c9fa77900ce8",
    "item": {
-    "statement": "Written production and control procedures include the following, designed to assure the drug products have their purported identity, strength, quality and purity: have a second person examine each container of component dispensed to manufacturing to confirm the weight or measure is correct as stated in the batch production records (one person suffices where the dispensing is done by qualified automated equipment).",
-    "quote": "The weight or measure is correct as stated in the batch production records;",
-    "clause_number": "211.101(c)(2)",
+    "statement": "Collect representative samples from each shipment of each lot for testing or examination.",
+    "quote": "Representative samples of each shipment of each lot shall be collected for testing or examination.",
+    "clause_number": "211.84(b)",
     "strength": "mandatory",
     "plant_types": [
      "OSD",
@@ -398,7 +356,7 @@
      "SEMI",
      "INJ"
     ],
-    "condition": "each dispensed component container; one person if automated equipment"
+    "condition": ""
    },
    "plant_scope": [
     "OSD",
@@ -408,13 +366,13 @@
    ]
   },
   {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.101#11",
-   "section": "211.101",
-   "hash": "d4ead96eac23aedc",
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.84#3",
+   "section": "211.84",
+   "hash": "2cd3f968d4afdf2d",
    "item": {
-    "statement": "Written production and control procedures include the following, designed to assure the drug products have their purported identity, strength, quality and purity: have a second person examine each container of component dispensed to manufacturing to confirm the containers are properly identified (one person suffices where the dispensing is done by qualified automated equipment).",
-    "quote": "The containers are properly identified.",
-    "clause_number": "211.101(c)(3)",
+    "statement": "Base the number of containers sampled and the amount taken from each on appropriate criteria, such as statistical criteria for component variability, confidence levels and desired precision, the supplier's past quality history, and the quantity needed for analysis and for reserve samples where reserve samples are required.",
+    "quote": "The number of containers to be sampled, and the amount of material to be taken from each container, shall be based upon appropriate criteria such as statistical criteria for component variability, confidence levels, and degree of precision desired, the past quality history of the supplier, and the quantity needed for analysis and reserve where required by § 211.170.",
+    "clause_number": "211.84(b)",
     "strength": "mandatory",
     "plant_types": [
      "OSD",
@@ -422,7 +380,7 @@
      "SEMI",
      "INJ"
     ],
-    "condition": "each dispensed component container; one person if automated equipment"
+    "condition": "reserve quantity where reserve samples are required"
    },
    "plant_scope": [
     "OSD",
@@ -432,13 +390,229 @@
    ]
   },
   {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.101#12",
-   "section": "211.101",
-   "hash": "28b0edfb0e422ca2",
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.84#4",
+   "section": "211.84",
+   "hash": "25944fd67c713d0c",
    "item": {
-    "statement": "Written production and control procedures include the following, designed to assure the drug products have their purported identity, strength, quality and purity: where weighing, measuring or subdividing is performed by qualified automated equipment, only one person is needed to confirm QC release, correct weight or measure against the batch record, and proper container identification.",
-    "quote": "If the weighing, measuring, or subdividing operations are performed by automated equipment under § 211.68, only one person is needed to assure paragraphs (c)(1), (c)(2), and (c)(3) of this section.",
-    "clause_number": "211.101(c)(3)",
+    "statement": "When collecting samples, clean the selected component containers when necessary, in a way that prevents introducing contaminants into the component.",
+    "quote": "The containers of components selected shall be cleaned when necessary in a manner to prevent introduction of contaminants into the component.",
+    "clause_number": "211.84(c)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "when collecting samples; when necessary"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.84#5",
+   "section": "211.84",
+   "hash": "bde2cdfc98523caf",
+   "item": {
+    "statement": "When collecting samples, open, sample and reseal containers in a way designed to prevent contamination of their contents and of other components, drug product containers or closures.",
+    "quote": "The containers shall be opened, sampled, and resealed in a manner designed to prevent contamination of their contents and contamination of other components, drug product containers, or closures.",
+    "clause_number": "211.84(c)(2)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "when collecting samples"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.84#6",
+   "section": "211.84",
+   "hash": "d44779f23e8f043c",
+   "item": {
+    "statement": "When collecting samples, use sterile equipment and aseptic sampling techniques when necessary.",
+    "quote": "Sterile equipment and aseptic sampling techniques shall be used when necessary.",
+    "clause_number": "211.84(c)(3)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "when collecting samples; when necessary"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.84#7",
+   "section": "211.84",
+   "hash": "a9b239e2508514a0",
+   "item": {
+    "statement": "When collecting samples, if a component must be sampled from the top, middle and bottom of its container, do not composite those sample subdivisions for testing.",
+    "quote": "If it is necessary to sample a component from the top, middle, and bottom of its container, such sample subdivisions shall not be composited for testing.",
+    "clause_number": "211.84(c)(4)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "when collecting samples; if top, middle and bottom sampling is necessary"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.84#8",
+   "section": "211.84",
+   "hash": "6311051c71126828",
+   "item": {
+    "statement": "When collecting samples, identify sample containers so that the material name, lot number, source container, sampling date and name of the person who took the sample can be determined.",
+    "quote": "Sample containers shall be identified so that the following information can be determined: name of the material sampled, the lot number, the container from which the sample was taken, the date on which the sample was taken, and the name of the person who collected the sample.",
+    "clause_number": "211.84(c)(5)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "when collecting samples"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.84#9",
+   "section": "211.84",
+   "hash": "b966f4b0f3b1a25f",
+   "item": {
+    "statement": "When collecting samples, mark the containers that have been sampled to show that samples were removed from them.",
+    "quote": "Containers from which samples have been taken shall be marked to show that samples have been removed from them.",
+    "clause_number": "211.84(c)(6)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "when collecting samples"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.84#10",
+   "section": "211.84",
+   "hash": "6f737ee555640ad2",
+   "item": {
+    "statement": "When examining and testing samples, perform at least one test to verify the identity of each drug product component.",
+    "quote": "At least one test shall be conducted to verify the identity of each component of a drug product.",
+    "clause_number": "211.84(d)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "when examining and testing samples"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.84#11",
+   "section": "211.84",
+   "hash": "57ba173f053f47f0",
+   "item": {
+    "statement": "When examining and testing samples, use specific identity tests for components where such tests exist.",
+    "quote": "Specific identity tests, if they exist, shall be used.",
+    "clause_number": "211.84(d)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "when examining and testing samples; if specific tests exist"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.84#12",
+   "section": "211.84",
+   "hash": "b89edbb95c3789f0",
+   "item": {
+    "statement": "When examining and testing samples, test each component for conformity with all appropriate written specifications for purity, strength and quality.",
+    "quote": "Each component shall be tested for conformity with all appropriate written specifications for purity, strength, and quality.",
+    "clause_number": "211.84(d)(2)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "when examining and testing samples"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.84#13",
+   "section": "211.84",
+   "hash": "9a93f90f94f9fac6",
+   "item": {
+    "statement": "When examining and testing samples, instead of performing the component specification testing yourself you may accept the supplier's report of analysis, provided you perform at least one specific identity test on the component and establish the reliability of the supplier's analyses by validating the supplier's test results at appropriate intervals.",
+    "quote": "In lieu of such testing by the manufacturer, a report of analysis may be accepted from the supplier of a component, provided that at least one specific identity test is conducted on such component by the manufacturer, and provided that the manufacturer establishes the reliability of the supplier's analyses through appropriate validation of the supplier's test results at appropriate intervals.",
+    "clause_number": "211.84(d)(2)",
     "strength": "optional",
     "plant_types": [
      "OSD",
@@ -446,500 +620,7 @@
      "SEMI",
      "INJ"
     ],
-    "condition": "operations performed by automated equipment"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.101#13",
-   "section": "211.101",
-   "hash": "2c01edbaa385cc95",
-   "item": {
-    "statement": "Written production and control procedures include the following, designed to assure the drug products have their purported identity, strength, quality and purity: add each component to the batch by one person with verification by a second person, or, if components are added by qualified automated equipment, have the addition verified by one person.",
-    "quote": "Each component shall either be added to the batch by one person and verified by a second person or, if the components are added by automated equipment under § 211.68, only verified by one person.",
-    "clause_number": "211.101(d)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": "one-person verification if added by automated equipment"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.103#1",
-   "section": "211.103",
-   "hash": "f7b9d0fd0ed2ce46",
-   "item": {
-    "statement": "Determine actual yields and percentages of theoretical yield at the end of each appropriate phase of manufacturing, processing, packaging or holding of the drug product.",
-    "quote": "Actual yields and percentages of theoretical yield shall be determined at the conclusion of each appropriate phase of manufacturing, processing, packaging, or holding of the drug product.",
-    "clause_number": "211.103",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": "at the conclusion of each appropriate phase"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.103#2",
-   "section": "211.103",
-   "hash": "67e5057e03cebf9a",
-   "item": {
-    "statement": "Have yield calculations performed by one person and independently verified by a second person, or, if the yield is calculated by qualified automated equipment, independently verified by one person.",
-    "quote": "Such calculations shall either be performed by one person and independently verified by a second person, or, if the yield is calculated by automated equipment under § 211.68, be independently verified by one person.",
-    "clause_number": "211.103",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": "one-person verification if calculated by automated equipment"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.105#1",
-   "section": "211.105",
-   "hash": "ba3e686e58fa71a0",
-   "item": {
-    "statement": "Properly identify all compounding and storage containers, processing lines and major equipment used in producing a batch at all times to show their contents and, when necessary, the batch's phase of processing.",
-    "quote": "All compounding and storage containers, processing lines, and major equipment used during the production of a batch of a drug product shall be properly identified at all times to indicate their contents and, when necessary, the phase of processing of the batch.",
-    "clause_number": "211.105(a)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": "phase of processing when necessary"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.105#2",
-   "section": "211.105",
-   "hash": "bdce5f5892dd9cbf",
-   "item": {
-    "statement": "Identify major equipment with a distinctive identification number or code and record it in the batch production record to show the specific equipment used for each batch.",
-    "quote": "Major equipment shall be identified by a distinctive identification number or code that shall be recorded in the batch production record to show the specific equipment used in the manufacture of each batch of a drug product.",
-    "clause_number": "211.105(b)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": ""
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.105#3",
-   "section": "211.105",
-   "hash": "580f213643de8e2a",
-   "item": {
-    "statement": "Where only one piece of a particular type of equipment exists in the manufacturing facility, the equipment name may be used instead of a distinctive identification number or code.",
-    "quote": "In cases where only one of a particular type of equipment exists in a manufacturing facility, the name of the equipment may be used in lieu of a distinctive identification number or code.",
-    "clause_number": "211.105(b)",
-    "strength": "optional",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": "only one of that equipment type in the facility"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.110#1",
-   "section": "211.110",
-   "hash": "c6e816a5decfa0a4",
-   "item": {
-    "statement": "Establish and follow written procedures describing the in-process controls, tests or examinations to be performed on appropriate samples of in-process materials from each batch, to assure batch uniformity and drug product integrity.",
-    "quote": "To assure batch uniformity and integrity of drug products, written procedures shall be established and followed that describe the in-process controls, and tests, or examinations to be conducted on appropriate samples of in-process materials of each batch.",
-    "clause_number": "211.110(a)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": ""
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.110#2",
-   "section": "211.110",
-   "hash": "cb327a220d7cae66",
-   "item": {
-    "statement": "Establish in-process control procedures that monitor the output and validate the performance of those manufacturing processes that may cause variability in the characteristics of in-process material and the drug product.",
-    "quote": "Such control procedures shall be established to monitor the output and to validate the performance of those manufacturing processes that may be responsible for causing variability in the characteristics of in-process material and the drug product.",
-    "clause_number": "211.110(a)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": ""
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.110#3",
-   "section": "211.110",
-   "hash": "33fa264d1bc4e731",
-   "item": {
-    "statement": "Where appropriate, include tablet or capsule weight variation in the in-process control procedures.",
-    "quote": "Tablet or capsule weight variation;",
-    "clause_number": "211.110(a)(1)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD"
-    ],
-    "condition": "where appropriate"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.110#4",
-   "section": "211.110",
-   "hash": "b9a2dcdd02713159",
-   "item": {
-    "statement": "Where appropriate, include disintegration time in the in-process control procedures.",
-    "quote": "Disintegration time;",
-    "clause_number": "211.110(a)(2)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD"
-    ],
-    "condition": "where appropriate"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.110#5",
-   "section": "211.110",
-   "hash": "b7ed82c162ec75c8",
-   "item": {
-    "statement": "Where appropriate, include checks of mixing adequacy to assure uniformity and homogeneity in the in-process control procedures.",
-    "quote": "Adequacy of mixing to assure uniformity and homogeneity;",
-    "clause_number": "211.110(a)(3)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": "where appropriate"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.110#6",
-   "section": "211.110",
-   "hash": "d23d0a3913a6eb45",
-   "item": {
-    "statement": "Where appropriate, include dissolution time and rate in the in-process control procedures.",
-    "quote": "Dissolution time and rate;",
-    "clause_number": "211.110(a)(4)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD"
-    ],
-    "condition": "where appropriate"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.110#7",
-   "section": "211.110",
-   "hash": "ebc647a405fdc828",
-   "item": {
-    "statement": "Where appropriate, include clarity, completeness or pH of solutions in the in-process control procedures.",
-    "quote": "Clarity, completeness, or pH of solutions.",
-    "clause_number": "211.110(a)(5)",
-    "strength": "mandatory",
-    "plant_types": [
-     "LIQ",
-     "INJ"
-    ],
-    "condition": "where appropriate"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.110#8",
-   "section": "211.110",
-   "hash": "c1f2ab7e7bb698ff",
-   "item": {
-    "statement": "Where appropriate, include bioburden testing in the in-process control procedures.",
-    "quote": "Bioburden testing.",
-    "clause_number": "211.110(a)(6)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": "where appropriate"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.110#9",
-   "section": "211.110",
-   "hash": "baf52243724476a4",
-   "item": {
-    "statement": "Ensure valid in-process specifications are consistent with final drug product specifications, are derived from previous acceptable process average and process variability estimates where possible, and are determined using suitable statistical procedures where appropriate.",
-    "quote": "Valid in-process specifications for such characteristics shall be consistent with drug product final specifications and shall be derived from previous acceptable process average and process variability estimates where possible and determined by the application of suitable statistical procedures where appropriate.",
-    "clause_number": "211.110(b)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": "where possible; where appropriate"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.110#10",
-   "section": "211.110",
-   "hash": "0148c29c3b66e175",
-   "item": {
-    "statement": "Ensure examination and testing of samples assures that in-process material and the drug product conform to specifications.",
-    "quote": "Examination and testing of samples shall assure that the drug product and in-process material conform to specifications.",
-    "clause_number": "211.110(b)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": ""
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.110#11",
-   "section": "211.110",
-   "hash": "1849ca7d77df2273",
-   "item": {
-    "statement": "Test in-process materials for identity, strength, quality and purity as appropriate, and have the quality control unit approve or reject them during production, for example at the start or end of significant phases or after long storage.",
-    "quote": "In-process materials shall be tested for identity, strength, quality, and purity as appropriate, and approved or rejected by the quality control unit, during the production process, e.g., at commencement or completion of significant phases or after storage for long periods.",
-    "clause_number": "211.110(c)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": "as appropriate"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.110#12",
-   "section": "211.110",
-   "hash": "bd945e00b63219d2",
-   "item": {
-    "statement": "Identify rejected in-process materials and control them under a quarantine system designed to prevent their use in manufacturing or processing operations for which they are unsuitable.",
-    "quote": "Rejected in-process materials shall be identified and controlled under a quarantine system designed to prevent their use in manufacturing or processing operations for which they are unsuitable.",
-    "clause_number": "211.110(d)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": "rejected in-process materials"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.111#1",
-   "section": "211.111",
-   "hash": "e88856660c57f789",
-   "item": {
-    "statement": "When appropriate, establish time limits for completing each phase of production to assure drug product quality.",
-    "quote": "When appropriate, time limits for the completion of each phase of production shall be established to assure the quality of the drug product.",
-    "clause_number": "211.111",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": "when appropriate"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.111#2",
-   "section": "211.111",
-   "hash": "e519feb5f676cb0a",
-   "item": {
-    "statement": "A deviation from established production time limits may be accepted if it does not compromise drug product quality.",
-    "quote": "Deviation from established time limits may be acceptable if such deviation does not compromise the quality of the drug product.",
-    "clause_number": "211.111",
-    "strength": "optional",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": "if quality not compromised"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.111#3",
-   "section": "211.111",
-   "hash": "ca477a65e5f917f9",
-   "item": {
-    "statement": "Justify and document any deviation from established production time limits.",
-    "quote": "Such deviation shall be justified and documented.",
-    "clause_number": "211.111",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": "deviation from time limits"
+    "condition": "when examining and testing samples; provided identity test done and supplier results validated at appropriate intervals"
    },
    "plant_scope": [
     "OSD",

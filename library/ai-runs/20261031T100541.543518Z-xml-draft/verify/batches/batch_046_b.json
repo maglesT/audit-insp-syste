@@ -1,0 +1,292 @@
+{
+ "role": "b",
+ "instructions": "You are a second, independent auditor. Check one checklist item against the US regulation paragraph it claims to come from. You get\nthe section's paragraphs (reference and exact text, from the official eCFR XML) and the item. Start from the TEXT:\nread the cited paragraph and its lead-in fully, then compare the item.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the parent paragraph's\nlead-in (including a qualifier such as \"as are necessary to prevent contamination or mixups\"). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph requires what the statement asks for, the statement\n  adds nothing and omits nothing of that obligation, the strength (shall/must = mandatory, should = recommended,\n  may = optional; a sub-paragraph takes its lead-in's) matches, and the regulation applies to every listed plant\n  type (INJ = sterile injectables: a paragraph limited to products not required to be sterile does not apply to\n  INJ; one limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences saying what you checked for THIS item, in this item's own words: name the\n  condition, number, list or scope you compared with the text (e.g. \"the 30-day limit and 'each lot' are both in\n  the statement\", \"the list of components, containers and closures is complete\", \"drops the lead-in's 'for\n  sterile products'\"). Write each reason fresh for its item: a reason that would fit any item (\"quote exact,\n  strength matches, nothing added or omitted\") or that repeats another answer's reason is not an answer, and the\n  item then counts as unchecked.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "sections": [
+  {
+   "section": "211.204",
+   "paragraphs": [
+    {
+     "ref": "211.204",
+     "text": "§ 211.204 Returned drug products. Returned drug products shall be identified as such and held. If the conditions under which returned drug products have been held, stored, or shipped before or during their return, or if the condition of the drug product, its container, carton, or labeling, as a result of storage or shipping, casts doubt on the safety, identity, strength, quality or purity of the drug product, the returned drug product shall be destroyed unless examination, testing, or other investigations prove the drug product meets appropriate standards of safety, identity, strength, quality, or purity. A drug product may be reprocessed provided the subsequent drug product meets appropriate standards, specifications, and characteristics. Records of returned drug products shall be maintained and shall include the name and label potency of the drug product dosage form, lot number (or control number or batch number), reason for the return, quantity returned, date of disposition, and ultimate disposition of the returned drug product. If the reason for a drug product being returned implicates associated batches, an appropriate investigation shall be conducted in accordance with the requirements of § 211.192. Procedures for the holding, testing, and reprocessing of returned drug products shall be in writing and shall be followed."
+    }
+   ]
+  },
+  {
+   "section": "211.208",
+   "paragraphs": [
+    {
+     "ref": "211.208",
+     "text": "§ 211.208 Drug product salvaging. Drug products that have been subjected to improper storage conditions including extremes in temperature, humidity, smoke, fumes, pressure, age, or radiation due to natural disasters, fires, accidents, or equipment failures shall not be salvaged and returned to the marketplace. Whenever there is a question whether drug products have been subjected to such conditions, salvaging operations may be conducted only if there is (a) evidence from laboratory tests and assays (including animal feeding studies where applicable) that the drug products meet all applicable standards of identity, strength, quality, and purity and (b) evidence from inspection of the premises that the drug products and their associated packaging were not subjected to improper storage conditions as a result of the disaster or accident. Organoleptic examinations shall be acceptable only as supplemental evidence that the drug products meet appropriate standards of identity, strength, quality, and purity. Records including name, lot number, and disposition shall be maintained for drug products subject to this section."
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.204#1",
+   "section": "211.204",
+   "hash": "6cc53db3be900eed",
+   "item": {
+    "statement": "Identify returned drug products as returned and hold them.",
+    "quote": "Returned drug products shall be identified as such and held.",
+    "clause_number": "211.204",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.204#2",
+   "section": "211.204",
+   "hash": "40dd172d0318ac4a",
+   "item": {
+    "statement": "Destroy a returned drug product if the conditions under which it was held, stored or shipped before or during return, or the condition of the product, its container, carton or labeling as a result of storage or shipping, cast doubt on its safety, identity, strength, quality or purity, unless examination, testing or other investigation proves it meets appropriate standards of safety, identity, strength, quality or purity.",
+    "quote": "If the conditions under which returned drug products have been held, stored, or shipped before or during their return, or if the condition of the drug product, its container, carton, or labeling, as a result of storage or shipping, casts doubt on the safety, identity, strength, quality or purity of the drug product, the returned drug product shall be destroyed unless examination, testing, or other investigations prove the drug product meets appropriate standards of safety, identity, strength, quality, or purity.",
+    "clause_number": "211.204",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "if conditions cast doubt, unless proven to meet standards"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.204#3",
+   "section": "211.204",
+   "hash": "79a90396173b55ec",
+   "item": {
+    "statement": "A returned drug product may be reprocessed, provided the resulting drug product meets appropriate standards, specifications and characteristics.",
+    "quote": "A drug product may be reprocessed provided the subsequent drug product meets appropriate standards, specifications, and characteristics.",
+    "clause_number": "211.204",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "provided resulting product meets standards"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.204#4",
+   "section": "211.204",
+   "hash": "b4f10d6a04244b6f",
+   "item": {
+    "statement": "Maintain records of returned drug products that include the name and label potency of the dosage form, lot, control or batch number, reason for return, quantity returned, date of disposition and ultimate disposition.",
+    "quote": "Records of returned drug products shall be maintained and shall include the name and label potency of the drug product dosage form, lot number (or control number or batch number), reason for the return, quantity returned, date of disposition, and ultimate disposition of the returned drug product.",
+    "clause_number": "211.204",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.204#5",
+   "section": "211.204",
+   "hash": "d15c285505b4db96",
+   "item": {
+    "statement": "If the reason for a return implicates associated batches, conduct an appropriate failure investigation that meets the batch investigation requirements.",
+    "quote": "If the reason for a drug product being returned implicates associated batches, an appropriate investigation shall be conducted in accordance with the requirements of § 211.192.",
+    "clause_number": "211.204",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "if return reason implicates associated batches"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.204#6",
+   "section": "211.204",
+   "hash": "e52da83228f69ec4",
+   "item": {
+    "statement": "Have written procedures for holding, testing and reprocessing returned drug products, and follow them.",
+    "quote": "Procedures for the holding, testing, and reprocessing of returned drug products shall be in writing and shall be followed.",
+    "clause_number": "211.204",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.208#1",
+   "section": "211.208",
+   "hash": "71584e39d9fb1331",
+   "item": {
+    "statement": "Do not salvage and return to the market drug products that were subjected to improper storage conditions, including extremes of temperature, humidity, smoke, fumes, pressure, age or radiation, caused by natural disasters, fires, accidents or equipment failures.",
+    "quote": "Drug products that have been subjected to improper storage conditions including extremes in temperature, humidity, smoke, fumes, pressure, age, or radiation due to natural disasters, fires, accidents, or equipment failures shall not be salvaged and returned to the marketplace.",
+    "clause_number": "211.208",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.208#2",
+   "section": "211.208",
+   "hash": "7aa9cadc55f28c5e",
+   "item": {
+    "statement": "Where it is in question whether drug products were subjected to such improper storage conditions, conduct salvaging only if there is both evidence from laboratory tests and assays (including animal feeding studies where applicable) that the products meet all applicable standards of identity, strength, quality and purity, and evidence from inspection of the premises that the products and their packaging were not subjected to improper storage conditions from the disaster or accident.",
+    "quote": "Whenever there is a question whether drug products have been subjected to such conditions, salvaging operations may be conducted only if there is (a) evidence from laboratory tests and assays (including animal feeding studies where applicable) that the drug products meet all applicable standards of identity, strength, quality, and purity and (b) evidence from inspection of the premises that the drug products and their associated packaging were not subjected to improper storage conditions as a result of the disaster or accident.",
+    "clause_number": "211.208",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "whenever exposure to improper conditions is in question"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.208#3",
+   "section": "211.208",
+   "hash": "7e091c0c2f6b1c24",
+   "item": {
+    "statement": "Accept organoleptic examinations only as supplemental evidence that salvaged drug products meet appropriate standards of identity, strength, quality and purity.",
+    "quote": "Organoleptic examinations shall be acceptable only as supplemental evidence that the drug products meet appropriate standards of identity, strength, quality, and purity.",
+    "clause_number": "211.208",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.208#4",
+   "section": "211.208",
+   "hash": "072731719ba7523a",
+   "item": {
+    "statement": "Maintain records, including name, lot number and disposition, for drug products subject to salvaging requirements.",
+    "quote": "Records including name, lot number, and disposition shall be maintained for drug products subject to this section.",
+    "clause_number": "211.208",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  }
+ ]
+}

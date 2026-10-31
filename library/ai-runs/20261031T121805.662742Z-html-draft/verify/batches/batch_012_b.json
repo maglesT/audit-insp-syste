@@ -1,0 +1,100 @@
+{
+ "role": "b",
+ "instructions": "You are a second, independent auditor. Check one checklist item against the FDA web page paragraph it claims to come from. You get\nthe unit's paragraphs (reference and exact text of the page; \"context\" entries are headings) and the item. Start from the TEXT:\nread the cited paragraph, the paragraphs its quote runs into, and its lead-in fully, then compare the item.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the lead-in above a list\nitem (the paragraph ending \":\" above it). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph expects what the statement asks for (an instruction\n  to the investigator, \"Determine whether the firm validated ...\", expects the firm to have that practice), the statement\n  adds nothing and omits nothing of that obligation, the strength (a legal requirement: shall/must/required = mandatory;\n  should, FDA expects/recommends, an inspection point = recommended; may/acceptable = optional; a list item takes\n  its lead-in's) matches, and the text applies to every listed plant\n  type (INJ = sterile injectables: text limited to non-sterile products does not apply to\n  INJ; text limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences saying what you checked for THIS item, in this item's own words: name the\n  condition, number, list or scope you compared with the text (e.g. \"the 30-day limit and 'each lot' are both in\n  the statement\", \"the list of components, containers and closures is complete\", \"drops the lead-in's 'for\n  sterile products'\"). Write each reason fresh for its item: a reason that would fit any item (\"quote exact,\n  strength matches, nothing added or omitted\") or that repeats another answer's reason is not an answer, and the\n  item then counts as unchecked.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+ "units": [
+  {
+   "unit": "Q10",
+   "paragraphs": [
+    {
+     "ref": "Q10",
+     "text": "What is the acceptable media fill frequency in relation to the number of shifts? Normally, media fills should be repeated twice per shift per line per year. Is the same frequency expected of a process conducted in an isolator?"
+    },
+    {
+     "ref": "Q10.1",
+     "text": "A firm's justification for the frequency of media fills in relation to shifts should be risk based, depending on the type of operations and the media fill study design. For closed, highly automated systems run on multiple shifts, a firm with a rigorous media fill design may be justified to conduct a lower number of total media fill runs. Such a program can be appropriate provided that it still ensures performance of media fills for each aseptic processing line at least semiannually. The 2004 guidance for industry on Sterile Drug Products Produced by Aseptic Processing states that \"[A]ctivities and interventions representative of each shift, and shift changeover, should be incorporated into the design of the semi-annual qualification program.\" In addition, the EU Annex 1, Manufacture of Sterile Medicinal Products, states that \"Normally, process simulation tests should be repeated twice a year per shift and process.\""
+    },
+    {
+     "ref": "Q10.2",
+     "text": "Certain modern manufacturing designs (isolators and closed vial filling) afford isolation of the aseptic process from microbiological contamination risks (e.g., operators and surrounding room environment) throughout processing. For such closed systems,1 if the design of the processing equipment is robust and the extent of manual manipulation in the manufacturing process is minimized, a firm can consider this information in determining its media fill validation approach. For example, it is expected that a conventional aseptic processing line that operates on two shifts be evaluated twice per year per shift and culminate in four media fills. However, for aseptic filling conducted in an isolator over two shifts, it may be justified to perform fewer than four media fill runs per year, while still evaluating the line semiannually to ensure a continued state of aseptic process control. This lower total number of media fill runs would be based on sound risk rationale and would be subject to reevaluation if contamination issues (e.g., product nonsterility, media fill failure, any problematic environmental trends) occur."
+    },
+    {
+     "ref": "Q10.3",
+     "text": "l This does not apply to RABS (restricted access barrier systems)."
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q10#7",
+   "unit": "Q10",
+   "hash": "78e618eca1fc2bd6",
+   "item": {
+    "statement": "For aseptic filling in an isolator over two shifts, fewer than four media fill runs per year may be justified, while the line is still evaluated semiannually to ensure continued aseptic process control.",
+    "quote": "However, for aseptic filling conducted in an isolator over two shifts, it may be justified to perform fewer than four media fill runs per year, while still evaluating the line semiannually to ensure a continued state of aseptic process control.",
+    "clause_number": "Q10.2",
+    "strength": "optional",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "isolator filling over two shifts"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q10#8",
+   "unit": "Q10",
+   "hash": "c9603e8b41934d8b",
+   "item": {
+    "statement": "Base any reduced total number of media fill runs on a sound risk rationale and reevaluate it if contamination issues occur (for example product nonsterility, media fill failure or any problematic environmental trends).",
+    "quote": "This lower total number of media fill runs would be based on sound risk rationale and would be subject to reevaluation if contamination issues (e.g., product nonsterility, media fill failure, any problematic environmental trends) occur.",
+    "clause_number": "Q10.2",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "reduced media fill program; reevaluate on contamination issues"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  }
+ ]
+}

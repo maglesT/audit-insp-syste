@@ -1,0 +1,653 @@
+{
+ "role": "b",
+ "instructions": "You are a second, independent auditor. Check one checklist item against the US regulation paragraph it claims to come from. You get\nthe section's paragraphs (reference and exact text, from the official eCFR XML) and the item. Start from the TEXT:\nread the cited paragraph and its lead-in fully, then compare the item.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the parent paragraph's\nlead-in (including a qualifier such as \"as are necessary to prevent contamination or mixups\"). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph requires what the statement asks for, the statement\n  adds nothing and omits nothing of that obligation, the strength (shall/must = mandatory, should = recommended,\n  may = optional; a sub-paragraph takes its lead-in's) matches, and the regulation applies to every listed plant\n  type (INJ = sterile injectables: a paragraph limited to products not required to be sterile does not apply to\n  INJ; one limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences saying what you checked for THIS item, in this item's own words: name the\n  condition, number, list or scope you compared with the text (e.g. \"the 30-day limit and 'each lot' are both in\n  the statement\", \"the list of components, containers and closures is complete\", \"drops the lead-in's 'for\n  sterile products'\"). Write each reason fresh for its item: a reason that would fit any item (\"quote exact,\n  strength matches, nothing added or omitted\") or that repeats another answer's reason is not an answer, and the\n  item then counts as unchecked.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "sections": [
+  {
+   "section": "211.188",
+   "paragraphs": [
+    {
+     "ref": "211.188",
+     "text": "§ 211.188 Batch production and control records. Batch production and control records shall be prepared for each batch of drug product produced and shall include complete information relating to the production and control of each batch. These records shall include:"
+    },
+    {
+     "ref": "211.188(a)",
+     "text": "(a) An accurate reproduction of the appropriate master production or control record, checked for accuracy, dated, and signed;"
+    },
+    {
+     "ref": "211.188(b)",
+     "text": "(b) Documentation that each significant step in the manufacture, processing, packing, or holding of the batch was accomplished, including:"
+    },
+    {
+     "ref": "211.188(b)(1)",
+     "text": "(1) Dates;"
+    },
+    {
+     "ref": "211.188(b)(2)",
+     "text": "(2) Identity of individual major equipment and lines used;"
+    },
+    {
+     "ref": "211.188(b)(3)",
+     "text": "(3) Specific identification of each batch of component or in-process material used;"
+    },
+    {
+     "ref": "211.188(b)(4)",
+     "text": "(4) Weights and measures of components used in the course of processing;"
+    },
+    {
+     "ref": "211.188(b)(5)",
+     "text": "(5) In-process and laboratory control results;"
+    },
+    {
+     "ref": "211.188(b)(6)",
+     "text": "(6) Inspection of the packaging and labeling area before and after use;"
+    },
+    {
+     "ref": "211.188(b)(7)",
+     "text": "(7) A statement of the actual yield and a statement of the percentage of theoretical yield at appropriate phases of processing;"
+    },
+    {
+     "ref": "211.188(b)(8)",
+     "text": "(8) Complete labeling control records, including specimens or copies of all labeling used;"
+    },
+    {
+     "ref": "211.188(b)(9)",
+     "text": "(9) Description of drug product containers and closures;"
+    },
+    {
+     "ref": "211.188(b)(10)",
+     "text": "(10) Any sampling performed;"
+    },
+    {
+     "ref": "211.188(b)(11)",
+     "text": "(11) Identification of the persons performing and directly supervising or checking each significant step in the operation, or if a significant step in the operation is performed by automated equipment under § 211.68, the identification of the person checking the significant step performed by the automated equipment."
+    },
+    {
+     "ref": "211.188(b)(12)",
+     "text": "(12) Any investigation made according to § 211.192."
+    },
+    {
+     "ref": "211.188(b)(13)",
+     "text": "(13) Results of examinations made in accordance with § 211.134."
+    }
+   ]
+  },
+  {
+   "section": "211.192",
+   "paragraphs": [
+    {
+     "ref": "211.192",
+     "text": "§ 211.192 Production record review. All drug product production and control records, including those for packaging and labeling, shall be reviewed and approved by the quality control unit to determine compliance with all established, approved written procedures before a batch is released or distributed. Any unexplained discrepancy (including a percentage of theoretical yield exceeding the maximum or minimum percentages established in master production and control records) or the failure of a batch or any of its components to meet any of its specifications shall be thoroughly investigated, whether or not the batch has already been distributed. The investigation shall extend to other batches of the same drug product and other drug products that may have been associated with the specific failure or discrepancy. A written record of the investigation shall be made and shall include the conclusions and followup."
+    }
+   ]
+  },
+  {
+   "section": "211.194",
+   "paragraphs": [
+    {
+     "ref": "211.194",
+     "text": "§ 211.194 Laboratory records."
+    },
+    {
+     "ref": "211.194(a)",
+     "text": "(a) Laboratory records shall include complete data derived from all tests necessary to assure compliance with established specifications and standards, including examinations and assays, as follows:"
+    },
+    {
+     "ref": "211.194(a)(1)",
+     "text": "(1) A description of the sample received for testing with identification of source (that is, location from where sample was obtained), quantity, lot number or other distinctive code, date sample was taken, and date sample was received for testing."
+    },
+    {
+     "ref": "211.194(a)(2)",
+     "text": "(2) A statement of each method used in the testing of the sample. The statement shall indicate the location of data that establish that the methods used in the testing of the sample meet proper standards of accuracy and reliability as applied to the product tested. (If the method employed is in the current revision of the United States Pharmacopeia, National Formulary, AOAC INTERNATIONAL, Book of Methods, 1 or in other recognized standard references, or is detailed in an approved new drug application and the referenced method is not modified, a statement indicating the method and reference will suffice). The suitability of all testing methods used shall be verified under actual conditions of use."
+    },
+    {
+     "ref": "211.194(a)(3)",
+     "text": "(3) A statement of the weight or measure of sample used for each test, where appropriate."
+    },
+    {
+     "ref": "211.194(a)(4)",
+     "text": "(4) A complete record of all data secured in the course of each test, including all graphs, charts, and spectra from laboratory instrumentation, properly identified to show the specific component, drug product container, closure, in-process material, or drug product, and lot tested."
+    },
+    {
+     "ref": "211.194(a)(5)",
+     "text": "(5) A record of all calculations performed in connection with the test, including units of measure, conversion factors, and equivalency factors."
+    },
+    {
+     "ref": "211.194(a)(6)",
+     "text": "(6) A statement of the results of tests and how the results compare with established standards of identity, strength, quality, and purity for the component, drug product container, closure, in-process material, or drug product tested."
+    },
+    {
+     "ref": "211.194(a)(7)",
+     "text": "(7) The initials or signature of the person who performs each test and the date(s) the tests were performed."
+    },
+    {
+     "ref": "211.194(a)(8)",
+     "text": "(8) The initials or signature of a second person showing that the original records have been reviewed for accuracy, completeness, and compliance with established standards."
+    },
+    {
+     "ref": "211.194(b)",
+     "text": "(b) Complete records shall be maintained of any modification of an established method employed in testing. Such records shall include the reason for the modification and data to verify that the modification produced results that are at least as accurate and reliable for the material being tested as the established method."
+    },
+    {
+     "ref": "211.194(c)",
+     "text": "(c) Complete records shall be maintained of any testing and standardization of laboratory reference standards, reagents, and standard solutions."
+    },
+    {
+     "ref": "211.194(d)",
+     "text": "(d) Complete records shall be maintained of the periodic calibration of laboratory instruments, apparatus, gauges, and recording devices required by § 211.160(b)(4)."
+    },
+    {
+     "ref": "211.194(e)",
+     "text": "(e) Complete records shall be maintained of all stability testing performed in accordance with § 211.166."
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.188#9",
+   "section": "211.188",
+   "hash": "78a0f91ddc929b9f",
+   "item": {
+    "statement": "Document in each batch production and control record, for each significant manufacturing, processing, packing or holding step, the inspection of the packaging and labeling area before and after use.",
+    "quote": "Inspection of the packaging and labeling area before and after use;",
+    "clause_number": "211.188(b)(6)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.188#10",
+   "section": "211.188",
+   "hash": "460652f5472c6b90",
+   "item": {
+    "statement": "Document in each batch production and control record, for each significant manufacturing, processing, packing or holding step, the actual yield and the percentage of theoretical yield at appropriate phases of processing.",
+    "quote": "A statement of the actual yield and a statement of the percentage of theoretical yield at appropriate phases of processing;",
+    "clause_number": "211.188(b)(7)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.188#11",
+   "section": "211.188",
+   "hash": "552edb1e5c9087e1",
+   "item": {
+    "statement": "Document in each batch production and control record, for each significant manufacturing, processing, packing or holding step, complete labeling control records, including specimens or copies of all labeling used.",
+    "quote": "Complete labeling control records, including specimens or copies of all labeling used;",
+    "clause_number": "211.188(b)(8)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.188#12",
+   "section": "211.188",
+   "hash": "5a467344b6e5f329",
+   "item": {
+    "statement": "Document in each batch production and control record, for each significant manufacturing, processing, packing or holding step, a description of the drug product containers and closures.",
+    "quote": "Description of drug product containers and closures;",
+    "clause_number": "211.188(b)(9)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.188#13",
+   "section": "211.188",
+   "hash": "9bc3a4ce1b9641db",
+   "item": {
+    "statement": "Document in each batch production and control record, for each significant manufacturing, processing, packing or holding step, any sampling performed.",
+    "quote": "Any sampling performed;",
+    "clause_number": "211.188(b)(10)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.188#14",
+   "section": "211.188",
+   "hash": "f408fd4e0802ac1f",
+   "item": {
+    "statement": "Document in each batch production and control record, for each significant manufacturing, processing, packing or holding step, the identity of the persons performing and directly supervising or checking each significant step or, where a significant step is performed by automated equipment, the identity of the person checking that step.",
+    "quote": "Identification of the persons performing and directly supervising or checking each significant step in the operation, or if a significant step in the operation is performed by automated equipment under § 211.68, the identification of the person checking the significant step performed by the automated equipment.",
+    "clause_number": "211.188(b)(11)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "if step performed by automated equipment, identify the checker"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.188#15",
+   "section": "211.188",
+   "hash": "6db30d1a5e855a29",
+   "item": {
+    "statement": "Document in each batch production and control record, for each significant manufacturing, processing, packing or holding step, any investigation made into unexplained discrepancies or specification failures.",
+    "quote": "Any investigation made according to § 211.192.",
+    "clause_number": "211.188(b)(12)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.188#16",
+   "section": "211.188",
+   "hash": "bebf30765f02aa41",
+   "item": {
+    "statement": "Document in each batch production and control record, for each significant manufacturing, processing, packing or holding step, the results of the examinations of labeled finished product made during finishing operations.",
+    "quote": "Results of examinations made in accordance with § 211.134.",
+    "clause_number": "211.188(b)(13)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.192#1",
+   "section": "211.192",
+   "hash": "e43de7dd4537d8ec",
+   "item": {
+    "statement": "Have the quality control unit review and approve all drug product production and control records, including packaging and labeling records, to determine compliance with all established, approved written procedures before a batch is released or distributed.",
+    "quote": "All drug product production and control records, including those for packaging and labeling, shall be reviewed and approved by the quality control unit to determine compliance with all established, approved written procedures before a batch is released or distributed.",
+    "clause_number": "211.192",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "before batch release or distribution"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.192#2",
+   "section": "211.192",
+   "hash": "0f1e8452b1024c20",
+   "item": {
+    "statement": "Thoroughly investigate any unexplained discrepancy (including a percentage of theoretical yield outside the maximum or minimum set in the master production and control records) or any failure of a batch or its components to meet a specification, whether or not the batch has already been distributed.",
+    "quote": "Any unexplained discrepancy (including a percentage of theoretical yield exceeding the maximum or minimum percentages established in master production and control records) or the failure of a batch or any of its components to meet any of its specifications shall be thoroughly investigated, whether or not the batch has already been distributed.",
+    "clause_number": "211.192",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "unexplained discrepancy or specification failure"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.192#3",
+   "section": "211.192",
+   "hash": "38fac0a61a8fe18e",
+   "item": {
+    "statement": "Extend each discrepancy or failure investigation to other batches of the same drug product and to other drug products that may be associated with the specific failure or discrepancy.",
+    "quote": "The investigation shall extend to other batches of the same drug product and other drug products that may have been associated with the specific failure or discrepancy.",
+    "clause_number": "211.192",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.192#4",
+   "section": "211.192",
+   "hash": "3b82c8afd333b78f",
+   "item": {
+    "statement": "Make a written record of each discrepancy or failure investigation, including its conclusions and follow-up.",
+    "quote": "A written record of the investigation shall be made and shall include the conclusions and followup.",
+    "clause_number": "211.192",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.194#1",
+   "section": "211.194",
+   "hash": "2d805db68bcdfc6c",
+   "item": {
+    "statement": "Ensure laboratory records include complete data from every test needed to assure compliance with established specifications and standards, including examinations and assays, covering the record elements listed below.",
+    "quote": "Laboratory records shall include complete data derived from all tests necessary to assure compliance with established specifications and standards, including examinations and assays, as follows:",
+    "clause_number": "211.194(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.194#2",
+   "section": "211.194",
+   "hash": "4077947230b32404",
+   "item": {
+    "statement": "Laboratory records must include complete data from all tests needed to assure compliance with established specifications and standards, including examinations and assays, including a description of the sample received for testing: its source (the location where it was obtained), quantity, lot number or other distinctive code, date sampled and date received for testing.",
+    "quote": "A description of the sample received for testing with identification of source (that is, location from where sample was obtained), quantity, lot number or other distinctive code, date sample was taken, and date sample was received for testing.",
+    "clause_number": "211.194(a)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.194#3",
+   "section": "211.194",
+   "hash": "70dff30e52c50cca",
+   "item": {
+    "statement": "Laboratory records must include complete data from all tests needed to assure compliance with established specifications and standards, including examinations and assays, including a statement of each method used to test the sample.",
+    "quote": "A statement of each method used in the testing of the sample.",
+    "clause_number": "211.194(a)(2)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.194#4",
+   "section": "211.194",
+   "hash": "5396cf4f13aae7d7",
+   "item": {
+    "statement": "Laboratory records must include complete data from all tests needed to assure compliance with established specifications and standards, including examinations and assays: the method statement must point to where the data are kept showing the methods meet proper standards of accuracy and reliability for the product tested; if the method is in the current USP, National Formulary, AOAC INTERNATIONAL Book of Methods or another recognized standard reference, or is detailed in an approved new drug application, and is used unmodified, stating the method and its reference is sufficient.",
+    "quote": "The statement shall indicate the location of data that establish that the methods used in the testing of the sample meet proper standards of accuracy and reliability as applied to the product tested. (If the method employed is in the current revision of the United States Pharmacopeia, National Formulary, AOAC INTERNATIONAL, Book of Methods, 1 or in other recognized standard references, or is detailed in an approved new drug application and the referenced method is not modified, a statement indicating the method and reference will suffice).",
+    "clause_number": "211.194(a)(2)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "unless compendial/approved method used unmodified"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.194#5",
+   "section": "211.194",
+   "hash": "8d30f4ba5cc043b2",
+   "item": {
+    "statement": "Verify the suitability of every testing method used under actual conditions of use, and document this in the laboratory records.",
+    "quote": "The suitability of all testing methods used shall be verified under actual conditions of use.",
+    "clause_number": "211.194(a)(2)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.194#6",
+   "section": "211.194",
+   "hash": "aaa94e820c79ae21",
+   "item": {
+    "statement": "Laboratory records must include complete data from all tests needed to assure compliance with established specifications and standards, including examinations and assays, including a statement of the weight or measure of sample used for each test, where appropriate.",
+    "quote": "A statement of the weight or measure of sample used for each test, where appropriate.",
+    "clause_number": "211.194(a)(3)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "where appropriate"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.194#7",
+   "section": "211.194",
+   "hash": "7a1f93603664c795",
+   "item": {
+    "statement": "Laboratory records must include complete data from all tests needed to assure compliance with established specifications and standards, including examinations and assays, including a complete record of all data obtained during each test, including all instrument graphs, charts and spectra, properly identified to show the specific component, container, closure, in-process material or drug product and lot tested.",
+    "quote": "A complete record of all data secured in the course of each test, including all graphs, charts, and spectra from laboratory instrumentation, properly identified to show the specific component, drug product container, closure, in-process material, or drug product, and lot tested.",
+    "clause_number": "211.194(a)(4)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.194#8",
+   "section": "211.194",
+   "hash": "f1055421e65b39d1",
+   "item": {
+    "statement": "Laboratory records must include complete data from all tests needed to assure compliance with established specifications and standards, including examinations and assays, including a record of all calculations made for the test, including units of measure, conversion factors and equivalency factors.",
+    "quote": "A record of all calculations performed in connection with the test, including units of measure, conversion factors, and equivalency factors.",
+    "clause_number": "211.194(a)(5)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  }
+ ]
+}

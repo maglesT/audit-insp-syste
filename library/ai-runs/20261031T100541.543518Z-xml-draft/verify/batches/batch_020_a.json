@@ -1,0 +1,636 @@
+{
+ "role": "a",
+ "instructions": "You are an auditor checking one checklist item against the US regulation paragraph it claims to come from. You get\nthe section's paragraphs (reference and exact text, from the official eCFR XML) and the item. Start from the ITEM:\nread it, then find in the cited paragraph what it covers.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the parent paragraph's\nlead-in (including a qualifier such as \"as are necessary to prevent contamination or mixups\"). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph requires what the statement asks for, the statement\n  adds nothing and omits nothing of that obligation, the strength (shall/must = mandatory, should = recommended,\n  may = optional; a sub-paragraph takes its lead-in's) matches, and the regulation applies to every listed plant\n  type (INJ = sterile injectables: a paragraph limited to products not required to be sterile does not apply to\n  INJ; one limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences saying what you checked for THIS item, in this item's own words: name the\n  condition, number, list or scope you compared with the text (e.g. \"the 30-day limit and 'each lot' are both in\n  the statement\", \"the list of components, containers and closures is complete\", \"drops the lead-in's 'for\n  sterile products'\"). Write each reason fresh for its item: a reason that would fit any item (\"quote exact,\n  strength matches, nothing added or omitted\") or that repeats another answer's reason is not an answer, and the\n  item then counts as unchecked.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "sections": [
+  {
+   "section": "211.186",
+   "paragraphs": [
+    {
+     "ref": "211.186",
+     "text": "§ 211.186 Master production and control records."
+    },
+    {
+     "ref": "211.186(a)",
+     "text": "(a) To assure uniformity from batch to batch, master production and control records for each drug product, including each batch size thereof, shall be prepared, dated, and signed (full signature, handwritten) by one person and independently checked, dated, and signed by a second person. The preparation of master production and control records shall be described in a written procedure and such written procedure shall be followed."
+    },
+    {
+     "ref": "211.186(b)",
+     "text": "(b) Master production and control records shall include:"
+    },
+    {
+     "ref": "211.186(b)(1)",
+     "text": "(1) The name and strength of the product and a description of the dosage form;"
+    },
+    {
+     "ref": "211.186(b)(2)",
+     "text": "(2) The name and weight or measure of each active ingredient per dosage unit or per unit of weight or measure of the drug product, and a statement of the total weight or measure of any dosage unit;"
+    },
+    {
+     "ref": "211.186(b)(3)",
+     "text": "(3) A complete list of components designated by names or codes sufficiently specific to indicate any special quality characteristic;"
+    },
+    {
+     "ref": "211.186(b)(4)",
+     "text": "(4) An accurate statement of the weight or measure of each component, using the same weight system (metric, avoirdupois, or apothecary) for each component. Reasonable variations may be permitted, however, in the amount of components necessary for the preparation in the dosage form, provided they are justified in the master production and control records;"
+    },
+    {
+     "ref": "211.186(b)(5)",
+     "text": "(5) A statement concerning any calculated excess of component;"
+    },
+    {
+     "ref": "211.186(b)(6)",
+     "text": "(6) A statement of theoretical weight or measure at appropriate phases of processing;"
+    },
+    {
+     "ref": "211.186(b)(7)",
+     "text": "(7) A statement of theoretical yield, including the maximum and minimum percentages of theoretical yield beyond which investigation according to § 211.192 is required;"
+    },
+    {
+     "ref": "211.186(b)(8)",
+     "text": "(8) A description of the drug product containers, closures, and packaging materials, including a specimen or copy of each label and all other labeling signed and dated by the person or persons responsible for approval of such labeling;"
+    },
+    {
+     "ref": "211.186(b)(9)",
+     "text": "(9) Complete manufacturing and control instructions, sampling and testing procedures, specifications, special notations, and precautions to be followed."
+    }
+   ]
+  },
+  {
+   "section": "211.188",
+   "paragraphs": [
+    {
+     "ref": "211.188",
+     "text": "§ 211.188 Batch production and control records. Batch production and control records shall be prepared for each batch of drug product produced and shall include complete information relating to the production and control of each batch. These records shall include:"
+    },
+    {
+     "ref": "211.188(a)",
+     "text": "(a) An accurate reproduction of the appropriate master production or control record, checked for accuracy, dated, and signed;"
+    },
+    {
+     "ref": "211.188(b)",
+     "text": "(b) Documentation that each significant step in the manufacture, processing, packing, or holding of the batch was accomplished, including:"
+    },
+    {
+     "ref": "211.188(b)(1)",
+     "text": "(1) Dates;"
+    },
+    {
+     "ref": "211.188(b)(2)",
+     "text": "(2) Identity of individual major equipment and lines used;"
+    },
+    {
+     "ref": "211.188(b)(3)",
+     "text": "(3) Specific identification of each batch of component or in-process material used;"
+    },
+    {
+     "ref": "211.188(b)(4)",
+     "text": "(4) Weights and measures of components used in the course of processing;"
+    },
+    {
+     "ref": "211.188(b)(5)",
+     "text": "(5) In-process and laboratory control results;"
+    },
+    {
+     "ref": "211.188(b)(6)",
+     "text": "(6) Inspection of the packaging and labeling area before and after use;"
+    },
+    {
+     "ref": "211.188(b)(7)",
+     "text": "(7) A statement of the actual yield and a statement of the percentage of theoretical yield at appropriate phases of processing;"
+    },
+    {
+     "ref": "211.188(b)(8)",
+     "text": "(8) Complete labeling control records, including specimens or copies of all labeling used;"
+    },
+    {
+     "ref": "211.188(b)(9)",
+     "text": "(9) Description of drug product containers and closures;"
+    },
+    {
+     "ref": "211.188(b)(10)",
+     "text": "(10) Any sampling performed;"
+    },
+    {
+     "ref": "211.188(b)(11)",
+     "text": "(11) Identification of the persons performing and directly supervising or checking each significant step in the operation, or if a significant step in the operation is performed by automated equipment under § 211.68, the identification of the person checking the significant step performed by the automated equipment."
+    },
+    {
+     "ref": "211.188(b)(12)",
+     "text": "(12) Any investigation made according to § 211.192."
+    },
+    {
+     "ref": "211.188(b)(13)",
+     "text": "(13) Results of examinations made in accordance with § 211.134."
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.186#1",
+   "section": "211.186",
+   "hash": "a0c26c1e28fa7aa0",
+   "item": {
+    "statement": "To assure batch-to-batch uniformity, prepare master production and control records for each drug product and each batch size, dated and signed (full handwritten signature) by one person and independently checked, dated and signed by a second person.",
+    "quote": "To assure uniformity from batch to batch, master production and control records for each drug product, including each batch size thereof, shall be prepared, dated, and signed (full signature, handwritten) by one person and independently checked, dated, and signed by a second person.",
+    "clause_number": "211.186(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.186#2",
+   "section": "211.186",
+   "hash": "1a8548ea34274df5",
+   "item": {
+    "statement": "Describe the preparation of master production and control records in a written procedure and follow it.",
+    "quote": "The preparation of master production and control records shall be described in a written procedure and such written procedure shall be followed.",
+    "clause_number": "211.186(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.186#3",
+   "section": "211.186",
+   "hash": "617556723126426c",
+   "item": {
+    "statement": "Include in the master production and control records the product name and strength and a description of the dosage form.",
+    "quote": "The name and strength of the product and a description of the dosage form;",
+    "clause_number": "211.186(b)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.186#4",
+   "section": "211.186",
+   "hash": "fa68b416a1349594",
+   "item": {
+    "statement": "Include in the master production and control records the name and weight or measure of each active ingredient per dosage unit or per unit of weight or measure of the product, and the total weight or measure of any dosage unit.",
+    "quote": "The name and weight or measure of each active ingredient per dosage unit or per unit of weight or measure of the drug product, and a statement of the total weight or measure of any dosage unit;",
+    "clause_number": "211.186(b)(2)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.186#5",
+   "section": "211.186",
+   "hash": "6523f9bb87428ad5",
+   "item": {
+    "statement": "Include in the master production and control records a complete list of components, named or coded specifically enough to show any special quality characteristic.",
+    "quote": "A complete list of components designated by names or codes sufficiently specific to indicate any special quality characteristic;",
+    "clause_number": "211.186(b)(3)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.186#6",
+   "section": "211.186",
+   "hash": "aab0e0a02c40b3da",
+   "item": {
+    "statement": "Include in the master production and control records an accurate weight or measure of each component, using the same weight system (metric, avoirdupois or apothecary) for every component.",
+    "quote": "An accurate statement of the weight or measure of each component, using the same weight system (metric, avoirdupois, or apothecary) for each component.",
+    "clause_number": "211.186(b)(4)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.186#7",
+   "section": "211.186",
+   "hash": "8ae27e42408bf65e",
+   "item": {
+    "statement": "Reasonable variations in the amounts of components needed to prepare the dosage form may be allowed, provided they are justified in the master production and control records.",
+    "quote": "Reasonable variations may be permitted, however, in the amount of components necessary for the preparation in the dosage form, provided they are justified in the master production and control records;",
+    "clause_number": "211.186(b)(4)",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "variations justified in the master records"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.186#8",
+   "section": "211.186",
+   "hash": "90d5ca318c45b654",
+   "item": {
+    "statement": "Include in the master production and control records a statement of any calculated excess of a component.",
+    "quote": "A statement concerning any calculated excess of component;",
+    "clause_number": "211.186(b)(5)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.186#9",
+   "section": "211.186",
+   "hash": "b8805efe408f5ddc",
+   "item": {
+    "statement": "Include in the master production and control records the theoretical weight or measure at appropriate phases of processing.",
+    "quote": "A statement of theoretical weight or measure at appropriate phases of processing;",
+    "clause_number": "211.186(b)(6)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.186#10",
+   "section": "211.186",
+   "hash": "875c16baf59eb264",
+   "item": {
+    "statement": "Include in the master production and control records the theoretical yield, including the maximum and minimum percentages of theoretical yield beyond which an investigation of the discrepancy is required.",
+    "quote": "A statement of theoretical yield, including the maximum and minimum percentages of theoretical yield beyond which investigation according to § 211.192 is required;",
+    "clause_number": "211.186(b)(7)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.186#11",
+   "section": "211.186",
+   "hash": "0509fb2ea3992c17",
+   "item": {
+    "statement": "Include in the master production and control records a description of the drug product containers, closures and packaging materials, including a specimen or copy of each label and all other labeling, signed and dated by the person(s) responsible for approving that labeling.",
+    "quote": "A description of the drug product containers, closures, and packaging materials, including a specimen or copy of each label and all other labeling signed and dated by the person or persons responsible for approval of such labeling;",
+    "clause_number": "211.186(b)(8)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.186#12",
+   "section": "211.186",
+   "hash": "916a56a98d9ddccd",
+   "item": {
+    "statement": "Include in the master production and control records complete manufacturing and control instructions, sampling and testing procedures, specifications, special notations and precautions to be followed.",
+    "quote": "Complete manufacturing and control instructions, sampling and testing procedures, specifications, special notations, and precautions to be followed.",
+    "clause_number": "211.186(b)(9)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.188#1",
+   "section": "211.188",
+   "hash": "2b61f51ef18495ff",
+   "item": {
+    "statement": "Prepare batch production and control records for each batch of drug product produced, containing complete information on the production and control of that batch.",
+    "quote": "Batch production and control records shall be prepared for each batch of drug product produced and shall include complete information relating to the production and control of each batch. These records shall include:",
+    "clause_number": "211.188",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.188#2",
+   "section": "211.188",
+   "hash": "e55482a1f9327a64",
+   "item": {
+    "statement": "Include in each batch production and control record an accurate reproduction of the appropriate master production or control record, checked for accuracy, dated and signed.",
+    "quote": "An accurate reproduction of the appropriate master production or control record, checked for accuracy, dated, and signed;",
+    "clause_number": "211.188(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.188#3",
+   "section": "211.188",
+   "hash": "99d43b34fc3b4cf9",
+   "item": {
+    "statement": "Include in each batch production and control record documentation that each significant step in manufacturing, processing, packing or holding the batch was accomplished.",
+    "quote": "Documentation that each significant step in the manufacture, processing, packing, or holding of the batch was accomplished, including:",
+    "clause_number": "211.188(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.188#4",
+   "section": "211.188",
+   "hash": "e22f1a8a78e3dbde",
+   "item": {
+    "statement": "Document in each batch production and control record, for each significant manufacturing, processing, packing or holding step, the dates.",
+    "quote": "Dates;",
+    "clause_number": "211.188(b)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.188#5",
+   "section": "211.188",
+   "hash": "416aa641b2920b68",
+   "item": {
+    "statement": "Document in each batch production and control record, for each significant manufacturing, processing, packing or holding step, the identity of each individual major equipment item and line used.",
+    "quote": "Identity of individual major equipment and lines used;",
+    "clause_number": "211.188(b)(2)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.188#6",
+   "section": "211.188",
+   "hash": "3f6ac8af3feebc1c",
+   "item": {
+    "statement": "Document in each batch production and control record, for each significant manufacturing, processing, packing or holding step, the specific identification of each batch of component or in-process material used.",
+    "quote": "Specific identification of each batch of component or in-process material used;",
+    "clause_number": "211.188(b)(3)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.188#7",
+   "section": "211.188",
+   "hash": "c6894b594c8a9837",
+   "item": {
+    "statement": "Document in each batch production and control record, for each significant manufacturing, processing, packing or holding step, the weights and measures of components used during processing.",
+    "quote": "Weights and measures of components used in the course of processing;",
+    "clause_number": "211.188(b)(4)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.188#8",
+   "section": "211.188",
+   "hash": "1d7b1f7d72dcd542",
+   "item": {
+    "statement": "Document in each batch production and control record, for each significant manufacturing, processing, packing or holding step, the in-process and laboratory control results.",
+    "quote": "In-process and laboratory control results;",
+    "clause_number": "211.188(b)(5)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  }
+ ]
+}

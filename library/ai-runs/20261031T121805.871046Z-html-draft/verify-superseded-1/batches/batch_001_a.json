@@ -1,0 +1,514 @@
+{
+ "role": "a",
+ "instructions": "You are an auditor checking one checklist item against the FDA web page paragraph it claims to come from. You get\nthe unit's paragraphs (reference and exact text of the page; \"context\" entries are headings) and the item. Start from the ITEM:\nread it, then find in the cited paragraph what it covers.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the lead-in above a list\nitem (the paragraph ending \":\" above it). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph expects what the statement asks for (an instruction\n  to the investigator, \"Determine whether the firm validated ...\", expects the firm to have that practice), the statement\n  adds nothing and omits nothing of that obligation, the strength (a legal requirement: shall/must/required = mandatory;\n  should, FDA expects/recommends, an inspection point = recommended; may/acceptable = optional; a list item takes\n  its lead-in's) matches, and the text applies to every listed plant\n  type (INJ = sterile injectables: text limited to non-sterile products does not apply to\n  INJ; text limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+ "units": [
+  {
+   "unit": "Q1",
+   "paragraphs": [
+    {
+     "ref": "Q1",
+     "text": "What should a firm do if its drug products or components have been subjected to improper storage conditions such as those caused by a natural disaster?"
+    },
+    {
+     "ref": "Q1.1",
+     "text": "Drug products that have been subjected to improper storage conditions (including extremes in temperature, humidity, smoke, fumes, pressure, age, or radiation) due, for example, to natural disasters, fires, accidents, or equipment failures shall not be salvaged and returned to the marketplace. Such exposure can pose a serious risk to a drug's identity, strength, quality, purity or safety (see 21 CFR 211.208). This fundamental CGMP principle applies to any component, in-process material, or finished drug product subjected to such conditions. In some cases, there may be substantial and reasonable uncertainty whether a drug was subjected to these conditions. In such a circumstance, it is essential that a firm nonetheless err on the side of caution in its risk assessment to ensure an appropriate lot disposition decision and conduct a rigorous evaluation in accordance with the standards described under § 211.208. When there is reasonable uncertainty whether a drug was subjected to such conditions, salvaging operations may be conducted only if there is evidence from laboratory testing that the drugs meet all applicable standards of identity, strength, quality, and purity, and from inspection that the drugs and their associated packaging were not subject to improper storage conditions as a result of the disaster or accident. When determining whether drugs have been subjected to such improper conditions, a firm's actions should include but not be limited to:"
+    },
+    {
+     "ref": "Q1.2",
+     "text": "Obtaining supply chain information, including knowing the names and addresses of all suppliers and distributors of a drug (including components and packaging) to determine if there is a reasonable possibility that such materials were stored under improper conditions.",
+     "list_item": true
+    },
+    {
+     "ref": "Q1.3",
+     "text": "Determining details such as the time frame, duration, nature, scope, and location of exposure as well as identity of all lots potentially subjected to the improper conditions (e.g., ramifications of a natural disaster such as power disruptions should be considered to ensure a complete risk assessment).",
+     "list_item": true
+    },
+    {
+     "ref": "Q1.4",
+     "text": "Obtaining certification (either on the certificate of analysis or as a separate statement) declaring that drug lots, including components and packaging, were not subjected to improper storage conditions.",
+     "list_item": true
+    }
+   ]
+  },
+  {
+   "unit": "Q2",
+   "paragraphs": [
+    {
+     "ref": "Q2",
+     "text": "What if the improper storage conditions include exposure to toxic fumes or radiation?"
+    },
+    {
+     "ref": "Q2.1",
+     "text": "Exposure to potentially harmful levels of toxic fumes or radiation is considered to be an improper storage condition (see above). It is essential that firms exercise due diligence to ensure that their drugs were manufactured, processed, packaged, and held under conditions consistent with CGMP. This includes ensuring acceptability of both raw materials and drug products. FDA routinely monitors the quality of marketed drug products, including those imported into the United States. In response to natural disasters, FDA may increase its monitoring and detection capabilities and apply appropriate regulatory action to help ensure the quality and safety of the drug supply."
+    }
+   ]
+  },
+  {
+   "unit": "Q3",
+   "paragraphs": [
+    {
+     "ref": "Q3",
+     "text": "What should be considered in performing an assessment of whether a firm's drug product, or its components or packaging materials, may have been contaminated with radioactive material?"
+    },
+    {
+     "ref": "Q3.1",
+     "text": "Radioactive materials (radionuclides) release radiation, also called ionizing radiation, as high-energy particles or electromagnetic energy (e.g., gamma rays) as their unstable atoms transition to a more stable state. Low levels of radiation occur naturally in the environment (as background radiation), but elevated levels may occur, for example, during or following a nuclear reactor accident. Radioactive materials released into the environment by such an accident may contaminate drug products, components, or packaging materials. In these circumstances, firms should determine if any of these articles has become contaminated with radionuclides. If a drug product has been subjected to improper storage, including contamination with radioactive material, the product must not be salvaged and returned to the marketplace (21 CFR 211.208). Similarly, contaminated drug components and packaging materials should not be used or salvaged to manufacture drug products. It is important for manufacturers to know the origin and complete supply chain of a drug product, component, or packaging to better enable an assessment for possible contamination arising from, for example, the accidental release of radioactivity."
+    },
+    {
+     "ref": "Q3.2",
+     "text": "Some general concerns about radionuclide contamination from nuclear accidents include, but are not limited to, the following:"
+    },
+    {
+     "ref": "Q3.3",
+     "text": "Drug products and/or components may become contaminated with radionuclides from various sources, including contaminated atmospheric fallout, ground water, soil, or naturally derived raw materials.",
+     "list_item": true
+    },
+    {
+     "ref": "Q3.4",
+     "text": "A contaminated water supply used in drug manufacture may result in poor-quality products that fail to meet specifications.",
+     "list_item": true
+    },
+    {
+     "ref": "Q3.5",
+     "text": "Certain dosage forms, such as injectable and inhalable drugs, may present greater risk to patients if contaminated with radionuclides, because these drugs more directly enter into the bloodstream.",
+     "list_item": true
+    },
+    {
+     "ref": "Q3.6",
+     "text": "Drug products and/or drug components contaminated with radionuclides may result in poor-quality products that fail to meet stability specifications (e.g., reduced efficacy).",
+     "list_item": true
+    },
+    {
+     "ref": "Q3.7",
+     "text": "Manufacturers of finished drugs must ensure that their products comply with FDA regulations, which includes assurance that the components are of appropriate quality (see, e.g., 21 CFR part 211). In addition, manufacturers of drug components and primary containers must also ensure the quality of their material. FDA expects drug manufacturers and distributors to be extra vigilant and to take enhanced measures to ensure the quality and safety of their drugs that may have been exposed to radioactive contaminants. It may be appropriate for a firm to undertake measures to prevent purchase of at-risk materials as well as to increase testing of incoming components and finished products before final release. See 21 CFR part 211, including:"
+    },
+    {
+     "ref": "Q3.8",
+     "text": "21 CFR 211.65, Testing and release for distribution",
+     "list_item": true
+    },
+    {
+     "ref": "Q3.9",
+     "text": "21 CFR 211.84, Testing and approval or rejection of components, drug product containers, and closures",
+     "list_item": true
+    },
+    {
+     "ref": "Q3.10",
+     "text": "21 CFR 211.94, Drug product containers and closures",
+     "list_item": true
+    },
+    {
+     "ref": "Q3.11",
+     "text": "21 CFR 211.208, Drug product salvaging",
+     "list_item": true
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "fda-cgmp-qa-returned-salvaged.html:Q1#1",
+   "unit": "Q1",
+   "hash": "e1cba29a0c8b675b",
+   "item": {
+    "statement": "Do not salvage and return to market any component, in-process material or finished drug product that has been exposed to improper storage conditions (including extremes of temperature, humidity, smoke, fumes, pressure, age or radiation) caused, for example, by natural disasters, fires, accidents or equipment failures.",
+    "quote": "Drug products that have been subjected to improper storage conditions (including extremes in temperature, humidity, smoke, fumes, pressure, age, or radiation) due, for example, to natural disasters, fires, accidents, or equipment failures shall not be salvaged and returned to the marketplace. Such exposure can pose a serious risk to a drug's identity, strength, quality, purity or safety (see 21 CFR 211.208). This fundamental CGMP principle applies to any component, in-process material, or finished drug product subjected to such conditions.",
+    "clause_number": "Q1.1",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "exposed to improper storage conditions"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-returned-salvaged.html:Q1#2",
+   "unit": "Q1",
+   "hash": "bdf169de0cb42e68",
+   "item": {
+    "statement": "Where there is substantial and reasonable uncertainty whether a drug was exposed to improper storage conditions, err on the side of caution in the risk assessment so the lot disposition decision is appropriate, and carry out a rigorous evaluation to the drug product salvaging standards.",
+    "quote": "In some cases, there may be substantial and reasonable uncertainty whether a drug was subjected to these conditions. In such a circumstance, it is essential that a firm nonetheless err on the side of caution in its risk assessment to ensure an appropriate lot disposition decision and conduct a rigorous evaluation in accordance with the standards described under § 211.208.",
+    "clause_number": "Q1.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "reasonable uncertainty about exposure"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-returned-salvaged.html:Q1#3",
+   "unit": "Q1",
+   "hash": "dc249d19fd2c50f5",
+   "item": {
+    "statement": "Where there is reasonable uncertainty whether a drug was exposed to improper storage conditions, salvage it only if laboratory testing shows it meets all applicable standards of identity, strength, quality and purity, and inspection shows the drugs and their packaging were not exposed to improper storage conditions from the disaster or accident.",
+    "quote": "When there is reasonable uncertainty whether a drug was subjected to such conditions, salvaging operations may be conducted only if there is evidence from laboratory testing that the drugs meet all applicable standards of identity, strength, quality, and purity, and from inspection that the drugs and their associated packaging were not subject to improper storage conditions as a result of the disaster or accident.",
+    "clause_number": "Q1.1",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "reasonable uncertainty about exposure"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-returned-salvaged.html:Q1#4",
+   "unit": "Q1",
+   "hash": "6280f7e4dd5a0de7",
+   "item": {
+    "statement": "When determining whether drugs have been exposed to improper storage conditions, obtain supply chain information, including the names and addresses of all suppliers and distributors of the drug (including components and packaging), to judge whether the materials may reasonably have been stored improperly.",
+    "quote": "Obtaining supply chain information, including knowing the names and addresses of all suppliers and distributors of a drug (including components and packaging) to determine if there is a reasonable possibility that such materials were stored under improper conditions.",
+    "clause_number": "Q1.2",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "determining exposure to improper storage"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-returned-salvaged.html:Q1#5",
+   "unit": "Q1",
+   "hash": "53fca55cb29a5431",
+   "item": {
+    "statement": "When determining whether drugs have been exposed to improper storage conditions, establish the time frame, duration, nature, scope and location of the exposure and identify all lots that may have been exposed, considering knock-on effects of a natural disaster such as power disruptions so the risk assessment is complete.",
+    "quote": "Determining details such as the time frame, duration, nature, scope, and location of exposure as well as identity of all lots potentially subjected to the improper conditions (e.g., ramifications of a natural disaster such as power disruptions should be considered to ensure a complete risk assessment).",
+    "clause_number": "Q1.3",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "determining exposure to improper storage"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-returned-salvaged.html:Q1#6",
+   "unit": "Q1",
+   "hash": "12a1b4abcab55d9c",
+   "item": {
+    "statement": "When determining whether drugs have been exposed to improper storage conditions, obtain certification (on the certificate of analysis or as a separate statement) that drug lots, including components and packaging, were not exposed to improper storage conditions.",
+    "quote": "Obtaining certification (either on the certificate of analysis or as a separate statement) declaring that drug lots, including components and packaging, were not subjected to improper storage conditions.",
+    "clause_number": "Q1.4",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "determining exposure to improper storage"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-returned-salvaged.html:Q2#1",
+   "unit": "Q2",
+   "hash": "438016eba0e1ac9a",
+   "item": {
+    "statement": "Where drugs may have been exposed to toxic fumes or radiation, exercise due diligence to ensure the drugs were manufactured, processed, packaged and held under conditions consistent with CGMP, including making sure both raw materials and drug products are acceptable.",
+    "quote": "It is essential that firms exercise due diligence to ensure that their drugs were manufactured, processed, packaged, and held under conditions consistent with CGMP. This includes ensuring acceptability of both raw materials and drug products.",
+    "clause_number": "Q2.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "possible exposure to toxic fumes or radiation"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-returned-salvaged.html:Q3#1",
+   "unit": "Q3",
+   "hash": "4ffa81be659861f6",
+   "item": {
+    "statement": "Where radioactive material may have been released into the environment (for example after a nuclear reactor accident), determine whether drug products, components or packaging materials have become contaminated with radionuclides.",
+    "quote": "In these circumstances, firms should determine if any of these articles has become contaminated with radionuclides.",
+    "clause_number": "Q3.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "possible release of radioactive material"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-returned-salvaged.html:Q3#2",
+   "unit": "Q3",
+   "hash": "0145936c037a2238",
+   "item": {
+    "statement": "Do not salvage and return to market a drug product that has been improperly stored, including one contaminated with radioactive material.",
+    "quote": "If a drug product has been subjected to improper storage, including contamination with radioactive material, the product must not be salvaged and returned to the marketplace",
+    "clause_number": "Q3.1",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "improper storage or radioactive contamination"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-returned-salvaged.html:Q3#3",
+   "unit": "Q3",
+   "hash": "e219d462808c1cd5",
+   "item": {
+    "statement": "Do not use or salvage contaminated drug components and packaging materials to manufacture drug products.",
+    "quote": "Similarly, contaminated drug components and packaging materials should not be used or salvaged to manufacture drug products.",
+    "clause_number": "Q3.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-returned-salvaged.html:Q3#4",
+   "unit": "Q3",
+   "hash": "01928ad8fe065493",
+   "item": {
+    "statement": "Know the origin and complete supply chain of each drug product, component and packaging material so that possible contamination, for example from an accidental release of radioactivity, can be assessed.",
+    "quote": "It is important for manufacturers to know the origin and complete supply chain of a drug product, component, or packaging to better enable an assessment for possible contamination arising from, for example, the accidental release of radioactivity.",
+    "clause_number": "Q3.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-returned-salvaged.html:Q3#5",
+   "unit": "Q3",
+   "hash": "1a1b51266cd51fa9",
+   "item": {
+    "statement": "Finished drug manufacturers must ensure their products comply with FDA regulations, including assurance that components are of appropriate quality.",
+    "quote": "Manufacturers of finished drugs must ensure that their products comply with FDA regulations, which includes assurance that the components are of appropriate quality",
+    "clause_number": "Q3.7",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-returned-salvaged.html:Q3#6",
+   "unit": "Q3",
+   "hash": "42e607e87ef9b4df",
+   "item": {
+    "statement": "Manufacturers of drug components must ensure the quality of their material.",
+    "quote": "In addition, manufacturers of drug components and primary containers must also ensure the quality of their material.",
+    "clause_number": "Q3.7",
+    "strength": "mandatory",
+    "plant_types": [
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-returned-salvaged.html:Q3#7",
+   "unit": "Q3",
+   "hash": "a88b48eb6577285f",
+   "item": {
+    "statement": "Where drugs may have been exposed to radioactive contaminants, be extra vigilant and take enhanced measures to ensure their quality and safety.",
+    "quote": "FDA expects drug manufacturers and distributors to be extra vigilant and to take enhanced measures to ensure the quality and safety of their drugs that may have been exposed to radioactive contaminants.",
+    "clause_number": "Q3.7",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "possible exposure to radioactive contaminants"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-returned-salvaged.html:Q3#8",
+   "unit": "Q3",
+   "hash": "9e036314ec381d61",
+   "item": {
+    "statement": "Measures may be taken to prevent buying at-risk materials and to increase testing of incoming components and finished products before final release.",
+    "quote": "It may be appropriate for a firm to undertake measures to prevent purchase of at-risk materials as well as to increase testing of incoming components and finished products before final release.",
+    "clause_number": "Q3.7",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  }
+ ]
+}

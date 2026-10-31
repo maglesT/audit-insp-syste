@@ -1,0 +1,234 @@
+{
+ "role": "a",
+ "instructions": "You are an auditor checking one checklist item against the FDA web page paragraph it claims to come from. You get\nthe unit's paragraphs (reference and exact text of the page; \"context\" entries are headings) and the item. Start from the ITEM:\nread it, then find in the cited paragraph what it covers.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the lead-in above a list\nitem (the paragraph ending \":\" above it). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph expects what the statement asks for (an instruction\n  to the investigator, \"Determine whether the firm validated ...\", expects the firm to have that practice), the statement\n  adds nothing and omits nothing of that obligation, the strength (a legal requirement: shall/must/required = mandatory;\n  should, FDA expects/recommends, an inspection point = recommended; may/acceptable = optional; a list item takes\n  its lead-in's) matches, and the text applies to every listed plant\n  type (INJ = sterile injectables: text limited to non-sterile products does not apply to\n  INJ; text limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences saying what you checked for THIS item, in this item's own words: name the\n  condition, number, list or scope you compared with the text (e.g. \"the 30-day limit and 'each lot' are both in\n  the statement\", \"the list of components, containers and closures is complete\", \"drops the lead-in's 'for\n  sterile products'\"). Write each reason fresh for its item: a reason that would fit any item (\"quote exact,\n  strength matches, nothing added or omitted\") or that repeats another answer's reason is not an answer, and the\n  item then counts as unchecked.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+ "units": [
+  {
+   "unit": "Q17",
+   "paragraphs": [
+    {
+     "ref": "Q17",
+     "text": "Is it ever appropriate to perform a “trial injection” of samples? No. FDA has observed at some drug manufacturers the practice of a trial injection where a sample of a lot is injected into the chromatographic system with the intention of obtaining an unofficial result (e.g., passing or failing). This is in contrast to the appropriate practice where an injection of a standard is performed with the sole intention of determining if the chromatographic system is fit for purpose. The injection of trial samples is not acceptable, in part, because all data from analysis of product samples must be retained and reviewed (21 CFR 211.22, 211.165, 211.192, and 211.194). Furthermore, uncertainty about system performance may also suggest a potential insufficiency of the method’s design, validation status, analyst training, equipment maintenance, or other fundamental problem(s) in the laboratory that should be promptly corrected."
+    },
+    {
+     "ref": "Q17.1",
+     "text": "Column conditioning does not involve injecting a sample from a lot and is not considered a trial injection. When its use is scientifically justified, column conditioning should be fully described in the method validation package as to the conditions needed to make the measurement (i.e., based on data from the method validation) and should be clearly defined in an approved and appropriate procedure. Only validated test methods that demonstrate accuracy, sensitivity, specificity, and reproducibility may be used to test drugs (21 CFR 211.165(e)). Consistent and unambiguous injection nomenclature should be used, and all data from the column conditioning, including audit trail data, should be maintained and subject to review."
+    },
+    {
+     "ref": "Q17.2",
+     "text": "Therefore, FDA considers it a violative practice to perform a trial injection (including under the guise of column conditioning). FDA also considers it a violative practice to use an actual sample in test, prep, or equilibration runs as a means of disguising testing into compliance."
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q17#3",
+   "unit": "Q17",
+   "hash": "451c90c870d3be64",
+   "item": {
+    "statement": "Promptly correct fundamental laboratory problems that uncertainty about system performance may point to, such as weaknesses in method design, validation status, analyst training or equipment maintenance.",
+    "quote": "Furthermore, uncertainty about system performance may also suggest a potential insufficiency of the method’s design, validation status, analyst training, equipment maintenance, or other fundamental problem(s) in the laboratory that should be promptly corrected.",
+    "clause_number": "Q17",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "uncertainty about system performance"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q17#4",
+   "unit": "Q17",
+   "hash": "f77d5758129f4fcf",
+   "item": {
+    "statement": "Where column conditioning is scientifically justified, fully describe it, including the conditions needed for the measurement based on method validation data, in the method validation package, and define it clearly in an approved and appropriate procedure.",
+    "quote": "When its use is scientifically justified, column conditioning should be fully described in the method validation package as to the conditions needed to make the measurement (i.e., based on data from the method validation) and should be clearly defined in an approved and appropriate procedure.",
+    "clause_number": "Q17.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "column conditioning scientifically justified"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q17#5",
+   "unit": "Q17",
+   "hash": "90046bb5f3248887",
+   "item": {
+    "statement": "Test drugs only with validated test methods that demonstrate accuracy, sensitivity, specificity and reproducibility.",
+    "quote": "Only validated test methods that demonstrate accuracy, sensitivity, specificity, and reproducibility may be used to test drugs (21 CFR 211.165(e)).",
+    "clause_number": "Q17.1",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q17#6",
+   "unit": "Q17",
+   "hash": "66e3ba628a6182f9",
+   "item": {
+    "statement": "Use consistent and unambiguous injection naming in chromatographic runs.",
+    "quote": "Consistent and unambiguous injection nomenclature should be used",
+    "clause_number": "Q17.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q17#7",
+   "unit": "Q17",
+   "hash": "c7301da418477ea0",
+   "item": {
+    "statement": "Maintain all column conditioning data, including audit trail data, and subject it to review.",
+    "quote": "all data from the column conditioning, including audit trail data, should be maintained and subject to review.",
+    "clause_number": "Q17.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q17#8",
+   "unit": "Q17",
+   "hash": "43f0e4260f5945db",
+   "item": {
+    "statement": "Do not perform trial injections of samples, including under the guise of column conditioning.",
+    "quote": "Therefore, FDA considers it a violative practice to perform a trial injection (including under the guise of column conditioning).",
+    "clause_number": "Q17.2",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q17#9",
+   "unit": "Q17",
+   "hash": "007cedd619feedcf",
+   "item": {
+    "statement": "Do not use an actual sample in test, prep or equilibration runs as a way of disguising testing into compliance.",
+    "quote": "FDA also considers it a violative practice to use an actual sample in test, prep, or equilibration runs as a means of disguising testing into compliance.",
+    "clause_number": "Q17.2",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  }
+ ]
+}

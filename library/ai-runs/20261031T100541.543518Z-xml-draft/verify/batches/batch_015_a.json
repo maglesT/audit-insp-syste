@@ -1,0 +1,577 @@
+{
+ "role": "a",
+ "instructions": "You are an auditor checking one checklist item against the US regulation paragraph it claims to come from. You get\nthe section's paragraphs (reference and exact text, from the official eCFR XML) and the item. Start from the ITEM:\nread it, then find in the cited paragraph what it covers.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the parent paragraph's\nlead-in (including a qualifier such as \"as are necessary to prevent contamination or mixups\"). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph requires what the statement asks for, the statement\n  adds nothing and omits nothing of that obligation, the strength (shall/must = mandatory, should = recommended,\n  may = optional; a sub-paragraph takes its lead-in's) matches, and the regulation applies to every listed plant\n  type (INJ = sterile injectables: a paragraph limited to products not required to be sterile does not apply to\n  INJ; one limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences saying what you checked for THIS item, in this item's own words: name the\n  condition, number, list or scope you compared with the text (e.g. \"the 30-day limit and 'each lot' are both in\n  the statement\", \"the list of components, containers and closures is complete\", \"drops the lead-in's 'for\n  sterile products'\"). Write each reason fresh for its item: a reason that would fit any item (\"quote exact,\n  strength matches, nothing added or omitted\") or that repeats another answer's reason is not an answer, and the\n  item then counts as unchecked.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "sections": [
+  {
+   "section": "211.160",
+   "paragraphs": [
+    {
+     "ref": "211.160",
+     "text": "§ 211.160 General requirements."
+    },
+    {
+     "ref": "211.160(a)",
+     "text": "(a) The establishment of any specifications, standards, sampling plans, test procedures, or other laboratory control mechanisms required by this subpart, including any change in such specifications, standards, sampling plans, test procedures, or other laboratory control mechanisms, shall be drafted by the appropriate organizational unit and reviewed and approved by the quality control unit. The requirements in this subpart shall be followed and shall be documented at the time of performance. Any deviation from the written specifications, standards, sampling plans, test procedures, or other laboratory control mechanisms shall be recorded and justified."
+    },
+    {
+     "ref": "211.160(b)",
+     "text": "(b) Laboratory controls shall include the establishment of scientifically sound and appropriate specifications, standards, sampling plans, and test procedures designed to assure that components, drug product containers, closures, in-process materials, labeling, and drug products conform to appropriate standards of identity, strength, quality, and purity. Laboratory controls shall include:"
+    },
+    {
+     "ref": "211.160(b)(1)",
+     "text": "(1) Determination of conformity to applicable written specifications for the acceptance of each lot within each shipment of components, drug product containers, closures, and labeling used in the manufacture, processing, packing, or holding of drug products. The specifications shall include a description of the sampling and testing procedures used. Samples shall be representative and adequately identified. Such procedures shall also require appropriate retesting of any component, drug product container, or closure that is subject to deterioration."
+    },
+    {
+     "ref": "211.160(b)(2)",
+     "text": "(2) Determination of conformance to written specifications and a description of sampling and testing procedures for in-process materials. Such samples shall be representative and properly identified."
+    },
+    {
+     "ref": "211.160(b)(3)",
+     "text": "(3) Determination of conformance to written descriptions of sampling procedures and appropriate specifications for drug products. Such samples shall be representative and properly identified."
+    },
+    {
+     "ref": "211.160(b)(4)",
+     "text": "(4) The calibration of instruments, apparatus, gauges, and recording devices at suitable intervals in accordance with an established written program containing specific directions, schedules, limits for accuracy and precision, and provisions for remedial action in the event accuracy and/or precision limits are not met. Instruments, apparatus, gauges, and recording devices not meeting established specifications shall not be used."
+    }
+   ]
+  },
+  {
+   "section": "211.165",
+   "paragraphs": [
+    {
+     "ref": "211.165",
+     "text": "§ 211.165 Testing and release for distribution."
+    },
+    {
+     "ref": "211.165(a)",
+     "text": "(a) For each batch of drug product, there shall be appropriate laboratory determination of satisfactory conformance to final specifications for the drug product, including the identity and strength of each active ingredient, prior to release. Where sterility and/or pyrogen testing are conducted on specific batches of shortlived radiopharmaceuticals, such batches may be released prior to completion of sterility and/or pyrogen testing, provided such testing is completed as soon as possible."
+    },
+    {
+     "ref": "211.165(b)",
+     "text": "(b) There shall be appropriate laboratory testing, as necessary, of each batch of drug product required to be free of objectionable microorganisms."
+    },
+    {
+     "ref": "211.165(c)",
+     "text": "(c) Any sampling and testing plans shall be described in written procedures that shall include the method of sampling and the number of units per batch to be tested; such written procedure shall be followed."
+    },
+    {
+     "ref": "211.165(d)",
+     "text": "(d) Acceptance criteria for the sampling and testing conducted by the quality control unit shall be adequate to assure that batches of drug products meet each appropriate specification and appropriate statistical quality control criteria as a condition for their approval and release. The statistical quality control criteria shall include appropriate acceptance levels and/or appropriate rejection levels."
+    },
+    {
+     "ref": "211.165(e)",
+     "text": "(e) The accuracy, sensitivity, specificity, and reproducibility of test methods employed by the firm shall be established and documented. Such validation and documentation may be accomplished in accordance with § 211.194(a)(2)."
+    },
+    {
+     "ref": "211.165(f)",
+     "text": "(f) Drug products failing to meet established standards or specifications and any other relevant quality control criteria shall be rejected. Reprocessing may be performed. Prior to acceptance and use, reprocessed material must meet appropriate standards, specifications, and any other relevant criteria."
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.160#1",
+   "section": "211.160",
+   "hash": "c5978fd6ba59761d",
+   "item": {
+    "statement": "Have the appropriate organizational unit draft any laboratory specifications, standards, sampling plans, test procedures or other laboratory control mechanisms, and any change to them, and have the quality control unit review and approve them.",
+    "quote": "The establishment of any specifications, standards, sampling plans, test procedures, or other laboratory control mechanisms required by this subpart, including any change in such specifications, standards, sampling plans, test procedures, or other laboratory control mechanisms, shall be drafted by the appropriate organizational unit and reviewed and approved by the quality control unit.",
+    "clause_number": "211.160(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.160#2",
+   "section": "211.160",
+   "hash": "be5cd4da0cfa5ee9",
+   "item": {
+    "statement": "Follow the laboratory control requirements and document them at the time they are performed.",
+    "quote": "The requirements in this subpart shall be followed and shall be documented at the time of performance.",
+    "clause_number": "211.160(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.160#3",
+   "section": "211.160",
+   "hash": "c66f590d353162df",
+   "item": {
+    "statement": "Record and justify any deviation from the written laboratory specifications, standards, sampling plans, test procedures or other laboratory control mechanisms.",
+    "quote": "Any deviation from the written specifications, standards, sampling plans, test procedures, or other laboratory control mechanisms shall be recorded and justified.",
+    "clause_number": "211.160(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.160#4",
+   "section": "211.160",
+   "hash": "f90bc696d7cfb476",
+   "item": {
+    "statement": "Laboratory controls establish scientifically sound and appropriate specifications, standards, sampling plans and test procedures designed to assure that components, drug product containers, closures, in-process materials, labeling and drug products conform to appropriate standards of identity, strength, quality and purity.",
+    "quote": "Laboratory controls shall include the establishment of scientifically sound and appropriate specifications, standards, sampling plans, and test procedures designed to assure that components, drug product containers, closures, in-process materials, labeling, and drug products conform to appropriate standards of identity, strength, quality, and purity.",
+    "clause_number": "211.160(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.160#5",
+   "section": "211.160",
+   "hash": "9eeb301e43b0b1de",
+   "item": {
+    "statement": "As part of laboratory controls, determine conformity to the applicable written acceptance specifications for each lot within each shipment of components, drug product containers, closures and labeling used in manufacturing, processing, packing or holding drug products.",
+    "quote": "Determination of conformity to applicable written specifications for the acceptance of each lot within each shipment of components, drug product containers, closures, and labeling used in the manufacture, processing, packing, or holding of drug products.",
+    "clause_number": "211.160(b)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.160#6",
+   "section": "211.160",
+   "hash": "ef55f7ad2a555b87",
+   "item": {
+    "statement": "As part of laboratory controls, make sure the acceptance specifications for components, drug product containers, closures and labeling describe the sampling and testing procedures used.",
+    "quote": "The specifications shall include a description of the sampling and testing procedures used.",
+    "clause_number": "211.160(b)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.160#7",
+   "section": "211.160",
+   "hash": "345c0c687bde4447",
+   "item": {
+    "statement": "As part of laboratory controls, make sure samples of components, drug product containers, closures and labeling are representative and adequately identified.",
+    "quote": "Samples shall be representative and adequately identified.",
+    "clause_number": "211.160(b)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.160#8",
+   "section": "211.160",
+   "hash": "692b8386a13fb47d",
+   "item": {
+    "statement": "As part of laboratory controls, make sure the procedures require appropriate retesting of any component, drug product container or closure that is subject to deterioration.",
+    "quote": "Such procedures shall also require appropriate retesting of any component, drug product container, or closure that is subject to deterioration.",
+    "clause_number": "211.160(b)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "material subject to deterioration"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.160#9",
+   "section": "211.160",
+   "hash": "c880d687be1f3bdd",
+   "item": {
+    "statement": "As part of laboratory controls, determine conformance of in-process materials to written specifications and describe the sampling and testing procedures for them.",
+    "quote": "Determination of conformance to written specifications and a description of sampling and testing procedures for in-process materials.",
+    "clause_number": "211.160(b)(2)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.160#10",
+   "section": "211.160",
+   "hash": "75a4eebf9a38d5c2",
+   "item": {
+    "statement": "As part of laboratory controls, make sure in-process material samples are representative and properly identified.",
+    "quote": "Such samples shall be representative and properly identified.",
+    "clause_number": "211.160(b)(2)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.160#11",
+   "section": "211.160",
+   "hash": "862951495f883521",
+   "item": {
+    "statement": "As part of laboratory controls, determine conformance of drug products to written descriptions of sampling procedures and appropriate specifications.",
+    "quote": "Determination of conformance to written descriptions of sampling procedures and appropriate specifications for drug products.",
+    "clause_number": "211.160(b)(3)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.160#12",
+   "section": "211.160",
+   "hash": "ac00b911aa4717dc",
+   "item": {
+    "statement": "As part of laboratory controls, make sure drug product samples are representative and properly identified.",
+    "quote": "Such samples shall be representative and properly identified.",
+    "clause_number": "211.160(b)(3)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.160#13",
+   "section": "211.160",
+   "hash": "333fa6d29a1b8053",
+   "item": {
+    "statement": "As part of laboratory controls, calibrate instruments, apparatus, gauges and recording devices at suitable intervals under an established written program that contains specific directions, schedules, limits for accuracy and precision, and provisions for remedial action if accuracy or precision limits are not met.",
+    "quote": "The calibration of instruments, apparatus, gauges, and recording devices at suitable intervals in accordance with an established written program containing specific directions, schedules, limits for accuracy and precision, and provisions for remedial action in the event accuracy and/or precision limits are not met.",
+    "clause_number": "211.160(b)(4)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.160#14",
+   "section": "211.160",
+   "hash": "9a04c8d1cb2b47c8",
+   "item": {
+    "statement": "As part of laboratory controls, do not use instruments, apparatus, gauges or recording devices that do not meet established specifications.",
+    "quote": "Instruments, apparatus, gauges, and recording devices not meeting established specifications shall not be used.",
+    "clause_number": "211.160(b)(4)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "does not meet established specifications"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.165#1",
+   "section": "211.165",
+   "hash": "f946dcfcd8789924",
+   "item": {
+    "statement": "Before release, carry out appropriate laboratory determination for each drug product batch that it satisfactorily conforms to final specifications, including the identity and strength of each active ingredient.",
+    "quote": "For each batch of drug product, there shall be appropriate laboratory determination of satisfactory conformance to final specifications for the drug product, including the identity and strength of each active ingredient, prior to release.",
+    "clause_number": "211.165(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.165#2",
+   "section": "211.165",
+   "hash": "46b68dbbf0876edf",
+   "item": {
+    "statement": "Where sterility and/or pyrogen testing is done on specific batches of short-lived radiopharmaceuticals, those batches may be released before that testing is finished, provided the testing is completed as soon as possible.",
+    "quote": "Where sterility and/or pyrogen testing are conducted on specific batches of shortlived radiopharmaceuticals, such batches may be released prior to completion of sterility and/or pyrogen testing, provided such testing is completed as soon as possible.",
+    "clause_number": "211.165(a)",
+    "strength": "optional",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "short-lived radiopharmaceuticals; testing completed as soon as possible"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.165#3",
+   "section": "211.165",
+   "hash": "c81168e4f61dc493",
+   "item": {
+    "statement": "Carry out appropriate laboratory testing, as necessary, of each batch of drug product that must be free of objectionable microorganisms.",
+    "quote": "There shall be appropriate laboratory testing, as necessary, of each batch of drug product required to be free of objectionable microorganisms.",
+    "clause_number": "211.165(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "product required to be free of objectionable microorganisms"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.165#4",
+   "section": "211.165",
+   "hash": "8f53d6faaf954755",
+   "item": {
+    "statement": "Describe any sampling and testing plans in written procedures that state the sampling method and the number of units per batch to be tested.",
+    "quote": "Any sampling and testing plans shall be described in written procedures that shall include the method of sampling and the number of units per batch to be tested",
+    "clause_number": "211.165(c)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.165#5",
+   "section": "211.165",
+   "hash": "20afc5c113a74ef3",
+   "item": {
+    "statement": "Follow the written sampling and testing procedures.",
+    "quote": "such written procedure shall be followed.",
+    "clause_number": "211.165(c)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.165#6",
+   "section": "211.165",
+   "hash": "8453a812527bbeea",
+   "item": {
+    "statement": "Set acceptance criteria for quality control unit sampling and testing that are adequate to assure batches meet each appropriate specification and appropriate statistical quality control criteria as a condition of approval and release.",
+    "quote": "Acceptance criteria for the sampling and testing conducted by the quality control unit shall be adequate to assure that batches of drug products meet each appropriate specification and appropriate statistical quality control criteria as a condition for their approval and release.",
+    "clause_number": "211.165(d)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  }
+ ]
+}

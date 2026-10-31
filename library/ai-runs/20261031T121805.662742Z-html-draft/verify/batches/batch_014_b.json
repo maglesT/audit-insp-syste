@@ -1,0 +1,655 @@
+{
+ "role": "b",
+ "instructions": "You are a second, independent auditor. Check one checklist item against the FDA web page paragraph it claims to come from. You get\nthe unit's paragraphs (reference and exact text of the page; \"context\" entries are headings) and the item. Start from the TEXT:\nread the cited paragraph, the paragraphs its quote runs into, and its lead-in fully, then compare the item.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the lead-in above a list\nitem (the paragraph ending \":\" above it). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph expects what the statement asks for (an instruction\n  to the investigator, \"Determine whether the firm validated ...\", expects the firm to have that practice), the statement\n  adds nothing and omits nothing of that obligation, the strength (a legal requirement: shall/must/required = mandatory;\n  should, FDA expects/recommends, an inspection point = recommended; may/acceptable = optional; a list item takes\n  its lead-in's) matches, and the text applies to every listed plant\n  type (INJ = sterile injectables: text limited to non-sterile products does not apply to\n  INJ; text limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences saying what you checked for THIS item, in this item's own words: name the\n  condition, number, list or scope you compared with the text (e.g. \"the 30-day limit and 'each lot' are both in\n  the statement\", \"the list of components, containers and closures is complete\", \"drops the lead-in's 'for\n  sterile products'\"). Write each reason fresh for its item: a reason that would fit any item (\"quote exact,\n  strength matches, nothing added or omitted\") or that repeats another answer's reason is not an answer, and the\n  item then counts as unchecked.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+ "units": [
+  {
+   "unit": "Q13",
+   "paragraphs": [
+    {
+     "ref": "Q13",
+     "text": "How can manufacturers assess and address the risk of microbiological contamination of topical antiseptics?"
+    },
+    {
+     "ref": "Q13.1",
+     "text": "Because there are potentially many different root causes of product contamination by microorganisms, it is imperative that manufacturers perform a manufacturing risk assessment to understand manufacturing failure modes and implement prevention measures."
+    },
+    {
+     "ref": "Q13.2",
+     "text": "In addition, any risk assessment approach should be informed by an understanding of the microbial contamination vulnerabilities of the concerned product.>For example, some product considerations for manufacturers include, but are not limited to:"
+    },
+    {
+     "ref": "Q13.3",
+     "text": "Determine the types of microbes that might survive or thrive in your products. Provide additional controls and testing based on the output of the risk assessment to ensure product quality.",
+     "list_item": true
+    },
+    {
+     "ref": "Q13.4",
+     "text": "Ensure that your microbial recovery methods are capable of detecting the types of microbes that may affect product quality.",
+     "list_item": true
+    },
+    {
+     "ref": "Q13.5",
+     "text": "Evaluate risk of contamination from components, including during component production, storage, or due to the intrinsic risk from source materials. Consider all possible sources of microbial contamination, including the following:",
+     "list_item": true
+    },
+    {
+     "ref": "Q13.6",
+     "text": "Components or products stored in open bins can be at risk for contamination by spore-forming microbes, such as Bacillus cereus, as well as by Serratia species and other worrisome airborne microbes (see the FDA news release and Morbidity and Mortality Weekly Report, referenced below). Manufacturing areas exposed to windy or poor HVAC conditions may increase the potential for this environmental contamination risk.",
+     "list_item": true
+    },
+    {
+     "ref": "Q13.7",
+     "text": "Some materials, especially from natural sources, may have high or objectionable intrinsic bioburden.",
+     "list_item": true
+    },
+    {
+     "ref": "Q13.8",
+     "text": "Water quality can pose a significant risk, as most antiseptics include water as a key ingredient. Contaminated purified water has been the root cause of multiple recalls of antiseptics, including instances of antiseptics contaminated with Burkholderia (previously Pseudomonas) cepacia, an opportunistic pathogen.",
+     "list_item": true
+    },
+    {
+     "ref": "Q13.9",
+     "text": "Unsanitary practices or sources.",
+     "list_item": true
+    },
+    {
+     "ref": "Q13.10",
+     "text": "When manufacturing in areas with high humidity, molds can be of special concern.",
+     "list_item": true
+    }
+   ]
+  },
+  {
+   "unit": "Q14",
+   "paragraphs": [
+    {
+     "ref": "Q14",
+     "text": "Can Leptospira species penetrate sterilizing-grade filters? If so, what should manufacturers keep in mind in their ongoing lifecycle risk management efforts to ensure microbial control?"
+    },
+    {
+     "ref": "Q14.1",
+     "text": "FDA is aware of a report of Leptospira licerasiae contamination in cell cultures (see Chen, Bergenvin, et al. 2012). There is no indication that this bacterium ultimately contaminated either the finished drug substance or drug product. This bacterium has been found to pass through 0.1 µm pore size rated sterilizing-grade membrane filters. While this specific species was the identified contaminant in this case, other Leptospira species also are capable of passing through 0.1 µm pore size rated filters (see Faine 1982). Compendial microbiological test methods typically used in association with upstream biotechnology and pharmaceutical production are not capable of detecting this type of bacteria. Whether this apparently rare contamination risk may be more widespread is unknown, and we are sharing this information so that manufacturers can consider whether this hazard may be relevant to their operations."
+    },
+    {
+     "ref": "Q14.2",
+     "text": "Leptospira are Gram-negative aerobic spirochetes that are flexible, highly motile, and spiral-shaped with internal flagella. The bacteria measure 1μm in diameter and 10-20 μm in length. Leptospira are obligate aerobes that use oxygen as the electron receptor and long-chain fatty acids as a major source of energy. While some of the Leptospira are harmless fresh-water saprophytes, other species are pathogenic and can cause leptosporosis, a significant disease in humans and animals (Ricaldi, Fouts, et al. 2012; Matthias, Ricaldi, et al. 2008; Bharti, Nally, et al. 2003). Based on current information, Leptospira contamination does not appear to occur frequently, and purification steps that follow cell culture in a typical biotechnology operation would be expected to prevent carryover to the finished drug substance.Testing of bulk drug substances produced in the reported cases did not detect the Leptospira species, and no evidence of deleterious effects on in-process product were observed in the known case study. However, we are providing this communication to alert manufacturers that these types of bacteria can potentially:"
+    },
+    {
+     "ref": "Q14.3",
+     "text": "Penetrate sterilizing-grade membrane filters",
+     "list_item": true
+    },
+    {
+     "ref": "Q14.4",
+     "text": "Be present in the manufacturing site environment",
+     "list_item": true
+    },
+    {
+     "ref": "Q14.5",
+     "text": "Impact in-process production (e.g., production yields, impurity levels, process performance)",
+     "list_item": true
+    },
+    {
+     "ref": "Q14.6",
+     "text": "Go undetected due to the limitations of current compendial bioburden tests in detecting this microbial genus",
+     "list_item": true
+    },
+    {
+     "ref": "Q14.7",
+     "text": "As a general principle, manufacturers should use sound risk management and be aware of unusual microbiota reported in the literature that may impact their manufacturing processes (e.g., cell culture biotechnology, conventional sterile drug manufacturing). Manufacturers should assess their operations, be aware of potential risks, and apply appropriate risk management based on an understanding of possible or emerging contamination risks (see section 18.3 in ICH guidance for industry Q7 Good Manufacturing Practice Guidance for Active Pharmaceutical Ingredients). As appropriate, preventive measures should be implemented during the product and process lifecycle. To illustrate, if leptospiral contamination is considered possible, or has occurred, risk mitigation procedures and practices for this microorganism should include at least the following:"
+    },
+    {
+     "ref": "Q14.8",
+     "text": "Review of available published articles from the scientific literature and technical reports by related industry organizations that may provide further understanding on how to mitigate this contamination hazard.",
+     "list_item": true
+    },
+    {
+     "ref": "Q14.9",
+     "text": "Use of molecular or nonconventional microbial monitoring methods at appropriate intervals to detect microbial flora that may exist in processing steps or in the immediate environment, but are not readily detected by current routine methods. Such expanded testing should be used to modify the strategy (e.g., timing, frequency, types of tests) of detection and control in the event of newly identified risk posed by the viable, but not easily cultured, microorganism."
+    },
+    {
+     "ref": "Q14.10",
+     "text": "Examples include:"
+    },
+    {
+     "ref": "Q14.11",
+     "text": "Use of specialized media such as Ellinghausen McCullough Johnson Harris (EMJH) medium (Ellinghausen and McCullough 1965) or other suitable media (Rule and Alexander 1986). It should be noted that these bacteria typically grow very slowly.",
+     "list_item": true
+    },
+    {
+     "ref": "Q14.12",
+     "text": "Use of validated polymerase chain reaction (PCR) methods (e.g., as an investigative tool) for rapid screening and detection of spirochete bacteria.",
+     "list_item": true
+    },
+    {
+     "ref": "Q14.13",
+     "text": "Consideration of special stain techniques or other means to identify the presence of Leptospira (Frank and Kohn 1973).",
+     "list_item": true
+    },
+    {
+     "ref": "Q14.14",
+     "text": "Use of conventional approaches. Firms should continue to properly employ basic, standard microbiology laboratory practices to detect contamination. For example, the laboratory should ensure that microscopic examination is part of its routine cell culture process control program, as it provides an important means of detecting microbial contaminants that may not readily grow on conventional media.",
+     "list_item": true
+    },
+    {
+     "ref": "Q14.15",
+     "text": "Implementing such quality risk-management measures into the initial design (i.e., preventive actions) and promptly implementing an appropriate corrective action plan in response to newly identified contamination sources, throughout the life cycle of the product.",
+     "list_item": true
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q13#2",
+   "unit": "Q13",
+   "hash": "c9587c3c350f0eef",
+   "item": {
+    "statement": "Base the microbial contamination risk assessment on an understanding of the contamination vulnerabilities of the product concerned.",
+    "quote": "In addition, any risk assessment approach should be informed by an understanding of the microbial contamination vulnerabilities of the concerned product.",
+    "clause_number": "Q13.2",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q13#3",
+   "unit": "Q13",
+   "hash": "dc4ac3ff6ea0f92d",
+   "item": {
+    "statement": "As part of the microbial contamination risk assessment, determine the types of microbes that might survive or thrive in the products.",
+    "quote": "Determine the types of microbes that might survive or thrive in your products.",
+    "clause_number": "Q13.3",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q13#4",
+   "unit": "Q13",
+   "hash": "491acac2f520679b",
+   "item": {
+    "statement": "Provide additional controls and testing based on the output of the microbial contamination risk assessment to ensure product quality.",
+    "quote": "Provide additional controls and testing based on the output of the risk assessment to ensure product quality.",
+    "clause_number": "Q13.3",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q13#5",
+   "unit": "Q13",
+   "hash": "59882d870a0b904d",
+   "item": {
+    "statement": "Ensure microbial recovery methods can detect the types of microbes that may affect product quality.",
+    "quote": "Ensure that your microbial recovery methods are capable of detecting the types of microbes that may affect product quality.",
+    "clause_number": "Q13.4",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q13#6",
+   "unit": "Q13",
+   "hash": "6029a2c5c6643f99",
+   "item": {
+    "statement": "As part of the microbial contamination risk assessment, evaluate the risk of contamination from components, including during component production and storage, and from the intrinsic risk of the source materials.",
+    "quote": "Evaluate risk of contamination from components, including during component production, storage, or due to the intrinsic risk from source materials.",
+    "clause_number": "Q13.5",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q13#7",
+   "unit": "Q13",
+   "hash": "b3714a66c6981bc9",
+   "item": {
+    "statement": "Consider all possible sources of microbial contamination in the risk assessment.",
+    "quote": "Consider all possible sources of microbial contamination, including the following:",
+    "clause_number": "Q13.5",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q13#8",
+   "unit": "Q13",
+   "hash": "6483bb9112bb8463",
+   "item": {
+    "statement": "When considering sources of microbial contamination, consider that components or products stored in open bins can be contaminated by spore-forming microbes (such as Bacillus cereus), by Serratia species and by other airborne microbes.",
+    "quote": "Components or products stored in open bins can be at risk for contamination by spore-forming microbes, such as Bacillus cereus, as well as by Serratia species and other worrisome airborne microbes",
+    "clause_number": "Q13.6",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q13#9",
+   "unit": "Q13",
+   "hash": "d710e9c00b70de68",
+   "item": {
+    "statement": "When considering sources of microbial contamination, consider that manufacturing areas exposed to windy or poor HVAC conditions may increase this environmental contamination risk.",
+    "quote": "Manufacturing areas exposed to windy or poor HVAC conditions may increase the potential for this environmental contamination risk.",
+    "clause_number": "Q13.6",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q13#10",
+   "unit": "Q13",
+   "hash": "a6071da7dfc09dba",
+   "item": {
+    "statement": "When considering sources of microbial contamination, consider that some materials, especially from natural sources, may have high or objectionable intrinsic bioburden.",
+    "quote": "Some materials, especially from natural sources, may have high or objectionable intrinsic bioburden.",
+    "clause_number": "Q13.7",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q13#11",
+   "unit": "Q13",
+   "hash": "a16107b0ab931681",
+   "item": {
+    "statement": "When considering sources of microbial contamination, consider water quality as a significant risk where water is a key ingredient, as in most antiseptics.",
+    "quote": "Water quality can pose a significant risk, as most antiseptics include water as a key ingredient.",
+    "clause_number": "Q13.8",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q13#12",
+   "unit": "Q13",
+   "hash": "4e61a072f9273a79",
+   "item": {
+    "statement": "When considering sources of microbial contamination, consider unsanitary practices or sources.",
+    "quote": "Unsanitary practices or sources.",
+    "clause_number": "Q13.9",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q13#13",
+   "unit": "Q13",
+   "hash": "437ad008f5d908ef",
+   "item": {
+    "statement": "When considering sources of microbial contamination in areas with high humidity, give special attention to molds.",
+    "quote": "When manufacturing in areas with high humidity, molds can be of special concern.",
+    "clause_number": "Q13.10",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "manufacturing in high-humidity areas"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q14#1",
+   "unit": "Q14",
+   "hash": "3537d41337b9fd96",
+   "item": {
+    "statement": "Use sound risk management and stay aware of unusual microbiota reported in the literature that may affect the manufacturing processes (for example cell culture biotechnology or conventional sterile drug manufacturing).",
+    "quote": "As a general principle, manufacturers should use sound risk management and be aware of unusual microbiota reported in the literature that may impact their manufacturing processes (e.g., cell culture biotechnology, conventional sterile drug manufacturing).",
+    "clause_number": "Q14.7",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q14#2",
+   "unit": "Q14",
+   "hash": "7fe3d9178f08177e",
+   "item": {
+    "statement": "Assess operations, be aware of potential risks and apply appropriate risk management based on an understanding of possible or emerging contamination risks.",
+    "quote": "Manufacturers should assess their operations, be aware of potential risks, and apply appropriate risk management based on an understanding of possible or emerging contamination risks",
+    "clause_number": "Q14.7",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q14#3",
+   "unit": "Q14",
+   "hash": "93956ab0030e47ae",
+   "item": {
+    "statement": "Implement preventive measures against contamination, as appropriate, during the product and process lifecycle.",
+    "quote": "As appropriate, preventive measures should be implemented during the product and process lifecycle.",
+    "clause_number": "Q14.7",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ",
+     "API"
+    ],
+    "condition": "as appropriate"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q14#4",
+   "unit": "Q14",
+   "hash": "7dd73b255ea2aa82",
+   "item": {
+    "statement": "If leptospiral contamination is considered possible or has occurred, include in risk mitigation a review of available published scientific literature and technical reports from related industry organizations that may help mitigate this hazard.",
+    "quote": "Review of available published articles from the scientific literature and technical reports by related industry organizations that may provide further understanding on how to mitigate this contamination hazard.",
+    "clause_number": "Q14.8",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ",
+     "API"
+    ],
+    "condition": "if leptospiral contamination is considered possible or has occurred"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q14#5",
+   "unit": "Q14",
+   "hash": "3c0e1ec73289e4b0",
+   "item": {
+    "statement": "If leptospiral contamination is considered possible or has occurred, include in risk mitigation the use, at appropriate intervals, of molecular or nonconventional microbial monitoring methods to detect microbial flora in processing steps or the immediate environment that current routine methods do not readily detect.",
+    "quote": "Use of molecular or nonconventional microbial monitoring methods at appropriate intervals to detect microbial flora that may exist in processing steps or in the immediate environment, but are not readily detected by current routine methods.",
+    "clause_number": "Q14.9",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ",
+     "API"
+    ],
+    "condition": "if leptospiral contamination is considered possible or has occurred"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q14#6",
+   "unit": "Q14",
+   "hash": "1247caf7c054ddb1",
+   "item": {
+    "statement": "Use the results of such expanded testing to modify the detection and control strategy (for example timing, frequency, types of tests) when a new risk is identified from a viable but not easily cultured microorganism.",
+    "quote": "Such expanded testing should be used to modify the strategy (e.g., timing, frequency, types of tests) of detection and control in the event of newly identified risk posed by the viable, but not easily cultured, microorganism.",
+    "clause_number": "Q14.9",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ",
+     "API"
+    ],
+    "condition": "newly identified risk from viable but not easily cultured microorganism"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q14#7",
+   "unit": "Q14",
+   "hash": "4153d0e1dd885f74",
+   "item": {
+    "statement": "Monitoring for Leptospira may use specialized media such as EMJH medium or other suitable media.",
+    "quote": "Use of specialized media such as Ellinghausen McCullough Johnson Harris (EMJH) medium (Ellinghausen and McCullough 1965) or other suitable media (Rule and Alexander 1986).",
+    "clause_number": "Q14.11",
+    "strength": "optional",
+    "plant_types": [
+     "INJ",
+     "API"
+    ],
+    "condition": "if leptospiral contamination is considered possible or has occurred"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q14#8",
+   "unit": "Q14",
+   "hash": "f1360979e7b73356",
+   "item": {
+    "statement": "Monitoring for spirochete bacteria may use validated polymerase chain reaction (PCR) methods for rapid screening and detection, for example as an investigative tool.",
+    "quote": "Use of validated polymerase chain reaction (PCR) methods (e.g., as an investigative tool) for rapid screening and detection of spirochete bacteria.",
+    "clause_number": "Q14.12",
+    "strength": "optional",
+    "plant_types": [
+     "INJ",
+     "API"
+    ],
+    "condition": "if leptospiral contamination is considered possible or has occurred"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  }
+ ]
+}

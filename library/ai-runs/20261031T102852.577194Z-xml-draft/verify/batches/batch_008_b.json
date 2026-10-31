@@ -1,0 +1,156 @@
+{
+ "role": "b",
+ "instructions": "You are a second, independent auditor. Check one checklist item against the US regulation paragraph it claims to come from. You get\nthe section's paragraphs (reference and exact text, from the official eCFR XML) and the item. Start from the TEXT:\nread the cited paragraph and its lead-in fully, then compare the item.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the parent paragraph's\nlead-in (including a qualifier such as \"as are necessary to prevent contamination or mixups\"). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph requires what the statement asks for, the statement\n  adds nothing and omits nothing of that obligation, the strength (shall/must = mandatory, should = recommended,\n  may = optional; a sub-paragraph takes its lead-in's) matches, and the regulation applies to every listed plant\n  type (INJ = sterile injectables: a paragraph limited to products not required to be sterile does not apply to\n  INJ; one limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences saying what you checked for THIS item, in this item's own words: name the\n  condition, number, list or scope you compared with the text (e.g. \"the 30-day limit and 'each lot' are both in\n  the statement\", \"the list of components, containers and closures is complete\", \"drops the lead-in's 'for\n  sterile products'\"). Write each reason fresh for its item: a reason that would fit any item (\"quote exact,\n  strength matches, nothing added or omitted\") or that repeats another answer's reason is not an answer, and the\n  item then counts as unchecked.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "sections": [
+  {
+   "section": "4.104",
+   "paragraphs": [
+    {
+     "ref": "4.104",
+     "text": "§ 4.104 How and where must you submit postmarketing safety reports for your combination product or constituent part?"
+    },
+    {
+     "ref": "4.104(a)",
+     "text": "(a) If you are a constituent part applicant, you must submit postmarketing safety reports in accordance with the regulations identified in § 4.102(b) that are applicable to your product based on its application type."
+    },
+    {
+     "ref": "4.104(b)",
+     "text": "(b) If you are a combination product applicant, you must submit postmarketing safety reports required under § 4.102 in the manner specified in the regulation applicable to the type of report, with the following exceptions:"
+    },
+    {
+     "ref": "4.104(b)(1)",
+     "text": "(1) You must submit the postmarketing safety reports identified in § 4.102(c)(1)(i) and (ii) in accordance with § 314.80(g) of this chapter if your combination product received marketing authorization under an NDA or ANDA or in accordance with § 600.80(h) of this chapter if your combination product received marketing authorization under a BLA."
+    },
+    {
+     "ref": "4.104(b)(2)",
+     "text": "(2) You must submit the postmarketing safety reports identified in § 4.102(c)(2)(ii) and (c)(3)(ii) in accordance with § 803.12(a) of this chapter if your combination product received marketing authorization under a device application."
+    }
+   ]
+  },
+  {
+   "section": "4.105",
+   "paragraphs": [
+    {
+     "ref": "4.105",
+     "text": "§ 4.105 What are the postmarketing safety reporting recordkeeping requirements for your combination product or constituent part?"
+    },
+    {
+     "ref": "4.105(a)",
+     "text": "(a) If you are a constituent part applicant:"
+    },
+    {
+     "ref": "4.105(a)(1)",
+     "text": "(1) You must maintain records in accordance with the recordkeeping requirements in the applicable regulation(s) described in § 4.102(b)."
+    },
+    {
+     "ref": "4.105(a)(2)",
+     "text": "(2) You must maintain records required under § 4.103(b) for the longest time period required for records under the postmarketing safety reporting regulations applicable to your product under § 4.102(b)."
+    },
+    {
+     "ref": "4.105(b)",
+     "text": "(b) If you are a combination product applicant, you must maintain records in accordance with the longest time period required for records under the regulations applicable to your product under § 4.102."
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "fda-cfr-21-part-4.xml:4.104#4",
+   "section": "4.104",
+   "hash": "2d83d6fc91ef8e50",
+   "item": {
+    "statement": "As a combination product applicant, submit drug and biological product fifteen-day reports in the manner specified for medical device reports if the combination product was authorized under a device application.",
+    "quote": "You must submit the postmarketing safety reports identified in § 4.102(c)(2)(ii) and (c)(3)(ii) in accordance with § 803.12(a) of this chapter if your combination product received marketing authorization under a device application.",
+    "clause_number": "4.104(b)(2)",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "combination product applicant; authorized under a device application"
+   },
+   "plant_scope": [
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-4.xml:4.105#1",
+   "section": "4.105",
+   "hash": "ac23ca5c431b0b54",
+   "item": {
+    "statement": "As a constituent part applicant, maintain records according to the recordkeeping requirements of the postmarketing safety reporting regulation(s) that apply to the product based on its application type.",
+    "quote": "You must maintain records in accordance with the recordkeeping requirements in the applicable regulation(s) described in § 4.102(b).",
+    "clause_number": "4.105(a)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "constituent part applicant"
+   },
+   "plant_scope": [
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-4.xml:4.105#2",
+   "section": "4.105",
+   "hash": "f8a58c00e85bfd62",
+   "item": {
+    "statement": "As a constituent part applicant, keep the records of information shared with other constituent part applicants for the longest retention period required under the postmarketing safety reporting regulations that apply to the product.",
+    "quote": "You must maintain records required under § 4.103(b) for the longest time period required for records under the postmarketing safety reporting regulations applicable to your product under § 4.102(b).",
+    "clause_number": "4.105(a)(2)",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "constituent part applicant"
+   },
+   "plant_scope": [
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-4.xml:4.105#3",
+   "section": "4.105",
+   "hash": "d538a0587fb594a5",
+   "item": {
+    "statement": "As a combination product applicant, keep postmarketing safety reporting records for the longest retention period required under the regulations that apply to the product.",
+    "quote": "If you are a combination product applicant, you must maintain records in accordance with the longest time period required for records under the regulations applicable to your product under § 4.102.",
+    "clause_number": "4.105(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "combination product applicant"
+   },
+   "plant_scope": [
+    "INJ"
+   ]
+  }
+ ]
+}

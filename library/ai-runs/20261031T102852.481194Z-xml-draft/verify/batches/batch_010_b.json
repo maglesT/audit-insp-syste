@@ -1,0 +1,840 @@
+{
+ "role": "b",
+ "instructions": "You are a second, independent auditor. Check one checklist item against the US regulation paragraph it claims to come from. You get\nthe section's paragraphs (reference and exact text, from the official eCFR XML) and the item. Start from the TEXT:\nread the cited paragraph and its lead-in fully, then compare the item.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the parent paragraph's\nlead-in (including a qualifier such as \"as are necessary to prevent contamination or mixups\"). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph requires what the statement asks for, the statement\n  adds nothing and omits nothing of that obligation, the strength (shall/must = mandatory, should = recommended,\n  may = optional; a sub-paragraph takes its lead-in's) matches, and the regulation applies to every listed plant\n  type (INJ = sterile injectables: a paragraph limited to products not required to be sterile does not apply to\n  INJ; one limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences saying what you checked for THIS item, in this item's own words: name the\n  condition, number, list or scope you compared with the text (e.g. \"the 30-day limit and 'each lot' are both in\n  the statement\", \"the list of components, containers and closures is complete\", \"drops the lead-in's 'for\n  sterile products'\"). Write each reason fresh for its item: a reason that would fit any item (\"quote exact,\n  strength matches, nothing added or omitted\") or that repeats another answer's reason is not an answer, and the\n  item then counts as unchecked.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "sections": [
+  {
+   "section": "207.9",
+   "paragraphs": [
+    {
+     "ref": "207.9",
+     "text": "§ 207.9 Who does this part cover?"
+    },
+    {
+     "ref": "207.9(a)",
+     "text": "(a) Except as provided in paragraph (b) of this section, this part applies to:"
+    },
+    {
+     "ref": "207.9(a)(1)",
+     "text": "(1) Domestic manufacturers, domestic repackers, domestic relabelers and domestic salvagers, not exempt under section 510(g) of the Federal Food, Drug, and Cosmetic Act or § 207.13, regardless of whether their drugs enter interstate commerce;"
+    },
+    {
+     "ref": "207.9(a)(2)",
+     "text": "(2) Foreign manufacturers, foreign repackers, foreign relabelers and foreign salvagers, not exempt under section 510(g) of the Federal Food, Drug, and Cosmetic Act or § 207.13;"
+    },
+    {
+     "ref": "207.9(a)(3)",
+     "text": "(3) Private label distributors, because they must have labeler codes;"
+    },
+    {
+     "ref": "207.9(a)(4)",
+     "text": "(4) Establishments engaged in the manufacture, repacking, relabeling, or salvaging of human drugs regulated under a biologics license application (BLA). These establishments are subject to the requirements of this part unless they are required to register and list such drugs as human blood or blood products under part 607 of this chapter and do not engage in activities that would otherwise require them to register and list under this part."
+    },
+    {
+     "ref": "207.9(a)(5)",
+     "text": "(5) Establishments engaged in the manufacture (as defined in § 1271.3(e) of this chapter) of human cells, tissues, and cellular and tissue-based products (HCT/Ps) (as defined in § 1271.3(d) of this chapter) that, under § 1271.20 of this chapter, are also drugs regulated under section 351 of the Public Health Service Act or section 505 of the Federal Food, Drug, and Cosmetic Act. These establishments must register and list those HCT/Ps following the procedures described in this part."
+    },
+    {
+     "ref": "207.9(b)",
+     "text": "(b) This part does not apply to owners and operators of establishments that collect or process human whole blood and blood products unless the establishment also manufactures, repacks, or relabels other drugs. For purposes of this paragraph (b), human whole blood and blood products do not include plasma derivatives such as albumin, Immune Globulin, Factor VIII and Factor IX, and recombinant versions of plasma derivatives or animal derived plasma derivatives, or bulk product substances such as fractionation intermediates or pastes. Establishments that collect or process human whole blood and blood products as well as establishments involved in testing of human whole blood and blood products must register and list under part 607 of this chapter. Manufacturers of licensed devices and manufacturers of licensed biological products used in a licensed device must register and list under part 607 of this chapter."
+    },
+    {
+     "ref": "207.9(c)",
+     "text": "(c) This part does not apply to establishments that solely manufacture, prepare, propagate, compound, assemble, or process medical devices. Registration and listing regulations for such establishments are codified in part 807 of this chapter."
+    }
+   ]
+  },
+  {
+   "section": "207.13",
+   "paragraphs": [
+    {
+     "ref": "207.13",
+     "text": "§ 207.13 Who is exempt from the registration and listing requirements? Except as provided in § 207.13(l), the following classes of persons are exempt from registration and drug listing in accordance with section 510(g) of the Federal Food, Drug, and Cosmetic Act or because FDA has determined, under section 510(g)(5) of the Federal Food, Drug, and Cosmetic Act, that their registration is not necessary for the protection of the public health. This exemption is limited to establishment registration and drug listing requirements and does not relieve a person from other statutory or regulatory obligations."
+    },
+    {
+     "ref": "207.13(a)",
+     "text": "(a)"
+    },
+    {
+     "ref": "207.13(a)(1)",
+     "text": "(1) Pharmacies that:"
+    },
+    {
+     "ref": "207.13(a)(1)(i)",
+     "text": "(i) Operate in conformance with all applicable local laws regulating the practice of pharmacy and medicine, including all applicable local laws regulating the dispensing of prescription drugs;"
+    },
+    {
+     "ref": "207.13(a)(1)(ii)",
+     "text": "(ii) Regularly engage in dispensing prescription drugs upon a valid prescription by practitioners licensed by law to administer these drugs to patients under their professional care; and"
+    },
+    {
+     "ref": "207.13(a)(1)(iii)",
+     "text": "(iii) Do not manufacture, repack, relabel, or salvage drugs other than in the regular course of their business of dispensing or selling drugs at retail."
+    },
+    {
+     "ref": "207.13(a)(2)",
+     "text": "(2) The exemption in this paragraph (a) is limited to pharmacies located in any State as defined in section 201(a)(1) of the Federal Food, Drug, and Cosmetic Act."
+    },
+    {
+     "ref": "207.13(b)",
+     "text": "(b)"
+    },
+    {
+     "ref": "207.13(b)(1)",
+     "text": "(1) Hospitals, clinics, other health care entities, and public health agencies that:"
+    },
+    {
+     "ref": "207.13(b)(1)(i)",
+     "text": "(i) Operate establishments in conformance with all applicable local laws regulating the practice of pharmacy and medicine, including all applicable local laws regulating the dispensing of prescription drugs;"
+    },
+    {
+     "ref": "207.13(b)(1)(ii)",
+     "text": "(ii) Regularly engage in dispensing prescription drugs, other than human whole blood or blood products, upon a valid order or prescription by practitioners licensed by law to administer these drugs to patients under their professional care; and"
+    },
+    {
+     "ref": "207.13(b)(1)(iii)",
+     "text": "(iii) Do not manufacture, repack, relabel, or salvage drugs other than in the regular course of their practice of pharmacy, including dispensing."
+    },
+    {
+     "ref": "207.13(b)(2)",
+     "text": "(2) The exemption in this paragraph (b) is limited to hospitals, clinics, other health care entities, and public health agencies located in any State as defined in section 201(a)(1) of the Federal Food, Drug, and Cosmetic Act."
+    },
+    {
+     "ref": "207.13(c)",
+     "text": "(c) Individuals or establishments under contract, agreement, or other arrangement with a registered establishment and engaged solely in recovering cells or tissues and sending the recovered cells or tissues to the registered establishment to become components of a biological product are exempt from registration and listing under this part unless FDA determines that drug establishment registration and listing is necessary for the protection of the public health."
+    },
+    {
+     "ref": "207.13(d)",
+     "text": "(d) Practitioners who are licensed by law to prescribe or administer drugs and who manufacture, repack, relabel, or salvage drugs solely for use in their professional practice."
+    },
+    {
+     "ref": "207.13(e)",
+     "text": "(e) Manufacturers, repackers, relabelers, or salvagers who manufacture, repack, relabel, or salvage drugs solely for use in research, teaching, or chemical analysis and not for sale."
+    },
+    {
+     "ref": "207.13(f)",
+     "text": "(f) Manufacturers, repackers, and relabelers of harmless inactive ingredients such as excipients, colorings, flavorings, emulsifiers, lubricants, preservatives, or solvents that become components of drugs."
+    },
+    {
+     "ref": "207.13(g)",
+     "text": "(g) Manufacturers, repackers, relabelers, or salvagers of Type B or Type C medicated feeds, except for persons who manufacture, repack, relabel, or salvage Type B or Type C medicated feeds starting from Category II, Type A medicated articles for which a medicated feed mill license approved under part 515 of this chapter is required. This exemption also does not apply to persons that would otherwise be required to register (such as manufacturers, repackers, relabelers, or salvagers of certain free-choice feeds, as defined in § 510.455 of this chapter, or certain liquid feeds, as defined in § 558.5 of this chapter, where the specifications and/or formulas are not published and a medicated feed mill license is required). All manufacturers, repackers, relabelers, or salvagers of Type B or Type C medicated feeds are exempt from listing."
+    },
+    {
+     "ref": "207.13(h)",
+     "text": "(h) Any manufacturer, repacker, relabeler, or salvager of a virus, serum, toxin, or analogous product intended for the treatment of domestic animals who holds an unsuspended and unrevoked license issued by the Secretary of Agriculture under the animal virus-serum-toxin law of March 4, 1913 (37 Stat. 832 (21 U.S.C. 151 et seq.)), provided that this exemption from registration applies only to the manufacturer, repacker, relabeler, or salvager of that animal virus, serum, toxin, or analogous product."
+    },
+    {
+     "ref": "207.13(i)",
+     "text": "(i) Carriers, in their receipt, carriage, holding, or delivery of drugs in the usual course of business as carriers."
+    },
+    {
+     "ref": "207.13(j)",
+     "text": "(j) Foreign establishments whose drugs are imported or offered for import into the United States must comply with the establishment registration and listing requirements of this part unless exempt under this section or unless:"
+    },
+    {
+     "ref": "207.13(j)(1)",
+     "text": "(1) Their drugs enter a foreign trade zone and are re-exported without having entered U.S. commerce, or"
+    },
+    {
+     "ref": "207.13(j)(2)",
+     "text": "(2) Their drugs are imported in conformance with section 801(d)(3) of the Federal Food, Drug, and Cosmetic Act."
+    },
+    {
+     "ref": "207.13(k)",
+     "text": "(k) Entities that are registered with FDA as outsourcing facilities and that compound drugs in conformance with section 503B of the Federal Food, Drug, and Cosmetic Act."
+    },
+    {
+     "ref": "207.13(l)",
+     "text": "(l) The exemptions provided in paragraphs (a) through (k) of this section do not apply to such persons if they:"
+    },
+    {
+     "ref": "207.13(l)(1)",
+     "text": "(1) Manufacture (as defined in § 207.1), repack, relabel, or salvage compounded positron emission tomography drugs as defined in section 201(ii) of the Federal Food, Drug, and Cosmetic Act;"
+    },
+    {
+     "ref": "207.13(l)(2)",
+     "text": "(2) Manufacture (as defined in § 600.3(u) of this chapter) a human biological product subject to licensing under section 351 of the Public Health Service Act; or"
+    },
+    {
+     "ref": "207.13(l)(3)",
+     "text": "(3) Engage in activities that would otherwise require them to register under this part."
+    }
+   ]
+  },
+  {
+   "section": "207.17",
+   "paragraphs": [
+    {
+     "ref": "207.17",
+     "text": "§ 207.17 Who must register?"
+    },
+    {
+     "ref": "207.17(a)",
+     "text": "(a) Unless exempt under section 510(g) of the Federal Food, Drug, and Cosmetic Act or this part, all manufacturers, repackers, relabelers, and salvagers must register each domestic establishment that manufactures, repacks, relabels, or salvages a drug, or an animal feed bearing or containing a new animal drug, and each foreign establishment that manufactures, repacks, relabels, or salvages a drug, or an animal feed bearing or containing a new animal drug, that is imported or offered for import into the United States. When operations are conducted at more than one establishment and common ownership and control among all the establishments exists, the parent, subsidiary, or affiliate company may submit registration information for all establishments."
+    },
+    {
+     "ref": "207.17(b)",
+     "text": "(b) Private label distributors who do not also manufacture, repack, relabel, or salvage drugs are not required to register under this part. FDA will accept registration or listing information submitted by a private label distributor only if it is acting as an authorized agent for and submitting information that pertains to an establishment that manufactures, repacks, relabels, or salvages drugs."
+    }
+   ]
+  },
+  {
+   "section": "207.21",
+   "paragraphs": [
+    {
+     "ref": "207.21",
+     "text": "§ 207.21 When must initial registration information be provided?"
+    },
+    {
+     "ref": "207.21(a)",
+     "text": "(a) Registrants must register each domestic establishment no later than 5 calendar days after beginning to manufacture, repack, relabel, or salvage a drug or an animal feed bearing or containing a new animal drug at such establishment."
+    },
+    {
+     "ref": "207.21(b)",
+     "text": "(b) Registrants must register each foreign establishment before a drug or an animal feed bearing or containing a new animal drug manufactured, repacked, relabeled, or salvaged at the establishment is imported or offered for import into the United States."
+    }
+   ]
+  },
+  {
+   "section": "207.25",
+   "paragraphs": [
+    {
+     "ref": "207.25",
+     "text": "§ 207.25 What information is required for registration? Registrants must provide the following information:"
+    },
+    {
+     "ref": "207.25(a)",
+     "text": "(a) Name of the owner or operator of each establishment; if a partnership, the name of each partner; if a corporation, the name of each corporate officer and director, and the place of incorporation;"
+    },
+    {
+     "ref": "207.25(b)",
+     "text": "(b) Each establishment's name, physical address, and telephone number(s);"
+    },
+    {
+     "ref": "207.25(c)",
+     "text": "(c) All name(s) of the establishment, including names under which the establishment conducts business or names by which the establishment is known;"
+    },
+    {
+     "ref": "207.25(d)",
+     "text": "(d) Registration number of each establishment, if previously assigned by FDA;"
+    },
+    {
+     "ref": "207.25(e)",
+     "text": "(e) A Unique Facility Identifier in accordance with the system specified under section 510 of the Federal Food, Drug, and Cosmetic Act."
+    },
+    {
+     "ref": "207.25(f)",
+     "text": "(f) All types of operations performed at each establishment;"
+    },
+    {
+     "ref": "207.25(g)",
+     "text": "(g) Name, mailing address, telephone number, and email address of the official contact for the establishment, as provided in § 207.69(a); and"
+    },
+    {
+     "ref": "207.25(h)",
+     "text": "(h) Additionally, with respect to foreign establishments subject to registration, the name, mailing address, telephone number, and email address must be provided for:"
+    },
+    {
+     "ref": "207.25(h)(1)",
+     "text": "(1) The United States agent, as provided in § 207.69(b);"
+    },
+    {
+     "ref": "207.25(h)(2)",
+     "text": "(2) Each importer in the United States of drugs manufactured, repacked, relabeled, or salvaged at the establishment that is known to the establishment; and"
+    },
+    {
+     "ref": "207.25(h)(3)",
+     "text": "(3) Each person who imports or offers for import such drug to the United States."
+    }
+   ]
+  },
+  {
+   "section": "207.29",
+   "paragraphs": [
+    {
+     "ref": "207.29",
+     "text": "§ 207.29 What are the requirements for reviewing and updating registration information?"
+    },
+    {
+     "ref": "207.29(a)",
+     "text": "(a) Expedited updates. Registrants must update their registration information no later than 30 calendar days after:"
+    },
+    {
+     "ref": "207.29(a)(1)",
+     "text": "(1) Closing or selling an establishment;"
+    },
+    {
+     "ref": "207.29(a)(2)",
+     "text": "(2) Changing an establishment's name or physical address; or"
+    },
+    {
+     "ref": "207.29(a)(3)",
+     "text": "(3) Changing the name, mailing address, telephone number, or email address of the official contact or the United States agent. A registrant, official contact, or United States agent may notify FDA about a change of information for the designated official contact or United States agent, but only a registrant is permitted to designate a new official contact or United States agent."
+    },
+    {
+     "ref": "207.29(b)",
+     "text": "(b) Annual review and update of registration information. Registrants must review and update all registration information required under § 207.25 for each establishment."
+    },
+    {
+     "ref": "207.29(b)(1)",
+     "text": "(1) The first review and update must occur during the period beginning on October 1 and ending December 31 of the year of initial registration, if the initial registration occurs prior to October 1. Subsequent reviews and updates must occur annually, during the period beginning on October 1 and ending December 31 of each calendar year."
+    },
+    {
+     "ref": "207.29(b)(2)",
+     "text": "(2) The updates must reflect all changes that have occurred since the last annual review and update."
+    },
+    {
+     "ref": "207.29(b)(3)",
+     "text": "(3) If no changes have occurred since the last registration, registrants must certify that no changes have occurred."
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "fda-cfr-21-part-207.xml:207.9#1",
+   "section": "207.9",
+   "hash": "0205fba573a7ef0c",
+   "item": {
+    "statement": "Establishments manufacturing human cells, tissues, and cellular and tissue-based products (HCT/Ps) that are also drugs regulated under section 351 of the Public Health Service Act or section 505 of the Federal Food, Drug, and Cosmetic Act register and list those HCT/Ps following the drug establishment registration and listing procedures.",
+    "quote": "These establishments must register and list those HCT/Ps following the procedures described in this part.",
+    "clause_number": "207.9(a)(5)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "HCT/Ps that are also regulated drugs"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.13#1",
+   "section": "207.13",
+   "hash": "c27263da93fa193c",
+   "item": {
+    "statement": "Foreign establishments whose drugs are imported or offered for import into the United States comply with the establishment registration and listing requirements, unless they are otherwise exempt, their drugs enter a foreign trade zone and are re-exported without having entered U.S. commerce, or their drugs are imported in conformance with section 801(d)(3) of the Federal Food, Drug, and Cosmetic Act.",
+    "quote": "Foreign establishments whose drugs are imported or offered for import into the United States must comply with the establishment registration and listing requirements of this part unless exempt under this section or unless:",
+    "clause_number": "207.13(j)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "foreign establishment importing into the US, unless exempt"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.17#1",
+   "section": "207.17",
+   "hash": "5a3d9e63e0f07345",
+   "item": {
+    "statement": "Unless exempt, register each domestic establishment that manufactures, repacks, relabels, or salvages a drug or an animal feed bearing or containing a new animal drug, and each foreign establishment doing so whose drug or animal feed is imported or offered for import into the United States.",
+    "quote": "Unless exempt under section 510(g) of the Federal Food, Drug, and Cosmetic Act or this part, all manufacturers, repackers, relabelers, and salvagers must register each domestic establishment that manufactures, repacks, relabels, or salvages a drug, or an animal feed bearing or containing a new animal drug, and each foreign establishment that manufactures, repacks, relabels, or salvages a drug, or an animal feed bearing or containing a new animal drug, that is imported or offered for import into the United States.",
+    "clause_number": "207.17(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "unless exempt"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.17#2",
+   "section": "207.17",
+   "hash": "bdfc23b6ac6e1ec8",
+   "item": {
+    "statement": "Where operations are conducted at more than one establishment under common ownership and control, the parent, subsidiary, or affiliate company may submit registration information for all establishments.",
+    "quote": "When operations are conducted at more than one establishment and common ownership and control among all the establishments exists, the parent, subsidiary, or affiliate company may submit registration information for all establishments.",
+    "clause_number": "207.17(a)",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "multiple establishments under common ownership and control"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.21#1",
+   "section": "207.21",
+   "hash": "47c5740941326456",
+   "item": {
+    "statement": "Register each domestic establishment no later than 5 calendar days after it begins to manufacture, repack, relabel, or salvage a drug or an animal feed bearing or containing a new animal drug.",
+    "quote": "Registrants must register each domestic establishment no later than 5 calendar days after beginning to manufacture, repack, relabel, or salvage a drug or an animal feed bearing or containing a new animal drug at such establishment.",
+    "clause_number": "207.21(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "domestic establishment begins operations"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.21#2",
+   "section": "207.21",
+   "hash": "86174bf93395db3a",
+   "item": {
+    "statement": "Register each foreign establishment before any drug or animal feed bearing or containing a new animal drug manufactured, repacked, relabeled, or salvaged there is imported or offered for import into the United States.",
+    "quote": "Registrants must register each foreign establishment before a drug or an animal feed bearing or containing a new animal drug manufactured, repacked, relabeled, or salvaged at the establishment is imported or offered for import into the United States.",
+    "clause_number": "207.21(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "foreign establishment"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.25#1",
+   "section": "207.25",
+   "hash": "ef6990c56e1df049",
+   "item": {
+    "statement": "Include in establishment registration: the name of the owner or operator of each establishment; for a partnership, each partner's name; for a corporation, the name of each corporate officer and director and the place of incorporation.",
+    "quote": "Name of the owner or operator of each establishment; if a partnership, the name of each partner; if a corporation, the name of each corporate officer and director, and the place of incorporation;",
+    "clause_number": "207.25(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.25#2",
+   "section": "207.25",
+   "hash": "4ed424bdc2a186a8",
+   "item": {
+    "statement": "Include in establishment registration: each establishment's name, physical address, and telephone number(s).",
+    "quote": "Each establishment's name, physical address, and telephone number(s);",
+    "clause_number": "207.25(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.25#3",
+   "section": "207.25",
+   "hash": "1ca7ddeed440c696",
+   "item": {
+    "statement": "Include in establishment registration: all names of the establishment, including names it does business under or is known by.",
+    "quote": "All name(s) of the establishment, including names under which the establishment conducts business or names by which the establishment is known;",
+    "clause_number": "207.25(c)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.25#4",
+   "section": "207.25",
+   "hash": "a3e242d1645965da",
+   "item": {
+    "statement": "Include in establishment registration: the registration number of each establishment, if FDA previously assigned one.",
+    "quote": "Registration number of each establishment, if previously assigned by FDA;",
+    "clause_number": "207.25(d)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "if previously assigned"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.25#5",
+   "section": "207.25",
+   "hash": "43aa35f83e76aa30",
+   "item": {
+    "statement": "Include in establishment registration: a Unique Facility Identifier per the system specified under section 510 of the Federal Food, Drug, and Cosmetic Act.",
+    "quote": "A Unique Facility Identifier in accordance with the system specified under section 510 of the Federal Food, Drug, and Cosmetic Act.",
+    "clause_number": "207.25(e)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.25#6",
+   "section": "207.25",
+   "hash": "39304eb828bd0f72",
+   "item": {
+    "statement": "Include in establishment registration: all types of operations performed at each establishment.",
+    "quote": "All types of operations performed at each establishment;",
+    "clause_number": "207.25(f)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.25#7",
+   "section": "207.25",
+   "hash": "42b8baf86cc41ee1",
+   "item": {
+    "statement": "Include in establishment registration: the name, mailing address, telephone number, and email address of the establishment's official contact.",
+    "quote": "Name, mailing address, telephone number, and email address of the official contact for the establishment, as provided in § 207.69(a); and",
+    "clause_number": "207.25(g)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.25#8",
+   "section": "207.25",
+   "hash": "a86b755a833c216e",
+   "item": {
+    "statement": "Include in establishment registration: for a foreign establishment, the name, mailing address, telephone number, and email address of the United States agent.",
+    "quote": "The United States agent, as provided in § 207.69(b);",
+    "clause_number": "207.25(h)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "foreign establishment"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.25#9",
+   "section": "207.25",
+   "hash": "c31c6fdd75b97fe6",
+   "item": {
+    "statement": "Include in establishment registration: for a foreign establishment, the name, mailing address, telephone number, and email address of each United States importer, known to the establishment, of drugs manufactured, repacked, relabeled, or salvaged there.",
+    "quote": "Each importer in the United States of drugs manufactured, repacked, relabeled, or salvaged at the establishment that is known to the establishment; and",
+    "clause_number": "207.25(h)(2)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "foreign establishment; importer known"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.25#10",
+   "section": "207.25",
+   "hash": "e9cc2e031759c5bb",
+   "item": {
+    "statement": "Include in establishment registration: for a foreign establishment, the name, mailing address, telephone number, and email address of each person who imports or offers for import such drug to the United States.",
+    "quote": "Each person who imports or offers for import such drug to the United States.",
+    "clause_number": "207.25(h)(3)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "foreign establishment"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.29#1",
+   "section": "207.29",
+   "hash": "2729e4559046c8ca",
+   "item": {
+    "statement": "Update registration information no later than 30 calendar days after closing or selling an establishment.",
+    "quote": "Closing or selling an establishment;",
+    "clause_number": "207.29(a)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "establishment closed or sold"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.29#2",
+   "section": "207.29",
+   "hash": "cbad7cd3bee7ac29",
+   "item": {
+    "statement": "Update registration information no later than 30 calendar days after changing an establishment's name or physical address.",
+    "quote": "Changing an establishment's name or physical address; or",
+    "clause_number": "207.29(a)(2)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "name or address change"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.29#3",
+   "section": "207.29",
+   "hash": "21274e26ae454ae7",
+   "item": {
+    "statement": "Update registration information no later than 30 calendar days after changing the name, mailing address, telephone number, or email address of the official contact or the United States agent.",
+    "quote": "Changing the name, mailing address, telephone number, or email address of the official contact or the United States agent.",
+    "clause_number": "207.29(a)(3)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "official contact or US agent details change"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.29#4",
+   "section": "207.29",
+   "hash": "675c3f63b0ccf819",
+   "item": {
+    "statement": "The registrant, official contact, or United States agent may notify FDA of changed information for the designated official contact or United States agent, but only the registrant may designate a new official contact or United States agent.",
+    "quote": "A registrant, official contact, or United States agent may notify FDA about a change of information for the designated official contact or United States agent, but only a registrant is permitted to designate a new official contact or United States agent.",
+    "clause_number": "207.29(a)(3)",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,168 @@
+{
+ "role": "a",
+ "instructions": "You are an auditor checking one checklist item against the FDA web page paragraph it claims to come from. You get\nthe unit's paragraphs (reference and exact text of the page; \"context\" entries are headings) and the item. Start from the ITEM:\nread it, then find in the cited paragraph what it covers.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the lead-in above a list\nitem (the paragraph ending \":\" above it). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph expects what the statement asks for (an instruction\n  to the investigator, \"Determine whether the firm validated ...\", expects the firm to have that practice), the statement\n  adds nothing and omits nothing of that obligation, the strength (a legal requirement: shall/must/required = mandatory;\n  should, FDA expects/recommends, an inspection point = recommended; may/acceptable = optional; a list item takes\n  its lead-in's) matches, and the text applies to every listed plant\n  type (INJ = sterile injectables: text limited to non-sterile products does not apply to\n  INJ; text limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences saying what you checked for THIS item, in this item's own words: name the\n  condition, number, list or scope you compared with the text (e.g. \"the 30-day limit and 'each lot' are both in\n  the statement\", \"the list of components, containers and closures is complete\", \"drops the lead-in's 'for\n  sterile products'\"). Write each reason fresh for its item: a reason that would fit any item (\"quote exact,\n  strength matches, nothing added or omitted\") or that repeats another answer's reason is not an answer, and the\n  item then counts as unchecked.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+ "units": [
+  {
+   "unit": "¶59-¶67",
+   "paragraphs": [
+    {
+     "ref": "¶59",
+     "text": "Currently, the USP, pg. 4, in the General Notices Section, allows drug substances to be manufactured from Potable Water. It comments that any dosage form must be manufactured from Purified Water, Water For Injection, or one of the forms of Sterile Water. There is some inconsistency in these two statements, since Purified Water has to be used for the granulation of tablets, yet Potable Water can be used for the final purification of the drug substance.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > XIII. PROCESS WATER"
+    },
+    {
+     "ref": "¶60",
+     "text": "The FDA Guide to Inspection of Bulk Pharmaceutical Chemicals comments on the concern for the quality of the water used for the manufacture of drug substances, particularly those drug substances used in parenteral manufacture. Excessive levels of microbiological and/or endotoxin contamination have been found in drug substances, with the source of contamination being the water used in purification. At this time, Water For Injection does not have to be used in the finishing steps of synthesis/purification of drug substances for parenteral use. However, such water systems used in the final stages of processing of drug substances for parenteral use should be validated to assure minimal endotoxin/ microbiological contamination.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > XIII. PROCESS WATER"
+    },
+    {
+     "ref": "¶61",
+     "text": "In the bulk drug substance industry, particularly for parenteral grade substances, it is common to see Ultrafiltration (UF) and Reverse Osmosis (RO) systems in use in water systems. While ultrafiltration may not be as efficient at reducing pyrogens, they will reduce the high molecular weight endotoxins that are a contaminant in water systems. As with RO, UF is not absolute, but it will reduce numbers. Additionally, as previously discussed with other cold systems, there is considerable maintenance required to maintain the system.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > XIII. PROCESS WATER"
+    },
+    {
+     "ref": "¶62",
+     "text": "For the manufacture of drug substances that are not for parenteral use, there is still a microbiological concern, although not to the degree as for parenteral grade drug substances. In some areas of the world, Potable (chlorinated) water may not present a microbiological problem. However, there may be other issues. For example, chlorinated water will generally increase chloride levels. In some areas, process water may be obtained directly from neutral sources.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > XIII. PROCESS WATER"
+    },
+    {
+     "ref": "¶63",
+     "text": "In one inspection, a manufacturer was obtaining process water from a river located in a farming region. At one point, they had a problem with high levels of pesticides which was a run-off from farms in the areas. The manufacturing process and analytical methodology was not designed to remove and identify trace pesticide contaminants. Therefore, it would seem that this process water when used in the purification of drug substances would be unacceptable.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > XIII. PROCESS WATER"
+    },
+    {
+     "context": "XIV. INSPECTION STRATEGY"
+    },
+    {
+     "ref": "¶64",
+     "text": "Manufacturers typically will have periodic printouts or tabulations of results for their purified water systems. These printouts or data summaries should be reviewed. Additionally, investigation reports, when values exceed limits, should be reviewed.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > XIV. INSPECTION STRATEGY"
+    },
+    {
+     "ref": "¶65",
+     "text": "Since microbiological test results from a water system are not usually obtained until after the drug product is manufactured, results exceeding limits should be reviewed with regard to the drug product formulated from such water. Consideration with regard to the further processing or release of such a product will be dependent upon the specific contaminant, the process and the end use of the product. Such situations are usually evaluated on a case-by-case basis. It is a good practice for such situations to include an investigation report with the logic for release/rejection discussed in the firm's report. End product microbiological testing, while providing some information should not be relied upon as the sole justification for the release of the drug product. The limitations of microbiological sampling and testing should be recognized.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > XIV. INSPECTION STRATEGY"
+    },
+    {
+     "ref": "¶66",
+     "text": "Manufacturers should also have maintenance records or logs for equipment, such as the still. These logs should also be reviewed so that problems with the system and equipment can be evaluated.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > XIV. INSPECTION STRATEGY"
+    },
+    {
+     "ref": "¶67",
+     "text": "In addition to reviewing test results, summary data, investigation reports and other data, the print of the system should be reviewed when conducting the actual physical inspection. As pointed out, an accurate description and print of the system is needed in order to demonstrate that the system is validated.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > XIV. INSPECTION STRATEGY"
+    },
+    {
+     "context": "Return to: Page Top | Inspection Start"
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶59-¶67#6",
+   "unit": "¶59-¶67",
+   "hash": "823b2def4cc29a0b",
+   "item": {
+    "statement": "Do not use end-product microbiological testing as the only justification for releasing a drug product, recognizing the limitations of microbiological sampling and testing.",
+    "quote": "End product microbiological testing, while providing some information should not be relied upon as the sole justification for the release of the drug product. The limitations of microbiological sampling and testing should be recognized.",
+    "clause_number": "¶65",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶59-¶67#7",
+   "unit": "¶59-¶67",
+   "hash": "45df11a8cd335ceb",
+   "item": {
+    "statement": "Keep maintenance records or logs for water system equipment, such as the still, so that system and equipment problems can be evaluated.",
+    "quote": "Manufacturers should also have maintenance records or logs for equipment, such as the still. These logs should also be reviewed so that problems with the system and equipment can be evaluated.",
+    "clause_number": "¶66",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶59-¶67#8",
+   "unit": "¶59-¶67",
+   "hash": "6608e8ef66f5449c",
+   "item": {
+    "statement": "Maintain an accurate description and drawing of the water system so it can be shown to be validated.",
+    "quote": "As pointed out, an accurate description and print of the system is needed in order to demonstrate that the system is validated.",
+    "clause_number": "¶67",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  }
+ ]
+}

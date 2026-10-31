@@ -1,0 +1,836 @@
+{
+ "role": "b",
+ "instructions": "You are a second, independent auditor. Check one checklist item against the US regulation paragraph it claims to come from. You get\nthe section's paragraphs (reference and exact text, from the official eCFR XML) and the item. Start from the TEXT:\nread the cited paragraph and its lead-in fully, then compare the item.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the parent paragraph's\nlead-in (including a qualifier such as \"as are necessary to prevent contamination or mixups\"). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph requires what the statement asks for, the statement\n  adds nothing and omits nothing of that obligation, the strength (shall/must = mandatory, should = recommended,\n  may = optional; a sub-paragraph takes its lead-in's) matches, and the regulation applies to every listed plant\n  type (INJ = sterile injectables: a paragraph limited to products not required to be sterile does not apply to\n  INJ; one limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences saying what you checked for THIS item, in this item's own words: name the\n  condition, number, list or scope you compared with the text (e.g. \"the 30-day limit and 'each lot' are both in\n  the statement\", \"the list of components, containers and closures is complete\", \"drops the lead-in's 'for\n  sterile products'\"). Write each reason fresh for its item: a reason that would fit any item (\"quote exact,\n  strength matches, nothing added or omitted\") or that repeats another answer's reason is not an answer, and the\n  item then counts as unchecked.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "sections": [
+  {
+   "section": "314.70",
+   "paragraphs": [
+    {
+     "ref": "314.70",
+     "text": "§ 314.70 Supplements and other changes to an approved NDA."
+    },
+    {
+     "ref": "314.70(a)",
+     "text": "(a) Changes to an approved NDA."
+    },
+    {
+     "ref": "314.70(a)(1)",
+     "text": "(1)(i) Except as provided in paragraph (a)(1)(ii) of this section, the applicant must notify FDA about each change in each condition established in an approved NDA beyond the variations already provided for in the NDA. The notice is required to describe the change fully. Depending on the type of change, the applicant must notify FDA about the change in a supplement under paragraph (b) or (c) of this section or by inclusion of the information in the annual report to the NDA under paragraph (d) of this section."
+    },
+    {
+     "ref": "314.70(a)(1)(ii)",
+     "text": "(ii) The submission and grant of a written request for an exception or alternative under § 201.26 of this chapter satisfies the applicable requirements in paragraphs (a) through (c) of this section. However, any grant of a request for an exception or alternative under § 201.26 of this chapter must be reported as part of the annual report to the NDA under paragraph (d) of this section."
+    },
+    {
+     "ref": "314.70(a)(2)",
+     "text": "(2) The NDA holder must assess the effects of the change before distributing a drug product made with a manufacturing change."
+    },
+    {
+     "ref": "314.70(a)(3)",
+     "text": "(3) Notwithstanding the requirements of paragraphs (b) and (c) of this section, an applicant must make a change provided for in those paragraphs in accordance with a regulation or guidance that provides for a less burdensome notification of the change (for example, by submission of a supplement that does not require approval prior to distribution of the product or in an annual report)."
+    },
+    {
+     "ref": "314.70(a)(4)",
+     "text": "(4) The applicant must promptly revise all promotional labeling and advertising to make it consistent with any labeling change implemented in accordance with paragraphs (b) and (c) of this section."
+    },
+    {
+     "ref": "314.70(a)(5)",
+     "text": "(5) Except for a supplement providing for a change in the labeling, the applicant must include in each supplement and amendment to a supplement providing for a change under paragraph (b) or (c) of this section a statement certifying that a field copy has been provided in accordance with § 314.440(a)(4)."
+    },
+    {
+     "ref": "314.70(a)(6)",
+     "text": "(6) A supplement or annual report must include a list of all changes contained in the supplement or annual report. For supplements, this list must be provided in the submission."
+    },
+    {
+     "ref": "314.70(b)",
+     "text": "(b) Changes requiring supplement submission and approval prior to distribution of the product made using the change (major changes). (1) A supplement must be submitted for any change in the drug substance, drug product, production process, quality controls, equipment, or facilities that has a substantial potential to have an adverse effect on the identity, strength, quality, purity, or potency of the drug product as these factors may relate to the safety or effectiveness of the drug product."
+    },
+    {
+     "ref": "314.70(b)(2)",
+     "text": "(2) These changes include, but are not limited to:"
+    },
+    {
+     "ref": "314.70(b)(2)(i)",
+     "text": "(i) Except those described in paragraphs (c) and (d) of this section, changes in the qualitative or quantitative formulation of the drug product, including inactive ingredients, or in the specifications provided in the approved NDA;"
+    },
+    {
+     "ref": "314.70(b)(2)(ii)",
+     "text": "(ii) Changes requiring completion of studies in accordance with part 320 of this chapter to demonstrate the equivalence of the drug product to the drug product as manufactured without the change or to the reference listed drug;"
+    },
+    {
+     "ref": "314.70(b)(2)(iii)",
+     "text": "(iii) Changes that may affect drug substance or drug product sterility assurance, such as changes in drug substance, drug product, or component sterilization method(s) or an addition, deletion, or substitution of steps in an aseptic processing operation;"
+    },
+    {
+     "ref": "314.70(b)(2)(iv)",
+     "text": "(iv) Changes in the synthesis or manufacture of the drug substance that may affect the impurity profile and/or the physical, chemical, or biological properties of the drug substance;"
+    },
+    {
+     "ref": "314.70(b)(2)(v)",
+     "text": "(v) The following labeling changes:"
+    },
+    {
+     "ref": "314.70(b)(2)(v)(A)",
+     "text": "(A) Changes in labeling, except those described in paragraphs (c)(6)(iii), (d)(2)(ix), or (d)(2)(x) of this section;"
+    },
+    {
+     "ref": "314.70(b)(2)(v)(B)",
+     "text": "(B) If applicable, any change to a Medication Guide required under part 208 of this chapter, except for changes in the information specified in § 208.20(b)(8)(iii) and (b)(8)(iv) of this chapter; and"
+    },
+    {
+     "ref": "314.70(b)(2)(v)(C)",
+     "text": "(C) Any change to the information required by § 201.57(a) of this chapter, with the following exceptions that may be reported in an annual report under paragraph (d)(2)(x) of this section:"
+    },
+    {
+     "ref": "314.70(b)(2)(v)(C)(1)",
+     "text": "(1) Removal of a listed section(s) specified in § 201.57(a)(5) of this chapter; and"
+    },
+    {
+     "ref": "314.70(b)(2)(v)(C)(2)",
+     "text": "(2) Changes to the most recent revision date of the labeling as specified in § 201.57(a)(15) of this chapter."
+    },
+    {
+     "ref": "314.70(b)(2)(vi)",
+     "text": "(vi) Changes in a drug product container closure system that controls the drug product delivered to a patient or changes in the type (e.g., glass to high density polyethylene (HDPE), HDPE to polyvinyl chloride, vial to syringe) or composition (e.g., one HDPE resin to another HDPE resin) of a packaging component that may affect the impurity profile of the drug product."
+    },
+    {
+     "ref": "314.70(b)(2)(vii)",
+     "text": "(vii) Changes solely affecting a natural product, a recombinant DNA-derived protein/polypeptide, or a complex or conjugate of a drug substance with a monoclonal antibody for the following:"
+    },
+    {
+     "ref": "314.70(b)(2)(vii)(A)",
+     "text": "(A) Changes in the virus or adventitious agent removal or inactivation method(s);"
+    },
+    {
+     "ref": "314.70(b)(2)(vii)(B)",
+     "text": "(B) Changes in the source material or cell line; and"
+    },
+    {
+     "ref": "314.70(b)(2)(vii)(C)",
+     "text": "(C) Establishment of a new master cell bank or seed."
+    },
+    {
+     "ref": "314.70(b)(2)(viii)",
+     "text": "(viii) Changes to a drug product under an NDA that is subject to a validity assessment because of significant questions regarding the integrity of the data supporting that NDA."
+    },
+    {
+     "ref": "314.70(b)(3)",
+     "text": "(3) The applicant must obtain approval of a supplement from FDA prior to distribution of a drug product made using a change under paragraph (b) of this section. Except for submissions under paragraph (e) of this section, the following information must be contained in the supplement:"
+    },
+    {
+     "ref": "314.70(b)(3)(i)",
+     "text": "(i) A detailed description of the proposed change;"
+    },
+    {
+     "ref": "314.70(b)(3)(ii)",
+     "text": "(ii) The drug product(s) involved;"
+    },
+    {
+     "ref": "314.70(b)(3)(iii)",
+     "text": "(iii) The manufacturing site(s) or area(s) affected;"
+    },
+    {
+     "ref": "314.70(b)(3)(iv)",
+     "text": "(iv) A description of the methods used and studies performed to assess the effects of the change;"
+    },
+    {
+     "ref": "314.70(b)(3)(v)",
+     "text": "(v) The data derived from such studies;"
+    },
+    {
+     "ref": "314.70(b)(3)(vi)",
+     "text": "(vi) For a natural product, a recombinant DNA-derived protein/polypeptide, or a complex or conjugate of a drug substance with a monoclonal antibody, relevant validation protocols and a list of relevant standard operating procedures must be provided in addition to the requirements in paragraphs (b)(3)(iv) and (b)(3)(v) of this section; and"
+    },
+    {
+     "ref": "314.70(b)(3)(vii)",
+     "text": "(vii) For sterilization process and test methodologies related to sterilization process validation, relevant validation protocols and a list of relevant standard operating procedures must be provided in addition to the requirements in paragraphs (b)(3)(iv) and (b)(3)(v) of this section."
+    },
+    {
+     "ref": "314.70(b)(4)",
+     "text": "(4) An applicant may ask FDA to expedite its review of a supplement for public health reasons or if a delay in making the change described in it would impose an extraordinary hardship on the applicant. Such a supplement should be plainly marked: “Prior Approval Supplement-Expedited Review Requested.”"
+    },
+    {
+     "ref": "314.70(c)",
+     "text": "(c) Changes requiring supplement submission at least 30 days prior to distribution of the drug product made using the change (moderate changes). (1) A supplement must be submitted for any change in the drug substance, drug product, production process, quality controls, equipment, or facilities that has a moderate potential to have an adverse effect on the identity, strength, quality, purity, or potency of the drug product as these factors may relate to the safety or effectiveness of the drug product. If the supplement provides for a labeling change under paragraph (c)(6)(iii) of this section, 12 copies of the final printed labeling must be included."
+    },
+    {
+     "ref": "314.70(c)(2)",
+     "text": "(2) These changes include, but are not limited to:"
+    },
+    {
+     "ref": "314.70(c)(2)(i)",
+     "text": "(i) A change in the container closure system that does not affect the quality of the drug product, except those described in paragraphs (b) and (d) of this section; and"
+    },
+    {
+     "ref": "314.70(c)(2)(ii)",
+     "text": "(ii) Changes solely affecting a natural protein, a recombinant DNA-derived protein/polypeptide or a complex or conjugate of a drug substance with a monoclonal antibody, including:"
+    },
+    {
+     "ref": "314.70(c)(2)(ii)(A)",
+     "text": "(A) An increase or decrease in production scale during finishing steps that involves different equipment; and"
+    },
+    {
+     "ref": "314.70(c)(2)(ii)(B)",
+     "text": "(B) Replacement of equipment with that of a different design that does not affect the process methodology or process operating parameters."
+    },
+    {
+     "ref": "314.70(c)(2)(iii)",
+     "text": "(iii) Relaxation of an acceptance criterion or deletion of a test to comply with an official compendium that is consistent with FDA statutory and regulatory requirements."
+    },
+    {
+     "ref": "314.70(c)(3)",
+     "text": "(3) A supplement submitted under paragraph (c)(1) of this section is required to give a full explanation of the basis for the change and identify the date on which the change is to be made. The supplement must be labeled “Supplement—Changes Being Effected in 30 Days” or, if applicable under paragraph (c)(6) of this section, “Supplement—Changes Being Effected.”"
+    },
+    {
+     "ref": "314.70(c)(4)",
+     "text": "(4) Pending approval of the supplement by FDA, except as provided in paragraph (c)(6) of this section, distribution of the drug product made using the change may begin not less than 30 days after receipt of the supplement by FDA. The information listed in paragraphs (b)(3)(i) through (b)(3)(vii) of this section must be contained in the supplement."
+    },
+    {
+     "ref": "314.70(c)(5)",
+     "text": "(5) The applicant must not distribute the drug product made using the change if within 30 days following FDA's receipt of the supplement, FDA informs the applicant that either:"
+    },
+    {
+     "ref": "314.70(c)(5)(i)",
+     "text": "(i) The change requires approval prior to distribution of the drug product in accordance with paragraph (b) of this section; or"
+    },
+    {
+     "ref": "314.70(c)(5)(ii)",
+     "text": "(ii) Any of the information required under paragraph (c)(4) of this section is missing; the applicant must not distribute the drug product made using the change until the supplement has been amended to provide the missing information."
+    },
+    {
+     "ref": "314.70(c)(6)",
+     "text": "(6) The agency may designate a category of changes for the purpose of providing that, in the case of a change in such category, the holder of an approved NDA may commence distribution of the drug product involved upon receipt by the agency of a supplement for the change. These changes include, but are not limited to:"
+    },
+    {
+     "ref": "314.70(c)(6)(i)",
+     "text": "(i) Addition to a specification or changes in the methods or controls to provide increased assurance that the drug substance or drug product will have the characteristics of identity, strength, quality, purity, or potency that it purports or is represented to possess;"
+    },
+    {
+     "ref": "314.70(c)(6)(ii)",
+     "text": "(ii) A change in the size and/or shape of a container for a nonsterile drug product, except for solid dosage forms, without a change in the labeled amount of drug product or from one container closure system to another;"
+    },
+    {
+     "ref": "314.70(c)(6)(iii)",
+     "text": "(iii) Changes in the labeling to reflect newly acquired information, except for changes to the information required in § 201.57(a) of this chapter (which must be made under paragraph (b)(2)(v)(C) of this section), to accomplish any of the following:"
+    },
+    {
+     "ref": "314.70(c)(6)(iii)(A)",
+     "text": "(A) To add or strengthen a contraindication, warning, precaution, or adverse reaction for which the evidence of a causal association satisfies the standard for inclusion in the labeling under § 201.57(c) of this chapter;"
+    },
+    {
+     "ref": "314.70(c)(6)(iii)(B)",
+     "text": "(B) To add or strengthen a statement about drug abuse, dependence, psychological effect, or overdosage;"
+    },
+    {
+     "ref": "314.70(c)(6)(iii)(C)",
+     "text": "(C) To add or strengthen an instruction about dosage and administration that is intended to increase the safe use of the drug product;"
+    },
+    {
+     "ref": "314.70(c)(6)(iii)(D)",
+     "text": "(D) To delete false, misleading, or unsupported indications for use or claims for effectiveness; or"
+    },
+    {
+     "ref": "314.70(c)(6)(iii)(E)",
+     "text": "(E) Any labeling change normally requiring a supplement submission and approval prior to distribution of the drug product that FDA specifically requests be submitted under this provision."
+    },
+    {
+     "ref": "314.70(c)(7)",
+     "text": "(7) If the agency disapproves the supplemental NDA, it may order the manufacturer to cease distribution of the drug product(s) made with the manufacturing change."
+    },
+    {
+     "ref": "314.70(d)",
+     "text": "(d) Changes to be described in an annual report (minor changes). (1) Changes in the drug substance, drug product, production process, quality controls, equipment, or facilities that have a minimal potential to have an adverse effect on the identity, strength, quality, purity, or potency of the drug product as these factors may relate to the safety or effectiveness of the drug product must be documented by the applicant in the next annual report in accordance with § 314.81(b)(2)."
+    },
+    {
+     "ref": "314.70(d)(2)",
+     "text": "(2) These changes include, but are not limited to:"
+    },
+    {
+     "ref": "314.70(d)(2)(i)",
+     "text": "(i) Any change made to comply with a change to an official compendium, except a change described in paragraph (c)(2)(iii) of this section, that is consistent with FDA statutory and regulatory requirements."
+    },
+    {
+     "ref": "314.70(d)(2)(ii)",
+     "text": "(ii) The deletion or reduction of an ingredient intended to affect only the color of the drug product;"
+    },
+    {
+     "ref": "314.70(d)(2)(iii)",
+     "text": "(iii) Replacement of equipment with that of the same design and operating principles except those equipment changes described in paragraph (c) of this section;"
+    },
+    {
+     "ref": "314.70(d)(2)(iv)",
+     "text": "(iv) A change in the size and/or shape of a container containing the same number of dosage units for a nonsterile solid dosage form drug product, without a change from one container closure system to another;"
+    },
+    {
+     "ref": "314.70(d)(2)(v)",
+     "text": "(v) A change within the container closure system for a nonsterile drug product, based upon a showing of equivalency to the approved system under a protocol approved in the NDA or published in an official compendium;"
+    },
+    {
+     "ref": "314.70(d)(2)(vi)",
+     "text": "(vi) An extension of an expiration dating period based upon full shelf life data on production batches obtained from a protocol approved in the NDA;"
+    },
+    {
+     "ref": "314.70(d)(2)(vii)",
+     "text": "(vii) The addition or revision of an alternative analytical procedure that provides the same or increased assurance of the identity, strength, quality, purity, or potency of the material being tested as the analytical procedure described in the approved NDA, or deletion of an alternative analytical procedure;"
+    },
+    {
+     "ref": "314.70(d)(2)(viii)",
+     "text": "(viii) The addition by embossing, debossing, or engraving of a code imprint to a solid oral dosage form drug product other than a modified release dosage form, or a minor change in an existing code imprint;"
+    },
+    {
+     "ref": "314.70(d)(2)(ix)",
+     "text": "(ix) A change in the labeling concerning the description of the drug product or in the information about how the drug product is supplied, that does not involve a change in the dosage strength or dosage form; and"
+    },
+    {
+     "ref": "314.70(d)(2)(x)",
+     "text": "(x) An editorial or similar minor change in labeling, including a change to the information allowed by paragraphs (b)(2)(v)(C)(1) and (2) of this section."
+    },
+    {
+     "ref": "314.70(d)(3)",
+     "text": "(3) For changes under this category, the applicant is required to submit in the annual report:"
+    },
+    {
+     "ref": "314.70(d)(3)(i)",
+     "text": "(i) A statement by the holder of the approved NDA that the effects of the change have been assessed;"
+    },
+    {
+     "ref": "314.70(d)(3)(ii)",
+     "text": "(ii) A full description of the manufacturing and controls changes, including the manufacturing site(s) or area(s) involved;"
+    },
+    {
+     "ref": "314.70(d)(3)(iii)",
+     "text": "(iii) The date each change was implemented;"
+    },
+    {
+     "ref": "314.70(d)(3)(iv)",
+     "text": "(iv) Data from studies and tests performed to assess the effects of the change; and,"
+    },
+    {
+     "ref": "314.70(d)(3)(v)",
+     "text": "(v) For a natural product, recombinant DNA-derived protein/polypeptide, complex or conjugate of a drug substance with a monoclonal antibody, sterilization process or test methodology related to sterilization process validation, a cross-reference to relevant validation protocols and/or standard operating procedures."
+    },
+    {
+     "ref": "314.70(e)",
+     "text": "(e) Protocols. An applicant may submit one or more protocols describing the specific tests and studies and acceptance criteria to be achieved to demonstrate the lack of adverse effect for specified types of manufacturing changes on the identity, strength, quality, purity, and potency of the drug product as these factors may relate to the safety or effectiveness of the drug product. Any such protocols, if not included in the approved NDA, or changes to an approved protocol, must be submitted as a supplement requiring approval from FDA prior to distribution of a drug product produced with the manufacturing change. The supplement, if approved, may subsequently justify a reduced reporting category for the particular change because the use of the protocol for that type of change reduces the potential risk of an adverse effect."
+    },
+    {
+     "ref": "314.70(f)",
+     "text": "(f) Patent information. The applicant must comply with the patent information requirements under section 505(c)(2) of the Federal Food, Drug, and Cosmetic Act and § 314.53."
+    },
+    {
+     "ref": "314.70(g)",
+     "text": "(g) Claimed exclusivity. If an applicant claims exclusivity under § 314.108 upon approval of a supplement for change to its previously approved drug product, the applicant must include with its supplement the information required under § 314.50(j)."
+    },
+    {
+     "ref": "314.70(h)",
+     "text": "(h) Different drug. An applicant may not supplement a 505(b)(2) application to seek approval of a drug that is a different drug from the drug in the approved 505(b)(2) application. For purposes of this paragraph (h), a drug is a different drug if it has been modified to have a different active ingredient, different route of administration, different dosage form, or difference in excipients that requires either a separate clinical study to establish safety or effectiveness or, for topical products, that requires a separate in vivo demonstration of bioequivalence. However, notwithstanding the limitation described in this paragraph (h), an applicant may supplement the 505(b)(2) application to seek approval of a different strength."
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "fda-cfr-21-314.70.xml:314.70#1",
+   "section": "314.70",
+   "hash": "a1e3618128546b95",
+   "item": {
+    "statement": "Notify FDA of every change to any condition established in the approved NDA that goes beyond the variations the NDA already allows, unless a written request for an exception or alternative has been submitted to and granted by FDA.",
+    "quote": "the applicant must notify FDA about each change in each condition established in an approved NDA beyond the variations already provided for in the NDA.",
+    "clause_number": "314.70(a)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "unless a granted exception or alternative applies"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-314.70.xml:314.70#2",
+   "section": "314.70",
+   "hash": "903a3ac1a461d73c",
+   "item": {
+    "statement": "Make each notice of change to FDA describe the change completely.",
+    "quote": "The notice is required to describe the change fully.",
+    "clause_number": "314.70(a)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-314.70.xml:314.70#3",
+   "section": "314.70",
+   "hash": "668d6f4efe4a610b",
+   "item": {
+    "statement": "Notify FDA of each change by the route matching its type: a prior-approval supplement (major change), a supplement submitted at least 30 days before distribution (moderate change), or inclusion in the NDA annual report (minor change).",
+    "quote": "Depending on the type of change, the applicant must notify FDA about the change in a supplement under paragraph (b) or (c) of this section or by inclusion of the information in the annual report to the NDA under paragraph (d) of this section.",
+    "clause_number": "314.70(a)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "depending on type of change"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-314.70.xml:314.70#4",
+   "section": "314.70",
+   "hash": "4712f3f9ab8aaf3c",
+   "item": {
+    "statement": "Report in the NDA annual report any exception or alternative FDA has granted on request under its exception and alternative provisions.",
+    "quote": "However, any grant of a request for an exception or alternative under § 201.26 of this chapter must be reported as part of the annual report to the NDA under paragraph (d) of this section.",
+    "clause_number": "314.70(a)(1)(ii)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "when an exception or alternative is granted"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-314.70.xml:314.70#5",
+   "section": "314.70",
+   "hash": "3ed39dca819a71da",
+   "item": {
+    "statement": "Assess the effects of each manufacturing change before distributing any drug product made with that change.",
+    "quote": "The NDA holder must assess the effects of the change before distributing a drug product made with a manufacturing change.",
+    "clause_number": "314.70(a)(2)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "before distribution of product made with a manufacturing change"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-314.70.xml:314.70#6",
+   "section": "314.70",
+   "hash": "73eda8c7a2589e40",
+   "item": {
+    "statement": "Where a regulation or guidance allows a less burdensome notification for a major or moderate change (for example a supplement not needing approval before distribution, or the annual report), make the change following that regulation or guidance.",
+    "quote": "Notwithstanding the requirements of paragraphs (b) and (c) of this section, an applicant must make a change provided for in those paragraphs in accordance with a regulation or guidance that provides for a less burdensome notification of the change (for example, by submission of a supplement that does not require approval prior to distribution of the product or in an annual report).",
+    "clause_number": "314.70(a)(3)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "where a regulation or guidance provides a less burdensome notification"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-314.70.xml:314.70#7",
+   "section": "314.70",
+   "hash": "316bbbd43a5dbb8b",
+   "item": {
+    "statement": "Promptly revise all promotional labeling and advertising so it is consistent with any labeling change implemented through a prior-approval or 30-day/changes-being-effected supplement.",
+    "quote": "The applicant must promptly revise all promotional labeling and advertising to make it consistent with any labeling change implemented in accordance with paragraphs (b) and (c) of this section.",
+    "clause_number": "314.70(a)(4)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "when a labeling change is implemented via supplement"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-314.70.xml:314.70#8",
+   "section": "314.70",
+   "hash": "8d8b15a4b328a0ac",
+   "item": {
+    "statement": "Except for labeling-change supplements, include in each major- or moderate-change supplement and each amendment to such a supplement a statement certifying that a field copy has been provided as FDA requires.",
+    "quote": "Except for a supplement providing for a change in the labeling, the applicant must include in each supplement and amendment to a supplement providing for a change under paragraph (b) or (c) of this section a statement certifying that a field copy has been provided in accordance with § 314.440(a)(4).",
+    "clause_number": "314.70(a)(5)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "except labeling-change supplements"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-314.70.xml:314.70#9",
+   "section": "314.70",
+   "hash": "44acf75dd5a9263c",
+   "item": {
+    "statement": "Include in each supplement or annual report a list of all changes it contains; for supplements, provide this list in the submission itself.",
+    "quote": "A supplement or annual report must include a list of all changes contained in the supplement or annual report. For supplements, this list must be provided in the submission.",
+    "clause_number": "314.70(a)(6)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-314.70.xml:314.70#10",
+   "section": "314.70",
+   "hash": "5501ae1f69c2bcfd",
+   "item": {
+    "statement": "Submit a prior-approval supplement for any change in the drug substance, drug product, production process, quality controls, equipment or facilities that has substantial potential to adversely affect the drug product's identity, strength, quality, purity or potency as these may relate to its safety or effectiveness.",
+    "quote": "A supplement must be submitted for any change in the drug substance, drug product, production process, quality controls, equipment, or facilities that has a substantial potential to have an adverse effect on the identity, strength, quality, purity, or potency of the drug product as these factors may relate to the safety or effectiveness of the drug product.",
+    "clause_number": "314.70(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "substantial potential for adverse effect"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-314.70.xml:314.70#11",
+   "section": "314.70",
+   "hash": "63cb7eb8b513ce7a",
+   "item": {
+    "statement": "Submit a prior-approval supplement (major change, FDA approval needed before distributing product made with the change) for changes in the qualitative or quantitative formulation of the drug product, including inactive ingredients, or in the specifications in the approved NDA, except those classed as moderate or minor changes.",
+    "quote": "Except those described in paragraphs (c) and (d) of this section, changes in the qualitative or quantitative formulation of the drug product, including inactive ingredients, or in the specifications provided in the approved NDA;",
+    "clause_number": "314.70(b)(2)(i)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "unless classed as moderate or minor change"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-314.70.xml:314.70#12",
+   "section": "314.70",
+   "hash": "d42f2711a3532fd3",
+   "item": {
+    "statement": "Submit a prior-approval supplement (major change, FDA approval needed before distributing product made with the change) for changes that require completing bioavailability/bioequivalence studies to show the product is equivalent to the product made without the change or to the reference listed drug.",
+    "quote": "Changes requiring completion of studies in accordance with part 320 of this chapter to demonstrate the equivalence of the drug product to the drug product as manufactured without the change or to the reference listed drug;",
+    "clause_number": "314.70(b)(2)(ii)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "if equivalence studies are required"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-314.70.xml:314.70#13",
+   "section": "314.70",
+   "hash": "d108c743e0811349",
+   "item": {
+    "statement": "Submit a prior-approval supplement (major change, FDA approval needed before distributing product made with the change) for changes that may affect drug substance or drug product sterility assurance, such as changes in drug substance, drug product or component sterilization methods, or adding, deleting or substituting steps in an aseptic processing operation.",
+    "quote": "Changes that may affect drug substance or drug product sterility assurance, such as changes in drug substance, drug product, or component sterilization method(s) or an addition, deletion, or substitution of steps in an aseptic processing operation;",
+    "clause_number": "314.70(b)(2)(iii)",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "if sterility assurance may be affected"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-314.70.xml:314.70#14",
+   "section": "314.70",
+   "hash": "401d7047c1d5e0fb",
+   "item": {
+    "statement": "Submit a prior-approval supplement (major change, FDA approval needed before distributing product made with the change) for changes in drug substance synthesis or manufacture that may affect its impurity profile and/or its physical, chemical or biological properties.",
+    "quote": "Changes in the synthesis or manufacture of the drug substance that may affect the impurity profile and/or the physical, chemical, or biological properties of the drug substance;",
+    "clause_number": "314.70(b)(2)(iv)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "if impurity profile or properties may be affected"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-314.70.xml:314.70#15",
+   "section": "314.70",
+   "hash": "d84d79dfd0041111",
+   "item": {
+    "statement": "Submit a prior-approval supplement (major change, FDA approval needed before distributing product made with the change) for labeling changes, except changes-being-effected labeling changes reflecting newly acquired safety information, changes to the product description or how-supplied information not involving dosage strength or form, and editorial or similar minor labeling changes.",
+    "quote": "Changes in labeling, except those described in paragraphs (c)(6)(iii), (d)(2)(ix), or (d)(2)(x) of this section;",
+    "clause_number": "314.70(b)(2)(v)(A)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "unless an excepted labeling change"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-314.70.xml:314.70#16",
+   "section": "314.70",
+   "hash": "05beabac06f72b13",
+   "item": {
+    "statement": "Submit a prior-approval supplement (major change, FDA approval needed before distributing product made with the change) for any change to a required Medication Guide, if applicable, except changes to the specified manufacturer/distributor and revision-date information in the guide.",
+    "quote": "If applicable, any change to a Medication Guide required under part 208 of this chapter, except for changes in the information specified in § 208.20(b)(8)(iii) and (b)(8)(iv) of this chapter; and",
+    "clause_number": "314.70(b)(2)(v)(B)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "if a Medication Guide applies"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-314.70.xml:314.70#17",
+   "section": "314.70",
+   "hash": "808f1b138178f132",
+   "item": {
+    "statement": "Submit a prior-approval supplement (major change, FDA approval needed before distributing product made with the change) for any change to the Highlights of Prescribing Information, except removal of listed sections from Highlights and changes to the most recent labeling revision date, which may be reported in the annual report.",
+    "quote": "Any change to the information required by § 201.57(a) of this chapter, with the following exceptions that may be reported in an annual report under paragraph (d)(2)(x) of this section:",
+    "clause_number": "314.70(b)(2)(v)(C)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "unless an annual-report exception"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-314.70.xml:314.70#18",
+   "section": "314.70",
+   "hash": "abdf4be62cafa8a0",
+   "item": {
+    "statement": "Optionally report in the annual report, instead of a prior-approval supplement, removal of listed sections from the recent major changes part of Highlights of Prescribing Information.",
+    "quote": "Removal of a listed section(s) specified in § 201.57(a)(5) of this chapter; and",
+    "clause_number": "314.70(b)(2)(v)(C)(1)",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-314.70.xml:314.70#19",
+   "section": "314.70",
+   "hash": "f87fc294e9cb89a5",
+   "item": {
+    "statement": "Optionally report in the annual report, instead of a prior-approval supplement, changes to the most recent revision date of the labeling shown in Highlights of Prescribing Information.",
+    "quote": "Changes to the most recent revision date of the labeling as specified in § 201.57(a)(15) of this chapter.",
+    "clause_number": "314.70(b)(2)(v)(C)(2)",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-314.70.xml:314.70#20",
+   "section": "314.70",
+   "hash": "f7d25c18092fbcbb",
+   "item": {
+    "statement": "Submit a prior-approval supplement (major change, FDA approval needed before distributing product made with the change) for changes in a container closure system that controls the drug product delivered to the patient, or changes in type (e.g. glass to HDPE, HDPE to PVC, vial to syringe) or composition (e.g. one HDPE resin to another) of a packaging component that may affect the product's impurity profile.",
+    "quote": "Changes in a drug product container closure system that controls the drug product delivered to a patient or changes in the type (e.g., glass to high density polyethylene (HDPE), HDPE to polyvinyl chloride, vial to syringe) or composition (e.g., one HDPE resin to another HDPE resin) of a packaging component that may affect the impurity profile of the drug product.",
+    "clause_number": "314.70(b)(2)(vi)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "if delivery control or impurity profile may be affected"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  }
+ ]
+}

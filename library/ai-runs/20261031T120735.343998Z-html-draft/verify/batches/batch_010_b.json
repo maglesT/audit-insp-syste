@@ -1,0 +1,379 @@
+{
+ "role": "b",
+ "instructions": "You are a second, independent auditor. Check one checklist item against the FDA web page paragraph it claims to come from. You get\nthe unit's paragraphs (reference and exact text of the page; \"context\" entries are headings) and the item. Start from the TEXT:\nread the cited paragraph, the paragraphs its quote runs into, and its lead-in fully, then compare the item.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the lead-in above a list\nitem (the paragraph ending \":\" above it). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph expects what the statement asks for (an instruction\n  to the investigator, \"Determine whether the firm validated ...\", expects the firm to have that practice), the statement\n  adds nothing and omits nothing of that obligation, the strength (a legal requirement: shall/must/required = mandatory;\n  should, FDA expects/recommends, an inspection point = recommended; may/acceptable = optional; a list item takes\n  its lead-in's) matches, and the text applies to every listed plant\n  type (INJ = sterile injectables: text limited to non-sterile products does not apply to\n  INJ; text limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences saying what you checked for THIS item, in this item's own words: name the\n  condition, number, list or scope you compared with the text (e.g. \"the 30-day limit and 'each lot' are both in\n  the statement\", \"the list of components, containers and closures is complete\", \"drops the lead-in's 'for\n  sterile products'\"). Write each reason fresh for its item: a reason that would fit any item (\"quote exact,\n  strength matches, nothing added or omitted\") or that repeats another answer's reason is not an answer, and the\n  item then counts as unchecked.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+ "units": [
+  {
+   "unit": "Q15",
+   "paragraphs": [
+    {
+     "ref": "Q15",
+     "text": "Who is responsible for analytically testing APIs to ensure they comply with their specifications and with USP requirements, if any? API manufacturers perform analytical testing on APIs to confirm that they meet all applicable specifications established for release. Finished drug product manufacturers ensure that APIs used in their products meet all of their established specifications and—for compendial APIs—meet USP requirements. Additional information is provided below. API Manufacturer Responsibilities Section 501(a)(2)(B) of the FD&C Act requires all drugs (including APIs) to be manufactured in compliance with CGMP. FDA therefore expects API manufacturers to follow the recommendations in ICH guidance for industry Q7 Good Manufacturing Practice Guidance for Active Pharmaceutical Ingredients. API labeling supplied by the API manufacturer includes a certificate of analysis (COA). Section 11.4 of ICH Q7 recommends that the API manufacturer’s COA should include, as applicable, the API’s name, grade, batch/lot number, date of release, and a list of “each test performed in accordance with compendial or customer requirements, including the acceptance limits, and the numerical results obtained . . . .” For example, for a compendial-grade API, the COA should identify the compendial tests that were performed (as well as customer-specified tests, if any) and the test results. If a compendial-grade API differs from a USP standard of strength, quality, or purity, that difference should be clearly declared on the label. Finished Drug Product Manufacturer Responsibilities In the CGMP regulations for finished pharmaceuticals, 21 CFR 211.80 states that “[T]here shall be written procedures describing in sufficient detail the . . . testing . . . of [finished drug product] components . . . .” Additionally, 21 CFR 211.84(d)(2) states that “[E]ach component shall be tested for conformity with all appropriate written specifications for purity, strength, and quality. In lieu of such testing by the manufacturer, a report of analysis may be accepted from the supplier of a component, provided that at least one specific identity test is conducted on such component by the manufacturer, and provided that the manufacturer establishes the reliability of the supplier’s analyses through appropriate validation of the supplier’s test results at appropriate intervals.” Therefore, if the finished drug product manufacturer accepts the test results from an API supplier’s COA rather than performing the tests itself (other than for identity, which the manufacturer is required to perform), the manufacturer must validate the API supplier’s reliability. This validation procedure is established by the finished drug product manufacturer and should be consistent with the principles of CGMP and risk management. The finished drug product manufacturer should also ensure that compendial-grade APIs comply with compendial specifications, either by testing the APIs or by validating API suppliers’ reliability, as described above. References:"
+    },
+    {
+     "ref": "Q15.1",
+     "text": "FD&C Act Chapter V: Drugs and Devices",
+     "list_item": true
+    },
+    {
+     "ref": "Q15.2",
+     "text": "21 CFR 211.80: General requirements",
+     "list_item": true
+    },
+    {
+     "ref": "Q15.3",
+     "text": "21 CFR 211.84: Testing and approval or rejection of components, drug product containers and closures",
+     "list_item": true
+    },
+    {
+     "ref": "Q15.4",
+     "text": "FDA Guidance for Industry, 2001, ICH Q7 Good Manufacturing Practice Guidance for Active Pharmaceutical Ingredients",
+     "list_item": true
+    },
+    {
+     "ref": "Q15.5",
+     "text": "Contact for further information: CDER-OPQ-Inquiries@fda.hhs.gov"
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q15#1",
+   "unit": "Q15",
+   "hash": "5a735715eb9bc2ce",
+   "item": {
+    "statement": "Perform analytical testing on each API to confirm it meets all applicable release specifications.",
+    "quote": "API manufacturers perform analytical testing on APIs to confirm that they meet all applicable specifications established for release.",
+    "clause_number": "Q15",
+    "strength": "recommended",
+    "plant_types": [
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q15#2",
+   "unit": "Q15",
+   "hash": "fa01a89a0cf89611",
+   "item": {
+    "statement": "Ensure that APIs used in the products meet all of the finished product manufacturer's established specifications and, for compendial APIs, USP requirements.",
+    "quote": "Finished drug product manufacturers ensure that APIs used in their products meet all of their established specifications and—for compendial APIs—meet USP requirements.",
+    "clause_number": "Q15",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "USP requirements for compendial APIs"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q15#3",
+   "unit": "Q15",
+   "hash": "ae8fcd9a47ca839a",
+   "item": {
+    "statement": "Manufacture all drugs, including APIs, in compliance with CGMP.",
+    "quote": "requires all drugs (including APIs) to be manufactured in compliance with CGMP.",
+    "clause_number": "Q15",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q15#4",
+   "unit": "Q15",
+   "hash": "d48d23b4eb2b1031",
+   "item": {
+    "statement": "Follow the recommendations of the internationally harmonised GMP guidance for active pharmaceutical ingredients.",
+    "quote": "FDA therefore expects API manufacturers to follow the recommendations in ICH guidance for industry Q7 Good Manufacturing Practice Guidance for Active Pharmaceutical Ingredients.",
+    "clause_number": "Q15",
+    "strength": "recommended",
+    "plant_types": [
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q15#5",
+   "unit": "Q15",
+   "hash": "4f649d13f6fdbffb",
+   "item": {
+    "statement": "Supply a certificate of analysis with the API labeling that includes, as applicable, the API's name, grade, batch or lot number, date of release, and a list of each test performed according to compendial or customer requirements, with the acceptance limits and the numerical results obtained.",
+    "quote": "API labeling supplied by the API manufacturer includes a certificate of analysis (COA). Section 11.4 of ICH Q7 recommends that the API manufacturer’s COA should include, as applicable, the API’s name, grade, batch/lot number, date of release, and a list of “each test performed in accordance with compendial or customer requirements, including the acceptance limits, and the numerical results obtained . . . .”",
+    "clause_number": "Q15",
+    "strength": "recommended",
+    "plant_types": [
+     "API"
+    ],
+    "condition": "as applicable"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q15#6",
+   "unit": "Q15",
+   "hash": "fd2edd25c647be17",
+   "item": {
+    "statement": "For a compendial-grade API, identify on the certificate of analysis the compendial tests performed (and any customer-specified tests) and the test results.",
+    "quote": "For example, for a compendial-grade API, the COA should identify the compendial tests that were performed (as well as customer-specified tests, if any) and the test results.",
+    "clause_number": "Q15",
+    "strength": "recommended",
+    "plant_types": [
+     "API"
+    ],
+    "condition": "compendial-grade API"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q15#7",
+   "unit": "Q15",
+   "hash": "bb34610c04714529",
+   "item": {
+    "statement": "If a compendial-grade API differs from a USP standard of strength, quality or purity, declare that difference clearly on the label.",
+    "quote": "If a compendial-grade API differs from a USP standard of strength, quality, or purity, that difference should be clearly declared on the label.",
+    "clause_number": "Q15",
+    "strength": "recommended",
+    "plant_types": [
+     "API"
+    ],
+    "condition": "if the API differs from a USP standard"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q15#8",
+   "unit": "Q15",
+   "hash": "33879b3236e4bb9c",
+   "item": {
+    "statement": "Have written procedures describing in sufficient detail the testing of components.",
+    "quote": "“[T]here shall be written procedures describing in sufficient detail the . . . testing . . . of [finished drug product] components . . . .”",
+    "clause_number": "Q15",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q15#9",
+   "unit": "Q15",
+   "hash": "65ddbfc258159825",
+   "item": {
+    "statement": "Test each component for conformity with all appropriate written specifications for purity, strength and quality.",
+    "quote": "“[E]ach component shall be tested for conformity with all appropriate written specifications for purity, strength, and quality.",
+    "clause_number": "Q15",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q15#10",
+   "unit": "Q15",
+   "hash": "7c802bcfe2a45539",
+   "item": {
+    "statement": "Instead of full testing, a supplier's report of analysis for a component may be accepted, provided the manufacturer conducts at least one specific identity test on the component and establishes the reliability of the supplier's analyses by appropriate validation of the supplier's test results at appropriate intervals.",
+    "quote": "In lieu of such testing by the manufacturer, a report of analysis may be accepted from the supplier of a component, provided that at least one specific identity test is conducted on such component by the manufacturer, and provided that the manufacturer establishes the reliability of the supplier’s analyses through appropriate validation of the supplier’s test results at appropriate intervals.”",
+    "clause_number": "Q15",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "provided at least one identity test is done and supplier reliability is validated"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q15#11",
+   "unit": "Q15",
+   "hash": "f11dfc3a0cdffa28",
+   "item": {
+    "statement": "If accepting test results from an API supplier's certificate of analysis instead of performing the tests, validate the supplier's reliability; the identity test must still be performed by the finished product manufacturer.",
+    "quote": "Therefore, if the finished drug product manufacturer accepts the test results from an API supplier’s COA rather than performing the tests itself (other than for identity, which the manufacturer is required to perform), the manufacturer must validate the API supplier’s reliability.",
+    "clause_number": "Q15",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "if relying on the supplier's certificate of analysis"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q15#12",
+   "unit": "Q15",
+   "hash": "5bc36739ae2f8a58",
+   "item": {
+    "statement": "Establish the procedure for validating API supplier reliability so that it is consistent with the principles of CGMP and risk management.",
+    "quote": "This validation procedure is established by the finished drug product manufacturer and should be consistent with the principles of CGMP and risk management.",
+    "clause_number": "Q15",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q15#13",
+   "unit": "Q15",
+   "hash": "2c74e3ac509825bb",
+   "item": {
+    "statement": "Ensure that compendial-grade APIs comply with compendial specifications, either by testing them or by validating the API supplier's reliability.",
+    "quote": "The finished drug product manufacturer should also ensure that compendial-grade APIs comply with compendial specifications, either by testing the APIs or by validating API suppliers’ reliability, as described above.",
+    "clause_number": "Q15",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "compendial-grade APIs"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  }
+ ]
+}

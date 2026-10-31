@@ -1,0 +1,532 @@
+{
+ "role": "a",
+ "instructions": "You are an auditor checking one checklist item against the FDA web page paragraph it claims to come from. You get\nthe unit's paragraphs (reference and exact text of the page; \"context\" entries are headings) and the item. Start from the ITEM:\nread it, then find in the cited paragraph what it covers.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the lead-in above a list\nitem (the paragraph ending \":\" above it). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph expects what the statement asks for (an instruction\n  to the investigator, \"Determine whether the firm validated ...\", expects the firm to have that practice), the statement\n  adds nothing and omits nothing of that obligation, the strength (a legal requirement: shall/must/required = mandatory;\n  should, FDA expects/recommends, an inspection point = recommended; may/acceptable = optional; a list item takes\n  its lead-in's) matches, and the text applies to every listed plant\n  type (INJ = sterile injectables: text limited to non-sterile products does not apply to\n  INJ; text limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+ "units": [
+  {
+   "unit": "¶1-¶26",
+   "paragraphs": [
+    {
+     "context": "Dosage Form Drug Manufacturers cGMPs (10/93)"
+    },
+    {
+     "context": "GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S"
+    },
+    {
+     "ref": "¶1",
+     "text": "Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s).",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S"
+    },
+    {
+     "context": "I. INTRODUCTION"
+    },
+    {
+     "ref": "¶2",
+     "text": "This document is intended to be a general guide to inspections of drug manufacturers to determine their compliance with the drug CGMPR's. This guide should be used with instructions in the IOM, other drug inspection guides, and compliance programs. A list of the inspection guides is referenced in Chapter 10 of the IOM. Some of these guides are:",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > I. INTRODUCTION"
+    },
+    {
+     "ref": "¶3",
+     "text": "Guide to Inspections of Bulk Pharmaceutical Chemicals.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > I. INTRODUCTION"
+    },
+    {
+     "ref": "¶4",
+     "text": "Guide to Inspections of High Purity Water Systems.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > I. INTRODUCTION"
+    },
+    {
+     "ref": "¶5",
+     "text": "Guide to Inspections of Pharmaceutical Quality Control Laboratories.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > I. INTRODUCTION"
+    },
+    {
+     "ref": "¶6",
+     "text": "Guide to Inspections of Microbiological Pharmaceutical Quality Control Laboratories.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > I. INTRODUCTION"
+    },
+    {
+     "ref": "¶7",
+     "text": "Guide to Inspections of Lyophilization of Parenterals.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > I. INTRODUCTION"
+    },
+    {
+     "ref": "¶8",
+     "text": "Guide to Inspections of Validation of Cleaning Processes.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > I. INTRODUCTION"
+    },
+    {
+     "ref": "¶9",
+     "text": "Guide to Inspections of Computerized Systems in Drug Processing.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > I. INTRODUCTION"
+    },
+    {
+     "ref": "¶10",
+     "text": "Guideline on General Principles of Process Validation.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > I. INTRODUCTION"
+    },
+    {
+     "context": "II. CURRENT GOOD"
+    },
+    {
+     "context": "MANUFACTURING PRACTICE"
+    },
+    {
+     "context": "REGULATIONS"
+    },
+    {
+     "context": "Prescription vs. Non-prescription"
+    },
+    {
+     "ref": "¶11",
+     "text": "All drugs must be manufactured in accordance with the current good manufacturing practice regulations otherwise they are considered to be adulterated within the meaning of the FD&C Act, Section 501(a)(2)(B). Records relating to prescription drugs must be readily available for review in accordance with Sec. 704(a)(1)(B) of the FD&C Act. If the product is an OTC drug which is covered by an NDA or ANDA, FDA may review, copy and verify the records under Sec. 505(k)(2) of the FD&C Act. However, if the product is an OTC drug for which there is no application filed with FDA, the firm is not legally required to show these records to the investigator during an inspection being conducted under Section 704 of the FD&C Act. Nonetheless, all manufacturers of prescription and OTC drugs must comply with the drug CGMPR requirements, including those involving records. The investigator should review these records as part of the inspection in determining the firm's compliance with the CGMP regulations. On rare occasions, a firm may refuse to allow review of OTC records stating they are not legally required to. While the firm may be under no legal obligation to permit review of such records, this does not relieve the firm of its statutory requirement to comply with the good manufacturing practices under section 501(a)(2)(B) of the Food Drug and Cosmetic Act, including the requirements for maintaining records.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶12",
+     "text": "If a firm refuses review of OTC records, the investigator should determine by other inspectional means the extent of the firm's compliance with CGMPR's. Inspectional observations and findings that CGMPR's are not being followed are to be cited on a List of Inspectional Observations, FDA-483, for both prescription and non-prescription drugs.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶13",
+     "text": "Organization and Personnel [21 CFR 211 Subpart B]",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶14",
+     "text": "The firm must have a quality control department that has the responsibility and authority as described in the referenced CFR. The quality control department must maintain its independence from the production department, and its responsibilities must be in writing.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶15",
+     "text": "Obtain the name, title and individual responsibilities of corporate officers and other key employees as indicated in the IOM.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶16",
+     "text": "In the drug industry, an employee's education and training for their position has a significant impact on the production of a quality product. Report whether the firm has a formalized training program, and describe the type of training received. The training received by an employee should be documented.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶17",
+     "text": "Quality control must do product annual review on each drug manufactured, and have written annual review procedures. Review these reports in detail. This report will quickly let you know if the manufacturing process is under control. The report should provide a summary all lots that failed in-process or finished product testing, and other critical factors. Investigate any failures.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶18",
+     "text": "Quality control must validate the manufacturing process for each drug manufactured. Review and evaluate this data.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶19",
+     "text": "Buildings and Facilities [21 CFR 211 Subpart C]",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶20",
+     "text": "Review the construction, size, and location of plant in relation to surroundings. There must be adequate lighting, ventilation, screening, and proper physical barriers for all operations including dust, temperature, humidity, and bacteriological controls. There must be adequate blueprints which describe the high purity water, HEPA, and compressed air systems. The site must have adequate locker, toilet, and hand washing facilities.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶21",
+     "text": "The firm must provide adequate space for the placement of equipment and materials to prevent mix-ups in the following operations:",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶22",
+     "text": "receiving, sampling, and storage of raw materials;",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶23",
+     "text": "manufacturing or processing;",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶24",
+     "text": "packaging and labeling;",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶25",
+     "text": "storage for containers, packaging materials, labeling, and finished products;",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶26",
+     "text": "production and control laboratories.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "Equipment [21 CFR 211 Subpart D]"
+    }
+   ]
+  },
+  {
+   "unit": "¶27-¶44",
+   "paragraphs": [
+    {
+     "ref": "¶27",
+     "text": "Review the design, capacity, construction, and location of equipment used in the manufacturing, processing, packaging, labeling, and laboratories. Describe the manufacturing equipment including brief descriptions of operating principles. Consider the use of photographs, flow charts, and diagrams to supplement written descriptions.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶28",
+     "text": "New equipment must be properly installed, and operate as designed. Determine if the equipment change would require FDA pre-approval and/or revalidation of the manufacturing process. The equipment must be cleaned before use according to written procedures. The cleaning must be documented and validated.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶29",
+     "text": "The equipment should not adversely effect the identity, strength, quality, or purity of the drug. The material used to manufacture the equipment must not react with the drug. Also, lubricants or coolants must not contaminate the drug.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶30",
+     "text": "The equipment should be constructed and located to ease cleaning, adjustments, and maintenance. Also, it should prevent contamination from other or previous manufacturing operations. Equipment must be identified as to its cleaning status and content. The cleaning and maintenance of the equipment are usually documented in a log book maintained in the immediate area. Determine if the equipment is of suitable capacity and accuracy for use in measuring, weighing, or mixing operations. If the equipment requires calibration, they must have a written procedure for calibrating the equipment and document the calibration.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶31",
+     "text": "Components and Product Containers [21 CFR 211 Subpart E]",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶32",
+     "text": "Inspect the warehouse and determine how components, drug product containers, and closures are received, identified, stored, handled, sampled, tested, and approved or rejected. They must have written procedures which describe how these operations are done. Challenge the system to decide if it is functioning correctly. If the handling and storage of components are computer controlled, the program must be validated.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶33",
+     "text": "The receiving records must provide traceability to the component manufacturer and supplier. The receiving records for components should contain the name of the component, manufacturer, supplier if different from the manufacturer, and carrier. In addition, it should include the receiving date, manufacturer's lot number, quantity received, and control number assigned by the firm.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶34",
+     "text": "Check sanitary conditions in the storage area, stock rotation practices, retest dates, and special storage conditions (protection from light, moisture, temperature, air, etc.). Inspect glandular and botanical components for insect infestation.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶35",
+     "text": "Components or finished product adulterated by rodents, insects, or chemicals must be documented and submitted for seizure.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶36",
+     "text": "Collect the evidence even if the firm plans to voluntarily destroy the product. Be alert for components, colors, and food additives that may be new drug substances, appear to have no use in the plant or appear to be from an unknown supplier. Check the colors against the Color Additives Status List in the IOM Determine if the color is approved for its intended use, and required statements are declared on the drug label.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶37",
+     "text": "Components might be received at more than one location. Components must be handled in accordance with the drug CGMP's including components used in the research and development lab. Determine how components are identified after receipt and quarantined until released. Components must be identified so the status (quarantine, approved, or rejected) is known. Review the criteria for removing components from quarantine and challenge the system. Determine what records are maintained in the storage area to document the movement of components to other areas, and how rejected components handled. The component container has an identification code affixed to it. This unique code provides traceability from the component manufacturer to its use in the finished product.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶38",
+     "text": "Review the sampling and testing procedures for components, and the process by which approved materials are released for use. Decide if these practices are adequate and followed.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶39",
+     "text": "Determine the validity, and accuracy of the firm's inventory system for drug components, containers, closures and labeling. Challenge the component inventory records by weighing a lot and comparing the results against the quantity remaining on the inventory record. Significant discrepancies in these records should be investigated.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶40",
+     "text": "Evaluate the following to determine whether the firm has shown that the containers and closures are compatible with the product, will provide adequate protection for the drug against deterioration or contamination, are not additive or absorptive, and are suitable for use:",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶41",
+     "text": "Specifications for containers, closures, cotton filler, and desiccant, etc.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶42",
+     "text": "What tests or checks are made (cracks, glass particles, durability of material, metal particles in ointment tubes, compliance with compendium specifications, etc.).",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶43",
+     "text": "Cleaning procedures and how containers are stored.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶44",
+     "text": "Handling of preprinted containers. Are these controlled as labeling, or as containers? The firm must review the labeling for accuracy.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    }
+   ]
+  },
+  {
+   "unit": "¶64-¶76",
+   "paragraphs": [
+    {
+     "ref": "¶64",
+     "text": "Observe the actual operation of the equipment and determine whether powders or granulations are processed according to the firm's specifications. The mixing process must be validated. The drying ovens should have their own air handling system which will prevent cross-contamination. Does the firm record drying time/temperature and maintain recording charts including loss on drying test results? Review the in-line tests performed by production and/or quality control. Some in-process tests are tablet weight, thickness, hardness, disintegration , and friability. Evaluate the disposition of in-process samples.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶65",
+     "text": "Capsules may be either hard, or soft type. They are filled with powder, beads, or liquid by machine. The manufacturing operation of powders for capsules should follow the same practice as for tablets. Determine manufacturing controls used, in-line testing, and basis for evaluating test results for the filling operations.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "Sterile Products"
+    },
+    {
+     "ref": "¶66",
+     "text": "Typically, a sterile drug contains no viable microorganisms and is non-pyrogenic. Drugs for intravenous injection, irrigation, and as ophthalmic preparations, etc., meet this criteria. In addition, other dosage forms might be labeled as sterile. For instance, an ointment applied to a puncture wound or skin abrasion.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶67",
+     "text": "Parenteral drugs must be non-pyrogenic, because the presence of pyrogens can cause a febrile reaction in human beings. Pyrogens are the products of the growth of microorganisms. Therefore, any condition that permits bacterial growth should be avoided in the manufacturing process. Pyrogens may develop in water located in stills, storage tanks, dead legs, and piping, or from surface contamination of containers, closures, or other equipment. Parenterals may also contain chemical contaminants that will produce a pyretic response in humans or animals although there are no pyrogens present.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶68",
+     "text": "There are many excellent reference materials which should be reviewed before the inspection. Some of these are the \"Guideline on Sterile Drug Products Produced by Aseptic Processing,\" and chapter 84 on pyrogens in the Remington's Pharmaceutical Sciences.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶69",
+     "text": "Determine and evaluate the procedures used to minimize the hazard of contamination with microorganisms and particulates of sterile drugs.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "Personnel"
+    },
+    {
+     "ref": "¶70",
+     "text": "Review the training program to ensure that personnel performing production and control procedures have experience and training commensurate with their intended duties. It is important that personnel be trained in aseptic procedures. The employees must be properly gowned and use good aseptic techniques.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "Buildings"
+    },
+    {
+     "ref": "¶71",
+     "text": "The non-sterile preparation areas for sterile drugs should be controlled. Refer to Subpart C of the proposed CGMPR's for LVP's; however, deviations from these proposed regulations are not necessarily deviations from the CGMPR's. Evaluate the air cleanliness classification of the area. For guidance in this area, review Federal Standard #209E entitled \"Airborne Particulate Cleanliness Classes in Cleanrooms and Clean Zones.\" Observe the formulation practices or procedures used in the preparation areas. Be alert for routes of contamination. Determine how the firm minimizes traffic and unnecessary activity in the preparation area. Determine if filling rooms and other aseptic areas are constructed to eliminate possible areas for microbiological/particulate contamination. For instance, dust-collecting ledges, porous surfaces, etc. Determine how aseptic areas are cleaned and maintained.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "1. Air"
+    },
+    {
+     "ref": "¶72",
+     "text": "Air supplied to the non-sterile preparation or formulation area for manufacturing solutions prior to sterilization should be filtered as necessary to control particulates. Air being supplied to product exposure areas where sterile drugs are processed and handled should be high efficiency particulate air (HEPA) filtered under positive pressure.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶73",
+     "text": "Review the firm's system for HEPA filters, determine if they are certified and/or Dioctyl Phthalate (DOP) tested and frequency of testing.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶74",
+     "text": "Review the compressed air system and determine if it is filtered at the point of use to control particulates. Diagrams of the HEPA filtered and compressed air systems should be reviewed and evaluated.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "2. Environmental Controls"
+    },
+    {
+     "ref": "¶75",
+     "text": "Specifications for viable and non-viable particulates must be established. Specifications for viable particulates must include provisions for both air and surface sampling of aseptic processing areas and equipment. Review the firm's environmental control program, specifications, and test data. Determine if the firm follows its procedure for reviewing out-of-limit test results. Also, determine if review of environmental test data is included as a part of the firm's release procedures.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶76",
+     "text": "Note: In the preparation of media for environmental air and surface sampling, suitable inactivating agents should be added. For example, the addition of penicillinase to media used for monitoring sterile penicillin operations and cephalosporin products.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "<>"
+    },
+    {
+     "context": "Equipment"
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶1-¶26#1",
+   "unit": "¶1-¶26",
+   "hash": "49225a9dcb46dd89",
+   "item": {
+    "statement": "Manufacture every drug, prescription or over-the-counter, in compliance with current good manufacturing practice requirements.",
+    "quote": "All drugs must be manufactured in accordance with the current good manufacturing practice regulations",
+    "clause_number": "¶11",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶1-¶26#2",
+   "unit": "¶1-¶26",
+   "hash": "d6536f89d26ec031",
+   "item": {
+    "statement": "Keep records relating to prescription drugs readily available for review by FDA during inspection.",
+    "quote": "Records relating to prescription drugs must be readily available for review",
+    "clause_number": "¶11",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "prescription drugs"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶27-¶44#1",
+   "unit": "¶27-¶44",
+   "hash": "38305d1b5edcd507",
+   "item": {
+    "statement": "Use only colors approved for their intended use, and declare the required statements about them on the drug label.",
+    "quote": "Determine if the color is approved for its intended use, and required statements are declared on the drug label.",
+    "clause_number": "¶36",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶64-¶76#1",
+   "unit": "¶64-¶76",
+   "hash": "fd0a258a7d9071fb",
+   "item": {
+    "statement": "Process powders and granulations according to the firm's own specifications.",
+    "quote": "determine whether powders or granulations are processed according to the firm's specifications.",
+    "clause_number": "¶64",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶64-¶76#2",
+   "unit": "¶64-¶76",
+   "hash": "aab7d9877bf2c104",
+   "item": {
+    "statement": "Have HEPA filters in sterile drug operations certified and/or DOP tested, at a defined testing frequency.",
+    "quote": "Review the firm's system for HEPA filters, determine if they are certified and/or Dioctyl Phthalate (DOP) tested and frequency of testing.",
+    "clause_number": "¶73",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "sterile drug operations"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶64-¶76#3",
+   "unit": "¶64-¶76",
+   "hash": "aa459b13540085bb",
+   "item": {
+    "statement": "Filter compressed air used in sterile drug operations at the point of use to control particulates.",
+    "quote": "Review the compressed air system and determine if it is filtered at the point of use to control particulates.",
+    "clause_number": "¶74",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "sterile drug operations"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  }
+ ]
+}

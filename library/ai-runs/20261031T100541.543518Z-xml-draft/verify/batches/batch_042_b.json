@@ -1,0 +1,312 @@
+{
+ "role": "b",
+ "instructions": "You are a second, independent auditor. Check one checklist item against the US regulation paragraph it claims to come from. You get\nthe section's paragraphs (reference and exact text, from the official eCFR XML) and the item. Start from the TEXT:\nread the cited paragraph and its lead-in fully, then compare the item.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the parent paragraph's\nlead-in (including a qualifier such as \"as are necessary to prevent contamination or mixups\"). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph requires what the statement asks for, the statement\n  adds nothing and omits nothing of that obligation, the strength (shall/must = mandatory, should = recommended,\n  may = optional; a sub-paragraph takes its lead-in's) matches, and the regulation applies to every listed plant\n  type (INJ = sterile injectables: a paragraph limited to products not required to be sterile does not apply to\n  INJ; one limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences saying what you checked for THIS item, in this item's own words: name the\n  condition, number, list or scope you compared with the text (e.g. \"the 30-day limit and 'each lot' are both in\n  the statement\", \"the list of components, containers and closures is complete\", \"drops the lead-in's 'for\n  sterile products'\"). Write each reason fresh for its item: a reason that would fit any item (\"quote exact,\n  strength matches, nothing added or omitted\") or that repeats another answer's reason is not an answer, and the\n  item then counts as unchecked.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "sections": [
+  {
+   "section": "211.182",
+   "paragraphs": [
+    {
+     "ref": "211.182",
+     "text": "§ 211.182 Equipment cleaning and use log. A written record of major equipment cleaning, maintenance (except routine maintenance such as lubrication and adjustments), and use shall be included in individual equipment logs that show the date, time, product, and lot number of each batch processed. If equipment is dedicated to manufacture of one product, then individual equipment logs are not required, provided that lots or batches of such product follow in numerical order and are manufactured in numerical sequence. In cases where dedicated equipment is employed, the records of cleaning, maintenance, and use shall be part of the batch record. The persons performing and double-checking the cleaning and maintenance (or, if the cleaning and maintenance is performed using automated equipment under § 211.68, just the person verifying the cleaning and maintenance done by the automated equipment) shall date and sign or initial the log indicating that the work was performed. Entries in the log shall be in chronological order."
+    }
+   ]
+  },
+  {
+   "section": "211.184",
+   "paragraphs": [
+    {
+     "ref": "211.184",
+     "text": "§ 211.184 Component, drug product container, closure, and labeling records. These records shall include the following:"
+    },
+    {
+     "ref": "211.184(a)",
+     "text": "(a) The identity and quantity of each shipment of each lot of components, drug product containers, closures, and labeling; the name of the supplier; the supplier's lot number(s) if known; the receiving code as specified in § 211.80; and the date of receipt. The name and location of the prime manufacturer, if different from the supplier, shall be listed if known."
+    },
+    {
+     "ref": "211.184(b)",
+     "text": "(b) The results of any test or examination performed (including those performed as required by § 211.82(a), § 211.84(d), or § 211.122(a)) and the conclusions derived therefrom."
+    },
+    {
+     "ref": "211.184(c)",
+     "text": "(c) An individual inventory record of each component, drug product container, and closure and, for each component, a reconciliation of the use of each lot of such component. The inventory record shall contain sufficient information to allow determination of any batch or lot of drug product associated with the use of each component, drug product container, and closure."
+    },
+    {
+     "ref": "211.184(d)",
+     "text": "(d) Documentation of the examination and review of labels and labeling for conformity with established specifications in accord with §§ 211.122(c) and 211.130(c)."
+    },
+    {
+     "ref": "211.184(e)",
+     "text": "(e) The disposition of rejected components, drug product containers, closure, and labeling."
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.182#3",
+   "section": "211.182",
+   "hash": "294cf5bea06aa2f1",
+   "item": {
+    "statement": "Where dedicated equipment is used, make the records of its cleaning, maintenance and use part of the batch record.",
+    "quote": "In cases where dedicated equipment is employed, the records of cleaning, maintenance, and use shall be part of the batch record.",
+    "clause_number": "211.182",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "dedicated equipment is used"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.182#4",
+   "section": "211.182",
+   "hash": "b39dd19f067a8ffe",
+   "item": {
+    "statement": "Have the persons who perform and who double-check equipment cleaning and maintenance date and sign or initial the log to show the work was done; where the cleaning and maintenance is done by automated equipment, only the person verifying the automated work needs to do so.",
+    "quote": "The persons performing and double-checking the cleaning and maintenance (or, if the cleaning and maintenance is performed using automated equipment under § 211.68, just the person verifying the cleaning and maintenance done by the automated equipment) shall date and sign or initial the log indicating that the work was performed.",
+    "clause_number": "211.182",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "if automated equipment is used, only the verifier signs"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.182#5",
+   "section": "211.182",
+   "hash": "6857d23b9aa05c3f",
+   "item": {
+    "statement": "Make entries in the equipment log in chronological order.",
+    "quote": "Entries in the log shall be in chronological order.",
+    "clause_number": "211.182",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.184#1",
+   "section": "211.184",
+   "hash": "c6bec082a32b7642",
+   "item": {
+    "statement": "Keep component, drug product container, closure and labeling records that include the identity and quantity of each shipment of each lot of components, containers, closures and labeling; the supplier's name; the supplier's lot number(s) if known; the receiving code; and the date of receipt.",
+    "quote": "The identity and quantity of each shipment of each lot of components, drug product containers, closures, and labeling; the name of the supplier; the supplier's lot number(s) if known; the receiving code as specified in § 211.80; and the date of receipt.",
+    "clause_number": "211.184(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "supplier lot number(s) if known"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.184#2",
+   "section": "211.184",
+   "hash": "6f1b281ac460aae8",
+   "item": {
+    "statement": "In component, drug product container, closure and labeling records, list the name and location of the prime manufacturer if it differs from the supplier and is known.",
+    "quote": "The name and location of the prime manufacturer, if different from the supplier, shall be listed if known.",
+    "clause_number": "211.184(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "prime manufacturer differs from supplier and is known"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.184#3",
+   "section": "211.184",
+   "hash": "fd3e05cdde6c1e46",
+   "item": {
+    "statement": "Keep component, drug product container, closure and labeling records that include the results of every test or examination performed on them (including identity tests, receipt examinations and labeling examinations) and the conclusions drawn from them.",
+    "quote": "The results of any test or examination performed (including those performed as required by § 211.82(a), § 211.84(d), or § 211.122(a)) and the conclusions derived therefrom.",
+    "clause_number": "211.184(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.184#4",
+   "section": "211.184",
+   "hash": "e95b6395e339eec7",
+   "item": {
+    "statement": "Keep component, drug product container, closure and labeling records that include an individual inventory record of each component, drug product container and closure and, for each component, a reconciliation of the use of each lot.",
+    "quote": "An individual inventory record of each component, drug product container, and closure and, for each component, a reconciliation of the use of each lot of such component.",
+    "clause_number": "211.184(c)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.184#5",
+   "section": "211.184",
+   "hash": "4cebeb3f0e238ddf",
+   "item": {
+    "statement": "Ensure the inventory record of each component, drug product container and closure holds enough information to determine any batch or lot of drug product associated with its use.",
+    "quote": "The inventory record shall contain sufficient information to allow determination of any batch or lot of drug product associated with the use of each component, drug product container, and closure.",
+    "clause_number": "211.184(c)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.184#6",
+   "section": "211.184",
+   "hash": "ad0b76a43d6b3bce",
+   "item": {
+    "statement": "Keep component, drug product container, closure and labeling records that include documentation of the examination and review of labels and labeling for conformity with established specifications.",
+    "quote": "Documentation of the examination and review of labels and labeling for conformity with established specifications in accord with §§ 211.122(c) and 211.130(c).",
+    "clause_number": "211.184(d)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.184#7",
+   "section": "211.184",
+   "hash": "4a584e47581fe292",
+   "item": {
+    "statement": "Keep component, drug product container, closure and labeling records that include the disposition of rejected components, drug product containers, closures and labeling.",
+    "quote": "The disposition of rejected components, drug product containers, closure, and labeling.",
+    "clause_number": "211.184(e)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  }
+ ]
+}

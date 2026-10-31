@@ -1,6 +1,6 @@
 {
  "role": "a",
- "instructions": "You are an auditor checking one checklist item against the US regulation paragraph it claims to come from. You get\nthe section's paragraphs (reference and exact text, from the official eCFR XML) and the item. Start from the ITEM:\nread it, then find in the cited paragraph what it covers.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the parent paragraph's\nlead-in (including a qualifier such as \"as are necessary to prevent contamination or mixups\"). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph requires what the statement asks for, the statement\n  adds nothing and omits nothing of that obligation, the strength (shall/must = mandatory, should = recommended,\n  may = optional; a sub-paragraph takes its lead-in's) matches, and the regulation applies to every listed plant\n  type (INJ = sterile injectables: a paragraph limited to products not required to be sterile does not apply to\n  INJ; one limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "instructions": "You are an auditor checking one checklist item against the US regulation paragraph it claims to come from. You get\nthe section's paragraphs (reference and exact text, from the official eCFR XML) and the item. Start from the ITEM:\nread it, then find in the cited paragraph what it covers.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the parent paragraph's\nlead-in (including a qualifier such as \"as are necessary to prevent contamination or mixups\"). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph requires what the statement asks for, the statement\n  adds nothing and omits nothing of that obligation, the strength (shall/must = mandatory, should = recommended,\n  may = optional; a sub-paragraph takes its lead-in's) matches, and the regulation applies to every listed plant\n  type (INJ = sterile injectables: a paragraph limited to products not required to be sterile does not apply to\n  INJ; one limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences saying what you checked for THIS item, in this item's own words: name the\n  condition, number, list or scope you compared with the text (e.g. \"the 30-day limit and 'each lot' are both in\n  the statement\", \"the list of components, containers and closures is complete\", \"drops the lead-in's 'for\n  sterile products'\"). Write each reason fresh for its item: a reason that would fit any item (\"quote exact,\n  strength matches, nothing added or omitted\") or that repeats another answer's reason is not an answer, and the\n  item then counts as unchecked.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
  "schema": {
   "type": "object",
   "required": [
@@ -29,110 +29,144 @@
  },
  "sections": [
   {
-   "section": "207.61",
+   "section": "207.33",
    "paragraphs": [
     {
-     "ref": "207.61",
-     "text": "§ 207.61 How is registration and listing information provided to FDA?"
+     "ref": "207.33",
+     "text": "§ 207.33 What is the National Drug Code (NDC), how is it assigned, and what are its requirements?"
     },
     {
-     "ref": "207.61(a)",
-     "text": "(a) Electronic format."
+     "ref": "207.33(a)",
+     "text": "(a) What is the NDC for a drug and what products must have unique NDCs? The NDC for a drug is a numeric code. Each finished drug product or unfinished drug subject to the listing requirements of this part must have a unique NDC to identify its labeler, product, and package size and type."
     },
     {
-     "ref": "207.61(a)(1)",
-     "text": "(1) Except as provided in § 207.65, all information submitted under this part must be transmitted to FDA in electronic format by using our electronic drug registration and listing system, in a form that we can process, review, and archive. We may periodically issue guidance on how to provide registration and listing information in electronic format (specifying for example method of transmission, media, file formats, preparation, and organization of files)."
+     "ref": "207.33(b)",
+     "text": "(b) What is the format of an NDC?"
     },
     {
-     "ref": "207.61(a)(2)",
-     "text": "(2) Information provided in electronic format must comply with part 11 of this chapter, except as follows:"
+     "ref": "207.33(b)(1)",
+     "text": "(1) Except as described in paragraph (b)(4) of this section, the NDC must consist of 10 or 11 digits, divided into three segments as follows:"
     },
     {
-     "ref": "207.61(a)(2)(i)",
-     "text": "(i) Advertisements and labeling, including the content of labeling, required under this part are exempt from the requirements in § 11.10(a), (c) through (h), and (k) of this chapter and the corresponding requirements in § 11.30 of this chapter."
+     "ref": "207.33(b)(1)(i)",
+     "text": "(i) The first segment of the NDC is the labeler code and consists of 4, 5, or 6 digits. The labeler code is assigned by FDA."
     },
     {
-     "ref": "207.61(a)(2)(ii)",
-     "text": "(ii) All other information submitted under this part is exempt from the requirements in § 11.10(b), (c), and (e) of this chapter and the corresponding requirements in § 11.30 of this chapter."
+     "ref": "207.33(b)(1)(ii)",
+     "text": "(ii) The second segment of the NDC is the product code and consists of 3 or 4 digits, as specified in paragraphs (b)(2) and (3) of this section."
     },
     {
-     "ref": "207.61(b)",
-     "text": "(b) English language. Drug establishment registration and drug listing information must be provided in the English language. The content of labeling must be provided at a minimum in the English language. Where § 201.15(c) of this chapter permits product labeling solely in a foreign language, the content of labeling must be submitted in that language along with an accurate English translation."
-    }
-   ]
-  },
-  {
-   "section": "207.65",
-   "paragraphs": [
-    {
-     "ref": "207.65",
-     "text": "§ 207.65 How can a waiver of the electronic submission requirement be obtained?"
+     "ref": "207.33(b)(1)(iii)",
+     "text": "(iii) The third segment of the NDC is the package code and consists of 1 or 2 digits as specified in paragraphs (b)(2) and (3) of this section. The package code identifies the package size and type of the drug and differentiates between different quantitative and qualitative attributes of the product packaging."
     },
     {
-     "ref": "207.65(a)",
-     "text": "(a) All information submitted under this part must be transmitted to FDA electronically in accordance with § 207.61(a) unless FDA has granted a request for waiver of this requirement prior to the date on which submission of such information is due. Submission of a request for waiver does not excuse timely compliance with the registration and listing requirements. FDA will grant a waiver request if FDA determines that the use of electronic means for submission of registration and listing information is not reasonable for the registrant making the waiver request."
+     "ref": "207.33(b)(2)",
+     "text": "(2) The following combinations of labeler code, product code and package code character lengths are permissible:"
     },
     {
-     "ref": "207.65(b)",
-     "text": "(b) Waiver requests under this section must be submitted in writing and must include the specific reasons why electronic submission is not reasonable for the registrant and a U.S. telephone number and mailing address where FDA can contact the registrant. All waiver requests must be sent to: SPL Coordinator, U.S. Food and Drug Administration, 10903 New Hampshire Ave., Bldg. 32, Silver Spring, MD 20993."
+     "ref": "207.33(b)(2)(i)",
+     "text": "(i) If a labeler code is either 5 or 6 digits in length, it may be combined with:"
     },
     {
-     "ref": "207.65(c)",
-     "text": "(c) If FDA grants the waiver request, FDA may limit its duration and will specify terms of the waiver and provide information on how to submit establishment registration, drug listings, other information, and updates, as applicable."
-    }
-   ]
-  },
-  {
-   "section": "207.69",
-   "paragraphs": [
-    {
-     "ref": "207.69",
-     "text": "§ 207.69 What are the requirements for an official contact and a United States agent?"
+     "ref": "207.33(b)(2)(i)(A)",
+     "text": "(A) A product code consisting of 4 digits and a package code consisting of 1 digit for a total NDC length of 10 or 11 digits (5-4-1 or 6-4-1), or"
     },
     {
-     "ref": "207.69(a)",
-     "text": "(a) Official contact. Registrants subject to the registration requirements of this part must designate an official contact for each establishment. The official contact is responsible for:"
+     "ref": "207.33(b)(2)(i)(B)",
+     "text": "(B) A product code consisting of 3 digits and a package code consisting of 2 digits for a total NDC length of 10 or 11 digits (5-3-2 or 6-3-2)."
     },
     {
-     "ref": "207.69(a)(1)",
-     "text": "(1) Ensuring the accuracy of registration and listing information; and"
+     "ref": "207.33(b)(2)(ii)",
+     "text": "(ii) If a labeler code is 4 digits in length, it may be combined only with a product code consisting of 4 digits and a package code consisting of 2 digits for a total NDC length of 10 digits (4-4-2)."
     },
     {
-     "ref": "207.69(a)(2)",
-     "text": "(2) Reviewing, disseminating, routing, and responding to all communications from FDA including emergency communications."
+     "ref": "207.33(b)(3)",
+     "text": "(3) A registrant or private label distributor with a given labeler code must use only one Product-Package Code configuration (e.g., a 3-digit product code combined with a 2-digit package code or a 4-digit product code combined with a 1-digit package code). This single configuration must be used in all NDCs that include the given labeler code that are reserved in accordance with § 207.33(d)(3) or listed in accordance with § 207.49 or § 207.53."
     },
     {
-     "ref": "207.69(b)",
-     "text": "(b) United States agent. Registrants of foreign establishments subject to this part must designate a single United States agent. The United States agent must reside or maintain a place of business in the United States and may not be a mailbox, answering machine or service, or other place where a person acting as the United States agent is not physically present. The United States agent is responsible for:"
+     "ref": "207.33(b)(4)",
+     "text": "(4) An alternatively formatted NDC that is approved for use by the relevant Center Director may be used for the following HCT/Ps if they are minimally manipulated: Hematopoietic stem/progenitor cells derived from peripheral and cord blood, and lymphocytes collected from peripheral blood."
     },
     {
-     "ref": "207.69(b)(1)",
-     "text": "(1) Reviewing, disseminating, routing, and responding to all communications from FDA including emergency communications;"
+     "ref": "207.33(c)",
+     "text": "(c) Who must obtain an NDC labeler code and how is the code assigned and updated?"
     },
     {
-     "ref": "207.69(b)(2)",
-     "text": "(2) Responding to questions concerning those drugs that are imported or offered for import to the United States;"
+     "ref": "207.33(c)(1)",
+     "text": "(1) Each person who engages in manufacturing, repacking, relabeling, or private label distribution of a drug subject to listing under this part must apply for an NDC labeler code, by providing the following information:"
     },
     {
-     "ref": "207.69(b)(3)",
-     "text": "(3) Assisting FDA in scheduling inspections; and"
+     "ref": "207.33(c)(1)(i)",
+     "text": "(i) The name, physical address, email address, and other contact information FDA may request, of the person for whom the NDC labeler code is requested;"
     },
     {
-     "ref": "207.69(b)(4)",
-     "text": "(4) If FDA is unable to contact a foreign registrant directly or expeditiously, FDA may provide the information and/or documents to the United States agent. FDA's providing information and/or documents to the United States agent is equivalent to providing the same information and/or documents to the foreign registrant."
+     "ref": "207.33(c)(1)(ii)",
+     "text": "(ii) The type(s) of activities (e.g., manufacture or repacking) in which the person requesting the NDC labeler code engages with respect to human drugs; and"
+    },
+    {
+     "ref": "207.33(c)(1)(iii)",
+     "text": "(iii) The type(s) of drug(s) (human, animal, or both, and prescription, nonprescription, or both) to which the NDC labeler code will be applied."
+    },
+    {
+     "ref": "207.33(c)(2)",
+     "text": "(2) Each person who is assigned an NDC labeler code must update the information submitted under paragraph (c)(1)of this section within 30 calendar days after any change to that information."
+    },
+    {
+     "ref": "207.33(d)",
+     "text": "(d) How is an NDC proposed for assignment by FDA, when is an NDC assigned by FDA, and how can a proposed NDC be reserved?"
+    },
+    {
+     "ref": "207.33(d)(1)",
+     "text": "(1) An NDC is proposed for assignment by FDA when it is submitted for the first time with listing information in accordance with § 207.49 or § 207.53, as applicable."
+    },
+    {
+     "ref": "207.33(d)(1)(i)",
+     "text": "(i) Each manufacturer, repacker, or relabeler must propose for assignment by FDA an NDC that includes its own labeler code for each package size and type of drug that it manufactures, repacks, or relabels for commercial distribution."
+    },
+    {
+     "ref": "207.33(d)(1)(ii)",
+     "text": "(ii) In addition, if a drug is distributed under the trade name or label of a private label distributor, the manufacturer, repacker, or relabeler must also propose for assignment by FDA an NDC that includes the labeler code of the private label distributor under whose trade name or label the drug is distributed, for each package size and type so distributed."
+    },
+    {
+     "ref": "207.33(d)(2)",
+     "text": "(2) If a proposed NDC conforms to the requirements of this section and is not reserved for a different drug or was not previously assigned to a different drug, FDA will assign the NDC to a drug when it receives listing information required for that drug under § 207.49 or § 207.53."
+    },
+    {
+     "ref": "207.33(d)(3)",
+     "text": "(3) A manufacturer, repacker, relabeler, or private label distributor may voluntarily reserve a proposed NDC for a drug, before the drug is listed, by submitting the following information:"
+    },
+    {
+     "ref": "207.33(d)(3)(i)",
+     "text": "(i) A proposed NDC that conforms to the requirements of this section;"
+    },
+    {
+     "ref": "207.33(d)(3)(ii)",
+     "text": "(ii) The established name of the active ingredient(s) and the strength of each active ingredient in the drug; and"
+    },
+    {
+     "ref": "207.33(d)(3)(iii)",
+     "text": "(iii) In the case of a finished drug product, the dosage form, and route of administration."
+    },
+    {
+     "ref": "207.33(d)(4)",
+     "text": "(4) If the required information is submitted and the proposed NDC is properly formatted and not already assigned or reserved, FDA will reserve the proposed NDC for a period of 2 years from the date of submission. If the drug for which the proposed NDC is reserved is not listed in accordance with § 207.49 or § 207.53 during such 2-year period, the reservation of the proposed NDC will lapse. FDA may also cancel the reservation of a proposed NDC at any time on the request of the person whose labeler code is included in the proposed NDC."
+    },
+    {
+     "ref": "207.33(e)",
+     "text": "(e) How must the information be submitted to us? The information described in paragraphs (c) and (d) of this section must be submitted electronically unless FDA grants a waiver under § 207.65."
     }
    ]
   }
  ],
  "items": [
   {
-   "id": "fda-cfr-21-part-207.xml:207.61#1",
-   "section": "207.61",
-   "hash": "a957166070f06e51",
+   "id": "fda-cfr-21-part-207.xml:207.33#16",
+   "section": "207.33",
+   "hash": "8843692a0abc7f53",
    "item": {
-    "statement": "Unless FDA has granted a waiver of electronic submission, transmit all drug registration and listing information to FDA electronically through FDA's electronic drug registration and listing system, in a form FDA can process, review and archive.",
-    "quote": "Except as provided in § 207.65, all information submitted under this part must be transmitted to FDA in electronic format by using our electronic drug registration and listing system, in a form that we can process, review, and archive.",
-    "clause_number": "207.61(a)(1)",
+    "statement": "A holder of an NDC labeler code updates the information submitted in its labeler code application within 30 calendar days after any change to it.",
+    "quote": "Each person who is assigned an NDC labeler code must update the information submitted under paragraph (c)(1)of this section within 30 calendar days after any change to that information.",
+    "clause_number": "207.33(c)(2)",
     "strength": "mandatory",
     "plant_types": [
      "OSD",
@@ -141,7 +175,7 @@
      "INJ",
      "API"
     ],
-    "condition": "unless an electronic submission waiver applies"
+    "condition": "change to labeler code information"
    },
    "plant_scope": [
     "OSD",
@@ -152,13 +186,13 @@
    ]
   },
   {
-   "id": "fda-cfr-21-part-207.xml:207.61#2",
-   "section": "207.61",
-   "hash": "0d6e9b9137c26843",
+   "id": "fda-cfr-21-part-207.xml:207.33#17",
+   "section": "207.33",
+   "hash": "17b26f41fe506038",
    "item": {
-    "statement": "Ensure registration and listing information provided electronically complies with FDA's electronic records and electronic signatures requirements, apart from the specified exemptions from certain of those controls for advertisements and labeling and for other submitted information.",
-    "quote": "Information provided in electronic format must comply with part 11 of this chapter, except as follows:",
-    "clause_number": "207.61(a)(2)",
+    "statement": "Each manufacturer, repacker, or relabeler proposes to FDA for assignment an NDC including its own labeler code for each package size and type of drug it manufactures, repacks, or relabels for commercial distribution.",
+    "quote": "Each manufacturer, repacker, or relabeler must propose for assignment by FDA an NDC that includes its own labeler code for each package size and type of drug that it manufactures, repacks, or relabels for commercial distribution.",
+    "clause_number": "207.33(d)(1)(i)",
     "strength": "mandatory",
     "plant_types": [
      "OSD",
@@ -167,7 +201,7 @@
      "INJ",
      "API"
     ],
-    "condition": "information provided in electronic format"
+    "condition": "drug for commercial distribution"
    },
    "plant_scope": [
     "OSD",
@@ -178,13 +212,13 @@
    ]
   },
   {
-   "id": "fda-cfr-21-part-207.xml:207.61#3",
-   "section": "207.61",
-   "hash": "57bbd846cddb80cf",
+   "id": "fda-cfr-21-part-207.xml:207.33#18",
+   "section": "207.33",
+   "hash": "5d64e5fbd8d0c0a9",
    "item": {
-    "statement": "Provide drug establishment registration and drug listing information in English.",
-    "quote": "Drug establishment registration and drug listing information must be provided in the English language.",
-    "clause_number": "207.61(b)",
+    "statement": "If a drug is distributed under a private label distributor's trade name or label, the manufacturer, repacker, or relabeler also proposes for FDA assignment an NDC including that private label distributor's labeler code for each package size and type so distributed.",
+    "quote": "In addition, if a drug is distributed under the trade name or label of a private label distributor, the manufacturer, repacker, or relabeler must also propose for assignment by FDA an NDC that includes the labeler code of the private label distributor under whose trade name or label the drug is distributed, for each package size and type so distributed.",
+    "clause_number": "207.33(d)(1)(ii)",
     "strength": "mandatory",
     "plant_types": [
      "OSD",
@@ -193,7 +227,7 @@
      "INJ",
      "API"
     ],
-    "condition": ""
+    "condition": "drug distributed under private label"
    },
    "plant_scope": [
     "OSD",
@@ -204,14 +238,14 @@
    ]
   },
   {
-   "id": "fda-cfr-21-part-207.xml:207.61#4",
-   "section": "207.61",
-   "hash": "9f2b51f61f18550c",
+   "id": "fda-cfr-21-part-207.xml:207.33#19",
+   "section": "207.33",
+   "hash": "a0702f6829ec097d",
    "item": {
-    "statement": "Provide the content of labeling in at least English.",
-    "quote": "The content of labeling must be provided at a minimum in the English language.",
-    "clause_number": "207.61(b)",
-    "strength": "mandatory",
+    "statement": "A manufacturer, repacker, relabeler, or private label distributor may voluntarily reserve a proposed NDC for a drug before it is listed by submitting the required reservation information.",
+    "quote": "A manufacturer, repacker, relabeler, or private label distributor may voluntarily reserve a proposed NDC for a drug, before the drug is listed, by submitting the following information:",
+    "clause_number": "207.33(d)(3)",
+    "strength": "optional",
     "plant_types": [
      "OSD",
      "LIQ",
@@ -219,7 +253,7 @@
      "INJ",
      "API"
     ],
-    "condition": ""
+    "condition": "before the drug is listed"
    },
    "plant_scope": [
     "OSD",
@@ -230,14 +264,14 @@
    ]
   },
   {
-   "id": "fda-cfr-21-part-207.xml:207.61#5",
-   "section": "207.61",
-   "hash": "499682760e344be2",
+   "id": "fda-cfr-21-part-207.xml:207.33#20",
+   "section": "207.33",
+   "hash": "4399f1cc7eecdb91",
    "item": {
-    "statement": "Where FDA rules permit product labeling solely in a foreign language, submit the content of labeling in that language together with an accurate English translation.",
-    "quote": "Where § 201.15(c) of this chapter permits product labeling solely in a foreign language, the content of labeling must be submitted in that language along with an accurate English translation.",
-    "clause_number": "207.61(b)",
-    "strength": "mandatory",
+    "statement": "When voluntarily reserving an NDC before listing, submit a proposed NDC that meets the NDC requirements.",
+    "quote": "A proposed NDC that conforms to the requirements of this section;",
+    "clause_number": "207.33(d)(3)(i)",
+    "strength": "optional",
     "plant_types": [
      "OSD",
      "LIQ",
@@ -245,7 +279,7 @@
      "INJ",
      "API"
     ],
-    "condition": "where labeling solely in a foreign language is permitted"
+    "condition": "voluntary NDC reservation"
    },
    "plant_scope": [
     "OSD",
@@ -256,14 +290,14 @@
    ]
   },
   {
-   "id": "fda-cfr-21-part-207.xml:207.65#1",
-   "section": "207.65",
-   "hash": "50aee78cf705659d",
+   "id": "fda-cfr-21-part-207.xml:207.33#21",
+   "section": "207.33",
+   "hash": "f067406fafbe802f",
    "item": {
-    "statement": "Transmit all registration and listing information to FDA electronically unless FDA granted a waiver request before the date the information is due.",
-    "quote": "All information submitted under this part must be transmitted to FDA electronically in accordance with § 207.61(a) unless FDA has granted a request for waiver of this requirement prior to the date on which submission of such information is due.",
-    "clause_number": "207.65(a)",
-    "strength": "mandatory",
+    "statement": "When voluntarily reserving an NDC before listing, submit the established name of each active ingredient and the strength of each active ingredient in the drug.",
+    "quote": "The established name of the active ingredient(s) and the strength of each active ingredient in the drug; and",
+    "clause_number": "207.33(d)(3)(ii)",
+    "strength": "optional",
     "plant_types": [
      "OSD",
      "LIQ",
@@ -271,7 +305,7 @@
      "INJ",
      "API"
     ],
-    "condition": "unless a waiver was granted before the due date"
+    "condition": "voluntary NDC reservation"
    },
    "plant_scope": [
     "OSD",
@@ -282,14 +316,14 @@
    ]
   },
   {
-   "id": "fda-cfr-21-part-207.xml:207.65#2",
-   "section": "207.65",
-   "hash": "fae536308fb39ba3",
+   "id": "fda-cfr-21-part-207.xml:207.33#22",
+   "section": "207.33",
+   "hash": "8be470444dec7bc5",
    "item": {
-    "statement": "When requesting a waiver of electronic submission, submit the request in writing, stating the specific reasons electronic submission is not reasonable for the registrant and giving a U.S. telephone number and mailing address where FDA can contact the registrant.",
-    "quote": "Waiver requests under this section must be submitted in writing and must include the specific reasons why electronic submission is not reasonable for the registrant and a U.S. telephone number and mailing address where FDA can contact the registrant.",
-    "clause_number": "207.65(b)",
-    "strength": "mandatory",
+    "statement": "When voluntarily reserving an NDC before listing a finished drug product, submit its dosage form and route of administration.",
+    "quote": "In the case of a finished drug product, the dosage form, and route of administration.",
+    "clause_number": "207.33(d)(3)(iii)",
+    "strength": "optional",
     "plant_types": [
      "OSD",
      "LIQ",
@@ -297,7 +331,7 @@
      "INJ",
      "API"
     ],
-    "condition": "when requesting a waiver"
+    "condition": "voluntary NDC reservation; finished drug product"
    },
    "plant_scope": [
     "OSD",
@@ -308,13 +342,13 @@
    ]
   },
   {
-   "id": "fda-cfr-21-part-207.xml:207.65#3",
-   "section": "207.65",
-   "hash": "29cf0d5684259ebc",
+   "id": "fda-cfr-21-part-207.xml:207.33#23",
+   "section": "207.33",
+   "hash": "6ddcdbbd016e14c6",
    "item": {
-    "statement": "Send any electronic submission waiver request to the SPL Coordinator, U.S. Food and Drug Administration, 10903 New Hampshire Ave., Bldg. 32, Silver Spring, MD 20993.",
-    "quote": "All waiver requests must be sent to: SPL Coordinator, U.S. Food and Drug Administration, 10903 New Hampshire Ave., Bldg. 32, Silver Spring, MD 20993.",
-    "clause_number": "207.65(b)",
+    "statement": "Submit NDC labeler code applications and updates, and NDC proposal and reservation information, electronically unless FDA grants a waiver.",
+    "quote": "The information described in paragraphs (c) and (d) of this section must be submitted electronically unless FDA grants a waiver under § 207.65.",
+    "clause_number": "207.33(e)",
     "strength": "mandatory",
     "plant_types": [
      "OSD",
@@ -323,215 +357,7 @@
      "INJ",
      "API"
     ],
-    "condition": "when requesting a waiver"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ",
-    "API"
-   ]
-  },
-  {
-   "id": "fda-cfr-21-part-207.xml:207.69#1",
-   "section": "207.69",
-   "hash": "d328ab6a09133d7f",
-   "item": {
-    "statement": "As a registrant subject to drug establishment registration, designate an official contact for each establishment.",
-    "quote": "Registrants subject to the registration requirements of this part must designate an official contact for each establishment.",
-    "clause_number": "207.69(a)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ",
-     "API"
-    ],
-    "condition": "registrants subject to registration"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ",
-    "API"
-   ]
-  },
-  {
-   "id": "fda-cfr-21-part-207.xml:207.69#2",
-   "section": "207.69",
-   "hash": "b1f0fb4eeaaf47e8",
-   "item": {
-    "statement": "Make the designated official contact responsible for ensuring registration and listing information is accurate.",
-    "quote": "Ensuring the accuracy of registration and listing information",
-    "clause_number": "207.69(a)(1)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ",
-     "API"
-    ],
-    "condition": "registrants subject to registration"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ",
-    "API"
-   ]
-  },
-  {
-   "id": "fda-cfr-21-part-207.xml:207.69#3",
-   "section": "207.69",
-   "hash": "f37bf621b5eacce0",
-   "item": {
-    "statement": "Make the designated official contact responsible for reviewing, disseminating, routing and responding to all FDA communications, including emergency communications.",
-    "quote": "Reviewing, disseminating, routing, and responding to all communications from FDA including emergency communications.",
-    "clause_number": "207.69(a)(2)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ",
-     "API"
-    ],
-    "condition": "registrants subject to registration"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ",
-    "API"
-   ]
-  },
-  {
-   "id": "fda-cfr-21-part-207.xml:207.69#4",
-   "section": "207.69",
-   "hash": "fcf55dd16615925b",
-   "item": {
-    "statement": "As a registrant of a foreign establishment, designate a single United States agent.",
-    "quote": "Registrants of foreign establishments subject to this part must designate a single United States agent.",
-    "clause_number": "207.69(b)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ",
-     "API"
-    ],
-    "condition": "foreign establishments"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ",
-    "API"
-   ]
-  },
-  {
-   "id": "fda-cfr-21-part-207.xml:207.69#5",
-   "section": "207.69",
-   "hash": "54cd4c6807e74c04",
-   "item": {
-    "statement": "For a foreign establishment, ensure the United States agent resides or keeps a place of business in the United States and is not a mailbox, answering machine or service, or other place where the person acting as agent is not physically present.",
-    "quote": "The United States agent must reside or maintain a place of business in the United States and may not be a mailbox, answering machine or service, or other place where a person acting as the United States agent is not physically present.",
-    "clause_number": "207.69(b)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ",
-     "API"
-    ],
-    "condition": "foreign establishments"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ",
-    "API"
-   ]
-  },
-  {
-   "id": "fda-cfr-21-part-207.xml:207.69#6",
-   "section": "207.69",
-   "hash": "c5fca0ce8de3f1a5",
-   "item": {
-    "statement": "For a foreign establishment, make the United States agent responsible for reviewing, disseminating, routing and responding to all FDA communications, including emergency communications.",
-    "quote": "Reviewing, disseminating, routing, and responding to all communications from FDA including emergency communications;",
-    "clause_number": "207.69(b)(1)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ",
-     "API"
-    ],
-    "condition": "foreign establishments"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ",
-    "API"
-   ]
-  },
-  {
-   "id": "fda-cfr-21-part-207.xml:207.69#7",
-   "section": "207.69",
-   "hash": "fe108e29a9e4f042",
-   "item": {
-    "statement": "For a foreign establishment, make the United States agent responsible for answering questions about the drugs imported or offered for import into the United States.",
-    "quote": "Responding to questions concerning those drugs that are imported or offered for import to the United States;",
-    "clause_number": "207.69(b)(2)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ",
-     "API"
-    ],
-    "condition": "foreign establishments"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ",
-    "API"
-   ]
-  },
-  {
-   "id": "fda-cfr-21-part-207.xml:207.69#8",
-   "section": "207.69",
-   "hash": "c242bff94b7588a0",
-   "item": {
-    "statement": "For a foreign establishment, make the United States agent responsible for helping FDA schedule inspections.",
-    "quote": "Assisting FDA in scheduling inspections;",
-    "clause_number": "207.69(b)(3)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ",
-     "API"
-    ],
-    "condition": "foreign establishments"
+    "condition": "unless FDA waiver"
    },
    "plant_scope": [
     "OSD",

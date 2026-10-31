@@ -1,0 +1,279 @@
+{
+ "role": "b",
+ "instructions": "You are a second, independent auditor. Check one checklist item against the US regulation paragraph it claims to come from. You get\nthe section's paragraphs (reference and exact text, from the official eCFR XML) and the item. Start from the TEXT:\nread the cited paragraph and its lead-in fully, then compare the item.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the parent paragraph's\nlead-in (including a qualifier such as \"as are necessary to prevent contamination or mixups\"). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph requires what the statement asks for, the statement\n  adds nothing and omits nothing of that obligation, the strength (shall/must = mandatory, should = recommended,\n  may = optional; a sub-paragraph takes its lead-in's) matches, and the regulation applies to every listed plant\n  type (INJ = sterile injectables: a paragraph limited to products not required to be sterile does not apply to\n  INJ; one limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences saying what you checked for THIS item, in this item's own words: name the\n  condition, number, list or scope you compared with the text (e.g. \"the 30-day limit and 'each lot' are both in\n  the statement\", \"the list of components, containers and closures is complete\", \"drops the lead-in's 'for\n  sterile products'\"). Write each reason fresh for its item: a reason that would fit any item (\"quote exact,\n  strength matches, nothing added or omitted\") or that repeats another answer's reason is not an answer, and the\n  item then counts as unchecked.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "sections": [
+  {
+   "section": "211.84",
+   "paragraphs": [
+    {
+     "ref": "211.84",
+     "text": "§ 211.84 Testing and approval or rejection of components, drug product containers, and closures."
+    },
+    {
+     "ref": "211.84(a)",
+     "text": "(a) Each lot of components, drug product containers, and closures shall be withheld from use until the lot has been sampled, tested, or examined, as appropriate, and released for use by the quality control unit."
+    },
+    {
+     "ref": "211.84(b)",
+     "text": "(b) Representative samples of each shipment of each lot shall be collected for testing or examination. The number of containers to be sampled, and the amount of material to be taken from each container, shall be based upon appropriate criteria such as statistical criteria for component variability, confidence levels, and degree of precision desired, the past quality history of the supplier, and the quantity needed for analysis and reserve where required by § 211.170."
+    },
+    {
+     "ref": "211.84(c)",
+     "text": "(c) Samples shall be collected in accordance with the following procedures:"
+    },
+    {
+     "ref": "211.84(c)(1)",
+     "text": "(1) The containers of components selected shall be cleaned when necessary in a manner to prevent introduction of contaminants into the component."
+    },
+    {
+     "ref": "211.84(c)(2)",
+     "text": "(2) The containers shall be opened, sampled, and resealed in a manner designed to prevent contamination of their contents and contamination of other components, drug product containers, or closures."
+    },
+    {
+     "ref": "211.84(c)(3)",
+     "text": "(3) Sterile equipment and aseptic sampling techniques shall be used when necessary."
+    },
+    {
+     "ref": "211.84(c)(4)",
+     "text": "(4) If it is necessary to sample a component from the top, middle, and bottom of its container, such sample subdivisions shall not be composited for testing."
+    },
+    {
+     "ref": "211.84(c)(5)",
+     "text": "(5) Sample containers shall be identified so that the following information can be determined: name of the material sampled, the lot number, the container from which the sample was taken, the date on which the sample was taken, and the name of the person who collected the sample."
+    },
+    {
+     "ref": "211.84(c)(6)",
+     "text": "(6) Containers from which samples have been taken shall be marked to show that samples have been removed from them."
+    },
+    {
+     "ref": "211.84(d)",
+     "text": "(d) Samples shall be examined and tested as follows:"
+    },
+    {
+     "ref": "211.84(d)(1)",
+     "text": "(1) At least one test shall be conducted to verify the identity of each component of a drug product. Specific identity tests, if they exist, shall be used."
+    },
+    {
+     "ref": "211.84(d)(2)",
+     "text": "(2) Each component shall be tested for conformity with all appropriate written specifications for purity, strength, and quality. In lieu of such testing by the manufacturer, a report of analysis may be accepted from the supplier of a component, provided that at least one specific identity test is conducted on such component by the manufacturer, and provided that the manufacturer establishes the reliability of the supplier's analyses through appropriate validation of the supplier's test results at appropriate intervals."
+    },
+    {
+     "ref": "211.84(d)(3)",
+     "text": "(3) Containers and closures shall be tested for conformity with all appropriate written specifications. In lieu of such testing by the manufacturer, a certificate of testing may be accepted from the supplier, provided that at least a visual identification is conducted on such containers/closures by the manufacturer and provided that the manufacturer establishes the reliability of the supplier's test results through appropriate validation of the supplier's test results at appropriate intervals."
+    },
+    {
+     "ref": "211.84(d)(4)",
+     "text": "(4) When appropriate, components shall be microscopically examined."
+    },
+    {
+     "ref": "211.84(d)(5)",
+     "text": "(5) Each lot of a component, drug product container, or closure that is liable to contamination with filth, insect infestation, or other extraneous adulterant shall be examined against established specifications for such contamination."
+    },
+    {
+     "ref": "211.84(d)(6)",
+     "text": "(6) Each lot of a component, drug product container, or closure with potential for microbiological contamination that is objectionable in view of its intended use shall be subjected to microbiological tests before use."
+    },
+    {
+     "ref": "211.84(e)",
+     "text": "(e) Any lot of components, drug product containers, or closures that meets the appropriate written specifications of identity, strength, quality, and purity and related tests under paragraph (d) of this section may be approved and released for use. Any lot of such material that does not meet such specifications shall be rejected."
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.84#14",
+   "section": "211.84",
+   "hash": "2b8644df4cceffc3",
+   "item": {
+    "statement": "When examining and testing samples, test containers and closures for conformity with all appropriate written specifications.",
+    "quote": "Containers and closures shall be tested for conformity with all appropriate written specifications.",
+    "clause_number": "211.84(d)(3)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "when examining and testing samples"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.84#15",
+   "section": "211.84",
+   "hash": "b66990df5486324f",
+   "item": {
+    "statement": "When examining and testing samples, instead of testing containers and closures yourself you may accept the supplier's certificate of testing, provided you perform at least a visual identification of the containers/closures and establish the reliability of the supplier's test results by validating them at appropriate intervals.",
+    "quote": "In lieu of such testing by the manufacturer, a certificate of testing may be accepted from the supplier, provided that at least a visual identification is conducted on such containers/closures by the manufacturer and provided that the manufacturer establishes the reliability of the supplier's test results through appropriate validation of the supplier's test results at appropriate intervals.",
+    "clause_number": "211.84(d)(3)",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "when examining and testing samples; provided visual identification done and supplier results validated at appropriate intervals"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.84#16",
+   "section": "211.84",
+   "hash": "e1a18f7989b84d68",
+   "item": {
+    "statement": "When examining and testing samples, examine components microscopically when appropriate.",
+    "quote": "When appropriate, components shall be microscopically examined.",
+    "clause_number": "211.84(d)(4)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "when examining and testing samples; when appropriate"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.84#17",
+   "section": "211.84",
+   "hash": "71e85f6b65564340",
+   "item": {
+    "statement": "When examining and testing samples, examine each lot of a component, drug product container or closure that is liable to contamination with filth, insect infestation or other extraneous adulterant against established specifications for such contamination.",
+    "quote": "Each lot of a component, drug product container, or closure that is liable to contamination with filth, insect infestation, or other extraneous adulterant shall be examined against established specifications for such contamination.",
+    "clause_number": "211.84(d)(5)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "when examining and testing samples; if liable to filth, insect or extraneous contamination"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.84#18",
+   "section": "211.84",
+   "hash": "b878853ba3819b3e",
+   "item": {
+    "statement": "When examining and testing samples, subject each lot of a component, drug product container or closure with potential for microbiological contamination that is objectionable for its intended use to microbiological tests before use.",
+    "quote": "Each lot of a component, drug product container, or closure with potential for microbiological contamination that is objectionable in view of its intended use shall be subjected to microbiological tests before use.",
+    "clause_number": "211.84(d)(6)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "when examining and testing samples; if potential for objectionable microbiological contamination"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.84#19",
+   "section": "211.84",
+   "hash": "d8521acaa1f55548",
+   "item": {
+    "statement": "A lot of components, drug product containers or closures that meets the appropriate written specifications of identity, strength, quality and purity and the related sample examinations and tests may be approved and released for use.",
+    "quote": "Any lot of components, drug product containers, or closures that meets the appropriate written specifications of identity, strength, quality, and purity and related tests under paragraph (d) of this section may be approved and released for use.",
+    "clause_number": "211.84(e)",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "if lot meets specifications and related tests"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.84#20",
+   "section": "211.84",
+   "hash": "1274028bfeaf10ba",
+   "item": {
+    "statement": "Reject any lot of components, drug product containers or closures that does not meet the appropriate written specifications of identity, strength, quality and purity and the related tests.",
+    "quote": "Any lot of such material that does not meet such specifications shall be rejected.",
+    "clause_number": "211.84(e)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "if lot does not meet specifications"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  }
+ ]
+}

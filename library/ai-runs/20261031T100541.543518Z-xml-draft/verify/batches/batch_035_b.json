@@ -1,0 +1,708 @@
+{
+ "role": "b",
+ "instructions": "You are a second, independent auditor. Check one checklist item against the US regulation paragraph it claims to come from. You get\nthe section's paragraphs (reference and exact text, from the official eCFR XML) and the item. Start from the TEXT:\nread the cited paragraph and its lead-in fully, then compare the item.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the parent paragraph's\nlead-in (including a qualifier such as \"as are necessary to prevent contamination or mixups\"). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph requires what the statement asks for, the statement\n  adds nothing and omits nothing of that obligation, the strength (shall/must = mandatory, should = recommended,\n  may = optional; a sub-paragraph takes its lead-in's) matches, and the regulation applies to every listed plant\n  type (INJ = sterile injectables: a paragraph limited to products not required to be sterile does not apply to\n  INJ; one limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences saying what you checked for THIS item, in this item's own words: name the\n  condition, number, list or scope you compared with the text (e.g. \"the 30-day limit and 'each lot' are both in\n  the statement\", \"the list of components, containers and closures is complete\", \"drops the lead-in's 'for\n  sterile products'\"). Write each reason fresh for its item: a reason that would fit any item (\"quote exact,\n  strength matches, nothing added or omitted\") or that repeats another answer's reason is not an answer, and the\n  item then counts as unchecked.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "sections": [
+  {
+   "section": "211.122",
+   "paragraphs": [
+    {
+     "ref": "211.122",
+     "text": "§ 211.122 Materials examination and usage criteria."
+    },
+    {
+     "ref": "211.122(a)",
+     "text": "(a) There shall be written procedures describing in sufficient detail the receipt, identification, storage, handling, sampling, examination, and/or testing of labeling and packaging materials; such written procedures shall be followed. Labeling and packaging materials shall be representatively sampled, and examined or tested upon receipt and before use in packaging or labeling of a drug product."
+    },
+    {
+     "ref": "211.122(b)",
+     "text": "(b) Any labeling or packaging materials meeting appropriate written specifications may be approved and released for use. Any labeling or packaging materials that do not meet such specifications shall be rejected to prevent their use in operations for which they are unsuitable."
+    },
+    {
+     "ref": "211.122(c)",
+     "text": "(c) Records shall be maintained for each shipment received of each different labeling and packaging material indicating receipt, examination or testing, and whether accepted or rejected."
+    },
+    {
+     "ref": "211.122(d)",
+     "text": "(d) Labels and other labeling materials for each different drug product, strength, dosage form, or quantity of contents shall be stored separately with suitable identification. Access to the storage area shall be limited to authorized personnel."
+    },
+    {
+     "ref": "211.122(e)",
+     "text": "(e) Obsolete and outdated labels, labeling, and other packaging materials shall be destroyed."
+    },
+    {
+     "ref": "211.122(f)",
+     "text": "(f) Use of gang-printed labeling for different drug products, or different strengths or net contents of the same drug product, is prohibited unless the labeling from gang-printed sheets is adequately differentiated by size, shape, or color."
+    },
+    {
+     "ref": "211.122(g)",
+     "text": "(g) If cut labeling is used for immediate container labels, individual unit cartons, or multiunit cartons containing immediate containers that are not packaged in individual unit cartons, packaging and labeling operations shall include one of the following special control procedures:"
+    },
+    {
+     "ref": "211.122(g)(1)",
+     "text": "(1) Dedication of labeling and packaging lines to each different strength of each different drug product;"
+    },
+    {
+     "ref": "211.122(g)(2)",
+     "text": "(2) Use of appropriate electronic or electromechanical equipment to conduct a 100-percent examination for correct labeling during or after completion of finishing operations; or"
+    },
+    {
+     "ref": "211.122(g)(3)",
+     "text": "(3) Use of visual inspection to conduct a 100-percent examination for correct labeling during or after completion of finishing operations for hand-applied labeling. Such examination shall be performed by one person and independently verified by a second person."
+    },
+    {
+     "ref": "211.122(g)(4)",
+     "text": "(4) Use of any automated technique, including differentiation by labeling size and shape, that physically prevents incorrect labeling from being processed by labeling and packaging equipment."
+    },
+    {
+     "ref": "211.122(h)",
+     "text": "(h) Printing devices on, or associated with, manufacturing lines used to imprint labeling upon the drug product unit label or case shall be monitored to assure that all imprinting conforms to the print specified in the batch production record."
+    }
+   ]
+  },
+  {
+   "section": "211.125",
+   "paragraphs": [
+    {
+     "ref": "211.125",
+     "text": "§ 211.125 Labeling issuance."
+    },
+    {
+     "ref": "211.125(a)",
+     "text": "(a) Strict control shall be exercised over labeling issued for use in drug product labeling operations."
+    },
+    {
+     "ref": "211.125(b)",
+     "text": "(b) Labeling materials issued for a batch shall be carefully examined for identity and conformity to the labeling specified in the master or batch production records."
+    },
+    {
+     "ref": "211.125(c)",
+     "text": "(c) Procedures shall be used to reconcile the quantities of labeling issued, used, and returned, and shall require evaluation of discrepancies found between the quantity of drug product finished and the quantity of labeling issued when such discrepancies are outside narrow preset limits based on historical operating data. Such discrepancies shall be investigated in accordance with § 211.192. Labeling reconciliation is waived for cut or roll labeling if a 100-percent examination for correct labeling is performed in accordance with § 211.122(g)(2)."
+    },
+    {
+     "ref": "211.125(d)",
+     "text": "(d) All excess labeling bearing lot or control numbers shall be destroyed."
+    },
+    {
+     "ref": "211.125(e)",
+     "text": "(e) Returned labeling shall be maintained and stored in a manner to prevent mixups and provide proper identification."
+    },
+    {
+     "ref": "211.125(f)",
+     "text": "(f) Procedures shall be written describing in sufficient detail the control procedures employed for the issuance of labeling; such written procedures shall be followed."
+    }
+   ]
+  },
+  {
+   "section": "211.130",
+   "paragraphs": [
+    {
+     "ref": "211.130",
+     "text": "§ 211.130 Packaging and labeling operations. There shall be written procedures designed to assure that correct labels, labeling, and packaging materials are used for drug products; such written procedures shall be followed. These procedures shall incorporate the following features:"
+    },
+    {
+     "ref": "211.130(a)",
+     "text": "(a) Prevention of mixups and cross-contamination by physical or spatial separation from operations on other drug products."
+    },
+    {
+     "ref": "211.130(b)",
+     "text": "(b) Identification and handling of filled drug product containers that are set aside and held in unlabeled condition for future labeling operations to preclude mislabeling of individual containers, lots, or portions of lots. Identification need not be applied to each individual container but shall be sufficient to determine name, strength, quantity of contents, and lot or control number of each container."
+    },
+    {
+     "ref": "211.130(c)",
+     "text": "(c) Identification of the drug product with a lot or control number that permits determination of the history of the manufacture and control of the batch."
+    },
+    {
+     "ref": "211.130(d)",
+     "text": "(d) Examination of packaging and labeling materials for suitability and correctness before packaging operations, and documentation of such examination in the batch production record."
+    },
+    {
+     "ref": "211.130(e)",
+     "text": "(e) Inspection of the packaging and labeling facilities immediately before use to assure that all drug products have been removed from previous operations. Inspection shall also be made to assure that packaging and labeling materials not suitable for subsequent operations have been removed. Results of inspection shall be documented in the batch production records."
+    }
+   ]
+  },
+  {
+   "section": "211.132",
+   "paragraphs": [
+    {
+     "ref": "211.132",
+     "text": "§ 211.132 Tamper-evident packaging requirements for over-the-counter (OTC) human drug products."
+    },
+    {
+     "ref": "211.132(a)",
+     "text": "(a) General. The Food and Drug Administration has the authority under the Federal Food, Drug, and Cosmetic Act (the act) to establish a uniform national requirement for tamper-evident packaging of OTC drug products that will improve the security of OTC drug packaging and help assure the safety and effectiveness of OTC drug products. An OTC drug product (except a dermatological, dentifrice, insulin, or lozenge product) for retail sale that is not packaged in a tamper-resistant package or that is not properly labeled under this section is adulterated under section 501 of the act or misbranded under section 502 of the act, or both."
+    },
+    {
+     "ref": "211.132(b)",
+     "text": "(b) Requirements for tamper-evident package."
+    },
+    {
+     "ref": "211.132(b)(1)",
+     "text": "(1) Each manufacturer and packer who packages an OTC drug product (except a dermatological, dentifrice, insulin, or lozenge product) for retail sale shall package the product in a tamper-evident package, if this product is accessible to the public while held for sale. A tamper-evident package is one having one or more indicators or barriers to entry which, if breached or missing, can reasonably be expected to provide visible evidence to consumers that tampering has occurred. To reduce the likelihood of successful tampering and to increase the likelihood that consumers will discover if a product has been tampered with, the package is required to be distinctive by design or by the use of one or more indicators or barriers to entry that employ an identifying characteristic (e.g., a pattern, name, registered trademark, logo, or picture). For purposes of this section, the term “distinctive by design” means the packaging cannot be duplicated with commonly available materials or through commonly available processes. A tamper-evident package may involve an immediate-container and closure system or secondary-container or carton system or any combination of systems intended to provide a visual indication of package integrity. The tamper-evident feature shall be designed to and shall remain intact when handled in a reasonable manner during manufacture, distribution, and retail display."
+    },
+    {
+     "ref": "211.132(b)(2)",
+     "text": "(2) In addition to the tamper-evident packaging feature described in paragraph (b)(1) of this section, any two-piece, hard gelatin capsule covered by this section must be sealed using an acceptable tamper-evident technology."
+    },
+    {
+     "ref": "211.132(c)",
+     "text": "(c) Labeling."
+    },
+    {
+     "ref": "211.132(c)(1)",
+     "text": "(1) In order to alert consumers to the specific tamper-evident feature(s) used, each retail package of an OTC drug product covered by this section (except ammonia inhalant in crushable glass ampules or aerosol products that depend upon the power of a liquefied or compressed gas to expel the contents from the container) is required to bear a statement that:"
+    },
+    {
+     "ref": "211.132(c)(1)(i)",
+     "text": "(i) Identifies all tamper-evident feature(s) and any capsule sealing technologies used to comply with paragraph (b) of this section;"
+    },
+    {
+     "ref": "211.132(c)(1)(ii)",
+     "text": "(ii) Is prominently placed on the package; and"
+    },
+    {
+     "ref": "211.132(c)(1)(iii)",
+     "text": "(iii) Is so placed that it will be unaffected if the tamper-evident feature of the package is breached or missing."
+    },
+    {
+     "ref": "211.132(c)(2)",
+     "text": "(2) If the tamper-evident feature chosen to meet the requirements in paragraph (b) of this section uses an identifying characteristic, that characteristic is required to be referred to in the labeling statement. For example, the labeling statement on a bottle with a shrink band could say “For your protection, this bottle has an imprinted seal around the neck.”"
+    },
+    {
+     "ref": "211.132(d)",
+     "text": "(d) Request for exemptions from packaging and labeling requirements. A manufacturer or packer may request an exemption from the packaging and labeling requirements of this section. A request for an exemption is required to be submitted in the form of a citizen petition under § 10.30 of this chapter and should be clearly identified on the envelope as a “Request for Exemption from the Tamper-Evident Packaging Rule.” The petition is required to contain the following:"
+    },
+    {
+     "ref": "211.132(d)(1)",
+     "text": "(1) The name of the drug product or, if the petition seeks an exemption for a drug class, the name of the drug class, and a list of products within that class."
+    },
+    {
+     "ref": "211.132(d)(2)",
+     "text": "(2) The reasons that the drug product's compliance with the tamper-evident packaging or labeling requirements of this section is unnecessary or cannot be achieved."
+    },
+    {
+     "ref": "211.132(d)(3)",
+     "text": "(3) A description of alternative steps that are available, or that the petitioner has already taken, to reduce the likelihood that the product or drug class will be the subject of malicious adulteration."
+    },
+    {
+     "ref": "211.132(d)(4)",
+     "text": "(4) Other information justifying an exemption."
+    },
+    {
+     "ref": "211.132(e)",
+     "text": "(e) OTC drug products subject to approved new drug applications. Holders of approved new drug applications for OTC drug products are required under § 314.70 of this chapter to provide the agency with notification of changes in packaging and labeling to comply with the requirements of this section. Changes in packaging and labeling required by this regulation may be made before FDA approval, as provided under § 314.70(c) of this chapter. Manufacturing changes by which capsules are to be sealed require prior FDA approval under § 314.70(b) of this chapter."
+    },
+    {
+     "ref": "211.132(f)",
+     "text": "(f) Poison Prevention Packaging Act of 1970. This section does not affect any requirements for “special packaging” as defined under § 310.3(l) of this chapter and required under the Poison Prevention Packaging Act of 1970."
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.122#16",
+   "section": "211.122",
+   "hash": "8974423ce8352bfc",
+   "item": {
+    "statement": "Monitor printing devices on or associated with manufacturing lines that imprint labeling on the drug product unit label or case, to assure all imprinting conforms to the print specified in the batch production record.",
+    "quote": "Printing devices on, or associated with, manufacturing lines used to imprint labeling upon the drug product unit label or case shall be monitored to assure that all imprinting conforms to the print specified in the batch production record.",
+    "clause_number": "211.122(h)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.125#1",
+   "section": "211.125",
+   "hash": "3e16821b2a89efca",
+   "item": {
+    "statement": "Exercise strict control over labeling issued for use in drug product labeling operations.",
+    "quote": "Strict control shall be exercised over labeling issued for use in drug product labeling operations.",
+    "clause_number": "211.125(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.125#2",
+   "section": "211.125",
+   "hash": "f18327c31fd37085",
+   "item": {
+    "statement": "Carefully examine labeling materials issued for a batch for identity and for conformity to the labeling specified in the master or batch production records.",
+    "quote": "Labeling materials issued for a batch shall be carefully examined for identity and conformity to the labeling specified in the master or batch production records.",
+    "clause_number": "211.125(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.125#3",
+   "section": "211.125",
+   "hash": "24278f2686adcb39",
+   "item": {
+    "statement": "Use procedures to reconcile the quantities of labeling issued, used and returned.",
+    "quote": "Procedures shall be used to reconcile the quantities of labeling issued, used, and returned",
+    "clause_number": "211.125(c)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.125#4",
+   "section": "211.125",
+   "hash": "8777388e5f83c5db",
+   "item": {
+    "statement": "Labeling reconciliation procedures require evaluation of discrepancies between the quantity of drug product finished and the quantity of labeling issued when the discrepancies fall outside narrow preset limits based on historical operating data.",
+    "quote": "shall require evaluation of discrepancies found between the quantity of drug product finished and the quantity of labeling issued when such discrepancies are outside narrow preset limits based on historical operating data",
+    "clause_number": "211.125(c)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "discrepancy outside narrow preset limits"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.125#5",
+   "section": "211.125",
+   "hash": "3a79a7049eb53e01",
+   "item": {
+    "statement": "Investigate labeling reconciliation discrepancies that fall outside the narrow preset limits through the formal investigation process for unexplained discrepancies and batch failures.",
+    "quote": "Such discrepancies shall be investigated in accordance with § 211.192.",
+    "clause_number": "211.125(c)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "discrepancy outside narrow preset limits"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.125#6",
+   "section": "211.125",
+   "hash": "840fc5cca3900480",
+   "item": {
+    "statement": "Labeling reconciliation may be omitted for cut or roll labeling only if a 100-percent examination for correct labeling is performed.",
+    "quote": "Labeling reconciliation is waived for cut or roll labeling if a 100-percent examination for correct labeling is performed in accordance with § 211.122(g)(2).",
+    "clause_number": "211.125(c)",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "cut or roll labeling with 100-percent examination"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.125#7",
+   "section": "211.125",
+   "hash": "de162d0e0e39ed76",
+   "item": {
+    "statement": "Destroy all excess labeling that bears lot or control numbers.",
+    "quote": "All excess labeling bearing lot or control numbers shall be destroyed.",
+    "clause_number": "211.125(d)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "excess labeling bears lot or control numbers"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.125#8",
+   "section": "211.125",
+   "hash": "0114de5ce1c641d7",
+   "item": {
+    "statement": "Maintain and store returned labeling in a way that prevents mixups and provides proper identification.",
+    "quote": "Returned labeling shall be maintained and stored in a manner to prevent mixups and provide proper identification.",
+    "clause_number": "211.125(e)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.125#9",
+   "section": "211.125",
+   "hash": "8f0be4c557678828",
+   "item": {
+    "statement": "Have written procedures describing in sufficient detail the controls used for issuing labeling, and follow them.",
+    "quote": "Procedures shall be written describing in sufficient detail the control procedures employed for the issuance of labeling; such written procedures shall be followed.",
+    "clause_number": "211.125(f)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.130#1",
+   "section": "211.130",
+   "hash": "fba49bc17af20a61",
+   "item": {
+    "statement": "Have written procedures designed to assure that correct labels, labeling and packaging materials are used for drug products, follow them, and include in them the required packaging and labeling control features.",
+    "quote": "There shall be written procedures designed to assure that correct labels, labeling, and packaging materials are used for drug products; such written procedures shall be followed. These procedures shall incorporate the following features:",
+    "clause_number": "211.130",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.130#2",
+   "section": "211.130",
+   "hash": "d9cdab5529447799",
+   "item": {
+    "statement": "Written packaging and labeling procedures, designed to assure correct labels, labeling and packaging materials are used, include prevention of mixups and cross-contamination by physical or spatial separation from operations on other drug products.",
+    "quote": "Prevention of mixups and cross-contamination by physical or spatial separation from operations on other drug products.",
+    "clause_number": "211.130(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.130#3",
+   "section": "211.130",
+   "hash": "3be3ec54e62c87a9",
+   "item": {
+    "statement": "Written packaging and labeling procedures, designed to assure correct labels, labeling and packaging materials are used, include identification and handling of filled containers set aside unlabeled for later labeling, to preclude mislabeling of containers, lots or part lots; identification need not be on each container but must be enough to determine name, strength, quantity of contents and lot or control number of each container.",
+    "quote": "Identification and handling of filled drug product containers that are set aside and held in unlabeled condition for future labeling operations to preclude mislabeling of individual containers, lots, or portions of lots. Identification need not be applied to each individual container but shall be sufficient to determine name, strength, quantity of contents, and lot or control number of each container.",
+    "clause_number": "211.130(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "filled containers held unlabeled for future labeling"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.130#4",
+   "section": "211.130",
+   "hash": "6ee9960b5fecba82",
+   "item": {
+    "statement": "Written packaging and labeling procedures, designed to assure correct labels, labeling and packaging materials are used, include identification of the drug product with a lot or control number that allows the manufacturing and control history of the batch to be determined.",
+    "quote": "Identification of the drug product with a lot or control number that permits determination of the history of the manufacture and control of the batch.",
+    "clause_number": "211.130(c)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.130#5",
+   "section": "211.130",
+   "hash": "5869c939d7ba18e7",
+   "item": {
+    "statement": "Written packaging and labeling procedures, designed to assure correct labels, labeling and packaging materials are used, include examination of packaging and labeling materials for suitability and correctness before packaging operations, with the examination documented in the batch production record.",
+    "quote": "Examination of packaging and labeling materials for suitability and correctness before packaging operations, and documentation of such examination in the batch production record.",
+    "clause_number": "211.130(d)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "before packaging operations"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.130#6",
+   "section": "211.130",
+   "hash": "4a64d52224fb1246",
+   "item": {
+    "statement": "Written packaging and labeling procedures, designed to assure correct labels, labeling and packaging materials are used, include inspection of packaging and labeling facilities immediately before use to assure all drug products from previous operations have been removed.",
+    "quote": "Inspection of the packaging and labeling facilities immediately before use to assure that all drug products have been removed from previous operations.",
+    "clause_number": "211.130(e)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "immediately before use"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.130#7",
+   "section": "211.130",
+   "hash": "59abb8df976413d9",
+   "item": {
+    "statement": "Written packaging and labeling procedures, designed to assure correct labels, labeling and packaging materials are used, include inspection of packaging and labeling facilities immediately before use to assure that packaging and labeling materials unsuitable for the next operations have been removed.",
+    "quote": "Inspection shall also be made to assure that packaging and labeling materials not suitable for subsequent operations have been removed.",
+    "clause_number": "211.130(e)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "immediately before use"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.130#8",
+   "section": "211.130",
+   "hash": "ae757cecbd7a0e79",
+   "item": {
+    "statement": "Written packaging and labeling procedures, designed to assure correct labels, labeling and packaging materials are used, include documentation of the results of the pre-use packaging and labeling facility inspections in the batch production records.",
+    "quote": "Results of inspection shall be documented in the batch production records.",
+    "clause_number": "211.130(e)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.132#1",
+   "section": "211.132",
+   "hash": "da75748b395176f5",
+   "item": {
+    "statement": "Package each OTC drug product (except dermatological, dentifrice, insulin or lozenge products) for retail sale in a tamper-evident package if the product is accessible to the public while held for sale.",
+    "quote": "Each manufacturer and packer who packages an OTC drug product (except a dermatological, dentifrice, insulin, or lozenge product) for retail sale shall package the product in a tamper-evident package, if this product is accessible to the public while held for sale.",
+    "clause_number": "211.132(b)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": "OTC product for retail sale accessible to public"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.132#2",
+   "section": "211.132",
+   "hash": "31681063929ca616",
+   "item": {
+    "statement": "Make the tamper-evident package for OTC retail drug products (except dermatological, dentifrice, insulin or lozenge products) distinctive by design, or use one or more indicators or barriers to entry with an identifying characteristic such as a pattern, name, registered trademark, logo or picture.",
+    "quote": "To reduce the likelihood of successful tampering and to increase the likelihood that consumers will discover if a product has been tampered with, the package is required to be distinctive by design or by the use of one or more indicators or barriers to entry that employ an identifying characteristic (e.g., a pattern, name, registered trademark, logo, or picture).",
+    "clause_number": "211.132(b)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": "OTC product for retail sale"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  }
+ ]
+}

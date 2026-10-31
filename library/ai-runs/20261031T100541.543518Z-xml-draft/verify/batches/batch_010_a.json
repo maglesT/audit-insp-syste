@@ -1,6 +1,6 @@
 {
  "role": "a",
- "instructions": "You are an auditor checking one checklist item against the US regulation paragraph it claims to come from. You get\nthe section's paragraphs (reference and exact text, from the official eCFR XML) and the item. Start from the ITEM:\nread it, then find in the cited paragraph what it covers.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the parent paragraph's\nlead-in (including a qualifier such as \"as are necessary to prevent contamination or mixups\"). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph requires what the statement asks for, the statement\n  adds nothing and omits nothing of that obligation, the strength (shall/must = mandatory, should = recommended,\n  may = optional; a sub-paragraph takes its lead-in's) matches, and the regulation applies to every listed plant\n  type (INJ = sterile injectables: a paragraph limited to products not required to be sterile does not apply to\n  INJ; one limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "instructions": "You are an auditor checking one checklist item against the US regulation paragraph it claims to come from. You get\nthe section's paragraphs (reference and exact text, from the official eCFR XML) and the item. Start from the ITEM:\nread it, then find in the cited paragraph what it covers.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the parent paragraph's\nlead-in (including a qualifier such as \"as are necessary to prevent contamination or mixups\"). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph requires what the statement asks for, the statement\n  adds nothing and omits nothing of that obligation, the strength (shall/must = mandatory, should = recommended,\n  may = optional; a sub-paragraph takes its lead-in's) matches, and the regulation applies to every listed plant\n  type (INJ = sterile injectables: a paragraph limited to products not required to be sterile does not apply to\n  INJ; one limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences saying what you checked for THIS item, in this item's own words: name the\n  condition, number, list or scope you compared with the text (e.g. \"the 30-day limit and 'each lot' are both in\n  the statement\", \"the list of components, containers and closures is complete\", \"drops the lead-in's 'for\n  sterile products'\"). Write each reason fresh for its item: a reason that would fit any item (\"quote exact,\n  strength matches, nothing added or omitted\") or that repeats another answer's reason is not an answer, and the\n  item then counts as unchecked.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
  "schema": {
   "type": "object",
   "required": [
@@ -29,232 +29,73 @@
  },
  "sections": [
   {
-   "section": "211.173",
+   "section": "211.110",
    "paragraphs": [
     {
-     "ref": "211.173",
-     "text": "§ 211.173 Laboratory animals. Animals used in testing components, in-process materials, or drug products for compliance with established specifications shall be maintained and controlled in a manner that assures their suitability for their intended use. They shall be identified, and adequate records shall be maintained showing the history of their use."
+     "ref": "211.110",
+     "text": "§ 211.110 Sampling and testing of in-process materials and drug products."
+    },
+    {
+     "ref": "211.110(a)",
+     "text": "(a) To assure batch uniformity and integrity of drug products, written procedures shall be established and followed that describe the in-process controls, and tests, or examinations to be conducted on appropriate samples of in-process materials of each batch. Such control procedures shall be established to monitor the output and to validate the performance of those manufacturing processes that may be responsible for causing variability in the characteristics of in-process material and the drug product. Such control procedures shall include, but are not limited to, the following, where appropriate:"
+    },
+    {
+     "ref": "211.110(a)(1)",
+     "text": "(1) Tablet or capsule weight variation;"
+    },
+    {
+     "ref": "211.110(a)(2)",
+     "text": "(2) Disintegration time;"
+    },
+    {
+     "ref": "211.110(a)(3)",
+     "text": "(3) Adequacy of mixing to assure uniformity and homogeneity;"
+    },
+    {
+     "ref": "211.110(a)(4)",
+     "text": "(4) Dissolution time and rate;"
+    },
+    {
+     "ref": "211.110(a)(5)",
+     "text": "(5) Clarity, completeness, or pH of solutions."
+    },
+    {
+     "ref": "211.110(a)(6)",
+     "text": "(6) Bioburden testing."
+    },
+    {
+     "ref": "211.110(b)",
+     "text": "(b) Valid in-process specifications for such characteristics shall be consistent with drug product final specifications and shall be derived from previous acceptable process average and process variability estimates where possible and determined by the application of suitable statistical procedures where appropriate. Examination and testing of samples shall assure that the drug product and in-process material conform to specifications."
+    },
+    {
+     "ref": "211.110(c)",
+     "text": "(c) In-process materials shall be tested for identity, strength, quality, and purity as appropriate, and approved or rejected by the quality control unit, during the production process, e.g., at commencement or completion of significant phases or after storage for long periods."
+    },
+    {
+     "ref": "211.110(d)",
+     "text": "(d) Rejected in-process materials shall be identified and controlled under a quarantine system designed to prevent their use in manufacturing or processing operations for which they are unsuitable."
     }
    ]
   },
   {
-   "section": "211.176",
+   "section": "211.111",
    "paragraphs": [
     {
-     "ref": "211.176",
-     "text": "§ 211.176 Penicillin contamination. If a reasonable possibility exists that a non-penicillin drug product has been exposed to cross-contamination with penicillin, the non-penicillin drug product shall be tested for the presence of penicillin. Such drug product shall not be marketed if detectable levels are found when tested according to procedures specified in ‘Procedures for Detecting and Measuring Penicillin Contamination in Drugs,’ which is incorporated by reference. Copies are available from the Division of Research and Testing (HFD-470), Center for Drug Evaluation and Research, Food and Drug Administration, 5001 Campus Dr., College Park, MD 20740, or available for inspection at the National Archives and Records Administration (NARA). For information on the availability of this material at NARA, call 202-741-6030, or go to: http://www.archives.gov/federal_register/code_of_federal_regulations/ibr_locations.html."
-    }
-   ]
-  },
-  {
-   "section": "211.180",
-   "paragraphs": [
-    {
-     "ref": "211.180",
-     "text": "§ 211.180 General requirements."
-    },
-    {
-     "ref": "211.180(a)",
-     "text": "(a) Any production, control, or distribution record that is required to be maintained in compliance with this part and is specifically associated with a batch of a drug product shall be retained for at least 1 year after the expiration date of the batch or, in the case of certain OTC drug products lacking expiration dating because they meet the criteria for exemption under § 211.137, 3 years after distribution of the batch."
-    },
-    {
-     "ref": "211.180(b)",
-     "text": "(b) Records shall be maintained for all components, drug product containers, closures, and labeling for at least 1 year after the expiration date or, in the case of certain OTC drug products lacking expiration dating because they meet the criteria for exemption under § 211.137, 3 years after distribution of the last lot of drug product incorporating the component or using the container, closure, or labeling."
-    },
-    {
-     "ref": "211.180(c)",
-     "text": "(c) All records required under this part, or copies of such records, shall be readily available for authorized inspection during the retention period at the establishment where the activities described in such records occurred. These records or copies thereof shall be subject to photocopying or other means of reproduction as part of such inspection. Records that can be immediately retrieved from another location by computer or other electronic means shall be considered as meeting the requirements of this paragraph."
-    },
-    {
-     "ref": "211.180(d)",
-     "text": "(d) Records required under this part may be retained either as original records or as true copies such as photocopies, microfilm, microfiche, or other accurate reproductions of the original records. Where reduction techniques, such as microfilming, are used, suitable reader and photocopying equipment shall be readily available."
-    },
-    {
-     "ref": "211.180(e)",
-     "text": "(e) Written records required by this part shall be maintained so that data therein can be used for evaluating, at least annually, the quality standards of each drug product to determine the need for changes in drug product specifications or manufacturing or control procedures. Written procedures shall be established and followed for such evaluations and shall include provisions for:"
-    },
-    {
-     "ref": "211.180(e)(1)",
-     "text": "(1) A review of a representative number of batches, whether approved or rejected, and, where applicable, records associated with the batch."
-    },
-    {
-     "ref": "211.180(e)(2)",
-     "text": "(2) A review of complaints, recalls, returned or salvaged drug products, and investigations conducted under § 211.192 for each drug product."
-    },
-    {
-     "ref": "211.180(f)",
-     "text": "(f) Procedures shall be established to assure that the responsible officials of the firm, if they are not personally involved in or immediately aware of such actions, are notified in writing of any investigations conducted under §§ 211.198, 211.204, or 211.208 of these regulations, any recalls, reports of inspectional observations issued by the Food and Drug Administration, or any regulatory actions relating to good manufacturing practices brought by the Food and Drug Administration."
-    }
-   ]
-  },
-  {
-   "section": "211.182",
-   "paragraphs": [
-    {
-     "ref": "211.182",
-     "text": "§ 211.182 Equipment cleaning and use log. A written record of major equipment cleaning, maintenance (except routine maintenance such as lubrication and adjustments), and use shall be included in individual equipment logs that show the date, time, product, and lot number of each batch processed. If equipment is dedicated to manufacture of one product, then individual equipment logs are not required, provided that lots or batches of such product follow in numerical order and are manufactured in numerical sequence. In cases where dedicated equipment is employed, the records of cleaning, maintenance, and use shall be part of the batch record. The persons performing and double-checking the cleaning and maintenance (or, if the cleaning and maintenance is performed using automated equipment under § 211.68, just the person verifying the cleaning and maintenance done by the automated equipment) shall date and sign or initial the log indicating that the work was performed. Entries in the log shall be in chronological order."
-    }
-   ]
-  },
-  {
-   "section": "211.184",
-   "paragraphs": [
-    {
-     "ref": "211.184",
-     "text": "§ 211.184 Component, drug product container, closure, and labeling records. These records shall include the following:"
-    },
-    {
-     "ref": "211.184(a)",
-     "text": "(a) The identity and quantity of each shipment of each lot of components, drug product containers, closures, and labeling; the name of the supplier; the supplier's lot number(s) if known; the receiving code as specified in § 211.80; and the date of receipt. The name and location of the prime manufacturer, if different from the supplier, shall be listed if known."
-    },
-    {
-     "ref": "211.184(b)",
-     "text": "(b) The results of any test or examination performed (including those performed as required by § 211.82(a), § 211.84(d), or § 211.122(a)) and the conclusions derived therefrom."
-    },
-    {
-     "ref": "211.184(c)",
-     "text": "(c) An individual inventory record of each component, drug product container, and closure and, for each component, a reconciliation of the use of each lot of such component. The inventory record shall contain sufficient information to allow determination of any batch or lot of drug product associated with the use of each component, drug product container, and closure."
-    },
-    {
-     "ref": "211.184(d)",
-     "text": "(d) Documentation of the examination and review of labels and labeling for conformity with established specifications in accord with §§ 211.122(c) and 211.130(c)."
-    },
-    {
-     "ref": "211.184(e)",
-     "text": "(e) The disposition of rejected components, drug product containers, closure, and labeling."
+     "ref": "211.111",
+     "text": "§ 211.111 Time limitations on production. When appropriate, time limits for the completion of each phase of production shall be established to assure the quality of the drug product. Deviation from established time limits may be acceptable if such deviation does not compromise the quality of the drug product. Such deviation shall be justified and documented."
     }
    ]
   }
  ],
  "items": [
   {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.173#1",
-   "section": "211.173",
-   "hash": "90353e16ab344258",
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.110#10",
+   "section": "211.110",
+   "hash": "0148c29c3b66e175",
    "item": {
-    "statement": "Maintain and control animals used to test components, in-process materials or drug products against established specifications so that they remain suitable for their intended use.",
-    "quote": "Animals used in testing components, in-process materials, or drug products for compliance with established specifications shall be maintained and controlled in a manner that assures their suitability for their intended use.",
-    "clause_number": "211.173",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": "animals used in specification testing"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.173#2",
-   "section": "211.173",
-   "hash": "8ca447827b210f50",
-   "item": {
-    "statement": "Identify each animal used to test components, in-process materials or drug products against specifications.",
-    "quote": "They shall be identified",
-    "clause_number": "211.173",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": "animals used in specification testing"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.173#3",
-   "section": "211.173",
-   "hash": "9e8027be1c081520",
-   "item": {
-    "statement": "Keep adequate records showing the history of use of each animal used to test components, in-process materials or drug products against specifications.",
-    "quote": "adequate records shall be maintained showing the history of their use.",
-    "clause_number": "211.173",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": "animals used in specification testing"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.176#1",
-   "section": "211.176",
-   "hash": "01abcd2651e16b3e",
-   "item": {
-    "statement": "Where there is a reasonable possibility that a non-penicillin drug product was exposed to penicillin cross-contamination, test that product for penicillin.",
-    "quote": "If a reasonable possibility exists that a non-penicillin drug product has been exposed to cross-contamination with penicillin, the non-penicillin drug product shall be tested for the presence of penicillin.",
-    "clause_number": "211.176",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": "reasonable possibility of penicillin cross-contamination"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.176#2",
-   "section": "211.176",
-   "hash": "3646cb15a88053c0",
-   "item": {
-    "statement": "Do not market a non-penicillin drug product in which detectable penicillin is found when tested by the FDA procedure for detecting and measuring penicillin contamination in drugs.",
-    "quote": "Such drug product shall not be marketed if detectable levels are found when tested according to procedures specified in ‘Procedures for Detecting and Measuring Penicillin Contamination in Drugs,’ which is incorporated by reference.",
-    "clause_number": "211.176",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": "detectable penicillin levels found"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.180#1",
-   "section": "211.180",
-   "hash": "e7f79107aac79749",
-   "item": {
-    "statement": "Keep every required production, control or distribution record tied to a batch of drug product for at least 1 year after the batch expiration date, or, for OTC drug products exempt from expiration dating, for 3 years after the batch is distributed.",
-    "quote": "Any production, control, or distribution record that is required to be maintained in compliance with this part and is specifically associated with a batch of a drug product shall be retained for at least 1 year after the expiration date of the batch or, in the case of certain OTC drug products lacking expiration dating because they meet the criteria for exemption under § 211.137, 3 years after distribution of the batch.",
-    "clause_number": "211.180(a)",
+    "statement": "Ensure examination and testing of samples assures that in-process material and the drug product conform to specifications.",
+    "quote": "Examination and testing of samples shall assure that the drug product and in-process material conform to specifications.",
+    "clause_number": "211.110(b)",
     "strength": "mandatory",
     "plant_types": [
      "OSD",
@@ -272,13 +113,13 @@
    ]
   },
   {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.180#2",
-   "section": "211.180",
-   "hash": "663750e1eef957b4",
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.110#11",
+   "section": "211.110",
+   "hash": "1849ca7d77df2273",
    "item": {
-    "statement": "Keep records for all components, drug product containers, closures and labeling for at least 1 year after the expiration date, or, for OTC drug products exempt from expiration dating, for 3 years after distribution of the last drug product lot that incorporated the component or used the container, closure or labeling.",
-    "quote": "Records shall be maintained for all components, drug product containers, closures, and labeling for at least 1 year after the expiration date or, in the case of certain OTC drug products lacking expiration dating because they meet the criteria for exemption under § 211.137, 3 years after distribution of the last lot of drug product incorporating the component or using the container, closure, or labeling.",
-    "clause_number": "211.180(b)",
+    "statement": "Test in-process materials for identity, strength, quality and purity as appropriate, and have the quality control unit approve or reject them during production, for example at the start or end of significant phases or after long storage.",
+    "quote": "In-process materials shall be tested for identity, strength, quality, and purity as appropriate, and approved or rejected by the quality control unit, during the production process, e.g., at commencement or completion of significant phases or after storage for long periods.",
+    "clause_number": "211.110(c)",
     "strength": "mandatory",
     "plant_types": [
      "OSD",
@@ -286,7 +127,7 @@
      "SEMI",
      "INJ"
     ],
-    "condition": ""
+    "condition": "as appropriate"
    },
    "plant_scope": [
     "OSD",
@@ -296,13 +137,13 @@
    ]
   },
   {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.180#3",
-   "section": "211.180",
-   "hash": "a6a151c7b11ffa57",
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.110#12",
+   "section": "211.110",
+   "hash": "bd945e00b63219d2",
    "item": {
-    "statement": "Keep all required GMP records, or copies, readily available for authorized inspection throughout the retention period at the site where the recorded activities took place.",
-    "quote": "All records required under this part, or copies of such records, shall be readily available for authorized inspection during the retention period at the establishment where the activities described in such records occurred.",
-    "clause_number": "211.180(c)",
+    "statement": "Identify rejected in-process materials and control them under a quarantine system designed to prevent their use in manufacturing or processing operations for which they are unsuitable.",
+    "quote": "Rejected in-process materials shall be identified and controlled under a quarantine system designed to prevent their use in manufacturing or processing operations for which they are unsuitable.",
+    "clause_number": "211.110(d)",
     "strength": "mandatory",
     "plant_types": [
      "OSD",
@@ -310,7 +151,7 @@
      "SEMI",
      "INJ"
     ],
-    "condition": ""
+    "condition": "rejected in-process materials"
    },
    "plant_scope": [
     "OSD",
@@ -320,13 +161,13 @@
    ]
   },
   {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.180#4",
-   "section": "211.180",
-   "hash": "c4f83aa82ad6dffa",
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.111#1",
+   "section": "211.111",
+   "hash": "e88856660c57f789",
    "item": {
-    "statement": "Allow required records, or copies, to be photocopied or otherwise reproduced as part of an inspection.",
-    "quote": "These records or copies thereof shall be subject to photocopying or other means of reproduction as part of such inspection.",
-    "clause_number": "211.180(c)",
+    "statement": "When appropriate, establish time limits for completing each phase of production to assure drug product quality.",
+    "quote": "When appropriate, time limits for the completion of each phase of production shall be established to assure the quality of the drug product.",
+    "clause_number": "211.111",
     "strength": "mandatory",
     "plant_types": [
      "OSD",
@@ -334,7 +175,7 @@
      "SEMI",
      "INJ"
     ],
-    "condition": "during inspection"
+    "condition": "when appropriate"
    },
    "plant_scope": [
     "OSD",
@@ -344,13 +185,13 @@
    ]
   },
   {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.180#5",
-   "section": "211.180",
-   "hash": "3d6cd17ec64639fd",
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.111#2",
+   "section": "211.111",
+   "hash": "e519feb5f676cb0a",
    "item": {
-    "statement": "Required records may be kept either as originals or as true copies, such as photocopies, microfilm, microfiche or other accurate reproductions.",
-    "quote": "Records required under this part may be retained either as original records or as true copies such as photocopies, microfilm, microfiche, or other accurate reproductions of the original records.",
-    "clause_number": "211.180(d)",
+    "statement": "A deviation from established production time limits may be accepted if it does not compromise drug product quality.",
+    "quote": "Deviation from established time limits may be acceptable if such deviation does not compromise the quality of the drug product.",
+    "clause_number": "211.111",
     "strength": "optional",
     "plant_types": [
      "OSD",
@@ -358,7 +199,7 @@
      "SEMI",
      "INJ"
     ],
-    "condition": ""
+    "condition": "if quality not compromised"
    },
    "plant_scope": [
     "OSD",
@@ -368,13 +209,13 @@
    ]
   },
   {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.180#6",
-   "section": "211.180",
-   "hash": "da6607c0f24f0bdb",
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.111#3",
+   "section": "211.111",
+   "hash": "ca477a65e5f917f9",
    "item": {
-    "statement": "Where records are kept using reduction techniques such as microfilming, have suitable reader and photocopying equipment readily available.",
-    "quote": "Where reduction techniques, such as microfilming, are used, suitable reader and photocopying equipment shall be readily available.",
-    "clause_number": "211.180(d)",
+    "statement": "Justify and document any deviation from established production time limits.",
+    "quote": "Such deviation shall be justified and documented.",
+    "clause_number": "211.111",
     "strength": "mandatory",
     "plant_types": [
      "OSD",
@@ -382,415 +223,7 @@
      "SEMI",
      "INJ"
     ],
-    "condition": "reduction techniques used"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.180#7",
-   "section": "211.180",
-   "hash": "5cb99c70d392759b",
-   "item": {
-    "statement": "Maintain required written records so their data can be used to evaluate the quality standards of each drug product at least annually, to decide whether specifications or manufacturing or control procedures need to change.",
-    "quote": "Written records required by this part shall be maintained so that data therein can be used for evaluating, at least annually, the quality standards of each drug product to determine the need for changes in drug product specifications or manufacturing or control procedures.",
-    "clause_number": "211.180(e)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": ""
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.180#8",
-   "section": "211.180",
-   "hash": "b0ede0e8a96eb3d9",
-   "item": {
-    "statement": "Establish and follow written procedures for the at least annual product quality evaluations, including provisions for reviewing batches and for reviewing complaints, recalls, returned or salvaged products and investigations.",
-    "quote": "Written procedures shall be established and followed for such evaluations and shall include provisions for:",
-    "clause_number": "211.180(e)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": ""
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.180#9",
-   "section": "211.180",
-   "hash": "c012c49be78f9d82",
-   "item": {
-    "statement": "As part of the written procedure for the at least annual product quality evaluation, review a representative number of batches, both approved and rejected, and, where applicable, their associated records.",
-    "quote": "A review of a representative number of batches, whether approved or rejected, and, where applicable, records associated with the batch.",
-    "clause_number": "211.180(e)(1)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": "annual product quality evaluation"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.180#10",
-   "section": "211.180",
-   "hash": "a2ce3e4d16880864",
-   "item": {
-    "statement": "As part of the written procedure for the at least annual product quality evaluation, review for each drug product its complaints, recalls, returned or salvaged products, and investigations of unexplained discrepancies or failures.",
-    "quote": "A review of complaints, recalls, returned or salvaged drug products, and investigations conducted under § 211.192 for each drug product.",
-    "clause_number": "211.180(e)(2)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": "annual product quality evaluation"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.180#11",
-   "section": "211.180",
-   "hash": "28b3d3ce24fa9f2a",
-   "item": {
-    "statement": "Establish procedures so that the firm's responsible officials, if not personally involved or immediately aware, are notified in writing of any complaint, returned-product or salvaged-product investigations, any recalls, FDA reports of inspectional observations, and any FDA regulatory actions relating to GMP.",
-    "quote": "Procedures shall be established to assure that the responsible officials of the firm, if they are not personally involved in or immediately aware of such actions, are notified in writing of any investigations conducted under §§ 211.198, 211.204, or 211.208 of these regulations, any recalls, reports of inspectional observations issued by the Food and Drug Administration, or any regulatory actions relating to good manufacturing practices brought by the Food and Drug Administration.",
-    "clause_number": "211.180(f)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": "responsible officials not personally involved or immediately aware"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.182#1",
-   "section": "211.182",
-   "hash": "971f1fc28834b833",
-   "item": {
-    "statement": "Keep individual equipment logs recording major equipment cleaning, maintenance (other than routine maintenance such as lubrication and adjustments) and use, showing the date, time, product and lot number of each batch processed.",
-    "quote": "A written record of major equipment cleaning, maintenance (except routine maintenance such as lubrication and adjustments), and use shall be included in individual equipment logs that show the date, time, product, and lot number of each batch processed.",
-    "clause_number": "211.182",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": ""
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.182#2",
-   "section": "211.182",
-   "hash": "662467a645d39c6c",
-   "item": {
-    "statement": "Where equipment is dedicated to manufacturing one product, individual equipment logs may be omitted, provided the lots or batches of that product follow in numerical order and are manufactured in numerical sequence.",
-    "quote": "If equipment is dedicated to manufacture of one product, then individual equipment logs are not required, provided that lots or batches of such product follow in numerical order and are manufactured in numerical sequence.",
-    "clause_number": "211.182",
-    "strength": "optional",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": "equipment dedicated to one product; lots in numerical order and sequence"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.182#3",
-   "section": "211.182",
-   "hash": "294cf5bea06aa2f1",
-   "item": {
-    "statement": "Where dedicated equipment is used, make the records of its cleaning, maintenance and use part of the batch record.",
-    "quote": "In cases where dedicated equipment is employed, the records of cleaning, maintenance, and use shall be part of the batch record.",
-    "clause_number": "211.182",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": "dedicated equipment is used"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.182#4",
-   "section": "211.182",
-   "hash": "b39dd19f067a8ffe",
-   "item": {
-    "statement": "Have the persons who perform and who double-check equipment cleaning and maintenance date and sign or initial the log to show the work was done; where the cleaning and maintenance is done by automated equipment, only the person verifying the automated work needs to do so.",
-    "quote": "The persons performing and double-checking the cleaning and maintenance (or, if the cleaning and maintenance is performed using automated equipment under § 211.68, just the person verifying the cleaning and maintenance done by the automated equipment) shall date and sign or initial the log indicating that the work was performed.",
-    "clause_number": "211.182",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": "if automated equipment is used, only the verifier signs"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.182#5",
-   "section": "211.182",
-   "hash": "6857d23b9aa05c3f",
-   "item": {
-    "statement": "Make entries in the equipment log in chronological order.",
-    "quote": "Entries in the log shall be in chronological order.",
-    "clause_number": "211.182",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": ""
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.184#1",
-   "section": "211.184",
-   "hash": "c6bec082a32b7642",
-   "item": {
-    "statement": "Keep component, drug product container, closure and labeling records that include the identity and quantity of each shipment of each lot of components, containers, closures and labeling; the supplier's name; the supplier's lot number(s) if known; the receiving code; and the date of receipt.",
-    "quote": "The identity and quantity of each shipment of each lot of components, drug product containers, closures, and labeling; the name of the supplier; the supplier's lot number(s) if known; the receiving code as specified in § 211.80; and the date of receipt.",
-    "clause_number": "211.184(a)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": "supplier lot number(s) if known"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.184#2",
-   "section": "211.184",
-   "hash": "6f1b281ac460aae8",
-   "item": {
-    "statement": "In component, drug product container, closure and labeling records, list the name and location of the prime manufacturer if it differs from the supplier and is known.",
-    "quote": "The name and location of the prime manufacturer, if different from the supplier, shall be listed if known.",
-    "clause_number": "211.184(a)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": "prime manufacturer differs from supplier and is known"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.184#3",
-   "section": "211.184",
-   "hash": "fd3e05cdde6c1e46",
-   "item": {
-    "statement": "Keep component, drug product container, closure and labeling records that include the results of every test or examination performed on them (including identity tests, receipt examinations and labeling examinations) and the conclusions drawn from them.",
-    "quote": "The results of any test or examination performed (including those performed as required by § 211.82(a), § 211.84(d), or § 211.122(a)) and the conclusions derived therefrom.",
-    "clause_number": "211.184(b)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": ""
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.184#4",
-   "section": "211.184",
-   "hash": "e95b6395e339eec7",
-   "item": {
-    "statement": "Keep component, drug product container, closure and labeling records that include an individual inventory record of each component, drug product container and closure and, for each component, a reconciliation of the use of each lot.",
-    "quote": "An individual inventory record of each component, drug product container, and closure and, for each component, a reconciliation of the use of each lot of such component.",
-    "clause_number": "211.184(c)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": ""
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.184#5",
-   "section": "211.184",
-   "hash": "4cebeb3f0e238ddf",
-   "item": {
-    "statement": "Ensure the inventory record of each component, drug product container and closure holds enough information to determine any batch or lot of drug product associated with its use.",
-    "quote": "The inventory record shall contain sufficient information to allow determination of any batch or lot of drug product associated with the use of each component, drug product container, and closure.",
-    "clause_number": "211.184(c)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": ""
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.184#6",
-   "section": "211.184",
-   "hash": "ad0b76a43d6b3bce",
-   "item": {
-    "statement": "Keep component, drug product container, closure and labeling records that include documentation of the examination and review of labels and labeling for conformity with established specifications.",
-    "quote": "Documentation of the examination and review of labels and labeling for conformity with established specifications in accord with §§ 211.122(c) and 211.130(c).",
-    "clause_number": "211.184(d)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": ""
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.184#7",
-   "section": "211.184",
-   "hash": "4a584e47581fe292",
-   "item": {
-    "statement": "Keep component, drug product container, closure and labeling records that include the disposition of rejected components, drug product containers, closures and labeling.",
-    "quote": "The disposition of rejected components, drug product containers, closure, and labeling.",
-    "clause_number": "211.184(e)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": ""
+    "condition": "deviation from time limits"
    },
    "plant_scope": [
     "OSD",

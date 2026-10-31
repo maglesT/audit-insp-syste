@@ -1,0 +1,669 @@
+{
+ "role": "b",
+ "instructions": "You are a second, independent auditor. Check one checklist item against the FDA web page paragraph it claims to come from. You get\nthe unit's paragraphs (reference and exact text of the page; \"context\" entries are headings) and the item. Start from the TEXT:\nread the cited paragraph, the paragraphs its quote runs into, and its lead-in fully, then compare the item.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the lead-in above a list\nitem (the paragraph ending \":\" above it). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph expects what the statement asks for (an instruction\n  to the investigator, \"Determine whether the firm validated ...\", expects the firm to have that practice), the statement\n  adds nothing and omits nothing of that obligation, the strength (a legal requirement: shall/must/required = mandatory;\n  should, FDA expects/recommends, an inspection point = recommended; may/acceptable = optional; a list item takes\n  its lead-in's) matches, and the text applies to every listed plant\n  type (INJ = sterile injectables: text limited to non-sterile products does not apply to\n  INJ; text limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences saying what you checked for THIS item, in this item's own words: name the\n  condition, number, list or scope you compared with the text (e.g. \"the 30-day limit and 'each lot' are both in\n  the statement\", \"the list of components, containers and closures is complete\", \"drops the lead-in's 'for\n  sterile products'\"). Write each reason fresh for its item: a reason that would fit any item (\"quote exact,\n  strength matches, nothing added or omitted\") or that repeats another answer's reason is not an answer, and the\n  item then counts as unchecked.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+ "units": [
+  {
+   "unit": "Q3",
+   "paragraphs": [
+    {
+     "ref": "Q3",
+     "text": "When performing the USP General Chapter <788> Particulate Matter in Injections test for a large volume parenteral (LVP), is it acceptable to take the average among the units tested to determine if the batch meets its specification for this attribute?"
+    },
+    {
+     "ref": "Q3.1",
+     "text": "No. It is not acceptable to take the average among the LVP units tested in each batch/lot when following this method because the purpose of this method is to measure and limit intra-batch variability."
+    },
+    {
+     "ref": "Q3.2",
+     "text": "Particulate matter refers to small, subvisible particles. General Chapter <788> provides two tests for detecting such particulates—light obscuration and microscopic assay. Both are generally accepted for use in testing LVPs and small volume parenterals (SVP) for the determination of subvisible particulate matter. Normally, samples are first tested by the light obscuration method; if the sample fails the specified limits, the microscopic assay method can then be used. However, the microscopic method can be the sole test if there is a documented technical reason or interference from the product under test that would make the light obscuration method unsuitable or the results invalid."
+    },
+    {
+     "ref": "Q3.3",
+     "text": "Confusion about when averaging data is and is not acceptable is probably due to the sample preparation method for the light obscuration test (General Chapter <788>). At least 2, 5-mL aliquots from each sampled unit or the pooled sample (see below) are to be used in the particulate count determination, and the results from these aliquots are to be averaged for comparison with the specification. Note that the average is of the results from examining each aliquot and not between units. (The results of the first aliquot examined by light obscuration are to be discarded, and the subsequent aliquots—2 or more—are retained.) Pooling units prior to analysis is permitted only if the volume in each unit is less than 25 mL, in which case 10 or more units may be pooled. If the volume in the SVP or LVP is 25 mL or more per unit, single units are to be examined by this method (General Chapter <788>)."
+    },
+    {
+     "ref": "Q3.4",
+     "text": "Results among the test units cannot be averaged because particulate matter is assumed to be non-uniformly dispersed throughout the lot. The intent of assessing results from each individual unit is to ensure adequate representation of the lot and to detect potential variation within a lot."
+    },
+    {
+     "ref": "Q3.5",
+     "text": "As to the number of individual units to be tested for LVP and SVP units having a volume of 25mL or more, the USP states that the number of units tested depends on \"statistically sound sampling plans,\" and \"sampling plans should be based on consideration of product volume, numbers of particles historically found to be present in comparison to limits, particle size distribution of particles present, and variability of particle counts between units.\" The USP also suggests that the total number of units tested for any given batch may be less than 10 units (for LVP and pooled SVPs) with proper justification. This is consistent with the CGMP requirement for statistical sampling plans (see 21 CFR 211.165)."
+    },
+    {
+     "context": "Back to Top"
+    }
+   ]
+  },
+  {
+   "unit": "Q4",
+   "paragraphs": [
+    {
+     "ref": "Q4",
+     "text": "Can Total Organic Carbon (TOC) be an acceptable method for detecting residues of contaminants in evaluating cleaning effectiveness?"
+    },
+    {
+     "ref": "Q4.1",
+     "text": "Yes. Since the publication of the inspection guide on cleaning validation in 1993, a number of studies have been published to demonstrate the adequacy of TOC in measuring contaminant residues."
+    },
+    {
+     "ref": "Q4.2",
+     "text": "We think TOC or TC can be an acceptable method for monitoring residues routinely and for cleaning validation. But in order for TOC to be functionally suitable, it should first be established that a substantial amount of the contaminating material(s) is organic and contains carbon that can be oxidized under TOC test conditions. This is not a trivial exercise because we know that some organic compounds cannot be reliably detected using TOC."
+    },
+    {
+     "ref": "Q4.3",
+     "text": "TOC use may be justified for direct surface sample testing as well as indirect (rinse water) sample testing. In either case, because TOC does not identify or distinguish among different compounds containing oxidizable carbon, any detected carbon is to be attributed to the target compound(s) for comparing with the established limit. Thus, a firm should limit background carbon (i.e., carbon from sources other than the contaminant being removed) as much as possible. The established limit, or the amount of residue detected for comparison to the specification, should correct for the target material's composition of carbon. As for any cleaning method, recovery studies are necessary (21 CFR 211.160(b)). If TOC samples are being held for long periods of time before analysis, a firm should verify the impact of sample holding time on accuracy and limit of quantitation."
+    },
+    {
+     "context": "Back to Top"
+    }
+   ]
+  },
+  {
+   "unit": "Q5",
+   "paragraphs": [
+    {
+     "ref": "Q5",
+     "text": "Would a paramagnetic or laser oxygen analyzer be able to detect all possible contaminants or impurities in a medical gas?"
+    },
+    {
+     "ref": "Q5.1",
+     "text": "No. Although paramagnetic and laser oxygen analyzers are very accurate and reliable when calibrated correctly, these types of analyzers can only detect the presence and measure the strength of oxygen. They are unable to detect contaminants or impurities that may be present, such as hydrocarbons or arsenic compounds. The USP monograph test for oxygen does not include an impurity screen, and other analyzers may need to be used. For example, assays for hydrocarbon impurities are routinely conducted during the oxygen manufacturing process even though the USP does not list hydrocarbons as an impurity. Also, alternative methods may be needed to test high-pressure cylinders for cleaning solution residues."
+    },
+    {
+     "context": "Back to Top"
+    }
+   ]
+  },
+  {
+   "unit": "Q7",
+   "paragraphs": [
+    {
+     "ref": "Q7",
+     "text": "Is it ever appropriate to use an unvalidated method to test a drug component or product?"
+    },
+    {
+     "ref": "Q7.1",
+     "text": "The CGMP regulations require the use of validated methods when performing routine testing of raw material, in-process material, and finished products (21 CFR 211.160, 211.165(e), and 211.194) for manufacturing finished drug products. Method validation studies establish proof that a method is suitable for its intended purpose. The purpose is generally to measure a particular material’s conformance to an established specification (see the ICH guidance for industry Q2 (R1) Validation of Analytical Procedures: Text and Methodology). FDA recognizes, however, that test methods developed based on scientifically sound principles (e.g., sufficient accuracy and precision) but that are not fully validated may be suitable for use in certain instances during an investigation of a potential quality problem or defect. For example, investigation of an atypical impurity or possible contaminant of a drug product or any of its components (e.g., oversulfated chondroitin sulfate in heparin) may indicate the need for additional methods beyond routine quality control tests. Such testing may be critical to promptly and adequately evaluate the problem and protect public health. Full evaluation of a method’s robustness and reproducibility may not initially be feasible or appropriate when conducting tests in certain investigations. When a company, for whatever reason, tests drug components or products using an unvalidated method, it is important to recognize the possibility of greater uncertainty in the test results derived from these unvalidated test methods, as compared to validated test methods. Nevertheless, the resulting data may yield important information indicating the need for prompt corrective action. Accordingly, we expect all such test results on drug components or products to be reviewed to assess the need for follow-up action (21 CFR 211.192 and 211.180(e)). References:"
+    },
+    {
+     "ref": "Q7.2",
+     "text": "21 CFR part 210: Current Good Manufacturing Practice in Manufacturing, Processing, Packing, or Holding of Drugs; General",
+     "list_item": true
+    },
+    {
+     "ref": "Q7.3",
+     "text": "21 CFR part 211: Current Good Manufacturing Practice for Finished Pharmaceuticals",
+     "list_item": true
+    },
+    {
+     "ref": "Q7.4",
+     "text": "FDA Guidance for Industry, 2001, ICH Q7 Good Manufacturing Practice Guidance for Active Pharmaceutical Ingredients",
+     "list_item": true
+    },
+    {
+     "ref": "Q7.5",
+     "text": "FDA Guidance for Industry, 1995–1996, ICH Q2 (R1) Validation of Analytical Procedures: Text and Methodology",
+     "list_item": true
+    },
+    {
+     "context": "Back to Top"
+    }
+   ]
+  },
+  {
+   "unit": "Q10",
+   "paragraphs": [
+    {
+     "ref": "Q10",
+     "text": "Is it acceptable to release non-penicillin finished drug products to market if the products may have been exposed to penicillin, as long as the non-penicillin products are tested and no penicillin residue is found?"
+    },
+    {
+     "ref": "Q10.1",
+     "text": "21 CFR 211.176, Penicillin Contamination, allows marketing of non-penicillin finished drug products if they are tested using the codified method and found not to be contaminated with penicillin. However, it is not acceptable to release the product unless all other applicable CGMP requirements have been met. In some cases, firms inappropriately apply § 211.176 to market products that have not been produced under CGMP. Notably, 21 CFR 211.42(d) requires that manufacturing operations for penicillin drug products be performed in facilities separate from those used for non-penicillin human drug products. Similarly, 21 CFR 211.46(d) requires that air-handling systems for penicillin and non-penicillin drug products be completely separate. For example, if a non-penicillin product is made in a facility that shares equipment or an air-handling system with a penicillin production area (in violation of § 211.46(d)), the non-penicillin product cannot be made CGMP-compliant through testing alone. However, if a door is accidentally left open between a penicillin-dedicated area and other separate production areas, resulting in possible exposure of the other areas to penicillin, testing those other products for penicillin could justify their release for distribution. However, as per 21 CFR 211.165, all sampling plans and acceptance criteria used for testing and release of the non-penicillin product, including any testing for penicillin contamination, must be adequate to ensure the tested product meets all of its specifications."
+    },
+    {
+     "context": "Back to Top"
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q3#9",
+   "unit": "Q3",
+   "hash": "f86c5ed32755de3d",
+   "item": {
+    "statement": "With proper justification, fewer than 10 units in total may be tested per batch for particulate matter (for large volume parenterals and pooled small volume parenterals).",
+    "quote": "The USP also suggests that the total number of units tested for any given batch may be less than 10 units (for LVP and pooled SVPs) with proper justification.",
+    "clause_number": "Q3.5",
+    "strength": "optional",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "with proper justification"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q4#1",
+   "unit": "Q4",
+   "hash": "d8eebe3422e23ed2",
+   "item": {
+    "statement": "TOC or TC may be used to monitor cleaning residues routinely and for cleaning validation.",
+    "quote": "We think TOC or TC can be an acceptable method for monitoring residues routinely and for cleaning validation.",
+    "clause_number": "Q4.2",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q4#2",
+   "unit": "Q4",
+   "hash": "97d655acb2c2fd29",
+   "item": {
+    "statement": "Before using TOC for residues, establish that a substantial amount of the contaminating material is organic and contains carbon that oxidizes under the TOC test conditions.",
+    "quote": "But in order for TOC to be functionally suitable, it should first be established that a substantial amount of the contaminating material(s) is organic and contains carbon that can be oxidized under TOC test conditions.",
+    "clause_number": "Q4.2",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "before relying on TOC"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q4#3",
+   "unit": "Q4",
+   "hash": "e176ed64bf51bf9a",
+   "item": {
+    "statement": "TOC may be justified for both direct surface sampling and indirect (rinse water) sampling.",
+    "quote": "TOC use may be justified for direct surface sample testing as well as indirect (rinse water) sample testing.",
+    "clause_number": "Q4.3",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q4#4",
+   "unit": "Q4",
+   "hash": "1930505349cecda5",
+   "item": {
+    "statement": "When using TOC, attribute all detected carbon to the target compound(s) when comparing with the established limit.",
+    "quote": "In either case, because TOC does not identify or distinguish among different compounds containing oxidizable carbon, any detected carbon is to be attributed to the target compound(s) for comparing with the established limit.",
+    "clause_number": "Q4.3",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "when using TOC"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q4#5",
+   "unit": "Q4",
+   "hash": "9b385ecbdeac7788",
+   "item": {
+    "statement": "Limit background carbon (carbon from sources other than the contaminant being removed) as much as possible when using TOC.",
+    "quote": "Thus, a firm should limit background carbon (i.e., carbon from sources other than the contaminant being removed) as much as possible.",
+    "clause_number": "Q4.3",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "when using TOC"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q4#6",
+   "unit": "Q4",
+   "hash": "d6d3e0885e739696",
+   "item": {
+    "statement": "Correct the established TOC limit, or the detected residue amount compared with the specification, for the carbon content of the target material.",
+    "quote": "The established limit, or the amount of residue detected for comparison to the specification, should correct for the target material's composition of carbon.",
+    "clause_number": "Q4.3",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "when using TOC"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q4#7",
+   "unit": "Q4",
+   "hash": "031360317d75b1ba",
+   "item": {
+    "statement": "Perform recovery studies for the cleaning residue test method, including TOC.",
+    "quote": "As for any cleaning method, recovery studies are necessary (21 CFR 211.160(b)).",
+    "clause_number": "Q4.3",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q4#8",
+   "unit": "Q4",
+   "hash": "d4ee9082c071c65e",
+   "item": {
+    "statement": "If TOC samples are held for long periods before analysis, verify the effect of the holding time on accuracy and limit of quantitation.",
+    "quote": "If TOC samples are being held for long periods of time before analysis, a firm should verify the impact of sample holding time on accuracy and limit of quantitation.",
+    "clause_number": "Q4.3",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "samples held long before analysis"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q5#1",
+   "unit": "Q5",
+   "hash": "2ab8e8813e66ab9b",
+   "item": {
+    "statement": "Because oxygen analyzers and the compendial oxygen test do not screen for impurities, use other analyzers where needed to detect contaminants or impurities in medical oxygen.",
+    "quote": "The USP monograph test for oxygen does not include an impurity screen, and other analyzers may need to be used.",
+    "clause_number": "Q5.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "where impurities must be detected"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q5#2",
+   "unit": "Q5",
+   "hash": "fae592209659c25e",
+   "item": {
+    "statement": "Use alternative methods where needed to test high-pressure gas cylinders for cleaning solution residues.",
+    "quote": "Also, alternative methods may be needed to test high-pressure cylinders for cleaning solution residues.",
+    "clause_number": "Q5.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "where needed"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q7#1",
+   "unit": "Q7",
+   "hash": "37c00436e66b2061",
+   "item": {
+    "statement": "Use validated methods for routine testing of raw materials, in-process materials and finished products when manufacturing finished drug products.",
+    "quote": "The CGMP regulations require the use of validated methods when performing routine testing of raw material, in-process material, and finished products (21 CFR 211.160, 211.165(e), and 211.194) for manufacturing finished drug products.",
+    "clause_number": "Q7.1",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q7#2",
+   "unit": "Q7",
+   "hash": "8ebaca3c145d3d62",
+   "item": {
+    "statement": "Test methods based on scientifically sound principles (e.g. sufficient accuracy and precision) that are not fully validated may be used in certain instances during an investigation of a potential quality problem or defect.",
+    "quote": "FDA recognizes, however, that test methods developed based on scientifically sound principles (e.g., sufficient accuracy and precision) but that are not fully validated may be suitable for use in certain instances during an investigation of a potential quality problem or defect.",
+    "clause_number": "Q7.1",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "during an investigation of a potential quality problem"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q7#3",
+   "unit": "Q7",
+   "hash": "14a59988faa51b2a",
+   "item": {
+    "statement": "When testing components or products with an unvalidated method, recognize that the results may carry greater uncertainty than results from validated methods.",
+    "quote": "When a company, for whatever reason, tests drug components or products using an unvalidated method, it is important to recognize the possibility of greater uncertainty in the test results derived from these unvalidated test methods, as compared to validated test methods.",
+    "clause_number": "Q7.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "unvalidated method used"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q7#4",
+   "unit": "Q7",
+   "hash": "ba794175c26e62fe",
+   "item": {
+    "statement": "Review all test results on drug components or products obtained with unvalidated methods to assess the need for follow-up action.",
+    "quote": "Accordingly, we expect all such test results on drug components or products to be reviewed to assess the need for follow-up action",
+    "clause_number": "Q7.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "unvalidated method used"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q10#1",
+   "unit": "Q10",
+   "hash": "f9a4ed78d85e0c30",
+   "item": {
+    "statement": "Non-penicillin finished drug products may be marketed if they are tested by the codified method and found not to be contaminated with penicillin.",
+    "quote": "21 CFR 211.176, Penicillin Contamination, allows marketing of non-penicillin finished drug products if they are tested using the codified method and found not to be contaminated with penicillin.",
+    "clause_number": "Q10.1",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q10#2",
+   "unit": "Q10",
+   "hash": "f63166275a33222b",
+   "item": {
+    "statement": "Do not release a non-penicillin product tested for penicillin unless all other applicable CGMP requirements have also been met.",
+    "quote": "However, it is not acceptable to release the product unless all other applicable CGMP requirements have been met.",
+    "clause_number": "Q10.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q10#3",
+   "unit": "Q10",
+   "hash": "4e7cb40292b3f38c",
+   "item": {
+    "statement": "Perform manufacturing operations for penicillin drug products in facilities separate from those used for non-penicillin human drug products.",
+    "quote": "Notably, 21 CFR 211.42(d) requires that manufacturing operations for penicillin drug products be performed in facilities separate from those used for non-penicillin human drug products.",
+    "clause_number": "Q10.1",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q10#4",
+   "unit": "Q10",
+   "hash": "a5b26a87917f4bee",
+   "item": {
+    "statement": "Keep air-handling systems for penicillin and non-penicillin drug products completely separate.",
+    "quote": "Similarly, 21 CFR 211.46(d) requires that air-handling systems for penicillin and non-penicillin drug products be completely separate.",
+    "clause_number": "Q10.1",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q10#5",
+   "unit": "Q10",
+   "hash": "c25db09f957036c4",
+   "item": {
+    "statement": "Do not rely on testing alone to make compliant a non-penicillin product made in a facility sharing equipment or an air-handling system with a penicillin production area.",
+    "quote": "For example, if a non-penicillin product is made in a facility that shares equipment or an air-handling system with a penicillin production area (in violation of § 211.46(d)), the non-penicillin product cannot be made CGMP-compliant through testing alone.",
+    "clause_number": "Q10.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "facility shares equipment or air handling with penicillin area"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  }
+ ]
+}

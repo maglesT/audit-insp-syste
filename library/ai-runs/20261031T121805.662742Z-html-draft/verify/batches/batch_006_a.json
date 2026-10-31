@@ -1,0 +1,617 @@
+{
+ "role": "a",
+ "instructions": "You are an auditor checking one checklist item against the FDA web page paragraph it claims to come from. You get\nthe unit's paragraphs (reference and exact text of the page; \"context\" entries are headings) and the item. Start from the ITEM:\nread it, then find in the cited paragraph what it covers.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the lead-in above a list\nitem (the paragraph ending \":\" above it). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph expects what the statement asks for (an instruction\n  to the investigator, \"Determine whether the firm validated ...\", expects the firm to have that practice), the statement\n  adds nothing and omits nothing of that obligation, the strength (a legal requirement: shall/must/required = mandatory;\n  should, FDA expects/recommends, an inspection point = recommended; may/acceptable = optional; a list item takes\n  its lead-in's) matches, and the text applies to every listed plant\n  type (INJ = sterile injectables: text limited to non-sterile products does not apply to\n  INJ; text limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences saying what you checked for THIS item, in this item's own words: name the\n  condition, number, list or scope you compared with the text (e.g. \"the 30-day limit and 'each lot' are both in\n  the statement\", \"the list of components, containers and closures is complete\", \"drops the lead-in's 'for\n  sterile products'\"). Write each reason fresh for its item: a reason that would fit any item (\"quote exact,\n  strength matches, nothing added or omitted\") or that repeats another answer's reason is not an answer, and the\n  item then counts as unchecked.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+ "units": [
+  {
+   "unit": "Q14",
+   "paragraphs": [
+    {
+     "ref": "Q14",
+     "text": "Can Leptospira species penetrate sterilizing-grade filters? If so, what should manufacturers keep in mind in their ongoing lifecycle risk management efforts to ensure microbial control?"
+    },
+    {
+     "ref": "Q14.1",
+     "text": "FDA is aware of a report of Leptospira licerasiae contamination in cell cultures (see Chen, Bergenvin, et al. 2012). There is no indication that this bacterium ultimately contaminated either the finished drug substance or drug product. This bacterium has been found to pass through 0.1 µm pore size rated sterilizing-grade membrane filters. While this specific species was the identified contaminant in this case, other Leptospira species also are capable of passing through 0.1 µm pore size rated filters (see Faine 1982). Compendial microbiological test methods typically used in association with upstream biotechnology and pharmaceutical production are not capable of detecting this type of bacteria. Whether this apparently rare contamination risk may be more widespread is unknown, and we are sharing this information so that manufacturers can consider whether this hazard may be relevant to their operations."
+    },
+    {
+     "ref": "Q14.2",
+     "text": "Leptospira are Gram-negative aerobic spirochetes that are flexible, highly motile, and spiral-shaped with internal flagella. The bacteria measure 1μm in diameter and 10-20 μm in length. Leptospira are obligate aerobes that use oxygen as the electron receptor and long-chain fatty acids as a major source of energy. While some of the Leptospira are harmless fresh-water saprophytes, other species are pathogenic and can cause leptosporosis, a significant disease in humans and animals (Ricaldi, Fouts, et al. 2012; Matthias, Ricaldi, et al. 2008; Bharti, Nally, et al. 2003). Based on current information, Leptospira contamination does not appear to occur frequently, and purification steps that follow cell culture in a typical biotechnology operation would be expected to prevent carryover to the finished drug substance.Testing of bulk drug substances produced in the reported cases did not detect the Leptospira species, and no evidence of deleterious effects on in-process product were observed in the known case study. However, we are providing this communication to alert manufacturers that these types of bacteria can potentially:"
+    },
+    {
+     "ref": "Q14.3",
+     "text": "Penetrate sterilizing-grade membrane filters",
+     "list_item": true
+    },
+    {
+     "ref": "Q14.4",
+     "text": "Be present in the manufacturing site environment",
+     "list_item": true
+    },
+    {
+     "ref": "Q14.5",
+     "text": "Impact in-process production (e.g., production yields, impurity levels, process performance)",
+     "list_item": true
+    },
+    {
+     "ref": "Q14.6",
+     "text": "Go undetected due to the limitations of current compendial bioburden tests in detecting this microbial genus",
+     "list_item": true
+    },
+    {
+     "ref": "Q14.7",
+     "text": "As a general principle, manufacturers should use sound risk management and be aware of unusual microbiota reported in the literature that may impact their manufacturing processes (e.g., cell culture biotechnology, conventional sterile drug manufacturing). Manufacturers should assess their operations, be aware of potential risks, and apply appropriate risk management based on an understanding of possible or emerging contamination risks (see section 18.3 in ICH guidance for industry Q7 Good Manufacturing Practice Guidance for Active Pharmaceutical Ingredients). As appropriate, preventive measures should be implemented during the product and process lifecycle. To illustrate, if leptospiral contamination is considered possible, or has occurred, risk mitigation procedures and practices for this microorganism should include at least the following:"
+    },
+    {
+     "ref": "Q14.8",
+     "text": "Review of available published articles from the scientific literature and technical reports by related industry organizations that may provide further understanding on how to mitigate this contamination hazard.",
+     "list_item": true
+    },
+    {
+     "ref": "Q14.9",
+     "text": "Use of molecular or nonconventional microbial monitoring methods at appropriate intervals to detect microbial flora that may exist in processing steps or in the immediate environment, but are not readily detected by current routine methods. Such expanded testing should be used to modify the strategy (e.g., timing, frequency, types of tests) of detection and control in the event of newly identified risk posed by the viable, but not easily cultured, microorganism."
+    },
+    {
+     "ref": "Q14.10",
+     "text": "Examples include:"
+    },
+    {
+     "ref": "Q14.11",
+     "text": "Use of specialized media such as Ellinghausen McCullough Johnson Harris (EMJH) medium (Ellinghausen and McCullough 1965) or other suitable media (Rule and Alexander 1986). It should be noted that these bacteria typically grow very slowly.",
+     "list_item": true
+    },
+    {
+     "ref": "Q14.12",
+     "text": "Use of validated polymerase chain reaction (PCR) methods (e.g., as an investigative tool) for rapid screening and detection of spirochete bacteria.",
+     "list_item": true
+    },
+    {
+     "ref": "Q14.13",
+     "text": "Consideration of special stain techniques or other means to identify the presence of Leptospira (Frank and Kohn 1973).",
+     "list_item": true
+    },
+    {
+     "ref": "Q14.14",
+     "text": "Use of conventional approaches. Firms should continue to properly employ basic, standard microbiology laboratory practices to detect contamination. For example, the laboratory should ensure that microscopic examination is part of its routine cell culture process control program, as it provides an important means of detecting microbial contaminants that may not readily grow on conventional media.",
+     "list_item": true
+    },
+    {
+     "ref": "Q14.15",
+     "text": "Implementing such quality risk-management measures into the initial design (i.e., preventive actions) and promptly implementing an appropriate corrective action plan in response to newly identified contamination sources, throughout the life cycle of the product.",
+     "list_item": true
+    }
+   ]
+  },
+  {
+   "unit": "Q15",
+   "paragraphs": [
+    {
+     "ref": "Q15",
+     "text": "FDA withdrew its draft guidance for industry on Powder Blends and Finished Dosage Units—Stratified In-Process Dosage Unit Sampling and Assessment. What were the Agency’s major concerns with this guidance?"
+    },
+    {
+     "ref": "Q15.1",
+     "text": "FDA’s major concern was that sections V and VII of the withdrawn draft guidance no longer represented the Agency’s current thinking, as explained below. Section V (Exhibit/Validation Batch Powder Mix Homogeneity) recommended that at least 3 replicate samples be taken from at least 10 locations in the powder blender, but that only 1 of the 3 replicates be evaluated to assess powder blend uniformity. The Agency currently recommends that all replicate samples taken from various locations in the blender be evaluated to perform a statistically valid analysis. This analysis can demonstrate that variability attributable to sample location is not significant and that the powder blend is homogenous. Statistical tools are available to ascertain both the number of replicates and the number of sampling locations across the blender that should be analyzed to conduct a valid analysis. Section VII (Routine Manufacturing Batch Testing Methods) acceptance criteria designated to the Standard Criteria Method and the Marginal Criteria Method were based upon the limits published in the United States Pharmacopeia (USP) General Chapter <905> Uniformity of Dosage Units. However, the procedures and acceptance criteria in General Chapter <905> are not a statistical sampling plan and so the results of the procedures should not be extrapolated to larger populations. Therefore, because the procedure and acceptance criteria prescribed in section VII provided only limited statistical assurance that batches of drug products met appropriate specifications and statistical quality control criteria, FDA no longer supports their use for batch release. Currently, there are several standard statistical practices that, if used correctly, can help to ensure compliance with CGMP regulations, including 21 CFR 211.110, 21 CFR 211.160, and 21 CFR 211.165."
+    }
+   ]
+  },
+  {
+   "unit": "Q16",
+   "paragraphs": [
+    {
+     "ref": "Q16",
+     "text": "Why is FDA concerned about proper sampling of powder blends?"
+    },
+    {
+     "ref": "Q16.1",
+     "text": "The CGMPs require that all sampling plans be scientifically sound and representative of the batch under test (see 21 CFR 211.160(b)). Further, in-process testing of powder blends to demonstrate adequacy of mixing is a CGMP requirement (21 CFR 211.110). Between- and within-location variability in the powder blend is a critical component of finished product quality and therefore should be evaluated. Drug product manufacturers need to use a science- and risk-based sampling approach to ensure (a) adequacy of blend mixing and (b) that sampling of the blend is done at a suitable juncture in the manufacturing process. The sampling and analysis needs to ensure that no differences exist between locations in a blend that could adversely affect finished product quality. Traditional sampling using a powder-thief may have drawbacks and limitations, such as causing disturbance to the powder bed, powder segregation, or other sampling errors. However, powder-thief sampling remains widely used and provides reliable results in many cases. The Agency encourages firms to adopt more innovative approaches to ensuring adequacy of mixing (see, e.g., the guidance for industry PAT—A Framework for Innovative Pharmaceutical Development, Manufacturing, and Quality Assurance). If a manufacturer proposes to use a thief sampling method, the reliability of the method should be evaluated as part of analytical methods development."
+    }
+   ]
+  },
+  {
+   "unit": "Q17",
+   "paragraphs": [
+    {
+     "ref": "Q17",
+     "text": "What are some recommended innovative approaches to ensuring adequacy of mixing of powder blends?"
+    },
+    {
+     "ref": "Q17.1",
+     "text": "Innovative approaches to consider include, but are not limited to: (a) PAT real-time monitoring and feed-forward controlling of the powder blending process (see the guidance for industry PAT—A Framework for Innovative Pharmaceutical Development, Manufacturing, and Quality Assurance) and (b) use of statistical process control tools to monitor the powder blending process and to maintain a state of control. When a manufacturer decides to implement PAT or other process-monitoring and control techniques for powder blend homogeneity assessment, its decision should be supported with appropriate data and rationale using a science- and risk-based approach. For example, the effective sample size of powder examined by PAT probes has to be estimated such that the scale of scrutiny of the PAT powder blending monitoring can be justified (Wu, Tawakkul, et al. 2009). The number of PAT probes and their locations also have to be justified. If a scientifically sound PAT monitoring and control strategy is established, it can facilitate the assessment of (a) variability across locations within the powder bed (El-Hagrasy, Morris, et al. 2001), (b) variability over time of one location, and (c) potential correlation between the powder sample and the unit dosage form."
+    }
+   ]
+  },
+  {
+   "unit": "Q18",
+   "paragraphs": [
+    {
+     "ref": "Q18",
+     "text": "What are the Agency’s recommendations regarding in-process stratified sampling of finished dosage units?"
+    },
+    {
+     "ref": "Q18.1",
+     "text": "Stratified sampling is recommended to be used when the population is known to have several subdivisions (i.e., locations), which may give different results for the quality characteristics measured. The Agency expects that no significant differences should exist between in-process locations that could affect finished product quality. Between- and within-location variability is a critical component of finished product quality and therefore should be evaluated. Please refer to ASTM E2709 and ASTM E2810 for further guidance on establishing acceptance criteria for a stratified sampling plan."
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q14#9",
+   "unit": "Q14",
+   "hash": "3694533fa1edf135",
+   "item": {
+    "statement": "Special stain techniques or other means may be considered to identify the presence of Leptospira.",
+    "quote": "Consideration of special stain techniques or other means to identify the presence of Leptospira",
+    "clause_number": "Q14.13",
+    "strength": "optional",
+    "plant_types": [
+     "INJ",
+     "API"
+    ],
+    "condition": "if leptospiral contamination is considered possible or has occurred"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q14#10",
+   "unit": "Q14",
+   "hash": "6d5598f293de75cc",
+   "item": {
+    "statement": "Continue to properly use basic, standard microbiology laboratory practices to detect contamination.",
+    "quote": "Firms should continue to properly employ basic, standard microbiology laboratory practices to detect contamination.",
+    "clause_number": "Q14.14",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q14#11",
+   "unit": "Q14",
+   "hash": "df4de6ee73cfba05",
+   "item": {
+    "statement": "Make microscopic examination part of the routine cell culture process control program in the laboratory.",
+    "quote": "For example, the laboratory should ensure that microscopic examination is part of its routine cell culture process control program",
+    "clause_number": "Q14.14",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ",
+     "API"
+    ],
+    "condition": "cell culture processes"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q14#12",
+   "unit": "Q14",
+   "hash": "576225d9fdf1799b",
+   "item": {
+    "statement": "If leptospiral contamination is considered possible or has occurred, build quality risk-management measures into the initial design as preventive actions.",
+    "quote": "Implementing such quality risk-management measures into the initial design (i.e., preventive actions)",
+    "clause_number": "Q14.15",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ",
+     "API"
+    ],
+    "condition": "if leptospiral contamination is considered possible or has occurred"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q14#13",
+   "unit": "Q14",
+   "hash": "05718f9c45b2229b",
+   "item": {
+    "statement": "If leptospiral contamination is considered possible or has occurred, promptly implement an appropriate corrective action plan in response to newly identified contamination sources, throughout the product life cycle.",
+    "quote": "promptly implementing an appropriate corrective action plan in response to newly identified contamination sources, throughout the life cycle of the product",
+    "clause_number": "Q14.15",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ",
+     "API"
+    ],
+    "condition": "if leptospiral contamination is considered possible or has occurred"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q15#1",
+   "unit": "Q15",
+   "hash": "24b0bed13e936ca5",
+   "item": {
+    "statement": "When assessing powder blend uniformity, evaluate all replicate samples taken from the various blender locations so that a statistically valid analysis is performed.",
+    "quote": "The Agency currently recommends that all replicate samples taken from various locations in the blender be evaluated to perform a statistically valid analysis.",
+    "clause_number": "Q15.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q15#2",
+   "unit": "Q15",
+   "hash": "a2ae0267d0eb0bf9",
+   "item": {
+    "statement": "Statistical tools may be used to determine both the number of replicates and the number of sampling locations across the blender to be analyzed for a valid analysis.",
+    "quote": "Statistical tools are available to ascertain both the number of replicates and the number of sampling locations across the blender that should be analyzed to conduct a valid analysis.",
+    "clause_number": "Q15.1",
+    "strength": "optional",
+    "plant_types": [
+     "OSD"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q15#3",
+   "unit": "Q15",
+   "hash": "c9b7a74d1f53a91c",
+   "item": {
+    "statement": "Do not extrapolate the results of the compendial uniformity of dosage units procedures to larger populations, because they are not a statistical sampling plan.",
+    "quote": "However, the procedures and acceptance criteria in General Chapter <905> are not a statistical sampling plan and so the results of the procedures should not be extrapolated to larger populations.",
+    "clause_number": "Q15.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q16#1",
+   "unit": "Q16",
+   "hash": "ed73d5ebc5b0b119",
+   "item": {
+    "statement": "Make all sampling plans scientifically sound and representative of the batch under test.",
+    "quote": "The CGMPs require that all sampling plans be scientifically sound and representative of the batch under test",
+    "clause_number": "Q16.1",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q16#2",
+   "unit": "Q16",
+   "hash": "280b82d82384bb5d",
+   "item": {
+    "statement": "Perform in-process testing of powder blends to demonstrate adequacy of mixing.",
+    "quote": "Further, in-process testing of powder blends to demonstrate adequacy of mixing is a CGMP requirement",
+    "clause_number": "Q16.1",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q16#3",
+   "unit": "Q16",
+   "hash": "a0961f121d9ee104",
+   "item": {
+    "statement": "Evaluate between-location and within-location variability in the powder blend.",
+    "quote": "Between- and within-location variability in the powder blend is a critical component of finished product quality and therefore should be evaluated.",
+    "clause_number": "Q16.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q16#4",
+   "unit": "Q16",
+   "hash": "fbb92cf17d0be4e8",
+   "item": {
+    "statement": "Use a science- and risk-based sampling approach to ensure (a) adequate blend mixing and (b) that the blend is sampled at a suitable point in the manufacturing process.",
+    "quote": "Drug product manufacturers need to use a science- and risk-based sampling approach to ensure (a) adequacy of blend mixing and (b) that sampling of the blend is done at a suitable juncture in the manufacturing process.",
+    "clause_number": "Q16.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q16#5",
+   "unit": "Q16",
+   "hash": "3f45d3699786ec7e",
+   "item": {
+    "statement": "Design blend sampling and analysis to ensure there are no differences between locations in a blend that could adversely affect finished product quality.",
+    "quote": "The sampling and analysis needs to ensure that no differences exist between locations in a blend that could adversely affect finished product quality.",
+    "clause_number": "Q16.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q16#6",
+   "unit": "Q16",
+   "hash": "35e650a7e1c9836e",
+   "item": {
+    "statement": "Adopt more innovative approaches to ensuring adequacy of powder blend mixing.",
+    "quote": "The Agency encourages firms to adopt more innovative approaches to ensuring adequacy of mixing",
+    "clause_number": "Q16.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q16#7",
+   "unit": "Q16",
+   "hash": "8b79f9d2e45aca59",
+   "item": {
+    "statement": "If a thief sampling method is proposed, evaluate its reliability as part of analytical methods development.",
+    "quote": "If a manufacturer proposes to use a thief sampling method, the reliability of the method should be evaluated as part of analytical methods development.",
+    "clause_number": "Q16.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD"
+    ],
+    "condition": "if thief sampling is proposed"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q17#1",
+   "unit": "Q17",
+   "hash": "1ac39df4110af7af",
+   "item": {
+    "statement": "Innovative approaches to ensuring adequate powder blend mixing may be considered, including but not limited to (a) PAT real-time monitoring and feed-forward control of the blending process and (b) statistical process control tools to monitor the blending process and maintain a state of control.",
+    "quote": "Innovative approaches to consider include, but are not limited to: (a) PAT real-time monitoring and feed-forward controlling of the powder blending process (see the guidance for industry PAT—A Framework for Innovative Pharmaceutical Development, Manufacturing, and Quality Assurance) and (b) use of statistical process control tools to monitor the powder blending process and to maintain a state of control.",
+    "clause_number": "Q17.1",
+    "strength": "optional",
+    "plant_types": [
+     "OSD"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q17#2",
+   "unit": "Q17",
+   "hash": "c439dbfad05c2c2d",
+   "item": {
+    "statement": "When deciding to implement PAT or other process-monitoring and control techniques for assessing powder blend homogeneity, support the decision with appropriate data and rationale using a science- and risk-based approach.",
+    "quote": "When a manufacturer decides to implement PAT or other process-monitoring and control techniques for powder blend homogeneity assessment, its decision should be supported with appropriate data and rationale using a science- and risk-based approach.",
+    "clause_number": "Q17.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD"
+    ],
+    "condition": "when PAT or other monitoring techniques are used for blend homogeneity"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q17#3",
+   "unit": "Q17",
+   "hash": "50afb33954a5e153",
+   "item": {
+    "statement": "Estimate the effective sample size of powder examined by PAT probes so that the scale of scrutiny of PAT blend monitoring can be justified.",
+    "quote": "For example, the effective sample size of powder examined by PAT probes has to be estimated such that the scale of scrutiny of the PAT powder blending monitoring can be justified",
+    "clause_number": "Q17.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD"
+    ],
+    "condition": "PAT blend monitoring"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q17#4",
+   "unit": "Q17",
+   "hash": "38ecefa8739aa721",
+   "item": {
+    "statement": "Justify the number of PAT probes and their locations.",
+    "quote": "The number of PAT probes and their locations also have to be justified.",
+    "clause_number": "Q17.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD"
+    ],
+    "condition": "PAT blend monitoring"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q18#1",
+   "unit": "Q18",
+   "hash": "80711e2950ef46e7",
+   "item": {
+    "statement": "Use stratified sampling when the population is known to have several subdivisions (locations) that may give different results for the quality characteristics measured.",
+    "quote": "Stratified sampling is recommended to be used when the population is known to have several subdivisions (i.e., locations), which may give different results for the quality characteristics measured.",
+    "clause_number": "Q18.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD"
+    ],
+    "condition": "population with subdivisions that may differ"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  }
+ ]
+}

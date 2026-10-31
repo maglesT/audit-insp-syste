@@ -1,0 +1,275 @@
+{
+ "role": "b",
+ "instructions": "You are a second, independent auditor. Check one checklist item against the FDA web page paragraph it claims to come from. You get\nthe unit's paragraphs (reference and exact text of the page; \"context\" entries are headings) and the item. Start from the TEXT:\nread the cited paragraph, the paragraphs its quote runs into, and its lead-in fully, then compare the item.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the lead-in above a list\nitem (the paragraph ending \":\" above it). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph expects what the statement asks for (an instruction\n  to the investigator, \"Determine whether the firm validated ...\", expects the firm to have that practice), the statement\n  adds nothing and omits nothing of that obligation, the strength (a legal requirement: shall/must/required = mandatory;\n  should, FDA expects/recommends, an inspection point = recommended; may/acceptable = optional; a list item takes\n  its lead-in's) matches, and the text applies to every listed plant\n  type (INJ = sterile injectables: text limited to non-sterile products does not apply to\n  INJ; text limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences saying what you checked for THIS item, in this item's own words: name the\n  condition, number, list or scope you compared with the text (e.g. \"the 30-day limit and 'each lot' are both in\n  the statement\", \"the list of components, containers and closures is complete\", \"drops the lead-in's 'for\n  sterile products'\"). Write each reason fresh for its item: a reason that would fit any item (\"quote exact,\n  strength matches, nothing added or omitted\") or that repeats another answer's reason is not an answer, and the\n  item then counts as unchecked.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+ "units": [
+  {
+   "unit": "Q18",
+   "paragraphs": [
+    {
+     "ref": "Q18",
+     "text": "What are the Agency’s recommendations regarding in-process stratified sampling of finished dosage units?"
+    },
+    {
+     "ref": "Q18.1",
+     "text": "Stratified sampling is recommended to be used when the population is known to have several subdivisions (i.e., locations), which may give different results for the quality characteristics measured. The Agency expects that no significant differences should exist between in-process locations that could affect finished product quality. Between- and within-location variability is a critical component of finished product quality and therefore should be evaluated. Please refer to ASTM E2709 and ASTM E2810 for further guidance on establishing acceptance criteria for a stratified sampling plan."
+    }
+   ]
+  },
+  {
+   "unit": "Q19",
+   "paragraphs": [
+    {
+     "ref": "Q19",
+     "text": "For a nonsterile compendial drug product that includes an antimicrobial preservative in its formulation, may I release and market lots of this drug product with initial out-of-specification total aerobic plate counts if these lots test within specification 2 weeks later?"
+    },
+    {
+     "ref": "Q19.1",
+     "text": "No. 21 CFR 211.113(a) requires appropriate written procedures to be established and followed during manufacturing to prevent objectionable microorganisms in drug products not required to be sterile. Additionally, the second paragraph of USP General Chapter <51> Antimicrobial Effectiveness Testing reads: Antimicrobial preservatives should not be used as a substitute for good manufacturing practices, solely to reduce the viable microbial population of a nonsterile product, or control the presterilization bioburden of a multidose formulation during manufacturing. Drug manufacturers should not rely on antimicrobial preservatives to reduce initial out-of-specification plate counts to within-specification levels and then market the product. Section 211.165(f) mandates that drug products failing to meet established standards or specifications be rejected. The initial test results exhibiting out-of specification levels of microbes are not disqualified even if subsequent test results are within specifications. In such cases, FDA still expects the manufacturer to reject the drug product based on the initial results. It is also not acceptable for manufacturers to allow an inappropriately long time (e.g., weeks) to pass before testing the product, which might permit the preservative to reduce levels of microbes possibly introduced during manufacture and thus avoid out-of-specification test results. Finally, drug manufacturers should review their manufacturing process to determine procedures or equipment that might introduce contaminating microorganisms into the process or product."
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q18#2",
+   "unit": "Q18",
+   "hash": "b32899d94b3442d2",
+   "item": {
+    "statement": "Ensure there are no significant differences between in-process locations that could affect finished product quality.",
+    "quote": "The Agency expects that no significant differences should exist between in-process locations that could affect finished product quality.",
+    "clause_number": "Q18.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q18#3",
+   "unit": "Q18",
+   "hash": "073f37cc0de6a58b",
+   "item": {
+    "statement": "Evaluate between-location and within-location variability of in-process dosage units.",
+    "quote": "Between- and within-location variability is a critical component of finished product quality and therefore should be evaluated.",
+    "clause_number": "Q18.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q19#1",
+   "unit": "Q19",
+   "hash": "c7d087fdb189e723",
+   "item": {
+    "statement": "For drug products not required to be sterile, establish and follow appropriate written procedures during manufacturing to prevent objectionable microorganisms.",
+    "quote": "21 CFR 211.113(a) requires appropriate written procedures to be established and followed during manufacturing to prevent objectionable microorganisms in drug products not required to be sterile.",
+    "clause_number": "Q19.1",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": "drug products not required to be sterile"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q19#2",
+   "unit": "Q19",
+   "hash": "e7519ea8d01b136b",
+   "item": {
+    "statement": "Do not use antimicrobial preservatives as a substitute for good manufacturing practices, solely to reduce the viable microbial population of a nonsterile product, or to control the presterilization bioburden of a multidose formulation during manufacturing.",
+    "quote": "Antimicrobial preservatives should not be used as a substitute for good manufacturing practices, solely to reduce the viable microbial population of a nonsterile product, or control the presterilization bioburden of a multidose formulation during manufacturing.",
+    "clause_number": "Q19.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q19#3",
+   "unit": "Q19",
+   "hash": "327a2427a9ce685b",
+   "item": {
+    "statement": "Do not rely on antimicrobial preservatives to bring initial out-of-specification plate counts down to within-specification levels and then market the product.",
+    "quote": "Drug manufacturers should not rely on antimicrobial preservatives to reduce initial out-of-specification plate counts to within-specification levels and then market the product.",
+    "clause_number": "Q19.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q19#4",
+   "unit": "Q19",
+   "hash": "c04c7332d4d1b958",
+   "item": {
+    "statement": "Reject drug products that fail to meet established standards or specifications.",
+    "quote": "Section 211.165(f) mandates that drug products failing to meet established standards or specifications be rejected.",
+    "clause_number": "Q19.1",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q19#5",
+   "unit": "Q19",
+   "hash": "55c7da410e90dbe3",
+   "item": {
+    "statement": "Reject the drug product on the basis of initial out-of-specification microbial results; these results are not disqualified even if later test results are within specification.",
+    "quote": "The initial test results exhibiting out-of specification levels of microbes are not disqualified even if subsequent test results are within specifications. In such cases, FDA still expects the manufacturer to reject the drug product based on the initial results.",
+    "clause_number": "Q19.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": "initial out-of-specification microbial results"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q19#6",
+   "unit": "Q19",
+   "hash": "d10376c3cf3c3fbb",
+   "item": {
+    "statement": "Do not allow an inappropriately long time (for example weeks) to pass before testing the product, which could let the preservative reduce microbes introduced during manufacture and so avoid out-of-specification results.",
+    "quote": "It is also not acceptable for manufacturers to allow an inappropriately long time (e.g., weeks) to pass before testing the product, which might permit the preservative to reduce levels of microbes possibly introduced during manufacture and thus avoid out-of-specification test results.",
+    "clause_number": "Q19.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q19#7",
+   "unit": "Q19",
+   "hash": "5fcd875602d3b240",
+   "item": {
+    "statement": "Review the manufacturing process to identify procedures or equipment that might introduce contaminating microorganisms into the process or product.",
+    "quote": "Finally, drug manufacturers should review their manufacturing process to determine procedures or equipment that might introduce contaminating microorganisms into the process or product.",
+    "clause_number": "Q19.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,671 @@
+{
+ "role": "b",
+ "instructions": "You are a second, independent auditor. Check one checklist item against the FDA web page paragraph it claims to come from. You get\nthe unit's paragraphs (reference and exact text of the page; \"context\" entries are headings) and the item. Start from the TEXT:\nread the cited paragraph, the paragraphs its quote runs into, and its lead-in fully, then compare the item.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the lead-in above a list\nitem (the paragraph ending \":\" above it). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph expects what the statement asks for (an instruction\n  to the investigator, \"Determine whether the firm validated ...\", expects the firm to have that practice), the statement\n  adds nothing and omits nothing of that obligation, the strength (a legal requirement: shall/must/required = mandatory;\n  should, FDA expects/recommends, an inspection point = recommended; may/acceptable = optional; a list item takes\n  its lead-in's) matches, and the text applies to every listed plant\n  type (INJ = sterile injectables: text limited to non-sterile products does not apply to\n  INJ; text limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences saying what you checked for THIS item, in this item's own words: name the\n  condition, number, list or scope you compared with the text (e.g. \"the 30-day limit and 'each lot' are both in\n  the statement\", \"the list of components, containers and closures is complete\", \"drops the lead-in's 'for\n  sterile products'\"). Write each reason fresh for its item: a reason that would fit any item (\"quote exact,\n  strength matches, nothing added or omitted\") or that repeats another answer's reason is not an answer, and the\n  item then counts as unchecked.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+ "units": [
+  {
+   "unit": "¶1-¶9",
+   "paragraphs": [
+    {
+     "context": "High Purity Water System (7/93)"
+    },
+    {
+     "context": "GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS"
+    },
+    {
+     "ref": "¶1",
+     "text": "Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s).",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS"
+    },
+    {
+     "ref": "¶2",
+     "text": "This guide discusses, primarily from a microbiological aspect, the review and evaluation of high purity water systems that are used for the manufacture of drug products and drug substances. It also includes a review of the design of the various types of systems and some of the problems that have been associated with these systems. As with other guides, it is not all-inclusive, but provides background and guidance for the review and evaluation of high purity water systems. The Guide To Inspections of Microbiological Pharmaceutical Quality Control Laboratories (May, 1993) provides additional guidance.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS"
+    },
+    {
+     "context": "I. SYSTEM DESIGN"
+    },
+    {
+     "ref": "¶3",
+     "text": "One of the basic considerations in the design of a system is the type of product that is to be manufactured. For parenteral products where there is a concern for pyrogens, it is expected that Water for Injection will be used. This applies to the formulation of products, as well as to the final washing of components and equipment used in their manufacture. Distillation and Reverse Osmosis (RO) filtration are the only acceptable methods listed in the USP for producing Water for Injection. However, in the bulk Pharmaceutical and Biotechnology industries and some foreign companies, Ultra Filtration (UF) is employed to minimize endotoxins in those drug substances that are administered parenterally.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > I. SYSTEM DESIGN"
+    },
+    {
+     "ref": "¶4",
+     "text": "For some ophthalmic products, such as the ophthalmic irrigating solution, and some inhalation products, such as Sterile Water for Inhalation, where there are pyrogen specifications, it is expected that Water for Injection be used in their formulation. However, for most inhalation and ophthalmic products, purified water is used in their formulation. This also applies to topicals, cosmetics and oral products.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > I. SYSTEM DESIGN"
+    },
+    {
+     "ref": "¶5",
+     "text": "Another design consideration is the temperature of the system. It is recognized that hot (65 - 80oC) systems are self sanitizing. While the cost of other systems may be less expensive for a company, the cost of maintenance, testing and potential problems may be greater than the cost of energy saved. Whether a system is circulating or one-way is also an important design consideration. Obviously, water in constant motion is less liable to have high levels of contaminant. A one-way water system is basically a \"dead-leg\".",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > I. SYSTEM DESIGN"
+    },
+    {
+     "ref": "¶6",
+     "text": "Finally, and possibly the most important consideration, is the risk assessment or level of quality that is desired. It should be recognized that different products require different quality waters. Parenterals require very pure water with no endotoxins. Topical and oral products require less pure water and do not have a requirement for endotoxins. Even with topical and oral products there are factors that dictate different qualities for water. For example, preservatives in antacids are marginally effective, so more stringent microbial limits have to be set. The quality control department should assess each product manufactured with the water from their system and determine the microbial action limits based on the most microbial sensitive product. In lieu of stringent water action limits in the system the manufacturer can add a microbial reduction step in the manufacturing process for the sensitive drug product(s).",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > I. SYSTEM DESIGN"
+    },
+    {
+     "context": "II. SYSTEM VALIDATION"
+    },
+    {
+     "ref": "¶7",
+     "text": "A basic reference used for the validation of high purity water systems is the Parenteral Drug Association Technical Report No. 4 titled, \"Design Concepts for the Validation of a Water for Injection System.\"",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > II. SYSTEM VALIDATION"
+    },
+    {
+     "ref": "¶8",
+     "text": "The introduction provides guidance and states that, \"Validation often involves the use of an appropriate challenge. In this situation, it would be undesirable to introduce microorganisms into an on-line system; therefore, reliance is placed on periodic testing for microbiological quality and on the installation of monitoring equipment at specific checkpoints to ensure that the total system is operating properly and continuously fulfilling its intended function.\"",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > II. SYSTEM VALIDATION"
+    },
+    {
+     "ref": "¶9",
+     "text": "In the review of a validation report, or in the validation of a high purity water system, there are several aspects that should be considered. Documentation should include a description of the system along with a print. The drawing needs to show all equipment in the system from the water feed to points of use. It should also show all sampling points and their designations. If a system has no print, it is usually considered an objectionable condition. The thinking is if there is no print, then how can the system be validated? How can a quality control manager or microbiologist know where to sample? In those facilities observed without updated prints, serious problems were identified in these systems. The print should be compared to the actual system annually to insure its accuracy, to detect unreported changes and confirm reported changes to the system.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > II. SYSTEM VALIDATION"
+    }
+   ]
+  },
+  {
+   "unit": "¶10-¶19",
+   "paragraphs": [
+    {
+     "ref": "¶10",
+     "text": "After all the equipment and piping has been verified as installed correctly and working as specified, the initial phase of the water system validation can begin. During this phase the operational parameters and the cleaning/ sanitization procedures and frequencies will be developed. Sampling should be daily after each step in the purification process and at each point of use for two to four weeks. The sampling procedure for point of use sampling should reflect how the water is to be drawn e.g. if a hose is usually attached the sample should be taken at the end of the hose. If the SOP calls for the line to be flushed before use of the water from that point, then the sample is taken after the flush. At the end of the two to four week time period the firm should have developed its SOPs for operation of the water system.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > II. SYSTEM VALIDATION"
+    },
+    {
+     "ref": "¶11",
+     "text": "The second phase of the system validation is to demonstrate that the system will consistently produce the desired water quality when operated in conformance with the SOPs. The sampling is performed as in the initial phase and for the same time period. At the end of this phase the data should demonstrate that the system will consistently produce the desired quality of water.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > II. SYSTEM VALIDATION"
+    },
+    {
+     "ref": "¶12",
+     "text": "The third phase of validation is designed to demonstrate that when the water system is operated in accordance with the SOPs over a long period of time it will consistently produce water of the desired quality. Any variations in the quality of the feedwater that could affect the operation and ultimately the water quality will be picked up during this phase of the validation. Sampling is performed according to routine procedures and frequencies. For Water for Injection systems the samples should be taken daily from a minimum of one point of use, with all points of use tested weekly. The validation of the water system is completed when the firm has a full years worth of data.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > II. SYSTEM VALIDATION"
+    },
+    {
+     "ref": "¶13",
+     "text": "While the above validation scheme is not the only way a system can be validated, it contains the necessary elements for validation of a water system. First, there must be data to support the SOPs. Second, there must be data demonstrating that the SOPs are valid and that the system is capable of consistently producing water that meets the desired specifications. Finally, there must be data to demonstrate that seasonal variations in the feedwater do not adversely affect the operation of the system or the water quality.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > II. SYSTEM VALIDATION"
+    },
+    {
+     "ref": "¶14",
+     "text": "The last part of the validation is the compilation of the data, with any conclusions into the final report. The final validation report must be signed by the appropriate people responsible for operation and quality assurance of the water system.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > II. SYSTEM VALIDATION"
+    },
+    {
+     "ref": "¶15",
+     "text": "A typical problem that occurs is the failure of operating procedures to preclude contamination of the system with non-sterile air remaining in a pipe after drainage. In a system illustrated as in Figure 1, (below) a typical problem occurs when a washer or hose connection is flushed and then drained at the end of the operation. After draining, this valve (the second off of the system) is closed. If on the next day or start-up of the operation the primary valve off of the circulating system is opened, then the non-sterile air remaining in the pipe after drainage would contaminate the system. The solution is to pro-vide for operational procedures that provide for opening the secondary valve before the primary valve to flush the pipe prior to use.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > II. SYSTEM VALIDATION"
+    },
+    {
+     "ref": "¶16",
+     "text": "Another major consideration in the validation of high purity water systems is the acceptance criteria. Consistent results throughout the system over a period of time constitute the primary element.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > II. SYSTEM VALIDATION"
+    },
+    {
+     "context": "III. MICROBIAL LIMITS"
+    },
+    {
+     "context": "Water For Injection Systems"
+    },
+    {
+     "ref": "¶17",
+     "text": "Regarding microbiological results, for Water For Injection, it is expected that they be essentially sterile. Since sampling frequently is performed in non-sterile areas and is not truly aseptic, occasional low level counts due to sampling errors may occur. Agency policy, is that less than 10 CFU/100ml is an acceptable action limit. None of the limits for water are pass/fail limits. All limits are action limits. When action limits are exceeded the firm must investigate the cause of the problem, take action to correct the problem and assess the impact of the microbial contamination on products manufactured with the water and document the results of their investigation.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > III. MICROBIAL LIMITS"
+    },
+    {
+     "ref": "¶18",
+     "text": "With regard to sample size, 100 - 300 mL is preferred when sampling Water for Injection systems. Sample volumes less than 100 mL are unacceptable.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > III. MICROBIAL LIMITS"
+    },
+    {
+     "ref": "¶19",
+     "text": "The real concern in WFI is endotoxins. Because WFI can pass the LAL endotoxin test and still fail the above microbial action limit, it is important to monitor WFI systems for both endotoxins and microorganisms.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > III. MICROBIAL LIMITS"
+    },
+    {
+     "context": "Purified Water Systems"
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶1-¶9#1",
+   "unit": "¶1-¶9",
+   "hash": "2ab13ac5fbdd2f92",
+   "item": {
+    "statement": "Use Water for Injection for parenteral products where pyrogens are a concern, both to formulate the product and for the final washing of components and equipment used to make it.",
+    "quote": "For parenteral products where there is a concern for pyrogens, it is expected that Water for Injection will be used. This applies to the formulation of products, as well as to the final washing of components and equipment used in their manufacture.",
+    "clause_number": "¶3",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ",
+     "API"
+    ],
+    "condition": "parenteral products where pyrogens are a concern"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶1-¶9#2",
+   "unit": "¶1-¶9",
+   "hash": "5ffe662dd971ae1c",
+   "item": {
+    "statement": "Formulate ophthalmic and inhalation products that have pyrogen specifications (for example ophthalmic irrigating solution or Sterile Water for Inhalation) with Water for Injection.",
+    "quote": "For some ophthalmic products, such as the ophthalmic irrigating solution, and some inhalation products, such as Sterile Water for Inhalation, where there are pyrogen specifications, it is expected that Water for Injection be used in their formulation.",
+    "clause_number": "¶4",
+    "strength": "recommended",
+    "plant_types": [
+     "LIQ",
+     "INJ"
+    ],
+    "condition": "ophthalmic or inhalation products with pyrogen specifications"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶1-¶9#3",
+   "unit": "¶1-¶9",
+   "hash": "b919399ad8f6dc24",
+   "item": {
+    "statement": "Set more stringent microbial limits for water used in products whose preservatives are only marginally effective, such as antacids.",
+    "quote": "For example, preservatives in antacids are marginally effective, so more stringent microbial limits have to be set.",
+    "clause_number": "¶6",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "API"
+    ],
+    "condition": "products with marginally effective preservatives"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶1-¶9#4",
+   "unit": "¶1-¶9",
+   "hash": "cd6632512cfddbe2",
+   "item": {
+    "statement": "Have quality control assess every product made with the system's water and set the water's microbial action limits based on the product most sensitive to microbes.",
+    "quote": "The quality control department should assess each product manufactured with the water from their system and determine the microbial action limits based on the most microbial sensitive product.",
+    "clause_number": "¶6",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶1-¶9#5",
+   "unit": "¶1-¶9",
+   "hash": "613750b16a26b8e6",
+   "item": {
+    "statement": "Instead of setting stringent water action limits for the system, a microbial reduction step may be added to the manufacturing process of the sensitive drug product(s).",
+    "quote": "In lieu of stringent water action limits in the system the manufacturer can add a microbial reduction step in the manufacturing process for the sensitive drug product(s).",
+    "clause_number": "¶6",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "instead of stringent water action limits"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶1-¶9#6",
+   "unit": "¶1-¶9",
+   "hash": "fe10a3e1361f4cc8",
+   "item": {
+    "statement": "When validating a water system, do not challenge the on-line system with microorganisms; instead rely on periodic microbiological testing and monitoring equipment installed at specific checkpoints to show the whole system works properly and continuously.",
+    "quote": "it would be undesirable to introduce microorganisms into an on-line system; therefore, reliance is placed on periodic testing for microbiological quality and on the installation of monitoring equipment at specific checkpoints to ensure that the total system is operating properly and continuously fulfilling its intended function.",
+    "clause_number": "¶8",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶1-¶9#7",
+   "unit": "¶1-¶9",
+   "hash": "e27adc3680e9036b",
+   "item": {
+    "statement": "Include in the water system documentation a description of the system together with a drawing (print).",
+    "quote": "Documentation should include a description of the system along with a print.",
+    "clause_number": "¶9",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶1-¶9#8",
+   "unit": "¶1-¶9",
+   "hash": "368ecf74515964ba",
+   "item": {
+    "statement": "Make the water system drawing show all equipment from the water feed to the points of use, and all sampling points with their designations.",
+    "quote": "The drawing needs to show all equipment in the system from the water feed to points of use. It should also show all sampling points and their designations.",
+    "clause_number": "¶9",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶1-¶9#9",
+   "unit": "¶1-¶9",
+   "hash": "3e0d0f5579f87817",
+   "item": {
+    "statement": "Compare the system drawing against the actual water system every year to ensure it is accurate, to detect unreported changes and to confirm reported changes.",
+    "quote": "The print should be compared to the actual system annually to insure its accuracy, to detect unreported changes and confirm reported changes to the system.",
+    "clause_number": "¶9",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶10-¶19#1",
+   "unit": "¶10-¶19",
+   "hash": "60c1e9a60f7329e6",
+   "item": {
+    "statement": "Start the initial phase of water system validation only after all equipment and piping has been verified as correctly installed and working as specified, and use this phase to develop the operating parameters and the cleaning/sanitization procedures and frequencies.",
+    "quote": "After all the equipment and piping has been verified as installed correctly and working as specified, the initial phase of the water system validation can begin. During this phase the operational parameters and the cleaning/ sanitization procedures and frequencies will be developed.",
+    "clause_number": "¶10",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "after installation verified"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶10-¶19#2",
+   "unit": "¶10-¶19",
+   "hash": "8c5408996413b622",
+   "item": {
+    "statement": "During the initial validation phase, sample daily after each purification step and at each point of use for two to four weeks.",
+    "quote": "Sampling should be daily after each step in the purification process and at each point of use for two to four weeks.",
+    "clause_number": "¶10",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "initial validation phase"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶10-¶19#3",
+   "unit": "¶10-¶19",
+   "hash": "eef9af0d77473a6e",
+   "item": {
+    "statement": "Draw point-of-use samples the same way the water is drawn for use, e.g. at the end of the hose if a hose is usually attached, and after flushing if the procedure requires flushing before use.",
+    "quote": "The sampling procedure for point of use sampling should reflect how the water is to be drawn e.g. if a hose is usually attached the sample should be taken at the end of the hose. If the SOP calls for the line to be flushed before use of the water from that point, then the sample is taken after the flush.",
+    "clause_number": "¶10",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶10-¶19#4",
+   "unit": "¶10-¶19",
+   "hash": "097686356181068b",
+   "item": {
+    "statement": "Have the standard operating procedures for running the water system developed by the end of the two-to-four-week initial phase.",
+    "quote": "At the end of the two to four week time period the firm should have developed its SOPs for operation of the water system.",
+    "clause_number": "¶10",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶10-¶19#5",
+   "unit": "¶10-¶19",
+   "hash": "9a4a435432921eb5",
+   "item": {
+    "statement": "In a second validation phase, sample as in the initial phase and for the same period, and show with the data that the system consistently produces water of the desired quality when operated according to its procedures.",
+    "quote": "The second phase of the system validation is to demonstrate that the system will consistently produce the desired water quality when operated in conformance with the SOPs. The sampling is performed as in the initial phase and for the same time period. At the end of this phase the data should demonstrate that the system will consistently produce the desired quality of water.",
+    "clause_number": "¶11",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶10-¶19#6",
+   "unit": "¶10-¶19",
+   "hash": "85f356512fafa425",
+   "item": {
+    "statement": "In a third validation phase, sample according to routine procedures and frequencies to show that the system, operated per its procedures over a long period, consistently produces water of the desired quality, capturing feedwater quality variations that could affect it.",
+    "quote": "The third phase of validation is designed to demonstrate that when the water system is operated in accordance with the SOPs over a long period of time it will consistently produce water of the desired quality. Any variations in the quality of the feedwater that could affect the operation and ultimately the water quality will be picked up during this phase of the validation. Sampling is performed according to routine procedures and frequencies.",
+    "clause_number": "¶12",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶10-¶19#7",
+   "unit": "¶10-¶19",
+   "hash": "1408577076c13ca0",
+   "item": {
+    "statement": "For Water for Injection systems during the long-term validation phase, sample at least one point of use daily and test all points of use weekly.",
+    "quote": "For Water for Injection systems the samples should be taken daily from a minimum of one point of use, with all points of use tested weekly.",
+    "clause_number": "¶12",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ",
+     "API"
+    ],
+    "condition": "Water for Injection systems"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶10-¶19#8",
+   "unit": "¶10-¶19",
+   "hash": "82ea25e912ea0d94",
+   "item": {
+    "statement": "Do not consider water system validation complete until a full year of data has been collected.",
+    "quote": "The validation of the water system is completed when the firm has a full years worth of data.",
+    "clause_number": "¶12",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶10-¶19#9",
+   "unit": "¶10-¶19",
+   "hash": "e49ab6bed726e06a",
+   "item": {
+    "statement": "Have data that support the water system operating procedures.",
+    "quote": "First, there must be data to support the SOPs.",
+    "clause_number": "¶13",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶10-¶19#10",
+   "unit": "¶10-¶19",
+   "hash": "3e5cfe4f5097a4b1",
+   "item": {
+    "statement": "Have data showing that the operating procedures are valid and that the system can consistently produce water meeting the desired specifications.",
+    "quote": "Second, there must be data demonstrating that the SOPs are valid and that the system is capable of consistently producing water that meets the desired specifications.",
+    "clause_number": "¶13",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶10-¶19#11",
+   "unit": "¶10-¶19",
+   "hash": "e07aedcf7c400e25",
+   "item": {
+    "statement": "Have data showing that seasonal feedwater variations do not adversely affect system operation or water quality.",
+    "quote": "Finally, there must be data to demonstrate that seasonal variations in the feedwater do not adversely affect the operation of the system or the water quality.",
+    "clause_number": "¶13",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  }
+ ]
+}

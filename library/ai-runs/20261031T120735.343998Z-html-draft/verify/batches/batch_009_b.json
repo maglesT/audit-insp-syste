@@ -1,0 +1,654 @@
+{
+ "role": "b",
+ "instructions": "You are a second, independent auditor. Check one checklist item against the FDA web page paragraph it claims to come from. You get\nthe unit's paragraphs (reference and exact text of the page; \"context\" entries are headings) and the item. Start from the TEXT:\nread the cited paragraph, the paragraphs its quote runs into, and its lead-in fully, then compare the item.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the lead-in above a list\nitem (the paragraph ending \":\" above it). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph expects what the statement asks for (an instruction\n  to the investigator, \"Determine whether the firm validated ...\", expects the firm to have that practice), the statement\n  adds nothing and omits nothing of that obligation, the strength (a legal requirement: shall/must/required = mandatory;\n  should, FDA expects/recommends, an inspection point = recommended; may/acceptable = optional; a list item takes\n  its lead-in's) matches, and the text applies to every listed plant\n  type (INJ = sterile injectables: text limited to non-sterile products does not apply to\n  INJ; text limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences saying what you checked for THIS item, in this item's own words: name the\n  condition, number, list or scope you compared with the text (e.g. \"the 30-day limit and 'each lot' are both in\n  the statement\", \"the list of components, containers and closures is complete\", \"drops the lead-in's 'for\n  sterile products'\"). Write each reason fresh for its item: a reason that would fit any item (\"quote exact,\n  strength matches, nothing added or omitted\") or that repeats another answer's reason is not an answer, and the\n  item then counts as unchecked.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+ "units": [
+  {
+   "unit": "Q10",
+   "paragraphs": [
+    {
+     "ref": "Q10",
+     "text": "Are there control measures for minimizing pathogenic agent contamination in animal-derived drug ingredient manufacturing facilities? Yes, control measures may include the following:"
+    },
+    {
+     "ref": "Q10.1",
+     "text": "Process control",
+     "list_item": true
+    },
+    {
+     "ref": "Q10.2",
+     "text": "Holding and processing times for animal-derived material should be minimized to reduce the likelihood of microbial proliferation. The process qualification studies should include microbial sampling at multiple time points to evaluate the effects of time, temperature, and processing conditions on microbial growth. Routine microbial identification will provide valuable information regarding the types of organisms present in incoming material and throughout the manufacturing process. Processing conditions can then be adjusted to help control the number and types of organisms present during the manufacturing process. Spores and many bacteria can be removed by filtration when filtration or filtration cascade systems are possible. Usually filters with a pore size rating of 0.45 micron or smaller will remove spores and many bacteria from a preparation. Viruses and many toxins are heat labile so a heat treatment should be considered early in process development. Many purification and concentration systems may have antimicrobial effects. The timing and sequence location in the process along with appropriate holding and processing times may serve to optimize the antimicrobial effects of the processes."
+    },
+    {
+     "ref": "Q10.3",
+     "text": "Development of process monitoring tests and acceptance criteria should be established during the process development stage."
+    },
+    {
+     "ref": "Q10.4",
+     "text": "Facility and equipment controls",
+     "list_item": true
+    },
+    {
+     "ref": "Q10.5",
+     "text": "Facilities can also be reservoirs for pathogenic agents. Maintaining a facility within CGMP should include but not be limited to:"
+    },
+    {
+     "ref": "Q10.6",
+     "text": "Having adequately trained staff",
+     "list_item": true
+    },
+    {
+     "ref": "Q10.7",
+     "text": "Using suitable quality water during manufacturing",
+     "list_item": true
+    },
+    {
+     "ref": "Q10.8",
+     "text": "Having a facility design that minimizes the risk of cross-contamination",
+     "list_item": true
+    },
+    {
+     "ref": "Q10.9",
+     "text": "Providing for proper storage of the ingredient",
+     "list_item": true
+    },
+    {
+     "ref": "Q10.10",
+     "text": "Cleaning procedures should include cleaning of facilities and equipment that ensures the removal of all raw materials between batches. Designing an effective cleaning program involves setting specific standards, understanding the facility’s microbial environmental isolates, and selecting the right disinfecting agents to inactivate isolates that may be in the product or in the environment. Ingredient manufacturers should use sporicidal agents at appropriate intervals in the cleaning schedule to destroy bacterial and fungal spores. References:"
+    },
+    {
+     "ref": "Q10.11",
+     "text": "FDA Guidance for Industry, 2001, ICH Q7 Good Manufacturing Practice Guidance for Active Pharmaceutical Ingredients",
+     "list_item": true
+    },
+    {
+     "ref": "Q10.12",
+     "text": "United States Pharmacopeia (USP) General Information Chapter <1072> Disinfectants and Antiseptics (USP33–NF 28 Reissue, 2010)",
+     "list_item": true
+    },
+    {
+     "ref": "Q10.13",
+     "text": "Wiley, JM, L Sherwood, and CJ Woolverton, 2008, Prescott, Harley and Klein's Microbiology, Boston: McGraw-Hill Higher Education.",
+     "list_item": true
+    }
+   ]
+  },
+  {
+   "unit": "Q11",
+   "paragraphs": [
+    {
+     "ref": "Q11",
+     "text": "What should drug manufacturers do to prevent formation of glass lamellae (glass fragments) in injectable drugs filled in small-volume glass vials?"
+    },
+    {
+     "ref": "Q11.1",
+     "text": "Under certain conditions, glass vials can shed thin, flexible fragments called glass lamellae (Lachman, Lieberman, et al. 1986; Iacocca, Toltl, et al. 2010). These lamellae are shed from the interior surface of the glass container directly into the drug and are difficult to detect by visual inspection. Several drugs have been recalled due to this problem: epoetin alfa, methotrexate, hyaluronidase recombinant, and fluorouracil (see Enforcement Reports on FDA's Web Site). No adverse events to date have been reported nor can be directly attributed to this phenomenon. However, there is the potential for drugs administered intravenously that contain these fragments to cause embolic, thrombotic, and other vascular events (e.g., phlebitis); and, when administered subcutaneously, to lead to development of foreign body granuloma, local injection site reactions, and increased immunogenicity (Singh, Afonina, et al. 2010). The following conditions have been associated with a higher incidence of the formation of glass lamellae:"
+    },
+    {
+     "ref": "Q11.2",
+     "text": "Glass vials manufactured by a tubing process (and thus manufactured under higher heat). These vials are less resistant than molded glass vials and may shed lamellae more easily (Ennis, Pritchard, et al. 2001). The processing conditions used to manufacture glass vials can be designed to mitigate the potential for later delamination.",
+     "list_item": true
+    },
+    {
+     "ref": "Q11.3",
+     "text": "Drug solutions formulated at high pH (alkaline) and with certain buffers. Common buffers associated with lamellae formation include citrate and tartrate (Sacha, et al. 2010).",
+     "list_item": true
+    },
+    {
+     "ref": "Q11.4",
+     "text": "Length of time the drug product is exposed to the inner surface of the container. The time duration has a direct correlation to the potential for glass lamellae formation to occur during the product shelf life (Lachman, Lieberman, et al. 1986).",
+     "list_item": true
+    },
+    {
+     "ref": "Q11.5",
+     "text": "Drug products with room temperature storage requirements. Drugs stored at room temperature have a greater chance of glass lamellae formation than do products stored at colder temperatures (Iacocca and Allgeier 2007).",
+     "list_item": true
+    },
+    {
+     "ref": "Q11.6",
+     "text": "Terminal sterilization has a significant effect on glass stability (Iacocca, Toltl, et al. 2010).",
+     "list_item": true
+    },
+    {
+     "ref": "Q11.7",
+     "text": "The referenced literature, below, includes recommended actions to help prevent the formation of glass lamellae. For example, for products “at risk,” the vial surface alkalinity can be minimized by proper selection of glass composition (e.g., highly resistant, nonalkaline earth borosilicate glass), appropriate selection and qualification of vendors, and proper quality control of the incoming vials. Accordingly, FDA advises drug manufacturers of products to reexamine their supplier quality management program with the glass vial manufacturers to ensure that this phenomenon is not occurring. Further, the Agency reminds finished drug product manufacturers that CGMP regulations require that drug containers not be reactive or additive so as to alter the safety or quality of the drug. See 21 CFR 211.94; Rx-360’s Web site, which has commented on the issue of delamination; and deviation reporting regulations for field alert reports (21 CFR 314.81) and biological product deviation reports (21 CFR 600.14). References:"
+    },
+    {
+     "ref": "Q11.8",
+     "text": "Lachman, L, H Lieberman, and J Kanig, 1986, The Theory and Practice of Industrial Pharmacy, 3rd ed., Philadelphia: Lippincott Williams & Wilkins, 645–649, 796–798",
+     "list_item": true
+    },
+    {
+     "ref": "Q11.9",
+     "text": "Iacocca, RG, N Toltl, et al., 2010, Factors Affecting the Chemical Durability of Glass Used in the Pharmaceutical Industry, AAPS Pharm Sci Tech, DOI:10.1208/s12249-010-9506-9",
+     "list_item": true
+    },
+    {
+     "ref": "Q11.10",
+     "text": "Singh SK, N Afonina, et al., 2010, An Industry Perspective on the Monitoring of Subvisible Particles as a Quality Attribute for Protein Therapeutics, J Pharm Sci, 99(8):3302–3321",
+     "list_item": true
+    },
+    {
+     "ref": "Q11.11",
+     "text": "Ennis RD, R Pritchard, et al., 2001, Glass Vials for Small Volume Parenterals: Influence of Drug and Manufacturing Process on Glass Delamination, Pharm Dev and Tech, 6(3):393–405",
+     "list_item": true
+    },
+    {
+     "ref": "Q11.12",
+     "text": "Sacha, G., et al., 2010, Practical Fundamentals of Glass, Rubber, and Plastic Sterile Packaging Systems, Pharm Dev and Tech, 15(1):6–34",
+     "list_item": true
+    },
+    {
+     "ref": "Q11.13",
+     "text": "Iacocca, RG, and M Allgeier, 2007, Corrosive Attack of Glass by a Pharmaceutical Compound, J Mater Sci, 42:801–811",
+     "list_item": true
+    },
+    {
+     "ref": "Q11.14",
+     "text": "21 CFR 211.94: Drug product containers and closures",
+     "list_item": true
+    },
+    {
+     "ref": "Q11.15",
+     "text": "21 CFR 314.81: Other postmarketing reports",
+     "list_item": true
+    },
+    {
+     "ref": "Q11.16",
+     "text": "21 CFR 600.14: Reporting of biological product deviations by licensed manufacturers",
+     "list_item": true
+    }
+   ]
+  },
+  {
+   "unit": "Q12",
+   "paragraphs": [
+    {
+     "ref": "Q12",
+     "text": "Are there any special processing or handling concerns for flexible intravenous (IV) solution bags?"
+    },
+    {
+     "ref": "Q12.1",
+     "text": "Yes, due to their soft and flexible design, IV solution bags can be easily damaged if not handled properly during processing and labeling. A damaged IV solution bag may not protect the contents from exposure to microbiological contamination as intended. Detection of a damaged IV solution bag by leaks or by examination of the bag may not be possible. In fact, a microscopic defect may not be evident until microbiological contamination becomes visible, which is too late. Prevention of this potentially serious problem is important. FDA is aware of product recalls where IV products in flexible plastic bags were exposed to rough surfaces or sharp objects during labeling, creating microscopic punctures or weakening the bag surfaces. When a compromised IV solution bag is filled with liquid and expands as intended, holes may form at the weak points, leading to a loss of sterility or assurance of sterility."
+    },
+    {
+     "ref": "Q12.2",
+     "text": "Manufacturers are reminded that drug product containers and closures must be handled and stored in a manner to prevent contamination (see 21 CFR 211.80(b) and also 211.94)."
+    }
+   ]
+  },
+  {
+   "unit": "Q13",
+   "paragraphs": [
+    {
+     "ref": "Q13",
+     "text": "What can IV drug manufacturers do to help prevent the loss of sterility due to compromised IV solution bag integrity during labeling?"
+    },
+    {
+     "ref": "Q13.1",
+     "text": "The risk of loss of sterility during labeling can be reduced through the use of nonimpression printing devices for labeling. If a manufacturer uses labeling equipment to apply a label on an IV solution bag and that labeling equipment makes an impression on the IV bag, procedures should be in place to inspect the labeling equipment regularly, particularly after any maintenance is performed. Manufacturing equipment must not have any rough or sharp surfaces that will create punctures or areas of weakness in the IV solution bags. Prevention is important: damaged IV bags may elude detection by standard examinations and tests, including checks for leaks. Manufacturers are reminded that equipment maintenance and cleaning must be appropriate to prevent malfunctions or contamination that would alter the quality or purity of a drug product (see 21 CFR 211.67). Additional information: FDA Guidances"
+    },
+    {
+     "ref": "Q13.2",
+     "text": "Sterile Drug Products Produced by Aseptic Processing—Current Good Manufacturing Practice",
+     "list_item": true
+    },
+    {
+     "ref": "Q13.3",
+     "text": "Container Closure Systems for Packaging Human Drugs and Biologics",
+     "list_item": true
+    },
+    {
+     "ref": "Q13.4",
+     "text": "Recall announcements FDA Warning Letters Date: 7/5/2011"
+    }
+   ]
+  },
+  {
+   "unit": "Q14",
+   "paragraphs": [
+    {
+     "ref": "Q14",
+     "text": "Must each batch of a United States Pharmacopeia (USP)-grade API be tested using the analytical procedures specified in the USP monograph?"
+    },
+    {
+     "ref": "Q14.1",
+     "text": "No; however, in the event of a dispute, the compendial method is considered conclusive (see USP reference, below). Section 201(g) of the FD&C Act includes “articles intended for use as a component” of a finished drug product, including APIs (or drug substances), under its definition of a drug, and section 501(b) requires a drug recognized in USP to meet the standards of strength, quality, and purity in the official monograph or to be clearly labeled to designate how it differs from USP standards. Although each batch of a compendial article must conform to the monograph specifications/acceptance criteria, the analytical procedures used to show conformance may differ from official USP methods if the alternative methods are fully validated, suitable for use, and give equivalent or better results than the official USP method. All APIs must also be manufactured in compliance with CGMP as stated in section 501(a)(2)(B) of the FD&C Act. References:"
+    },
+    {
+     "ref": "Q14.2",
+     "text": "FD&C Act Chapter V: Drugs and Devices",
+     "list_item": true
+    },
+    {
+     "ref": "Q14.3",
+     "text": "USP 38–National Formulary (NF) 33 (2015) General Notices, Section 6.30",
+     "list_item": true
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q10#7",
+   "unit": "Q10",
+   "hash": "d9cec44369bc023e",
+   "item": {
+    "statement": "To maintain the facility within CGMP (among other measures), have a facility design that minimises the risk of cross-contamination.",
+    "quote": "Having a facility design",
+    "clause_number": "Q10.8",
+    "strength": "recommended",
+    "plant_types": [
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q10#8",
+   "unit": "Q10",
+   "hash": "0c9869ada35572d9",
+   "item": {
+    "statement": "To maintain the facility within CGMP (among other measures), provide for proper storage of the ingredient.",
+    "quote": "Providing for proper storage",
+    "clause_number": "Q10.9",
+    "strength": "recommended",
+    "plant_types": [
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q10#9",
+   "unit": "Q10",
+   "hash": "3418b5c79ae14332",
+   "item": {
+    "statement": "Include in cleaning procedures the cleaning of facilities and equipment so that all raw materials are removed between batches.",
+    "quote": "Cleaning procedures should include cleaning of facilities and equipment that ensures the removal of all raw materials between batches.",
+    "clause_number": "Q10.10",
+    "strength": "recommended",
+    "plant_types": [
+     "API"
+    ],
+    "condition": "between batches"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q10#10",
+   "unit": "Q10",
+   "hash": "e154e8075d59418b",
+   "item": {
+    "statement": "Design the cleaning program by setting specific standards, understanding the facility's microbial environmental isolates, and selecting disinfecting agents that inactivate isolates that may be in the product or environment.",
+    "quote": "Designing an effective cleaning program involves setting specific standards, understanding the facility’s microbial environmental isolates, and selecting the right disinfecting agents to inactivate isolates that may be in the product or in the environment.",
+    "clause_number": "Q10.10",
+    "strength": "recommended",
+    "plant_types": [
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q10#11",
+   "unit": "Q10",
+   "hash": "bf4d9ec5c2e5de0f",
+   "item": {
+    "statement": "Use sporicidal agents at appropriate intervals in the cleaning schedule to destroy bacterial and fungal spores.",
+    "quote": "Ingredient manufacturers should use sporicidal agents at appropriate intervals in the cleaning schedule to destroy bacterial and fungal spores.",
+    "clause_number": "Q10.10",
+    "strength": "recommended",
+    "plant_types": [
+     "API"
+    ],
+    "condition": "at appropriate intervals"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q11#1",
+   "unit": "Q11",
+   "hash": "2d56f4cb7b573f2a",
+   "item": {
+    "statement": "For products at risk of glass delamination, vial surface alkalinity may be minimised by proper selection of glass composition (e.g. highly resistant, non-alkaline-earth borosilicate glass), appropriate selection and qualification of vial vendors, and proper quality control of incoming vials.",
+    "quote": "For example, for products “at risk,” the vial surface alkalinity can be minimized by proper selection of glass composition (e.g., highly resistant, nonalkaline earth borosilicate glass), appropriate selection and qualification of vendors, and proper quality control of the incoming vials.",
+    "clause_number": "Q11.7",
+    "strength": "optional",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "products at risk of glass lamellae"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q11#2",
+   "unit": "Q11",
+   "hash": "ffb1160749595efc",
+   "item": {
+    "statement": "Re-examine the supplier quality management program with glass vial manufacturers to ensure that glass lamellae formation is not occurring.",
+    "quote": "Accordingly, FDA advises drug manufacturers of products to reexamine their supplier quality management program with the glass vial manufacturers to ensure that this phenomenon is not occurring.",
+    "clause_number": "Q11.7",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q11#3",
+   "unit": "Q11",
+   "hash": "af5f084df99c1fd2",
+   "item": {
+    "statement": "Use drug product containers that are not reactive or additive so as to alter the safety or quality of the drug.",
+    "quote": "Further, the Agency reminds finished drug product manufacturers that CGMP regulations require that drug containers not be reactive or additive so as to alter the safety or quality of the drug.",
+    "clause_number": "Q11.7",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q12#1",
+   "unit": "Q12",
+   "hash": "d6cb28d55e17a57b",
+   "item": {
+    "statement": "Handle and store drug product containers and closures in a manner that prevents contamination.",
+    "quote": "Manufacturers are reminded that drug product containers and closures must be handled and stored in a manner to prevent contamination (see 21 CFR 211.80(b) and also 211.94).",
+    "clause_number": "Q12.2",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q13#1",
+   "unit": "Q13",
+   "hash": "e5c42b5679c90f06",
+   "item": {
+    "statement": "Nonimpression printing devices may be used to label IV solution bags to reduce the risk of loss of sterility during labeling.",
+    "quote": "The risk of loss of sterility during labeling can be reduced through the use of nonimpression printing devices for labeling.",
+    "clause_number": "Q13.1",
+    "strength": "optional",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q13#2",
+   "unit": "Q13",
+   "hash": "97557e75d2abbf77",
+   "item": {
+    "statement": "If labeling equipment that makes an impression on the IV solution bag is used, have procedures to inspect that equipment regularly, particularly after any maintenance.",
+    "quote": "If a manufacturer uses labeling equipment to apply a label on an IV solution bag and that labeling equipment makes an impression on the IV bag, procedures should be in place to inspect the labeling equipment regularly, particularly after any maintenance is performed.",
+    "clause_number": "Q13.1",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "if labeling equipment makes an impression on the bag"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q13#3",
+   "unit": "Q13",
+   "hash": "1b51ed6caa295678",
+   "item": {
+    "statement": "Ensure manufacturing equipment has no rough or sharp surfaces that could puncture or weaken IV solution bags.",
+    "quote": "Manufacturing equipment must not have any rough or sharp surfaces that will create punctures or areas of weakness in the IV solution bags.",
+    "clause_number": "Q13.1",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q13#4",
+   "unit": "Q13",
+   "hash": "55db4a56663c6459",
+   "item": {
+    "statement": "Maintain and clean equipment appropriately to prevent malfunctions or contamination that would alter the quality or purity of the drug product.",
+    "quote": "Manufacturers are reminded that equipment maintenance and cleaning must be appropriate to prevent malfunctions or contamination that would alter the quality or purity of a drug product (see 21 CFR 211.67).",
+    "clause_number": "Q13.1",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q14#1",
+   "unit": "Q14",
+   "hash": "d5869ab6f9ae3775",
+   "item": {
+    "statement": "Ensure a drug recognised in the USP meets the strength, quality and purity standards of its official monograph, or is clearly labeled to show how it differs from those standards.",
+    "quote": "section 501(b) requires a drug recognized in USP to meet the standards of strength, quality, and purity in the official monograph or to be clearly labeled to designate how it differs from USP standards.",
+    "clause_number": "Q14.1",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "drug recognised in the USP"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q14#2",
+   "unit": "Q14",
+   "hash": "67067ea9b04e3267",
+   "item": {
+    "statement": "Ensure each batch of a compendial article conforms to the monograph specifications and acceptance criteria.",
+    "quote": "each batch of a compendial article must conform to the monograph specifications/acceptance criteria",
+    "clause_number": "Q14.1",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "compendial articles"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q14#3",
+   "unit": "Q14",
+   "hash": "95bffc35647d5e79",
+   "item": {
+    "statement": "Analytical procedures other than the official USP methods may be used to show monograph conformance, if the alternative methods are fully validated, suitable for use, and give equivalent or better results than the official method.",
+    "quote": "the analytical procedures used to show conformance may differ from official USP methods if the alternative methods are fully validated, suitable for use, and give equivalent or better results than the official USP method.",
+    "clause_number": "Q14.1",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "if alternative methods are fully validated, suitable and equivalent or better"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q14#4",
+   "unit": "Q14",
+   "hash": "dbf21637d982caca",
+   "item": {
+    "statement": "Manufacture all APIs in compliance with CGMP.",
+    "quote": "All APIs must also be manufactured in compliance with CGMP as stated in section 501(a)(2)(B) of the FD&C Act.",
+    "clause_number": "Q14.1",
+    "strength": "mandatory",
+    "plant_types": [
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  }
+ ]
+}

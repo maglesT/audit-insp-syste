@@ -1,0 +1,707 @@
+{
+ "role": "b",
+ "instructions": "You are a second, independent auditor. Check one checklist item against the FDA web page paragraph it claims to come from. You get\nthe unit's paragraphs (reference and exact text of the page; \"context\" entries are headings) and the item. Start from the TEXT:\nread the cited paragraph, the paragraphs its quote runs into, and its lead-in fully, then compare the item.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the lead-in above a list\nitem (the paragraph ending \":\" above it). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph expects what the statement asks for (an instruction\n  to the investigator, \"Determine whether the firm validated ...\", expects the firm to have that practice), the statement\n  adds nothing and omits nothing of that obligation, the strength (a legal requirement: shall/must/required = mandatory;\n  should, FDA expects/recommends, an inspection point = recommended; may/acceptable = optional; a list item takes\n  its lead-in's) matches, and the text applies to every listed plant\n  type (INJ = sterile injectables: text limited to non-sterile products does not apply to\n  INJ; text limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences saying what you checked for THIS item, in this item's own words: name the\n  condition, number, list or scope you compared with the text (e.g. \"the 30-day limit and 'each lot' are both in\n  the statement\", \"the list of components, containers and closures is complete\", \"drops the lead-in's 'for\n  sterile products'\"). Write each reason fresh for its item: a reason that would fit any item (\"quote exact,\n  strength matches, nothing added or omitted\") or that repeats another answer's reason is not an answer, and the\n  item then counts as unchecked.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+ "units": [
+  {
+   "unit": "Q1",
+   "paragraphs": [
+    {
+     "ref": "Q1",
+     "text": "Some products, such as transdermal patches, are made using manufacturing processes with higher in-process material reject rates than for other products and processes. Is this okay?"
+    },
+    {
+     "ref": "Q1.1",
+     "text": "Maybe. It depends on the cause and consistency of the reject rate. Many transdermal patch manufacturing processes produce more waste (i.e., lower yield from theoretical) than other pharmaceutical processes. This should not of itself be a concern. The waste is usually due to the cumulative effect of roll splicing, line start-ups and stoppages, roll-stock changes, and perhaps higher rates of in-process sampling. This is most pronounced for processes involving lamination of rolls of various component layers. Roll-stock defects detected during adhesive coating of the roll, for example, can often only be rejected from the roll after final fabrication/lamination of the entire patch, which contributes to the final process waste stream."
+    },
+    {
+     "ref": "Q1.2",
+     "text": "We expect that validated and well-controlled processes will achieve fairly consistent waste amounts batch-to-batch. Waste in excess of the normal operating rates may need (see 21 CFR 211.192) to be evaluated to determine cause (e.g., due to increase in sampling or higher than normal component defects ... or both) and the consequences on product quality assessed. We've seen a small number of cases where unusually high intra-batch rejects/losses were due to excessive component quality variability and poorly developed processes."
+    },
+    {
+     "ref": "Q1.3",
+     "text": "21 CFR 211.100: Written procedures; deviations"
+    },
+    {
+     "ref": "Q1.4",
+     "text": "21 CFR 211.103: Calculation of yield"
+    },
+    {
+     "ref": "Q1.5",
+     "text": "21 CFR 211.110: Sampling and testing of in-process materials and drug products"
+    },
+    {
+     "ref": "Q1.6",
+     "text": "21 CFR 211.192: Production record review"
+    }
+   ]
+  },
+  {
+   "unit": "Q2",
+   "paragraphs": [
+    {
+     "ref": "Q2",
+     "text": "Do the CGMP regulations permit the destruction of an internal quality assurance audit report once the corrective action has been completed?"
+    },
+    {
+     "ref": "Q2.1",
+     "text": "The CGMP regulations (21 CFR parts 210 and 211) for finished pharmaceutical manufacturing do not specifically address the requirement to conduct, or to keep records of, internal quality assurance audits. If the report in question was from a routine audit to verify that the firm's quality system is operating as intended, then it would be acceptable if the firm elected to discard the report once all corrections have been verified."
+    },
+    {
+     "ref": "Q2.2",
+     "text": "However, any documentation of corrective action as a result of such an audit would have to be retained (see §§ 211.180 and 211.188). For example, if a routine internal audit finds a problem with a mixing step and the outcome is a change in mixing time, all affected procedures, including the master production record, are to reflect the necessary changes, and such records are subject to FDA inspection as usual. Any investigation into the impact this problem had on related batches is to be retained and also made available for inspection by FDA (see § 211.192)."
+    },
+    {
+     "ref": "Q2.3",
+     "text": "In addition, any reports of investigations or evaluations prepared in response to, for example, a product complaint (§ 211.198), vendor qualification (§ 211.84), periodic review of records and data (§ 211.180(e)), and a failure investigation (§ 211.192) are not internal audits as discussed above. Such records are subject to FDA inspection and must be retained for at least the time specified in the CGMP regulations (see § 211.180)."
+    },
+    {
+     "ref": "Q2.4",
+     "text": "21 CFR 211.188: Batch production and control records"
+    },
+    {
+     "ref": "Q2.5",
+     "text": "21 CFR 211.192: Production record review",
+     "list_item": true
+    },
+    {
+     "ref": "Q2.6",
+     "text": "21 CFR 211.198: Complaint files",
+     "list_item": true
+    },
+    {
+     "ref": "Q2.7",
+     "text": "Preamble to the Current Good Manufacturing Practice in Manufacture, Processing, Packing, or Holding regulations (43 FR 45015, paragraph 4, Sept 29, 1978)"
+    },
+    {
+     "ref": "Q2.8",
+     "text": "Compliance Policy Guide Sec. 130.300 FDA Access to Results of Quality Assurance Program Audits and Inspections (CPG 7151.02)",
+     "list_item": true
+    }
+   ]
+  },
+  {
+   "unit": "Q3",
+   "paragraphs": [
+    {
+     "ref": "Q3",
+     "text": "Can a firm demonstrate compliance with current good manufacturing practice (CGMP) by relying on records not accessible to FDA?"
+    },
+    {
+     "ref": "Q3.1",
+     "text": "No. Records that are needed to demonstrate compliance with current good manufacturing practice (CGMP records) are subject to FDA inspection under section 704(a) of the Federal Food, Drug, and Cosmetic Act (FD&C Act).1 Consequently, records that are not subject to review and inspection by FDA (which may include certain records maintained solely outside the quality system2) cannot be relied upon to demonstrate compliance with CGMP requirements."
+    },
+    {
+     "ref": "Q3.2",
+     "text": "FDA has observed that some firms maintain certain details relating to product quality complaints and investigations (e.g., records related to the details of a discrepancy and its related investigation) only in a record system that they consider largely out of scope of FDA’s inspectional authority, such as a human resources (HR) filing system containing personnel data. The HR filing system at a firm may include qualification information for technical and professional personnel performing functions subject to FDA regulation. FDA has the authority to inspect such records to the extent that they relate to adherence to the CGMP requirement for qualified personnel. FDA also has the authority to inspect records related to product quality complaints and investigations. Records related to employee qualifications and product quality complaints and investigations may be included in an HR filing system. However, CGMP records, whether related to training, discrepancies, or related follow-up actions, should not be retained solely in a filing system that a firm considers largely out of scope of FDA’s inspectional authority. Records and other information relating to CGMP must be retained (e.g., in an appropriate CGMP records management system) such that records are available for inspection by FDA and subject to FDA’s authority to inspect.3"
+    },
+    {
+     "ref": "Q3.3",
+     "text": "A firm may adopt any appropriate filing system that it chooses and may file information FDA has the authority to inspect with records generally excluded from such authority. However, under section 704(a) of the FD&C Act, FDA investigators may ask a firm to provide CGMP records that may be contained in such files. If the firm denies FDA access to such records that the agency has authority to inspect, this may constitute a limitation of inspection under section 501(j) of the FD&C Act. Examples of limiting an inspection include (1) not providing certain requested CGMP records that FDA has authority to inspect on the grounds that such records are inaccessible because they are in an HR or other filing system that a firm considers largely out of scope of FDA’s inspectional authority; and (2) not providing certain CGMP records that FDA has authority to inspect because such records were generated by legal counsel and therefore the firm considers they are not obligated to provide such information. Instead, the firm could redact any information that FDA would not have authority to access, review, and copy. See the guidance for industry Circumstances That Constitute Delaying, Denying, Limiting, or Refusing a Drug Inspection."
+    },
+    {
+     "ref": "Q3.4",
+     "text": "11/16/2022"
+    },
+    {
+     "ref": "Q3.5",
+     "text": "1It is a prohibited act under section 301(e) of the FD&C Act to refuse to permit access to or to refuse copying of any record as required by section 704(a) of the Act."
+    },
+    {
+     "ref": "Q3.6",
+     "text": "2See 21 CFR 211.180(c). See also guidance for industry Quality Systems Approach to Pharmaceutical CGMP Regulations (September 2006). We update guidances periodically. To make sure you have the most recent version of a guidance, check the FDA guidance web page at https://www.fda.gov/regulatory-information/search-fda-guidance-documents."
+    },
+    {
+     "ref": "Q3.7",
+     "text": "3See 501(a)(2)(B) and 704(a) of the FD&C Act; see also 21 CFR 211.180 for finished drugs."
+    }
+   ]
+  },
+  {
+   "unit": "Q4",
+   "paragraphs": [
+    {
+     "ref": "Q4",
+     "text": "How do the part 11 regulations and \"predicate rule requirements\" (in 21 CFR part 211) apply to the electronic records created by computerized laboratory systems and the associated printed chromatograms that are used in drug manufacturing and testing?"
+    },
+    {
+     "ref": "Q4.1",
+     "text": "Some in industry misinterpret the following text from the guidance for industry Part 11, Electronic Records; Electronic Signatures–Scope and Application (Part 11 guidance, lines 164-171) to mean that in all cases paper printouts of electronic records satisfy predicate rule requirements in 21 CFR part 211:"
+    },
+    {
+     "ref": "Q4.2",
+     "text": "Under the narrow interpretation of the scope of part 11, with respect to records required to be maintained under predicate rules or submitted to FDA, when persons choose to use records in electronic format in place of paper format, part 11 would apply. On the other hand, when persons use computers to generate paper printouts of electronic records, and those paper records meet all the requirements of the applicable predicate rules and persons rely on the paper records to perform their regulated activities, FDA would generally not consider persons to be ‘using electronic records in lieu of paper records’ under §§ 11.2(a) and 11.2(b). In these instances, the use of computer systems in the generation of paper records would not trigger part 11."
+    },
+    {
+     "ref": "Q4.3",
+     "text": "The Part 11 guidance also states (in lines 150-152) that:"
+    },
+    {
+     "ref": "Q4.4",
+     "text": "Persons must comply with applicable predicate rules, and records that are required to be maintained or submitted must remain secure and reliable in accordance with the predicate rules."
+    },
+    {
+     "ref": "Q4.5",
+     "text": "For high performance liquid chromatography (HPLC) and gas chromatography (GC) systems (and other computerized systems involving user inputs, outputs, audit trials, etc.), the predicate rules, such as 21 CFR 211.68 and 211.180(d), require the electronic records themselves to be retained and maintained in accordance with those regulations. Section 211.180(d) requires records to be retained “either as original records or true copies such as photocopies, microfilm, microfiche, or other accurate reproductions of the original records.” Section 211.68 further states that: “[H]ard copy or alternative systems, such as duplicates, tapes, or microfilm, designed to assure that backup data are exact and complete and that it is secure from alteration, inadvertent erasures, or loss shall be maintained” (emphasis added). The printed paper copy of the chromatogram would not be considered a true copy of the entire electronic raw data used to create that chromatogram, as required by § 211.180(d). The printed chromatogram would also not be considered an exact and complete copy of the electronic raw data used to create the chromatogram, as required by § 211.68. The chromatogram does not generally include, for example, the injection sequence, instrument method, integration method, or the audit trail, of which all were used to create the chromatogram or are associated with its validity. Therefore, the printed chromatograms used in drug manufacturing and testing do not satisfy the predicate rule requirements in part 211. The electronic records created by the computerized laboratory systems must be maintained under these requirements."
+    },
+    {
+     "ref": "Q4.6",
+     "text": "We recognize that there are cases where it could be appropriate for the printed chromatogram to be used within laboratories for the review of test results. Similarly, it also may be acceptable to provide the printed chromatogram during a regulatory inspection or for application review purposes. However, the electronic record must be maintained and readily available for review by, for example, quality control/quality assurance personnel or the FDA investigator."
+    },
+    {
+     "ref": "Q4.7",
+     "text": "In summary, decisions on how to maintain records for computerized systems should be based on predicate rule requirements. We recommend that these decisions be supported by a sound risk assessment."
+    },
+    {
+     "ref": "Q4.8",
+     "text": "FDA Guidance for Industry, 2003, Part 11, Electronic Records; Electronic Signatures—Scope and Application",
+     "list_item": true
+    },
+    {
+     "ref": "Q4.9",
+     "text": "21 CFR 211.180(d): General requirements",
+     "list_item": true
+    },
+    {
+     "ref": "Q4.10",
+     "text": "21 CFR 211.68: Automatic, mechanical, and electronic equipment",
+     "list_item": true
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "fda-cgmp-qa-records-reports.html:Q1#1",
+   "unit": "Q1",
+   "hash": "88f7aad6bf8984c0",
+   "item": {
+    "statement": "Run validated, well-controlled processes so that the amount of waste is fairly consistent from batch to batch.",
+    "quote": "We expect that validated and well-controlled processes will achieve fairly consistent waste amounts batch-to-batch.",
+    "clause_number": "Q1.2",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-records-reports.html:Q1#2",
+   "unit": "Q1",
+   "hash": "0e382c0d429e7c7e",
+   "item": {
+    "statement": "Where waste exceeds the normal operating rate, evaluate it to find the cause (for example more sampling or more component defects than usual, or both) and assess the effect on product quality.",
+    "quote": "Waste in excess of the normal operating rates may need (see 21 CFR 211.192) to be evaluated to determine cause (e.g., due to increase in sampling or higher than normal component defects ... or both) and the consequences on product quality assessed.",
+    "clause_number": "Q1.2",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "waste above normal operating rates"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-records-reports.html:Q2#1",
+   "unit": "Q2",
+   "hash": "5e82e9c94ea9a839",
+   "item": {
+    "statement": "A report from a routine internal quality audit that checks the quality system works as intended may be discarded once all corrections have been verified.",
+    "quote": "If the report in question was from a routine audit to verify that the firm's quality system is operating as intended, then it would be acceptable if the firm elected to discard the report once all corrections have been verified.",
+    "clause_number": "Q2.1",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "routine audit; all corrections verified"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-records-reports.html:Q2#2",
+   "unit": "Q2",
+   "hash": "b8009a3a1b82a573",
+   "item": {
+    "statement": "Retain all documentation of corrective action taken as a result of an internal audit.",
+    "quote": "However, any documentation of corrective action as a result of such an audit would have to be retained",
+    "clause_number": "Q2.2",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-records-reports.html:Q2#3",
+   "unit": "Q2",
+   "hash": "618533e840d3dd2b",
+   "item": {
+    "statement": "When an internal audit finding leads to a change (for example a change in mixing time), update all affected procedures, including the master production record, to reflect the change, and keep these records available for FDA inspection.",
+    "quote": "For example, if a routine internal audit finds a problem with a mixing step and the outcome is a change in mixing time, all affected procedures, including the master production record, are to reflect the necessary changes, and such records are subject to FDA inspection as usual.",
+    "clause_number": "Q2.2",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "audit finding leads to a change"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-records-reports.html:Q2#4",
+   "unit": "Q2",
+   "hash": "e628940533e05121",
+   "item": {
+    "statement": "Retain any investigation into the impact an audit-found problem had on related batches and make it available for FDA inspection.",
+    "quote": "Any investigation into the impact this problem had on related batches is to be retained and also made available for inspection by FDA",
+    "clause_number": "Q2.2",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-records-reports.html:Q2#5",
+   "unit": "Q2",
+   "hash": "288a4e375ad7b5b3",
+   "item": {
+    "statement": "Keep reports of investigations or evaluations made in response to, for example, product complaints, vendor qualification, periodic review of records and data, and failure investigations available for FDA inspection, and retain them for at least the period the CGMP regulations specify; they are not treated as internal audit reports.",
+    "quote": "any reports of investigations or evaluations prepared in response to, for example, a product complaint (§ 211.198), vendor qualification (§ 211.84), periodic review of records and data (§ 211.180(e)), and a failure investigation (§ 211.192) are not internal audits as discussed above. Such records are subject to FDA inspection and must be retained for at least the time specified in the CGMP regulations (see § 211.180).",
+    "clause_number": "Q2.3",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-records-reports.html:Q3#1",
+   "unit": "Q3",
+   "hash": "eb949d56a3cb4dac",
+   "item": {
+    "statement": "Do not rely on records that are not open to FDA review and inspection (such as some records kept only outside the quality system) to demonstrate CGMP compliance.",
+    "quote": "Consequently, records that are not subject to review and inspection by FDA (which may include certain records maintained solely outside the quality system2) cannot be relied upon to demonstrate compliance with CGMP requirements.",
+    "clause_number": "Q3.1",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-records-reports.html:Q3#2",
+   "unit": "Q3",
+   "hash": "8948e874a541ce36",
+   "item": {
+    "statement": "Do not keep CGMP records, whether about training, discrepancies or related follow-up actions, only in a filing system the firm considers largely outside FDA's inspection authority (such as a human resources file).",
+    "quote": "However, CGMP records, whether related to training, discrepancies, or related follow-up actions, should not be retained solely in a filing system that a firm considers largely out of scope of FDA’s inspectional authority.",
+    "clause_number": "Q3.2",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-records-reports.html:Q3#3",
+   "unit": "Q3",
+   "hash": "2371167628f00816",
+   "item": {
+    "statement": "Retain CGMP records and information (for example in an appropriate CGMP records management system) so that they are available for FDA inspection and within FDA's authority to inspect.",
+    "quote": "Records and other information relating to CGMP must be retained (e.g., in an appropriate CGMP records management system) such that records are available for inspection by FDA and subject to FDA’s authority to inspect.3",
+    "clause_number": "Q3.2",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-records-reports.html:Q3#4",
+   "unit": "Q3",
+   "hash": "92b9c10df2a2c03a",
+   "item": {
+    "statement": "Any appropriate filing system may be used, and information FDA may inspect may be filed together with records generally outside that authority.",
+    "quote": "A firm may adopt any appropriate filing system that it chooses and may file information FDA has the authority to inspect with records generally excluded from such authority.",
+    "clause_number": "Q3.3",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-records-reports.html:Q3#5",
+   "unit": "Q3",
+   "hash": "a97a52c924b3732f",
+   "item": {
+    "statement": "Give FDA access to requested CGMP records it has authority to inspect; do not withhold them because they sit in a human resources or other file the firm considers out of FDA's scope, or because they were generated by legal counsel, as this may be a limitation of inspection.",
+    "quote": "If the firm denies FDA access to such records that the agency has authority to inspect, this may constitute a limitation of inspection under section 501(j) of the FD&C Act. Examples of limiting an inspection include (1) not providing certain requested CGMP records that FDA has authority to inspect on the grounds that such records are inaccessible because they are in an HR or other filing system that a firm considers largely out of scope of FDA’s inspectional authority; and (2) not providing certain CGMP records that FDA has authority to inspect because such records were generated by legal counsel and therefore the firm considers they are not obligated to provide such information.",
+    "clause_number": "Q3.3",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "when FDA requests CGMP records"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-records-reports.html:Q3#6",
+   "unit": "Q3",
+   "hash": "6c2acc5695b5d7e3",
+   "item": {
+    "statement": "Instead of withholding such CGMP records, information FDA has no authority to access, review and copy may be redacted.",
+    "quote": "Instead, the firm could redact any information that FDA would not have authority to access, review, and copy.",
+    "clause_number": "Q3.3",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-records-reports.html:Q4#1",
+   "unit": "Q4",
+   "hash": "d311f0c0a08f8565",
+   "item": {
+    "statement": "Comply with applicable predicate rules, and keep records that must be maintained or submitted secure and reliable in line with those rules.",
+    "quote": "Persons must comply with applicable predicate rules, and records that are required to be maintained or submitted must remain secure and reliable in accordance with the predicate rules.",
+    "clause_number": "Q4.4",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-records-reports.html:Q4#2",
+   "unit": "Q4",
+   "hash": "d40ef64983683329",
+   "item": {
+    "statement": "For HPLC and GC systems and other computerized systems involving user inputs, outputs and audit trails, retain and maintain the electronic records themselves.",
+    "quote": "For high performance liquid chromatography (HPLC) and gas chromatography (GC) systems (and other computerized systems involving user inputs, outputs, audit trials, etc.), the predicate rules, such as 21 CFR 211.68 and 211.180(d), require the electronic records themselves to be retained and maintained in accordance with those regulations.",
+    "clause_number": "Q4.5",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-records-reports.html:Q4#3",
+   "unit": "Q4",
+   "hash": "b94dda399f97e00d",
+   "item": {
+    "statement": "Retain records either as originals or as true copies, such as photocopies, microfilm, microfiche or other accurate reproductions of the originals.",
+    "quote": "Section 211.180(d) requires records to be retained “either as original records or true copies such as photocopies, microfilm, microfiche, or other accurate reproductions of the original records.”",
+    "clause_number": "Q4.5",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-records-reports.html:Q4#4",
+   "unit": "Q4",
+   "hash": "ea21f3b8e5c5bfa7",
+   "item": {
+    "statement": "Maintain hard copy or alternative backup systems (such as duplicates, tapes or microfilm) designed to assure backup data are exact and complete and secure from alteration, inadvertent erasure or loss.",
+    "quote": "Section 211.68 further states that: “[H]ard copy or alternative systems, such as duplicates, tapes, or microfilm, designed to assure that backup data are exact and complete and that it is secure from alteration, inadvertent erasures, or loss shall be maintained” (emphasis added).",
+    "clause_number": "Q4.5",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-records-reports.html:Q4#5",
+   "unit": "Q4",
+   "hash": "c4f6fbf22cebf7fd",
+   "item": {
+    "statement": "Do not treat printed chromatograms as meeting record requirements; maintain the electronic records created by computerized laboratory systems.",
+    "quote": "Therefore, the printed chromatograms used in drug manufacturing and testing do not satisfy the predicate rule requirements in part 211. The electronic records created by the computerized laboratory systems must be maintained under these requirements.",
+    "clause_number": "Q4.5",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-records-reports.html:Q4#6",
+   "unit": "Q4",
+   "hash": "c145f2a55609464c",
+   "item": {
+    "statement": "Printed chromatograms may, in some cases, be used within the laboratory for reviewing test results.",
+    "quote": "We recognize that there are cases where it could be appropriate for the printed chromatogram to be used within laboratories for the review of test results.",
+    "clause_number": "Q4.6",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-records-reports.html:Q4#7",
+   "unit": "Q4",
+   "hash": "f3d9b9b91495289f",
+   "item": {
+    "statement": "Printed chromatograms may be provided during a regulatory inspection or for application review.",
+    "quote": "Similarly, it also may be acceptable to provide the printed chromatogram during a regulatory inspection or for application review purposes.",
+    "clause_number": "Q4.6",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  }
+ ]
+}

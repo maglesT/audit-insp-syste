@@ -1,0 +1,665 @@
+{
+ "role": "b",
+ "instructions": "You are a second, independent auditor. Check one checklist item against the FDA web page paragraph it claims to come from. You get\nthe unit's paragraphs (reference and exact text of the page; \"context\" entries are headings) and the item. Start from the TEXT:\nread the cited paragraph, the paragraphs its quote runs into, and its lead-in fully, then compare the item.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the lead-in above a list\nitem (the paragraph ending \":\" above it). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph expects what the statement asks for (an instruction\n  to the investigator, \"Determine whether the firm validated ...\", expects the firm to have that practice), the statement\n  adds nothing and omits nothing of that obligation, the strength (a legal requirement: shall/must/required = mandatory;\n  should, FDA expects/recommends, an inspection point = recommended; may/acceptable = optional; a list item takes\n  its lead-in's) matches, and the text applies to every listed plant\n  type (INJ = sterile injectables: text limited to non-sterile products does not apply to\n  INJ; text limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences saying what you checked for THIS item, in this item's own words: name the\n  condition, number, list or scope you compared with the text (e.g. \"the 30-day limit and 'each lot' are both in\n  the statement\", \"the list of components, containers and closures is complete\", \"drops the lead-in's 'for\n  sterile products'\"). Write each reason fresh for its item: a reason that would fit any item (\"quote exact,\n  strength matches, nothing added or omitted\") or that repeats another answer's reason is not an answer, and the\n  item then counts as unchecked.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+ "units": [
+  {
+   "unit": "¶10-¶19",
+   "paragraphs": [
+    {
+     "ref": "¶10",
+     "text": "After all the equipment and piping has been verified as installed correctly and working as specified, the initial phase of the water system validation can begin. During this phase the operational parameters and the cleaning/ sanitization procedures and frequencies will be developed. Sampling should be daily after each step in the purification process and at each point of use for two to four weeks. The sampling procedure for point of use sampling should reflect how the water is to be drawn e.g. if a hose is usually attached the sample should be taken at the end of the hose. If the SOP calls for the line to be flushed before use of the water from that point, then the sample is taken after the flush. At the end of the two to four week time period the firm should have developed its SOPs for operation of the water system.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > II. SYSTEM VALIDATION"
+    },
+    {
+     "ref": "¶11",
+     "text": "The second phase of the system validation is to demonstrate that the system will consistently produce the desired water quality when operated in conformance with the SOPs. The sampling is performed as in the initial phase and for the same time period. At the end of this phase the data should demonstrate that the system will consistently produce the desired quality of water.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > II. SYSTEM VALIDATION"
+    },
+    {
+     "ref": "¶12",
+     "text": "The third phase of validation is designed to demonstrate that when the water system is operated in accordance with the SOPs over a long period of time it will consistently produce water of the desired quality. Any variations in the quality of the feedwater that could affect the operation and ultimately the water quality will be picked up during this phase of the validation. Sampling is performed according to routine procedures and frequencies. For Water for Injection systems the samples should be taken daily from a minimum of one point of use, with all points of use tested weekly. The validation of the water system is completed when the firm has a full years worth of data.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > II. SYSTEM VALIDATION"
+    },
+    {
+     "ref": "¶13",
+     "text": "While the above validation scheme is not the only way a system can be validated, it contains the necessary elements for validation of a water system. First, there must be data to support the SOPs. Second, there must be data demonstrating that the SOPs are valid and that the system is capable of consistently producing water that meets the desired specifications. Finally, there must be data to demonstrate that seasonal variations in the feedwater do not adversely affect the operation of the system or the water quality.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > II. SYSTEM VALIDATION"
+    },
+    {
+     "ref": "¶14",
+     "text": "The last part of the validation is the compilation of the data, with any conclusions into the final report. The final validation report must be signed by the appropriate people responsible for operation and quality assurance of the water system.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > II. SYSTEM VALIDATION"
+    },
+    {
+     "ref": "¶15",
+     "text": "A typical problem that occurs is the failure of operating procedures to preclude contamination of the system with non-sterile air remaining in a pipe after drainage. In a system illustrated as in Figure 1, (below) a typical problem occurs when a washer or hose connection is flushed and then drained at the end of the operation. After draining, this valve (the second off of the system) is closed. If on the next day or start-up of the operation the primary valve off of the circulating system is opened, then the non-sterile air remaining in the pipe after drainage would contaminate the system. The solution is to pro-vide for operational procedures that provide for opening the secondary valve before the primary valve to flush the pipe prior to use.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > II. SYSTEM VALIDATION"
+    },
+    {
+     "ref": "¶16",
+     "text": "Another major consideration in the validation of high purity water systems is the acceptance criteria. Consistent results throughout the system over a period of time constitute the primary element.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > II. SYSTEM VALIDATION"
+    },
+    {
+     "context": "III. MICROBIAL LIMITS"
+    },
+    {
+     "context": "Water For Injection Systems"
+    },
+    {
+     "ref": "¶17",
+     "text": "Regarding microbiological results, for Water For Injection, it is expected that they be essentially sterile. Since sampling frequently is performed in non-sterile areas and is not truly aseptic, occasional low level counts due to sampling errors may occur. Agency policy, is that less than 10 CFU/100ml is an acceptable action limit. None of the limits for water are pass/fail limits. All limits are action limits. When action limits are exceeded the firm must investigate the cause of the problem, take action to correct the problem and assess the impact of the microbial contamination on products manufactured with the water and document the results of their investigation.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > III. MICROBIAL LIMITS"
+    },
+    {
+     "ref": "¶18",
+     "text": "With regard to sample size, 100 - 300 mL is preferred when sampling Water for Injection systems. Sample volumes less than 100 mL are unacceptable.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > III. MICROBIAL LIMITS"
+    },
+    {
+     "ref": "¶19",
+     "text": "The real concern in WFI is endotoxins. Because WFI can pass the LAL endotoxin test and still fail the above microbial action limit, it is important to monitor WFI systems for both endotoxins and microorganisms.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > III. MICROBIAL LIMITS"
+    },
+    {
+     "context": "Purified Water Systems"
+    }
+   ]
+  },
+  {
+   "unit": "¶20-¶29",
+   "paragraphs": [
+    {
+     "ref": "¶20",
+     "text": "For purified water systems, microbiological specifications are not as clear. USP XXII specifications, that it complies with federal Environmental Protection Agency regulations for drinking water, are recognized as being minimal specifications. There have been attempts by some to establish meaningful microbiological specifications for purified water. The CFTA proposed a specification of not more than 500 organisms per ml. The USP XXII has an action guideline of not greater than 100 organisms per ml. Although microbiological specifications have been discussed, none (other than EPA standards) have been established. Agency policy is that any action limit over 100 CFU/mL for a purified water system is unacceptable.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > III. MICROBIAL LIMITS"
+    },
+    {
+     "ref": "¶21",
+     "text": "The purpose of establishing any action limit or level is to assure that the water system is under control. Any action limit established will depend upon the overall purified water system and further processing of the finished product and its use. For example, purified water used to manufacture drug products by cold processing should be free of objectionable organisms. We have defined \"objectionable organisms\" as any organisms that can cause infections when the drug product is used as directed or any organism capable of growth in the drug product. As pointed out in the Guide to Inspections of Microbiological Pharmaceutical Quality Control Laboratories, the specific contaminant, rather than the number is generally more significant.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > III. MICROBIAL LIMITS"
+    },
+    {
+     "ref": "¶22",
+     "text": "Organisms exist in a water system either as free floating in the water or attached to the walls of the pipes and tanks. When they are attached to the walls they are known as biofilm, which continuously slough off organisms. Thus, contamination is not uniformly distributed in a system and the sample may not be representative of the type and level of contamination. A count of 10 CFU/mL in one sample and 100 or even 1000 CFU/mL in a subsequent sample would not be unrealistic.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > III. MICROBIAL LIMITS"
+    },
+    {
+     "ref": "¶23",
+     "text": "Thus, in establishing the level of contamination allowed in a high purity water system used in the manufacture of a non-sterile product requires an understanding of the use of the product, the formulation (preservative system) and manufacturing process. For example, antacids, which do not have an effective preservative system, require an action limit below the 100 CFU/mL maximum.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > III. MICROBIAL LIMITS"
+    },
+    {
+     "ref": "¶24",
+     "text": "The USP gives some guidance in their monograph on Microbiological Attributes of Non-Sterile Products. It points out that, \"The significance of microorganisms in non-sterile pharmaceutical products should be evaluated in terms of the use of the product, the nature of the product, and the potential harm to the user.\" Thus, not just the indicator organisms listed in some of the specific monographs present problems. It is up to each manufacturer to evaluate their product, the way it is manufactured, and establish am acceptable action level of contamination, not to exceed the maximum, for the water system, based on the highest risk product manufactured with the water.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > III. MICROBIAL LIMITS"
+    },
+    {
+     "context": "IV. WATER FOR INJECTION SYSTEMS"
+    },
+    {
+     "ref": "¶25",
+     "text": "In the review and evaluation of Water For Injection systems, there are several concerns.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > IV. WATER FOR INJECTION SYSTEMS"
+    },
+    {
+     "ref": "¶26",
+     "text": "Pretreatment of feedwater is recommended by most manufacturers of distillation equipment and is definitely required for RO units. The incoming feedwater quality may fluctuate during the life of the system depending upon seasonal variations and other external factors beyond the control of the pharmaceutical facility. For example, in the spring (at least in the N.E.), increases in gram negative organisms have been known. Also, new construction or fires can cause a depletion of water stores in old mains which can cause an influx of heavily contaminated water of a different flora.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > IV. WATER FOR INJECTION SYSTEMS"
+    },
+    {
+     "ref": "¶27",
+     "text": "A water system should be designed to operate within these anticipated extremes. Obviously, the only way to know the extremes is to periodically monitor feedwater. If the feedwater is from a municipal water system, reports from the municipality testing can be used in lieu of in-house testing.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > IV. WATER FOR INJECTION SYSTEMS"
+    },
+    {
+     "context": "V. STILL"
+    },
+    {
+     "ref": "¶28",
+     "text": "Figures 3-5 represent a typical basic diagram of a WFI system. Most of the new systems now use multi-effect stills. In some of the facilities, there has been evidence of endotoxin contamination. In one system this occurred, due to malfunction of the feedwater valve and level control in the still which resulted in droplets of feedwater being carried over in the distillate.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > V. STILL"
+    },
+    {
+     "context": "Figure 3"
+    },
+    {
+     "context": "Figure 4"
+    },
+    {
+     "context": "Figure 5"
+    },
+    {
+     "ref": "¶29",
+     "text": "In another system with endotoxin problems, it was noted that there was approximately 50 liters of WFI in the condenser at the start-up. Since this water could lie in the condenser for up to several days (i.e., over the weekend), it was believed that this was the reason for unacceptable levels of endotoxins.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > V. STILL"
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶10-¶19#12",
+   "unit": "¶10-¶19",
+   "hash": "0f3e278f33b8a7ef",
+   "item": {
+    "statement": "Compile the validation data and any conclusions into a final validation report.",
+    "quote": "The last part of the validation is the compilation of the data, with any conclusions into the final report.",
+    "clause_number": "¶14",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶10-¶19#13",
+   "unit": "¶10-¶19",
+   "hash": "76fc3805a4dc03f6",
+   "item": {
+    "statement": "Have the final water system validation report signed by the appropriate people responsible for operating the system and for its quality assurance.",
+    "quote": "The final validation report must be signed by the appropriate people responsible for operation and quality assurance of the water system.",
+    "clause_number": "¶14",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶10-¶19#14",
+   "unit": "¶10-¶19",
+   "hash": "e7cc23571f14f2a1",
+   "item": {
+    "statement": "Write operating procedures requiring the secondary valve to be opened before the primary valve so the drained pipe is flushed before use, preventing non-sterile air contaminating the system.",
+    "quote": "The solution is to pro-vide for operational procedures that provide for opening the secondary valve before the primary valve to flush the pipe prior to use.",
+    "clause_number": "¶15",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶10-¶19#15",
+   "unit": "¶10-¶19",
+   "hash": "6f3e03d3bcdb43e9",
+   "item": {
+    "statement": "Base the water system validation acceptance criteria primarily on consistent results throughout the system over a period of time.",
+    "quote": "Another major consideration in the validation of high purity water systems is the acceptance criteria. Consistent results throughout the system over a period of time constitute the primary element.",
+    "clause_number": "¶16",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶10-¶19#16",
+   "unit": "¶10-¶19",
+   "hash": "c2071b06dd39649e",
+   "item": {
+    "statement": "Water for Injection microbiological results should be essentially sterile.",
+    "quote": "Regarding microbiological results, for Water For Injection, it is expected that they be essentially sterile.",
+    "clause_number": "¶17",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ",
+     "API"
+    ],
+    "condition": "Water for Injection"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶10-¶19#17",
+   "unit": "¶10-¶19",
+   "hash": "de8cee4b9e3f6c22",
+   "item": {
+    "statement": "An action limit of less than 10 CFU/100 mL is acceptable for Water for Injection.",
+    "quote": "Agency policy, is that less than 10 CFU/100ml is an acceptable action limit.",
+    "clause_number": "¶17",
+    "strength": "optional",
+    "plant_types": [
+     "INJ",
+     "API"
+    ],
+    "condition": "Water for Injection"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶10-¶19#18",
+   "unit": "¶10-¶19",
+   "hash": "6a39fad48200836d",
+   "item": {
+    "statement": "Treat all water limits as action limits, not as pass/fail limits.",
+    "quote": "None of the limits for water are pass/fail limits. All limits are action limits.",
+    "clause_number": "¶17",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶10-¶19#19",
+   "unit": "¶10-¶19",
+   "hash": "aed12c9b4605fc99",
+   "item": {
+    "statement": "When a water action limit is exceeded, investigate the cause, correct the problem, assess the impact of the microbial contamination on products made with the water, and document the investigation results.",
+    "quote": "When action limits are exceeded the firm must investigate the cause of the problem, take action to correct the problem and assess the impact of the microbial contamination on products manufactured with the water and document the results of their investigation.",
+    "clause_number": "¶17",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "action limit exceeded"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶10-¶19#20",
+   "unit": "¶10-¶19",
+   "hash": "afcabaecb1a4ad6a",
+   "item": {
+    "statement": "When sampling Water for Injection systems, use a sample volume of preferably 100 to 300 mL and never less than 100 mL.",
+    "quote": "With regard to sample size, 100 - 300 mL is preferred when sampling Water for Injection systems. Sample volumes less than 100 mL are unacceptable.",
+    "clause_number": "¶18",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ",
+     "API"
+    ],
+    "condition": "sampling Water for Injection systems"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶10-¶19#21",
+   "unit": "¶10-¶19",
+   "hash": "a0c76072062636c1",
+   "item": {
+    "statement": "Monitor Water for Injection systems for both endotoxins and microorganisms.",
+    "quote": "Because WFI can pass the LAL endotoxin test and still fail the above microbial action limit, it is important to monitor WFI systems for both endotoxins and microorganisms.",
+    "clause_number": "¶19",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶20-¶29#1",
+   "unit": "¶20-¶29",
+   "hash": "b49217eadb68b51a",
+   "item": {
+    "statement": "As a minimum, purified water should comply with the federal EPA regulations for drinking water.",
+    "quote": "USP XXII specifications, that it complies with federal Environmental Protection Agency regulations for drinking water, are recognized as being minimal specifications.",
+    "clause_number": "¶20",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶20-¶29#2",
+   "unit": "¶20-¶29",
+   "hash": "78b993752d5f5cfb",
+   "item": {
+    "statement": "Set the action limit for a purified water system at no more than 100 CFU/mL.",
+    "quote": "Agency policy is that any action limit over 100 CFU/mL for a purified water system is unacceptable.",
+    "clause_number": "¶20",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "purified water system"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶20-¶29#3",
+   "unit": "¶20-¶29",
+   "hash": "1705a201d02f44ba",
+   "item": {
+    "statement": "Base each purified water action limit on the overall purified water system, the further processing of the finished product and the product's use.",
+    "quote": "Any action limit established will depend upon the overall purified water system and further processing of the finished product and its use.",
+    "clause_number": "¶21",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶20-¶29#4",
+   "unit": "¶20-¶29",
+   "hash": "0d3abb3a4ac5616e",
+   "item": {
+    "statement": "Ensure purified water used to make drug products by cold processing is free of objectionable organisms.",
+    "quote": "For example, purified water used to manufacture drug products by cold processing should be free of objectionable organisms.",
+    "clause_number": "¶21",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "drug products made by cold processing"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶20-¶29#5",
+   "unit": "¶20-¶29",
+   "hash": "ccd9d046a38b3f58",
+   "item": {
+    "statement": "When setting the contamination level allowed in a high purity water system used for a non-sterile product, take into account the product's use, its formulation (preservative system) and its manufacturing process.",
+    "quote": "Thus, in establishing the level of contamination allowed in a high purity water system used in the manufacture of a non-sterile product requires an understanding of the use of the product, the formulation (preservative system) and manufacturing process.",
+    "clause_number": "¶23",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "API"
+    ],
+    "condition": "water used for non-sterile products"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶20-¶29#6",
+   "unit": "¶20-¶29",
+   "hash": "e3910a524675732d",
+   "item": {
+    "statement": "For products without an effective preservative system, such as antacids, set the water action limit below the 100 CFU/mL maximum.",
+    "quote": "For example, antacids, which do not have an effective preservative system, require an action limit below the 100 CFU/mL maximum.",
+    "clause_number": "¶23",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": "products without an effective preservative system"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶20-¶29#7",
+   "unit": "¶20-¶29",
+   "hash": "0b5dbc3467ff4e2b",
+   "item": {
+    "statement": "Evaluate the products and how they are made, and set an acceptable water system action level, not above the maximum, based on the highest-risk product made with the water.",
+    "quote": "It is up to each manufacturer to evaluate their product, the way it is manufactured, and establish am acceptable action level of contamination, not to exceed the maximum, for the water system, based on the highest risk product manufactured with the water.",
+    "clause_number": "¶24",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶20-¶29#8",
+   "unit": "¶20-¶29",
+   "hash": "e6e32cd239667263",
+   "item": {
+    "statement": "Pretreat feedwater for reverse osmosis units, and for distillation equipment as most still manufacturers recommend.",
+    "quote": "Pretreatment of feedwater is recommended by most manufacturers of distillation equipment and is definitely required for RO units.",
+    "clause_number": "¶26",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶20-¶29#9",
+   "unit": "¶20-¶29",
+   "hash": "c5f6702b5ac7da95",
+   "item": {
+    "statement": "Design the water system to operate within the anticipated extremes of feedwater quality, such as seasonal and other external variations.",
+    "quote": "A water system should be designed to operate within these anticipated extremes.",
+    "clause_number": "¶27",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶20-¶29#10",
+   "unit": "¶20-¶29",
+   "hash": "8670e35df7a4ec39",
+   "item": {
+    "statement": "Monitor the feedwater periodically to know its quality extremes.",
+    "quote": "Obviously, the only way to know the extremes is to periodically monitor feedwater.",
+    "clause_number": "¶27",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  }
+ ]
+}

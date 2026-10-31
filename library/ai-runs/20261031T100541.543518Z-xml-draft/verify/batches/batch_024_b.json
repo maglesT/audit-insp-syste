@@ -1,6 +1,6 @@
 {
  "role": "b",
- "instructions": "You are a second, independent auditor. Check one checklist item against the US regulation paragraph it claims to come from. You get\nthe section's paragraphs (reference and exact text, from the official eCFR XML) and the item. Start from the TEXT:\nread the cited paragraph and its lead-in fully, then compare the item.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the parent paragraph's\nlead-in (including a qualifier such as \"as are necessary to prevent contamination or mixups\"). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph requires what the statement asks for, the statement\n  adds nothing and omits nothing of that obligation, the strength (shall/must = mandatory, should = recommended,\n  may = optional; a sub-paragraph takes its lead-in's) matches, and the regulation applies to every listed plant\n  type (INJ = sterile injectables: a paragraph limited to products not required to be sterile does not apply to\n  INJ; one limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "instructions": "You are a second, independent auditor. Check one checklist item against the US regulation paragraph it claims to come from. You get\nthe section's paragraphs (reference and exact text, from the official eCFR XML) and the item. Start from the TEXT:\nread the cited paragraph and its lead-in fully, then compare the item.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the parent paragraph's\nlead-in (including a qualifier such as \"as are necessary to prevent contamination or mixups\"). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph requires what the statement asks for, the statement\n  adds nothing and omits nothing of that obligation, the strength (shall/must = mandatory, should = recommended,\n  may = optional; a sub-paragraph takes its lead-in's) matches, and the regulation applies to every listed plant\n  type (INJ = sterile injectables: a paragraph limited to products not required to be sterile does not apply to\n  INJ; one limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences saying what you checked for THIS item, in this item's own words: name the\n  condition, number, list or scope you compared with the text (e.g. \"the 30-day limit and 'each lot' are both in\n  the statement\", \"the list of components, containers and closures is complete\", \"drops the lead-in's 'for\n  sterile products'\"). Write each reason fresh for its item: a reason that would fit any item (\"quote exact,\n  strength matches, nothing added or omitted\") or that repeats another answer's reason is not an answer, and the\n  item then counts as unchecked.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
  "schema": {
   "type": "object",
   "required": [
@@ -29,62 +29,95 @@
  },
  "sections": [
   {
-   "section": "211.198",
+   "section": "211.22",
    "paragraphs": [
     {
-     "ref": "211.198",
-     "text": "§ 211.198 Complaint files."
+     "ref": "211.22",
+     "text": "§ 211.22 Responsibilities of quality control unit."
     },
     {
-     "ref": "211.198(a)",
-     "text": "(a) Written procedures describing the handling of all written and oral complaints regarding a drug product shall be established and followed. Such procedures shall include provisions for review by the quality control unit, of any complaint involving the possible failure of a drug product to meet any of its specifications and, for such drug products, a determination as to the need for an investigation in accordance with § 211.192. Such procedures shall include provisions for review to determine whether the complaint represents a serious and unexpected adverse drug experience which is required to be reported to the Food and Drug Administration in accordance with §§ 310.305 and 514.80 of this chapter."
+     "ref": "211.22(a)",
+     "text": "(a) There shall be a quality control unit that shall have the responsibility and authority to approve or reject all components, drug product containers, closures, in-process materials, packaging material, labeling, and drug products, and the authority to review production records to assure that no errors have occurred or, if errors have occurred, that they have been fully investigated. The quality control unit shall be responsible for approving or rejecting drug products manufactured, processed, packed, or held under contract by another company."
     },
     {
-     "ref": "211.198(b)",
-     "text": "(b) A written record of each complaint shall be maintained in a file designated for drug product complaints. The file regarding such drug product complaints shall be maintained at the establishment where the drug product involved was manufactured, processed, or packed, or such file may be maintained at another facility if the written records in such files are readily available for inspection at that other facility. Written records involving a drug product shall be maintained until at least 1 year after the expiration date of the drug product, or 1 year after the date that the complaint was received, whichever is longer. In the case of certain OTC drug products lacking expiration dating because they meet the criteria for exemption under § 211.137, such written records shall be maintained for 3 years after distribution of the drug product."
+     "ref": "211.22(b)",
+     "text": "(b) Adequate laboratory facilities for the testing and approval (or rejection) of components, drug product containers, closures, packaging materials, in-process materials, and drug products shall be available to the quality control unit."
     },
     {
-     "ref": "211.198(b)(1)",
-     "text": "(1) The written record shall include the following information, where known: the name and strength of the drug product, lot number, name of complainant, nature of complaint, and reply to complainant."
+     "ref": "211.22(c)",
+     "text": "(c) The quality control unit shall have the responsibility for approving or rejecting all procedures or specifications impacting on the identity, strength, quality, and purity of the drug product."
     },
     {
-     "ref": "211.198(b)(2)",
-     "text": "(2) Where an investigation under § 211.192 is conducted, the written record shall include the findings of the investigation and followup. The record or copy of the record of the investigation shall be maintained at the establishment where the investigation occurred in accordance with § 211.180(c)."
-    },
-    {
-     "ref": "211.198(b)(3)",
-     "text": "(3) Where an investigation under § 211.192 is not conducted, the written record shall include the reason that an investigation was found not to be necessary and the name of the responsible person making such a determination."
+     "ref": "211.22(d)",
+     "text": "(d) The responsibilities and procedures applicable to the quality control unit shall be in writing; such written procedures shall be followed."
     }
    ]
   },
   {
-   "section": "211.204",
+   "section": "211.25",
    "paragraphs": [
     {
-     "ref": "211.204",
-     "text": "§ 211.204 Returned drug products. Returned drug products shall be identified as such and held. If the conditions under which returned drug products have been held, stored, or shipped before or during their return, or if the condition of the drug product, its container, carton, or labeling, as a result of storage or shipping, casts doubt on the safety, identity, strength, quality or purity of the drug product, the returned drug product shall be destroyed unless examination, testing, or other investigations prove the drug product meets appropriate standards of safety, identity, strength, quality, or purity. A drug product may be reprocessed provided the subsequent drug product meets appropriate standards, specifications, and characteristics. Records of returned drug products shall be maintained and shall include the name and label potency of the drug product dosage form, lot number (or control number or batch number), reason for the return, quantity returned, date of disposition, and ultimate disposition of the returned drug product. If the reason for a drug product being returned implicates associated batches, an appropriate investigation shall be conducted in accordance with the requirements of § 211.192. Procedures for the holding, testing, and reprocessing of returned drug products shall be in writing and shall be followed."
+     "ref": "211.25",
+     "text": "§ 211.25 Personnel qualifications."
+    },
+    {
+     "ref": "211.25(a)",
+     "text": "(a) Each person engaged in the manufacture, processing, packing, or holding of a drug product shall have education, training, and experience, or any combination thereof, to enable that person to perform the assigned functions. Training shall be in the particular operations that the employee performs and in current good manufacturing practice (including the current good manufacturing practice regulations in this chapter and written procedures required by these regulations) as they relate to the employee's functions. Training in current good manufacturing practice shall be conducted by qualified individuals on a continuing basis and with sufficient frequency to assure that employees remain familiar with CGMP requirements applicable to them."
+    },
+    {
+     "ref": "211.25(b)",
+     "text": "(b) Each person responsible for supervising the manufacture, processing, packing, or holding of a drug product shall have the education, training, and experience, or any combination thereof, to perform assigned functions in such a manner as to provide assurance that the drug product has the safety, identity, strength, quality, and purity that it purports or is represented to possess."
+    },
+    {
+     "ref": "211.25(c)",
+     "text": "(c) There shall be an adequate number of qualified personnel to perform and supervise the manufacture, processing, packing, or holding of each drug product."
     }
    ]
   },
   {
-   "section": "211.208",
+   "section": "211.28",
    "paragraphs": [
     {
-     "ref": "211.208",
-     "text": "§ 211.208 Drug product salvaging. Drug products that have been subjected to improper storage conditions including extremes in temperature, humidity, smoke, fumes, pressure, age, or radiation due to natural disasters, fires, accidents, or equipment failures shall not be salvaged and returned to the marketplace. Whenever there is a question whether drug products have been subjected to such conditions, salvaging operations may be conducted only if there is (a) evidence from laboratory tests and assays (including animal feeding studies where applicable) that the drug products meet all applicable standards of identity, strength, quality, and purity and (b) evidence from inspection of the premises that the drug products and their associated packaging were not subjected to improper storage conditions as a result of the disaster or accident. Organoleptic examinations shall be acceptable only as supplemental evidence that the drug products meet appropriate standards of identity, strength, quality, and purity. Records including name, lot number, and disposition shall be maintained for drug products subject to this section."
+     "ref": "211.28",
+     "text": "§ 211.28 Personnel responsibilities."
+    },
+    {
+     "ref": "211.28(a)",
+     "text": "(a) Personnel engaged in the manufacture, processing, packing, or holding of a drug product shall wear clean clothing appropriate for the duties they perform. Protective apparel, such as head, face, hand, and arm coverings, shall be worn as necessary to protect drug products from contamination."
+    },
+    {
+     "ref": "211.28(b)",
+     "text": "(b) Personnel shall practice good sanitation and health habits."
+    },
+    {
+     "ref": "211.28(c)",
+     "text": "(c) Only personnel authorized by supervisory personnel shall enter those areas of the buildings and facilities designated as limited-access areas."
+    },
+    {
+     "ref": "211.28(d)",
+     "text": "(d) Any person shown at any time (either by medical examination or supervisory observation) to have an apparent illness or open lesions that may adversely affect the safety or quality of drug products shall be excluded from direct contact with components, drug product containers, closures, in-process materials, and drug products until the condition is corrected or determined by competent medical personnel not to jeopardize the safety or quality of drug products. All personnel shall be instructed to report to supervisory personnel any health conditions that may have an adverse effect on drug products."
+    }
+   ]
+  },
+  {
+   "section": "211.34",
+   "paragraphs": [
+    {
+     "ref": "211.34",
+     "text": "§ 211.34 Consultants. Consultants advising on the manufacture, processing, packing, or holding of drug products shall have sufficient education, training, and experience, or any combination thereof, to advise on the subject for which they are retained. Records shall be maintained stating the name, address, and qualifications of any consultants and the type of service they provide."
     }
    ]
   }
  ],
  "items": [
   {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.198#1",
-   "section": "211.198",
-   "hash": "e806e889961aa544",
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.22#1",
+   "section": "211.22",
+   "hash": "20949c15cdf24931",
    "item": {
-    "statement": "Establish and follow written procedures for handling all written and oral complaints about a drug product.",
-    "quote": "Written procedures describing the handling of all written and oral complaints regarding a drug product shall be established and followed.",
-    "clause_number": "211.198(a)",
+    "statement": "Have a quality control unit with the responsibility and authority to approve or reject all components, drug product containers, closures, in-process materials, packaging material, labeling and drug products.",
+    "quote": "There shall be a quality control unit that shall have the responsibility and authority to approve or reject all components, drug product containers, closures, in-process materials, packaging material, labeling, and drug products",
+    "clause_number": "211.22(a)",
     "strength": "mandatory",
     "plant_types": [
      "OSD",
@@ -102,13 +135,13 @@
    ]
   },
   {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.198#2",
-   "section": "211.198",
-   "hash": "771e0024868b47f3",
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.22#2",
+   "section": "211.22",
+   "hash": "f1ec3a0663581d29",
    "item": {
-    "statement": "Ensure complaint procedures provide for quality control unit review of any complaint involving a possible failure of a drug product to meet any of its specifications and, for such products, a decision on whether a failure investigation is needed.",
-    "quote": "Such procedures shall include provisions for review by the quality control unit, of any complaint involving the possible failure of a drug product to meet any of its specifications and, for such drug products, a determination as to the need for an investigation in accordance with § 211.192.",
-    "clause_number": "211.198(a)",
+    "statement": "Give the quality control unit authority to review production records to make sure no errors occurred or, if errors occurred, that they were fully investigated.",
+    "quote": "the authority to review production records to assure that no errors have occurred or, if errors have occurred, that they have been fully investigated",
+    "clause_number": "211.22(a)",
     "strength": "mandatory",
     "plant_types": [
      "OSD",
@@ -116,7 +149,7 @@
      "SEMI",
      "INJ"
     ],
-    "condition": "complaint involves possible specification failure"
+    "condition": "if errors have occurred"
    },
    "plant_scope": [
     "OSD",
@@ -126,13 +159,13 @@
    ]
   },
   {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.198#3",
-   "section": "211.198",
-   "hash": "c78aea2a4b89f520",
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.22#3",
+   "section": "211.22",
+   "hash": "f0f9e83df4fcddf8",
    "item": {
-    "statement": "Ensure complaint procedures provide for review of whether a complaint represents a serious and unexpected adverse drug experience that must be reported to FDA.",
-    "quote": "Such procedures shall include provisions for review to determine whether the complaint represents a serious and unexpected adverse drug experience which is required to be reported to the Food and Drug Administration in accordance with §§ 310.305 and 514.80 of this chapter.",
-    "clause_number": "211.198(a)",
+    "statement": "Make the quality control unit responsible for approving or rejecting drug products made, processed, packed or held under contract by another company.",
+    "quote": "The quality control unit shall be responsible for approving or rejecting drug products manufactured, processed, packed, or held under contract by another company.",
+    "clause_number": "211.22(a)",
     "strength": "mandatory",
     "plant_types": [
      "OSD",
@@ -140,7 +173,7 @@
      "SEMI",
      "INJ"
     ],
-    "condition": ""
+    "condition": "products handled under contract by another company"
    },
    "plant_scope": [
     "OSD",
@@ -150,61 +183,13 @@
    ]
   },
   {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.198#4",
-   "section": "211.198",
-   "hash": "5f9a0c19a9dd8039",
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.22#4",
+   "section": "211.22",
+   "hash": "75cedc31f6864da3",
    "item": {
-    "statement": "Maintain a written record of each complaint in a file designated for drug product complaints.",
-    "quote": "A written record of each complaint shall be maintained in a file designated for drug product complaints.",
-    "clause_number": "211.198(b)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": ""
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.198#5",
-   "section": "211.198",
-   "hash": "346b06d609a03caf",
-   "item": {
-    "statement": "Keep the drug product complaint file at the establishment where the product was manufactured, processed or packed, or at another facility provided the written records are readily available for inspection there.",
-    "quote": "The file regarding such drug product complaints shall be maintained at the establishment where the drug product involved was manufactured, processed, or packed, or such file may be maintained at another facility if the written records in such files are readily available for inspection at that other facility.",
-    "clause_number": "211.198(b)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": "other facility only if records readily available for inspection"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.198#6",
-   "section": "211.198",
-   "hash": "9cd4748f5fb9656e",
-   "item": {
-    "statement": "Retain written complaint records for a drug product until at least 1 year after the product's expiration date or 1 year after the complaint was received, whichever is longer.",
-    "quote": "Written records involving a drug product shall be maintained until at least 1 year after the expiration date of the drug product, or 1 year after the date that the complaint was received, whichever is longer.",
-    "clause_number": "211.198(b)",
+    "statement": "Make adequate laboratory facilities available to the quality control unit for testing and approving or rejecting components, drug product containers, closures, packaging materials, in-process materials and drug products.",
+    "quote": "Adequate laboratory facilities for the testing and approval (or rejection) of components, drug product containers, closures, packaging materials, in-process materials, and drug products shall be available to the quality control unit.",
+    "clause_number": "211.22(b)",
     "strength": "mandatory",
     "plant_types": [
      "OSD",
@@ -222,133 +207,13 @@
    ]
   },
   {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.198#7",
-   "section": "211.198",
-   "hash": "c72ab57ea8d35060",
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.22#5",
+   "section": "211.22",
+   "hash": "93d3fbbec412c16e",
    "item": {
-    "statement": "For OTC drug products without expiration dating because they meet the exemption criteria, retain written complaint records for 3 years after distribution of the product.",
-    "quote": "In the case of certain OTC drug products lacking expiration dating because they meet the criteria for exemption under § 211.137, such written records shall be maintained for 3 years after distribution of the drug product.",
-    "clause_number": "211.198(b)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": "OTC product exempt from expiration dating"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.198#8",
-   "section": "211.198",
-   "hash": "5c64a0a9da3d27af",
-   "item": {
-    "statement": "Ensure each written complaint record includes, where known, the drug product name and strength, lot number, complainant's name, nature of the complaint and the reply to the complainant.",
-    "quote": "The written record shall include the following information, where known: the name and strength of the drug product, lot number, name of complainant, nature of complaint, and reply to complainant.",
-    "clause_number": "211.198(b)(1)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": "where known"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.198#9",
-   "section": "211.198",
-   "hash": "d7cf397db6746356",
-   "item": {
-    "statement": "Where a failure investigation of a complaint is conducted, include the investigation findings and follow-up in the written complaint record.",
-    "quote": "Where an investigation under § 211.192 is conducted, the written record shall include the findings of the investigation and followup.",
-    "clause_number": "211.198(b)(2)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": "where an investigation is conducted"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.198#10",
-   "section": "211.198",
-   "hash": "923f6ff0198f73b1",
-   "item": {
-    "statement": "Where a failure investigation of a complaint is conducted, keep the investigation record or a copy of it at the establishment where the investigation took place, in line with record retention requirements.",
-    "quote": "The record or copy of the record of the investigation shall be maintained at the establishment where the investigation occurred in accordance with § 211.180(c).",
-    "clause_number": "211.198(b)(2)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": "where an investigation is conducted"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.198#11",
-   "section": "211.198",
-   "hash": "974fd310c14fac40",
-   "item": {
-    "statement": "Where no failure investigation of a complaint is conducted, include in the written complaint record the reason an investigation was judged unnecessary and the name of the responsible person who decided this.",
-    "quote": "Where an investigation under § 211.192 is not conducted, the written record shall include the reason that an investigation was found not to be necessary and the name of the responsible person making such a determination.",
-    "clause_number": "211.198(b)(3)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": "where no investigation is conducted"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.204#1",
-   "section": "211.204",
-   "hash": "6cc53db3be900eed",
-   "item": {
-    "statement": "Identify returned drug products as returned and hold them.",
-    "quote": "Returned drug products shall be identified as such and held.",
-    "clause_number": "211.204",
+    "statement": "Make the quality control unit responsible for approving or rejecting every procedure or specification that affects the identity, strength, quality and purity of the drug product.",
+    "quote": "The quality control unit shall have the responsibility for approving or rejecting all procedures or specifications impacting on the identity, strength, quality, and purity of the drug product.",
+    "clause_number": "211.22(c)",
     "strength": "mandatory",
     "plant_types": [
      "OSD",
@@ -366,61 +231,13 @@
    ]
   },
   {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.204#2",
-   "section": "211.204",
-   "hash": "40dd172d0318ac4a",
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.22#6",
+   "section": "211.22",
+   "hash": "b1d649d87d1daa64",
    "item": {
-    "statement": "Destroy a returned drug product if the conditions under which it was held, stored or shipped before or during return, or the condition of the product, its container, carton or labeling as a result of storage or shipping, cast doubt on its safety, identity, strength, quality or purity, unless examination, testing or other investigation proves it meets appropriate standards of safety, identity, strength, quality or purity.",
-    "quote": "If the conditions under which returned drug products have been held, stored, or shipped before or during their return, or if the condition of the drug product, its container, carton, or labeling, as a result of storage or shipping, casts doubt on the safety, identity, strength, quality or purity of the drug product, the returned drug product shall be destroyed unless examination, testing, or other investigations prove the drug product meets appropriate standards of safety, identity, strength, quality, or purity.",
-    "clause_number": "211.204",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": "if conditions cast doubt, unless proven to meet standards"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.204#3",
-   "section": "211.204",
-   "hash": "79a90396173b55ec",
-   "item": {
-    "statement": "A returned drug product may be reprocessed, provided the resulting drug product meets appropriate standards, specifications and characteristics.",
-    "quote": "A drug product may be reprocessed provided the subsequent drug product meets appropriate standards, specifications, and characteristics.",
-    "clause_number": "211.204",
-    "strength": "optional",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": "provided resulting product meets standards"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.204#4",
-   "section": "211.204",
-   "hash": "b4f10d6a04244b6f",
-   "item": {
-    "statement": "Maintain records of returned drug products that include the name and label potency of the dosage form, lot, control or batch number, reason for return, quantity returned, date of disposition and ultimate disposition.",
-    "quote": "Records of returned drug products shall be maintained and shall include the name and label potency of the drug product dosage form, lot number (or control number or batch number), reason for the return, quantity returned, date of disposition, and ultimate disposition of the returned drug product.",
-    "clause_number": "211.204",
+    "statement": "Document in writing the responsibilities and procedures that apply to the quality control unit.",
+    "quote": "The responsibilities and procedures applicable to the quality control unit shall be in writing",
+    "clause_number": "211.22(d)",
     "strength": "mandatory",
     "plant_types": [
      "OSD",
@@ -438,37 +255,13 @@
    ]
   },
   {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.204#5",
-   "section": "211.204",
-   "hash": "d15c285505b4db96",
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.22#7",
+   "section": "211.22",
+   "hash": "193e1e0b790e7905",
    "item": {
-    "statement": "If the reason for a return implicates associated batches, conduct an appropriate failure investigation that meets the batch investigation requirements.",
-    "quote": "If the reason for a drug product being returned implicates associated batches, an appropriate investigation shall be conducted in accordance with the requirements of § 211.192.",
-    "clause_number": "211.204",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": "if return reason implicates associated batches"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.204#6",
-   "section": "211.204",
-   "hash": "e52da83228f69ec4",
-   "item": {
-    "statement": "Have written procedures for holding, testing and reprocessing returned drug products, and follow them.",
-    "quote": "Procedures for the holding, testing, and reprocessing of returned drug products shall be in writing and shall be followed.",
-    "clause_number": "211.204",
+    "statement": "Follow the written procedures of the quality control unit.",
+    "quote": "such written procedures shall be followed",
+    "clause_number": "211.22(d)",
     "strength": "mandatory",
     "plant_types": [
      "OSD",
@@ -486,13 +279,13 @@
    ]
   },
   {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.208#1",
-   "section": "211.208",
-   "hash": "71584e39d9fb1331",
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.25#1",
+   "section": "211.25",
+   "hash": "4d2ee307a2ad5397",
    "item": {
-    "statement": "Do not salvage and return to the market drug products that were subjected to improper storage conditions, including extremes of temperature, humidity, smoke, fumes, pressure, age or radiation, caused by natural disasters, fires, accidents or equipment failures.",
-    "quote": "Drug products that have been subjected to improper storage conditions including extremes in temperature, humidity, smoke, fumes, pressure, age, or radiation due to natural disasters, fires, accidents, or equipment failures shall not be salvaged and returned to the marketplace.",
-    "clause_number": "211.208",
+    "statement": "Ensure every person involved in manufacturing, processing, packing or holding a drug product has the education, training and experience, or a combination of these, needed to perform the assigned functions.",
+    "quote": "Each person engaged in the manufacture, processing, packing, or holding of a drug product shall have education, training, and experience, or any combination thereof, to enable that person to perform the assigned functions.",
+    "clause_number": "211.25(a)",
     "strength": "mandatory",
     "plant_types": [
      "OSD",
@@ -510,37 +303,13 @@
    ]
   },
   {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.208#2",
-   "section": "211.208",
-   "hash": "7aa9cadc55f28c5e",
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.25#2",
+   "section": "211.25",
+   "hash": "10d65d4efedf547f",
    "item": {
-    "statement": "Where it is in question whether drug products were subjected to such improper storage conditions, conduct salvaging only if there is both evidence from laboratory tests and assays (including animal feeding studies where applicable) that the products meet all applicable standards of identity, strength, quality and purity, and evidence from inspection of the premises that the products and their packaging were not subjected to improper storage conditions from the disaster or accident.",
-    "quote": "Whenever there is a question whether drug products have been subjected to such conditions, salvaging operations may be conducted only if there is (a) evidence from laboratory tests and assays (including animal feeding studies where applicable) that the drug products meet all applicable standards of identity, strength, quality, and purity and (b) evidence from inspection of the premises that the drug products and their associated packaging were not subjected to improper storage conditions as a result of the disaster or accident.",
-    "clause_number": "211.208",
-    "strength": "optional",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": "whenever exposure to improper conditions is in question"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.208#3",
-   "section": "211.208",
-   "hash": "7e091c0c2f6b1c24",
-   "item": {
-    "statement": "Accept organoleptic examinations only as supplemental evidence that salvaged drug products meet appropriate standards of identity, strength, quality and purity.",
-    "quote": "Organoleptic examinations shall be acceptable only as supplemental evidence that the drug products meet appropriate standards of identity, strength, quality, and purity.",
-    "clause_number": "211.208",
+    "statement": "Train each employee in the specific operations they perform and in current good manufacturing practice, including the CGMP regulations and the written procedures they require, as these relate to the employee's functions.",
+    "quote": "Training shall be in the particular operations that the employee performs and in current good manufacturing practice (including the current good manufacturing practice regulations in this chapter and written procedures required by these regulations) as they relate to the employee's functions.",
+    "clause_number": "211.25(a)",
     "strength": "mandatory",
     "plant_types": [
      "OSD",
@@ -558,13 +327,13 @@
    ]
   },
   {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.208#4",
-   "section": "211.208",
-   "hash": "072731719ba7523a",
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.25#3",
+   "section": "211.25",
+   "hash": "894ca4662de541aa",
    "item": {
-    "statement": "Maintain records, including name, lot number and disposition, for drug products subject to salvaging requirements.",
-    "quote": "Records including name, lot number, and disposition shall be maintained for drug products subject to this section.",
-    "clause_number": "211.208",
+    "statement": "Have qualified individuals deliver CGMP training on a continuing basis, often enough that employees stay familiar with the CGMP requirements that apply to them.",
+    "quote": "Training in current good manufacturing practice shall be conducted by qualified individuals on a continuing basis and with sufficient frequency to assure that employees remain familiar with CGMP requirements applicable to them.",
+    "clause_number": "211.25(a)",
     "strength": "mandatory",
     "plant_types": [
      "OSD",
@@ -573,6 +342,246 @@
      "INJ"
     ],
     "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.25#4",
+   "section": "211.25",
+   "hash": "6c77516734a041ec",
+   "item": {
+    "statement": "Ensure every person supervising manufacturing, processing, packing or holding of a drug product has the education, training and experience, or a combination of these, to perform their functions so as to assure the product has the safety, identity, strength, quality and purity it purports or is represented to have.",
+    "quote": "Each person responsible for supervising the manufacture, processing, packing, or holding of a drug product shall have the education, training, and experience, or any combination thereof, to perform assigned functions in such a manner as to provide assurance that the drug product has the safety, identity, strength, quality, and purity that it purports or is represented to possess.",
+    "clause_number": "211.25(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.25#5",
+   "section": "211.25",
+   "hash": "99a47f10dd474f05",
+   "item": {
+    "statement": "Have enough qualified personnel to perform and supervise the manufacturing, processing, packing or holding of each drug product.",
+    "quote": "There shall be an adequate number of qualified personnel to perform and supervise the manufacture, processing, packing, or holding of each drug product.",
+    "clause_number": "211.25(c)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.28#1",
+   "section": "211.28",
+   "hash": "85f66d17dcdbc329",
+   "item": {
+    "statement": "Personnel involved in manufacturing, processing, packing or holding a drug product wear clean clothing suitable for their duties.",
+    "quote": "Personnel engaged in the manufacture, processing, packing, or holding of a drug product shall wear clean clothing appropriate for the duties they perform.",
+    "clause_number": "211.28(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.28#2",
+   "section": "211.28",
+   "hash": "0046e7764b4d8158",
+   "item": {
+    "statement": "Wear protective apparel such as head, face, hand and arm coverings as needed to protect drug products from contamination.",
+    "quote": "Protective apparel, such as head, face, hand, and arm coverings, shall be worn as necessary to protect drug products from contamination.",
+    "clause_number": "211.28(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "as necessary to protect products from contamination"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.28#3",
+   "section": "211.28",
+   "hash": "ff6a17ccfd6a2773",
+   "item": {
+    "statement": "Personnel practise good sanitation and health habits.",
+    "quote": "Personnel shall practice good sanitation and health habits.",
+    "clause_number": "211.28(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.28#4",
+   "section": "211.28",
+   "hash": "f652c8be5ea0dfd4",
+   "item": {
+    "statement": "Allow only personnel authorised by supervisors to enter areas of buildings and facilities designated as limited-access areas.",
+    "quote": "Only personnel authorized by supervisory personnel shall enter those areas of the buildings and facilities designated as limited-access areas.",
+    "clause_number": "211.28(c)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "areas designated as limited-access"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.28#5",
+   "section": "211.28",
+   "hash": "8daa578861057e7a",
+   "item": {
+    "statement": "Exclude anyone shown at any time, by medical examination or supervisory observation, to have an apparent illness or open lesions that may adversely affect drug product safety or quality from direct contact with components, drug product containers, closures, in-process materials and drug products until the condition is corrected or competent medical personnel determine it does not jeopardise product safety or quality.",
+    "quote": "Any person shown at any time (either by medical examination or supervisory observation) to have an apparent illness or open lesions that may adversely affect the safety or quality of drug products shall be excluded from direct contact with components, drug product containers, closures, in-process materials, and drug products until the condition is corrected or determined by competent medical personnel not to jeopardize the safety or quality of drug products.",
+    "clause_number": "211.28(d)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "person shown to have apparent illness or open lesions"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.28#6",
+   "section": "211.28",
+   "hash": "60b0211a3114e6c7",
+   "item": {
+    "statement": "Instruct all personnel to report to supervisors any health conditions that may adversely affect drug products.",
+    "quote": "All personnel shall be instructed to report to supervisory personnel any health conditions that may have an adverse effect on drug products.",
+    "clause_number": "211.28(d)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.34#1",
+   "section": "211.34",
+   "hash": "f6d41e404813ba30",
+   "item": {
+    "statement": "Ensure consultants who advise on making, processing, packing or holding drug products have enough education, training and experience, or a combination of these, for the subject they are engaged to advise on.",
+    "quote": "Consultants advising on the manufacture, processing, packing, or holding of drug products shall have sufficient education, training, and experience, or any combination thereof, to advise on the subject for which they are retained.",
+    "clause_number": "211.34",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "when consultants are retained"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.34#2",
+   "section": "211.34",
+   "hash": "e6a3e5e7dc74d104",
+   "item": {
+    "statement": "Keep records of every consultant giving their name, address, qualifications and the kind of service they provide.",
+    "quote": "Records shall be maintained stating the name, address, and qualifications of any consultants and the type of service they provide.",
+    "clause_number": "211.34",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "when consultants are retained"
    },
    "plant_scope": [
     "OSD",

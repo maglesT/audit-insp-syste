@@ -1,6 +1,6 @@
 {
  "role": "a",
- "instructions": "You are an auditor checking one checklist item against the US regulation paragraph it claims to come from. You get\nthe section's paragraphs (reference and exact text, from the official eCFR XML) and the item. Start from the ITEM:\nread it, then find in the cited paragraph what it covers.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the parent paragraph's\nlead-in (including a qualifier such as \"as are necessary to prevent contamination or mixups\"). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph requires what the statement asks for, the statement\n  adds nothing and omits nothing of that obligation, the strength (shall/must = mandatory, should = recommended,\n  may = optional; a sub-paragraph takes its lead-in's) matches, and the regulation applies to every listed plant\n  type (INJ = sterile injectables: a paragraph limited to products not required to be sterile does not apply to\n  INJ; one limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "instructions": "You are an auditor checking one checklist item against the US regulation paragraph it claims to come from. You get\nthe section's paragraphs (reference and exact text, from the official eCFR XML) and the item. Start from the ITEM:\nread it, then find in the cited paragraph what it covers.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the parent paragraph's\nlead-in (including a qualifier such as \"as are necessary to prevent contamination or mixups\"). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph requires what the statement asks for, the statement\n  adds nothing and omits nothing of that obligation, the strength (shall/must = mandatory, should = recommended,\n  may = optional; a sub-paragraph takes its lead-in's) matches, and the regulation applies to every listed plant\n  type (INJ = sterile injectables: a paragraph limited to products not required to be sterile does not apply to\n  INJ; one limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences saying what you checked for THIS item, in this item's own words: name the\n  condition, number, list or scope you compared with the text (e.g. \"the 30-day limit and 'each lot' are both in\n  the statement\", \"the list of components, containers and closures is complete\", \"drops the lead-in's 'for\n  sterile products'\"). Write each reason fresh for its item: a reason that would fit any item (\"quote exact,\n  strength matches, nothing added or omitted\") or that repeats another answer's reason is not an answer, and the\n  item then counts as unchecked.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
  "schema": {
   "type": "object",
   "required": [
@@ -29,120 +29,197 @@
  },
  "sections": [
   {
-   "section": "211.56",
+   "section": "211.42",
    "paragraphs": [
     {
-     "ref": "211.56",
-     "text": "§ 211.56 Sanitation."
+     "ref": "211.42",
+     "text": "§ 211.42 Design and construction features."
     },
     {
-     "ref": "211.56(a)",
-     "text": "(a) Any building used in the manufacture, processing, packing, or holding of a drug product shall be maintained in a clean and sanitary condition, Any such building shall be free of infestation by rodents, birds, insects, and other vermin (other than laboratory animals). Trash and organic waste matter shall be held and disposed of in a timely and sanitary manner."
+     "ref": "211.42(a)",
+     "text": "(a) Any building or buildings used in the manufacture, processing, packing, or holding of a drug product shall be of suitable size, construction and location to facilitate cleaning, maintenance, and proper operations."
     },
     {
-     "ref": "211.56(b)",
-     "text": "(b) There shall be written procedures assigning responsibility for sanitation and describing in sufficient detail the cleaning schedules, methods, equipment, and materials to be used in cleaning the buildings and facilities; such written procedures shall be followed."
+     "ref": "211.42(b)",
+     "text": "(b) Any such building shall have adequate space for the orderly placement of equipment and materials to prevent mixups between different components, drug product containers, closures, labeling, in-process materials, or drug products, and to prevent contamination. The flow of components, drug product containers, closures, labeling, in-process materials, and drug products through the building or buildings shall be designed to prevent contamination."
     },
     {
-     "ref": "211.56(c)",
-     "text": "(c) There shall be written procedures for use of suitable rodenticides, insecticides, fungicides, fumigating agents, and cleaning and sanitizing agents. Such written procedures shall be designed to prevent the contamination of equipment, components, drug product containers, closures, packaging, labeling materials, or drug products and shall be followed. Rodenticides, insecticides, and fungicides shall not be used unless registered and used in accordance with the Federal Insecticide, Fungicide, and Rodenticide Act (7 U.S.C. 135)."
+     "ref": "211.42(c)",
+     "text": "(c) Operations shall be performed within specifically defined areas of adequate size. There shall be separate or defined areas or such other control systems for the firm's operations as are necessary to prevent contamination or mixups during the course of the following procedures:"
     },
     {
-     "ref": "211.56(d)",
-     "text": "(d) Sanitation procedures shall apply to work performed by contractors or temporary employees as well as work performed by full-time employees during the ordinary course of operations."
+     "ref": "211.42(c)(1)",
+     "text": "(1) Receipt, identification, storage, and withholding from use of components, drug product containers, closures, and labeling, pending the appropriate sampling, testing, or examination by the quality control unit before release for manufacturing or packaging;"
+    },
+    {
+     "ref": "211.42(c)(2)",
+     "text": "(2) Holding rejected components, drug product containers, closures, and labeling before disposition;"
+    },
+    {
+     "ref": "211.42(c)(3)",
+     "text": "(3) Storage of released components, drug product containers, closures, and labeling;"
+    },
+    {
+     "ref": "211.42(c)(4)",
+     "text": "(4) Storage of in-process materials;"
+    },
+    {
+     "ref": "211.42(c)(5)",
+     "text": "(5) Manufacturing and processing operations;"
+    },
+    {
+     "ref": "211.42(c)(6)",
+     "text": "(6) Packaging and labeling operations;"
+    },
+    {
+     "ref": "211.42(c)(7)",
+     "text": "(7) Quarantine storage before release of drug products;"
+    },
+    {
+     "ref": "211.42(c)(8)",
+     "text": "(8) Storage of drug products after release;"
+    },
+    {
+     "ref": "211.42(c)(9)",
+     "text": "(9) Control and laboratory operations;"
+    },
+    {
+     "ref": "211.42(c)(10)",
+     "text": "(10) Aseptic processing, which includes as appropriate:"
+    },
+    {
+     "ref": "211.42(c)(10)(i)",
+     "text": "(i) Floors, walls, and ceilings of smooth, hard surfaces that are easily cleanable;"
+    },
+    {
+     "ref": "211.42(c)(10)(ii)",
+     "text": "(ii) Temperature and humidity controls;"
+    },
+    {
+     "ref": "211.42(c)(10)(iii)",
+     "text": "(iii) An air supply filtered through high-efficiency particulate air filters under positive pressure, regardless of whether flow is laminar or nonlaminar;"
+    },
+    {
+     "ref": "211.42(c)(10)(iv)",
+     "text": "(iv) A system for monitoring environmental conditions;"
+    },
+    {
+     "ref": "211.42(c)(10)(v)",
+     "text": "(v) A system for cleaning and disinfecting the room and equipment to produce aseptic conditions;"
+    },
+    {
+     "ref": "211.42(c)(10)(vi)",
+     "text": "(vi) A system for maintaining any equipment used to control the aseptic conditions."
+    },
+    {
+     "ref": "211.42(d)",
+     "text": "(d) Operations relating to the manufacture, processing, and packing of penicillin shall be performed in facilities separate from those used for other drug products for human use."
     }
    ]
   },
   {
-   "section": "211.58",
+   "section": "211.44",
    "paragraphs": [
     {
-     "ref": "211.58",
-     "text": "§ 211.58 Maintenance. Any building used in the manufacture, processing, packing, or holding of a drug product shall be maintained in a good state of repair."
+     "ref": "211.44",
+     "text": "§ 211.44 Lighting. Adequate lighting shall be provided in all areas."
     }
    ]
   },
   {
-   "section": "211.63",
+   "section": "211.46",
    "paragraphs": [
     {
-     "ref": "211.63",
-     "text": "§ 211.63 Equipment design, size, and location. Equipment used in the manufacture, processing, packing, or holding of a drug product shall be of appropriate design, adequate size, and suitably located to facilitate operations for its intended use and for its cleaning and maintenance."
+     "ref": "211.46",
+     "text": "§ 211.46 Ventilation, air filtration, air heating and cooling."
+    },
+    {
+     "ref": "211.46(a)",
+     "text": "(a) Adequate ventilation shall be provided."
+    },
+    {
+     "ref": "211.46(b)",
+     "text": "(b) Equipment for adequate control over air pressure, micro-organisms, dust, humidity, and temperature shall be provided when appropriate for the manufacture, processing, packing, or holding of a drug product."
+    },
+    {
+     "ref": "211.46(c)",
+     "text": "(c) Air filtration systems, including prefilters and particulate matter air filters, shall be used when appropriate on air supplies to production areas. If air is recirculated to production areas, measures shall be taken to control recirculation of dust from production. In areas where air contamination occurs during production, there shall be adequate exhaust systems or other systems adequate to control contaminants."
+    },
+    {
+     "ref": "211.46(d)",
+     "text": "(d) Air-handling systems for the manufacture, processing, and packing of penicillin shall be completely separate from those for other drug products for human use."
     }
    ]
   },
   {
-   "section": "211.65",
+   "section": "211.48",
    "paragraphs": [
     {
-     "ref": "211.65",
-     "text": "§ 211.65 Equipment construction."
+     "ref": "211.48",
+     "text": "§ 211.48 Plumbing."
     },
     {
-     "ref": "211.65(a)",
-     "text": "(a) Equipment shall be constructed so that surfaces that contact components, in-process materials, or drug products shall not be reactive, additive, or absorptive so as to alter the safety, identity, strength, quality, or purity of the drug product beyond the official or other established requirements."
+     "ref": "211.48(a)",
+     "text": "(a) Potable water shall be supplied under continuous positive pressure in a plumbing system free of defects that could contribute contamination to any drug product. Potable water shall meet the standards prescribed in the Environmental Protection Agency's Primary Drinking Water Regulations set forth in 40 CFR part 141. Water not meeting such standards shall not be permitted in the potable water system."
     },
     {
-     "ref": "211.65(b)",
-     "text": "(b) Any substances required for operation, such as lubricants or coolants, shall not come into contact with components, drug product containers, closures, in-process materials, or drug products so as to alter the safety, identity, strength, quality, or purity of the drug product beyond the official or other established requirements."
+     "ref": "211.48(b)",
+     "text": "(b) Drains shall be of adequate size and, where connected directly to a sewer, shall be provided with an air break or other mechanical device to prevent back-siphonage."
     }
    ]
   },
   {
-   "section": "211.67",
+   "section": "211.50",
    "paragraphs": [
     {
-     "ref": "211.67",
-     "text": "§ 211.67 Equipment cleaning and maintenance."
-    },
+     "ref": "211.50",
+     "text": "§ 211.50 Sewage and refuse. Sewage, trash, and other refuse in and from the building and immediate premises shall be disposed of in a safe and sanitary manner."
+    }
+   ]
+  },
+  {
+   "section": "211.52",
+   "paragraphs": [
     {
-     "ref": "211.67(a)",
-     "text": "(a) Equipment and utensils shall be cleaned, maintained, and, as appropriate for the nature of the drug, sanitized and/or sterilized at appropriate intervals to prevent malfunctions or contamination that would alter the safety, identity, strength, quality, or purity of the drug product beyond the official or other established requirements."
-    },
-    {
-     "ref": "211.67(b)",
-     "text": "(b) Written procedures shall be established and followed for cleaning and maintenance of equipment, including utensils, used in the manufacture, processing, packing, or holding of a drug product. These procedures shall include, but are not necessarily limited to, the following:"
-    },
-    {
-     "ref": "211.67(b)(1)",
-     "text": "(1) Assignment of responsibility for cleaning and maintaining equipment;"
-    },
-    {
-     "ref": "211.67(b)(2)",
-     "text": "(2) Maintenance and cleaning schedules, including, where appropriate, sanitizing schedules;"
-    },
-    {
-     "ref": "211.67(b)(3)",
-     "text": "(3) A description in sufficient detail of the methods, equipment, and materials used in cleaning and maintenance operations, and the methods of disassembling and reassembling equipment as necessary to assure proper cleaning and maintenance;"
-    },
-    {
-     "ref": "211.67(b)(4)",
-     "text": "(4) Removal or obliteration of previous batch identification;"
-    },
-    {
-     "ref": "211.67(b)(5)",
-     "text": "(5) Protection of clean equipment from contamination prior to use;"
-    },
-    {
-     "ref": "211.67(b)(6)",
-     "text": "(6) Inspection of equipment for cleanliness immediately before use."
-    },
-    {
-     "ref": "211.67(c)",
-     "text": "(c) Records shall be kept of maintenance, cleaning, sanitizing, and inspection as specified in §§ 211.180 and 211.182."
+     "ref": "211.52",
+     "text": "§ 211.52 Washing and toilet facilities. Adequate washing facilities shall be provided, including hot and cold water, soap or detergent, air driers or single-service towels, and clean toilet facilities easily accesible to working areas."
     }
    ]
   }
  ],
  "items": [
   {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.56#1",
-   "section": "211.56",
-   "hash": "fd8952b883bec553",
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#21",
+   "section": "211.42",
+   "hash": "1d2b53d233943040",
    "item": {
-    "statement": "Keep every building used to manufacture, process, pack or hold drug products clean and sanitary.",
-    "quote": "Any building used in the manufacture, processing, packing, or holding of a drug product shall be maintained in a clean and sanitary condition",
-    "clause_number": "211.56(a)",
+    "statement": "Carry out manufacturing, processing and packing of penicillin in facilities kept separate from those used for other human drug products.",
+    "quote": "Operations relating to the manufacture, processing, and packing of penicillin shall be performed in facilities separate from those used for other drug products for human use.",
+    "clause_number": "211.42(d)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "penicillin operations"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.44#1",
+   "section": "211.44",
+   "hash": "a44b62ce115a2887",
+   "item": {
+    "statement": "Provide adequate lighting in every area.",
+    "quote": "Adequate lighting shall be provided in all areas.",
+    "clause_number": "211.44",
     "strength": "mandatory",
     "plant_types": [
      "OSD",
@@ -160,37 +237,13 @@
    ]
   },
   {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.56#2",
-   "section": "211.56",
-   "hash": "65e47e6f671715a9",
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.46#1",
+   "section": "211.46",
+   "hash": "3f49257670205485",
    "item": {
-    "statement": "Keep every building used to manufacture, process, pack or hold drug products free of rodents, birds, insects and other vermin, other than laboratory animals.",
-    "quote": "Any such building shall be free of infestation by rodents, birds, insects, and other vermin (other than laboratory animals).",
-    "clause_number": "211.56(a)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": "other than laboratory animals"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.56#3",
-   "section": "211.56",
-   "hash": "83cf365ff898bd5f",
-   "item": {
-    "statement": "Hold and dispose of trash and organic waste promptly and hygienically.",
-    "quote": "Trash and organic waste matter shall be held and disposed of in a timely and sanitary manner.",
-    "clause_number": "211.56(a)",
+    "statement": "Provide adequate ventilation.",
+    "quote": "Adequate ventilation shall be provided.",
+    "clause_number": "211.46(a)",
     "strength": "mandatory",
     "plant_types": [
      "OSD",
@@ -208,13 +261,133 @@
    ]
   },
   {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.56#4",
-   "section": "211.56",
-   "hash": "c49949aab904ccff",
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.46#2",
+   "section": "211.46",
+   "hash": "9453115919ccdc54",
    "item": {
-    "statement": "Have written sanitation procedures that assign responsibility for sanitation and describe in enough detail the cleaning schedules, methods, equipment and materials used to clean buildings and facilities.",
-    "quote": "There shall be written procedures assigning responsibility for sanitation and describing in sufficient detail the cleaning schedules, methods, equipment, and materials to be used in cleaning the buildings and facilities",
-    "clause_number": "211.56(b)",
+    "statement": "Where appropriate for making, processing, packing or holding a drug product, provide equipment that adequately controls air pressure, micro-organisms, dust, humidity and temperature.",
+    "quote": "Equipment for adequate control over air pressure, micro-organisms, dust, humidity, and temperature shall be provided when appropriate for the manufacture, processing, packing, or holding of a drug product.",
+    "clause_number": "211.46(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "when appropriate"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.46#3",
+   "section": "211.46",
+   "hash": "e6384ae997b2a224",
+   "item": {
+    "statement": "Where appropriate, use air filtration systems, including prefilters and particulate filters, on air supplied to production areas.",
+    "quote": "Air filtration systems, including prefilters and particulate matter air filters, shall be used when appropriate on air supplies to production areas.",
+    "clause_number": "211.46(c)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "when appropriate"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.46#4",
+   "section": "211.46",
+   "hash": "3fa5375027051d49",
+   "item": {
+    "statement": "If air is recirculated to production areas, take measures to control recirculation of dust generated by production.",
+    "quote": "If air is recirculated to production areas, measures shall be taken to control recirculation of dust from production.",
+    "clause_number": "211.46(c)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "if air is recirculated to production areas"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.46#5",
+   "section": "211.46",
+   "hash": "8c23ab00135b9cd6",
+   "item": {
+    "statement": "In areas where production causes air contamination, provide adequate exhaust or other systems able to control the contaminants.",
+    "quote": "In areas where air contamination occurs during production, there shall be adequate exhaust systems or other systems adequate to control contaminants.",
+    "clause_number": "211.46(c)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "where air contamination occurs during production"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.46#6",
+   "section": "211.46",
+   "hash": "c4627c24792f1c25",
+   "item": {
+    "statement": "Keep air-handling systems for manufacturing, processing and packing penicillin completely separate from those serving other human drug products.",
+    "quote": "Air-handling systems for the manufacture, processing, and packing of penicillin shall be completely separate from those for other drug products for human use.",
+    "clause_number": "211.46(d)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "penicillin operations"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.48#1",
+   "section": "211.48",
+   "hash": "b333733fa0803c23",
+   "item": {
+    "statement": "Supply potable water under continuous positive pressure through plumbing that has no defects that could contaminate any drug product.",
+    "quote": "Potable water shall be supplied under continuous positive pressure in a plumbing system free of defects that could contribute contamination to any drug product.",
+    "clause_number": "211.48(a)",
     "strength": "mandatory",
     "plant_types": [
      "OSD",
@@ -232,13 +405,13 @@
    ]
   },
   {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.56#5",
-   "section": "211.56",
-   "hash": "1da780064af27b36",
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.48#2",
+   "section": "211.48",
+   "hash": "0303edb83f8e31b9",
    "item": {
-    "statement": "Follow the written sanitation and building cleaning procedures.",
-    "quote": "such written procedures shall be followed.",
-    "clause_number": "211.56(b)",
+    "statement": "Ensure potable water meets the EPA Primary Drinking Water Regulations in 40 CFR part 141, and do not allow water that fails those standards into the potable water system.",
+    "quote": "Potable water shall meet the standards prescribed in the Environmental Protection Agency's Primary Drinking Water Regulations set forth in 40 CFR part 141. Water not meeting such standards shall not be permitted in the potable water system.",
+    "clause_number": "211.48(a)",
     "strength": "mandatory",
     "plant_types": [
      "OSD",
@@ -256,13 +429,13 @@
    ]
   },
   {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.56#6",
-   "section": "211.56",
-   "hash": "2ffbdd169c279b15",
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.48#3",
+   "section": "211.48",
+   "hash": "d53c1f8b482f3a47",
    "item": {
-    "statement": "Have written procedures for the use of suitable rodenticides, insecticides, fungicides, fumigants, and cleaning and sanitizing agents.",
-    "quote": "There shall be written procedures for use of suitable rodenticides, insecticides, fungicides, fumigating agents, and cleaning and sanitizing agents.",
-    "clause_number": "211.56(c)",
+    "statement": "Make drains of adequate size.",
+    "quote": "Drains shall be of adequate size",
+    "clause_number": "211.48(b)",
     "strength": "mandatory",
     "plant_types": [
      "OSD",
@@ -280,13 +453,37 @@
    ]
   },
   {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.56#7",
-   "section": "211.56",
-   "hash": "6fea93476073c157",
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.48#4",
+   "section": "211.48",
+   "hash": "48862286e11c163c",
    "item": {
-    "statement": "Design the procedures for pest control and cleaning or sanitizing agents so they prevent contamination of equipment, components, containers, closures, packaging, labeling materials and drug products.",
-    "quote": "Such written procedures shall be designed to prevent the contamination of equipment, components, drug product containers, closures, packaging, labeling materials, or drug products",
-    "clause_number": "211.56(c)",
+    "statement": "Where a drain connects directly to a sewer, fit it with an air break or other mechanical device that prevents back-siphonage.",
+    "quote": "where connected directly to a sewer, shall be provided with an air break or other mechanical device to prevent back-siphonage.",
+    "clause_number": "211.48(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "where connected directly to a sewer"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.50#1",
+   "section": "211.50",
+   "hash": "1edf4fb5c358c84f",
+   "item": {
+    "statement": "Dispose of sewage, trash and other refuse from the building and its immediate surroundings safely and hygienically.",
+    "quote": "Sewage, trash, and other refuse in and from the building and immediate premises shall be disposed of in a safe and sanitary manner.",
+    "clause_number": "211.50",
     "strength": "mandatory",
     "plant_types": [
      "OSD",
@@ -304,397 +501,13 @@
    ]
   },
   {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.56#8",
-   "section": "211.56",
-   "hash": "a41f857ddb203084",
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.52#1",
+   "section": "211.52",
+   "hash": "326509834fb3e16f",
    "item": {
-    "statement": "Follow the written procedures for the use of pest control, fumigating, cleaning and sanitizing agents.",
-    "quote": "and shall be followed.",
-    "clause_number": "211.56(c)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": ""
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.56#9",
-   "section": "211.56",
-   "hash": "e644fa2bbec4fd8c",
-   "item": {
-    "statement": "Use rodenticides, insecticides and fungicides only if they are registered and used as required by the Federal Insecticide, Fungicide, and Rodenticide Act (7 U.S.C. 135).",
-    "quote": "Rodenticides, insecticides, and fungicides shall not be used unless registered and used in accordance with the Federal Insecticide, Fungicide, and Rodenticide Act (7 U.S.C. 135).",
-    "clause_number": "211.56(c)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": "unless registered and used per the federal pesticide act"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.56#10",
-   "section": "211.56",
-   "hash": "8bdd9050eb7af5d0",
-   "item": {
-    "statement": "Apply sanitation procedures to work done by contractors and temporary staff as well as to work done by full-time employees in normal operations.",
-    "quote": "Sanitation procedures shall apply to work performed by contractors or temporary employees as well as work performed by full-time employees during the ordinary course of operations.",
-    "clause_number": "211.56(d)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": ""
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.58#1",
-   "section": "211.58",
-   "hash": "f35770a4d7256625",
-   "item": {
-    "statement": "Keep every building used to manufacture, process, pack or hold drug products in good repair.",
-    "quote": "Any building used in the manufacture, processing, packing, or holding of a drug product shall be maintained in a good state of repair.",
-    "clause_number": "211.58",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": ""
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.63#1",
-   "section": "211.63",
-   "hash": "8c1ba469f2d2dc19",
-   "item": {
-    "statement": "Ensure equipment used to manufacture, process, pack or hold drug products is of appropriate design and adequate size, and is located so that it supports its intended operations, cleaning and maintenance.",
-    "quote": "Equipment used in the manufacture, processing, packing, or holding of a drug product shall be of appropriate design, adequate size, and suitably located to facilitate operations for its intended use and for its cleaning and maintenance.",
-    "clause_number": "211.63",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": ""
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.65#1",
-   "section": "211.65",
-   "hash": "d6a81964ab5c4c44",
-   "item": {
-    "statement": "Build equipment so that surfaces in contact with components, in-process materials or drug products are not reactive, additive or absorptive in a way that would alter the drug product's safety, identity, strength, quality or purity beyond official or other established requirements.",
-    "quote": "Equipment shall be constructed so that surfaces that contact components, in-process materials, or drug products shall not be reactive, additive, or absorptive so as to alter the safety, identity, strength, quality, or purity of the drug product beyond the official or other established requirements.",
-    "clause_number": "211.65(a)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": ""
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.65#2",
-   "section": "211.65",
-   "hash": "c26c02286efb5910",
-   "item": {
-    "statement": "Prevent substances needed to operate equipment, such as lubricants or coolants, from contacting components, drug product containers, closures, in-process materials or drug products in a way that would alter the drug product's safety, identity, strength, quality or purity beyond official or other established requirements.",
-    "quote": "Any substances required for operation, such as lubricants or coolants, shall not come into contact with components, drug product containers, closures, in-process materials, or drug products so as to alter the safety, identity, strength, quality, or purity of the drug product beyond the official or other established requirements.",
-    "clause_number": "211.65(b)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": ""
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.67#1",
-   "section": "211.67",
-   "hash": "497cab6c546b7c5c",
-   "item": {
-    "statement": "Clean and maintain equipment and utensils, and sanitize and/or sterilize them as appropriate for the nature of the drug, at appropriate intervals to prevent malfunctions or contamination that would alter the drug product's safety, identity, strength, quality or purity beyond official or other established requirements.",
-    "quote": "Equipment and utensils shall be cleaned, maintained, and, as appropriate for the nature of the drug, sanitized and/or sterilized at appropriate intervals to prevent malfunctions or contamination that would alter the safety, identity, strength, quality, or purity of the drug product beyond the official or other established requirements.",
-    "clause_number": "211.67(a)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": "sanitizing/sterilizing as appropriate for the nature of the drug"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.67#2",
-   "section": "211.67",
-   "hash": "03f1129001ce1621",
-   "item": {
-    "statement": "Establish and follow written procedures for cleaning and maintaining equipment, including utensils, used to manufacture, process, pack or hold a drug product.",
-    "quote": "Written procedures shall be established and followed for cleaning and maintenance of equipment, including utensils, used in the manufacture, processing, packing, or holding of a drug product.",
-    "clause_number": "211.67(b)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": ""
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.67#3",
-   "section": "211.67",
-   "hash": "810cd2c0ead91141",
-   "item": {
-    "statement": "Make the written equipment cleaning and maintenance procedures include, at a minimum, the elements listed in the following items (responsibilities, schedules, methods, removal of previous batch identification, protection of clean equipment, pre-use inspection).",
-    "quote": "These procedures shall include, but are not necessarily limited to, the following:",
-    "clause_number": "211.67(b)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": ""
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.67#4",
-   "section": "211.67",
-   "hash": "8f5e274ab11700c0",
-   "item": {
-    "statement": "Written equipment cleaning and maintenance procedures assign responsibility for cleaning and maintaining equipment.",
-    "quote": "Assignment of responsibility for cleaning and maintaining equipment;",
-    "clause_number": "211.67(b)(1)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": ""
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.67#5",
-   "section": "211.67",
-   "hash": "338d4082c862b3c5",
-   "item": {
-    "statement": "Written equipment cleaning and maintenance procedures include maintenance and cleaning schedules and, where appropriate, sanitizing schedules.",
-    "quote": "Maintenance and cleaning schedules, including, where appropriate, sanitizing schedules;",
-    "clause_number": "211.67(b)(2)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": "sanitizing schedules where appropriate"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.67#6",
-   "section": "211.67",
-   "hash": "ceb376fe8ba5f6df",
-   "item": {
-    "statement": "Written equipment cleaning and maintenance procedures describe in enough detail the methods, equipment and materials used for cleaning and maintenance, and how to take apart and reassemble equipment as needed to ensure proper cleaning and maintenance.",
-    "quote": "A description in sufficient detail of the methods, equipment, and materials used in cleaning and maintenance operations, and the methods of disassembling and reassembling equipment as necessary to assure proper cleaning and maintenance;",
-    "clause_number": "211.67(b)(3)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": "disassembly/reassembly as necessary"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.67#7",
-   "section": "211.67",
-   "hash": "2bced5d4bce4b1a2",
-   "item": {
-    "statement": "Written equipment cleaning and maintenance procedures cover removing or obliterating the previous batch's identification.",
-    "quote": "Removal or obliteration of previous batch identification;",
-    "clause_number": "211.67(b)(4)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": ""
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.67#8",
-   "section": "211.67",
-   "hash": "f2e5a935a5e5b44e",
-   "item": {
-    "statement": "Written equipment cleaning and maintenance procedures cover protecting cleaned equipment from contamination before it is used.",
-    "quote": "Protection of clean equipment from contamination prior to use;",
-    "clause_number": "211.67(b)(5)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": ""
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.67#9",
-   "section": "211.67",
-   "hash": "745d660f931e0406",
-   "item": {
-    "statement": "Written equipment cleaning and maintenance procedures require inspecting equipment for cleanliness immediately before use.",
-    "quote": "Inspection of equipment for cleanliness immediately before use.",
-    "clause_number": "211.67(b)(6)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": ""
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.67#10",
-   "section": "211.67",
-   "hash": "6b50b3acf395f79a",
-   "item": {
-    "statement": "Keep records of equipment maintenance, cleaning, sanitizing and inspection, in line with the requirements for general records and equipment cleaning and use logs.",
-    "quote": "Records shall be kept of maintenance, cleaning, sanitizing, and inspection as specified in §§ 211.180 and 211.182.",
-    "clause_number": "211.67(c)",
+    "statement": "Provide adequate hand-washing facilities with hot and cold water, soap or detergent, air dryers or single-use towels, and clean toilets that are easy to reach from working areas.",
+    "quote": "Adequate washing facilities shall be provided, including hot and cold water, soap or detergent, air driers or single-service towels, and clean toilet facilities easily accesible to working areas.",
+    "clause_number": "211.52",
     "strength": "mandatory",
     "plant_types": [
      "OSD",

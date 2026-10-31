@@ -1,0 +1,293 @@
+{
+ "role": "a",
+ "instructions": "You are an auditor checking one checklist item against the FDA web page paragraph it claims to come from. You get\nthe unit's paragraphs (reference and exact text of the page; \"context\" entries are headings) and the item. Start from the ITEM:\nread it, then find in the cited paragraph what it covers.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the lead-in above a list\nitem (the paragraph ending \":\" above it). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph expects what the statement asks for (an instruction\n  to the investigator, \"Determine whether the firm validated ...\", expects the firm to have that practice), the statement\n  adds nothing and omits nothing of that obligation, the strength (a legal requirement: shall/must/required = mandatory;\n  should, FDA expects/recommends, an inspection point = recommended; may/acceptable = optional; a list item takes\n  its lead-in's) matches, and the text applies to every listed plant\n  type (INJ = sterile injectables: text limited to non-sterile products does not apply to\n  INJ; text limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+ "units": [
+  {
+   "unit": "Q9",
+   "paragraphs": [
+    {
+     "ref": "Q9",
+     "text": "What are some ways to minimize pathogenic agent contamination in incoming animal-derived raw material?"
+    },
+    {
+     "ref": "Q9.1",
+     "text": "The drug component and finished product CGMP guidances and regulations emphasize prevention of problems and avoidance of contamination rather than final testing or examination alone. In other words, control strategies that prevent contamination are central to CGMP, while control strategies based on testing alone do not comply with CGMP regulations. Raw materials from animals can have microbial pathogen health risks based on country of origin, LPE processing, transportation, and manufacturing processing. Under the right circumstances, raw material from animals can provide a suitable (e.g., nutrient-rich) environment for bacteria and mold to proliferate, or for viruses and other pathogenic agents to remain infective. If undetected contaminated raw material enters the manufacturing process, it can remain pathogenic in the product and a hazard to the consumer. The manufacturing conditions used in most ingredient manufacturing processes are often insufficient to eliminate all pathogenic agents from the ingredient. Methods of minimizing contamination of raw material with pathogenic agents may include the following:"
+    },
+    {
+     "ref": "Q9.2",
+     "text": "Animal source",
+     "list_item": true
+    },
+    {
+     "ref": "Q9.3",
+     "text": "When animal-derived material is used, it is important that it be derived from healthy, disease-free animals. The occurrence of pathogens can vary greatly among different animal species. Ingredient manufacturers should understand the pathogenic risks associated with different animal species and with different organs, glands, or tissues within species. Drug ingredient manufacturers should be aware that even healthy animals can be reservoirs for pathogenic agents and improper handling can spread contamination. If improperly handled, microbial contamination can transfer to uncontaminated tissues and cause contamination."
+    },
+    {
+     "ref": "Q9.4",
+     "text": "Ensuring the health of U.S. livestock is the responsibility of many Federal agencies, most of which are part of the U.S. Department of Agriculture (USDA). Animal-health and food-safety regulations are detailed in titles 9 and 21 of the Code of Federal Regulations. Animal health authorities in each State develop regulations that are consistent with the Federal agencies and are responsible for monitoring and controlling diseases in the State's domestic livestock and poultry. State inspectors ensure compliance by companies with individual State standards as well as with Federal meat and poultry inspection statutes. States assist in controlling diseases through inspections, testing, vaccinations, treatments, quarantines, and other activities."
+    },
+    {
+     "ref": "Q9.5",
+     "text": "Awareness of the conditions of control and monitoring of source animals will aid in determining which animals and animal parts are appropriate for drug product manufacturing."
+    },
+    {
+     "ref": "Q9.6",
+     "text": "LPE",
+     "list_item": true
+    },
+    {
+     "ref": "Q9.7",
+     "text": "Ingredient manufacturers should consider auditing the LPEs supplying raw materials to them and ensure their compliance with all Federal and State government regulations. It is recommended that manufacturers develop standard operating procedures and define sanitation requirements of raw materials immediately after butchering, including, for example, the following:"
+    },
+    {
+     "ref": "Q9.8",
+     "text": "Chilling requirements, if indicated, including temperature ranges and how soon after butchering chilling should begin",
+     "list_item": true
+    },
+    {
+     "ref": "Q9.9",
+     "text": "Chemical preservation methods, if indicated, including types and concentrations of chemical preservatives used",
+     "list_item": true
+    },
+    {
+     "ref": "Q9.10",
+     "text": "Storage processes, including sanitization of containers and container type/material (e.g., stainless steel vs. food grade plastics)",
+     "list_item": true
+    },
+    {
+     "ref": "Q9.11",
+     "text": "Transportation criteria, including sanitization of containers, if different from storage and temperature ranges",
+     "list_item": true
+    },
+    {
+     "ref": "Q9.12",
+     "text": "The overall contamination of carcasses with pathogens depends on not only the prevalence and numbers of the pathogens on the hair, skin, and in the intestinal tract of the animal, but is significantly affected by the degree of cross-contamination occurring from these sources during slaughter and processing (see USDA references, below, for additional information). FDA expects that manufacturers will establish appropriate specifications for bioburden in their in-coming raw materials. References:"
+    },
+    {
+     "ref": "Q9.13",
+     "text": "USDA Animal and Plant Health Inspection Service",
+     "list_item": true
+    },
+    {
+     "ref": "Q9.14",
+     "text": "USDA Animal and Plant Health Inspection Service, Import and Export",
+     "list_item": true
+    },
+    {
+     "ref": "Q9.15",
+     "text": "USDA Food Safety and Inspection Service, Parasites and Foodborne Illness Fact Sheet",
+     "list_item": true
+    }
+   ]
+  },
+  {
+   "unit": "Q10",
+   "paragraphs": [
+    {
+     "ref": "Q10",
+     "text": "Are there control measures for minimizing pathogenic agent contamination in animal-derived drug ingredient manufacturing facilities? Yes, control measures may include the following:"
+    },
+    {
+     "ref": "Q10.1",
+     "text": "Process control",
+     "list_item": true
+    },
+    {
+     "ref": "Q10.2",
+     "text": "Holding and processing times for animal-derived material should be minimized to reduce the likelihood of microbial proliferation. The process qualification studies should include microbial sampling at multiple time points to evaluate the effects of time, temperature, and processing conditions on microbial growth. Routine microbial identification will provide valuable information regarding the types of organisms present in incoming material and throughout the manufacturing process. Processing conditions can then be adjusted to help control the number and types of organisms present during the manufacturing process. Spores and many bacteria can be removed by filtration when filtration or filtration cascade systems are possible. Usually filters with a pore size rating of 0.45 micron or smaller will remove spores and many bacteria from a preparation. Viruses and many toxins are heat labile so a heat treatment should be considered early in process development. Many purification and concentration systems may have antimicrobial effects. The timing and sequence location in the process along with appropriate holding and processing times may serve to optimize the antimicrobial effects of the processes."
+    },
+    {
+     "ref": "Q10.3",
+     "text": "Development of process monitoring tests and acceptance criteria should be established during the process development stage."
+    },
+    {
+     "ref": "Q10.4",
+     "text": "Facility and equipment controls",
+     "list_item": true
+    },
+    {
+     "ref": "Q10.5",
+     "text": "Facilities can also be reservoirs for pathogenic agents. Maintaining a facility within CGMP should include but not be limited to:"
+    },
+    {
+     "ref": "Q10.6",
+     "text": "Having adequately trained staff",
+     "list_item": true
+    },
+    {
+     "ref": "Q10.7",
+     "text": "Using suitable quality water during manufacturing",
+     "list_item": true
+    },
+    {
+     "ref": "Q10.8",
+     "text": "Having a facility design that minimizes the risk of cross-contamination",
+     "list_item": true
+    },
+    {
+     "ref": "Q10.9",
+     "text": "Providing for proper storage of the ingredient",
+     "list_item": true
+    },
+    {
+     "ref": "Q10.10",
+     "text": "Cleaning procedures should include cleaning of facilities and equipment that ensures the removal of all raw materials between batches. Designing an effective cleaning program involves setting specific standards, understanding the facility’s microbial environmental isolates, and selecting the right disinfecting agents to inactivate isolates that may be in the product or in the environment. Ingredient manufacturers should use sporicidal agents at appropriate intervals in the cleaning schedule to destroy bacterial and fungal spores. References:"
+    },
+    {
+     "ref": "Q10.11",
+     "text": "FDA Guidance for Industry, 2001, ICH Q7 Good Manufacturing Practice Guidance for Active Pharmaceutical Ingredients",
+     "list_item": true
+    },
+    {
+     "ref": "Q10.12",
+     "text": "United States Pharmacopeia (USP) General Information Chapter <1072> Disinfectants and Antiseptics (USP33–NF 28 Reissue, 2010)",
+     "list_item": true
+    },
+    {
+     "ref": "Q10.13",
+     "text": "Wiley, JM, L Sherwood, and CJ Woolverton, 2008, Prescott, Harley and Klein's Microbiology, Boston: McGraw-Hill Higher Education.",
+     "list_item": true
+    }
+   ]
+  },
+  {
+   "unit": "Q15",
+   "paragraphs": [
+    {
+     "ref": "Q15",
+     "text": "Who is responsible for analytically testing APIs to ensure they comply with their specifications and with USP requirements, if any? API manufacturers perform analytical testing on APIs to confirm that they meet all applicable specifications established for release. Finished drug product manufacturers ensure that APIs used in their products meet all of their established specifications and—for compendial APIs—meet USP requirements. Additional information is provided below. API Manufacturer Responsibilities Section 501(a)(2)(B) of the FD&C Act requires all drugs (including APIs) to be manufactured in compliance with CGMP. FDA therefore expects API manufacturers to follow the recommendations in ICH guidance for industry Q7 Good Manufacturing Practice Guidance for Active Pharmaceutical Ingredients. API labeling supplied by the API manufacturer includes a certificate of analysis (COA). Section 11.4 of ICH Q7 recommends that the API manufacturer’s COA should include, as applicable, the API’s name, grade, batch/lot number, date of release, and a list of “each test performed in accordance with compendial or customer requirements, including the acceptance limits, and the numerical results obtained . . . .” For example, for a compendial-grade API, the COA should identify the compendial tests that were performed (as well as customer-specified tests, if any) and the test results. If a compendial-grade API differs from a USP standard of strength, quality, or purity, that difference should be clearly declared on the label. Finished Drug Product Manufacturer Responsibilities In the CGMP regulations for finished pharmaceuticals, 21 CFR 211.80 states that “[T]here shall be written procedures describing in sufficient detail the . . . testing . . . of [finished drug product] components . . . .” Additionally, 21 CFR 211.84(d)(2) states that “[E]ach component shall be tested for conformity with all appropriate written specifications for purity, strength, and quality. In lieu of such testing by the manufacturer, a report of analysis may be accepted from the supplier of a component, provided that at least one specific identity test is conducted on such component by the manufacturer, and provided that the manufacturer establishes the reliability of the supplier’s analyses through appropriate validation of the supplier’s test results at appropriate intervals.” Therefore, if the finished drug product manufacturer accepts the test results from an API supplier’s COA rather than performing the tests itself (other than for identity, which the manufacturer is required to perform), the manufacturer must validate the API supplier’s reliability. This validation procedure is established by the finished drug product manufacturer and should be consistent with the principles of CGMP and risk management. The finished drug product manufacturer should also ensure that compendial-grade APIs comply with compendial specifications, either by testing the APIs or by validating API suppliers’ reliability, as described above. References:"
+    },
+    {
+     "ref": "Q15.1",
+     "text": "FD&C Act Chapter V: Drugs and Devices",
+     "list_item": true
+    },
+    {
+     "ref": "Q15.2",
+     "text": "21 CFR 211.80: General requirements",
+     "list_item": true
+    },
+    {
+     "ref": "Q15.3",
+     "text": "21 CFR 211.84: Testing and approval or rejection of components, drug product containers and closures",
+     "list_item": true
+    },
+    {
+     "ref": "Q15.4",
+     "text": "FDA Guidance for Industry, 2001, ICH Q7 Good Manufacturing Practice Guidance for Active Pharmaceutical Ingredients",
+     "list_item": true
+    },
+    {
+     "ref": "Q15.5",
+     "text": "Contact for further information: CDER-OPQ-Inquiries@fda.hhs.gov"
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q9#1",
+   "unit": "Q9",
+   "hash": "ba657c6c59ab5572",
+   "item": {
+    "statement": "For animal-derived raw materials, include in the written procedures on sanitation of raw materials right after butchering the chilling requirements where chilling is indicated, covering temperature ranges and how soon after butchering chilling is to start.",
+    "quote": "Chilling requirements, if indicated, including temperature ranges and how soon after butchering chilling should begin",
+    "clause_number": "Q9.8",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "where chilling is indicated"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q10#1",
+   "unit": "Q10",
+   "hash": "4acdc20b7ce412e2",
+   "item": {
+    "statement": "In manufacturing animal-derived drug ingredients, establish process monitoring tests and their acceptance criteria during the process development stage.",
+    "quote": "Development of process monitoring tests and acceptance criteria should be established during the process development stage.",
+    "clause_number": "Q10.3",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "animal-derived drug ingredients"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q15#1",
+   "unit": "Q15",
+   "hash": "23075beaa83753b1",
+   "item": {
+    "statement": "Finished drug product manufacturers must have written procedures that describe in sufficient detail the testing of components.",
+    "quote": "“[T]here shall be written procedures describing in sufficient detail the . . . testing . . . of [finished drug product] components . . . .”",
+    "clause_number": "Q15",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,415 @@
+{
+ "role": "a",
+ "instructions": "You are an auditor checking one checklist item against the US regulation paragraph it claims to come from. You get\nthe section's paragraphs (reference and exact text, from the official eCFR XML) and the item. Start from the ITEM:\nread it, then find in the cited paragraph what it covers.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the parent paragraph's\nlead-in (including a qualifier such as \"as are necessary to prevent contamination or mixups\"). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph requires what the statement asks for, the statement\n  adds nothing and omits nothing of that obligation, the strength (shall/must = mandatory, should = recommended,\n  may = optional; a sub-paragraph takes its lead-in's) matches, and the regulation applies to every listed plant\n  type (INJ = sterile injectables: a paragraph limited to products not required to be sterile does not apply to\n  INJ; one limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "sections": [
+  {
+   "section": "211.44",
+   "paragraphs": [
+    {
+     "ref": "211.44",
+     "text": "§ 211.44 Lighting. Adequate lighting shall be provided in all areas."
+    }
+   ]
+  },
+  {
+   "section": "211.46",
+   "paragraphs": [
+    {
+     "ref": "211.46",
+     "text": "§ 211.46 Ventilation, air filtration, air heating and cooling."
+    },
+    {
+     "ref": "211.46(a)",
+     "text": "(a) Adequate ventilation shall be provided."
+    },
+    {
+     "ref": "211.46(b)",
+     "text": "(b) Equipment for adequate control over air pressure, micro-organisms, dust, humidity, and temperature shall be provided when appropriate for the manufacture, processing, packing, or holding of a drug product."
+    },
+    {
+     "ref": "211.46(c)",
+     "text": "(c) Air filtration systems, including prefilters and particulate matter air filters, shall be used when appropriate on air supplies to production areas. If air is recirculated to production areas, measures shall be taken to control recirculation of dust from production. In areas where air contamination occurs during production, there shall be adequate exhaust systems or other systems adequate to control contaminants."
+    },
+    {
+     "ref": "211.46(d)",
+     "text": "(d) Air-handling systems for the manufacture, processing, and packing of penicillin shall be completely separate from those for other drug products for human use."
+    }
+   ]
+  },
+  {
+   "section": "211.48",
+   "paragraphs": [
+    {
+     "ref": "211.48",
+     "text": "§ 211.48 Plumbing."
+    },
+    {
+     "ref": "211.48(a)",
+     "text": "(a) Potable water shall be supplied under continuous positive pressure in a plumbing system free of defects that could contribute contamination to any drug product. Potable water shall meet the standards prescribed in the Environmental Protection Agency's Primary Drinking Water Regulations set forth in 40 CFR part 141. Water not meeting such standards shall not be permitted in the potable water system."
+    },
+    {
+     "ref": "211.48(b)",
+     "text": "(b) Drains shall be of adequate size and, where connected directly to a sewer, shall be provided with an air break or other mechanical device to prevent back-siphonage."
+    }
+   ]
+  },
+  {
+   "section": "211.50",
+   "paragraphs": [
+    {
+     "ref": "211.50",
+     "text": "§ 211.50 Sewage and refuse. Sewage, trash, and other refuse in and from the building and immediate premises shall be disposed of in a safe and sanitary manner."
+    }
+   ]
+  },
+  {
+   "section": "211.52",
+   "paragraphs": [
+    {
+     "ref": "211.52",
+     "text": "§ 211.52 Washing and toilet facilities. Adequate washing facilities shall be provided, including hot and cold water, soap or detergent, air driers or single-service towels, and clean toilet facilities easily accesible to working areas."
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.44#1",
+   "section": "211.44",
+   "hash": "a44b62ce115a2887",
+   "item": {
+    "statement": "Provide adequate lighting in every area.",
+    "quote": "Adequate lighting shall be provided in all areas.",
+    "clause_number": "211.44",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.46#1",
+   "section": "211.46",
+   "hash": "3f49257670205485",
+   "item": {
+    "statement": "Provide adequate ventilation.",
+    "quote": "Adequate ventilation shall be provided.",
+    "clause_number": "211.46(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.46#2",
+   "section": "211.46",
+   "hash": "9453115919ccdc54",
+   "item": {
+    "statement": "Where appropriate for making, processing, packing or holding a drug product, provide equipment that adequately controls air pressure, micro-organisms, dust, humidity and temperature.",
+    "quote": "Equipment for adequate control over air pressure, micro-organisms, dust, humidity, and temperature shall be provided when appropriate for the manufacture, processing, packing, or holding of a drug product.",
+    "clause_number": "211.46(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "when appropriate"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.46#3",
+   "section": "211.46",
+   "hash": "e6384ae997b2a224",
+   "item": {
+    "statement": "Where appropriate, use air filtration systems, including prefilters and particulate filters, on air supplied to production areas.",
+    "quote": "Air filtration systems, including prefilters and particulate matter air filters, shall be used when appropriate on air supplies to production areas.",
+    "clause_number": "211.46(c)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "when appropriate"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.46#4",
+   "section": "211.46",
+   "hash": "3fa5375027051d49",
+   "item": {
+    "statement": "If air is recirculated to production areas, take measures to control recirculation of dust generated by production.",
+    "quote": "If air is recirculated to production areas, measures shall be taken to control recirculation of dust from production.",
+    "clause_number": "211.46(c)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "if air is recirculated to production areas"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.46#5",
+   "section": "211.46",
+   "hash": "8c23ab00135b9cd6",
+   "item": {
+    "statement": "In areas where production causes air contamination, provide adequate exhaust or other systems able to control the contaminants.",
+    "quote": "In areas where air contamination occurs during production, there shall be adequate exhaust systems or other systems adequate to control contaminants.",
+    "clause_number": "211.46(c)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "where air contamination occurs during production"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.46#6",
+   "section": "211.46",
+   "hash": "c4627c24792f1c25",
+   "item": {
+    "statement": "Keep air-handling systems for manufacturing, processing and packing penicillin completely separate from those serving other human drug products.",
+    "quote": "Air-handling systems for the manufacture, processing, and packing of penicillin shall be completely separate from those for other drug products for human use.",
+    "clause_number": "211.46(d)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "penicillin operations"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.48#1",
+   "section": "211.48",
+   "hash": "b333733fa0803c23",
+   "item": {
+    "statement": "Supply potable water under continuous positive pressure through plumbing that has no defects that could contaminate any drug product.",
+    "quote": "Potable water shall be supplied under continuous positive pressure in a plumbing system free of defects that could contribute contamination to any drug product.",
+    "clause_number": "211.48(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.48#2",
+   "section": "211.48",
+   "hash": "0303edb83f8e31b9",
+   "item": {
+    "statement": "Ensure potable water meets the EPA Primary Drinking Water Regulations in 40 CFR part 141, and do not allow water that fails those standards into the potable water system.",
+    "quote": "Potable water shall meet the standards prescribed in the Environmental Protection Agency's Primary Drinking Water Regulations set forth in 40 CFR part 141. Water not meeting such standards shall not be permitted in the potable water system.",
+    "clause_number": "211.48(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.48#3",
+   "section": "211.48",
+   "hash": "d53c1f8b482f3a47",
+   "item": {
+    "statement": "Make drains of adequate size.",
+    "quote": "Drains shall be of adequate size",
+    "clause_number": "211.48(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.48#4",
+   "section": "211.48",
+   "hash": "48862286e11c163c",
+   "item": {
+    "statement": "Where a drain connects directly to a sewer, fit it with an air break or other mechanical device that prevents back-siphonage.",
+    "quote": "where connected directly to a sewer, shall be provided with an air break or other mechanical device to prevent back-siphonage.",
+    "clause_number": "211.48(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "where connected directly to a sewer"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.50#1",
+   "section": "211.50",
+   "hash": "1edf4fb5c358c84f",
+   "item": {
+    "statement": "Dispose of sewage, trash and other refuse from the building and its immediate surroundings safely and hygienically.",
+    "quote": "Sewage, trash, and other refuse in and from the building and immediate premises shall be disposed of in a safe and sanitary manner.",
+    "clause_number": "211.50",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.52#1",
+   "section": "211.52",
+   "hash": "326509834fb3e16f",
+   "item": {
+    "statement": "Provide adequate hand-washing facilities with hot and cold water, soap or detergent, air dryers or single-use towels, and clean toilets that are easy to reach from working areas.",
+    "quote": "Adequate washing facilities shall be provided, including hot and cold water, soap or detergent, air driers or single-service towels, and clean toilet facilities easily accesible to working areas.",
+    "clause_number": "211.52",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  }
+ ]
+}

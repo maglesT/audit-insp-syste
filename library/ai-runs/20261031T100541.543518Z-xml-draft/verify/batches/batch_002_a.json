@@ -1,6 +1,6 @@
 {
  "role": "a",
- "instructions": "You are an auditor checking one checklist item against the US regulation paragraph it claims to come from. You get\nthe section's paragraphs (reference and exact text, from the official eCFR XML) and the item. Start from the ITEM:\nread it, then find in the cited paragraph what it covers.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the parent paragraph's\nlead-in (including a qualifier such as \"as are necessary to prevent contamination or mixups\"). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph requires what the statement asks for, the statement\n  adds nothing and omits nothing of that obligation, the strength (shall/must = mandatory, should = recommended,\n  may = optional; a sub-paragraph takes its lead-in's) matches, and the regulation applies to every listed plant\n  type (INJ = sterile injectables: a paragraph limited to products not required to be sterile does not apply to\n  INJ; one limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "instructions": "You are an auditor checking one checklist item against the US regulation paragraph it claims to come from. You get\nthe section's paragraphs (reference and exact text, from the official eCFR XML) and the item. Start from the ITEM:\nread it, then find in the cited paragraph what it covers.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the parent paragraph's\nlead-in (including a qualifier such as \"as are necessary to prevent contamination or mixups\"). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph requires what the statement asks for, the statement\n  adds nothing and omits nothing of that obligation, the strength (shall/must = mandatory, should = recommended,\n  may = optional; a sub-paragraph takes its lead-in's) matches, and the regulation applies to every listed plant\n  type (INJ = sterile injectables: a paragraph limited to products not required to be sterile does not apply to\n  INJ; one limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences saying what you checked for THIS item, in this item's own words: name the\n  condition, number, list or scope you compared with the text (e.g. \"the 30-day limit and 'each lot' are both in\n  the statement\", \"the list of components, containers and closures is complete\", \"drops the lead-in's 'for\n  sterile products'\"). Write each reason fresh for its item: a reason that would fit any item (\"quote exact,\n  strength matches, nothing added or omitted\") or that repeats another answer's reason is not an answer, and the\n  item then counts as unchecked.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
  "schema": {
   "type": "object",
   "required": [
@@ -29,84 +29,104 @@
  },
  "sections": [
   {
-   "section": "211.44",
+   "section": "211.42",
    "paragraphs": [
     {
-     "ref": "211.44",
-     "text": "§ 211.44 Lighting. Adequate lighting shall be provided in all areas."
-    }
-   ]
-  },
-  {
-   "section": "211.46",
-   "paragraphs": [
-    {
-     "ref": "211.46",
-     "text": "§ 211.46 Ventilation, air filtration, air heating and cooling."
+     "ref": "211.42",
+     "text": "§ 211.42 Design and construction features."
     },
     {
-     "ref": "211.46(a)",
-     "text": "(a) Adequate ventilation shall be provided."
+     "ref": "211.42(a)",
+     "text": "(a) Any building or buildings used in the manufacture, processing, packing, or holding of a drug product shall be of suitable size, construction and location to facilitate cleaning, maintenance, and proper operations."
     },
     {
-     "ref": "211.46(b)",
-     "text": "(b) Equipment for adequate control over air pressure, micro-organisms, dust, humidity, and temperature shall be provided when appropriate for the manufacture, processing, packing, or holding of a drug product."
+     "ref": "211.42(b)",
+     "text": "(b) Any such building shall have adequate space for the orderly placement of equipment and materials to prevent mixups between different components, drug product containers, closures, labeling, in-process materials, or drug products, and to prevent contamination. The flow of components, drug product containers, closures, labeling, in-process materials, and drug products through the building or buildings shall be designed to prevent contamination."
     },
     {
-     "ref": "211.46(c)",
-     "text": "(c) Air filtration systems, including prefilters and particulate matter air filters, shall be used when appropriate on air supplies to production areas. If air is recirculated to production areas, measures shall be taken to control recirculation of dust from production. In areas where air contamination occurs during production, there shall be adequate exhaust systems or other systems adequate to control contaminants."
+     "ref": "211.42(c)",
+     "text": "(c) Operations shall be performed within specifically defined areas of adequate size. There shall be separate or defined areas or such other control systems for the firm's operations as are necessary to prevent contamination or mixups during the course of the following procedures:"
     },
     {
-     "ref": "211.46(d)",
-     "text": "(d) Air-handling systems for the manufacture, processing, and packing of penicillin shall be completely separate from those for other drug products for human use."
-    }
-   ]
-  },
-  {
-   "section": "211.48",
-   "paragraphs": [
-    {
-     "ref": "211.48",
-     "text": "§ 211.48 Plumbing."
+     "ref": "211.42(c)(1)",
+     "text": "(1) Receipt, identification, storage, and withholding from use of components, drug product containers, closures, and labeling, pending the appropriate sampling, testing, or examination by the quality control unit before release for manufacturing or packaging;"
     },
     {
-     "ref": "211.48(a)",
-     "text": "(a) Potable water shall be supplied under continuous positive pressure in a plumbing system free of defects that could contribute contamination to any drug product. Potable water shall meet the standards prescribed in the Environmental Protection Agency's Primary Drinking Water Regulations set forth in 40 CFR part 141. Water not meeting such standards shall not be permitted in the potable water system."
+     "ref": "211.42(c)(2)",
+     "text": "(2) Holding rejected components, drug product containers, closures, and labeling before disposition;"
     },
     {
-     "ref": "211.48(b)",
-     "text": "(b) Drains shall be of adequate size and, where connected directly to a sewer, shall be provided with an air break or other mechanical device to prevent back-siphonage."
-    }
-   ]
-  },
-  {
-   "section": "211.50",
-   "paragraphs": [
+     "ref": "211.42(c)(3)",
+     "text": "(3) Storage of released components, drug product containers, closures, and labeling;"
+    },
     {
-     "ref": "211.50",
-     "text": "§ 211.50 Sewage and refuse. Sewage, trash, and other refuse in and from the building and immediate premises shall be disposed of in a safe and sanitary manner."
-    }
-   ]
-  },
-  {
-   "section": "211.52",
-   "paragraphs": [
+     "ref": "211.42(c)(4)",
+     "text": "(4) Storage of in-process materials;"
+    },
     {
-     "ref": "211.52",
-     "text": "§ 211.52 Washing and toilet facilities. Adequate washing facilities shall be provided, including hot and cold water, soap or detergent, air driers or single-service towels, and clean toilet facilities easily accesible to working areas."
+     "ref": "211.42(c)(5)",
+     "text": "(5) Manufacturing and processing operations;"
+    },
+    {
+     "ref": "211.42(c)(6)",
+     "text": "(6) Packaging and labeling operations;"
+    },
+    {
+     "ref": "211.42(c)(7)",
+     "text": "(7) Quarantine storage before release of drug products;"
+    },
+    {
+     "ref": "211.42(c)(8)",
+     "text": "(8) Storage of drug products after release;"
+    },
+    {
+     "ref": "211.42(c)(9)",
+     "text": "(9) Control and laboratory operations;"
+    },
+    {
+     "ref": "211.42(c)(10)",
+     "text": "(10) Aseptic processing, which includes as appropriate:"
+    },
+    {
+     "ref": "211.42(c)(10)(i)",
+     "text": "(i) Floors, walls, and ceilings of smooth, hard surfaces that are easily cleanable;"
+    },
+    {
+     "ref": "211.42(c)(10)(ii)",
+     "text": "(ii) Temperature and humidity controls;"
+    },
+    {
+     "ref": "211.42(c)(10)(iii)",
+     "text": "(iii) An air supply filtered through high-efficiency particulate air filters under positive pressure, regardless of whether flow is laminar or nonlaminar;"
+    },
+    {
+     "ref": "211.42(c)(10)(iv)",
+     "text": "(iv) A system for monitoring environmental conditions;"
+    },
+    {
+     "ref": "211.42(c)(10)(v)",
+     "text": "(v) A system for cleaning and disinfecting the room and equipment to produce aseptic conditions;"
+    },
+    {
+     "ref": "211.42(c)(10)(vi)",
+     "text": "(vi) A system for maintaining any equipment used to control the aseptic conditions."
+    },
+    {
+     "ref": "211.42(d)",
+     "text": "(d) Operations relating to the manufacture, processing, and packing of penicillin shall be performed in facilities separate from those used for other drug products for human use."
     }
    ]
   }
  ],
  "items": [
   {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.44#1",
-   "section": "211.44",
-   "hash": "a44b62ce115a2887",
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#1",
+   "section": "211.42",
+   "hash": "52b5e333a2230f05",
    "item": {
-    "statement": "Provide adequate lighting in every area.",
-    "quote": "Adequate lighting shall be provided in all areas.",
-    "clause_number": "211.44",
+    "statement": "Ensure every building used to make, process, pack or hold drug products is of suitable size, construction and location to make cleaning, maintenance and proper operations easy.",
+    "quote": "Any building or buildings used in the manufacture, processing, packing, or holding of a drug product shall be of suitable size, construction and location to facilitate cleaning, maintenance, and proper operations.",
+    "clause_number": "211.42(a)",
     "strength": "mandatory",
     "plant_types": [
      "OSD",
@@ -124,13 +144,13 @@
    ]
   },
   {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.46#1",
-   "section": "211.46",
-   "hash": "3f49257670205485",
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#2",
+   "section": "211.42",
+   "hash": "afe94d5886e6c59c",
    "item": {
-    "statement": "Provide adequate ventilation.",
-    "quote": "Adequate ventilation shall be provided.",
-    "clause_number": "211.46(a)",
+    "statement": "Provide enough space in each building for equipment and materials to be placed in an orderly way, so that components, containers, closures, labeling, in-process materials and drug products are not mixed up and contamination is prevented.",
+    "quote": "Any such building shall have adequate space for the orderly placement of equipment and materials to prevent mixups between different components, drug product containers, closures, labeling, in-process materials, or drug products, and to prevent contamination.",
+    "clause_number": "211.42(b)",
     "strength": "mandatory",
     "plant_types": [
      "OSD",
@@ -148,133 +168,13 @@
    ]
   },
   {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.46#2",
-   "section": "211.46",
-   "hash": "9453115919ccdc54",
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#3",
+   "section": "211.42",
+   "hash": "9cf54e0f540f1c08",
    "item": {
-    "statement": "Where appropriate for making, processing, packing or holding a drug product, provide equipment that adequately controls air pressure, micro-organisms, dust, humidity and temperature.",
-    "quote": "Equipment for adequate control over air pressure, micro-organisms, dust, humidity, and temperature shall be provided when appropriate for the manufacture, processing, packing, or holding of a drug product.",
-    "clause_number": "211.46(b)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": "when appropriate"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.46#3",
-   "section": "211.46",
-   "hash": "e6384ae997b2a224",
-   "item": {
-    "statement": "Where appropriate, use air filtration systems, including prefilters and particulate filters, on air supplied to production areas.",
-    "quote": "Air filtration systems, including prefilters and particulate matter air filters, shall be used when appropriate on air supplies to production areas.",
-    "clause_number": "211.46(c)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": "when appropriate"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.46#4",
-   "section": "211.46",
-   "hash": "3fa5375027051d49",
-   "item": {
-    "statement": "If air is recirculated to production areas, take measures to control recirculation of dust generated by production.",
-    "quote": "If air is recirculated to production areas, measures shall be taken to control recirculation of dust from production.",
-    "clause_number": "211.46(c)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": "if air is recirculated to production areas"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.46#5",
-   "section": "211.46",
-   "hash": "8c23ab00135b9cd6",
-   "item": {
-    "statement": "In areas where production causes air contamination, provide adequate exhaust or other systems able to control the contaminants.",
-    "quote": "In areas where air contamination occurs during production, there shall be adequate exhaust systems or other systems adequate to control contaminants.",
-    "clause_number": "211.46(c)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": "where air contamination occurs during production"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.46#6",
-   "section": "211.46",
-   "hash": "c4627c24792f1c25",
-   "item": {
-    "statement": "Keep air-handling systems for manufacturing, processing and packing penicillin completely separate from those serving other human drug products.",
-    "quote": "Air-handling systems for the manufacture, processing, and packing of penicillin shall be completely separate from those for other drug products for human use.",
-    "clause_number": "211.46(d)",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ"
-    ],
-    "condition": "penicillin operations"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ"
-   ]
-  },
-  {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.48#1",
-   "section": "211.48",
-   "hash": "b333733fa0803c23",
-   "item": {
-    "statement": "Supply potable water under continuous positive pressure through plumbing that has no defects that could contaminate any drug product.",
-    "quote": "Potable water shall be supplied under continuous positive pressure in a plumbing system free of defects that could contribute contamination to any drug product.",
-    "clause_number": "211.48(a)",
+    "statement": "Design the flow of components, containers, closures, labeling, in-process materials and drug products through the building(s) so that contamination is prevented.",
+    "quote": "The flow of components, drug product containers, closures, labeling, in-process materials, and drug products through the building or buildings shall be designed to prevent contamination.",
+    "clause_number": "211.42(b)",
     "strength": "mandatory",
     "plant_types": [
      "OSD",
@@ -292,13 +192,13 @@
    ]
   },
   {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.48#2",
-   "section": "211.48",
-   "hash": "0303edb83f8e31b9",
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#4",
+   "section": "211.42",
+   "hash": "4fb35af352dd8886",
    "item": {
-    "statement": "Ensure potable water meets the EPA Primary Drinking Water Regulations in 40 CFR part 141, and do not allow water that fails those standards into the potable water system.",
-    "quote": "Potable water shall meet the standards prescribed in the Environmental Protection Agency's Primary Drinking Water Regulations set forth in 40 CFR part 141. Water not meeting such standards shall not be permitted in the potable water system.",
-    "clause_number": "211.48(a)",
+    "statement": "Carry out operations in specifically defined areas that are of adequate size.",
+    "quote": "Operations shall be performed within specifically defined areas of adequate size.",
+    "clause_number": "211.42(c)",
     "strength": "mandatory",
     "plant_types": [
      "OSD",
@@ -316,13 +216,13 @@
    ]
   },
   {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.48#3",
-   "section": "211.48",
-   "hash": "d53c1f8b482f3a47",
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#5",
+   "section": "211.42",
+   "hash": "6c16cc6425c4bae2",
    "item": {
-    "statement": "Make drains of adequate size.",
-    "quote": "Drains shall be of adequate size",
-    "clause_number": "211.48(b)",
+    "statement": "Provide separate or defined areas, or other control systems as necessary to prevent contamination or mixups, for receiving, identifying, storing and holding back from use components, drug product containers, closures and labeling until the quality control unit has sampled, tested or examined them as appropriate and released them for manufacturing or packaging.",
+    "quote": "Receipt, identification, storage, and withholding from use of components, drug product containers, closures, and labeling, pending the appropriate sampling, testing, or examination by the quality control unit before release for manufacturing or packaging;",
+    "clause_number": "211.42(c)(1)",
     "strength": "mandatory",
     "plant_types": [
      "OSD",
@@ -330,7 +230,7 @@
      "SEMI",
      "INJ"
     ],
-    "condition": ""
+    "condition": "as necessary to prevent contamination or mixups; pending QC release"
    },
    "plant_scope": [
     "OSD",
@@ -340,13 +240,13 @@
    ]
   },
   {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.48#4",
-   "section": "211.48",
-   "hash": "48862286e11c163c",
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#6",
+   "section": "211.42",
+   "hash": "5e1229da2409b7a2",
    "item": {
-    "statement": "Where a drain connects directly to a sewer, fit it with an air break or other mechanical device that prevents back-siphonage.",
-    "quote": "where connected directly to a sewer, shall be provided with an air break or other mechanical device to prevent back-siphonage.",
-    "clause_number": "211.48(b)",
+    "statement": "Provide separate or defined areas, or other control systems as necessary to prevent contamination or mixups, for holding rejected components, drug product containers, closures and labeling until their disposition.",
+    "quote": "Holding rejected components, drug product containers, closures, and labeling before disposition;",
+    "clause_number": "211.42(c)(2)",
     "strength": "mandatory",
     "plant_types": [
      "OSD",
@@ -354,7 +254,7 @@
      "SEMI",
      "INJ"
     ],
-    "condition": "where connected directly to a sewer"
+    "condition": "as necessary to prevent contamination or mixups; before disposition"
    },
    "plant_scope": [
     "OSD",
@@ -364,13 +264,13 @@
    ]
   },
   {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.50#1",
-   "section": "211.50",
-   "hash": "1edf4fb5c358c84f",
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#7",
+   "section": "211.42",
+   "hash": "982681a19e42c8c5",
    "item": {
-    "statement": "Dispose of sewage, trash and other refuse from the building and its immediate surroundings safely and hygienically.",
-    "quote": "Sewage, trash, and other refuse in and from the building and immediate premises shall be disposed of in a safe and sanitary manner.",
-    "clause_number": "211.50",
+    "statement": "Provide separate or defined areas, or other control systems as necessary to prevent contamination or mixups, for storing released components, drug product containers, closures and labeling.",
+    "quote": "Storage of released components, drug product containers, closures, and labeling;",
+    "clause_number": "211.42(c)(3)",
     "strength": "mandatory",
     "plant_types": [
      "OSD",
@@ -378,7 +278,7 @@
      "SEMI",
      "INJ"
     ],
-    "condition": ""
+    "condition": "as necessary to prevent contamination or mixups"
    },
    "plant_scope": [
     "OSD",
@@ -388,13 +288,13 @@
    ]
   },
   {
-   "id": "ecfr-21cfr211-2026-10-27.xml:211.52#1",
-   "section": "211.52",
-   "hash": "326509834fb3e16f",
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#8",
+   "section": "211.42",
+   "hash": "541e57f90348d569",
    "item": {
-    "statement": "Provide adequate hand-washing facilities with hot and cold water, soap or detergent, air dryers or single-use towels, and clean toilets that are easy to reach from working areas.",
-    "quote": "Adequate washing facilities shall be provided, including hot and cold water, soap or detergent, air driers or single-service towels, and clean toilet facilities easily accesible to working areas.",
-    "clause_number": "211.52",
+    "statement": "Provide separate or defined areas, or other control systems as necessary to prevent contamination or mixups, for storing in-process materials.",
+    "quote": "Storage of in-process materials;",
+    "clause_number": "211.42(c)(4)",
     "strength": "mandatory",
     "plant_types": [
      "OSD",
@@ -402,7 +302,274 @@
      "SEMI",
      "INJ"
     ],
-    "condition": ""
+    "condition": "as necessary to prevent contamination or mixups"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#9",
+   "section": "211.42",
+   "hash": "2f46659038b50909",
+   "item": {
+    "statement": "Provide separate or defined areas, or other control systems as necessary to prevent contamination or mixups, for manufacturing and processing operations.",
+    "quote": "Manufacturing and processing operations;",
+    "clause_number": "211.42(c)(5)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "as necessary to prevent contamination or mixups"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#10",
+   "section": "211.42",
+   "hash": "079ddfc11bb75896",
+   "item": {
+    "statement": "Provide separate or defined areas, or other control systems as necessary to prevent contamination or mixups, for packaging and labeling operations.",
+    "quote": "Packaging and labeling operations;",
+    "clause_number": "211.42(c)(6)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "as necessary to prevent contamination or mixups"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#11",
+   "section": "211.42",
+   "hash": "b6f7bef1275acefd",
+   "item": {
+    "statement": "Provide separate or defined areas, or other control systems as necessary to prevent contamination or mixups, for quarantine storage of drug products before they are released.",
+    "quote": "Quarantine storage before release of drug products;",
+    "clause_number": "211.42(c)(7)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "as necessary to prevent contamination or mixups; before release"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#12",
+   "section": "211.42",
+   "hash": "80185d3b09b8e512",
+   "item": {
+    "statement": "Provide separate or defined areas, or other control systems as necessary to prevent contamination or mixups, for storing drug products after they are released.",
+    "quote": "Storage of drug products after release;",
+    "clause_number": "211.42(c)(8)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "as necessary to prevent contamination or mixups; after release"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#13",
+   "section": "211.42",
+   "hash": "131d9c67c2a1edba",
+   "item": {
+    "statement": "Provide separate or defined areas, or other control systems as necessary to prevent contamination or mixups, for control and laboratory operations.",
+    "quote": "Control and laboratory operations;",
+    "clause_number": "211.42(c)(9)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "as necessary to prevent contamination or mixups"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#14",
+   "section": "211.42",
+   "hash": "1a63e4c58f4d66a5",
+   "item": {
+    "statement": "Provide separate or defined areas, or other control systems as necessary to prevent contamination or mixups, for aseptic processing, including as appropriate the design and control features listed for aseptic areas (cleanable surfaces, temperature and humidity control, HEPA-filtered positive-pressure air, environmental monitoring, cleaning and disinfection, and maintenance of equipment that controls aseptic conditions).",
+    "quote": "Aseptic processing, which includes as appropriate:",
+    "clause_number": "211.42(c)(10)",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "aseptic processing; as necessary to prevent contamination or mixups"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#15",
+   "section": "211.42",
+   "hash": "3175116e59de70f5",
+   "item": {
+    "statement": "For aseptic processing, within separate or defined areas or other control systems as necessary to prevent contamination or mixups, provide as appropriate floors, walls and ceilings with smooth, hard surfaces that are easy to clean.",
+    "quote": "Floors, walls, and ceilings of smooth, hard surfaces that are easily cleanable;",
+    "clause_number": "211.42(c)(10)(i)",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "aseptic processing; as appropriate"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#16",
+   "section": "211.42",
+   "hash": "8bacd4115a1bd587",
+   "item": {
+    "statement": "For aseptic processing, within separate or defined areas or other control systems as necessary to prevent contamination or mixups, provide as appropriate controls for temperature and humidity.",
+    "quote": "Temperature and humidity controls;",
+    "clause_number": "211.42(c)(10)(ii)",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "aseptic processing; as appropriate"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#17",
+   "section": "211.42",
+   "hash": "658baadb129d939f",
+   "item": {
+    "statement": "For aseptic processing, within separate or defined areas or other control systems as necessary to prevent contamination or mixups, provide as appropriate an air supply that is filtered through HEPA filters and kept under positive pressure, whether the airflow is laminar or not.",
+    "quote": "An air supply filtered through high-efficiency particulate air filters under positive pressure, regardless of whether flow is laminar or nonlaminar;",
+    "clause_number": "211.42(c)(10)(iii)",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "aseptic processing; as appropriate"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#18",
+   "section": "211.42",
+   "hash": "76a94e920a286d12",
+   "item": {
+    "statement": "For aseptic processing, within separate or defined areas or other control systems as necessary to prevent contamination or mixups, provide as appropriate a system to monitor environmental conditions.",
+    "quote": "A system for monitoring environmental conditions;",
+    "clause_number": "211.42(c)(10)(iv)",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "aseptic processing; as appropriate"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#19",
+   "section": "211.42",
+   "hash": "1b111b171377c051",
+   "item": {
+    "statement": "For aseptic processing, within separate or defined areas or other control systems as necessary to prevent contamination or mixups, provide as appropriate a system to clean and disinfect the room and equipment so that aseptic conditions are achieved.",
+    "quote": "A system for cleaning and disinfecting the room and equipment to produce aseptic conditions;",
+    "clause_number": "211.42(c)(10)(v)",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "aseptic processing; as appropriate"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#20",
+   "section": "211.42",
+   "hash": "cc6cb65b338ccf92",
+   "item": {
+    "statement": "For aseptic processing, within separate or defined areas or other control systems as necessary to prevent contamination or mixups, provide as appropriate a system to maintain any equipment that is used to control aseptic conditions.",
+    "quote": "A system for maintaining any equipment used to control the aseptic conditions.",
+    "clause_number": "211.42(c)(10)(vi)",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "aseptic processing; as appropriate"
    },
    "plant_scope": [
     "OSD",

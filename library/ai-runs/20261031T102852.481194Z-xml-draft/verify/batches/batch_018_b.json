@@ -1,0 +1,545 @@
+{
+ "role": "b",
+ "instructions": "You are a second, independent auditor. Check one checklist item against the US regulation paragraph it claims to come from. You get\nthe section's paragraphs (reference and exact text, from the official eCFR XML) and the item. Start from the TEXT:\nread the cited paragraph and its lead-in fully, then compare the item.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the parent paragraph's\nlead-in (including a qualifier such as \"as are necessary to prevent contamination or mixups\"). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph requires what the statement asks for, the statement\n  adds nothing and omits nothing of that obligation, the strength (shall/must = mandatory, should = recommended,\n  may = optional; a sub-paragraph takes its lead-in's) matches, and the regulation applies to every listed plant\n  type (INJ = sterile injectables: a paragraph limited to products not required to be sterile does not apply to\n  INJ; one limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences saying what you checked for THIS item, in this item's own words: name the\n  condition, number, list or scope you compared with the text (e.g. \"the 30-day limit and 'each lot' are both in\n  the statement\", \"the list of components, containers and closures is complete\", \"drops the lead-in's 'for\n  sterile products'\"). Write each reason fresh for its item: a reason that would fit any item (\"quote exact,\n  strength matches, nothing added or omitted\") or that repeats another answer's reason is not an answer, and the\n  item then counts as unchecked.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "sections": [
+  {
+   "section": "207.61",
+   "paragraphs": [
+    {
+     "ref": "207.61",
+     "text": "§ 207.61 How is registration and listing information provided to FDA?"
+    },
+    {
+     "ref": "207.61(a)",
+     "text": "(a) Electronic format."
+    },
+    {
+     "ref": "207.61(a)(1)",
+     "text": "(1) Except as provided in § 207.65, all information submitted under this part must be transmitted to FDA in electronic format by using our electronic drug registration and listing system, in a form that we can process, review, and archive. We may periodically issue guidance on how to provide registration and listing information in electronic format (specifying for example method of transmission, media, file formats, preparation, and organization of files)."
+    },
+    {
+     "ref": "207.61(a)(2)",
+     "text": "(2) Information provided in electronic format must comply with part 11 of this chapter, except as follows:"
+    },
+    {
+     "ref": "207.61(a)(2)(i)",
+     "text": "(i) Advertisements and labeling, including the content of labeling, required under this part are exempt from the requirements in § 11.10(a), (c) through (h), and (k) of this chapter and the corresponding requirements in § 11.30 of this chapter."
+    },
+    {
+     "ref": "207.61(a)(2)(ii)",
+     "text": "(ii) All other information submitted under this part is exempt from the requirements in § 11.10(b), (c), and (e) of this chapter and the corresponding requirements in § 11.30 of this chapter."
+    },
+    {
+     "ref": "207.61(b)",
+     "text": "(b) English language. Drug establishment registration and drug listing information must be provided in the English language. The content of labeling must be provided at a minimum in the English language. Where § 201.15(c) of this chapter permits product labeling solely in a foreign language, the content of labeling must be submitted in that language along with an accurate English translation."
+    }
+   ]
+  },
+  {
+   "section": "207.65",
+   "paragraphs": [
+    {
+     "ref": "207.65",
+     "text": "§ 207.65 How can a waiver of the electronic submission requirement be obtained?"
+    },
+    {
+     "ref": "207.65(a)",
+     "text": "(a) All information submitted under this part must be transmitted to FDA electronically in accordance with § 207.61(a) unless FDA has granted a request for waiver of this requirement prior to the date on which submission of such information is due. Submission of a request for waiver does not excuse timely compliance with the registration and listing requirements. FDA will grant a waiver request if FDA determines that the use of electronic means for submission of registration and listing information is not reasonable for the registrant making the waiver request."
+    },
+    {
+     "ref": "207.65(b)",
+     "text": "(b) Waiver requests under this section must be submitted in writing and must include the specific reasons why electronic submission is not reasonable for the registrant and a U.S. telephone number and mailing address where FDA can contact the registrant. All waiver requests must be sent to: SPL Coordinator, U.S. Food and Drug Administration, 10903 New Hampshire Ave., Bldg. 32, Silver Spring, MD 20993."
+    },
+    {
+     "ref": "207.65(c)",
+     "text": "(c) If FDA grants the waiver request, FDA may limit its duration and will specify terms of the waiver and provide information on how to submit establishment registration, drug listings, other information, and updates, as applicable."
+    }
+   ]
+  },
+  {
+   "section": "207.69",
+   "paragraphs": [
+    {
+     "ref": "207.69",
+     "text": "§ 207.69 What are the requirements for an official contact and a United States agent?"
+    },
+    {
+     "ref": "207.69(a)",
+     "text": "(a) Official contact. Registrants subject to the registration requirements of this part must designate an official contact for each establishment. The official contact is responsible for:"
+    },
+    {
+     "ref": "207.69(a)(1)",
+     "text": "(1) Ensuring the accuracy of registration and listing information; and"
+    },
+    {
+     "ref": "207.69(a)(2)",
+     "text": "(2) Reviewing, disseminating, routing, and responding to all communications from FDA including emergency communications."
+    },
+    {
+     "ref": "207.69(b)",
+     "text": "(b) United States agent. Registrants of foreign establishments subject to this part must designate a single United States agent. The United States agent must reside or maintain a place of business in the United States and may not be a mailbox, answering machine or service, or other place where a person acting as the United States agent is not physically present. The United States agent is responsible for:"
+    },
+    {
+     "ref": "207.69(b)(1)",
+     "text": "(1) Reviewing, disseminating, routing, and responding to all communications from FDA including emergency communications;"
+    },
+    {
+     "ref": "207.69(b)(2)",
+     "text": "(2) Responding to questions concerning those drugs that are imported or offered for import to the United States;"
+    },
+    {
+     "ref": "207.69(b)(3)",
+     "text": "(3) Assisting FDA in scheduling inspections; and"
+    },
+    {
+     "ref": "207.69(b)(4)",
+     "text": "(4) If FDA is unable to contact a foreign registrant directly or expeditiously, FDA may provide the information and/or documents to the United States agent. FDA's providing information and/or documents to the United States agent is equivalent to providing the same information and/or documents to the foreign registrant."
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "fda-cfr-21-part-207.xml:207.61#1",
+   "section": "207.61",
+   "hash": "a957166070f06e51",
+   "item": {
+    "statement": "Unless FDA has granted a waiver of electronic submission, transmit all drug registration and listing information to FDA electronically through FDA's electronic drug registration and listing system, in a form FDA can process, review and archive.",
+    "quote": "Except as provided in § 207.65, all information submitted under this part must be transmitted to FDA in electronic format by using our electronic drug registration and listing system, in a form that we can process, review, and archive.",
+    "clause_number": "207.61(a)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "unless an electronic submission waiver applies"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.61#2",
+   "section": "207.61",
+   "hash": "0d6e9b9137c26843",
+   "item": {
+    "statement": "Ensure registration and listing information provided electronically complies with FDA's electronic records and electronic signatures requirements, apart from the specified exemptions from certain of those controls for advertisements and labeling and for other submitted information.",
+    "quote": "Information provided in electronic format must comply with part 11 of this chapter, except as follows:",
+    "clause_number": "207.61(a)(2)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "information provided in electronic format"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.61#3",
+   "section": "207.61",
+   "hash": "57bbd846cddb80cf",
+   "item": {
+    "statement": "Provide drug establishment registration and drug listing information in English.",
+    "quote": "Drug establishment registration and drug listing information must be provided in the English language.",
+    "clause_number": "207.61(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.61#4",
+   "section": "207.61",
+   "hash": "9f2b51f61f18550c",
+   "item": {
+    "statement": "Provide the content of labeling in at least English.",
+    "quote": "The content of labeling must be provided at a minimum in the English language.",
+    "clause_number": "207.61(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.61#5",
+   "section": "207.61",
+   "hash": "499682760e344be2",
+   "item": {
+    "statement": "Where FDA rules permit product labeling solely in a foreign language, submit the content of labeling in that language together with an accurate English translation.",
+    "quote": "Where § 201.15(c) of this chapter permits product labeling solely in a foreign language, the content of labeling must be submitted in that language along with an accurate English translation.",
+    "clause_number": "207.61(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "where labeling solely in a foreign language is permitted"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.65#1",
+   "section": "207.65",
+   "hash": "50aee78cf705659d",
+   "item": {
+    "statement": "Transmit all registration and listing information to FDA electronically unless FDA granted a waiver request before the date the information is due.",
+    "quote": "All information submitted under this part must be transmitted to FDA electronically in accordance with § 207.61(a) unless FDA has granted a request for waiver of this requirement prior to the date on which submission of such information is due.",
+    "clause_number": "207.65(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "unless a waiver was granted before the due date"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.65#2",
+   "section": "207.65",
+   "hash": "fae536308fb39ba3",
+   "item": {
+    "statement": "When requesting a waiver of electronic submission, submit the request in writing, stating the specific reasons electronic submission is not reasonable for the registrant and giving a U.S. telephone number and mailing address where FDA can contact the registrant.",
+    "quote": "Waiver requests under this section must be submitted in writing and must include the specific reasons why electronic submission is not reasonable for the registrant and a U.S. telephone number and mailing address where FDA can contact the registrant.",
+    "clause_number": "207.65(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "when requesting a waiver"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.65#3",
+   "section": "207.65",
+   "hash": "29cf0d5684259ebc",
+   "item": {
+    "statement": "Send any electronic submission waiver request to the SPL Coordinator, U.S. Food and Drug Administration, 10903 New Hampshire Ave., Bldg. 32, Silver Spring, MD 20993.",
+    "quote": "All waiver requests must be sent to: SPL Coordinator, U.S. Food and Drug Administration, 10903 New Hampshire Ave., Bldg. 32, Silver Spring, MD 20993.",
+    "clause_number": "207.65(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "when requesting a waiver"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.69#1",
+   "section": "207.69",
+   "hash": "d328ab6a09133d7f",
+   "item": {
+    "statement": "As a registrant subject to drug establishment registration, designate an official contact for each establishment.",
+    "quote": "Registrants subject to the registration requirements of this part must designate an official contact for each establishment.",
+    "clause_number": "207.69(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "registrants subject to registration"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.69#2",
+   "section": "207.69",
+   "hash": "b1f0fb4eeaaf47e8",
+   "item": {
+    "statement": "Make the designated official contact responsible for ensuring registration and listing information is accurate.",
+    "quote": "Ensuring the accuracy of registration and listing information",
+    "clause_number": "207.69(a)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "registrants subject to registration"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.69#3",
+   "section": "207.69",
+   "hash": "f37bf621b5eacce0",
+   "item": {
+    "statement": "Make the designated official contact responsible for reviewing, disseminating, routing and responding to all FDA communications, including emergency communications.",
+    "quote": "Reviewing, disseminating, routing, and responding to all communications from FDA including emergency communications.",
+    "clause_number": "207.69(a)(2)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "registrants subject to registration"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.69#4",
+   "section": "207.69",
+   "hash": "fcf55dd16615925b",
+   "item": {
+    "statement": "As a registrant of a foreign establishment, designate a single United States agent.",
+    "quote": "Registrants of foreign establishments subject to this part must designate a single United States agent.",
+    "clause_number": "207.69(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "foreign establishments"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.69#5",
+   "section": "207.69",
+   "hash": "54cd4c6807e74c04",
+   "item": {
+    "statement": "For a foreign establishment, ensure the United States agent resides or keeps a place of business in the United States and is not a mailbox, answering machine or service, or other place where the person acting as agent is not physically present.",
+    "quote": "The United States agent must reside or maintain a place of business in the United States and may not be a mailbox, answering machine or service, or other place where a person acting as the United States agent is not physically present.",
+    "clause_number": "207.69(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "foreign establishments"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.69#6",
+   "section": "207.69",
+   "hash": "c5fca0ce8de3f1a5",
+   "item": {
+    "statement": "For a foreign establishment, make the United States agent responsible for reviewing, disseminating, routing and responding to all FDA communications, including emergency communications.",
+    "quote": "Reviewing, disseminating, routing, and responding to all communications from FDA including emergency communications;",
+    "clause_number": "207.69(b)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "foreign establishments"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.69#7",
+   "section": "207.69",
+   "hash": "fe108e29a9e4f042",
+   "item": {
+    "statement": "For a foreign establishment, make the United States agent responsible for answering questions about the drugs imported or offered for import into the United States.",
+    "quote": "Responding to questions concerning those drugs that are imported or offered for import to the United States;",
+    "clause_number": "207.69(b)(2)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "foreign establishments"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.69#8",
+   "section": "207.69",
+   "hash": "c242bff94b7588a0",
+   "item": {
+    "statement": "For a foreign establishment, make the United States agent responsible for helping FDA schedule inspections.",
+    "quote": "Assisting FDA in scheduling inspections;",
+    "clause_number": "207.69(b)(3)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "foreign establishments"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  }
+ ]
+}

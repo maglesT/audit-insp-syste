@@ -1,0 +1,703 @@
+{
+ "role": "b",
+ "instructions": "You are a second, independent auditor. Check one checklist item against the FDA web page paragraph it claims to come from. You get\nthe unit's paragraphs (reference and exact text of the page; \"context\" entries are headings) and the item. Start from the TEXT:\nread the cited paragraph, the paragraphs its quote runs into, and its lead-in fully, then compare the item.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the lead-in above a list\nitem (the paragraph ending \":\" above it). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph expects what the statement asks for (an instruction\n  to the investigator, \"Determine whether the firm validated ...\", expects the firm to have that practice), the statement\n  adds nothing and omits nothing of that obligation, the strength (a legal requirement: shall/must/required = mandatory;\n  should, FDA expects/recommends, an inspection point = recommended; may/acceptable = optional; a list item takes\n  its lead-in's) matches, and the text applies to every listed plant\n  type (INJ = sterile injectables: text limited to non-sterile products does not apply to\n  INJ; text limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences saying what you checked for THIS item, in this item's own words: name the\n  condition, number, list or scope you compared with the text (e.g. \"the 30-day limit and 'each lot' are both in\n  the statement\", \"the list of components, containers and closures is complete\", \"drops the lead-in's 'for\n  sterile products'\"). Write each reason fresh for its item: a reason that would fit any item (\"quote exact,\n  strength matches, nothing added or omitted\") or that repeats another answer's reason is not an answer, and the\n  item then counts as unchecked.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+ "units": [
+  {
+   "unit": "¶41-¶50",
+   "paragraphs": [
+    {
+     "ref": "¶41",
+     "text": "Pumps burn out and parts wear. Also, if pumps are static and not continuously in operation, their reservoir can be a static area where water will lie. For example, in an inspection, it was noted that a firm had to install a drain from the low point in a pump housing. Pseudomonas sp. contamination was periodically found in their water system which was attributed in part to a pump which only periodically is operational.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > VIII. PUMPS"
+    },
+    {
+     "context": "IX. PIPING"
+    },
+    {
+     "ref": "¶42",
+     "text": "Piping in WFI systems usually consist of a high polished stainless steel. In a few cases, manufacturers have begun to utilize PVDF (polyvinylidene fluoride) piping. It is purported that this piping can tolerate heat with no extractables being leached. A major problem with PVDF tubing is that it requires considerable support. When this tubing is heated, it tends to sag and may stress the weld (fusion) connection and result in leakage. Additionally, initially at least, fluoride levels are high. This piping is of benefit in product delivery systems where low level metal contamination may accelerate the degradation of drug product, such as in the Biotech industry.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > IX. PIPING"
+    },
+    {
+     "ref": "¶43",
+     "text": "One common problem with piping is that of \"dead-legs\". The proposed LVP Regulations defined dead-legs as not having an unused portion greater in length than six diameters of the unused pipe measured from the axis of the pipe in use. It should be pointed out that this was developed for hot 75 - 80o circulating systems. With colder systems (65 - 75oC), any drops or unused portion of any length of piping has the potential for the formation of a biofilm and should be eliminated if possible or have special sanitizing procedures. There should be n o threaded fittings in a pharmaceutical water system. All pipe joints must utilize sanitary fittings or be butt welded. Sanitary fittings will usually be used where the piping meets valves, tanks and other equipment that must be removed for maintenance or replacement. Therefore, the firm's procedures for sanitization, as well as the actual piping, should be reviewed and evaluated during the inspection.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > IX. PIPING"
+    },
+    {
+     "context": "X. REVERSE OSMOSIS"
+    },
+    {
+     "ref": "¶44",
+     "text": "Another acceptable method for manufacturing Water for Injection is Reverse Osmosis (RO). However, because these systems are cold, and because RO filters are not absolute, microbiological contamination is not unusual. Figure 8 shows a system that was in use several years ago. There are five RO units in this system which are in parallel. Since RO filters are not absolute, the filter manufacturers recommend that at least two be in series. The drawing also illustrates an Ultraviolet (UV) light in the system downstream from the RO units. The light was needed to control microbiological contamination.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > X. REVERSE OSMOSIS"
+    },
+    {
+     "ref": "¶45",
+     "text": "Also in this system were ball valves. These valves are not considered sanitary valves since the center of the valve can have water in it when the valve is closed. This is a stagnant pool of water that can harbor microorganisms and provide a starting point for a biofilm.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > X. REVERSE OSMOSIS"
+    },
+    {
+     "ref": "¶46",
+     "text": "As an additional comment on RO systems, with the recognition of microbiological problems, some manufacturers have installed heat exchangers immediately after the RO filters to heat the water to 75 - 80oC to minimize microbiological contamination.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > X. REVERSE OSMOSIS"
+    },
+    {
+     "ref": "¶47",
+     "text": "With the development of biotechnology products, many small companies are utilizing RO and UF systems to produce high purity water. For example, Figure 9 illustrates a wall mounted system that is fed by a single pass RO unit.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > X. REVERSE OSMOSIS"
+    },
+    {
+     "ref": "¶48",
+     "text": "As illustrated, most of these systems employ PVC or some type of plastic tubing. Because the systems are typically cold, the many joints in the system are subject to contamination. Another potential problem with PVC tubing is extractables. Looking at the WFI from a system to assure that it meets USP requirements without some assurance that there are no extractables would not be acceptable.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > X. REVERSE OSMOSIS"
+    },
+    {
+     "ref": "¶49",
+     "text": "The systems also contain 0.2 micron point of use filters which can mask the level of microbiological contamination in the system. While it is recognized that endotoxins are the primary concern in such a system, a filter will reduce microbiological contamination, but not necessarily endotoxin contamination. If filters are used in a water system there should be a stated purpose for the filter, i.e., particulate removal or microbial reduction, and an SOP stating the frequency with which the filter is to be changed which is based on data generated during the validation of the system.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > X. REVERSE OSMOSIS"
+    },
+    {
+     "ref": "¶50",
+     "text": "As previously discussed, because of the volume of water actually tested (.1ml for endotoxins vs. 100ml for WFI), the microbiological test offers a good index of the level of contamination in a system. Therefore, unless the water is sampled prior to the final 0.2 micron filter, microbiological testing will have little meaning.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > X. REVERSE OSMOSIS"
+    }
+   ]
+  },
+  {
+   "unit": "¶51-¶58",
+   "paragraphs": [
+    {
+     "ref": "¶51",
+     "text": "At a reinspection of this facility, it was noted that they corrected the deficient water system with a circulating stainless steel piping system that was fed by four RO units in series. Because this manufacturer did not have a need for a large amount of water (the total system capacity was about 30 gallons), they attempted to let the system sit for approximately one day. Figure 9 shows that at zero time (at 9 AM on 3/10), there were no detectable levels of microorganisms and of endotoxins. After one day, this static non-circulating system was found to be contaminated. The four consecutive one hour samples also illustrate the variability among samples taken from a system. After the last sample at 12 PM was collected, the system was resanitized with 0.5% peroxide solution, flushed, recirculated and resampled. No levels of microbiological contamination were found on daily samples after the system was put back in operation. This is the reason the agency has recommended that non-recirculating water systems be drained daily and water not be allowed to sit in the system.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > X. REVERSE OSMOSIS"
+    },
+    {
+     "context": "XI. PURIFIED WATER SYSTEMS"
+    },
+    {
+     "ref": "¶52",
+     "text": "Many of the comments regarding equipment for WFI systems are applicable to Purified Water Systems. One type system that has been used to control microbiological contamination utilizes ozone. Figure 10 illustrates a typical system. Although the system has purported to be relatively inexpensive, there are some problems associated with it. For optimum effectiveness, it is required that dissolved ozone residual remain in the system. This presents both employee safety problems and use problems when drugs are formulated.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > XI. PURIFIED WATER SYSTEMS"
+    },
+    {
+     "ref": "¶53",
+     "text": "Published data for Vicks Greensboro, NC facility showed that their system was recontaminated in two to three days after the ozone generator was turned off. In an inspection of another manufacturer, it was noted that a firm was experiencing a contamination problem with Pseudomonas sp. Because of potential problems with employee safety, ozone was removed from the water prior to placing it in their recirculating system. It has been reported that dissolved ozone at a level of 0.45 mg/liter will remain in a system for a maximum of five to six hours.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > XI. PURIFIED WATER SYSTEMS"
+    },
+    {
+     "ref": "¶54",
+     "text": "Another manufacturer, as part of their daily sanitization, removes all drops off of their ozonated water system and disinfects them in filter sterilized 70% isopropyl alcohol. This manufacturer has reported excellent microbiological results. However, sampling is only performed immediately after sanitization and not at the end of operations. Thus, the results are not that meaningful.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > XI. PURIFIED WATER SYSTEMS"
+    },
+    {
+     "ref": "¶55",
+     "text": "Figure 11 and Figure12 illustrate another purified water system which had some problems. Unlike most of the other systems discussed, this is a one-way and not recirculating system. A heat exchanger is used to heat the water on a weekly basis and sanitize the system. Actually, the entire system is a \"dead-leg.\"",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > XI. PURIFIED WATER SYSTEMS"
+    },
+    {
+     "ref": "¶56",
+     "text": "Figure 11 also shows a 0.2 micron in line filter used to sanitize the purified water on a daily basis. In addition to the filter housing providing a good environment for microbiological contamination, a typical problem is water hammer that can cause \"ballooning\" of the filter. If a valve downstream from the filter is shut too fast, the water pressure will reverse and can cause \"ballooning\". Pipe vibration is a typical visible sign of high back pressure while passage of upstream contaminants on the filter face is a real problem. This system also contains several vertical drops at use points. During sanitization, it is important to \"crack\" the terminal valves so that all of the elbows and bends in the piping are full of water and thus, get complete exposure to the sanitizing agent.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > XI. PURIFIED WATER SYSTEMS"
+    },
+    {
+     "ref": "¶57",
+     "text": "It should be pointed out that simply because this is a one-way system, it is not inadequate. With good Standard Operational Procedures, based on validation data, and routine hot flushings of this system, it could be acceptable. A very long system (over 200 yards) with over 50 outlets was found acceptable. This system employed a daily flushing of all outlets with 80oC water.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > XI. PURIFIED WATER SYSTEMS"
+    },
+    {
+     "ref": "¶58",
+     "text": "The last system to be discussed is a system that was found to be objectionable. Pseudomonas sp. found as a contaminant in the system (after FDA testing) was also found in a topical steroid product (after FDA testing). Product recall and issuance of a Warning Letter resulted. This system (Figure 13) is also one-way that employs a UV light to control microbiological contamination. The light is turned on only when water is needed. Thus, there are times when water is allowed to remain in the system. This system also contains a flexible hose which is very difficult to sanitize. UV lights must be properly maintained to work. The glass sleeves around the bulb(s) must be kept clean or their effectiveness will decrease. In multibulb units there must be a system to determine that each bulb is functioning. It must be remembered that at best UV light will only kill 90% of the organisms entering the unit.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > XI. PURIFIED WATER SYSTEMS"
+    },
+    {
+     "context": "XIII. PROCESS WATER"
+    }
+   ]
+  },
+  {
+   "unit": "¶59-¶67",
+   "paragraphs": [
+    {
+     "ref": "¶59",
+     "text": "Currently, the USP, pg. 4, in the General Notices Section, allows drug substances to be manufactured from Potable Water. It comments that any dosage form must be manufactured from Purified Water, Water For Injection, or one of the forms of Sterile Water. There is some inconsistency in these two statements, since Purified Water has to be used for the granulation of tablets, yet Potable Water can be used for the final purification of the drug substance.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > XIII. PROCESS WATER"
+    },
+    {
+     "ref": "¶60",
+     "text": "The FDA Guide to Inspection of Bulk Pharmaceutical Chemicals comments on the concern for the quality of the water used for the manufacture of drug substances, particularly those drug substances used in parenteral manufacture. Excessive levels of microbiological and/or endotoxin contamination have been found in drug substances, with the source of contamination being the water used in purification. At this time, Water For Injection does not have to be used in the finishing steps of synthesis/purification of drug substances for parenteral use. However, such water systems used in the final stages of processing of drug substances for parenteral use should be validated to assure minimal endotoxin/ microbiological contamination.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > XIII. PROCESS WATER"
+    },
+    {
+     "ref": "¶61",
+     "text": "In the bulk drug substance industry, particularly for parenteral grade substances, it is common to see Ultrafiltration (UF) and Reverse Osmosis (RO) systems in use in water systems. While ultrafiltration may not be as efficient at reducing pyrogens, they will reduce the high molecular weight endotoxins that are a contaminant in water systems. As with RO, UF is not absolute, but it will reduce numbers. Additionally, as previously discussed with other cold systems, there is considerable maintenance required to maintain the system.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > XIII. PROCESS WATER"
+    },
+    {
+     "ref": "¶62",
+     "text": "For the manufacture of drug substances that are not for parenteral use, there is still a microbiological concern, although not to the degree as for parenteral grade drug substances. In some areas of the world, Potable (chlorinated) water may not present a microbiological problem. However, there may be other issues. For example, chlorinated water will generally increase chloride levels. In some areas, process water may be obtained directly from neutral sources.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > XIII. PROCESS WATER"
+    },
+    {
+     "ref": "¶63",
+     "text": "In one inspection, a manufacturer was obtaining process water from a river located in a farming region. At one point, they had a problem with high levels of pesticides which was a run-off from farms in the areas. The manufacturing process and analytical methodology was not designed to remove and identify trace pesticide contaminants. Therefore, it would seem that this process water when used in the purification of drug substances would be unacceptable.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > XIII. PROCESS WATER"
+    },
+    {
+     "context": "XIV. INSPECTION STRATEGY"
+    },
+    {
+     "ref": "¶64",
+     "text": "Manufacturers typically will have periodic printouts or tabulations of results for their purified water systems. These printouts or data summaries should be reviewed. Additionally, investigation reports, when values exceed limits, should be reviewed.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > XIV. INSPECTION STRATEGY"
+    },
+    {
+     "ref": "¶65",
+     "text": "Since microbiological test results from a water system are not usually obtained until after the drug product is manufactured, results exceeding limits should be reviewed with regard to the drug product formulated from such water. Consideration with regard to the further processing or release of such a product will be dependent upon the specific contaminant, the process and the end use of the product. Such situations are usually evaluated on a case-by-case basis. It is a good practice for such situations to include an investigation report with the logic for release/rejection discussed in the firm's report. End product microbiological testing, while providing some information should not be relied upon as the sole justification for the release of the drug product. The limitations of microbiological sampling and testing should be recognized.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > XIV. INSPECTION STRATEGY"
+    },
+    {
+     "ref": "¶66",
+     "text": "Manufacturers should also have maintenance records or logs for equipment, such as the still. These logs should also be reviewed so that problems with the system and equipment can be evaluated.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > XIV. INSPECTION STRATEGY"
+    },
+    {
+     "ref": "¶67",
+     "text": "In addition to reviewing test results, summary data, investigation reports and other data, the print of the system should be reviewed when conducting the actual physical inspection. As pointed out, an accurate description and print of the system is needed in order to demonstrate that the system is validated.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > XIV. INSPECTION STRATEGY"
+    },
+    {
+     "context": "Return to: Page Top | Inspection Start"
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶41-¶50#1",
+   "unit": "¶41-¶50",
+   "hash": "96a9cefc2d20ca0b",
+   "item": {
+    "statement": "In colder water systems (65 to 75 °C), eliminate drops and unused piping portions of any length where possible, or apply special sanitizing procedures to them.",
+    "quote": "With colder systems (65 - 75oC), any drops or unused portion of any length of piping has the potential for the formation of a biofilm and should be eliminated if possible or have special sanitizing procedures.",
+    "clause_number": "¶43",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "colder systems (65 - 75 °C)"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶41-¶50#2",
+   "unit": "¶41-¶50",
+   "hash": "9b56610a493d7dfb",
+   "item": {
+    "statement": "Do not use threaded fittings in a pharmaceutical water system.",
+    "quote": "There should be n o threaded fittings in a pharmaceutical water system.",
+    "clause_number": "¶43",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶41-¶50#3",
+   "unit": "¶41-¶50",
+   "hash": "96a6af5df8e55366",
+   "item": {
+    "statement": "Make every pipe joint in the water system either a sanitary fitting or a butt weld.",
+    "quote": "All pipe joints must utilize sanitary fittings or be butt welded.",
+    "clause_number": "¶43",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶41-¶50#4",
+   "unit": "¶41-¶50",
+   "hash": "2adae4118e147f48",
+   "item": {
+    "statement": "Reverse osmosis may be used to manufacture Water for Injection.",
+    "quote": "Another acceptable method for manufacturing Water for Injection is Reverse Osmosis (RO).",
+    "clause_number": "¶44",
+    "strength": "optional",
+    "plant_types": [
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶41-¶50#5",
+   "unit": "¶41-¶50",
+   "hash": "01bedaab559357b3",
+   "item": {
+    "statement": "Because RO filters are not absolute, install at least two RO units in series.",
+    "quote": "Since RO filters are not absolute, the filter manufacturers recommend that at least two be in series.",
+    "clause_number": "¶44",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶41-¶50#6",
+   "unit": "¶41-¶50",
+   "hash": "0e1e5055d927482c",
+   "item": {
+    "statement": "For WFI systems using PVC or other plastic tubing, have assurance that there are no extractables in addition to testing the water against USP requirements.",
+    "quote": "Looking at the WFI from a system to assure that it meets USP requirements without some assurance that there are no extractables would not be acceptable.",
+    "clause_number": "¶48",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ",
+     "API"
+    ],
+    "condition": "plastic tubing in WFI systems"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶41-¶50#7",
+   "unit": "¶41-¶50",
+   "hash": "2579628b50aa09db",
+   "item": {
+    "statement": "Where filters are used in a water system, state each filter's purpose (particulate removal or microbial reduction) and have a procedure setting the filter change frequency based on data from the system validation.",
+    "quote": "If filters are used in a water system there should be a stated purpose for the filter, i.e., particulate removal or microbial reduction, and an SOP stating the frequency with which the filter is to be changed which is based on data generated during the validation of the system.",
+    "clause_number": "¶49",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "filters used in a water system"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶41-¶50#8",
+   "unit": "¶41-¶50",
+   "hash": "b13a0c9ef3c50905",
+   "item": {
+    "statement": "Take water samples for microbiological testing before the final 0.2 micron filter.",
+    "quote": "Therefore, unless the water is sampled prior to the final 0.2 micron filter, microbiological testing will have little meaning.",
+    "clause_number": "¶50",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶51-¶58#1",
+   "unit": "¶51-¶58",
+   "hash": "f6fd117238f0ff9f",
+   "item": {
+    "statement": "Drain non-recirculating water systems daily and do not let water sit in the system.",
+    "quote": "This is the reason the agency has recommended that non-recirculating water systems be drained daily and water not be allowed to sit in the system.",
+    "clause_number": "¶51",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "non-recirculating water systems"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶51-¶58#2",
+   "unit": "¶51-¶58",
+   "hash": "1d5b0e348bd03095",
+   "item": {
+    "statement": "Where ozone is used to control microbial contamination in a purified water system, keep a dissolved ozone residual in the system for optimum effectiveness.",
+    "quote": "For optimum effectiveness, it is required that dissolved ozone residual remain in the system.",
+    "clause_number": "¶52",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "ozonated purified water systems"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶51-¶58#3",
+   "unit": "¶51-¶58",
+   "hash": "32cb89f9d0ac4533",
+   "item": {
+    "statement": "During sanitization, crack open the terminal valves so all elbows and bends in the piping fill with water and are fully exposed to the sanitizing agent.",
+    "quote": "During sanitization, it is important to \"crack\" the terminal valves so that all of the elbows and bends in the piping are full of water and thus, get complete exposure to the sanitizing agent.",
+    "clause_number": "¶56",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "during sanitization"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶51-¶58#4",
+   "unit": "¶51-¶58",
+   "hash": "15e42d303842f073",
+   "item": {
+    "statement": "A one-way (non-recirculating) purified water system may be acceptable if it has good operating procedures based on validation data and routine hot flushing.",
+    "quote": "It should be pointed out that simply because this is a one-way system, it is not inadequate. With good Standard Operational Procedures, based on validation data, and routine hot flushings of this system, it could be acceptable.",
+    "clause_number": "¶57",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "one-way systems"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶51-¶58#5",
+   "unit": "¶51-¶58",
+   "hash": "8b143f51f1cfdc22",
+   "item": {
+    "statement": "Maintain UV lights in the water system properly.",
+    "quote": "UV lights must be properly maintained to work.",
+    "clause_number": "¶58",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "UV lights used"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶51-¶58#6",
+   "unit": "¶51-¶58",
+   "hash": "4f0ac7bd6c91ebf8",
+   "item": {
+    "statement": "Keep the glass sleeves around UV bulbs clean.",
+    "quote": "The glass sleeves around the bulb(s) must be kept clean or their effectiveness will decrease.",
+    "clause_number": "¶58",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "UV lights used"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶51-¶58#7",
+   "unit": "¶51-¶58",
+   "hash": "7b7b8984af263d7c",
+   "item": {
+    "statement": "In multi-bulb UV units, have a means of determining that each bulb is working.",
+    "quote": "In multibulb units there must be a system to determine that each bulb is functioning.",
+    "clause_number": "¶58",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "multi-bulb UV units"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶59-¶67#1",
+   "unit": "¶59-¶67",
+   "hash": "dc196e2d7f6b20f3",
+   "item": {
+    "statement": "Drug substances may be manufactured using potable water.",
+    "quote": "Currently, the USP, pg. 4, in the General Notices Section, allows drug substances to be manufactured from Potable Water.",
+    "clause_number": "¶59",
+    "strength": "optional",
+    "plant_types": [
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶59-¶67#2",
+   "unit": "¶59-¶67",
+   "hash": "f29320d3bc7b16d8",
+   "item": {
+    "statement": "Manufacture every dosage form with Purified Water, Water for Injection or one of the forms of Sterile Water.",
+    "quote": "It comments that any dosage form must be manufactured from Purified Water, Water For Injection, or one of the forms of Sterile Water.",
+    "clause_number": "¶59",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶59-¶67#3",
+   "unit": "¶59-¶67",
+   "hash": "e76a96631eaa279c",
+   "item": {
+    "statement": "Validate water systems used in the final processing stages of drug substances for parenteral use to assure minimal endotoxin and microbiological contamination.",
+    "quote": "However, such water systems used in the final stages of processing of drug substances for parenteral use should be validated to assure minimal endotoxin/ microbiological contamination.",
+    "clause_number": "¶60",
+    "strength": "recommended",
+    "plant_types": [
+     "API"
+    ],
+    "condition": "drug substances for parenteral use"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶59-¶67#4",
+   "unit": "¶59-¶67",
+   "hash": "7af8aea9da27b242",
+   "item": {
+    "statement": "When water microbiological results exceed limits, review the drug product made with that water, basing decisions on its further processing or release on the specific contaminant, the process and the product's end use.",
+    "quote": "Since microbiological test results from a water system are not usually obtained until after the drug product is manufactured, results exceeding limits should be reviewed with regard to the drug product formulated from such water. Consideration with regard to the further processing or release of such a product will be dependent upon the specific contaminant, the process and the end use of the product.",
+    "clause_number": "¶65",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "water results exceed limits"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶59-¶67#5",
+   "unit": "¶59-¶67",
+   "hash": "0bf212e5a554081a",
+   "item": {
+    "statement": "When water results exceeding limits affect a drug product, prepare an investigation report that explains the reasoning for release or rejection.",
+    "quote": "It is a good practice for such situations to include an investigation report with the logic for release/rejection discussed in the firm's report.",
+    "clause_number": "¶65",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "water results exceed limits"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  }
+ ]
+}

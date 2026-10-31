@@ -1,0 +1,236 @@
+{
+ "role": "b",
+ "instructions": "You are a second, independent auditor. Check one checklist item against the US regulation paragraph it claims to come from. You get\nthe section's paragraphs (reference and exact text, from the official eCFR XML) and the item. Start from the TEXT:\nread the cited paragraph and its lead-in fully, then compare the item.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the parent paragraph's\nlead-in (including a qualifier such as \"as are necessary to prevent contamination or mixups\"). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph requires what the statement asks for, the statement\n  adds nothing and omits nothing of that obligation, the strength (shall/must = mandatory, should = recommended,\n  may = optional; a sub-paragraph takes its lead-in's) matches, and the regulation applies to every listed plant\n  type (INJ = sterile injectables: a paragraph limited to products not required to be sterile does not apply to\n  INJ; one limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences saying what you checked for THIS item, in this item's own words: name the\n  condition, number, list or scope you compared with the text (e.g. \"the 30-day limit and 'each lot' are both in\n  the statement\", \"the list of components, containers and closures is complete\", \"drops the lead-in's 'for\n  sterile products'\"). Write each reason fresh for its item: a reason that would fit any item (\"quote exact,\n  strength matches, nothing added or omitted\") or that repeats another answer's reason is not an answer, and the\n  item then counts as unchecked.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "sections": [
+  {
+   "section": "211.110",
+   "paragraphs": [
+    {
+     "ref": "211.110",
+     "text": "§ 211.110 Sampling and testing of in-process materials and drug products."
+    },
+    {
+     "ref": "211.110(a)",
+     "text": "(a) To assure batch uniformity and integrity of drug products, written procedures shall be established and followed that describe the in-process controls, and tests, or examinations to be conducted on appropriate samples of in-process materials of each batch. Such control procedures shall be established to monitor the output and to validate the performance of those manufacturing processes that may be responsible for causing variability in the characteristics of in-process material and the drug product. Such control procedures shall include, but are not limited to, the following, where appropriate:"
+    },
+    {
+     "ref": "211.110(a)(1)",
+     "text": "(1) Tablet or capsule weight variation;"
+    },
+    {
+     "ref": "211.110(a)(2)",
+     "text": "(2) Disintegration time;"
+    },
+    {
+     "ref": "211.110(a)(3)",
+     "text": "(3) Adequacy of mixing to assure uniformity and homogeneity;"
+    },
+    {
+     "ref": "211.110(a)(4)",
+     "text": "(4) Dissolution time and rate;"
+    },
+    {
+     "ref": "211.110(a)(5)",
+     "text": "(5) Clarity, completeness, or pH of solutions."
+    },
+    {
+     "ref": "211.110(a)(6)",
+     "text": "(6) Bioburden testing."
+    },
+    {
+     "ref": "211.110(b)",
+     "text": "(b) Valid in-process specifications for such characteristics shall be consistent with drug product final specifications and shall be derived from previous acceptable process average and process variability estimates where possible and determined by the application of suitable statistical procedures where appropriate. Examination and testing of samples shall assure that the drug product and in-process material conform to specifications."
+    },
+    {
+     "ref": "211.110(c)",
+     "text": "(c) In-process materials shall be tested for identity, strength, quality, and purity as appropriate, and approved or rejected by the quality control unit, during the production process, e.g., at commencement or completion of significant phases or after storage for long periods."
+    },
+    {
+     "ref": "211.110(d)",
+     "text": "(d) Rejected in-process materials shall be identified and controlled under a quarantine system designed to prevent their use in manufacturing or processing operations for which they are unsuitable."
+    }
+   ]
+  },
+  {
+   "section": "211.111",
+   "paragraphs": [
+    {
+     "ref": "211.111",
+     "text": "§ 211.111 Time limitations on production. When appropriate, time limits for the completion of each phase of production shall be established to assure the quality of the drug product. Deviation from established time limits may be acceptable if such deviation does not compromise the quality of the drug product. Such deviation shall be justified and documented."
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.110#10",
+   "section": "211.110",
+   "hash": "0148c29c3b66e175",
+   "item": {
+    "statement": "Ensure examination and testing of samples assures that in-process material and the drug product conform to specifications.",
+    "quote": "Examination and testing of samples shall assure that the drug product and in-process material conform to specifications.",
+    "clause_number": "211.110(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.110#11",
+   "section": "211.110",
+   "hash": "1849ca7d77df2273",
+   "item": {
+    "statement": "Test in-process materials for identity, strength, quality and purity as appropriate, and have the quality control unit approve or reject them during production, for example at the start or end of significant phases or after long storage.",
+    "quote": "In-process materials shall be tested for identity, strength, quality, and purity as appropriate, and approved or rejected by the quality control unit, during the production process, e.g., at commencement or completion of significant phases or after storage for long periods.",
+    "clause_number": "211.110(c)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "as appropriate"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.110#12",
+   "section": "211.110",
+   "hash": "bd945e00b63219d2",
+   "item": {
+    "statement": "Identify rejected in-process materials and control them under a quarantine system designed to prevent their use in manufacturing or processing operations for which they are unsuitable.",
+    "quote": "Rejected in-process materials shall be identified and controlled under a quarantine system designed to prevent their use in manufacturing or processing operations for which they are unsuitable.",
+    "clause_number": "211.110(d)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "rejected in-process materials"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.111#1",
+   "section": "211.111",
+   "hash": "e88856660c57f789",
+   "item": {
+    "statement": "When appropriate, establish time limits for completing each phase of production to assure drug product quality.",
+    "quote": "When appropriate, time limits for the completion of each phase of production shall be established to assure the quality of the drug product.",
+    "clause_number": "211.111",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "when appropriate"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.111#2",
+   "section": "211.111",
+   "hash": "e519feb5f676cb0a",
+   "item": {
+    "statement": "A deviation from established production time limits may be accepted if it does not compromise drug product quality.",
+    "quote": "Deviation from established time limits may be acceptable if such deviation does not compromise the quality of the drug product.",
+    "clause_number": "211.111",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "if quality not compromised"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.111#3",
+   "section": "211.111",
+   "hash": "ca477a65e5f917f9",
+   "item": {
+    "statement": "Justify and document any deviation from established production time limits.",
+    "quote": "Such deviation shall be justified and documented.",
+    "clause_number": "211.111",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "deviation from time limits"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  }
+ ]
+}

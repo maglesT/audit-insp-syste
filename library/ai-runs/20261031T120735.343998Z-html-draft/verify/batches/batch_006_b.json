@@ -1,6 +1,6 @@
 {
  "role": "b",
- "instructions": "You are a second, independent auditor. Check one checklist item against the FDA web page paragraph it claims to come from. You get\nthe unit's paragraphs (reference and exact text of the page; \"context\" entries are headings) and the item. Start from the TEXT:\nread the cited paragraph, the paragraphs its quote runs into, and its lead-in fully, then compare the item.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the lead-in above a list\nitem (the paragraph ending \":\" above it). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph expects what the statement asks for (an instruction\n  to the investigator, \"Determine whether the firm validated ...\", expects the firm to have that practice), the statement\n  adds nothing and omits nothing of that obligation, the strength (a legal requirement: shall/must/required = mandatory;\n  should, FDA expects/recommends, an inspection point = recommended; may/acceptable = optional; a list item takes\n  its lead-in's) matches, and the text applies to every listed plant\n  type (INJ = sterile injectables: text limited to non-sterile products does not apply to\n  INJ; text limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "instructions": "You are a second, independent auditor. Check one checklist item against the FDA web page paragraph it claims to come from. You get\nthe unit's paragraphs (reference and exact text of the page; \"context\" entries are headings) and the item. Start from the TEXT:\nread the cited paragraph, the paragraphs its quote runs into, and its lead-in fully, then compare the item.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the lead-in above a list\nitem (the paragraph ending \":\" above it). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph expects what the statement asks for (an instruction\n  to the investigator, \"Determine whether the firm validated ...\", expects the firm to have that practice), the statement\n  adds nothing and omits nothing of that obligation, the strength (a legal requirement: shall/must/required = mandatory;\n  should, FDA expects/recommends, an inspection point = recommended; may/acceptable = optional; a list item takes\n  its lead-in's) matches, and the text applies to every listed plant\n  type (INJ = sterile injectables: text limited to non-sterile products does not apply to\n  INJ; text limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences saying what you checked for THIS item, in this item's own words: name the\n  condition, number, list or scope you compared with the text (e.g. \"the 30-day limit and 'each lot' are both in\n  the statement\", \"the list of components, containers and closures is complete\", \"drops the lead-in's 'for\n  sterile products'\"). Write each reason fresh for its item: a reason that would fit any item (\"quote exact,\n  strength matches, nothing added or omitted\") or that repeats another answer's reason is not an answer, and the\n  item then counts as unchecked.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
  "schema": {
   "type": "object",
   "required": [
@@ -30,78 +30,152 @@
  "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
  "units": [
   {
-   "unit": "Q15",
+   "unit": "Q1",
    "paragraphs": [
     {
-     "ref": "Q15",
-     "text": "Who is responsible for analytically testing APIs to ensure they comply with their specifications and with USP requirements, if any? API manufacturers perform analytical testing on APIs to confirm that they meet all applicable specifications established for release. Finished drug product manufacturers ensure that APIs used in their products meet all of their established specifications and—for compendial APIs—meet USP requirements. Additional information is provided below. API Manufacturer Responsibilities Section 501(a)(2)(B) of the FD&C Act requires all drugs (including APIs) to be manufactured in compliance with CGMP. FDA therefore expects API manufacturers to follow the recommendations in ICH guidance for industry Q7 Good Manufacturing Practice Guidance for Active Pharmaceutical Ingredients. API labeling supplied by the API manufacturer includes a certificate of analysis (COA). Section 11.4 of ICH Q7 recommends that the API manufacturer’s COA should include, as applicable, the API’s name, grade, batch/lot number, date of release, and a list of “each test performed in accordance with compendial or customer requirements, including the acceptance limits, and the numerical results obtained . . . .” For example, for a compendial-grade API, the COA should identify the compendial tests that were performed (as well as customer-specified tests, if any) and the test results. If a compendial-grade API differs from a USP standard of strength, quality, or purity, that difference should be clearly declared on the label. Finished Drug Product Manufacturer Responsibilities In the CGMP regulations for finished pharmaceuticals, 21 CFR 211.80 states that “[T]here shall be written procedures describing in sufficient detail the . . . testing . . . of [finished drug product] components . . . .” Additionally, 21 CFR 211.84(d)(2) states that “[E]ach component shall be tested for conformity with all appropriate written specifications for purity, strength, and quality. In lieu of such testing by the manufacturer, a report of analysis may be accepted from the supplier of a component, provided that at least one specific identity test is conducted on such component by the manufacturer, and provided that the manufacturer establishes the reliability of the supplier’s analyses through appropriate validation of the supplier’s test results at appropriate intervals.” Therefore, if the finished drug product manufacturer accepts the test results from an API supplier’s COA rather than performing the tests itself (other than for identity, which the manufacturer is required to perform), the manufacturer must validate the API supplier’s reliability. This validation procedure is established by the finished drug product manufacturer and should be consistent with the principles of CGMP and risk management. The finished drug product manufacturer should also ensure that compendial-grade APIs comply with compendial specifications, either by testing the APIs or by validating API suppliers’ reliability, as described above. References:"
+     "ref": "Q1",
+     "text": "Do the CGMP regulations permit the destruction of an internal quality assurance audit report once the corrective action has been completed?"
     },
     {
-     "ref": "Q15.1",
-     "text": "FD&C Act Chapter V: Drugs and Devices",
+     "ref": "Q1.1",
+     "text": "The CGMP regulations (21 CFR parts 210 and 211) for finished pharmaceutical manufacturing do not specifically address the requirement to conduct, or to keep records of, internal quality assurance audits. If the report in question was from a routine audit to verify that the firm's quality system is operating as intended, then it would be acceptable if the firm elected to discard the report once all corrections have been verified."
+    },
+    {
+     "ref": "Q1.2",
+     "text": "However, any documentation of corrective action as a result of such an audit would have to be retained (see §§ 211.180 and 211.188). For example, if a routine internal audit finds a problem with a mixing step and the outcome is a change in mixing time, all affected procedures, including the master production record, are to reflect the necessary changes, and such records are subject to FDA inspection as usual. Any investigation into the impact this problem had on related batches is to be retained and also made available for inspection by FDA (see § 211.192)."
+    },
+    {
+     "ref": "Q1.3",
+     "text": "In addition, any reports of investigations or evaluations prepared in response to, for example, a product complaint (§ 211.198), vendor qualification (§ 211.84), periodic review of records and data (§ 211.180(e)), and a failure investigation (§ 211.192) are not internal audits as discussed above. Such records are subject to FDA inspection and must be retained for at least the time specified in the CGMP regulations (see § 211.180)."
+    }
+   ]
+  },
+  {
+   "unit": "Q2",
+   "paragraphs": [
+    {
+     "ref": "Q2",
+     "text": "Can containers, closures, and packaging materials be sampled for receipt examination in the warehouse?"
+    },
+    {
+     "ref": "Q2.1",
+     "text": "Yes. Generally, we believe that sampling in a typical drug manufacturing facility warehouse would not represent a risk to the container or closure or affect the integrity of the sample results. But whether the act of collecting a sample in the warehouse violates the CGMP requirement that containers \"be opened, sampled, and sealed in a manner designed to prevent contamination of their contents...\" will depend on the purported quality characteristics of the material under sample and the warehouse environment. For containers or closures purporting to be sterile or depyrogenated, sampling should be under conditions equivalent to the purported quality of the material: a warehouse environment would not suffice (see 21 CFR 211.94 and 211.113(b)). This is to preserve the fitness for use of the remaining containers or closures as well as to ensure sample integrity, if they are to be examined for microbial contamination. At a minimum, any sampling should be performed in a manner to limit exposure to the environment during and after the time samples are removed (i.e., wiping outside surfaces, limiting time that the original package is open, and properly resealing the original package). Well-written and followed procedures are the critical elements."
+    },
+    {
+     "ref": "Q2.2",
+     "text": "Note that the CGMP regulations at 21 CFR 211.84 permit a manufacturer to release for use a shipment of containers or closures based on the supplier's certificate of analysis and a visual identification of the containers or closures. Once a supplier's reliability has been established by validation of their test results, a manufacturer could perform the visual examination entirely in the warehouse."
+    }
+   ]
+  },
+  {
+   "unit": "Q3",
+   "paragraphs": [
+    {
+     "ref": "Q3",
+     "text": "A firm has multiple media fill failures. They conducted their media fills using TSB (tryptic soy broth) prepared by filtration through a 0.2 micron sterilizing filter. Investigation did not show any obvious causes. What could be the source of contamination?"
+    },
+    {
+     "ref": "Q3.1",
+     "text": "A firm had multiple media fill failures. The media fill runs, simulating the filling process during production, were conducted inside an isolator. The firm used TSB (nonsterile bulk powder) from a commercial source and prepared the sterile solution by filtering through a 0.2 micron sterilizing filter. An investigation was launched to trace the source of contamination. The investigation was not successful in isolating or recovering the contaminating organism using conventional microbiological techniques, including the use of selective (e.g., blood agar) and nonselective (e.g., TSB and tryptic soy agar) media, and examination under a microscope. The contaminant was eventually identified to be Acholeplasma laidlawii by using 16S rRNA gene sequence. The firm subsequently conducted studies to confirm the presence of Acholeplasma laidlawii in the lot of TSB used. Therefore, it was not a contaminant from the process, but from the media source."
+    },
+    {
+     "ref": "Q3.2",
+     "text": "Acholeplasma laidlawii belongs to an order of Mycoplasma. Mycoplasma contain only a cell membrane and have no cell wall. They are not susceptible to beta-lactams and do not take up Gram stain. Individual organisms are pleomorphic (assume various shapes from cocci to rods to filaments), varying in size from 0.2 to 0.3 microns or smaller. It has been shown that Acholeplasma laidlawii is capable of penetrating a 0.2 micron filter, but is retained by a 0.1 micron filter (see Sundaram, Eisenhuth, et al. 1999). Acholeplasma laidlawii is known to be associated with animal-derived material, and microbiological media is often from animal sources. Environmental monitoring of Mycoplasma requires selective media (PPLO broth or agar)."
+    },
+    {
+     "ref": "Q3.3",
+     "text": "Resolution:"
+    },
+    {
+     "ref": "Q3.4",
+     "text": "For now, this firm has decided to filter prepared TSB, for use in media fills, through a 0.1 micron filter (note: we do not expect or require firms to routinely use 0.1 micron filters for media preparation). In the future, the firm will use sterile, irradiated TSB when it becomes available from a commercial supplier. (Firm's autoclave is too small to permit processing of TSB for media fills, so this was not a viable option.) The firm will continue monitoring for Mycoplasma and has revalidated their cleaning procedure to verify its removal. In this case, a thorough investigation by the firm led to a determination of the cause of the failure and an appropriate corrective action."
+    }
+   ]
+  },
+  {
+   "unit": "Q4",
+   "paragraphs": [
+    {
+     "ref": "Q4",
+     "text": "How many containers of each component from each shipment must a firm sample and test to comply with the CGMP regulations for identity testing? Do the CGMP regulations permit the identity test on a pooled, or composite, sample of multiple containers?"
+    },
+    {
+     "ref": "Q4.1",
+     "text": "The CGMP regulations address component sampling and testing primarily at 21 CFR 211.84. These regulations require representative samples of each shipment of each lot of active and inactive component (or raw materials) to be tested to confirm the identity of the component as labeled prior to release for use in drug product manufacturing. The regulations acknowledge that more than one test may be needed to ascertain a component’s identity. For the purpose of this answer, a component’s identity is its chemical structure and its physical form (e.g., polymorph, solvate, and appearance) including, if appropriate, its stereochemistry or immunochemistry. (See also ICH guidances for industry Q6A Specifications: Test Procedures and Acceptance Criteria for New Drug Substances and New Drug Products: Chemical Substances and Q6B Specifications: Test Procedures and Acceptance Criteria for Biotechnological/Biological Products.)"
+    },
+    {
+     "ref": "Q4.2",
+     "text": "The CGMP regulations do not specify the number of containers to be sampled from each received shipment. However, § 211.84(b) establishes the principles to be followed in designing a sampling program for components. The requirements of this section can be summarized as follows:"
+    },
+    {
+     "ref": "Q4.3",
+     "text": "Samples are to be representative of the shipment received.",
      "list_item": true
     },
     {
-     "ref": "Q15.2",
-     "text": "21 CFR 211.80: General requirements",
+     "ref": "Q4.4",
+     "text": "The number of containers sampled as well as the amount of material sampled from each container is to be based on statistical criteria for component variability, confidence levels, and the degree of precision required.",
      "list_item": true
     },
     {
-     "ref": "Q15.3",
-     "text": "21 CFR 211.84: Testing and approval or rejection of components, drug product containers and closures",
+     "ref": "Q4.5",
+     "text": "The sample program takes into account the past quality history of the supplier.",
      "list_item": true
     },
     {
-     "ref": "Q15.4",
-     "text": "FDA Guidance for Industry, 2001, ICH Q7 Good Manufacturing Practice Guidance for Active Pharmaceutical Ingredients",
+     "ref": "Q4.6",
+     "text": "The sample amount is to be sufficient for the necessary analysis and reserve samples.",
      "list_item": true
     },
     {
-     "ref": "Q15.5",
-     "text": "Contact for further information: CDER-OPQ-Inquiries@fda.hhs.gov"
+     "ref": "Q4.7",
+     "text": "The first three are most relevant to the question of how many containers to sample for identity testing, i.e., representative sampling, tolerance for variability and confidence required, and past history. (The amount needed for analysis and reserve can be readily met by sampling even one container, so the number of containers is not an important issue once the shipment’s identity is verified.)"
+    },
+    {
+     "ref": "Q4.8",
+     "text": "Unlike most component attributes, a component’s identity is generally a discrete variable, i.e., the material in the container either is or is not what the label purports it to be. The component container’s content might differ from what the container label states due to mistakes in filling and labeling by the supplier or repacker, or as a result of the substitution of a container’s contents during distribution and warehousing before receipt by the drug product manufacturer. Using a wrong component in processing could result in a serious public health hazard. For these reasons, manufacturers need to develop an approach that provides a high degree of confidence that each container in each shipment contains the material purported by the label. (See also 21 CFR 211.160(b), which requires all sampling to be representative and scientifically sound.) The approach must account for the fact that the material’s identity must not vary from what is specified. The past quality history of a supplier and the scope of their operations is relevant to the chance for mistakes to occur under a supplier’s control, but does not necessarily bear on what happens to a drug once it is outside the supplier’s control."
+    },
+    {
+     "ref": "Q4.9",
+     "text": "How many containers of each component from each shipment must a firm sample and test to comply with the CGMP requirements for identity testing?"
+    },
+    {
+     "ref": "Q4.10",
+     "text": "The regulation at § 211.84 requires that representative samples of each shipment of each lot shall be collected for testing. Some manufacturers have interpreted the CGMP regulations to require that each container in a shipment be sampled and tested for the attribute of identity. Testing samples from every container to determine identity may be valuable particularly for components purchased from distributors. (Analytical equipment and methods are readily available that permit rapid, nondestructive identification of material directly in containers in a warehouse area.) The CGMP regulations permit each drug product manufacturer to make its own decision as to the number of containers to sample, as long as the sampling plan is scientifically sound, leads to representative samples, and complies with the principles established at § 211.84(b). An important caveat applies with respect to § 211.84: samples are to be taken by the drug product manufacturer from containers after receipt (i.e., pre-shipment samples or so-called piggyback samples are generally not acceptable)."
+    },
+    {
+     "ref": "Q4.11",
+     "text": "Do the CGMP regulations permit the identity test on a pooled, or composite, sample of multiple containers?"
+    },
+    {
+     "ref": "Q4.12",
+     "text": "The CGMP regulations address the issue of sample compositing directly but only in the context of individual container sampling. Section 211.84(c)(4) explicitly prohibits compositing samples taken from the top, middle, and bottom of a single container when such stratified sampling is considered necessary (as might be the case when moisture content needs to be controlled, particularly when only a portion of a container may be used in a drug product batch). The preamble for § 211.84(c)(4) explains further that there \"is no general prohibition... on compositing samples [from single containers] where such compositing would not mask subdivisions of the sample that do not meet specifications\" (see 1978 preamble, paragraph 231)."
+    },
+    {
+     "ref": "Q4.13",
+     "text": "Testing individual samples from multiple containers provides a high level of assurance and is consistent with CGMP. Testing a composite sample for identity could satisfy the CGMP regulations (§§ 211.84 and 211.160) but only if a manufacturer demonstrates either that the detection of a single nonconforming container is not masked by compositing or that an additional test(s) routinely performed on the composite sample ensures that all containers sampled contain the same material. Thus, a purity assay on a composite sample prepared by mixing equal aliquots from each container may be acceptable provided such a test is sufficiently sensitive to reveal the presence of a single nonconforming container."
     }
    ]
   }
  ],
  "items": [
   {
-   "id": "fda-cgmp-qa-components-containers-closures.html:Q15#1",
-   "unit": "Q15",
-   "hash": "5a735715eb9bc2ce",
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q1#1",
+   "unit": "Q1",
+   "hash": "e7bff9eb784fa15c",
    "item": {
-    "statement": "Perform analytical testing on each API to confirm it meets all applicable release specifications.",
-    "quote": "API manufacturers perform analytical testing on APIs to confirm that they meet all applicable specifications established for release.",
-    "clause_number": "Q15",
-    "strength": "recommended",
-    "plant_types": [
-     "API"
-    ],
-    "condition": ""
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ",
-    "API"
-   ]
-  },
-  {
-   "id": "fda-cgmp-qa-components-containers-closures.html:Q15#2",
-   "unit": "Q15",
-   "hash": "fa01a89a0cf89611",
-   "item": {
-    "statement": "Ensure that APIs used in the products meet all of the finished product manufacturer's established specifications and, for compendial APIs, USP requirements.",
-    "quote": "Finished drug product manufacturers ensure that APIs used in their products meet all of their established specifications and—for compendial APIs—meet USP requirements.",
-    "clause_number": "Q15",
-    "strength": "recommended",
+    "statement": "A report from a routine internal quality audit that checks the quality system is working as intended may be discarded once all corrections arising from it have been verified.",
+    "quote": "If the report in question was from a routine audit to verify that the firm's quality system is operating as intended, then it would be acceptable if the firm elected to discard the report once all corrections have been verified.",
+    "clause_number": "Q1.1",
+    "strength": "optional",
     "plant_types": [
      "OSD",
      "LIQ",
      "SEMI",
-     "INJ"
+     "INJ",
+     "API"
     ],
-    "condition": "USP requirements for compendial APIs"
+    "condition": "routine audit report; after all corrections are verified"
    },
    "plant_scope": [
     "OSD",
@@ -112,13 +186,13 @@
    ]
   },
   {
-   "id": "fda-cgmp-qa-components-containers-closures.html:Q15#3",
-   "unit": "Q15",
-   "hash": "ae8fcd9a47ca839a",
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q1#2",
+   "unit": "Q1",
+   "hash": "6455180b7181aaaa",
    "item": {
-    "statement": "Manufacture all drugs, including APIs, in compliance with CGMP.",
-    "quote": "requires all drugs (including APIs) to be manufactured in compliance with CGMP.",
-    "clause_number": "Q15",
+    "statement": "Retain all documentation of corrective actions taken as a result of an internal audit.",
+    "quote": "However, any documentation of corrective action as a result of such an audit would have to be retained (see §§ 211.180 and 211.188).",
+    "clause_number": "Q1.2",
     "strength": "mandatory",
     "plant_types": [
      "OSD",
@@ -138,109 +212,22 @@
    ]
   },
   {
-   "id": "fda-cgmp-qa-components-containers-closures.html:Q15#4",
-   "unit": "Q15",
-   "hash": "d48d23b4eb2b1031",
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q1#3",
+   "unit": "Q1",
+   "hash": "5b4ec9314251538c",
    "item": {
-    "statement": "Follow the recommendations of the internationally harmonised GMP guidance for active pharmaceutical ingredients.",
-    "quote": "FDA therefore expects API manufacturers to follow the recommendations in ICH guidance for industry Q7 Good Manufacturing Practice Guidance for Active Pharmaceutical Ingredients.",
-    "clause_number": "Q15",
-    "strength": "recommended",
-    "plant_types": [
-     "API"
-    ],
-    "condition": ""
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ",
-    "API"
-   ]
-  },
-  {
-   "id": "fda-cgmp-qa-components-containers-closures.html:Q15#5",
-   "unit": "Q15",
-   "hash": "4f649d13f6fdbffb",
-   "item": {
-    "statement": "Supply a certificate of analysis with the API labeling that includes, as applicable, the API's name, grade, batch or lot number, date of release, and a list of each test performed according to compendial or customer requirements, with the acceptance limits and the numerical results obtained.",
-    "quote": "API labeling supplied by the API manufacturer includes a certificate of analysis (COA). Section 11.4 of ICH Q7 recommends that the API manufacturer’s COA should include, as applicable, the API’s name, grade, batch/lot number, date of release, and a list of “each test performed in accordance with compendial or customer requirements, including the acceptance limits, and the numerical results obtained . . . .”",
-    "clause_number": "Q15",
-    "strength": "recommended",
-    "plant_types": [
-     "API"
-    ],
-    "condition": "as applicable"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ",
-    "API"
-   ]
-  },
-  {
-   "id": "fda-cgmp-qa-components-containers-closures.html:Q15#6",
-   "unit": "Q15",
-   "hash": "fd2edd25c647be17",
-   "item": {
-    "statement": "For a compendial-grade API, identify on the certificate of analysis the compendial tests performed (and any customer-specified tests) and the test results.",
-    "quote": "For example, for a compendial-grade API, the COA should identify the compendial tests that were performed (as well as customer-specified tests, if any) and the test results.",
-    "clause_number": "Q15",
-    "strength": "recommended",
-    "plant_types": [
-     "API"
-    ],
-    "condition": "compendial-grade API"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ",
-    "API"
-   ]
-  },
-  {
-   "id": "fda-cgmp-qa-components-containers-closures.html:Q15#7",
-   "unit": "Q15",
-   "hash": "bb34610c04714529",
-   "item": {
-    "statement": "If a compendial-grade API differs from a USP standard of strength, quality or purity, declare that difference clearly on the label.",
-    "quote": "If a compendial-grade API differs from a USP standard of strength, quality, or purity, that difference should be clearly declared on the label.",
-    "clause_number": "Q15",
-    "strength": "recommended",
-    "plant_types": [
-     "API"
-    ],
-    "condition": "if the API differs from a USP standard"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ",
-    "API"
-   ]
-  },
-  {
-   "id": "fda-cgmp-qa-components-containers-closures.html:Q15#8",
-   "unit": "Q15",
-   "hash": "33879b3236e4bb9c",
-   "item": {
-    "statement": "Have written procedures describing in sufficient detail the testing of components.",
-    "quote": "“[T]here shall be written procedures describing in sufficient detail the . . . testing . . . of [finished drug product] components . . . .”",
-    "clause_number": "Q15",
+    "statement": "When an internal audit finding leads to a process change, update all affected procedures, including the master production record, to reflect the change, and keep these records available for FDA inspection.",
+    "quote": "For example, if a routine internal audit finds a problem with a mixing step and the outcome is a change in mixing time, all affected procedures, including the master production record, are to reflect the necessary changes, and such records are subject to FDA inspection as usual.",
+    "clause_number": "Q1.2",
     "strength": "mandatory",
     "plant_types": [
      "OSD",
      "LIQ",
      "SEMI",
-     "INJ"
+     "INJ",
+     "API"
     ],
-    "condition": ""
+    "condition": "when an audit finding leads to a process change"
    },
    "plant_scope": [
     "OSD",
@@ -251,19 +238,20 @@
    ]
   },
   {
-   "id": "fda-cgmp-qa-components-containers-closures.html:Q15#9",
-   "unit": "Q15",
-   "hash": "65ddbfc258159825",
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q1#4",
+   "unit": "Q1",
+   "hash": "a56061122cae52a7",
    "item": {
-    "statement": "Test each component for conformity with all appropriate written specifications for purity, strength and quality.",
-    "quote": "“[E]ach component shall be tested for conformity with all appropriate written specifications for purity, strength, and quality.",
-    "clause_number": "Q15",
+    "statement": "Retain any investigation into the impact of an audit-identified problem on related batches and make it available for FDA inspection.",
+    "quote": "Any investigation into the impact this problem had on related batches is to be retained and also made available for inspection by FDA (see § 211.192).",
+    "clause_number": "Q1.2",
     "strength": "mandatory",
     "plant_types": [
      "OSD",
      "LIQ",
      "SEMI",
-     "INJ"
+     "INJ",
+     "API"
     ],
     "condition": ""
    },
@@ -276,13 +264,139 @@
    ]
   },
   {
-   "id": "fda-cgmp-qa-components-containers-closures.html:Q15#10",
-   "unit": "Q15",
-   "hash": "7c802bcfe2a45539",
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q1#5",
+   "unit": "Q1",
+   "hash": "932cad4cd762d024",
    "item": {
-    "statement": "Instead of full testing, a supplier's report of analysis for a component may be accepted, provided the manufacturer conducts at least one specific identity test on the component and establishes the reliability of the supplier's analyses by appropriate validation of the supplier's test results at appropriate intervals.",
-    "quote": "In lieu of such testing by the manufacturer, a report of analysis may be accepted from the supplier of a component, provided that at least one specific identity test is conducted on such component by the manufacturer, and provided that the manufacturer establishes the reliability of the supplier’s analyses through appropriate validation of the supplier’s test results at appropriate intervals.”",
-    "clause_number": "Q15",
+    "statement": "Treat reports of investigations or evaluations prepared for matters such as product complaints, vendor qualification, periodic review of records and data, and failure investigations as records open to FDA inspection (not as internal audits), and retain them for at least the retention period set by the CGMP regulations.",
+    "quote": "any reports of investigations or evaluations prepared in response to, for example, a product complaint (§ 211.198), vendor qualification (§ 211.84), periodic review of records and data (§ 211.180(e)), and a failure investigation (§ 211.192) are not internal audits as discussed above. Such records are subject to FDA inspection and must be retained for at least the time specified in the CGMP regulations (see § 211.180).",
+    "clause_number": "Q1.3",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q2#1",
+   "unit": "Q2",
+   "hash": "872fafb39f53e53b",
+   "item": {
+    "statement": "Containers, closures and packaging materials may be sampled for receipt examination in the warehouse, provided the warehouse environment is suitable for the purported quality characteristics of the material sampled, so that sampling does not contaminate the contents.",
+    "quote": "Yes. Generally, we believe that sampling in a typical drug manufacturing facility warehouse would not represent a risk to the container or closure or affect the integrity of the sample results. But whether the act of collecting a sample in the warehouse violates the CGMP requirement that containers \"be opened, sampled, and sealed in a manner designed to prevent contamination of their contents...\" will depend on the purported quality characteristics of the material under sample and the warehouse environment.",
+    "clause_number": "Q2.1",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "warehouse environment suits the material's purported quality"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q2#2",
+   "unit": "Q2",
+   "hash": "e777c65cd7800cc2",
+   "item": {
+    "statement": "Sample containers or closures that are claimed to be sterile or depyrogenated under conditions equivalent to their claimed quality; a warehouse environment is not sufficient for this.",
+    "quote": "For containers or closures purporting to be sterile or depyrogenated, sampling should be under conditions equivalent to the purported quality of the material: a warehouse environment would not suffice (see 21 CFR 211.94 and 211.113(b)).",
+    "clause_number": "Q2.1",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "containers or closures purporting to be sterile or depyrogenated"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q2#3",
+   "unit": "Q2",
+   "hash": "9249e34869d44fcc",
+   "item": {
+    "statement": "Perform all sampling of containers, closures and packaging materials so as to limit exposure to the environment during and after sample removal, e.g. by wiping outside surfaces, limiting the time the original package is open, and properly resealing it.",
+    "quote": "At a minimum, any sampling should be performed in a manner to limit exposure to the environment during and after the time samples are removed (i.e., wiping outside surfaces, limiting time that the original package is open, and properly resealing the original package).",
+    "clause_number": "Q2.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q2#4",
+   "unit": "Q2",
+   "hash": "e87121f9683e40cd",
+   "item": {
+    "statement": "Have well-written procedures for sampling containers, closures and packaging materials, and follow them.",
+    "quote": "Well-written and followed procedures",
+    "clause_number": "Q2.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q2#5",
+   "unit": "Q2",
+   "hash": "833a9e1542333c89",
+   "item": {
+    "statement": "A shipment of containers or closures may be released for use on the basis of the supplier's certificate of analysis plus a visual identification of the containers or closures.",
+    "quote": "Note that the CGMP regulations at 21 CFR 211.84 permit a manufacturer to release for use a shipment of containers or closures based on the supplier's certificate of analysis and a visual identification of the containers or closures.",
+    "clause_number": "Q2.2",
     "strength": "optional",
     "plant_types": [
      "OSD",
@@ -290,7 +404,7 @@
      "SEMI",
      "INJ"
     ],
-    "condition": "provided at least one identity test is done and supplier reliability is validated"
+    "condition": ""
    },
    "plant_scope": [
     "OSD",
@@ -301,13 +415,60 @@
    ]
   },
   {
-   "id": "fda-cgmp-qa-components-containers-closures.html:Q15#11",
-   "unit": "Q15",
-   "hash": "f11dfc3a0cdffa28",
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q2#6",
+   "unit": "Q2",
+   "hash": "98b56715d7e59bb4",
    "item": {
-    "statement": "If accepting test results from an API supplier's certificate of analysis instead of performing the tests, validate the supplier's reliability; the identity test must still be performed by the finished product manufacturer.",
-    "quote": "Therefore, if the finished drug product manufacturer accepts the test results from an API supplier’s COA rather than performing the tests itself (other than for identity, which the manufacturer is required to perform), the manufacturer must validate the API supplier’s reliability.",
-    "clause_number": "Q15",
+    "statement": "Once the supplier's reliability has been established by validating its test results, the visual examination of containers or closures may be performed entirely in the warehouse.",
+    "quote": "Once a supplier's reliability has been established by validation of their test results, a manufacturer could perform the visual examination entirely in the warehouse.",
+    "clause_number": "Q2.2",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "once supplier reliability is established by validating its test results"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q3#1",
+   "unit": "Q3",
+   "hash": "989cc48773dc0d5a",
+   "item": {
+    "statement": "Where environmental monitoring for Mycoplasma is performed, use selective media (PPLO broth or agar).",
+    "quote": "Environmental monitoring of Mycoplasma",
+    "clause_number": "Q3.2",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "when monitoring for Mycoplasma"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q4#1",
+   "unit": "Q4",
+   "hash": "39cb552129f7617d",
+   "item": {
+    "statement": "Test representative samples of each shipment of each lot of every active and inactive component (raw material) to confirm its identity as labeled before releasing it for use in drug product manufacturing, using more than one test where needed to establish identity.",
+    "quote": "These regulations require representative samples of each shipment of each lot of active and inactive component (or raw materials) to be tested to confirm the identity of the component as labeled prior to release for use in drug product manufacturing. The regulations acknowledge that more than one test may be needed to ascertain a component’s identity.",
+    "clause_number": "Q4.1",
     "strength": "mandatory",
     "plant_types": [
      "OSD",
@@ -315,7 +476,7 @@
      "SEMI",
      "INJ"
     ],
-    "condition": "if relying on the supplier's certificate of analysis"
+    "condition": "before release for use"
    },
    "plant_scope": [
     "OSD",
@@ -326,14 +487,14 @@
    ]
   },
   {
-   "id": "fda-cgmp-qa-components-containers-closures.html:Q15#12",
-   "unit": "Q15",
-   "hash": "5bc36739ae2f8a58",
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q4#2",
+   "unit": "Q4",
+   "hash": "8c91e0f2861f8e77",
    "item": {
-    "statement": "Establish the procedure for validating API supplier reliability so that it is consistent with the principles of CGMP and risk management.",
-    "quote": "This validation procedure is established by the finished drug product manufacturer and should be consistent with the principles of CGMP and risk management.",
-    "clause_number": "Q15",
-    "strength": "recommended",
+    "statement": "In the sampling program for components, take samples that are representative of the shipment received.",
+    "quote": "Samples are to be",
+    "clause_number": "Q4.3",
+    "strength": "mandatory",
     "plant_types": [
      "OSD",
      "LIQ",
@@ -351,21 +512,148 @@
    ]
   },
   {
-   "id": "fda-cgmp-qa-components-containers-closures.html:Q15#13",
-   "unit": "Q15",
-   "hash": "2c74e3ac509825bb",
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q4#3",
+   "unit": "Q4",
+   "hash": "9692275dc788f208",
    "item": {
-    "statement": "Ensure that compendial-grade APIs comply with compendial specifications, either by testing them or by validating the API supplier's reliability.",
-    "quote": "The finished drug product manufacturer should also ensure that compendial-grade APIs comply with compendial specifications, either by testing the APIs or by validating API suppliers’ reliability, as described above.",
-    "clause_number": "Q15",
-    "strength": "recommended",
+    "statement": "In the sampling program for components, base the number of containers sampled and the amount sampled from each container on statistical criteria for component variability, confidence levels and the degree of precision required.",
+    "quote": "The number of containers",
+    "clause_number": "Q4.4",
+    "strength": "mandatory",
     "plant_types": [
      "OSD",
      "LIQ",
      "SEMI",
      "INJ"
     ],
-    "condition": "compendial-grade APIs"
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q4#4",
+   "unit": "Q4",
+   "hash": "ab3ff5d85654c9ce",
+   "item": {
+    "statement": "In the sampling program for components, take into account the supplier's past quality history.",
+    "quote": "The sample program",
+    "clause_number": "Q4.5",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q4#5",
+   "unit": "Q4",
+   "hash": "e240e4e02059a5b1",
+   "item": {
+    "statement": "In the sampling program for components, take a sample amount sufficient for the necessary analysis and for reserve samples.",
+    "quote": "The sample amount",
+    "clause_number": "Q4.6",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q4#6",
+   "unit": "Q4",
+   "hash": "a555be65e102e961",
+   "item": {
+    "statement": "Use an identity-testing approach for components that gives a high degree of confidence that each container in each shipment contains the material stated on its label.",
+    "quote": "For these reasons, manufacturers need to develop an approach that provides a high degree of confidence that each container in each shipment contains the material purported by the label.",
+    "clause_number": "Q4.8",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q4#7",
+   "unit": "Q4",
+   "hash": "7140136f9d3c16c9",
+   "item": {
+    "statement": "Make all sampling representative and scientifically sound.",
+    "quote": "(See also 21 CFR 211.160(b), which requires all sampling to be representative and scientifically sound.)",
+    "clause_number": "Q4.8",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q4#8",
+   "unit": "Q4",
+   "hash": "982f43e3ffcd569d",
+   "item": {
+    "statement": "Design the identity-testing approach to account for the fact that a material's identity must not vary from what is specified.",
+    "quote": "The approach must account for the fact that the material’s identity must not vary from what is specified.",
+    "clause_number": "Q4.8",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
    },
    "plant_scope": [
     "OSD",

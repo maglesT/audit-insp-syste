@@ -1,0 +1,1704 @@
+{
+ "role": "a",
+ "instructions": "You are an auditor checking one checklist item against the US regulation paragraph it claims to come from. You get\nthe section's paragraphs (reference and exact text, from the official eCFR XML) and the item. Start from the ITEM:\nread it, then find in the cited paragraph what it covers.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the parent paragraph's\nlead-in (including a qualifier such as \"as are necessary to prevent contamination or mixups\"). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph requires what the statement asks for, the statement\n  adds nothing and omits nothing of that obligation, the strength (shall/must = mandatory, should = recommended,\n  may = optional; a sub-paragraph takes its lead-in's) matches, and the regulation applies to every listed plant\n  type (INJ = sterile injectables: a paragraph limited to products not required to be sterile does not apply to\n  INJ; one limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "sections": [
+  {
+   "section": "211.160",
+   "paragraphs": [
+    {
+     "ref": "211.160",
+     "text": "§ 211.160 General requirements."
+    },
+    {
+     "ref": "211.160(a)",
+     "text": "(a) The establishment of any specifications, standards, sampling plans, test procedures, or other laboratory control mechanisms required by this subpart, including any change in such specifications, standards, sampling plans, test procedures, or other laboratory control mechanisms, shall be drafted by the appropriate organizational unit and reviewed and approved by the quality control unit. The requirements in this subpart shall be followed and shall be documented at the time of performance. Any deviation from the written specifications, standards, sampling plans, test procedures, or other laboratory control mechanisms shall be recorded and justified."
+    },
+    {
+     "ref": "211.160(b)",
+     "text": "(b) Laboratory controls shall include the establishment of scientifically sound and appropriate specifications, standards, sampling plans, and test procedures designed to assure that components, drug product containers, closures, in-process materials, labeling, and drug products conform to appropriate standards of identity, strength, quality, and purity. Laboratory controls shall include:"
+    },
+    {
+     "ref": "211.160(b)(1)",
+     "text": "(1) Determination of conformity to applicable written specifications for the acceptance of each lot within each shipment of components, drug product containers, closures, and labeling used in the manufacture, processing, packing, or holding of drug products. The specifications shall include a description of the sampling and testing procedures used. Samples shall be representative and adequately identified. Such procedures shall also require appropriate retesting of any component, drug product container, or closure that is subject to deterioration."
+    },
+    {
+     "ref": "211.160(b)(2)",
+     "text": "(2) Determination of conformance to written specifications and a description of sampling and testing procedures for in-process materials. Such samples shall be representative and properly identified."
+    },
+    {
+     "ref": "211.160(b)(3)",
+     "text": "(3) Determination of conformance to written descriptions of sampling procedures and appropriate specifications for drug products. Such samples shall be representative and properly identified."
+    },
+    {
+     "ref": "211.160(b)(4)",
+     "text": "(4) The calibration of instruments, apparatus, gauges, and recording devices at suitable intervals in accordance with an established written program containing specific directions, schedules, limits for accuracy and precision, and provisions for remedial action in the event accuracy and/or precision limits are not met. Instruments, apparatus, gauges, and recording devices not meeting established specifications shall not be used."
+    }
+   ]
+  },
+  {
+   "section": "211.165",
+   "paragraphs": [
+    {
+     "ref": "211.165",
+     "text": "§ 211.165 Testing and release for distribution."
+    },
+    {
+     "ref": "211.165(a)",
+     "text": "(a) For each batch of drug product, there shall be appropriate laboratory determination of satisfactory conformance to final specifications for the drug product, including the identity and strength of each active ingredient, prior to release. Where sterility and/or pyrogen testing are conducted on specific batches of shortlived radiopharmaceuticals, such batches may be released prior to completion of sterility and/or pyrogen testing, provided such testing is completed as soon as possible."
+    },
+    {
+     "ref": "211.165(b)",
+     "text": "(b) There shall be appropriate laboratory testing, as necessary, of each batch of drug product required to be free of objectionable microorganisms."
+    },
+    {
+     "ref": "211.165(c)",
+     "text": "(c) Any sampling and testing plans shall be described in written procedures that shall include the method of sampling and the number of units per batch to be tested; such written procedure shall be followed."
+    },
+    {
+     "ref": "211.165(d)",
+     "text": "(d) Acceptance criteria for the sampling and testing conducted by the quality control unit shall be adequate to assure that batches of drug products meet each appropriate specification and appropriate statistical quality control criteria as a condition for their approval and release. The statistical quality control criteria shall include appropriate acceptance levels and/or appropriate rejection levels."
+    },
+    {
+     "ref": "211.165(e)",
+     "text": "(e) The accuracy, sensitivity, specificity, and reproducibility of test methods employed by the firm shall be established and documented. Such validation and documentation may be accomplished in accordance with § 211.194(a)(2)."
+    },
+    {
+     "ref": "211.165(f)",
+     "text": "(f) Drug products failing to meet established standards or specifications and any other relevant quality control criteria shall be rejected. Reprocessing may be performed. Prior to acceptance and use, reprocessed material must meet appropriate standards, specifications, and any other relevant criteria."
+    }
+   ]
+  },
+  {
+   "section": "211.166",
+   "paragraphs": [
+    {
+     "ref": "211.166",
+     "text": "§ 211.166 Stability testing."
+    },
+    {
+     "ref": "211.166(a)",
+     "text": "(a) There shall be a written testing program designed to assess the stability characteristics of drug products. The results of such stability testing shall be used in determining appropriate storage conditions and expiration dates. The written program shall be followed and shall include:"
+    },
+    {
+     "ref": "211.166(a)(1)",
+     "text": "(1) Sample size and test intervals based on statistical criteria for each attribute examined to assure valid estimates of stability;"
+    },
+    {
+     "ref": "211.166(a)(2)",
+     "text": "(2) Storage conditions for samples retained for testing;"
+    },
+    {
+     "ref": "211.166(a)(3)",
+     "text": "(3) Reliable, meaningful, and specific test methods;"
+    },
+    {
+     "ref": "211.166(a)(4)",
+     "text": "(4) Testing of the drug product in the same container-closure system as that in which the drug product is marketed;"
+    },
+    {
+     "ref": "211.166(a)(5)",
+     "text": "(5) Testing of drug products for reconstitution at the time of dispensing (as directed in the labeling) as well as after they are reconstituted."
+    },
+    {
+     "ref": "211.166(b)",
+     "text": "(b) An adequate number of batches of each drug product shall be tested to determine an appropriate expiration date and a record of such data shall be maintained. Accelerated studies, combined with basic stability information on the components, drug products, and container-closure system, may be used to support tentative expiration dates provided full shelf life studies are not available and are being conducted. Where data from accelerated studies are used to project a tentative expiration date that is beyond a date supported by actual shelf life studies, there must be stability studies conducted, including drug product testing at appropriate intervals, until the tentative expiration date is verified or the appropriate expiration date determined."
+    },
+    {
+     "ref": "211.166(c)",
+     "text": "(c) For homeopathic drug products, the requirements of this section are as follows:"
+    },
+    {
+     "ref": "211.166(c)(1)",
+     "text": "(1) There shall be a written assessment of stability based at least on testing or examination of the drug product for compatibility of the ingredients, and based on marketing experience with the drug product to indicate that there is no degradation of the product for the normal or expected period of use."
+    },
+    {
+     "ref": "211.166(c)(2)",
+     "text": "(2) Evaluation of stability shall be based on the same container-closure system in which the drug product is being marketed."
+    },
+    {
+     "ref": "211.166(d)",
+     "text": "(d) Allergenic extracts that are labeled “No U.S. Standard of Potency” are exempt from the requirements of this section."
+    }
+   ]
+  },
+  {
+   "section": "211.167",
+   "paragraphs": [
+    {
+     "ref": "211.167",
+     "text": "§ 211.167 Special testing requirements."
+    },
+    {
+     "ref": "211.167(a)",
+     "text": "(a) For each batch of drug product purporting to be sterile and/or pyrogen-free, there shall be appropriate laboratory testing to determine conformance to such requirements. The test procedures shall be in writing and shall be followed."
+    },
+    {
+     "ref": "211.167(b)",
+     "text": "(b) For each batch of ophthalmic ointment, there shall be appropriate testing to determine conformance to specifications regarding the presence of foreign particles and harsh or abrasive substances. The test procedures shall be in writing and shall be followed."
+    },
+    {
+     "ref": "211.167(c)",
+     "text": "(c) For each batch of controlled-release dosage form, there shall be appropriate laboratory testing to determine conformance to the specifications for the rate of release of each active ingredient. The test procedures shall be in writing and shall be followed."
+    }
+   ]
+  },
+  {
+   "section": "211.170",
+   "paragraphs": [
+    {
+     "ref": "211.170",
+     "text": "§ 211.170 Reserve samples."
+    },
+    {
+     "ref": "211.170(a)",
+     "text": "(a) An appropriately identified reserve sample that is representative of each lot in each shipment of each active ingredient shall be retained. The reserve sample consists of at least twice the quantity necessary for all tests required to determine whether the active ingredient meets its established specifications, except for sterility and pyrogen testing. The retention time is as follows:"
+    },
+    {
+     "ref": "211.170(a)(1)",
+     "text": "(1) For an active ingredient in a drug product other than those described in paragraphs (a) (2) and (3) of this section, the reserve sample shall be retained for 1 year after the expiration date of the last lot of the drug product containing the active ingredient."
+    },
+    {
+     "ref": "211.170(a)(2)",
+     "text": "(2) For an active ingredient in a radioactive drug product, except for nonradioactive reagent kits, the reserve sample shall be retained for:"
+    },
+    {
+     "ref": "211.170(a)(2)(i)",
+     "text": "(i) Three months after the expiration date of the last lot of the drug product containing the active ingredient if the expiration dating period of the drug product is 30 days or less; or"
+    },
+    {
+     "ref": "211.170(a)(2)(ii)",
+     "text": "(ii) Six months after the expiration date of the last lot of the drug product containing the active ingredient if the expiration dating period of the drug product is more than 30 days."
+    },
+    {
+     "ref": "211.170(a)(3)",
+     "text": "(3) For an active ingredient in an OTC drug product that is exempt from bearing an expiration date under § 211.137, the reserve sample shall be retained for 3 years after distribution of the last lot of the drug product containing the active ingredient."
+    },
+    {
+     "ref": "211.170(b)",
+     "text": "(b) An appropriately identified reserve sample that is representative of each lot or batch of drug product shall be retained and stored under conditions consistent with product labeling. The reserve sample shall be stored in the same immediate container-closure system in which the drug product is marketed or in one that has essentially the same characteristics. The reserve sample consists of at least twice the quantity necessary to perform all the required tests, except those for sterility and pyrogens. Except for those for drug products described in paragraph (b)(2) of this section, reserve samples from representative sample lots or batches selected by acceptable statistical procedures shall be examined visually at least once a year for evidence of deterioration unless visual examination would affect the integrity of the reserve sample. Any evidence of reserve sample deterioration shall be investigated in accordance with § 211.192. The results of the examination shall be recorded and maintained with other stability data on the drug product. The retention time is as follows:"
+    },
+    {
+     "ref": "211.170(b)(1)",
+     "text": "(1) For a drug product other than those described in paragraphs (b) (2) and (3) of this section, the reserve sample shall be retained for 1 year after the expiration date of the drug product."
+    },
+    {
+     "ref": "211.170(b)(2)",
+     "text": "(2) For a radioactive drug product, except for nonradioactive reagent kits, the reserve sample shall be retained for:"
+    },
+    {
+     "ref": "211.170(b)(2)(i)",
+     "text": "(i) Three months after the expiration date of the drug product if the expiration dating period of the drug product is 30 days or less; or"
+    },
+    {
+     "ref": "211.170(b)(2)(ii)",
+     "text": "(ii) Six months after the expiration date of the drug product if the expiration dating period of the drug product is more than 30 days."
+    },
+    {
+     "ref": "211.170(b)(3)",
+     "text": "(3) For an OTC drug product that is exempt for bearing an expiration date under § 211.137, the reserve sample must be retained for 3 years after the lot or batch of drug product is distributed."
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.160#1",
+   "section": "211.160",
+   "hash": "c5978fd6ba59761d",
+   "item": {
+    "statement": "Have the appropriate organizational unit draft any laboratory specifications, standards, sampling plans, test procedures or other laboratory control mechanisms, and any change to them, and have the quality control unit review and approve them.",
+    "quote": "The establishment of any specifications, standards, sampling plans, test procedures, or other laboratory control mechanisms required by this subpart, including any change in such specifications, standards, sampling plans, test procedures, or other laboratory control mechanisms, shall be drafted by the appropriate organizational unit and reviewed and approved by the quality control unit.",
+    "clause_number": "211.160(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.160#2",
+   "section": "211.160",
+   "hash": "be5cd4da0cfa5ee9",
+   "item": {
+    "statement": "Follow the laboratory control requirements and document them at the time they are performed.",
+    "quote": "The requirements in this subpart shall be followed and shall be documented at the time of performance.",
+    "clause_number": "211.160(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.160#3",
+   "section": "211.160",
+   "hash": "c66f590d353162df",
+   "item": {
+    "statement": "Record and justify any deviation from the written laboratory specifications, standards, sampling plans, test procedures or other laboratory control mechanisms.",
+    "quote": "Any deviation from the written specifications, standards, sampling plans, test procedures, or other laboratory control mechanisms shall be recorded and justified.",
+    "clause_number": "211.160(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.160#4",
+   "section": "211.160",
+   "hash": "f90bc696d7cfb476",
+   "item": {
+    "statement": "Laboratory controls establish scientifically sound and appropriate specifications, standards, sampling plans and test procedures designed to assure that components, drug product containers, closures, in-process materials, labeling and drug products conform to appropriate standards of identity, strength, quality and purity.",
+    "quote": "Laboratory controls shall include the establishment of scientifically sound and appropriate specifications, standards, sampling plans, and test procedures designed to assure that components, drug product containers, closures, in-process materials, labeling, and drug products conform to appropriate standards of identity, strength, quality, and purity.",
+    "clause_number": "211.160(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.160#5",
+   "section": "211.160",
+   "hash": "9eeb301e43b0b1de",
+   "item": {
+    "statement": "As part of laboratory controls, determine conformity to the applicable written acceptance specifications for each lot within each shipment of components, drug product containers, closures and labeling used in manufacturing, processing, packing or holding drug products.",
+    "quote": "Determination of conformity to applicable written specifications for the acceptance of each lot within each shipment of components, drug product containers, closures, and labeling used in the manufacture, processing, packing, or holding of drug products.",
+    "clause_number": "211.160(b)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.160#6",
+   "section": "211.160",
+   "hash": "ef55f7ad2a555b87",
+   "item": {
+    "statement": "As part of laboratory controls, make sure the acceptance specifications for components, drug product containers, closures and labeling describe the sampling and testing procedures used.",
+    "quote": "The specifications shall include a description of the sampling and testing procedures used.",
+    "clause_number": "211.160(b)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.160#7",
+   "section": "211.160",
+   "hash": "345c0c687bde4447",
+   "item": {
+    "statement": "As part of laboratory controls, make sure samples of components, drug product containers, closures and labeling are representative and adequately identified.",
+    "quote": "Samples shall be representative and adequately identified.",
+    "clause_number": "211.160(b)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.160#8",
+   "section": "211.160",
+   "hash": "692b8386a13fb47d",
+   "item": {
+    "statement": "As part of laboratory controls, make sure the procedures require appropriate retesting of any component, drug product container or closure that is subject to deterioration.",
+    "quote": "Such procedures shall also require appropriate retesting of any component, drug product container, or closure that is subject to deterioration.",
+    "clause_number": "211.160(b)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "material subject to deterioration"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.160#9",
+   "section": "211.160",
+   "hash": "c880d687be1f3bdd",
+   "item": {
+    "statement": "As part of laboratory controls, determine conformance of in-process materials to written specifications and describe the sampling and testing procedures for them.",
+    "quote": "Determination of conformance to written specifications and a description of sampling and testing procedures for in-process materials.",
+    "clause_number": "211.160(b)(2)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.160#10",
+   "section": "211.160",
+   "hash": "75a4eebf9a38d5c2",
+   "item": {
+    "statement": "As part of laboratory controls, make sure in-process material samples are representative and properly identified.",
+    "quote": "Such samples shall be representative and properly identified.",
+    "clause_number": "211.160(b)(2)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.160#11",
+   "section": "211.160",
+   "hash": "862951495f883521",
+   "item": {
+    "statement": "As part of laboratory controls, determine conformance of drug products to written descriptions of sampling procedures and appropriate specifications.",
+    "quote": "Determination of conformance to written descriptions of sampling procedures and appropriate specifications for drug products.",
+    "clause_number": "211.160(b)(3)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.160#12",
+   "section": "211.160",
+   "hash": "ac00b911aa4717dc",
+   "item": {
+    "statement": "As part of laboratory controls, make sure drug product samples are representative and properly identified.",
+    "quote": "Such samples shall be representative and properly identified.",
+    "clause_number": "211.160(b)(3)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.160#13",
+   "section": "211.160",
+   "hash": "333fa6d29a1b8053",
+   "item": {
+    "statement": "As part of laboratory controls, calibrate instruments, apparatus, gauges and recording devices at suitable intervals under an established written program that contains specific directions, schedules, limits for accuracy and precision, and provisions for remedial action if accuracy or precision limits are not met.",
+    "quote": "The calibration of instruments, apparatus, gauges, and recording devices at suitable intervals in accordance with an established written program containing specific directions, schedules, limits for accuracy and precision, and provisions for remedial action in the event accuracy and/or precision limits are not met.",
+    "clause_number": "211.160(b)(4)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.160#14",
+   "section": "211.160",
+   "hash": "9a04c8d1cb2b47c8",
+   "item": {
+    "statement": "As part of laboratory controls, do not use instruments, apparatus, gauges or recording devices that do not meet established specifications.",
+    "quote": "Instruments, apparatus, gauges, and recording devices not meeting established specifications shall not be used.",
+    "clause_number": "211.160(b)(4)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "does not meet established specifications"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.165#1",
+   "section": "211.165",
+   "hash": "f946dcfcd8789924",
+   "item": {
+    "statement": "Before release, carry out appropriate laboratory determination for each drug product batch that it satisfactorily conforms to final specifications, including the identity and strength of each active ingredient.",
+    "quote": "For each batch of drug product, there shall be appropriate laboratory determination of satisfactory conformance to final specifications for the drug product, including the identity and strength of each active ingredient, prior to release.",
+    "clause_number": "211.165(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.165#2",
+   "section": "211.165",
+   "hash": "46b68dbbf0876edf",
+   "item": {
+    "statement": "Where sterility and/or pyrogen testing is done on specific batches of short-lived radiopharmaceuticals, those batches may be released before that testing is finished, provided the testing is completed as soon as possible.",
+    "quote": "Where sterility and/or pyrogen testing are conducted on specific batches of shortlived radiopharmaceuticals, such batches may be released prior to completion of sterility and/or pyrogen testing, provided such testing is completed as soon as possible.",
+    "clause_number": "211.165(a)",
+    "strength": "optional",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "short-lived radiopharmaceuticals; testing completed as soon as possible"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.165#3",
+   "section": "211.165",
+   "hash": "c81168e4f61dc493",
+   "item": {
+    "statement": "Carry out appropriate laboratory testing, as necessary, of each batch of drug product that must be free of objectionable microorganisms.",
+    "quote": "There shall be appropriate laboratory testing, as necessary, of each batch of drug product required to be free of objectionable microorganisms.",
+    "clause_number": "211.165(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "product required to be free of objectionable microorganisms"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.165#4",
+   "section": "211.165",
+   "hash": "8f53d6faaf954755",
+   "item": {
+    "statement": "Describe any sampling and testing plans in written procedures that state the sampling method and the number of units per batch to be tested.",
+    "quote": "Any sampling and testing plans shall be described in written procedures that shall include the method of sampling and the number of units per batch to be tested",
+    "clause_number": "211.165(c)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.165#5",
+   "section": "211.165",
+   "hash": "20afc5c113a74ef3",
+   "item": {
+    "statement": "Follow the written sampling and testing procedures.",
+    "quote": "such written procedure shall be followed.",
+    "clause_number": "211.165(c)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.165#6",
+   "section": "211.165",
+   "hash": "8453a812527bbeea",
+   "item": {
+    "statement": "Set acceptance criteria for quality control unit sampling and testing that are adequate to assure batches meet each appropriate specification and appropriate statistical quality control criteria as a condition of approval and release.",
+    "quote": "Acceptance criteria for the sampling and testing conducted by the quality control unit shall be adequate to assure that batches of drug products meet each appropriate specification and appropriate statistical quality control criteria as a condition for their approval and release.",
+    "clause_number": "211.165(d)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.165#7",
+   "section": "211.165",
+   "hash": "2acaf012978a2e37",
+   "item": {
+    "statement": "Include appropriate acceptance levels and/or appropriate rejection levels in the statistical quality control criteria.",
+    "quote": "The statistical quality control criteria shall include appropriate acceptance levels and/or appropriate rejection levels.",
+    "clause_number": "211.165(d)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.165#8",
+   "section": "211.165",
+   "hash": "a6e21c556ffa9ead",
+   "item": {
+    "statement": "Establish and document the accuracy, sensitivity, specificity and reproducibility of the test methods the firm uses.",
+    "quote": "The accuracy, sensitivity, specificity, and reproducibility of test methods employed by the firm shall be established and documented.",
+    "clause_number": "211.165(e)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.165#9",
+   "section": "211.165",
+   "hash": "3f9c045d692a93c0",
+   "item": {
+    "statement": "Test method validation and documentation may be done through the laboratory records that document each test method used.",
+    "quote": "Such validation and documentation may be accomplished in accordance with § 211.194(a)(2).",
+    "clause_number": "211.165(e)",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.165#10",
+   "section": "211.165",
+   "hash": "db807873a9244b1c",
+   "item": {
+    "statement": "Reject drug products that fail to meet established standards or specifications and any other relevant quality control criteria.",
+    "quote": "Drug products failing to meet established standards or specifications and any other relevant quality control criteria shall be rejected.",
+    "clause_number": "211.165(f)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "product fails standards, specifications or QC criteria"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.165#11",
+   "section": "211.165",
+   "hash": "a04527ac2ab54b48",
+   "item": {
+    "statement": "Rejected drug products may be reprocessed.",
+    "quote": "Reprocessing may be performed.",
+    "clause_number": "211.165(f)",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.165#12",
+   "section": "211.165",
+   "hash": "c39bc5926a1a8f44",
+   "item": {
+    "statement": "Make sure reprocessed material meets appropriate standards, specifications and any other relevant criteria before it is accepted and used.",
+    "quote": "Prior to acceptance and use, reprocessed material must meet appropriate standards, specifications, and any other relevant criteria.",
+    "clause_number": "211.165(f)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "material has been reprocessed"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#1",
+   "section": "211.166",
+   "hash": "2f511ef58474f316",
+   "item": {
+    "statement": "Have a written testing program designed to assess the stability characteristics of drug products.",
+    "quote": "There shall be a written testing program designed to assess the stability characteristics of drug products.",
+    "clause_number": "211.166(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#2",
+   "section": "211.166",
+   "hash": "b1c5ccfd04f1639a",
+   "item": {
+    "statement": "Use the stability testing results to determine appropriate storage conditions and expiration dates.",
+    "quote": "The results of such stability testing shall be used in determining appropriate storage conditions and expiration dates.",
+    "clause_number": "211.166(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#3",
+   "section": "211.166",
+   "hash": "5d6c119019924a5e",
+   "item": {
+    "statement": "Follow the written stability testing program, and make it cover sample size and test intervals, sample storage conditions, test methods, testing in the marketed container-closure system, and testing of products for reconstitution.",
+    "quote": "The written program shall be followed and shall include:",
+    "clause_number": "211.166(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#4",
+   "section": "211.166",
+   "hash": "2261cf6328e196fe",
+   "item": {
+    "statement": "The written stability testing program includes sample size and test intervals based on statistical criteria for each attribute examined, to assure valid estimates of stability.",
+    "quote": "Sample size and test intervals based on statistical criteria for each attribute examined to assure valid estimates of stability;",
+    "clause_number": "211.166(a)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#5",
+   "section": "211.166",
+   "hash": "a5d47fc35c7c43c9",
+   "item": {
+    "statement": "The written stability testing program includes storage conditions for the samples retained for testing.",
+    "quote": "Storage conditions for samples retained for testing;",
+    "clause_number": "211.166(a)(2)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#6",
+   "section": "211.166",
+   "hash": "42def08b6b844da1",
+   "item": {
+    "statement": "The written stability testing program includes reliable, meaningful and specific test methods.",
+    "quote": "Reliable, meaningful, and specific test methods;",
+    "clause_number": "211.166(a)(3)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#7",
+   "section": "211.166",
+   "hash": "6a514678ae80a86c",
+   "item": {
+    "statement": "The written stability testing program includes testing of the drug product in the same container-closure system in which it is marketed.",
+    "quote": "Testing of the drug product in the same container-closure system as that in which the drug product is marketed;",
+    "clause_number": "211.166(a)(4)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#8",
+   "section": "211.166",
+   "hash": "709c959bb90905fa",
+   "item": {
+    "statement": "The written stability testing program includes testing of drug products for reconstitution at the time of dispensing (as directed in the labeling) and also after reconstitution.",
+    "quote": "Testing of drug products for reconstitution at the time of dispensing (as directed in the labeling) as well as after they are reconstituted.",
+    "clause_number": "211.166(a)(5)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "drug products for reconstitution"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#9",
+   "section": "211.166",
+   "hash": "11fe090c5b28a763",
+   "item": {
+    "statement": "Test an adequate number of batches of each drug product to determine an appropriate expiration date.",
+    "quote": "An adequate number of batches of each drug product shall be tested to determine an appropriate expiration date",
+    "clause_number": "211.166(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#10",
+   "section": "211.166",
+   "hash": "217a8539b371a3cc",
+   "item": {
+    "statement": "Maintain a record of the stability data used to determine the expiration date.",
+    "quote": "a record of such data shall be maintained.",
+    "clause_number": "211.166(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#11",
+   "section": "211.166",
+   "hash": "807d46a45e498c59",
+   "item": {
+    "statement": "Where full shelf life studies are not available and are being conducted, accelerated studies combined with basic stability information on the components, drug products and container-closure system may be used to support tentative expiration dates.",
+    "quote": "Accelerated studies, combined with basic stability information on the components, drug products, and container-closure system, may be used to support tentative expiration dates provided full shelf life studies are not available and are being conducted.",
+    "clause_number": "211.166(b)",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "full shelf life studies not available and being conducted"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#12",
+   "section": "211.166",
+   "hash": "000b70ae7802b3c5",
+   "item": {
+    "statement": "Where accelerated study data are used to project a tentative expiration date beyond the date supported by actual shelf life studies, conduct stability studies, including drug product testing at appropriate intervals, until the tentative expiration date is verified or the appropriate expiration date is determined.",
+    "quote": "Where data from accelerated studies are used to project a tentative expiration date that is beyond a date supported by actual shelf life studies, there must be stability studies conducted, including drug product testing at appropriate intervals, until the tentative expiration date is verified or the appropriate expiration date determined.",
+    "clause_number": "211.166(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "tentative expiry beyond actual shelf life data"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#13",
+   "section": "211.166",
+   "hash": "308908094bde2a6b",
+   "item": {
+    "statement": "For homeopathic drug products, have a written stability assessment based at least on testing or examination of the drug product for ingredient compatibility and on marketing experience with the product, showing no degradation of the product over its normal or expected period of use.",
+    "quote": "There shall be a written assessment of stability based at least on testing or examination of the drug product for compatibility of the ingredients, and based on marketing experience with the drug product to indicate that there is no degradation of the product for the normal or expected period of use.",
+    "clause_number": "211.166(c)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "homeopathic drug products"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#14",
+   "section": "211.166",
+   "hash": "2551b89f03957ad2",
+   "item": {
+    "statement": "For homeopathic drug products, base the stability evaluation on the same container-closure system in which the product is marketed.",
+    "quote": "Evaluation of stability shall be based on the same container-closure system in which the drug product is being marketed.",
+    "clause_number": "211.166(c)(2)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "homeopathic drug products"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.167#1",
+   "section": "211.167",
+   "hash": "17a29d70a0789bfb",
+   "item": {
+    "statement": "For every batch of drug product claimed to be sterile and/or pyrogen-free, perform appropriate laboratory testing to confirm it meets those requirements.",
+    "quote": "For each batch of drug product purporting to be sterile and/or pyrogen-free, there shall be appropriate laboratory testing to determine conformance to such requirements.",
+    "clause_number": "211.167(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "drug product purporting to be sterile and/or pyrogen-free"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.167#2",
+   "section": "211.167",
+   "hash": "31844508e6ef157a",
+   "item": {
+    "statement": "Have written test procedures for the sterility and/or pyrogen testing of each batch of drug product claimed to be sterile and/or pyrogen-free, and follow them.",
+    "quote": "The test procedures shall be in writing and shall be followed.",
+    "clause_number": "211.167(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "drug product purporting to be sterile and/or pyrogen-free"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.167#3",
+   "section": "211.167",
+   "hash": "f469d61555605792",
+   "item": {
+    "statement": "For every batch of ophthalmic ointment, perform appropriate testing to confirm it meets specifications for foreign particles and harsh or abrasive substances.",
+    "quote": "For each batch of ophthalmic ointment, there shall be appropriate testing to determine conformance to specifications regarding the presence of foreign particles and harsh or abrasive substances.",
+    "clause_number": "211.167(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "SEMI"
+    ],
+    "condition": "ophthalmic ointment"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.167#4",
+   "section": "211.167",
+   "hash": "f98b80650dc939ce",
+   "item": {
+    "statement": "Have written procedures for testing each batch of ophthalmic ointment for foreign particles and harsh or abrasive substances, and follow them.",
+    "quote": "The test procedures shall be in writing and shall be followed.",
+    "clause_number": "211.167(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "SEMI"
+    ],
+    "condition": "ophthalmic ointment"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.167#5",
+   "section": "211.167",
+   "hash": "deb635da7a33fabf",
+   "item": {
+    "statement": "For every batch of a controlled-release dosage form, perform appropriate laboratory testing to confirm it meets the release-rate specifications for each active ingredient.",
+    "quote": "For each batch of controlled-release dosage form, there shall be appropriate laboratory testing to determine conformance to the specifications for the rate of release of each active ingredient.",
+    "clause_number": "211.167(c)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "controlled-release dosage form"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.167#6",
+   "section": "211.167",
+   "hash": "75e6d398b0a72c61",
+   "item": {
+    "statement": "Have written procedures for release-rate testing of each batch of controlled-release dosage form, and follow them.",
+    "quote": "The test procedures shall be in writing and shall be followed.",
+    "clause_number": "211.167(c)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "controlled-release dosage form"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.170#1",
+   "section": "211.170",
+   "hash": "5dd9f4f2ab0d9bb1",
+   "item": {
+    "statement": "Keep an appropriately identified reserve sample, representative of each lot in each shipment of each active ingredient.",
+    "quote": "An appropriately identified reserve sample that is representative of each lot in each shipment of each active ingredient shall be retained.",
+    "clause_number": "211.170(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.170#2",
+   "section": "211.170",
+   "hash": "e50817f3b39246ba",
+   "item": {
+    "statement": "Make each active ingredient reserve sample at least twice the quantity needed for all tests required to show the active ingredient meets its established specifications, excluding sterility and pyrogen testing.",
+    "quote": "The reserve sample consists of at least twice the quantity necessary for all tests required to determine whether the active ingredient meets its established specifications, except for sterility and pyrogen testing.",
+    "clause_number": "211.170(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.170#3",
+   "section": "211.170",
+   "hash": "c5ba41a0aabc1ad7",
+   "item": {
+    "statement": "For an active ingredient used in a drug product that is neither radioactive nor an expiry-exempt OTC product, keep the active ingredient reserve sample for 1 year after the expiration date of the last drug product lot containing it.",
+    "quote": "For an active ingredient in a drug product other than those described in paragraphs (a) (2) and (3) of this section, the reserve sample shall be retained for 1 year after the expiration date of the last lot of the drug product containing the active ingredient.",
+    "clause_number": "211.170(a)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "drug product not radioactive and not expiry-exempt OTC"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.170#4",
+   "section": "211.170",
+   "hash": "dfa07b3e9bb5016f",
+   "item": {
+    "statement": "For an active ingredient in a radioactive drug product (other than nonradioactive reagent kits) whose expiration dating period is 30 days or less, keep the active ingredient reserve sample for three months after the expiration date of the last drug product lot containing it.",
+    "quote": "Three months after the expiration date of the last lot of the drug product containing the active ingredient if the expiration dating period of the drug product is 30 days or less; or",
+    "clause_number": "211.170(a)(2)(i)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "radioactive drug product, except nonradioactive reagent kits; dating period 30 days or less"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.170#5",
+   "section": "211.170",
+   "hash": "b1799cd40380f473",
+   "item": {
+    "statement": "For an active ingredient in a radioactive drug product (other than nonradioactive reagent kits) whose expiration dating period is more than 30 days, keep the active ingredient reserve sample for six months after the expiration date of the last drug product lot containing it.",
+    "quote": "Six months after the expiration date of the last lot of the drug product containing the active ingredient if the expiration dating period of the drug product is more than 30 days.",
+    "clause_number": "211.170(a)(2)(ii)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "radioactive drug product, except nonradioactive reagent kits; dating period more than 30 days"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.170#6",
+   "section": "211.170",
+   "hash": "5d9ab88ee21d9ba7",
+   "item": {
+    "statement": "For an active ingredient in an OTC drug product exempt from carrying an expiration date, keep the active ingredient reserve sample for 3 years after distribution of the last drug product lot containing it.",
+    "quote": "For an active ingredient in an OTC drug product that is exempt from bearing an expiration date under § 211.137, the reserve sample shall be retained for 3 years after distribution of the last lot of the drug product containing the active ingredient.",
+    "clause_number": "211.170(a)(3)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "OTC drug product exempt from expiration dating"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.170#7",
+   "section": "211.170",
+   "hash": "49c5215350aa5a93",
+   "item": {
+    "statement": "Keep an appropriately identified reserve sample, representative of each lot or batch of drug product, stored under conditions consistent with the product labeling.",
+    "quote": "An appropriately identified reserve sample that is representative of each lot or batch of drug product shall be retained and stored under conditions consistent with product labeling.",
+    "clause_number": "211.170(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.170#8",
+   "section": "211.170",
+   "hash": "329924a5731cd32c",
+   "item": {
+    "statement": "Store each drug product reserve sample in the same immediate container-closure system as the marketed product, or in one with essentially the same characteristics.",
+    "quote": "The reserve sample shall be stored in the same immediate container-closure system in which the drug product is marketed or in one that has essentially the same characteristics.",
+    "clause_number": "211.170(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.170#9",
+   "section": "211.170",
+   "hash": "91ed2329c3f287d8",
+   "item": {
+    "statement": "Make each drug product reserve sample at least twice the quantity needed to perform all required tests, excluding sterility and pyrogen tests.",
+    "quote": "The reserve sample consists of at least twice the quantity necessary to perform all the required tests, except those for sterility and pyrogens.",
+    "clause_number": "211.170(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.170#10",
+   "section": "211.170",
+   "hash": "0ca69b2b681a5033",
+   "item": {
+    "statement": "Visually examine reserve samples from representative lots or batches, chosen by acceptable statistical procedures, at least once a year for signs of deterioration, unless the examination would affect sample integrity; this does not apply to radioactive drug products other than nonradioactive reagent kits.",
+    "quote": "Except for those for drug products described in paragraph (b)(2) of this section, reserve samples from representative sample lots or batches selected by acceptable statistical procedures shall be examined visually at least once a year for evidence of deterioration unless visual examination would affect the integrity of the reserve sample.",
+    "clause_number": "211.170(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "unless examination affects sample integrity; not radioactive drug products"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.170#11",
+   "section": "211.170",
+   "hash": "688b557e28fae0a5",
+   "item": {
+    "statement": "Investigate any sign of deterioration found in a reserve sample, following the requirements for investigating unexplained discrepancies and failures.",
+    "quote": "Any evidence of reserve sample deterioration shall be investigated in accordance with § 211.192.",
+    "clause_number": "211.170(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "evidence of reserve sample deterioration"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.170#12",
+   "section": "211.170",
+   "hash": "d2519e3cf7f2def0",
+   "item": {
+    "statement": "Record the results of the reserve sample visual examination and keep them with the other stability data for the drug product.",
+    "quote": "The results of the examination shall be recorded and maintained with other stability data on the drug product.",
+    "clause_number": "211.170(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.170#13",
+   "section": "211.170",
+   "hash": "397d9f1fd19b0327",
+   "item": {
+    "statement": "For a drug product that is neither radioactive nor an expiry-exempt OTC product, keep the drug product reserve sample for 1 year after its expiration date.",
+    "quote": "For a drug product other than those described in paragraphs (b) (2) and (3) of this section, the reserve sample shall be retained for 1 year after the expiration date of the drug product.",
+    "clause_number": "211.170(b)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "drug product not radioactive and not expiry-exempt OTC"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.170#14",
+   "section": "211.170",
+   "hash": "0ecc7df5ea884542",
+   "item": {
+    "statement": "For a radioactive drug product (other than nonradioactive reagent kits) with an expiration dating period of 30 days or less, keep the drug product reserve sample for three months after its expiration date.",
+    "quote": "Three months after the expiration date of the drug product if the expiration dating period of the drug product is 30 days or less; or",
+    "clause_number": "211.170(b)(2)(i)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "radioactive drug product, except nonradioactive reagent kits; dating period 30 days or less"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.170#15",
+   "section": "211.170",
+   "hash": "f9e3077771856133",
+   "item": {
+    "statement": "For a radioactive drug product (other than nonradioactive reagent kits) with an expiration dating period of more than 30 days, keep the drug product reserve sample for six months after its expiration date.",
+    "quote": "Six months after the expiration date of the drug product if the expiration dating period of the drug product is more than 30 days.",
+    "clause_number": "211.170(b)(2)(ii)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "radioactive drug product, except nonradioactive reagent kits; dating period more than 30 days"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.170#16",
+   "section": "211.170",
+   "hash": "549af063f21899ac",
+   "item": {
+    "statement": "For an OTC drug product exempt from carrying an expiration date, keep the drug product reserve sample for 3 years after the lot or batch is distributed.",
+    "quote": "For an OTC drug product that is exempt for bearing an expiration date under § 211.137, the reserve sample must be retained for 3 years after the lot or batch of drug product is distributed.",
+    "clause_number": "211.170(b)(3)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "OTC drug product exempt from expiration dating"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  }
+ ]
+}

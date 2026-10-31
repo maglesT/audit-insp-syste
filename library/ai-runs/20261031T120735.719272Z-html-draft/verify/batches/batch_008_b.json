@@ -1,0 +1,350 @@
+{
+ "role": "b",
+ "instructions": "You are a second, independent auditor. Check one checklist item against the FDA web page paragraph it claims to come from. You get\nthe unit's paragraphs (reference and exact text of the page; \"context\" entries are headings) and the item. Start from the TEXT:\nread the cited paragraph, the paragraphs its quote runs into, and its lead-in fully, then compare the item.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the lead-in above a list\nitem (the paragraph ending \":\" above it). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph expects what the statement asks for (an instruction\n  to the investigator, \"Determine whether the firm validated ...\", expects the firm to have that practice), the statement\n  adds nothing and omits nothing of that obligation, the strength (a legal requirement: shall/must/required = mandatory;\n  should, FDA expects/recommends, an inspection point = recommended; may/acceptable = optional; a list item takes\n  its lead-in's) matches, and the text applies to every listed plant\n  type (INJ = sterile injectables: text limited to non-sterile products does not apply to\n  INJ; text limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences saying what you checked for THIS item, in this item's own words: name the\n  condition, number, list or scope you compared with the text (e.g. \"the 30-day limit and 'each lot' are both in\n  the statement\", \"the list of components, containers and closures is complete\", \"drops the lead-in's 'for\n  sterile products'\"). Write each reason fresh for its item: a reason that would fit any item (\"quote exact,\n  strength matches, nothing added or omitted\") or that repeats another answer's reason is not an answer, and the\n  item then counts as unchecked.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+ "units": [
+  {
+   "unit": "Q10",
+   "paragraphs": [
+    {
+     "ref": "Q10",
+     "text": "Is it acceptable to release non-penicillin finished drug products to market if the products may have been exposed to penicillin, as long as the non-penicillin products are tested and no penicillin residue is found?"
+    },
+    {
+     "ref": "Q10.1",
+     "text": "21 CFR 211.176, Penicillin Contamination, allows marketing of non-penicillin finished drug products if they are tested using the codified method and found not to be contaminated with penicillin. However, it is not acceptable to release the product unless all other applicable CGMP requirements have been met. In some cases, firms inappropriately apply § 211.176 to market products that have not been produced under CGMP. Notably, 21 CFR 211.42(d) requires that manufacturing operations for penicillin drug products be performed in facilities separate from those used for non-penicillin human drug products. Similarly, 21 CFR 211.46(d) requires that air-handling systems for penicillin and non-penicillin drug products be completely separate. For example, if a non-penicillin product is made in a facility that shares equipment or an air-handling system with a penicillin production area (in violation of § 211.46(d)), the non-penicillin product cannot be made CGMP-compliant through testing alone. However, if a door is accidentally left open between a penicillin-dedicated area and other separate production areas, resulting in possible exposure of the other areas to penicillin, testing those other products for penicillin could justify their release for distribution. However, as per 21 CFR 211.165, all sampling plans and acceptance criteria used for testing and release of the non-penicillin product, including any testing for penicillin contamination, must be adequate to ensure the tested product meets all of its specifications."
+    },
+    {
+     "context": "Back to Top"
+    }
+   ]
+  },
+  {
+   "unit": "Q11",
+   "paragraphs": [
+    {
+     "ref": "Q11",
+     "text": "Can a facility that produced penicillin dosage forms be decontaminated and renovated for production of non-penicillin dosage forms, provided there is no further penicillin production in the renovated facility? Yes; however, decontamination can be extremely difficult. The decontamination process must include scientifically sound studies demonstrating the efficacy of the decontamination agents, extensive and statistically appropriate sampling throughout the areas before and after decontamination to verify cleanliness, and appropriate testing of such samples with a validated analytical method having an appropriate limit of detection. The CGMP regulations in 21 CFR 211.176 require that if a reasonable possibility exists that a non-penicillin drug product has been exposed to cross-contamination with penicillin, the non-penicillin product must be tested for the presence of penicillin and cannot be marketed if detectable levels are found using the codified method. Such a reasonable possibility may be present if decontamination has not been conducted effectively. Although CGMP regulations do not prohibit decontamination and conversion, the difficulty of cleaning up penicillin residues can make the process daunting (see also FDA Guide to Inspections, referenced below)."
+    },
+    {
+     "context": "Back to Top"
+    }
+   ]
+  },
+  {
+   "unit": "Q12",
+   "paragraphs": [
+    {
+     "ref": "Q12",
+     "text": "Is there an acceptable level of penicillin residue in non-penicillin drug products? No. There is no established safe level of penicillin residue in non-penicillin drug products (see FDA guidance for industry, referenced below). The CGMP regulations in 21 CFR 211.42(d) and 211.46(d) require that penicillin-manufacturing facilities and air-handling systems must be adequately separated from those used to manufacture other drugs. 21 CFR 211.176 states that a non-penicillin drug product must not be marketed if penicillin is found when tested according to the codified procedure. Alternative validated test methods to detect penicillin residues may be used if demonstrated to be equivalent to or better than the referenced method."
+    },
+    {
+     "context": "Back to Top"
+    }
+   ]
+  },
+  {
+   "unit": "Q13",
+   "paragraphs": [
+    {
+     "ref": "Q13",
+     "text": "For injectable drugs in multiple-dose containers, is the number of entries to withdraw a dose a factor in determining the expiration date? Generally, no. Unless the multiple-dose container is labeled to yield a specific number of doses of a stated volume, there is no limit to the number of withdrawals that may be made from a multiple-dose container before the drug is depleted or reaches its expiration date. The primary concern with multiple-dose containers is the potential for contaminating the product during multiple penetrations through the container stopper. Although the expiration date assigned to such products would be based on the stability of the drug product, stability protocols should include requirements for testing and evaluating container-closure integrity. Container-closure integrity testing may include physically testing the closure seal by using a leak test and monitoring the system’s ability to prevent microbial contamination. For multiple-dose injection product containers, functionality testing can include a self-sealing capacity test involving multiple penetrations of a hypodermic needle through the container stopper (see USP references below). Furthermore, injectable drug products in multiple-dose containers are generally formulated with an antimicrobial agent or preservative—or they contain inherently antimicrobial ingredients—and must meet requirements in accordance with the approved application (new drug application/abbreviated new drug application, biologics license application) and/or USP requirements."
+    },
+    {
+     "context": "Back to Top"
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q10#6",
+   "unit": "Q10",
+   "hash": "5c9c296b9ac0b6e0",
+   "item": {
+    "statement": "Where other separate production areas were possibly exposed to penicillin by accident (such as a door left open to a penicillin-dedicated area), testing the products from those areas for penicillin may justify their release.",
+    "quote": "However, if a door is accidentally left open between a penicillin-dedicated area and other separate production areas, resulting in possible exposure of the other areas to penicillin, testing those other products for penicillin could justify their release for distribution.",
+    "clause_number": "Q10.1",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "accidental possible exposure of separate areas"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q10#7",
+   "unit": "Q10",
+   "hash": "80c6e9af9f68b13e",
+   "item": {
+    "statement": "Ensure all sampling plans and acceptance criteria used to test and release non-penicillin products, including any penicillin contamination testing, are adequate to ensure the product meets all its specifications.",
+    "quote": "However, as per 21 CFR 211.165, all sampling plans and acceptance criteria used for testing and release of the non-penicillin product, including any testing for penicillin contamination, must be adequate to ensure the tested product meets all of its specifications.",
+    "clause_number": "Q10.1",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q11#1",
+   "unit": "Q11",
+   "hash": "fc65f1680bceb731",
+   "item": {
+    "statement": "When decontaminating a former penicillin facility for non-penicillin production, include scientifically sound studies showing the decontamination agents are effective, extensive and statistically appropriate sampling throughout the areas before and after decontamination to verify cleanliness, and appropriate testing of the samples with a validated analytical method with an appropriate limit of detection.",
+    "quote": "The decontamination process must include scientifically sound studies demonstrating the efficacy of the decontamination agents, extensive and statistically appropriate sampling throughout the areas before and after decontamination to verify cleanliness, and appropriate testing of such samples with a validated analytical method having an appropriate limit of detection.",
+    "clause_number": "Q11",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "converting a penicillin facility"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q11#2",
+   "unit": "Q11",
+   "hash": "546819ef8920b49a",
+   "item": {
+    "statement": "If there is a reasonable possibility that a non-penicillin product was exposed to penicillin cross-contamination, test it for penicillin and do not market it if detectable levels are found with the codified method.",
+    "quote": "The CGMP regulations in 21 CFR 211.176 require that if a reasonable possibility exists that a non-penicillin drug product has been exposed to cross-contamination with penicillin, the non-penicillin product must be tested for the presence of penicillin and cannot be marketed if detectable levels are found using the codified method.",
+    "clause_number": "Q11",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "reasonable possibility of penicillin exposure"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q12#1",
+   "unit": "Q12",
+   "hash": "bf6b9fb28db978c2",
+   "item": {
+    "statement": "Adequately separate penicillin manufacturing facilities and air-handling systems from those used to manufacture other drugs.",
+    "quote": "The CGMP regulations in 21 CFR 211.42(d) and 211.46(d) require that penicillin-manufacturing facilities and air-handling systems must be adequately separated from those used to manufacture other drugs.",
+    "clause_number": "Q12",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q12#2",
+   "unit": "Q12",
+   "hash": "ac208bea108d9b4c",
+   "item": {
+    "statement": "Do not market a non-penicillin drug product if penicillin is found when it is tested by the codified procedure.",
+    "quote": "21 CFR 211.176 states that a non-penicillin drug product must not be marketed if penicillin is found when tested according to the codified procedure.",
+    "clause_number": "Q12",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q12#3",
+   "unit": "Q12",
+   "hash": "3cc49d6b68ed8f69",
+   "item": {
+    "statement": "Alternative validated methods for detecting penicillin residues may be used if shown to be equivalent to or better than the codified method.",
+    "quote": "Alternative validated test methods to detect penicillin residues may be used if demonstrated to be equivalent to or better than the referenced method.",
+    "clause_number": "Q12",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "if shown equivalent or better"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q13#1",
+   "unit": "Q13",
+   "hash": "8268a7518cd51d60",
+   "item": {
+    "statement": "For injectable products in multiple-dose containers, include requirements for testing and evaluating container-closure integrity in stability protocols.",
+    "quote": "Although the expiration date assigned to such products would be based on the stability of the drug product, stability protocols should include requirements for testing and evaluating container-closure integrity.",
+    "clause_number": "Q13",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q13#2",
+   "unit": "Q13",
+   "hash": "38bf1540e9f50263",
+   "item": {
+    "statement": "Container-closure integrity testing may include physically testing the closure seal with a leak test and monitoring the system's ability to prevent microbial contamination.",
+    "quote": "Container-closure integrity testing may include physically testing the closure seal by using a leak test and monitoring the system’s ability to prevent microbial contamination.",
+    "clause_number": "Q13",
+    "strength": "optional",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q13#3",
+   "unit": "Q13",
+   "hash": "2669dfc97dee3075",
+   "item": {
+    "statement": "For multiple-dose injection containers, functionality testing may include a self-sealing capacity test with multiple hypodermic needle penetrations through the stopper.",
+    "quote": "For multiple-dose injection product containers, functionality testing can include a self-sealing capacity test involving multiple penetrations of a hypodermic needle through the container stopper",
+    "clause_number": "Q13",
+    "strength": "optional",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q13#4",
+   "unit": "Q13",
+   "hash": "8dd3b5946ecd34bf",
+   "item": {
+    "statement": "Ensure injectable products in multiple-dose containers, which are generally formulated with an antimicrobial agent or preservative or contain inherently antimicrobial ingredients, meet the requirements of the approved application and/or USP requirements.",
+    "quote": "Furthermore, injectable drug products in multiple-dose containers are generally formulated with an antimicrobial agent or preservative—or they contain inherently antimicrobial ingredients—and must meet requirements in accordance with the approved application (new drug application/abbreviated new drug application, biologics license application) and/or USP requirements.",
+    "clause_number": "Q13",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,714 @@
+{
+ "role": "b",
+ "instructions": "You are a second, independent auditor. Check one checklist item against the US regulation paragraph it claims to come from. You get\nthe section's paragraphs (reference and exact text, from the official eCFR XML) and the item. Start from the TEXT:\nread the cited paragraph and its lead-in fully, then compare the item.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the parent paragraph's\nlead-in (including a qualifier such as \"as are necessary to prevent contamination or mixups\"). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph requires what the statement asks for, the statement\n  adds nothing and omits nothing of that obligation, the strength (shall/must = mandatory, should = recommended,\n  may = optional; a sub-paragraph takes its lead-in's) matches, and the regulation applies to every listed plant\n  type (INJ = sterile injectables: a paragraph limited to products not required to be sterile does not apply to\n  INJ; one limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences saying what you checked for THIS item, in this item's own words: name the\n  condition, number, list or scope you compared with the text (e.g. \"the 30-day limit and 'each lot' are both in\n  the statement\", \"the list of components, containers and closures is complete\", \"drops the lead-in's 'for\n  sterile products'\"). Write each reason fresh for its item: a reason that would fit any item (\"quote exact,\n  strength matches, nothing added or omitted\") or that repeats another answer's reason is not an answer, and the\n  item then counts as unchecked.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "sections": [
+  {
+   "section": "207.53",
+   "paragraphs": [
+    {
+     "ref": "207.53",
+     "text": "§ 207.53 What listing information must a registrant submit for a drug that it repacks or relabels? Each registrant must provide the following listing information for each drug it repacks or relabels:"
+    },
+    {
+     "ref": "207.53(a)",
+     "text": "(a) NDC. The appropriate NDC(s), as described in § 207.33, that include the registrant's labeler code and all package code variations;"
+    },
+    {
+     "ref": "207.53(b)",
+     "text": "(b) Source NDC. The NDC assigned to each finished drug received by the registrant for repacking or relabeling, with the exception of medical gases. Each such NDC must be associated with the corresponding NDC(s) for repacked or relabeled drugs, reported under paragraph (a) of this section."
+    },
+    {
+     "ref": "207.53(c)",
+     "text": "(c) Name and Unique Facility Identifier. For each drug identified by an NDC reported under paragraph (a) of this section, the name and Unique Facility Identifier of every establishment where repacking or relabeling is performed for the drug and the type of operation (repacking vs. relabeling) performed at each such establishment."
+    },
+    {
+     "ref": "207.53(d)",
+     "text": "(d) Labeling. For each drug identified by an NDC reported under paragraph (a) of this section, except those human drugs repacked or relabeled exclusively for private label distribution and not distributed under the registrant's own name and label, provide the following:"
+    },
+    {
+     "ref": "207.53(d)(1)",
+     "text": "(1) Human prescription drugs. All current labeling for the repacked or relabeled drug except that only one representative container or carton label need be submitted where differences exist only in the quantity of contents statement or the bar code. This labeling submission must include the content of labeling, as defined in section § 207.1."
+    },
+    {
+     "ref": "207.53(d)(2)",
+     "text": "(2) Human nonprescription drugs."
+    },
+    {
+     "ref": "207.53(d)(2)(i)",
+     "text": "(i) For each human nonprescription drug subject to section 505 of the Federal Food, Drug, and Cosmetic Act or section 351 of the Public Health Service Act, all current labeling, except that only one representative container or carton label need be submitted where differences exist only in the quantity of contents statement or the bar code. This labeling submission must include the content of labeling, as defined in § 207.1."
+    },
+    {
+     "ref": "207.53(d)(2)(ii)",
+     "text": "(ii) For each human nonprescription drug not subject to section 505 of the Federal Food, Drug, and Cosmetic Act or section 351 of the Public Health Service Act, the current label (except that only one representative container or carton label need be submitted where differences exist only in the quantity of contents statement or the bar code), the package insert (if any), and a representative sampling of any other labeling. This labeling submission must include the content of labeling as defined in § 207.1."
+    },
+    {
+     "ref": "207.53(d)(3)",
+     "text": "(3) Animal drugs."
+    },
+    {
+     "ref": "207.53(d)(3)(i)",
+     "text": "(i) For each animal drug that is subject to section 512 of the Federal Food, Drug, and Cosmetic Act, which includes but is not limited to, new animal drugs that have been approved, conditionally approved, or indexed under sections 512, 571, or 572 of the Federal Food, Drug, and Cosmetic Act, a copy of all current labeling (except that only one representative container or carton label need be submitted where differences exist only in the quantity of contents statement), including the content of labeling as defined in § 207.1;"
+    },
+    {
+     "ref": "207.53(d)(3)(ii)",
+     "text": "(ii) For all other animal drugs, a copy of the current label (except that only one representative container or carton label need be submitted where differences exist only in the quantity of contents statement), the package insert, the content of labeling as defined in § 207.1, and a representative sampling of any other labeling;"
+    },
+    {
+     "ref": "207.53(d)(4)",
+     "text": "(4) All other. For all other listed drugs, including unfinished drugs, the label (if any), except that only one representative label need be submitted where differences exist only in the quantity of contents statement."
+    },
+    {
+     "ref": "207.53(e)",
+     "text": "(e) Advertisements."
+    },
+    {
+     "ref": "207.53(e)(1)",
+     "text": "(1) A representative sampling of advertisements for a human prescription drug that is not subject to section 505 of the Federal Food, Drug, and Cosmetic Act or section 351 of the Public Health Service Act;"
+    },
+    {
+     "ref": "207.53(e)(2)",
+     "text": "(2) If we request it for good cause, a copy of all advertisements for a particular drug described in paragraph (e)(1) of this section, including advertisements described in § 202.1(l)(1) of this chapter. Such advertisements must be submitted within 30 calendar days after our request."
+    },
+    {
+     "ref": "207.53(f)",
+     "text": "(f) Private label distributor products. A listing submission for a human drug distributed by a private label distributor described in § 207.41(c)(2) must include information specified in § 207.53(b) through (e) as applicable and:"
+    },
+    {
+     "ref": "207.53(f)(1)",
+     "text": "(1) The appropriate NDC(s) (as described in § 207.33) that include the private label distributor's labeler code and all package code variations;"
+    },
+    {
+     "ref": "207.53(f)(2)",
+     "text": "(2) The name, mailing address, telephone number, and email address of the private label distributor; and"
+    },
+    {
+     "ref": "207.53(f)(3)",
+     "text": "(3) For drugs bearing the NDC(s) reported under paragraph (f)(1) of this section, labeling as described in paragraphs (d)(1) through (4) of this section, as applicable, that accompanies the private label distributor's product."
+    }
+   ]
+  },
+  {
+   "section": "207.54",
+   "paragraphs": [
+    {
+     "ref": "207.54",
+     "text": "§ 207.54 What listing information must a registrant submit for a drug that it salvages? A registrant who also relabels or repacks a drug that it salvages must list the drug it relabels or repacks in accordance with § 207.53 rather than in accordance with this section. A registrant who performs only salvaging with respect to a drug must provide the following listing information for that drug."
+    },
+    {
+     "ref": "207.54(a)",
+     "text": "(a) The NDC assigned to the drug immediately before the drug is received by the registrant for salvaging;"
+    },
+    {
+     "ref": "207.54(b)",
+     "text": "(b) The lot number and expiration date of the salvaged drug product; and"
+    },
+    {
+     "ref": "207.54(c)",
+     "text": "(c) The name and Unique Facility Identifier for each establishment where the registrant salvages the drug."
+    }
+   ]
+  },
+  {
+   "section": "207.55",
+   "paragraphs": [
+    {
+     "ref": "207.55",
+     "text": "§ 207.55 What additional drug listing information may FDA require? For a particular listed drug, upon our request, the registrant must briefly state the basis for its belief that the drug is not subject to section 505 or 512 of the Federal Food, Drug, and Cosmetic Act or section 351 of the Public Health Service Act."
+    }
+   ]
+  },
+  {
+   "section": "207.57",
+   "paragraphs": [
+    {
+     "ref": "207.57",
+     "text": "§ 207.57 What information must registrants submit when updating listing information and when? Registrants must review and update listing information at a minimum, as follows:"
+    },
+    {
+     "ref": "207.57(a)",
+     "text": "(a) Registrants must provide listing information at the time of annual establishment registration for any drug manufactured, repacked, relabeled, or salvaged by them for commercial distribution that has not been listed previously."
+    },
+    {
+     "ref": "207.57(b)",
+     "text": "(b) Registrants must review and update their drug listing information each June and December. When doing so, registrants must:"
+    },
+    {
+     "ref": "207.57(b)(1)",
+     "text": "(1)"
+    },
+    {
+     "ref": "207.57(b)(1)(i)",
+     "text": "(i) Provide listing information, in accordance with §§ 207.49, 207.53, and 207.54, for any drug manufactured, repacked, relabeled, or salvaged by them for commercial distribution that has not been previously listed;"
+    },
+    {
+     "ref": "207.57(b)(1)(ii)",
+     "text": "(ii) Submit the date that they discontinued the manufacture, repacking, relabeling or salvaging for commercial distribution of a listed drug and provide the expiration date of the last lot manufactured, repacked, relabeled, or salvaged;"
+    },
+    {
+     "ref": "207.57(b)(1)(iii)",
+     "text": "(iii) Submit the date that they resumed the manufacture, repacking, or relabeling for commercial distribution of a drug previously discontinued, and provide any required listing information not previously submitted; and"
+    },
+    {
+     "ref": "207.57(b)(1)(iv)",
+     "text": "(iv) Submit any material changes in any information previously submitted pursuant to §§ 207.49, 207.53, 207.54, or other relevant sections of this part; or"
+    },
+    {
+     "ref": "207.57(b)(2)",
+     "text": "(2) For each listed drug, certify that no changes subject to reporting under paragraph (b)(1)(iv) of this section have occurred if no such changes have occurred since the last review and update. If a drug is discontinued and FDA has received the information required under paragraph (b)(1)(ii) of this section, no further certifications are necessary for the discontinued drug. After initial electronic listing, registrants may satisfy the listing update requirement with respect to unchanged listing information by making a single “no changes” certification during the annual registration update under § 207.29(b) applicable to all of the registrant's listed drugs for which no changes have been made since the previous annual registration update."
+    },
+    {
+     "ref": "207.57(c)",
+     "text": "(c) Registrants are encouraged to submit listing information for every drug subject to listing under this part prior to commercial distribution and are encouraged to update listing information at the time of any change affecting information previously submitted."
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "fda-cfr-21-part-207.xml:207.53#13",
+   "section": "207.53",
+   "hash": "88c73943d90c0783",
+   "item": {
+    "statement": "In the listing for each drug repacked or relabeled, provide a representative sampling of advertisements for a human prescription drug not subject to FD&C Act section 505 or PHS Act section 351.",
+    "quote": "A representative sampling of advertisements for a human prescription drug that is not subject to section 505 of the Federal Food, Drug, and Cosmetic Act or section 351 of the Public Health Service Act;",
+    "clause_number": "207.53(e)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "drug repacked or relabeled; human Rx drug not subject to 505 or 351"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.53#14",
+   "section": "207.53",
+   "hash": "729fad6308a9a54d",
+   "item": {
+    "statement": "If FDA requests it for good cause, submit within 30 calendar days of the request a copy of all advertisements (including reminder-type advertisements) for a repacked or relabeled human prescription drug not subject to FD&C Act section 505 or PHS Act section 351.",
+    "quote": "If we request it for good cause, a copy of all advertisements for a particular drug described in paragraph (e)(1) of this section, including advertisements described in § 202.1(l)(1) of this chapter. Such advertisements must be submitted within 30 calendar days after our request.",
+    "clause_number": "207.53(e)(2)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "FDA request for good cause"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.53#15",
+   "section": "207.53",
+   "hash": "c8fb09a7ce31e43e",
+   "item": {
+    "statement": "In the listing of a repacked or relabeled human drug distributed by a private label distributor (listed under the registrant's own labeler code), include as applicable the source NDCs linked to the repacked or relabeled NDCs, the names, Unique Facility Identifiers and operation types of repacking or relabeling establishments, the required labeling, and advertisements.",
+    "quote": "A listing submission for a human drug distributed by a private label distributor described in § 207.41(c)(2) must include information specified in § 207.53(b) through (e) as applicable and:",
+    "clause_number": "207.53(f)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "human drug distributed by private label distributor"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.53#16",
+   "section": "207.53",
+   "hash": "b8e60b3b08ccddce",
+   "item": {
+    "statement": "In the listing of a repacked or relabeled human drug distributed by a private label distributor (listed under the registrant's own labeler code), include the appropriate NDCs containing the private label distributor's labeler code and all package code variations.",
+    "quote": "The appropriate NDC(s) (as described in § 207.33) that include the private label distributor's labeler code and all package code variations;",
+    "clause_number": "207.53(f)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "human drug distributed by private label distributor"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.53#17",
+   "section": "207.53",
+   "hash": "75a90c37b0a57cbe",
+   "item": {
+    "statement": "In the listing of a repacked or relabeled human drug distributed by a private label distributor (listed under the registrant's own labeler code), include the private label distributor's name, mailing address, telephone number and email address.",
+    "quote": "The name, mailing address, telephone number, and email address of the private label distributor;",
+    "clause_number": "207.53(f)(2)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "human drug distributed by private label distributor"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.53#18",
+   "section": "207.53",
+   "hash": "d5b3e6517e2357d4",
+   "item": {
+    "statement": "In the listing of a repacked or relabeled human drug distributed by a private label distributor (listed under the registrant's own labeler code), include for drugs bearing the private label distributor's NDCs, the labeling that accompanies the private label distributor's product, in the form required for the drug's category, as applicable.",
+    "quote": "For drugs bearing the NDC(s) reported under paragraph (f)(1) of this section, labeling as described in paragraphs (d)(1) through (4) of this section, as applicable, that accompanies the private label distributor's product.",
+    "clause_number": "207.53(f)(3)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "human drug distributed by private label distributor; bearing distributor's NDC"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.54#1",
+   "section": "207.54",
+   "hash": "a4d4e7b93c680e08",
+   "item": {
+    "statement": "Where the registrant also relabels or repacks a drug it salvages, list that drug under the repacker/relabeler listing requirements, not the salvager requirements.",
+    "quote": "A registrant who also relabels or repacks a drug that it salvages must list the drug it relabels or repacks in accordance with § 207.53 rather than in accordance with this section.",
+    "clause_number": "207.54",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "salvaged drug also relabeled or repacked"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.54#2",
+   "section": "207.54",
+   "hash": "e0265d7242425c2e",
+   "item": {
+    "statement": "Where the registrant only salvages a drug, provide drug listing information for that drug.",
+    "quote": "A registrant who performs only salvaging with respect to a drug must provide the following listing information for that drug.",
+    "clause_number": "207.54",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "registrant performs only salvaging"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.54#3",
+   "section": "207.54",
+   "hash": "82a6165c10b8bcca",
+   "item": {
+    "statement": "Where the registrant only salvages a drug, list the NDC assigned to the drug immediately before it was received for salvaging.",
+    "quote": "The NDC assigned to the drug immediately before the drug is received by the registrant for salvaging;",
+    "clause_number": "207.54(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "registrant performs only salvaging"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.54#4",
+   "section": "207.54",
+   "hash": "7edea946979286f0",
+   "item": {
+    "statement": "Where the registrant only salvages a drug, list the lot number and expiration date of the salvaged drug product.",
+    "quote": "The lot number and expiration date of the salvaged drug product;",
+    "clause_number": "207.54(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "registrant performs only salvaging"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.54#5",
+   "section": "207.54",
+   "hash": "9ddb12cd6d57d261",
+   "item": {
+    "statement": "Where the registrant only salvages a drug, list the name and Unique Facility Identifier of each establishment where it salvages the drug.",
+    "quote": "The name and Unique Facility Identifier for each establishment where the registrant salvages the drug.",
+    "clause_number": "207.54(c)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "registrant performs only salvaging"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.55#1",
+   "section": "207.55",
+   "hash": "5f29cbc050ff949a",
+   "item": {
+    "statement": "When FDA asks about a particular listed drug, give a brief statement of why the registrant believes the drug is not subject to new drug or new animal drug approval (FD&C Act sections 505 or 512) or biologics licensing (PHS Act section 351).",
+    "quote": "For a particular listed drug, upon our request, the registrant must briefly state the basis for its belief that the drug is not subject to section 505 or 512 of the Federal Food, Drug, and Cosmetic Act or section 351 of the Public Health Service Act.",
+    "clause_number": "207.55",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "FDA request"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.57#1",
+   "section": "207.57",
+   "hash": "aa474035f51059b2",
+   "item": {
+    "statement": "Review and update drug listing information at no less than the minimum required frequency.",
+    "quote": "Registrants must review and update listing information at a minimum, as follows:",
+    "clause_number": "207.57",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.57#2",
+   "section": "207.57",
+   "hash": "5db9961fea2887dc",
+   "item": {
+    "statement": "At each annual establishment registration, provide listing information for any drug manufactured, repacked, relabeled or salvaged for commercial distribution that has not yet been listed.",
+    "quote": "Registrants must provide listing information at the time of annual establishment registration for any drug manufactured, repacked, relabeled, or salvaged by them for commercial distribution that has not been listed previously.",
+    "clause_number": "207.57(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "annual establishment registration"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.57#3",
+   "section": "207.57",
+   "hash": "6a43850e0b3827ba",
+   "item": {
+    "statement": "Review and update drug listing information every June and every December.",
+    "quote": "Registrants must review and update their drug listing information each June and December. When doing so, registrants must:",
+    "clause_number": "207.57(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.57#4",
+   "section": "207.57",
+   "hash": "e081e25fd906fd20",
+   "item": {
+    "statement": "During each June and December listing review and update, provide full listing information (per the manufacturer, repacker/relabeler or salvager requirements) for any drug manufactured, repacked, relabeled or salvaged for commercial distribution that has not been listed before.",
+    "quote": "Provide listing information, in accordance with §§ 207.49, 207.53, and 207.54, for any drug manufactured, repacked, relabeled, or salvaged by them for commercial distribution that has not been previously listed;",
+    "clause_number": "207.57(b)(1)(i)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "June/December listing review"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.57#5",
+   "section": "207.57",
+   "hash": "356ee5ffbe5ef206",
+   "item": {
+    "statement": "During each June and December listing review and update, submit the date manufacture, repacking, relabeling or salvaging for commercial distribution of a listed drug was discontinued, and the expiration date of the last lot manufactured, repacked, relabeled or salvaged.",
+    "quote": "Submit the date that they discontinued the manufacture, repacking, relabeling or salvaging for commercial distribution of a listed drug and provide the expiration date of the last lot manufactured, repacked, relabeled, or salvaged;",
+    "clause_number": "207.57(b)(1)(ii)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "June/December listing review; drug discontinued"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.57#6",
+   "section": "207.57",
+   "hash": "132a75a6f4775bc5",
+   "item": {
+    "statement": "During each June and December listing review and update, submit the date manufacture, repacking or relabeling for commercial distribution of a previously discontinued drug resumed, and provide any required listing information not submitted before.",
+    "quote": "Submit the date that they resumed the manufacture, repacking, or relabeling for commercial distribution of a drug previously discontinued, and provide any required listing information not previously submitted; and",
+    "clause_number": "207.57(b)(1)(iii)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "June/December listing review; discontinued drug resumed"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.57#7",
+   "section": "207.57",
+   "hash": "53e80e9e7bc39ec7",
+   "item": {
+    "statement": "During each June and December listing review and update, submit any material changes to listing information previously submitted (manufacturer, repacker/relabeler, salvager or other listing information).",
+    "quote": "Submit any material changes in any information previously submitted pursuant to §§ 207.49, 207.53, 207.54, or other relevant sections of this part;",
+    "clause_number": "207.57(b)(1)(iv)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "June/December listing review; material change"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.57#8",
+   "section": "207.57",
+   "hash": "876ba43b309d5db8",
+   "item": {
+    "statement": "During each June and December listing review and update, certify for each listed drug that no reportable material changes have occurred, where none have occurred since the last review and update.",
+    "quote": "For each listed drug, certify that no changes subject to reporting under paragraph (b)(1)(iv) of this section have occurred if no such changes have occurred since the last review and update.",
+    "clause_number": "207.57(b)(2)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "June/December listing review; no material changes since last review"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  }
+ ]
+}

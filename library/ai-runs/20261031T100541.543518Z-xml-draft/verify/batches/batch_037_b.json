@@ -1,0 +1,397 @@
+{
+ "role": "b",
+ "instructions": "You are a second, independent auditor. Check one checklist item against the US regulation paragraph it claims to come from. You get\nthe section's paragraphs (reference and exact text, from the official eCFR XML) and the item. Start from the TEXT:\nread the cited paragraph and its lead-in fully, then compare the item.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the parent paragraph's\nlead-in (including a qualifier such as \"as are necessary to prevent contamination or mixups\"). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph requires what the statement asks for, the statement\n  adds nothing and omits nothing of that obligation, the strength (shall/must = mandatory, should = recommended,\n  may = optional; a sub-paragraph takes its lead-in's) matches, and the regulation applies to every listed plant\n  type (INJ = sterile injectables: a paragraph limited to products not required to be sterile does not apply to\n  INJ; one limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences saying what you checked for THIS item, in this item's own words: name the\n  condition, number, list or scope you compared with the text (e.g. \"the 30-day limit and 'each lot' are both in\n  the statement\", \"the list of components, containers and closures is complete\", \"drops the lead-in's 'for\n  sterile products'\"). Write each reason fresh for its item: a reason that would fit any item (\"quote exact,\n  strength matches, nothing added or omitted\") or that repeats another answer's reason is not an answer, and the\n  item then counts as unchecked.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "sections": [
+  {
+   "section": "211.137",
+   "paragraphs": [
+    {
+     "ref": "211.137",
+     "text": "§ 211.137 Expiration dating."
+    },
+    {
+     "ref": "211.137(a)",
+     "text": "(a) To assure that a drug product meets applicable standards of identity, strength, quality, and purity at the time of use, it shall bear an expiration date determined by appropriate stability testing described in § 211.166."
+    },
+    {
+     "ref": "211.137(b)",
+     "text": "(b) Expiration dates shall be related to any storage conditions stated on the labeling, as determined by stability studies described in § 211.166."
+    },
+    {
+     "ref": "211.137(c)",
+     "text": "(c) If the drug product is to be reconstituted at the time of dispensing, its labeling shall bear expiration information for both the reconstituted and unreconstituted drug products."
+    },
+    {
+     "ref": "211.137(d)",
+     "text": "(d) Expiration dates shall appear on labeling in accordance with the requirements of § 201.17 of this chapter."
+    },
+    {
+     "ref": "211.137(e)",
+     "text": "(e) Homeopathic drug products shall be exempt from the requirements of this section."
+    },
+    {
+     "ref": "211.137(f)",
+     "text": "(f) Allergenic extracts that are labeled “No U.S. Standard of Potency” are exempt from the requirements of this section."
+    },
+    {
+     "ref": "211.137(g)",
+     "text": "(g) New drug products for investigational use are exempt from the requirements of this section, provided that they meet appropriate standards or specifications as demonstrated by stability studies during their use in clinical investigations. Where new drug products for investigational use are to be reconstituted at the time of dispensing, their labeling shall bear expiration information for the reconstituted drug product."
+    },
+    {
+     "ref": "211.137(h)",
+     "text": "(h) Pending consideration of a proposed exemption, published in the Federal Register of September 29, 1978, the requirements in this section shall not be enforced for human OTC drug products if their labeling does not bear dosage limitations and they are stable for at least 3 years as supported by appropriate stability data."
+    }
+   ]
+  },
+  {
+   "section": "211.142",
+   "paragraphs": [
+    {
+     "ref": "211.142",
+     "text": "§ 211.142 Warehousing procedures. Written procedures describing the warehousing of drug products shall be established and followed. They shall include:"
+    },
+    {
+     "ref": "211.142(a)",
+     "text": "(a) Quarantine of drug products before release by the quality control unit."
+    },
+    {
+     "ref": "211.142(b)",
+     "text": "(b) Storage of drug products under appropriate conditions of temperature, humidity, and light so that the identity, strength, quality, and purity of the drug products are not affected."
+    }
+   ]
+  },
+  {
+   "section": "211.150",
+   "paragraphs": [
+    {
+     "ref": "211.150",
+     "text": "§ 211.150 Distribution procedures. Written procedures shall be established, and followed, describing the distribution of drug products. They shall include:"
+    },
+    {
+     "ref": "211.150(a)",
+     "text": "(a) A procedure whereby the oldest approved stock of a drug product is distributed first. Deviation from this requirement is permitted if such deviation is temporary and appropriate."
+    },
+    {
+     "ref": "211.150(b)",
+     "text": "(b) A system by which the distribution of each lot of drug product can be readily determined to facilitate its recall if necessary."
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.137#1",
+   "section": "211.137",
+   "hash": "a85324aecef0a2a8",
+   "item": {
+    "statement": "Give each drug product an expiration date, determined by appropriate stability testing, to assure it meets applicable standards of identity, strength, quality and purity at the time of use.",
+    "quote": "To assure that a drug product meets applicable standards of identity, strength, quality, and purity at the time of use, it shall bear an expiration date determined by appropriate stability testing described in § 211.166.",
+    "clause_number": "211.137(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.137#2",
+   "section": "211.137",
+   "hash": "5a7cf699ae46ed73",
+   "item": {
+    "statement": "Relate expiration dates to any storage conditions stated on the labeling, as determined by stability studies.",
+    "quote": "Expiration dates shall be related to any storage conditions stated on the labeling, as determined by stability studies described in § 211.166.",
+    "clause_number": "211.137(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "storage conditions stated on labeling"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.137#3",
+   "section": "211.137",
+   "hash": "c6dd2d2192fef658",
+   "item": {
+    "statement": "If a drug product is to be reconstituted at the time of dispensing, include expiration information on its labeling for both the reconstituted and unreconstituted product.",
+    "quote": "If the drug product is to be reconstituted at the time of dispensing, its labeling shall bear expiration information for both the reconstituted and unreconstituted drug products.",
+    "clause_number": "211.137(c)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "product reconstituted at dispensing"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.137#4",
+   "section": "211.137",
+   "hash": "b9606422c4a8bf70",
+   "item": {
+    "statement": "Show expiration dates on labeling in line with FDA's labeling requirements for expiration dates.",
+    "quote": "Expiration dates shall appear on labeling in accordance with the requirements of § 201.17 of this chapter.",
+    "clause_number": "211.137(d)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.137#5",
+   "section": "211.137",
+   "hash": "3f4e1f5c97b4f14a",
+   "item": {
+    "statement": "Investigational new drug products may be exempt from expiration dating only if stability studies during their clinical use demonstrate they meet appropriate standards or specifications.",
+    "quote": "New drug products for investigational use are exempt from the requirements of this section, provided that they meet appropriate standards or specifications as demonstrated by stability studies during their use in clinical investigations.",
+    "clause_number": "211.137(g)",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "investigational new drug product"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.137#6",
+   "section": "211.137",
+   "hash": "eabf4b8d01612944",
+   "item": {
+    "statement": "Where investigational new drug products are to be reconstituted at the time of dispensing, include expiration information for the reconstituted product on their labeling.",
+    "quote": "Where new drug products for investigational use are to be reconstituted at the time of dispensing, their labeling shall bear expiration information for the reconstituted drug product.",
+    "clause_number": "211.137(g)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "investigational product reconstituted at dispensing"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.142#1",
+   "section": "211.142",
+   "hash": "7b5c93ac0eba20e1",
+   "item": {
+    "statement": "Establish and follow written warehousing procedures for drug products that cover quarantine before release and storage under appropriate conditions.",
+    "quote": "Written procedures describing the warehousing of drug products shall be established and followed. They shall include:",
+    "clause_number": "211.142",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.142#2",
+   "section": "211.142",
+   "hash": "d5d735dc39e21698",
+   "item": {
+    "statement": "Written warehousing procedures for drug products cover holding drug products in quarantine until the quality control unit releases them.",
+    "quote": "Quarantine of drug products before release by the quality control unit.",
+    "clause_number": "211.142(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.142#3",
+   "section": "211.142",
+   "hash": "602ff08c89976ba8",
+   "item": {
+    "statement": "Written warehousing procedures for drug products cover storing drug products under suitable temperature, humidity and light conditions so their identity, strength, quality and purity are not affected.",
+    "quote": "Storage of drug products under appropriate conditions of temperature, humidity, and light so that the identity, strength, quality, and purity of the drug products are not affected.",
+    "clause_number": "211.142(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.150#1",
+   "section": "211.150",
+   "hash": "b2123582edd20208",
+   "item": {
+    "statement": "Establish and follow written procedures for the distribution of drug products that cover first-out distribution of the oldest approved stock and lot traceability for recall.",
+    "quote": "Written procedures shall be established, and followed, describing the distribution of drug products. They shall include:",
+    "clause_number": "211.150",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.150#2",
+   "section": "211.150",
+   "hash": "c9d9a1842045b1ce",
+   "item": {
+    "statement": "Written distribution procedures for drug products include a procedure so that the oldest approved stock of a drug product is shipped first; departing from this is allowed only if the departure is temporary and appropriate.",
+    "quote": "A procedure whereby the oldest approved stock of a drug product is distributed first. Deviation from this requirement is permitted if such deviation is temporary and appropriate.",
+    "clause_number": "211.150(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "deviation only if temporary and appropriate"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.150#3",
+   "section": "211.150",
+   "hash": "799fe8e367dd0d66",
+   "item": {
+    "statement": "Written distribution procedures for drug products include a system that allows the distribution of each drug product lot to be readily determined, to facilitate recall if necessary.",
+    "quote": "A system by which the distribution of each lot of drug product can be readily determined to facilitate its recall if necessary.",
+    "clause_number": "211.150(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  }
+ ]
+}

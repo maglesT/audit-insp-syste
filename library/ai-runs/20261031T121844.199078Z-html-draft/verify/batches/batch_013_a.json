@@ -1,0 +1,568 @@
+{
+ "role": "a",
+ "instructions": "You are an auditor checking one checklist item against the FDA web page paragraph it claims to come from. You get\nthe unit's paragraphs (reference and exact text of the page; \"context\" entries are headings) and the item. Start from the ITEM:\nread it, then find in the cited paragraph what it covers.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the lead-in above a list\nitem (the paragraph ending \":\" above it). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph expects what the statement asks for (an instruction\n  to the investigator, \"Determine whether the firm validated ...\", expects the firm to have that practice), the statement\n  adds nothing and omits nothing of that obligation, the strength (a legal requirement: shall/must/required = mandatory;\n  should, FDA expects/recommends, an inspection point = recommended; may/acceptable = optional; a list item takes\n  its lead-in's) matches, and the text applies to every listed plant\n  type (INJ = sterile injectables: text limited to non-sterile products does not apply to\n  INJ; text limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences saying what you checked for THIS item, in this item's own words: name the\n  condition, number, list or scope you compared with the text (e.g. \"the 30-day limit and 'each lot' are both in\n  the statement\", \"the list of components, containers and closures is complete\", \"drops the lead-in's 'for\n  sterile products'\"). Write each reason fresh for its item: a reason that would fit any item (\"quote exact,\n  strength matches, nothing added or omitted\") or that repeats another answer's reason is not an answer, and the\n  item then counts as unchecked.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+ "units": [
+  {
+   "unit": "¶196-¶221",
+   "paragraphs": [
+    {
+     "ref": "¶196",
+     "text": "If the L.A.L. Test is used, review the FDA \"Guideline on Validation of the Limulus Amebocyte Lysate Test ***.\"",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶197",
+     "text": "If any tests are made by outside laboratories, report the names of the laboratories and the tests they perform. Determine what precautions the firm takes to insure that the laboratories' work is bona fide.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶198",
+     "text": "Methods used to check the reliability, accuracy, and precision of laboratory test procedures and instrumentation.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶199",
+     "text": "How final acceptance or rejection of raw materials, intermediates, and finished products is determined. Review recent rejections and disposition of affected items.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶200",
+     "text": "The provisions for complete records of all data concerning laboratory tests performed, including dates and endorsements of individuals performing the tests, and traceability.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶201",
+     "text": "For components and finished product, the reserve sample program and procedures should be evaluated. Challenge the system and determine if the samples are maintained and can be retrieved. The storage container must maintain the integrity of the product.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶202",
+     "text": "Whether stability tests are performed on:",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶203",
+     "text": "The drug product in the container and closure system in which marketed.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶204",
+     "text": "Solutions prepared as directed in the labeling at the time of dispensing. Determine if expiration dates, based on appropriate stability studies, are placed on labels.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶205",
+     "text": "If penicillin and non-penicillin products are manufactured on the same premises, whether non-penicillin products are tested for penicillin contamination.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶206",
+     "text": "Obtain copies of laboratory records, batch records, and any other documents that show errors or other deficiencies.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "Control Records [21 CFR Subpart J]"
+    },
+    {
+     "ref": "¶207",
+     "text": "Master Production and Control Records [21 CFR 211.186]",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶208",
+     "text": "The various master production and control records are important because all phases of production and control are governed by them. Master records, if erroneous, may adversely affect the product. These records must be prepared according to the drug CGMPR's outlined in 21 CFR 211.186. These records might not be in one location, but should be readily available for review.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶209",
+     "text": "Batch Production and Control Records [21 CFR 211.188]",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶210",
+     "text": "The batch production and control records must document each significant step in the manufacture, labeling, packaging, and control of specific batches of drugs. 21 CFR 211.188 provides the basic information the batch records must provide. A complete production and control record may consist of several separate records which should be readily available to the investigator.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶211",
+     "text": "Routinely check the batch record calculations against the master formula record. Give special attention to those products on which there have been complaints.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶212",
+     "text": "Be alert for transcription errors from the master formula record to the batch record. Be alert for transcription or photocopying errors involving misinterpretation of symbols, abbreviations, and decimal points, etc.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶213",
+     "text": "It is important that batch production records be specific in terms of equipment (v-blender vs. ribbon blender) and processing times (mixing time and speed). The equipment should have its own unique identification number. The manufacturing process for these products must be standardized, controlled, and validated.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "Distribution [21 CFR 211.196]"
+    },
+    {
+     "ref": "¶214",
+     "text": "Complete distribution records should be maintained per 21 CFR 211.196. Be alert for suspicious shipments of products subject to abuse or which have been targeted for high priority investigation by the agency. These include steroids, counterfeits, diverted drugs (i.e.; physician samples, clinical packs, etc.).",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶215",
+     "text": "Determine and evaluate if the firm checks on the authenticity of orders received. What references are used, e.g. current editions of the AMA Directory, Hays Directory, etc.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "Complaint Files [21 CFR 211.198]"
+    },
+    {
+     "ref": "¶216",
+     "text": "21 CFR 211.198 requires that records of all written and oral complaints be maintained. Although FDA has no authority to require a drug firm, except for prescription drugs, to open its complaint files, attempt to review the firm's files.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶217",
+     "text": "The complaint files should be readily available for review. Do a follow-up investigation on all applicable consumer complaints in the firm's district factory jacket. Review and evaluate the firm's procedures for handling complaints. Determine if all complaints are handled as complaints and not inappropriately excluded.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶218",
+     "text": "Review the complaints and determine if they were fully investigated. Evaluate the firm's conclusions of the investigation, and determine if appropriate corrective action was taken. Determine if the product should be recalled, or warrant a comprehensive investigation by FDA",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶219",
+     "text": "Returned Drug Products [21 CFR Subpart K]",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶220",
+     "text": "Returned drugs often serve as an indication that products may have decomposed during storage, are being recalled or discontinued.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶221",
+     "text": "Determine how returned drug items are handled. For example, are they quarantined, destroyed after credit, or returned to storage?",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    }
+   ]
+  },
+  {
+   "unit": "¶222-¶223",
+   "paragraphs": [
+    {
+     "ref": "¶222",
+     "text": "If an abnormally large amount of a specific drug item is on hand, determine why. Check if returned drug items are examined in the laboratory, and who makes the ultimate decision as to the use of the returned drugs.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶223",
+     "text": "Note: Dumping salvage drugs in the trash is a potentially dangerous practice. Advise management to properly dispose of the drugs to preclude salvage. Drugs should be disposed of in accordance with E.P.A. regulations.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "Return to: Page Top | Inspection Start"
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶196-¶221#13",
+   "unit": "¶196-¶221",
+   "hash": "3199e08c207fda05",
+   "item": {
+    "statement": "Document each significant step in the manufacture, labeling, packaging and control of specific batches in the batch production and control records.",
+    "quote": "The batch production and control records must document each significant step in the manufacture, labeling, packaging, and control of specific batches of drugs.",
+    "clause_number": "¶210",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶196-¶221#14",
+   "unit": "¶196-¶221",
+   "hash": "9cee5e6be73663ba",
+   "item": {
+    "statement": "Keep the separate records that make up a complete production and control record readily available to the investigator.",
+    "quote": "A complete production and control record may consist of several separate records which should be readily available to the investigator.",
+    "clause_number": "¶210",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶196-¶221#15",
+   "unit": "¶196-¶221",
+   "hash": "0c5e057ed1028fcf",
+   "item": {
+    "statement": "Make batch production records specific about the equipment used (for example v-blender versus ribbon blender) and processing times (for example mixing time and speed).",
+    "quote": "It is important that batch production records be specific in terms of equipment (v-blender vs. ribbon blender) and processing times (mixing time and speed).",
+    "clause_number": "¶213",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶196-¶221#16",
+   "unit": "¶196-¶221",
+   "hash": "06adf04479d0fb2f",
+   "item": {
+    "statement": "Give each piece of equipment its own unique identification number.",
+    "quote": "The equipment should have its own unique identification number.",
+    "clause_number": "¶213",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶196-¶221#17",
+   "unit": "¶196-¶221",
+   "hash": "17e540547eda68cd",
+   "item": {
+    "statement": "Standardize, control and validate the manufacturing process.",
+    "quote": "The manufacturing process for these products must be standardized, controlled, and validated.",
+    "clause_number": "¶213",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶196-¶221#18",
+   "unit": "¶196-¶221",
+   "hash": "4d4e97737a409cf0",
+   "item": {
+    "statement": "Maintain complete distribution records.",
+    "quote": "Complete distribution records should be maintained",
+    "clause_number": "¶214",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶196-¶221#19",
+   "unit": "¶196-¶221",
+   "hash": "689fa57c5edd2901",
+   "item": {
+    "statement": "Check the authenticity of orders received.",
+    "quote": "Determine and evaluate if the firm checks on the authenticity of orders received.",
+    "clause_number": "¶215",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶196-¶221#20",
+   "unit": "¶196-¶221",
+   "hash": "96dcd1a1c7e08f63",
+   "item": {
+    "statement": "Maintain records of all written and oral complaints.",
+    "quote": "requires that records of all written and oral complaints be maintained",
+    "clause_number": "¶216",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶196-¶221#21",
+   "unit": "¶196-¶221",
+   "hash": "0533c633e4be274b",
+   "item": {
+    "statement": "Keep complaint files readily available for review.",
+    "quote": "The complaint files should be readily available for review.",
+    "clause_number": "¶217",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶196-¶221#22",
+   "unit": "¶196-¶221",
+   "hash": "07787450310a41f6",
+   "item": {
+    "statement": "Handle all complaints as complaints and do not inappropriately exclude any.",
+    "quote": "Determine if all complaints are handled as complaints and not inappropriately excluded.",
+    "clause_number": "¶217",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶196-¶221#23",
+   "unit": "¶196-¶221",
+   "hash": "2ff44768ff111f54",
+   "item": {
+    "statement": "Fully investigate complaints.",
+    "quote": "Review the complaints and determine if they were fully investigated.",
+    "clause_number": "¶218",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶196-¶221#24",
+   "unit": "¶196-¶221",
+   "hash": "a45ba5bca6795b0e",
+   "item": {
+    "statement": "Take appropriate corrective action based on the conclusions of complaint investigations.",
+    "quote": "Evaluate the firm's conclusions of the investigation, and determine if appropriate corrective action was taken.",
+    "clause_number": "¶218",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶222-¶223#1",
+   "unit": "¶222-¶223",
+   "hash": "88b711d30a0ff994",
+   "item": {
+    "statement": "Examine returned drug items in the laboratory and assign who makes the final decision on use of returned drugs.",
+    "quote": "Check if returned drug items are examined in the laboratory, and who makes the ultimate decision as to the use of the returned drugs.",
+    "clause_number": "¶222",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶222-¶223#2",
+   "unit": "¶222-¶223",
+   "hash": "9c0afdb9eedd5668",
+   "item": {
+    "statement": "Dispose of salvage drugs properly so they cannot be salvaged.",
+    "quote": "Advise management to properly dispose of the drugs to preclude salvage.",
+    "clause_number": "¶223",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶222-¶223#3",
+   "unit": "¶222-¶223",
+   "hash": "283f07e20e71a109",
+   "item": {
+    "statement": "Dispose of drugs in line with environmental protection regulations.",
+    "quote": "Drugs should be disposed of in accordance with E.P.A. regulations.",
+    "clause_number": "¶223",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,667 @@
+{
+ "role": "b",
+ "instructions": "You are a second, independent auditor. Check one checklist item against the FDA web page paragraph it claims to come from. You get\nthe unit's paragraphs (reference and exact text of the page; \"context\" entries are headings) and the item. Start from the TEXT:\nread the cited paragraph, the paragraphs its quote runs into, and its lead-in fully, then compare the item.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the lead-in above a list\nitem (the paragraph ending \":\" above it). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph expects what the statement asks for (an instruction\n  to the investigator, \"Determine whether the firm validated ...\", expects the firm to have that practice), the statement\n  adds nothing and omits nothing of that obligation, the strength (a legal requirement: shall/must/required = mandatory;\n  should, FDA expects/recommends, an inspection point = recommended; may/acceptable = optional; a list item takes\n  its lead-in's) matches, and the text applies to every listed plant\n  type (INJ = sterile injectables: text limited to non-sterile products does not apply to\n  INJ; text limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences saying what you checked for THIS item, in this item's own words: name the\n  condition, number, list or scope you compared with the text (e.g. \"the 30-day limit and 'each lot' are both in\n  the statement\", \"the list of components, containers and closures is complete\", \"drops the lead-in's 'for\n  sterile products'\"). Write each reason fresh for its item: a reason that would fit any item (\"quote exact,\n  strength matches, nothing added or omitted\") or that repeats another answer's reason is not an answer, and the\n  item then counts as unchecked.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+ "units": [
+  {
+   "unit": "Q12",
+   "paragraphs": [
+    {
+     "ref": "Q12",
+     "text": "What specific CGMP regulations might be useful to manufacturers of topical antiseptic drug products?"
+    },
+    {
+     "ref": "Q12.1",
+     "text": "Section 501(a)(2)(B) of the Federal Food, Drug, and Cosmetic Act requires all drugs to be manufactured in conformance with CGMP. The CGMP regulations in 21 CFR parts 210 and 211 for finished pharmaceuticals apply equally to over-the-counter (OTC) and prescription (Rx) drug products (see Compliance Policy Guide Sec. 450.100)."
+    },
+    {
+     "ref": "Q12.2",
+     "text": "The CGMP regulations provide the minimum legal requirements for conducting reliable operations (see 21 CFR part 211). Some relevant CGMP regulations, with a brief description, are given below:"
+    },
+    {
+     "ref": "Q12.3",
+     "text": "Manufacturing Design and Control: CGMP Requirements and Recommended Guidance for Manufacturers"
+    },
+    {
+     "ref": "Q12.4",
+     "text": "Design manufacturing facilities(§ 211.42) and processes (see below) to prevent microbial contamination:",
+     "list_item": true
+    },
+    {
+     "ref": "Q12.5",
+     "text": "For nonsterile drug products, establish control procedures to monitor output and validate processes to include bioburden testing (§§ 211.110(a)(6)), 211.111) and establish and follow written procedures designed to prevent the introduction of objectionable microorganisms (§ 211.113(a)).",
+     "list_item": true
+    },
+    {
+     "ref": "Q12.6",
+     "text": "For sterile drug products, establish and follow written procedures designed to prevent microbial contamination (§ 211.113(b)). See the guidance for industry Sterile Drug Products Produced by Aseptic Processing—Current Good Manufacturing Practice.",
+     "list_item": true
+    },
+    {
+     "ref": "Q12.7",
+     "text": "Conduct process validation studies to ensure acceptable output (e.g., with topical antiseptics, particularly product microbiological quality) (§ 211.110(a). Implement and validate needed changes when deficient manufacturing steps, equipment, or raw materials may be adversely affecting process control. See the guidance for industry Process Validation: General Principles and Practices.",
+     "list_item": true
+    },
+    {
+     "ref": "Q12.8",
+     "text": "Ensure that operating procedures will consistently produce a quality product (§ 211.100). Review and evaluate any deviations or discrepancies documented during manufacturing and testing to determine if a product lacks assurance of sterility (for sterile antiseptics) or may be contaminated with objectionable microorganisms (for nonsterile antiseptics). Document and implement any corrective actions deriving from the evaluation (§ 211.192).",
+     "list_item": true
+    },
+    {
+     "ref": "Q12.9",
+     "text": "Ensure that all equipment, including water systems, operates consistently and is clean, sanitary, and suitable for its intended use (§§ 211.63, 211.65, 211.67, and 211.68).",
+     "list_item": true
+    },
+    {
+     "ref": "Q12.10",
+     "text": "Establish and follow in-process bioburden testing procedures to help monitor in-process control, including understanding the bioburden challenge to a final sterilization process (§ 211.110(a)(6)).",
+     "list_item": true
+    },
+    {
+     "ref": "Q12.11",
+     "text": "Components, In-Process Materials, Containers or Closures, and Finished Product Testing: CGMP Requirements for Manufacturers"
+    },
+    {
+     "ref": "Q12.12",
+     "text": "Establish appropriate written testing standards/specifications and sampling plans for components, in-process materials, containers or closures, and finished products (§ 211.160).",
+     "list_item": true
+    },
+    {
+     "ref": "Q12.13",
+     "text": "Establish procedures for testing and approval or rejection of components, drug product containers, and closures (§ 211.80). Test each lot of a drug product component and container or closure, including those that may be vulnerable to microbiological contamination (§211.84)(d)(4-5), including applicator material (e.g., cotton pads) and water used as an ingredient in the product.",
+     "list_item": true
+    },
+    {
+     "ref": "Q12.14",
+     "text": "Conduct appropriate microbiological tests before a batch disposition decision is made.Test each batch of a sterile product for sterility (§211.167). Test each batch of a non-sterile product to ensure absence of objectionable microorganisms (§211.165(b)).",
+     "list_item": true
+    },
+    {
+     "ref": "Q12.15",
+     "text": "Management"
+    },
+    {
+     "ref": "Q12.16",
+     "text": "The CGMP regulations require that the management of a manufacturing facility maintains a well-functioning quality system, which includes an effective quality unit vested with the responsibilities and authorities required under CGMP (§ 211.22). See ICH guidances for industry Q9 Quality Risk Management and Q10 Pharmaceutical Quality System."
+    }
+   ]
+  },
+  {
+   "unit": "Q13",
+   "paragraphs": [
+    {
+     "ref": "Q13",
+     "text": "How can manufacturers assess and address the risk of microbiological contamination of topical antiseptics?"
+    },
+    {
+     "ref": "Q13.1",
+     "text": "Because there are potentially many different root causes of product contamination by microorganisms, it is imperative that manufacturers perform a manufacturing risk assessment to understand manufacturing failure modes and implement prevention measures."
+    },
+    {
+     "ref": "Q13.2",
+     "text": "In addition, any risk assessment approach should be informed by an understanding of the microbial contamination vulnerabilities of the concerned product.>For example, some product considerations for manufacturers include, but are not limited to:"
+    },
+    {
+     "ref": "Q13.3",
+     "text": "Determine the types of microbes that might survive or thrive in your products. Provide additional controls and testing based on the output of the risk assessment to ensure product quality.",
+     "list_item": true
+    },
+    {
+     "ref": "Q13.4",
+     "text": "Ensure that your microbial recovery methods are capable of detecting the types of microbes that may affect product quality.",
+     "list_item": true
+    },
+    {
+     "ref": "Q13.5",
+     "text": "Evaluate risk of contamination from components, including during component production, storage, or due to the intrinsic risk from source materials. Consider all possible sources of microbial contamination, including the following:",
+     "list_item": true
+    },
+    {
+     "ref": "Q13.6",
+     "text": "Components or products stored in open bins can be at risk for contamination by spore-forming microbes, such as Bacillus cereus, as well as by Serratia species and other worrisome airborne microbes (see the FDA news release and Morbidity and Mortality Weekly Report, referenced below). Manufacturing areas exposed to windy or poor HVAC conditions may increase the potential for this environmental contamination risk.",
+     "list_item": true
+    },
+    {
+     "ref": "Q13.7",
+     "text": "Some materials, especially from natural sources, may have high or objectionable intrinsic bioburden.",
+     "list_item": true
+    },
+    {
+     "ref": "Q13.8",
+     "text": "Water quality can pose a significant risk, as most antiseptics include water as a key ingredient. Contaminated purified water has been the root cause of multiple recalls of antiseptics, including instances of antiseptics contaminated with Burkholderia (previously Pseudomonas) cepacia, an opportunistic pathogen.",
+     "list_item": true
+    },
+    {
+     "ref": "Q13.9",
+     "text": "Unsanitary practices or sources.",
+     "list_item": true
+    },
+    {
+     "ref": "Q13.10",
+     "text": "When manufacturing in areas with high humidity, molds can be of special concern.",
+     "list_item": true
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q12#1",
+   "unit": "Q12",
+   "hash": "316cc619401c17ed",
+   "item": {
+    "statement": "Manufacture all drugs in conformance with current good manufacturing practice.",
+    "quote": "Section 501(a)(2)(B) of the Federal Food, Drug, and Cosmetic Act requires all drugs to be manufactured in conformance with CGMP.",
+    "clause_number": "Q12.1",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q12#2",
+   "unit": "Q12",
+   "hash": "5b67cfd028abd5c9",
+   "item": {
+    "statement": "Design manufacturing facilities and processes to prevent microbial contamination.",
+    "quote": "Design manufacturing facilities(§ 211.42) and processes (see below) to prevent microbial contamination:",
+    "clause_number": "Q12.4",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q12#3",
+   "unit": "Q12",
+   "hash": "5d91d2465b3a9f6d",
+   "item": {
+    "statement": "For nonsterile drug products, establish control procedures to monitor output and validate processes, including bioburden testing.",
+    "quote": "For nonsterile drug products, establish control procedures to monitor output and validate processes to include bioburden testing",
+    "clause_number": "Q12.5",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": "nonsterile drug products"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q12#4",
+   "unit": "Q12",
+   "hash": "f5930ddbfaa258de",
+   "item": {
+    "statement": "For nonsterile drug products, establish and follow written procedures designed to prevent the introduction of objectionable microorganisms.",
+    "quote": "establish and follow written procedures designed to prevent the introduction of objectionable microorganisms",
+    "clause_number": "Q12.5",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": "nonsterile drug products"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q12#5",
+   "unit": "Q12",
+   "hash": "f582ce4dd546b1b3",
+   "item": {
+    "statement": "For sterile drug products, establish and follow written procedures designed to prevent microbial contamination.",
+    "quote": "For sterile drug products, establish and follow written procedures designed to prevent microbial contamination",
+    "clause_number": "Q12.6",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "sterile drug products"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q12#6",
+   "unit": "Q12",
+   "hash": "fff26dea9fc9e922",
+   "item": {
+    "statement": "Conduct process validation studies to ensure acceptable output (for topical antiseptics, for example, particularly the microbiological quality of the product).",
+    "quote": "Conduct process validation studies to ensure acceptable output (e.g., with topical antiseptics, particularly product microbiological quality)",
+    "clause_number": "Q12.7",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q12#7",
+   "unit": "Q12",
+   "hash": "6660e5bfcb204822",
+   "item": {
+    "statement": "When deficient manufacturing steps, equipment or raw materials may be adversely affecting process control, implement and validate the needed changes.",
+    "quote": "Implement and validate needed changes when deficient manufacturing steps, equipment, or raw materials may be adversely affecting process control.",
+    "clause_number": "Q12.7",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "when deficient steps, equipment or raw materials may affect process control"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q12#8",
+   "unit": "Q12",
+   "hash": "ac3f166a295151f1",
+   "item": {
+    "statement": "Ensure operating procedures will consistently produce a quality product.",
+    "quote": "Ensure that operating procedures will consistently produce a quality product",
+    "clause_number": "Q12.8",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q12#9",
+   "unit": "Q12",
+   "hash": "7109e99fbb80dfda",
+   "item": {
+    "statement": "Review and evaluate any deviations or discrepancies documented during manufacturing and testing to determine whether a product lacks assurance of sterility (for sterile antiseptics) or may be contaminated with objectionable microorganisms (for nonsterile antiseptics).",
+    "quote": "Review and evaluate any deviations or discrepancies documented during manufacturing and testing to determine if a product lacks assurance of sterility (for sterile antiseptics) or may be contaminated with objectionable microorganisms (for nonsterile antiseptics).",
+    "clause_number": "Q12.8",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q12#10",
+   "unit": "Q12",
+   "hash": "810181c8f47f56a0",
+   "item": {
+    "statement": "Document and implement any corrective actions arising from the evaluation of deviations or discrepancies.",
+    "quote": "Document and implement any corrective actions deriving from the evaluation",
+    "clause_number": "Q12.8",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q12#11",
+   "unit": "Q12",
+   "hash": "bdc01369d88e600e",
+   "item": {
+    "statement": "Ensure all equipment, including water systems, operates consistently and is clean, sanitary and suitable for its intended use.",
+    "quote": "Ensure that all equipment, including water systems, operates consistently and is clean, sanitary, and suitable for its intended use",
+    "clause_number": "Q12.9",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q12#12",
+   "unit": "Q12",
+   "hash": "80e41eaa45f43905",
+   "item": {
+    "statement": "Establish and follow in-process bioburden testing procedures to help monitor in-process control, including understanding the bioburden challenge to a final sterilization process.",
+    "quote": "Establish and follow in-process bioburden testing procedures to help monitor in-process control, including understanding the bioburden challenge to a final sterilization process",
+    "clause_number": "Q12.10",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q12#13",
+   "unit": "Q12",
+   "hash": "d2aa14181e1e3c32",
+   "item": {
+    "statement": "Establish appropriate written testing standards or specifications and sampling plans for components, in-process materials, containers or closures, and finished products.",
+    "quote": "Establish appropriate written testing standards/specifications and sampling plans for components, in-process materials, containers or closures, and finished products",
+    "clause_number": "Q12.12",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q12#14",
+   "unit": "Q12",
+   "hash": "11d815f3d28c5ffb",
+   "item": {
+    "statement": "Establish procedures for testing and approving or rejecting components, drug product containers and closures.",
+    "quote": "Establish procedures for testing and approval or rejection of components, drug product containers, and closures",
+    "clause_number": "Q12.13",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q12#15",
+   "unit": "Q12",
+   "hash": "ca1d59a4de3da9be",
+   "item": {
+    "statement": "Test each lot of drug product component and of container or closure, including those that may be vulnerable to microbiological contamination, including applicator material (for example cotton pads) and water used as an ingredient in the product.",
+    "quote": "Test each lot of a drug product component and container or closure, including those that may be vulnerable to microbiological contamination (§211.84)(d)(4-5), including applicator material (e.g., cotton pads) and water used as an ingredient in the product.",
+    "clause_number": "Q12.13",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q12#16",
+   "unit": "Q12",
+   "hash": "f9cd9c49e829027e",
+   "item": {
+    "statement": "Conduct appropriate microbiological tests before a batch disposition decision is made.",
+    "quote": "Conduct appropriate microbiological tests before a batch disposition decision is made.",
+    "clause_number": "Q12.14",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "before batch disposition"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q12#17",
+   "unit": "Q12",
+   "hash": "ee1d4b96161d203d",
+   "item": {
+    "statement": "Test each batch of a sterile product for sterility.",
+    "quote": "Test each batch of a sterile product for sterility",
+    "clause_number": "Q12.14",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "sterile products"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q12#18",
+   "unit": "Q12",
+   "hash": "d59d2f986e281623",
+   "item": {
+    "statement": "Test each batch of a non-sterile product to ensure the absence of objectionable microorganisms.",
+    "quote": "Test each batch of a non-sterile product to ensure absence of objectionable microorganisms",
+    "clause_number": "Q12.14",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": "non-sterile products"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q12#19",
+   "unit": "Q12",
+   "hash": "36cfd0d0744a6a69",
+   "item": {
+    "statement": "Management of the manufacturing facility must maintain a well-functioning quality system that includes an effective quality unit vested with the responsibilities and authorities CGMP requires.",
+    "quote": "The CGMP regulations require that the management of a manufacturing facility maintains a well-functioning quality system, which includes an effective quality unit vested with the responsibilities and authorities required under CGMP",
+    "clause_number": "Q12.16",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q13#1",
+   "unit": "Q13",
+   "hash": "b81c4ef8e44e373f",
+   "item": {
+    "statement": "Perform a manufacturing risk assessment to understand manufacturing failure modes for microbial contamination and implement prevention measures.",
+    "quote": "Because there are potentially many different root causes of product contamination by microorganisms, it is imperative that manufacturers perform a manufacturing risk assessment to understand manufacturing failure modes and implement prevention measures.",
+    "clause_number": "Q13.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  }
+ ]
+}

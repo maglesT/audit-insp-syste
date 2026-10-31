@@ -1,6 +1,6 @@
 {
  "role": "a",
- "instructions": "You are an auditor checking one checklist item against the FDA web page paragraph it claims to come from. You get\nthe unit's paragraphs (reference and exact text of the page; \"context\" entries are headings) and the item. Start from the ITEM:\nread it, then find in the cited paragraph what it covers.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the lead-in above a list\nitem (the paragraph ending \":\" above it). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph expects what the statement asks for (an instruction\n  to the investigator, \"Determine whether the firm validated ...\", expects the firm to have that practice), the statement\n  adds nothing and omits nothing of that obligation, the strength (a legal requirement: shall/must/required = mandatory;\n  should, FDA expects/recommends, an inspection point = recommended; may/acceptable = optional; a list item takes\n  its lead-in's) matches, and the text applies to every listed plant\n  type (INJ = sterile injectables: text limited to non-sterile products does not apply to\n  INJ; text limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "instructions": "You are an auditor checking one checklist item against the FDA web page paragraph it claims to come from. You get\nthe unit's paragraphs (reference and exact text of the page; \"context\" entries are headings) and the item. Start from the ITEM:\nread it, then find in the cited paragraph what it covers.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the lead-in above a list\nitem (the paragraph ending \":\" above it). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph expects what the statement asks for (an instruction\n  to the investigator, \"Determine whether the firm validated ...\", expects the firm to have that practice), the statement\n  adds nothing and omits nothing of that obligation, the strength (a legal requirement: shall/must/required = mandatory;\n  should, FDA expects/recommends, an inspection point = recommended; may/acceptable = optional; a list item takes\n  its lead-in's) matches, and the text applies to every listed plant\n  type (INJ = sterile injectables: text limited to non-sterile products does not apply to\n  INJ; text limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences saying what you checked for THIS item, in this item's own words: name the\n  condition, number, list or scope you compared with the text (e.g. \"the 30-day limit and 'each lot' are both in\n  the statement\", \"the list of components, containers and closures is complete\", \"drops the lead-in's 'for\n  sterile products'\"). Write each reason fresh for its item: a reason that would fit any item (\"quote exact,\n  strength matches, nothing added or omitted\") or that repeats another answer's reason is not an answer, and the\n  item then counts as unchecked.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
  "schema": {
   "type": "object",
   "required": [
@@ -30,86 +30,123 @@
  "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
  "units": [
   {
-   "unit": "Q11",
+   "unit": "Q5",
    "paragraphs": [
     {
-     "ref": "Q11",
-     "text": "If a procedure’s ability to clean a piece of equipment made of a particular material, such as 316 stainless steel, is acceptable and validated, can that “material-specific” cleaning procedure be applied to other pieces of equipment and compounds without extensive validation?"
+     "ref": "Q5",
+     "text": "What are the cleaning validation requirements for potent compounds (e.g., compounds that are cytotoxic, mutagenic, or have high pharmacologic activity), and is dedicated equipment required?"
     },
     {
-     "ref": "Q11.1",
-     "text": "No. In establishing an effective cleaning procedure for a particular piece of equipment, firms must consider its material of construction/fabrication, exact design, conditions of use, and, in particular, the specific substances that could contaminate the equipment. Therefore, to demonstrate proof of cleaning for a given piece of equipment, firms should have data that relate to all of these factors."
+     "ref": "Q5.1",
+     "text": "Separation or dedication of equipment and facilities for the manufacture of potent compounds is not specifically required by CGMP regulations. However, manufacturers should identify drugs with such risks and define the controls necessary to eliminate risk of product cross-contamination in nondedicated equipment and facilities. Such controls include proper cleaning, cleaning validation, and other contaminant controls. Firms must validate that cleaning procedures are adequate to ensure that cross-contamination does not occur. CGMP regulations establish requirements to guide development and execution of cleaning validation plans."
     },
     {
-     "ref": "Q11.2",
-     "text": "21 CFR 211.67: Equipment cleaning and maintenance"
-    },
-    {
-     "ref": "Q11.3",
-     "text": "FDA Guide to Inspections:Validation of Cleaning Processes"
+     "ref": "Q5.2",
+     "text": "In designing a facility, firms should carefully evaluate manufacturing processes to determine the best procedural controls and floor plan—optimizing the flow of materials, equipment, and people—to help prevent product contamination."
     }
    ]
   },
   {
-   "unit": "Q12",
+   "unit": "Q6",
    "paragraphs": [
     {
-     "ref": "Q12",
-     "text": "Is testing rinse solution enough to support residue determinations for cleaning validation?"
+     "ref": "Q6",
+     "text": "How do I perform cleaning validation, including for homeopathic drug products?"
     },
     {
-     "ref": "Q12.1",
-     "text": "No. For cleaning validation, rinse samples alone would not be acceptable; firms should also measure the residue or contaminant on the equipment surface using a direct method (if feasible). One disadvantage of rinse samples is that the rinse solvent may not remove the residue or contaminant. Rinse samples are capable of sampling large surface areas, particularly ones that are difficult to access; therefore, some firms use both swab and rinse samples during the course of their cleaning validation. This is acceptable if the rinse solvent has been demonstrated to dissolve residues of concern and is otherwise suitable for use on the surfaces to be sampled."
+     "ref": "Q6.1",
+     "text": "21 CFR 211.67(a) requires that any equipment, including dedicated and multipurpose equipment, is “cleaned, maintained, and, as appropriate for the nature of the drug, sanitized and/or sterilized at appropriate intervals to prevent malfunctions or contamination that would alter the safety, identity, strength, quality, or purity of the drug product beyond the official or other established requirements.” You must therefore ensure that residues (e.g., active ingredients, cleaning agents) are adequately removed from product contact surfaces of all equipment during product changeovers and/or between production campaigns, depending on the types of materials and surfaces in use."
     },
     {
-     "ref": "Q12.2",
-     "text": "For routine equipment cleaning after validation, a residue-monitoring program whose frequency and methods have been determined by risk assessment is recommended to demonstrate that the validated process continues to consistently clean the equipment."
-    },
-    {
-     "ref": "Q12.3",
-     "text": "The purpose of cleaning validation is to demonstrate that a particular cleaning process will consistently clean the equipment to a predetermined standard; the sampling and analytical test methods should be scientifically sound and should provide adequate scientific rationale to support the validation."
-    },
-    {
-     "ref": "Q12.4",
-     "text": "21 CFR 211.67: Equipment cleaning and maintenance"
-    },
-    {
-     "ref": "Q12.5",
-     "text": "FDA Guide to Inspections:Validation of Cleaning Processes"
+     "ref": "Q6.2",
+     "text": "Cleaning procedures should be well-documented and consistent for their intended use. Cleaning validation programs should provide assurance that residues are effectively removed from product contact surfaces, and manufacturers should select test methods that demonstrate their effectiveness. FDA does not provide extensive guidance on conducting cleaning validation but does recommend consulting guidelines published by various trade and professional associations for additional information (e.g., International Society for Pharmaceutical Engineering, Parenteral Drug Association)."
     }
    ]
   },
   {
-   "unit": "Q13",
+   "unit": "Q7",
    "paragraphs": [
     {
-     "ref": "Q13",
-     "text": "Does FDA prefer one type of material over another (e.g., polyvinylidene difluoride over stainless steel) for construction of recirculating loops in water for injection (WFI) systems?"
+     "ref": "Q7",
+     "text": "Does equipment need to be clean enough to meet limits based on the most sensitive possible methods of residue detection or quantification?"
     },
     {
-     "ref": "Q13.1",
-     "text": "No. There is no official agency preference for one material over another. Whatever material a firm selects for its WFI system must be suitable for its intended use. This holds true for virtually all production equipment."
+     "ref": "Q7.1",
+     "text": "No. CGMP regulations require that equipment be cleaned to prevent contamination that “would alter the safety, identity, strength, quality, or purity of the drug product beyond the official or other established requirements” (see 21 CFR 211.67). The preamble to the CGMP regulations (see 43 FR 45014) indicates that this phrase was added because absolute cleanliness for multiuse equipment is neither valuable nor feasible in many circumstances. The degree of cleanliness needed, therefore, cannot depend on the method of detection because improvements in method sensitivity would necessitate ever-lower limits and ever-increasing wash cycles. Equipment should be as clean as can be reasonably achieved to a residue limit that is documented to be safe, causes no product quality concerns, and leaves no visible residues. Contamination that is reasonably avoidable and removable is never considered acceptable."
+    }
+   ]
+  },
+  {
+   "unit": "Q8",
+   "paragraphs": [
+    {
+     "ref": "Q8",
+     "text": "Do firms need to quantify the total amount of residue remaining on equipment surfaces after manufacturing a product (before cleaning) to support cleaning validation studies?"
     },
     {
-     "ref": "Q13.2",
-     "text": "When evaluating the suitability of a WFI system’s piping, consider the surface texture or finish of the piping’s interior wall (e.g., smoothness, waviness), its ability to resist high temperatures and pressures, and its ability to withstand sterilizing and sanitizing agents and procedures."
+     "ref": "Q8.1",
+     "text": "No. In validating original cleaning procedures, firms need not quantify the level of chemical contamination remaining after manufacturing a product and before cleaning. Firms must, however, ensure that they validate proposed cleaning procedures as for routine use and should not pre-clean or otherwise attempt to make it easier for the procedures being validated to meet their cleaning objectives."
     },
     {
-     "ref": "Q13.3",
-     "text": "Equipment surfaces that are in contact with components, in-process materials, or drug products must not be reactive, additive, or absorptive so as to alter the drug product’s safety, identity, strength, quality, or purity beyond its official or established requirements."
+     "ref": "Q8.2",
+     "text": "For example, batches significantly smaller than full-scale would not offer sufficient assurance that the cleaning procedure could reliably remove residues to acceptable levels after full-scale production. The material being cleaned should be manufactured at a similar scale and manner as during validation. Also, firms should sample equipment that is stored uncleaned for a longer time than validated to demonstrate that their cleaning procedures are effective."
+    },
+    {
+     "ref": "Q8.3",
+     "text": "Once equipment surfaces are cleaned by validated procedures, firms generally are not expected to analytically examine them after each cleaning. (Manual cleaning methods may be an exception to this general rule because of inherent variability in operator compliance and abilities.) However, a residue-monitoring program whose frequency and methods have been determined by risk assessment is recommended."
+    },
+    {
+     "ref": "Q8.4",
+     "text": "FDA Guide to Inspections: Validation of Cleaning Processes"
+    }
+   ]
+  },
+  {
+   "unit": "Q9",
+   "paragraphs": [
+    {
+     "ref": "Q9",
+     "text": "Should laboratory glassware be included in a firm's equipment cleaning validation program?"
+    },
+    {
+     "ref": "Q9.1",
+     "text": "No. FDA does not expect laboratory glassware to be included in the processing equipment cleaning validation program. Glassware must, of course, be clean, and CGMP regulations consider laboratory equipment to be included within the scope of 21 CFR 211.67. Cleanliness is best assessed by inspecting laboratory procedures for the following:"
+    },
+    {
+     "ref": "Q9.2",
+     "text": "Use of nondedicated glassware and other equipment",
+     "list_item": true
+    },
+    {
+     "ref": "Q9.3",
+     "text": "Method validation (e.g., ruggedness)",
+     "list_item": true
+    },
+    {
+     "ref": "Q9.4",
+     "text": "Absence of extraneous or interfering data in the results of sample analyses",
+     "list_item": true
+    },
+    {
+     "ref": "Q9.5",
+     "text": "Laboratory cleaning procedures may include repetitive rinses with the solvent used to prepare the analyte, followed by oven drying. The equipment need not be swabbed or otherwise tested to ensure removal of potentially contaminating residues. A firm may elect to sample its glassware for residual contamination to exclude or explore the possibility of interference in the case of particularly sensitive analyses or difficult-to-clean compounds."
+    },
+    {
+     "ref": "Q9.6",
+     "text": "The possibility of carryover contamination affecting a method’s performance or integrity of the results is generally considered of low risk to the product and consumers, with the exception of potent compounds. Contaminated laboratory equipment, however, should not be a frequent excuse for rejecting or discarding aberrant results. Glassware that is not properly cleaned can make it difficult to determine if the source of aberrant analytical results is related to the unclean glassware or residues from manufacturing equipment. We expect firms to maintain laboratory equipment in a clean and sanitary manner to provide confidence in the analytical results."
     }
    ]
   }
  ],
  "items": [
   {
-   "id": "fda-cgmp-qa-equipment.html:Q11#1",
-   "unit": "Q11",
-   "hash": "a0dd1db0f953f9ef",
+   "id": "fda-cgmp-qa-equipment.html:Q5#2",
+   "unit": "Q5",
+   "hash": "e870140c6ea316a9",
    "item": {
-    "statement": "When setting up a cleaning procedure for a specific piece of equipment, take into account its material of construction, its exact design, how it is used, and especially the specific substances that could contaminate it; do not apply a cleaning procedure validated for one material to other equipment or compounds without this.",
-    "quote": "In establishing an effective cleaning procedure for a particular piece of equipment, firms must consider its material of construction/fabrication, exact design, conditions of use, and, in particular, the specific substances that could contaminate the equipment.",
-    "clause_number": "Q11.1",
+    "statement": "Validate that cleaning procedures are adequate to ensure cross-contamination does not occur.",
+    "quote": "Firms must validate that cleaning procedures are adequate to ensure that cross-contamination does not occur.",
+    "clause_number": "Q5.1",
     "strength": "mandatory",
     "plant_types": [
      "OSD",
@@ -118,7 +155,7 @@
      "INJ",
      "API"
     ],
-    "condition": "when establishing a cleaning procedure for a given piece of equipment"
+    "condition": ""
    },
    "plant_scope": [
     "OSD",
@@ -129,13 +166,13 @@
    ]
   },
   {
-   "id": "fda-cgmp-qa-equipment.html:Q11#2",
-   "unit": "Q11",
-   "hash": "55f80ae3ba8391c2",
+   "id": "fda-cgmp-qa-equipment.html:Q5#3",
+   "unit": "Q5",
+   "hash": "459197cc1f68c3ef",
    "item": {
-    "statement": "Hold data covering material of construction, exact design, conditions of use and the specific potential contaminants to demonstrate that a given piece of equipment is cleaned effectively.",
-    "quote": "Therefore, to demonstrate proof of cleaning for a given piece of equipment, firms should have data that relate to all of these factors.",
-    "clause_number": "Q11.1",
+    "statement": "When designing a facility, evaluate manufacturing processes carefully to choose procedural controls and a floor plan that optimise the flow of materials, equipment and people to help prevent product contamination.",
+    "quote": "In designing a facility, firms should carefully evaluate manufacturing processes to determine the best procedural controls and floor plan—optimizing the flow of materials, equipment, and people—to help prevent product contamination.",
+    "clause_number": "Q5.2",
     "strength": "recommended",
     "plant_types": [
      "OSD",
@@ -144,7 +181,7 @@
      "INJ",
      "API"
     ],
-    "condition": "to demonstrate proof of cleaning for a given piece of equipment"
+    "condition": "when designing a facility"
    },
    "plant_scope": [
     "OSD",
@@ -155,14 +192,14 @@
    ]
   },
   {
-   "id": "fda-cgmp-qa-equipment.html:Q12#1",
-   "unit": "Q12",
-   "hash": "2212cb3c4000ecee",
+   "id": "fda-cgmp-qa-equipment.html:Q6#1",
+   "unit": "Q6",
+   "hash": "a952628b081bac3e",
    "item": {
-    "statement": "In cleaning validation, do not rely on rinse samples alone; also measure residue or contaminant on the equipment surface by a direct method, if feasible.",
-    "quote": "For cleaning validation, rinse samples alone would not be acceptable; firms should also measure the residue or contaminant on the equipment surface using a direct method (if feasible).",
-    "clause_number": "Q12.1",
-    "strength": "recommended",
+    "statement": "Clean and maintain all equipment, dedicated or multipurpose, and sanitise and/or sterilise it as appropriate to the nature of the drug, at appropriate intervals, to prevent malfunctions or contamination that would change the product's safety, identity, strength, quality or purity beyond official or other established requirements.",
+    "quote": "21 CFR 211.67(a) requires that any equipment, including dedicated and multipurpose equipment, is “cleaned, maintained, and, as appropriate for the nature of the drug, sanitized and/or sterilized at appropriate intervals to prevent malfunctions or contamination that would alter the safety, identity, strength, quality, or purity of the drug product beyond the official or other established requirements.”",
+    "clause_number": "Q6.1",
+    "strength": "mandatory",
     "plant_types": [
      "OSD",
      "LIQ",
@@ -170,7 +207,7 @@
      "INJ",
      "API"
     ],
-    "condition": "if a direct method is feasible"
+    "condition": ""
    },
    "plant_scope": [
     "OSD",
@@ -181,14 +218,14 @@
    ]
   },
   {
-   "id": "fda-cgmp-qa-equipment.html:Q12#2",
-   "unit": "Q12",
-   "hash": "986d329ea0a1b85b",
+   "id": "fda-cgmp-qa-equipment.html:Q6#2",
+   "unit": "Q6",
+   "hash": "426a90dc2c4fcc4d",
    "item": {
-    "statement": "Swab and rinse samples may both be used during cleaning validation, provided the rinse solvent has been shown to dissolve the residues of concern and is otherwise suitable for use on the surfaces being sampled.",
-    "quote": "some firms use both swab and rinse samples during the course of their cleaning validation. This is acceptable if the rinse solvent has been demonstrated to dissolve residues of concern and is otherwise suitable for use on the surfaces to be sampled.",
-    "clause_number": "Q12.1",
-    "strength": "optional",
+    "statement": "Ensure residues (for example active ingredients and cleaning agents) are adequately removed from product contact surfaces of all equipment at product changeovers and/or between production campaigns, depending on the materials and surfaces involved.",
+    "quote": "You must therefore ensure that residues (e.g., active ingredients, cleaning agents) are adequately removed from product contact surfaces of all equipment during product changeovers and/or between production campaigns, depending on the types of materials and surfaces in use.",
+    "clause_number": "Q6.1",
+    "strength": "mandatory",
     "plant_types": [
      "OSD",
      "LIQ",
@@ -196,7 +233,7 @@
      "INJ",
      "API"
     ],
-    "condition": "if the rinse solvent is shown to dissolve residues of concern and suit the surfaces"
+    "condition": ""
    },
    "plant_scope": [
     "OSD",
@@ -207,39 +244,13 @@
    ]
   },
   {
-   "id": "fda-cgmp-qa-equipment.html:Q12#3",
-   "unit": "Q12",
-   "hash": "10d50a4b1fdc2387",
+   "id": "fda-cgmp-qa-equipment.html:Q6#3",
+   "unit": "Q6",
+   "hash": "abd342c99573cf7b",
    "item": {
-    "statement": "After cleaning validation, run a residue-monitoring program for routine equipment cleaning, with frequency and methods set by risk assessment, to show the validated process keeps cleaning the equipment consistently.",
-    "quote": "For routine equipment cleaning after validation, a residue-monitoring program whose frequency and methods have been determined by risk assessment is recommended to demonstrate that the validated process continues to consistently clean the equipment.",
-    "clause_number": "Q12.2",
-    "strength": "recommended",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ",
-     "API"
-    ],
-    "condition": "for routine equipment cleaning after validation"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ",
-    "API"
-   ]
-  },
-  {
-   "id": "fda-cgmp-qa-equipment.html:Q12#4",
-   "unit": "Q12",
-   "hash": "a5e43c26b3409ced",
-   "item": {
-    "statement": "Use scientifically sound sampling and analytical test methods for cleaning validation that give adequate scientific rationale to support the validation.",
-    "quote": "the sampling and analytical test methods should be scientifically sound and should provide adequate scientific rationale to support the validation.",
-    "clause_number": "Q12.3",
+    "statement": "Document cleaning procedures well and keep them consistent for their intended use.",
+    "quote": "Cleaning procedures should be well-documented and consistent for their intended use.",
+    "clause_number": "Q6.2",
     "strength": "recommended",
     "plant_types": [
      "OSD",
@@ -259,65 +270,13 @@
    ]
   },
   {
-   "id": "fda-cgmp-qa-equipment.html:Q13#1",
-   "unit": "Q13",
-   "hash": "6a77ea5a880de3a2",
+   "id": "fda-cgmp-qa-equipment.html:Q6#4",
+   "unit": "Q6",
+   "hash": "404475f9fffd2065",
    "item": {
-    "statement": "Make sure whatever material is chosen for the water for injection system is suitable for its intended use.",
-    "quote": "Whatever material a firm selects for its WFI system must be suitable for its intended use.",
-    "clause_number": "Q13.1",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ",
-     "API"
-    ],
-    "condition": "for a water for injection system"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ",
-    "API"
-   ]
-  },
-  {
-   "id": "fda-cgmp-qa-equipment.html:Q13#2",
-   "unit": "Q13",
-   "hash": "9a53cdab0513649b",
-   "item": {
-    "statement": "Make sure the materials chosen for virtually all production equipment are suitable for their intended use.",
-    "quote": "Whatever material a firm selects for its WFI system must be suitable for its intended use. This holds true for virtually all production equipment.",
-    "clause_number": "Q13.1",
-    "strength": "mandatory",
-    "plant_types": [
-     "OSD",
-     "LIQ",
-     "SEMI",
-     "INJ",
-     "API"
-    ],
-    "condition": "virtually all production equipment"
-   },
-   "plant_scope": [
-    "OSD",
-    "LIQ",
-    "SEMI",
-    "INJ",
-    "API"
-   ]
-  },
-  {
-   "id": "fda-cgmp-qa-equipment.html:Q13#3",
-   "unit": "Q13",
-   "hash": "7429cf4181dc0dbc",
-   "item": {
-    "statement": "When assessing whether water for injection system piping is suitable, take into account the surface texture or finish of the interior wall (e.g., smoothness, waviness), its resistance to high temperatures and pressures, and its ability to withstand sterilizing and sanitizing agents and procedures.",
-    "quote": "When evaluating the suitability of a WFI system’s piping, consider the surface texture or finish of the piping’s interior wall (e.g., smoothness, waviness), its ability to resist high temperatures and pressures, and its ability to withstand sterilizing and sanitizing agents and procedures.",
-    "clause_number": "Q13.2",
+    "statement": "Design the cleaning validation program to give assurance that residues are effectively removed from product contact surfaces.",
+    "quote": "Cleaning validation programs should provide assurance that residues are effectively removed from product contact surfaces,",
+    "clause_number": "Q6.2",
     "strength": "recommended",
     "plant_types": [
      "OSD",
@@ -326,7 +285,7 @@
      "INJ",
      "API"
     ],
-    "condition": "when evaluating suitability of WFI system piping"
+    "condition": ""
    },
    "plant_scope": [
     "OSD",
@@ -337,13 +296,65 @@
    ]
   },
   {
-   "id": "fda-cgmp-qa-equipment.html:Q13#4",
-   "unit": "Q13",
-   "hash": "5edb8ed965719d27",
+   "id": "fda-cgmp-qa-equipment.html:Q6#5",
+   "unit": "Q6",
+   "hash": "ed71654c14316ffa",
    "item": {
-    "statement": "Ensure equipment surfaces that contact components, in-process materials or drug products are not reactive, additive or absorptive so as to alter the product's safety, identity, strength, quality or purity beyond its official or established requirements.",
-    "quote": "Equipment surfaces that are in contact with components, in-process materials, or drug products must not be reactive, additive, or absorptive so as to alter the drug product’s safety, identity, strength, quality, or purity beyond its official or established requirements.",
-    "clause_number": "Q13.3",
+    "statement": "Choose test methods that demonstrate the effectiveness of residue removal.",
+    "quote": "manufacturers should select test methods that demonstrate their effectiveness.",
+    "clause_number": "Q6.2",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-equipment.html:Q6#6",
+   "unit": "Q6",
+   "hash": "256e216040be5579",
+   "item": {
+    "statement": "Consult guidelines from trade and professional associations (for example ISPE or PDA) for additional information on conducting cleaning validation.",
+    "quote": "does recommend consulting guidelines published by various trade and professional associations for additional information (e.g., International Society for Pharmaceutical Engineering, Parenteral Drug Association).",
+    "clause_number": "Q6.2",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-equipment.html:Q7#1",
+   "unit": "Q7",
+   "hash": "30d3a79052dfecfa",
+   "item": {
+    "statement": "Clean equipment to prevent contamination that would change the product's safety, identity, strength, quality or purity beyond official or other established requirements.",
+    "quote": "CGMP regulations require that equipment be cleaned to prevent contamination that “would alter the safety, identity, strength, quality, or purity of the drug product beyond the official or other established requirements” (see 21 CFR 211.67).",
+    "clause_number": "Q7.1",
     "strength": "mandatory",
     "plant_types": [
      "OSD",
@@ -352,7 +363,293 @@
      "INJ",
      "API"
     ],
-    "condition": "surfaces in contact with components, in-process materials or drug products"
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-equipment.html:Q7#2",
+   "unit": "Q7",
+   "hash": "f4fb032465ab2e11",
+   "item": {
+    "statement": "Clean equipment as thoroughly as can reasonably be achieved, to a residue limit documented as safe, that raises no product quality concerns and that leaves no visible residue.",
+    "quote": "Equipment should be as clean as can be reasonably achieved to a residue limit that is documented to be safe, causes no product quality concerns, and leaves no visible residues.",
+    "clause_number": "Q7.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-equipment.html:Q7#3",
+   "unit": "Q7",
+   "hash": "0f42792e62d8e260",
+   "item": {
+    "statement": "Remove all contamination that is reasonably avoidable and removable; leaving it is never acceptable.",
+    "quote": "Contamination that is reasonably avoidable and removable is never considered acceptable.",
+    "clause_number": "Q7.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-equipment.html:Q8#1",
+   "unit": "Q8",
+   "hash": "5d301345ae40707d",
+   "item": {
+    "statement": "Validate proposed cleaning procedures as they will be used routinely.",
+    "quote": "Firms must, however, ensure that they validate proposed cleaning procedures as for routine use",
+    "clause_number": "Q8.1",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-equipment.html:Q8#2",
+   "unit": "Q8",
+   "hash": "a19a4e4edb2fecf7",
+   "item": {
+    "statement": "During cleaning validation, do not pre-clean or otherwise make it easier for the procedures under validation to meet their cleaning objectives.",
+    "quote": "should not pre-clean or otherwise attempt to make it easier for the procedures being validated to meet their cleaning objectives.",
+    "clause_number": "Q8.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-equipment.html:Q8#3",
+   "unit": "Q8",
+   "hash": "39a229abe1a8e5df",
+   "item": {
+    "statement": "Manufacture the material being cleaned at a similar scale and in a similar manner as during validation.",
+    "quote": "The material being cleaned should be manufactured at a similar scale and manner as during validation.",
+    "clause_number": "Q8.2",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-equipment.html:Q8#4",
+   "unit": "Q8",
+   "hash": "1920b9f8906d6b15",
+   "item": {
+    "statement": "Where equipment is stored uncleaned for longer than the validated time, sample it to show the cleaning procedures remain effective.",
+    "quote": "Also, firms should sample equipment that is stored uncleaned for a longer time than validated to demonstrate that their cleaning procedures are effective.",
+    "clause_number": "Q8.2",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "dirty hold longer than validated"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-equipment.html:Q8#5",
+   "unit": "Q8",
+   "hash": "3c5d68a122d56849",
+   "item": {
+    "statement": "Run a residue-monitoring program whose frequency and methods are set by risk assessment.",
+    "quote": "However, a residue-monitoring program whose frequency and methods have been determined by risk assessment is recommended.",
+    "clause_number": "Q8.3",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-equipment.html:Q9#1",
+   "unit": "Q9",
+   "hash": "dad3ae4953c79019",
+   "item": {
+    "statement": "Keep laboratory glassware clean.",
+    "quote": "Glassware must, of course, be clean,",
+    "clause_number": "Q9.1",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-equipment.html:Q9#2",
+   "unit": "Q9",
+   "hash": "fec24bd58d8e39a5",
+   "item": {
+    "statement": "Laboratory cleaning procedures may consist of repeated rinses with the solvent used to prepare the analyte, followed by oven drying.",
+    "quote": "Laboratory cleaning procedures may include repetitive rinses with the solvent used to prepare the analyte, followed by oven drying.",
+    "clause_number": "Q9.5",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-equipment.html:Q9#3",
+   "unit": "Q9",
+   "hash": "6cb9b1db209d4ffa",
+   "item": {
+    "statement": "For particularly sensitive analyses or difficult-to-clean compounds, a firm may sample its glassware for residual contamination to rule out or investigate possible interference.",
+    "quote": "A firm may elect to sample its glassware for residual contamination to exclude or explore the possibility of interference in the case of particularly sensitive analyses or difficult-to-clean compounds.",
+    "clause_number": "Q9.5",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "particularly sensitive analyses or difficult-to-clean compounds"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-equipment.html:Q9#4",
+   "unit": "Q9",
+   "hash": "9afb42212bbc7bd9",
+   "item": {
+    "statement": "Do not use contaminated laboratory equipment as a frequent excuse to reject or discard aberrant results.",
+    "quote": "Contaminated laboratory equipment, however, should not be a frequent excuse for rejecting or discarding aberrant results.",
+    "clause_number": "Q9.6",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
    },
    "plant_scope": [
     "OSD",

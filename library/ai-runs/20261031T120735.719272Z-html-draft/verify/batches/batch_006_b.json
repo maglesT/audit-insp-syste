@@ -1,0 +1,611 @@
+{
+ "role": "b",
+ "instructions": "You are a second, independent auditor. Check one checklist item against the FDA web page paragraph it claims to come from. You get\nthe unit's paragraphs (reference and exact text of the page; \"context\" entries are headings) and the item. Start from the TEXT:\nread the cited paragraph, the paragraphs its quote runs into, and its lead-in fully, then compare the item.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the lead-in above a list\nitem (the paragraph ending \":\" above it). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph expects what the statement asks for (an instruction\n  to the investigator, \"Determine whether the firm validated ...\", expects the firm to have that practice), the statement\n  adds nothing and omits nothing of that obligation, the strength (a legal requirement: shall/must/required = mandatory;\n  should, FDA expects/recommends, an inspection point = recommended; may/acceptable = optional; a list item takes\n  its lead-in's) matches, and the text applies to every listed plant\n  type (INJ = sterile injectables: text limited to non-sterile products does not apply to\n  INJ; text limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences saying what you checked for THIS item, in this item's own words: name the\n  condition, number, list or scope you compared with the text (e.g. \"the 30-day limit and 'each lot' are both in\n  the statement\", \"the list of components, containers and closures is complete\", \"drops the lead-in's 'for\n  sterile products'\"). Write each reason fresh for its item: a reason that would fit any item (\"quote exact,\n  strength matches, nothing added or omitted\") or that repeats another answer's reason is not an answer, and the\n  item then counts as unchecked.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+ "units": [
+  {
+   "unit": "Q1",
+   "paragraphs": [
+    {
+     "ref": "Q1",
+     "text": "Many leading analytical balance manufacturers provide built-in \"auto calibration\" features in their balances. Are such auto-calibration procedures acceptable instead of external performance checks? If not, then what should the schedule for calibration be?"
+    },
+    {
+     "ref": "Q1.1",
+     "text": "The auto-calibration feature of a balance may not be relied upon to the exclusion of an external performance check (21 CFR 211.68). For a scale with a built-in auto-calibrator, we recommend that external performance checks be performed on a periodic basis, but less frequently as compared to a scale without this feature. The frequency of performance checks depends on the frequency of use of the scale and the criticality and tolerance of the process or analytical step. Note that all batches of a product manufactured between two successive verifications would be affected should the check of the auto-calibrator reveal a problem. Additionally, the calibration of an auto-calibrator should be periodically verified—a common frequency is once a year—using National Institute of Standards and Technology (NIST)-traceable standards or NIST-accredited standards in use in other countries."
+    },
+    {
+     "context": "Back to Top"
+    }
+   ]
+  },
+  {
+   "unit": "Q2",
+   "paragraphs": [
+    {
+     "ref": "Q2",
+     "text": "Do CGMPs require that forced degradation studies always be conducted of the drug product when determining if a drug product stability test method is stability indicating?"
+    },
+    {
+     "ref": "Q2.1",
+     "text": "No. Drug product stress testing (forced degradation) may not be necessary when the routes of degradation and the suitability of the analytical procedures can be determined through use of the following:"
+    },
+    {
+     "ref": "Q2.2",
+     "text": "Data from stress testing of the drug substance",
+     "list_item": true
+    },
+    {
+     "ref": "Q2.3",
+     "text": "Reference materials for process impurities and degradants",
+     "list_item": true
+    },
+    {
+     "ref": "Q2.4",
+     "text": "Data from accelerated and long-term studies on the drug substance",
+     "list_item": true
+    },
+    {
+     "ref": "Q2.5",
+     "text": "Data from accelerated and long-term studies on the drug product",
+     "list_item": true
+    },
+    {
+     "ref": "Q2.6",
+     "text": "Additional supportive information on the specificity of the analytical methods and on degradation pathways of the drug substance may be available from literature sources. Section 211.165(e) of the CGMP regulations states that the accuracy, sensitivity, specificity, and reproducibility of test methods shall be established and documented (21 CFR 211.165(e)). Further, 21 CFR 211.166(a)(3) requires that stability test methods be reliable, meaningful, and specific, which means that the content of the active ingredient, degradation products, and other components of interest in a drug product can be accurately measured without interference, often called stability indicating. The CGMP regulations do not specify what techniques or tests are to be used to ensure that one’s test methods are stability indicating. However, evaluating the specificity of the test methods during forced degradation studies (i.e., exposing the drug to extremes of pH, temperature, oxygen, etc.) of the drug substance and drug product often is necessary to ensure that stability test methods are stability indicating. But in certain circumstances, conducting a forced degradation study of just the drug substance may be sufficient to evaluate the stability-indicating properties of a test method. Generally, in determining whether it is necessary to conduct forced degradation studies of the drug product, the specificity of the test method should be evaluated for its ability to assay drug substance, degradants, and impurities, in the presence of each other, without interference. The evaluation also should provide assurance that there is not a potential for interaction between the drug substance, degradants, impurities, excipients, and container-closure system during the course of the shelf life of the finished drug product. Last, the rationale for any decision made concerning the extent of the forced degradation studies conducted as well as the rationale for concluding that a test method is stability indicating should be fully documented."
+    },
+    {
+     "context": "Back to Top"
+    }
+   ]
+  },
+  {
+   "unit": "Q3",
+   "paragraphs": [
+    {
+     "ref": "Q3",
+     "text": "When performing the USP General Chapter <788> Particulate Matter in Injections test for a large volume parenteral (LVP), is it acceptable to take the average among the units tested to determine if the batch meets its specification for this attribute?"
+    },
+    {
+     "ref": "Q3.1",
+     "text": "No. It is not acceptable to take the average among the LVP units tested in each batch/lot when following this method because the purpose of this method is to measure and limit intra-batch variability."
+    },
+    {
+     "ref": "Q3.2",
+     "text": "Particulate matter refers to small, subvisible particles. General Chapter <788> provides two tests for detecting such particulates—light obscuration and microscopic assay. Both are generally accepted for use in testing LVPs and small volume parenterals (SVP) for the determination of subvisible particulate matter. Normally, samples are first tested by the light obscuration method; if the sample fails the specified limits, the microscopic assay method can then be used. However, the microscopic method can be the sole test if there is a documented technical reason or interference from the product under test that would make the light obscuration method unsuitable or the results invalid."
+    },
+    {
+     "ref": "Q3.3",
+     "text": "Confusion about when averaging data is and is not acceptable is probably due to the sample preparation method for the light obscuration test (General Chapter <788>). At least 2, 5-mL aliquots from each sampled unit or the pooled sample (see below) are to be used in the particulate count determination, and the results from these aliquots are to be averaged for comparison with the specification. Note that the average is of the results from examining each aliquot and not between units. (The results of the first aliquot examined by light obscuration are to be discarded, and the subsequent aliquots—2 or more—are retained.) Pooling units prior to analysis is permitted only if the volume in each unit is less than 25 mL, in which case 10 or more units may be pooled. If the volume in the SVP or LVP is 25 mL or more per unit, single units are to be examined by this method (General Chapter <788>)."
+    },
+    {
+     "ref": "Q3.4",
+     "text": "Results among the test units cannot be averaged because particulate matter is assumed to be non-uniformly dispersed throughout the lot. The intent of assessing results from each individual unit is to ensure adequate representation of the lot and to detect potential variation within a lot."
+    },
+    {
+     "ref": "Q3.5",
+     "text": "As to the number of individual units to be tested for LVP and SVP units having a volume of 25mL or more, the USP states that the number of units tested depends on \"statistically sound sampling plans,\" and \"sampling plans should be based on consideration of product volume, numbers of particles historically found to be present in comparison to limits, particle size distribution of particles present, and variability of particle counts between units.\" The USP also suggests that the total number of units tested for any given batch may be less than 10 units (for LVP and pooled SVPs) with proper justification. This is consistent with the CGMP requirement for statistical sampling plans (see 21 CFR 211.165)."
+    },
+    {
+     "context": "Back to Top"
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q1#1",
+   "unit": "Q1",
+   "hash": "70cbcdf037a3b752",
+   "item": {
+    "statement": "Do not rely on a balance's built-in auto-calibration feature alone; also perform external performance checks of the balance.",
+    "quote": "The auto-calibration feature of a balance may not be relied upon to the exclusion of an external performance check",
+    "clause_number": "Q1.1",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q1#2",
+   "unit": "Q1",
+   "hash": "7c21e5fd1c664ae4",
+   "item": {
+    "statement": "For scales with a built-in auto-calibrator, perform external performance checks periodically; these may be less frequent than for scales without this feature.",
+    "quote": "For a scale with a built-in auto-calibrator, we recommend that external performance checks be performed on a periodic basis, but less frequently as compared to a scale without this feature.",
+    "clause_number": "Q1.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "scale has built-in auto-calibrator"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q1#3",
+   "unit": "Q1",
+   "hash": "0906c8c978857c96",
+   "item": {
+    "statement": "Set the frequency of balance performance checks based on how often the scale is used and on the criticality and tolerance of the process or analytical step.",
+    "quote": "The frequency of performance checks depends on the frequency of use of the scale and the criticality and tolerance of the process or analytical step.",
+    "clause_number": "Q1.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q1#4",
+   "unit": "Q1",
+   "hash": "6684a6cd5849e315",
+   "item": {
+    "statement": "Periodically verify the calibration of a balance's auto-calibrator (commonly once a year) using NIST-traceable standards or NIST-accredited standards used in other countries.",
+    "quote": "Additionally, the calibration of an auto-calibrator should be periodically verified—a common frequency is once a year—using National Institute of Standards and Technology (NIST)-traceable standards or NIST-accredited standards in use in other countries.",
+    "clause_number": "Q1.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q2#1",
+   "unit": "Q2",
+   "hash": "244d3d4f452dd69b",
+   "item": {
+    "statement": "Forced degradation (stress testing) of the drug product may be omitted when the degradation routes and the suitability of the analytical procedures can be determined using: stress testing data on the drug substance; reference materials for process impurities and degradants; accelerated and long-term study data on the drug substance; and accelerated and long-term study data on the drug product.",
+    "quote": "Drug product stress testing (forced degradation) may not be necessary when the routes of degradation and the suitability of the analytical procedures can be determined through use of the following:",
+    "clause_number": "Q2.1",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "degradation routes and method suitability can be determined from listed data"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q2#2",
+   "unit": "Q2",
+   "hash": "f07cb9af36e84d08",
+   "item": {
+    "statement": "Establish and document the accuracy, sensitivity, specificity and reproducibility of test methods.",
+    "quote": "Section 211.165(e) of the CGMP regulations states that the accuracy, sensitivity, specificity, and reproducibility of test methods shall be established and documented",
+    "clause_number": "Q2.6",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q2#3",
+   "unit": "Q2",
+   "hash": "70178668d2f30fb8",
+   "item": {
+    "statement": "Use stability test methods that are reliable, meaningful and specific, so that the active ingredient content, degradation products and other components of interest can be measured accurately without interference (stability indicating).",
+    "quote": "Further, 21 CFR 211.166(a)(3) requires that stability test methods be reliable, meaningful, and specific, which means that the content of the active ingredient, degradation products, and other components of interest in a drug product can be accurately measured without interference, often called stability indicating.",
+    "clause_number": "Q2.6",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q2#4",
+   "unit": "Q2",
+   "hash": "40c704634a686677",
+   "item": {
+    "statement": "Where needed to ensure stability test methods are stability indicating, evaluate test method specificity in forced degradation studies of both the drug substance and the drug product (for example, exposure to extremes of pH, temperature, oxygen).",
+    "quote": "However, evaluating the specificity of the test methods during forced degradation studies (i.e., exposing the drug to extremes of pH, temperature, oxygen, etc.) of the drug substance and drug product often is necessary to ensure that stability test methods are stability indicating.",
+    "clause_number": "Q2.6",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q2#5",
+   "unit": "Q2",
+   "hash": "40aeab524af61bf8",
+   "item": {
+    "statement": "In certain circumstances, a forced degradation study of only the drug substance may be enough to evaluate whether a test method is stability indicating.",
+    "quote": "But in certain circumstances, conducting a forced degradation study of just the drug substance may be sufficient to evaluate the stability-indicating properties of a test method.",
+    "clause_number": "Q2.6",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "in certain circumstances"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q2#6",
+   "unit": "Q2",
+   "hash": "de6bbc12a51526f7",
+   "item": {
+    "statement": "When deciding whether forced degradation studies of the drug product are needed, evaluate whether the test method can assay the drug substance, degradants and impurities in the presence of each other without interference.",
+    "quote": "Generally, in determining whether it is necessary to conduct forced degradation studies of the drug product, the specificity of the test method should be evaluated for its ability to assay drug substance, degradants, and impurities, in the presence of each other, without interference.",
+    "clause_number": "Q2.6",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "deciding on drug product forced degradation"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q2#7",
+   "unit": "Q2",
+   "hash": "edbc0c88e46e8863",
+   "item": {
+    "statement": "Ensure that evaluation also gives assurance that no interaction can occur between drug substance, degradants, impurities, excipients and the container-closure system over the shelf life of the finished product.",
+    "quote": "The evaluation also should provide assurance that there is not a potential for interaction between the drug substance, degradants, impurities, excipients, and container-closure system during the course of the shelf life of the finished drug product.",
+    "clause_number": "Q2.6",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q2#8",
+   "unit": "Q2",
+   "hash": "353e1b68ceb2c0c2",
+   "item": {
+    "statement": "Fully document the rationale for decisions on the extent of forced degradation studies and the rationale for concluding that a test method is stability indicating.",
+    "quote": "Last, the rationale for any decision made concerning the extent of the forced degradation studies conducted as well as the rationale for concluding that a test method is stability indicating should be fully documented.",
+    "clause_number": "Q2.6",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q3#1",
+   "unit": "Q3",
+   "hash": "c51c0a3abf9c1786",
+   "item": {
+    "statement": "When testing large volume parenterals for subvisible particulate matter, do not average results across the units tested in a batch or lot to decide whether the batch meets specification.",
+    "quote": "It is not acceptable to take the average among the LVP units tested in each batch/lot when following this method because the purpose of this method is to measure and limit intra-batch variability.",
+    "clause_number": "Q3.1",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q3#2",
+   "unit": "Q3",
+   "hash": "a4a1ac0ed0bf9db5",
+   "item": {
+    "statement": "Test particulate matter samples first by light obscuration; if a sample fails the specified limits, the microscopic assay may then be used.",
+    "quote": "Normally, samples are first tested by the light obscuration method; if the sample fails the specified limits, the microscopic assay method can then be used.",
+    "clause_number": "Q3.2",
+    "strength": "optional",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "sample fails light obscuration limits"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q3#3",
+   "unit": "Q3",
+   "hash": "2afbe1ed46e39088",
+   "item": {
+    "statement": "The microscopic method may be used as the only particulate test if there is a documented technical reason or product interference that makes light obscuration unsuitable or its results invalid.",
+    "quote": "However, the microscopic method can be the sole test if there is a documented technical reason or interference from the product under test that would make the light obscuration method unsuitable or the results invalid.",
+    "clause_number": "Q3.2",
+    "strength": "optional",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "documented reason light obscuration unsuitable"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q3#4",
+   "unit": "Q3",
+   "hash": "d073b750f95910af",
+   "item": {
+    "statement": "For the light obscuration particulate count, use at least 2 aliquots of 5 mL from each sampled unit or from the pooled sample, and average the aliquot results for comparison with the specification.",
+    "quote": "At least 2, 5-mL aliquots from each sampled unit or the pooled sample (see below) are to be used in the particulate count determination, and the results from these aliquots are to be averaged for comparison with the specification.",
+    "clause_number": "Q3.3",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q3#5",
+   "unit": "Q3",
+   "hash": "516d67fdd5f26998",
+   "item": {
+    "statement": "In light obscuration testing, discard the results of the first aliquot examined and retain the subsequent aliquots (2 or more).",
+    "quote": "(The results of the first aliquot examined by light obscuration are to be discarded, and the subsequent aliquots—2 or more—are retained.)",
+    "clause_number": "Q3.3",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q3#6",
+   "unit": "Q3",
+   "hash": "9ce57df5fa9b038a",
+   "item": {
+    "statement": "Pool units before particulate analysis only if each unit holds less than 25 mL; in that case 10 or more units may be pooled.",
+    "quote": "Pooling units prior to analysis is permitted only if the volume in each unit is less than 25 mL, in which case 10 or more units may be pooled.",
+    "clause_number": "Q3.3",
+    "strength": "optional",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "unit volume less than 25 mL"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q3#7",
+   "unit": "Q3",
+   "hash": "05a096492315901c",
+   "item": {
+    "statement": "Where small or large volume parenteral units hold 25 mL or more each, examine single units by the particulate test.",
+    "quote": "If the volume in the SVP or LVP is 25 mL or more per unit, single units are to be examined by this method",
+    "clause_number": "Q3.3",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "unit volume 25 mL or more"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q3#8",
+   "unit": "Q3",
+   "hash": "837d838a600a40fa",
+   "item": {
+    "statement": "For parenteral units of 25 mL or more, base the number of units tested for particulate matter on a statistically sound sampling plan that considers product volume, historical particle numbers relative to limits, particle size distribution and unit-to-unit variability of particle counts.",
+    "quote": "As to the number of individual units to be tested for LVP and SVP units having a volume of 25mL or more, the USP states that the number of units tested depends on \"statistically sound sampling plans,\" and \"sampling plans should be based on consideration of product volume, numbers of particles historically found to be present in comparison to limits, particle size distribution of particles present, and variability of particle counts between units.\"",
+    "clause_number": "Q3.5",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "unit volume 25 mL or more"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  }
+ ]
+}

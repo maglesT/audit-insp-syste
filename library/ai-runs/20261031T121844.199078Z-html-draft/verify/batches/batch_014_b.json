@@ -1,0 +1,687 @@
+{
+ "role": "b",
+ "instructions": "You are a second, independent auditor. Check one checklist item against the FDA web page paragraph it claims to come from. You get\nthe unit's paragraphs (reference and exact text of the page; \"context\" entries are headings) and the item. Start from the TEXT:\nread the cited paragraph, the paragraphs its quote runs into, and its lead-in fully, then compare the item.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the lead-in above a list\nitem (the paragraph ending \":\" above it). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph expects what the statement asks for (an instruction\n  to the investigator, \"Determine whether the firm validated ...\", expects the firm to have that practice), the statement\n  adds nothing and omits nothing of that obligation, the strength (a legal requirement: shall/must/required = mandatory;\n  should, FDA expects/recommends, an inspection point = recommended; may/acceptable = optional; a list item takes\n  its lead-in's) matches, and the text applies to every listed plant\n  type (INJ = sterile injectables: text limited to non-sterile products does not apply to\n  INJ; text limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences saying what you checked for THIS item, in this item's own words: name the\n  condition, number, list or scope you compared with the text (e.g. \"the 30-day limit and 'each lot' are both in\n  the statement\", \"the list of components, containers and closures is complete\", \"drops the lead-in's 'for\n  sterile products'\"). Write each reason fresh for its item: a reason that would fit any item (\"quote exact,\n  strength matches, nothing added or omitted\") or that repeats another answer's reason is not an answer, and the\n  item then counts as unchecked.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+ "units": [
+  {
+   "unit": "¶1-¶26",
+   "paragraphs": [
+    {
+     "context": "Dosage Form Drug Manufacturers cGMPs (10/93)"
+    },
+    {
+     "context": "GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S"
+    },
+    {
+     "ref": "¶1",
+     "text": "Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s).",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S"
+    },
+    {
+     "context": "I. INTRODUCTION"
+    },
+    {
+     "ref": "¶2",
+     "text": "This document is intended to be a general guide to inspections of drug manufacturers to determine their compliance with the drug CGMPR's. This guide should be used with instructions in the IOM, other drug inspection guides, and compliance programs. A list of the inspection guides is referenced in Chapter 10 of the IOM. Some of these guides are:",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > I. INTRODUCTION"
+    },
+    {
+     "ref": "¶3",
+     "text": "Guide to Inspections of Bulk Pharmaceutical Chemicals.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > I. INTRODUCTION"
+    },
+    {
+     "ref": "¶4",
+     "text": "Guide to Inspections of High Purity Water Systems.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > I. INTRODUCTION"
+    },
+    {
+     "ref": "¶5",
+     "text": "Guide to Inspections of Pharmaceutical Quality Control Laboratories.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > I. INTRODUCTION"
+    },
+    {
+     "ref": "¶6",
+     "text": "Guide to Inspections of Microbiological Pharmaceutical Quality Control Laboratories.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > I. INTRODUCTION"
+    },
+    {
+     "ref": "¶7",
+     "text": "Guide to Inspections of Lyophilization of Parenterals.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > I. INTRODUCTION"
+    },
+    {
+     "ref": "¶8",
+     "text": "Guide to Inspections of Validation of Cleaning Processes.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > I. INTRODUCTION"
+    },
+    {
+     "ref": "¶9",
+     "text": "Guide to Inspections of Computerized Systems in Drug Processing.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > I. INTRODUCTION"
+    },
+    {
+     "ref": "¶10",
+     "text": "Guideline on General Principles of Process Validation.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > I. INTRODUCTION"
+    },
+    {
+     "context": "II. CURRENT GOOD"
+    },
+    {
+     "context": "MANUFACTURING PRACTICE"
+    },
+    {
+     "context": "REGULATIONS"
+    },
+    {
+     "context": "Prescription vs. Non-prescription"
+    },
+    {
+     "ref": "¶11",
+     "text": "All drugs must be manufactured in accordance with the current good manufacturing practice regulations otherwise they are considered to be adulterated within the meaning of the FD&C Act, Section 501(a)(2)(B). Records relating to prescription drugs must be readily available for review in accordance with Sec. 704(a)(1)(B) of the FD&C Act. If the product is an OTC drug which is covered by an NDA or ANDA, FDA may review, copy and verify the records under Sec. 505(k)(2) of the FD&C Act. However, if the product is an OTC drug for which there is no application filed with FDA, the firm is not legally required to show these records to the investigator during an inspection being conducted under Section 704 of the FD&C Act. Nonetheless, all manufacturers of prescription and OTC drugs must comply with the drug CGMPR requirements, including those involving records. The investigator should review these records as part of the inspection in determining the firm's compliance with the CGMP regulations. On rare occasions, a firm may refuse to allow review of OTC records stating they are not legally required to. While the firm may be under no legal obligation to permit review of such records, this does not relieve the firm of its statutory requirement to comply with the good manufacturing practices under section 501(a)(2)(B) of the Food Drug and Cosmetic Act, including the requirements for maintaining records.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶12",
+     "text": "If a firm refuses review of OTC records, the investigator should determine by other inspectional means the extent of the firm's compliance with CGMPR's. Inspectional observations and findings that CGMPR's are not being followed are to be cited on a List of Inspectional Observations, FDA-483, for both prescription and non-prescription drugs.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶13",
+     "text": "Organization and Personnel [21 CFR 211 Subpart B]",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶14",
+     "text": "The firm must have a quality control department that has the responsibility and authority as described in the referenced CFR. The quality control department must maintain its independence from the production department, and its responsibilities must be in writing.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶15",
+     "text": "Obtain the name, title and individual responsibilities of corporate officers and other key employees as indicated in the IOM.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶16",
+     "text": "In the drug industry, an employee's education and training for their position has a significant impact on the production of a quality product. Report whether the firm has a formalized training program, and describe the type of training received. The training received by an employee should be documented.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶17",
+     "text": "Quality control must do product annual review on each drug manufactured, and have written annual review procedures. Review these reports in detail. This report will quickly let you know if the manufacturing process is under control. The report should provide a summary all lots that failed in-process or finished product testing, and other critical factors. Investigate any failures.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶18",
+     "text": "Quality control must validate the manufacturing process for each drug manufactured. Review and evaluate this data.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶19",
+     "text": "Buildings and Facilities [21 CFR 211 Subpart C]",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶20",
+     "text": "Review the construction, size, and location of plant in relation to surroundings. There must be adequate lighting, ventilation, screening, and proper physical barriers for all operations including dust, temperature, humidity, and bacteriological controls. There must be adequate blueprints which describe the high purity water, HEPA, and compressed air systems. The site must have adequate locker, toilet, and hand washing facilities.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶21",
+     "text": "The firm must provide adequate space for the placement of equipment and materials to prevent mix-ups in the following operations:",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶22",
+     "text": "receiving, sampling, and storage of raw materials;",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶23",
+     "text": "manufacturing or processing;",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶24",
+     "text": "packaging and labeling;",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶25",
+     "text": "storage for containers, packaging materials, labeling, and finished products;",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶26",
+     "text": "production and control laboratories.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "Equipment [21 CFR 211 Subpart D]"
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶1-¶26#1",
+   "unit": "¶1-¶26",
+   "hash": "98062d8a31db375a",
+   "item": {
+    "statement": "Manufacture every drug in line with the current good manufacturing practice requirements.",
+    "quote": "All drugs must be manufactured in accordance with the current good manufacturing practice regulations",
+    "clause_number": "¶11",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶1-¶26#2",
+   "unit": "¶1-¶26",
+   "hash": "9b6125e155845e97",
+   "item": {
+    "statement": "Keep records relating to prescription drugs readily available for FDA review.",
+    "quote": "Records relating to prescription drugs must be readily available for review",
+    "clause_number": "¶11",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶1-¶26#3",
+   "unit": "¶1-¶26",
+   "hash": "dfdb58d41bd1d080",
+   "item": {
+    "statement": "Comply with all drug CGMP requirements, including record requirements, for both prescription and over-the-counter drugs.",
+    "quote": "all manufacturers of prescription and OTC drugs must comply with the drug CGMPR requirements, including those involving records",
+    "clause_number": "¶11",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶1-¶26#4",
+   "unit": "¶1-¶26",
+   "hash": "ee7fed94ec7383e4",
+   "item": {
+    "statement": "Have a quality control unit that holds the responsibility and authority set out in the CGMP regulations.",
+    "quote": "The firm must have a quality control department that has the responsibility and authority as described in the referenced CFR.",
+    "clause_number": "¶14",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶1-¶26#5",
+   "unit": "¶1-¶26",
+   "hash": "64f67bac47bbfea2",
+   "item": {
+    "statement": "Keep the quality control unit independent of the production department.",
+    "quote": "The quality control department must maintain its independence from the production department",
+    "clause_number": "¶14",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶1-¶26#6",
+   "unit": "¶1-¶26",
+   "hash": "2ff9483f812242b9",
+   "item": {
+    "statement": "Set out the responsibilities of the quality control unit in writing.",
+    "quote": "its responsibilities must be in writing",
+    "clause_number": "¶14",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶1-¶26#7",
+   "unit": "¶1-¶26",
+   "hash": "5841ddbb1c4b6a74",
+   "item": {
+    "statement": "Document the training each employee has received.",
+    "quote": "The training received by an employee should be documented.",
+    "clause_number": "¶16",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶1-¶26#8",
+   "unit": "¶1-¶26",
+   "hash": "8fcb9979674454f9",
+   "item": {
+    "statement": "Have quality control perform an annual product review for each drug manufactured.",
+    "quote": "Quality control must do product annual review on each drug manufactured",
+    "clause_number": "¶17",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶1-¶26#9",
+   "unit": "¶1-¶26",
+   "hash": "7ebc98588cd325c6",
+   "item": {
+    "statement": "Have written procedures for the annual product review.",
+    "quote": "have written annual review procedures",
+    "clause_number": "¶17",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶1-¶26#10",
+   "unit": "¶1-¶26",
+   "hash": "ddcacfb2cc28f309",
+   "item": {
+    "statement": "Include in the annual review a summary of all lots that failed in-process or finished product testing, and of other critical factors.",
+    "quote": "The report should provide a summary all lots that failed in-process or finished product testing, and other critical factors.",
+    "clause_number": "¶17",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶1-¶26#11",
+   "unit": "¶1-¶26",
+   "hash": "c15fdeec588516ba",
+   "item": {
+    "statement": "Investigate any failures.",
+    "quote": "Investigate any failures.",
+    "clause_number": "¶17",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶1-¶26#12",
+   "unit": "¶1-¶26",
+   "hash": "c90ea7f342be6358",
+   "item": {
+    "statement": "Have quality control validate the manufacturing process for each drug manufactured.",
+    "quote": "Quality control must validate the manufacturing process for each drug manufactured.",
+    "clause_number": "¶18",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶1-¶26#13",
+   "unit": "¶1-¶26",
+   "hash": "ec95c3d484264e95",
+   "item": {
+    "statement": "Provide adequate lighting, ventilation, screening and proper physical barriers for all operations, including dust, temperature, humidity and bacteriological controls.",
+    "quote": "There must be adequate lighting, ventilation, screening, and proper physical barriers for all operations including dust, temperature, humidity, and bacteriological controls.",
+    "clause_number": "¶20",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶1-¶26#14",
+   "unit": "¶1-¶26",
+   "hash": "0e5fd5ba877dbb4e",
+   "item": {
+    "statement": "Keep adequate blueprints describing the high purity water, HEPA and compressed air systems.",
+    "quote": "There must be adequate blueprints which describe the high purity water, HEPA, and compressed air systems.",
+    "clause_number": "¶20",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶1-¶26#15",
+   "unit": "¶1-¶26",
+   "hash": "0ea8f508b285a724",
+   "item": {
+    "statement": "Provide adequate locker, toilet and hand washing facilities at the site.",
+    "quote": "The site must have adequate locker, toilet, and hand washing facilities.",
+    "clause_number": "¶20",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶1-¶26#16",
+   "unit": "¶1-¶26",
+   "hash": "10906b8e281ffe0a",
+   "item": {
+    "statement": "Provide adequate space for placing equipment and materials to prevent mix-ups in the receiving, sampling and storage of raw materials.",
+    "quote": "receiving, sampling, and storage of raw materials;",
+    "clause_number": "¶22",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶1-¶26#17",
+   "unit": "¶1-¶26",
+   "hash": "144d952271ce5c0e",
+   "item": {
+    "statement": "Provide adequate space for placing equipment and materials to prevent mix-ups in manufacturing or processing.",
+    "quote": "manufacturing or processing;",
+    "clause_number": "¶23",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶1-¶26#18",
+   "unit": "¶1-¶26",
+   "hash": "77256a3a9847c503",
+   "item": {
+    "statement": "Provide adequate space for placing equipment and materials to prevent mix-ups in packaging and labeling.",
+    "quote": "packaging and labeling;",
+    "clause_number": "¶24",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶1-¶26#19",
+   "unit": "¶1-¶26",
+   "hash": "3ebb055b030c16c1",
+   "item": {
+    "statement": "Provide adequate space for placing equipment and materials to prevent mix-ups in the storage of containers, packaging materials, labeling and finished products.",
+    "quote": "storage for containers, packaging materials, labeling, and finished products;",
+    "clause_number": "¶25",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶1-¶26#20",
+   "unit": "¶1-¶26",
+   "hash": "8697f8382e2c0a62",
+   "item": {
+    "statement": "Provide adequate space for placing equipment and materials to prevent mix-ups in production and control laboratories.",
+    "quote": "production and control laboratories.",
+    "clause_number": "¶26",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  }
+ ]
+}

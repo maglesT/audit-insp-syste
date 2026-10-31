@@ -1,0 +1,252 @@
+{
+ "role": "b",
+ "instructions": "You are a second, independent auditor. Check one checklist item against the FDA web page paragraph it claims to come from. You get\nthe unit's paragraphs (reference and exact text of the page; \"context\" entries are headings) and the item. Start from the TEXT:\nread the cited paragraph, the paragraphs its quote runs into, and its lead-in fully, then compare the item.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the lead-in above a list\nitem (the paragraph ending \":\" above it). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph expects what the statement asks for (an instruction\n  to the investigator, \"Determine whether the firm validated ...\", expects the firm to have that practice), the statement\n  adds nothing and omits nothing of that obligation, the strength (a legal requirement: shall/must/required = mandatory;\n  should, FDA expects/recommends, an inspection point = recommended; may/acceptable = optional; a list item takes\n  its lead-in's) matches, and the text applies to every listed plant\n  type (INJ = sterile injectables: text limited to non-sterile products does not apply to\n  INJ; text limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences saying what you checked for THIS item, in this item's own words: name the\n  condition, number, list or scope you compared with the text (e.g. \"the 30-day limit and 'each lot' are both in\n  the statement\", \"the list of components, containers and closures is complete\", \"drops the lead-in's 'for\n  sterile products'\"). Write each reason fresh for its item: a reason that would fit any item (\"quote exact,\n  strength matches, nothing added or omitted\") or that repeats another answer's reason is not an answer, and the\n  item then counts as unchecked.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+ "units": [
+  {
+   "unit": "¶64-¶76",
+   "paragraphs": [
+    {
+     "ref": "¶64",
+     "text": "Observe the actual operation of the equipment and determine whether powders or granulations are processed according to the firm's specifications. The mixing process must be validated. The drying ovens should have their own air handling system which will prevent cross-contamination. Does the firm record drying time/temperature and maintain recording charts including loss on drying test results? Review the in-line tests performed by production and/or quality control. Some in-process tests are tablet weight, thickness, hardness, disintegration , and friability. Evaluate the disposition of in-process samples.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶65",
+     "text": "Capsules may be either hard, or soft type. They are filled with powder, beads, or liquid by machine. The manufacturing operation of powders for capsules should follow the same practice as for tablets. Determine manufacturing controls used, in-line testing, and basis for evaluating test results for the filling operations.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "Sterile Products"
+    },
+    {
+     "ref": "¶66",
+     "text": "Typically, a sterile drug contains no viable microorganisms and is non-pyrogenic. Drugs for intravenous injection, irrigation, and as ophthalmic preparations, etc., meet this criteria. In addition, other dosage forms might be labeled as sterile. For instance, an ointment applied to a puncture wound or skin abrasion.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶67",
+     "text": "Parenteral drugs must be non-pyrogenic, because the presence of pyrogens can cause a febrile reaction in human beings. Pyrogens are the products of the growth of microorganisms. Therefore, any condition that permits bacterial growth should be avoided in the manufacturing process. Pyrogens may develop in water located in stills, storage tanks, dead legs, and piping, or from surface contamination of containers, closures, or other equipment. Parenterals may also contain chemical contaminants that will produce a pyretic response in humans or animals although there are no pyrogens present.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶68",
+     "text": "There are many excellent reference materials which should be reviewed before the inspection. Some of these are the \"Guideline on Sterile Drug Products Produced by Aseptic Processing,\" and chapter 84 on pyrogens in the Remington's Pharmaceutical Sciences.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶69",
+     "text": "Determine and evaluate the procedures used to minimize the hazard of contamination with microorganisms and particulates of sterile drugs.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "Personnel"
+    },
+    {
+     "ref": "¶70",
+     "text": "Review the training program to ensure that personnel performing production and control procedures have experience and training commensurate with their intended duties. It is important that personnel be trained in aseptic procedures. The employees must be properly gowned and use good aseptic techniques.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "Buildings"
+    },
+    {
+     "ref": "¶71",
+     "text": "The non-sterile preparation areas for sterile drugs should be controlled. Refer to Subpart C of the proposed CGMPR's for LVP's; however, deviations from these proposed regulations are not necessarily deviations from the CGMPR's. Evaluate the air cleanliness classification of the area. For guidance in this area, review Federal Standard #209E entitled \"Airborne Particulate Cleanliness Classes in Cleanrooms and Clean Zones.\" Observe the formulation practices or procedures used in the preparation areas. Be alert for routes of contamination. Determine how the firm minimizes traffic and unnecessary activity in the preparation area. Determine if filling rooms and other aseptic areas are constructed to eliminate possible areas for microbiological/particulate contamination. For instance, dust-collecting ledges, porous surfaces, etc. Determine how aseptic areas are cleaned and maintained.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "1. Air"
+    },
+    {
+     "ref": "¶72",
+     "text": "Air supplied to the non-sterile preparation or formulation area for manufacturing solutions prior to sterilization should be filtered as necessary to control particulates. Air being supplied to product exposure areas where sterile drugs are processed and handled should be high efficiency particulate air (HEPA) filtered under positive pressure.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶73",
+     "text": "Review the firm's system for HEPA filters, determine if they are certified and/or Dioctyl Phthalate (DOP) tested and frequency of testing.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶74",
+     "text": "Review the compressed air system and determine if it is filtered at the point of use to control particulates. Diagrams of the HEPA filtered and compressed air systems should be reviewed and evaluated.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "2. Environmental Controls"
+    },
+    {
+     "ref": "¶75",
+     "text": "Specifications for viable and non-viable particulates must be established. Specifications for viable particulates must include provisions for both air and surface sampling of aseptic processing areas and equipment. Review the firm's environmental control program, specifications, and test data. Determine if the firm follows its procedure for reviewing out-of-limit test results. Also, determine if review of environmental test data is included as a part of the firm's release procedures.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶76",
+     "text": "Note: In the preparation of media for environmental air and surface sampling, suitable inactivating agents should be added. For example, the addition of penicillinase to media used for monitoring sterile penicillin operations and cephalosporin products.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "<>"
+    },
+    {
+     "context": "Equipment"
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶64-¶76#18",
+   "unit": "¶64-¶76",
+   "hash": "65c4fedf76cd23df",
+   "item": {
+    "statement": "Filter compressed air at the point of use to control particulates.",
+    "quote": "determine if it is filtered at the point of use to control particulates",
+    "clause_number": "¶74",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶64-¶76#19",
+   "unit": "¶64-¶76",
+   "hash": "00e4f6bc721e0e98",
+   "item": {
+    "statement": "Establish specifications for viable and non-viable particulates.",
+    "quote": "Specifications for viable and non-viable particulates must be established.",
+    "clause_number": "¶75",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶64-¶76#20",
+   "unit": "¶64-¶76",
+   "hash": "89bd7ac52dbeaa56",
+   "item": {
+    "statement": "Include in viable particulate specifications provisions for both air and surface sampling of aseptic processing areas and equipment.",
+    "quote": "Specifications for viable particulates must include provisions for both air and surface sampling of aseptic processing areas and equipment.",
+    "clause_number": "¶75",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶64-¶76#21",
+   "unit": "¶64-¶76",
+   "hash": "cfffcc14b6a8711e",
+   "item": {
+    "statement": "Follow the firm's procedure for reviewing out-of-limit environmental test results.",
+    "quote": "Determine if the firm follows its procedure for reviewing out-of-limit test results.",
+    "clause_number": "¶75",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶64-¶76#22",
+   "unit": "¶64-¶76",
+   "hash": "853b7861198795f7",
+   "item": {
+    "statement": "Include review of environmental test data in the batch release procedures.",
+    "quote": "Also, determine if review of environmental test data is included as a part of the firm's release procedures.",
+    "clause_number": "¶75",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶64-¶76#23",
+   "unit": "¶64-¶76",
+   "hash": "1d97eaa6c87a7974",
+   "item": {
+    "statement": "Add suitable inactivating agents to media prepared for environmental air and surface sampling, for example penicillinase in media used to monitor sterile penicillin and cephalosporin operations.",
+    "quote": "In the preparation of media for environmental air and surface sampling, suitable inactivating agents should be added. For example, the addition of penicillinase to media used for monitoring sterile penicillin operations and cephalosporin products.",
+    "clause_number": "¶76",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  }
+ ]
+}

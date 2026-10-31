@@ -1,0 +1,157 @@
+{
+ "role": "a",
+ "instructions": "You are an auditor checking one checklist item against the US regulation paragraph it claims to come from. You get\nthe section's paragraphs (reference and exact text, from the official eCFR XML) and the item. Start from the ITEM:\nread it, then find in the cited paragraph what it covers.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the parent paragraph's\nlead-in (including a qualifier such as \"as are necessary to prevent contamination or mixups\"). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph requires what the statement asks for, the statement\n  adds nothing and omits nothing of that obligation, the strength (shall/must = mandatory, should = recommended,\n  may = optional; a sub-paragraph takes its lead-in's) matches, and the regulation applies to every listed plant\n  type (INJ = sterile injectables: a paragraph limited to products not required to be sterile does not apply to\n  INJ; one limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences saying what you checked for THIS item, in this item's own words: name the\n  condition, number, list or scope you compared with the text (e.g. \"the 30-day limit and 'each lot' are both in\n  the statement\", \"the list of components, containers and closures is complete\", \"drops the lead-in's 'for\n  sterile products'\"). Write each reason fresh for its item: a reason that would fit any item (\"quote exact,\n  strength matches, nothing added or omitted\") or that repeats another answer's reason is not an answer, and the\n  item then counts as unchecked.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "sections": [
+  {
+   "section": "207.57",
+   "paragraphs": [
+    {
+     "ref": "207.57",
+     "text": "§ 207.57 What information must registrants submit when updating listing information and when? Registrants must review and update listing information at a minimum, as follows:"
+    },
+    {
+     "ref": "207.57(a)",
+     "text": "(a) Registrants must provide listing information at the time of annual establishment registration for any drug manufactured, repacked, relabeled, or salvaged by them for commercial distribution that has not been listed previously."
+    },
+    {
+     "ref": "207.57(b)",
+     "text": "(b) Registrants must review and update their drug listing information each June and December. When doing so, registrants must:"
+    },
+    {
+     "ref": "207.57(b)(1)",
+     "text": "(1)"
+    },
+    {
+     "ref": "207.57(b)(1)(i)",
+     "text": "(i) Provide listing information, in accordance with §§ 207.49, 207.53, and 207.54, for any drug manufactured, repacked, relabeled, or salvaged by them for commercial distribution that has not been previously listed;"
+    },
+    {
+     "ref": "207.57(b)(1)(ii)",
+     "text": "(ii) Submit the date that they discontinued the manufacture, repacking, relabeling or salvaging for commercial distribution of a listed drug and provide the expiration date of the last lot manufactured, repacked, relabeled, or salvaged;"
+    },
+    {
+     "ref": "207.57(b)(1)(iii)",
+     "text": "(iii) Submit the date that they resumed the manufacture, repacking, or relabeling for commercial distribution of a drug previously discontinued, and provide any required listing information not previously submitted; and"
+    },
+    {
+     "ref": "207.57(b)(1)(iv)",
+     "text": "(iv) Submit any material changes in any information previously submitted pursuant to §§ 207.49, 207.53, 207.54, or other relevant sections of this part; or"
+    },
+    {
+     "ref": "207.57(b)(2)",
+     "text": "(2) For each listed drug, certify that no changes subject to reporting under paragraph (b)(1)(iv) of this section have occurred if no such changes have occurred since the last review and update. If a drug is discontinued and FDA has received the information required under paragraph (b)(1)(ii) of this section, no further certifications are necessary for the discontinued drug. After initial electronic listing, registrants may satisfy the listing update requirement with respect to unchanged listing information by making a single “no changes” certification during the annual registration update under § 207.29(b) applicable to all of the registrant's listed drugs for which no changes have been made since the previous annual registration update."
+    },
+    {
+     "ref": "207.57(c)",
+     "text": "(c) Registrants are encouraged to submit listing information for every drug subject to listing under this part prior to commercial distribution and are encouraged to update listing information at the time of any change affecting information previously submitted."
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "fda-cfr-21-part-207.xml:207.57#9",
+   "section": "207.57",
+   "hash": "a3affced8b7e2d43",
+   "item": {
+    "statement": "After initial electronic listing, the listing update requirement for unchanged information may be met by a single “no changes” certification, made during the annual registration update, covering all listed drugs with no changes since the previous annual registration update.",
+    "quote": "After initial electronic listing, registrants may satisfy the listing update requirement with respect to unchanged listing information by making a single “no changes” certification during the annual registration update under § 207.29(b) applicable to all of the registrant's listed drugs for which no changes have been made since the previous annual registration update.",
+    "clause_number": "207.57(b)(2)",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "after initial electronic listing; unchanged listing information"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.57#10",
+   "section": "207.57",
+   "hash": "2242016dc0966b45",
+   "item": {
+    "statement": "Submit listing information for every drug subject to listing before it enters commercial distribution (encouraged).",
+    "quote": "submit listing information for every drug subject to listing under this part prior to commercial distribution",
+    "clause_number": "207.57(c)",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.57#11",
+   "section": "207.57",
+   "hash": "7bfe74ea7ec7df1a",
+   "item": {
+    "statement": "Update listing information at the time of any change affecting information previously submitted (encouraged).",
+    "quote": "update listing information at the time of any change affecting information previously submitted",
+    "clause_number": "207.57(c)",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "change affecting previously submitted information"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  }
+ ]
+}

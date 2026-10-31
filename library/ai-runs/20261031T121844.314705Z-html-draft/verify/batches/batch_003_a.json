@@ -1,0 +1,381 @@
+{
+ "role": "a",
+ "instructions": "You are an auditor checking one checklist item against the FDA web page paragraph it claims to come from. You get\nthe unit's paragraphs (reference and exact text of the page; \"context\" entries are headings) and the item. Start from the ITEM:\nread it, then find in the cited paragraph what it covers.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the lead-in above a list\nitem (the paragraph ending \":\" above it). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph expects what the statement asks for (an instruction\n  to the investigator, \"Determine whether the firm validated ...\", expects the firm to have that practice), the statement\n  adds nothing and omits nothing of that obligation, the strength (a legal requirement: shall/must/required = mandatory;\n  should, FDA expects/recommends, an inspection point = recommended; may/acceptable = optional; a list item takes\n  its lead-in's) matches, and the text applies to every listed plant\n  type (INJ = sterile injectables: text limited to non-sterile products does not apply to\n  INJ; text limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences saying what you checked for THIS item, in this item's own words: name the\n  condition, number, list or scope you compared with the text (e.g. \"the 30-day limit and 'each lot' are both in\n  the statement\", \"the list of components, containers and closures is complete\", \"drops the lead-in's 'for\n  sterile products'\"). Write each reason fresh for its item: a reason that would fit any item (\"quote exact,\n  strength matches, nothing added or omitted\") or that repeats another answer's reason is not an answer, and the\n  item then counts as unchecked.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+ "units": [
+  {
+   "unit": "¶20-¶29",
+   "paragraphs": [
+    {
+     "ref": "¶20",
+     "text": "For purified water systems, microbiological specifications are not as clear. USP XXII specifications, that it complies with federal Environmental Protection Agency regulations for drinking water, are recognized as being minimal specifications. There have been attempts by some to establish meaningful microbiological specifications for purified water. The CFTA proposed a specification of not more than 500 organisms per ml. The USP XXII has an action guideline of not greater than 100 organisms per ml. Although microbiological specifications have been discussed, none (other than EPA standards) have been established. Agency policy is that any action limit over 100 CFU/mL for a purified water system is unacceptable.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > III. MICROBIAL LIMITS"
+    },
+    {
+     "ref": "¶21",
+     "text": "The purpose of establishing any action limit or level is to assure that the water system is under control. Any action limit established will depend upon the overall purified water system and further processing of the finished product and its use. For example, purified water used to manufacture drug products by cold processing should be free of objectionable organisms. We have defined \"objectionable organisms\" as any organisms that can cause infections when the drug product is used as directed or any organism capable of growth in the drug product. As pointed out in the Guide to Inspections of Microbiological Pharmaceutical Quality Control Laboratories, the specific contaminant, rather than the number is generally more significant.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > III. MICROBIAL LIMITS"
+    },
+    {
+     "ref": "¶22",
+     "text": "Organisms exist in a water system either as free floating in the water or attached to the walls of the pipes and tanks. When they are attached to the walls they are known as biofilm, which continuously slough off organisms. Thus, contamination is not uniformly distributed in a system and the sample may not be representative of the type and level of contamination. A count of 10 CFU/mL in one sample and 100 or even 1000 CFU/mL in a subsequent sample would not be unrealistic.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > III. MICROBIAL LIMITS"
+    },
+    {
+     "ref": "¶23",
+     "text": "Thus, in establishing the level of contamination allowed in a high purity water system used in the manufacture of a non-sterile product requires an understanding of the use of the product, the formulation (preservative system) and manufacturing process. For example, antacids, which do not have an effective preservative system, require an action limit below the 100 CFU/mL maximum.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > III. MICROBIAL LIMITS"
+    },
+    {
+     "ref": "¶24",
+     "text": "The USP gives some guidance in their monograph on Microbiological Attributes of Non-Sterile Products. It points out that, \"The significance of microorganisms in non-sterile pharmaceutical products should be evaluated in terms of the use of the product, the nature of the product, and the potential harm to the user.\" Thus, not just the indicator organisms listed in some of the specific monographs present problems. It is up to each manufacturer to evaluate their product, the way it is manufactured, and establish am acceptable action level of contamination, not to exceed the maximum, for the water system, based on the highest risk product manufactured with the water.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > III. MICROBIAL LIMITS"
+    },
+    {
+     "context": "IV. WATER FOR INJECTION SYSTEMS"
+    },
+    {
+     "ref": "¶25",
+     "text": "In the review and evaluation of Water For Injection systems, there are several concerns.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > IV. WATER FOR INJECTION SYSTEMS"
+    },
+    {
+     "ref": "¶26",
+     "text": "Pretreatment of feedwater is recommended by most manufacturers of distillation equipment and is definitely required for RO units. The incoming feedwater quality may fluctuate during the life of the system depending upon seasonal variations and other external factors beyond the control of the pharmaceutical facility. For example, in the spring (at least in the N.E.), increases in gram negative organisms have been known. Also, new construction or fires can cause a depletion of water stores in old mains which can cause an influx of heavily contaminated water of a different flora.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > IV. WATER FOR INJECTION SYSTEMS"
+    },
+    {
+     "ref": "¶27",
+     "text": "A water system should be designed to operate within these anticipated extremes. Obviously, the only way to know the extremes is to periodically monitor feedwater. If the feedwater is from a municipal water system, reports from the municipality testing can be used in lieu of in-house testing.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > IV. WATER FOR INJECTION SYSTEMS"
+    },
+    {
+     "context": "V. STILL"
+    },
+    {
+     "ref": "¶28",
+     "text": "Figures 3-5 represent a typical basic diagram of a WFI system. Most of the new systems now use multi-effect stills. In some of the facilities, there has been evidence of endotoxin contamination. In one system this occurred, due to malfunction of the feedwater valve and level control in the still which resulted in droplets of feedwater being carried over in the distillate.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > V. STILL"
+    },
+    {
+     "context": "Figure 3"
+    },
+    {
+     "context": "Figure 4"
+    },
+    {
+     "context": "Figure 5"
+    },
+    {
+     "ref": "¶29",
+     "text": "In another system with endotoxin problems, it was noted that there was approximately 50 liters of WFI in the condenser at the start-up. Since this water could lie in the condenser for up to several days (i.e., over the weekend), it was believed that this was the reason for unacceptable levels of endotoxins.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > V. STILL"
+    }
+   ]
+  },
+  {
+   "unit": "¶30-¶40",
+   "paragraphs": [
+    {
+     "ref": "¶30",
+     "text": "More common, however, is the failure to adequately treat feedwater to reduce levels of endotoxins. Many of the still fabricators will only guarantee a 2.5 log to 3 log reduction in the endotoxin content. Therefore, it is not surprising that in systems where the feedwater occasionally spikes to 250 EU/ml, unacceptable levels of endotoxins may occasionally appear in the distillate (WFI). For example, recently three new stills, including two multi-effect, were found to be periodically yielding WFI with levels greater than .25 EU/ml. Pretreatment systems for the stills included only deionization systems with no UF, RO or distillation. Unless a firm has a satisfactory pretreatment system, it would be extremely difficult for them to demonstrate that the system is validated.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > V. STILL"
+    },
+    {
+     "ref": "¶31",
+     "text": "The above examples of problems with distillation units used to produce WFI, point to problems with maintenance of the equipment or improper operation of the system indicating that the system has not been properly validated or that the initial validation is no longer valid. If you see these types of problems you should look very closely at the system design, any changes that have been made to the system, the validation report and the routine test data to determine if the system is operating in a state of control.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > V. STILL"
+    },
+    {
+     "ref": "¶32",
+     "text": "Typically, conductivity meters are used on water systems to monitor chemical quality and have no meaning regarding microbiological quality.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > V. STILL"
+    },
+    {
+     "ref": "¶33",
+     "text": "Figures 3-5 also show petcocks or small sampling ports between each piece of equipment, such as after the still and before the holding tank. These are in the system to isolate major pieces of equipment. This is necessary for the qualification of the equipment and for the investigation of any problems which might occur.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > V. STILL"
+    },
+    {
+     "context": "VI. HEAT EXCHANGERS"
+    },
+    {
+     "ref": "¶34",
+     "text": "One principal component of the still is the heat exchanger. Because of the similar ionic quality of distilled and deionized water, conductivity meters cannot be used to monitor microbiological quality. Positive pressure such as in vapor compression or double tubesheet design should be employed to prevent possible feedwater to distillate contamination in a leaky heat exchanger.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > VI. HEAT EXCHANGERS"
+    },
+    {
+     "ref": "¶35",
+     "text": "An FDA Inspectors Technical Guide with the subject of \"Heat Exchangers to Avoid Contamination\" discusses the design and potential problems associated with heat exchangers. The guide points out that there are two methods for preventing contamination by leakage. One is to provide gauges to constantly monitor pressure differentials to ensure that the higher pressure is always on the clean fluid side. The other is to utilize the double-tubesheet type of heat exchanger.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > VI. HEAT EXCHANGERS"
+    },
+    {
+     "ref": "¶36",
+     "text": "In some systems, heat exchangers are utilized to cool water at use points. For the most part, cooling water is not circulated through them when not in use. In a few situations, pinholes formed in the tubing after they were drained (on the cooling water side) and not in use. It was determined that a small amount of moisture remaining in the tubes when combined with air caused a corrosion of the stainless steel tubes on the cooling water side. Thus, it is recommended that when not in use, heat exchangers not be drained of the cooling water.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > VI. HEAT EXCHANGERS"
+    },
+    {
+     "context": "VII. HOLDING TANK"
+    },
+    {
+     "ref": "¶37",
+     "text": "In hot systems, temperature is usually maintained by applying heat to a jacketed holding tank or by placing a heat exchanger in the line prior to an insulated holding tank.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > VII. HOLDING TANK"
+    },
+    {
+     "ref": "¶38",
+     "text": "The one component of the holding tank that generates the most discussion is the vent filter. It is expected that there be some program for integrity testing this filter to assure that it is intact. Typically, filters are now jacketed to prevent condensate or water from blocking the hydrophobic vent filter. If this occurs (the vent filter becomes blocked), possibly either the filter will rupture or the tank will collapse. There are methods for integrity testing of vent filters in place.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > VII. HOLDING TANK"
+    },
+    {
+     "ref": "¶39",
+     "text": "It is expected, therefore, that the vent filter be located in a position on the holding tank where it is readily accessible.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > VII. HOLDING TANK"
+    },
+    {
+     "ref": "¶40",
+     "text": "Just because a WFI system is relatively new and distillation is employed, it is not problem-free. In an inspection of a manufacturer of parenterals, a system fabricated in 1984 was observed. Refer to Figure 6. While the system may appear somewhat complex on the initial review, it was found to be relatively simple. Figure 7 is a schematic of the system. The observations at the conclusion of the inspection of this manufacturer included, \"Operational procedures for the Water For Injection system failed to provide for periodic complete flushing or draining. The system was also open to the atmosphere and room environment. Compounding equipment consisted of non-sealed, open tanks with lids. The Water for Injection holding tank was also not sealed and was never sampled for endotoxins.\" Because of these and other comments, the firm recalled several products and discontinued operations.",
+     "heading_path": "High Purity Water System (7/93) > GUIDE TO INSPECTIONS OF HIGH PURITY WATER SYSTEMS > VII. HOLDING TANK"
+    },
+    {
+     "context": "VIII. PUMPS"
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶20-¶29#11",
+   "unit": "¶20-¶29",
+   "hash": "acb6eda231f36b52",
+   "item": {
+    "statement": "Where feedwater comes from a municipal water system, the municipality's test reports may be used instead of in-house testing.",
+    "quote": "If the feedwater is from a municipal water system, reports from the municipality testing can be used in lieu of in-house testing.",
+    "clause_number": "¶27",
+    "strength": "optional",
+    "plant_types": [
+     "INJ",
+     "API"
+    ],
+    "condition": "feedwater from a municipal system"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶30-¶40#1",
+   "unit": "¶30-¶40",
+   "hash": "ec773e5bf8f3a690",
+   "item": {
+    "statement": "Have a satisfactory feedwater pretreatment system for stills so that the water system can be shown to be validated.",
+    "quote": "Unless a firm has a satisfactory pretreatment system, it would be extremely difficult for them to demonstrate that the system is validated.",
+    "clause_number": "¶30",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶30-¶40#2",
+   "unit": "¶30-¶40",
+   "hash": "7927cfbaa9e6550e",
+   "item": {
+    "statement": "Where distillation units producing WFI show maintenance or operating problems, be able to show from the system design, system changes, the validation report and routine test data that the system operates in a state of control.",
+    "quote": "If you see these types of problems you should look very closely at the system design, any changes that have been made to the system, the validation report and the routine test data to determine if the system is operating in a state of control.",
+    "clause_number": "¶31",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ",
+     "API"
+    ],
+    "condition": "problems with WFI distillation units"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶30-¶40#3",
+   "unit": "¶30-¶40",
+   "hash": "c8cda79480370698",
+   "item": {
+    "statement": "Provide petcocks or small sampling ports between each piece of equipment (for example after the still and before the holding tank) so major equipment can be isolated for qualification and for investigating problems.",
+    "quote": "Figures 3-5 also show petcocks or small sampling ports between each piece of equipment, such as after the still and before the holding tank. These are in the system to isolate major pieces of equipment. This is necessary for the qualification of the equipment and for the investigation of any problems which might occur.",
+    "clause_number": "¶33",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶30-¶40#4",
+   "unit": "¶30-¶40",
+   "hash": "cfc5160b2ed09bca",
+   "item": {
+    "statement": "Use positive pressure, for example vapor compression or a double tubesheet design, to prevent feedwater contaminating the distillate through a leaking heat exchanger.",
+    "quote": "Positive pressure such as in vapor compression or double tubesheet design should be employed to prevent possible feedwater to distillate contamination in a leaky heat exchanger.",
+    "clause_number": "¶34",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶30-¶40#5",
+   "unit": "¶30-¶40",
+   "hash": "319336e2c1ab5722",
+   "item": {
+    "statement": "Prevent contamination by heat exchanger leakage either with gauges that constantly monitor pressure differentials so the clean fluid side is always at the higher pressure, or with a double-tubesheet heat exchanger.",
+    "quote": "The guide points out that there are two methods for preventing contamination by leakage. One is to provide gauges to constantly monitor pressure differentials to ensure that the higher pressure is always on the clean fluid side. The other is to utilize the double-tubesheet type of heat exchanger.",
+    "clause_number": "¶35",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶30-¶40#6",
+   "unit": "¶30-¶40",
+   "hash": "bd07bf63fe8840ca",
+   "item": {
+    "statement": "Do not drain the cooling water from use-point heat exchangers when they are not in use.",
+    "quote": "Thus, it is recommended that when not in use, heat exchangers not be drained of the cooling water.",
+    "clause_number": "¶36",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ",
+     "API"
+    ],
+    "condition": "heat exchangers not in use"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶30-¶40#7",
+   "unit": "¶30-¶40",
+   "hash": "3d221f1b63706961",
+   "item": {
+    "statement": "Have a program for integrity testing the holding tank vent filter to make sure it is intact.",
+    "quote": "It is expected that there be some program for integrity testing this filter to assure that it is intact.",
+    "clause_number": "¶38",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-high-purity-water-1993.html:¶30-¶40#8",
+   "unit": "¶30-¶40",
+   "hash": "05f3158c6b7c3092",
+   "item": {
+    "statement": "Place the holding tank vent filter where it is readily accessible.",
+    "quote": "It is expected, therefore, that the vent filter be located in a position on the holding tank where it is readily accessible.",
+    "clause_number": "¶39",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  }
+ ]
+}

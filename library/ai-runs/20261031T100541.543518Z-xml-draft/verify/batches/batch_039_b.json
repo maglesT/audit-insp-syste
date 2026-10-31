@@ -1,0 +1,600 @@
+{
+ "role": "b",
+ "instructions": "You are a second, independent auditor. Check one checklist item against the US regulation paragraph it claims to come from. You get\nthe section's paragraphs (reference and exact text, from the official eCFR XML) and the item. Start from the TEXT:\nread the cited paragraph and its lead-in fully, then compare the item.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the parent paragraph's\nlead-in (including a qualifier such as \"as are necessary to prevent contamination or mixups\"). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph requires what the statement asks for, the statement\n  adds nothing and omits nothing of that obligation, the strength (shall/must = mandatory, should = recommended,\n  may = optional; a sub-paragraph takes its lead-in's) matches, and the regulation applies to every listed plant\n  type (INJ = sterile injectables: a paragraph limited to products not required to be sterile does not apply to\n  INJ; one limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences saying what you checked for THIS item, in this item's own words: name the\n  condition, number, list or scope you compared with the text (e.g. \"the 30-day limit and 'each lot' are both in\n  the statement\", \"the list of components, containers and closures is complete\", \"drops the lead-in's 'for\n  sterile products'\"). Write each reason fresh for its item: a reason that would fit any item (\"quote exact,\n  strength matches, nothing added or omitted\") or that repeats another answer's reason is not an answer, and the\n  item then counts as unchecked.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "sections": [
+  {
+   "section": "211.165",
+   "paragraphs": [
+    {
+     "ref": "211.165",
+     "text": "§ 211.165 Testing and release for distribution."
+    },
+    {
+     "ref": "211.165(a)",
+     "text": "(a) For each batch of drug product, there shall be appropriate laboratory determination of satisfactory conformance to final specifications for the drug product, including the identity and strength of each active ingredient, prior to release. Where sterility and/or pyrogen testing are conducted on specific batches of shortlived radiopharmaceuticals, such batches may be released prior to completion of sterility and/or pyrogen testing, provided such testing is completed as soon as possible."
+    },
+    {
+     "ref": "211.165(b)",
+     "text": "(b) There shall be appropriate laboratory testing, as necessary, of each batch of drug product required to be free of objectionable microorganisms."
+    },
+    {
+     "ref": "211.165(c)",
+     "text": "(c) Any sampling and testing plans shall be described in written procedures that shall include the method of sampling and the number of units per batch to be tested; such written procedure shall be followed."
+    },
+    {
+     "ref": "211.165(d)",
+     "text": "(d) Acceptance criteria for the sampling and testing conducted by the quality control unit shall be adequate to assure that batches of drug products meet each appropriate specification and appropriate statistical quality control criteria as a condition for their approval and release. The statistical quality control criteria shall include appropriate acceptance levels and/or appropriate rejection levels."
+    },
+    {
+     "ref": "211.165(e)",
+     "text": "(e) The accuracy, sensitivity, specificity, and reproducibility of test methods employed by the firm shall be established and documented. Such validation and documentation may be accomplished in accordance with § 211.194(a)(2)."
+    },
+    {
+     "ref": "211.165(f)",
+     "text": "(f) Drug products failing to meet established standards or specifications and any other relevant quality control criteria shall be rejected. Reprocessing may be performed. Prior to acceptance and use, reprocessed material must meet appropriate standards, specifications, and any other relevant criteria."
+    }
+   ]
+  },
+  {
+   "section": "211.166",
+   "paragraphs": [
+    {
+     "ref": "211.166",
+     "text": "§ 211.166 Stability testing."
+    },
+    {
+     "ref": "211.166(a)",
+     "text": "(a) There shall be a written testing program designed to assess the stability characteristics of drug products. The results of such stability testing shall be used in determining appropriate storage conditions and expiration dates. The written program shall be followed and shall include:"
+    },
+    {
+     "ref": "211.166(a)(1)",
+     "text": "(1) Sample size and test intervals based on statistical criteria for each attribute examined to assure valid estimates of stability;"
+    },
+    {
+     "ref": "211.166(a)(2)",
+     "text": "(2) Storage conditions for samples retained for testing;"
+    },
+    {
+     "ref": "211.166(a)(3)",
+     "text": "(3) Reliable, meaningful, and specific test methods;"
+    },
+    {
+     "ref": "211.166(a)(4)",
+     "text": "(4) Testing of the drug product in the same container-closure system as that in which the drug product is marketed;"
+    },
+    {
+     "ref": "211.166(a)(5)",
+     "text": "(5) Testing of drug products for reconstitution at the time of dispensing (as directed in the labeling) as well as after they are reconstituted."
+    },
+    {
+     "ref": "211.166(b)",
+     "text": "(b) An adequate number of batches of each drug product shall be tested to determine an appropriate expiration date and a record of such data shall be maintained. Accelerated studies, combined with basic stability information on the components, drug products, and container-closure system, may be used to support tentative expiration dates provided full shelf life studies are not available and are being conducted. Where data from accelerated studies are used to project a tentative expiration date that is beyond a date supported by actual shelf life studies, there must be stability studies conducted, including drug product testing at appropriate intervals, until the tentative expiration date is verified or the appropriate expiration date determined."
+    },
+    {
+     "ref": "211.166(c)",
+     "text": "(c) For homeopathic drug products, the requirements of this section are as follows:"
+    },
+    {
+     "ref": "211.166(c)(1)",
+     "text": "(1) There shall be a written assessment of stability based at least on testing or examination of the drug product for compatibility of the ingredients, and based on marketing experience with the drug product to indicate that there is no degradation of the product for the normal or expected period of use."
+    },
+    {
+     "ref": "211.166(c)(2)",
+     "text": "(2) Evaluation of stability shall be based on the same container-closure system in which the drug product is being marketed."
+    },
+    {
+     "ref": "211.166(d)",
+     "text": "(d) Allergenic extracts that are labeled “No U.S. Standard of Potency” are exempt from the requirements of this section."
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.165#7",
+   "section": "211.165",
+   "hash": "2acaf012978a2e37",
+   "item": {
+    "statement": "Include appropriate acceptance levels and/or appropriate rejection levels in the statistical quality control criteria.",
+    "quote": "The statistical quality control criteria shall include appropriate acceptance levels and/or appropriate rejection levels.",
+    "clause_number": "211.165(d)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.165#8",
+   "section": "211.165",
+   "hash": "a6e21c556ffa9ead",
+   "item": {
+    "statement": "Establish and document the accuracy, sensitivity, specificity and reproducibility of the test methods the firm uses.",
+    "quote": "The accuracy, sensitivity, specificity, and reproducibility of test methods employed by the firm shall be established and documented.",
+    "clause_number": "211.165(e)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.165#9",
+   "section": "211.165",
+   "hash": "3f9c045d692a93c0",
+   "item": {
+    "statement": "Test method validation and documentation may be done through the laboratory records that document each test method used.",
+    "quote": "Such validation and documentation may be accomplished in accordance with § 211.194(a)(2).",
+    "clause_number": "211.165(e)",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.165#10",
+   "section": "211.165",
+   "hash": "db807873a9244b1c",
+   "item": {
+    "statement": "Reject drug products that fail to meet established standards or specifications and any other relevant quality control criteria.",
+    "quote": "Drug products failing to meet established standards or specifications and any other relevant quality control criteria shall be rejected.",
+    "clause_number": "211.165(f)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "product fails standards, specifications or QC criteria"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.165#11",
+   "section": "211.165",
+   "hash": "a04527ac2ab54b48",
+   "item": {
+    "statement": "Rejected drug products may be reprocessed.",
+    "quote": "Reprocessing may be performed.",
+    "clause_number": "211.165(f)",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.165#12",
+   "section": "211.165",
+   "hash": "c39bc5926a1a8f44",
+   "item": {
+    "statement": "Make sure reprocessed material meets appropriate standards, specifications and any other relevant criteria before it is accepted and used.",
+    "quote": "Prior to acceptance and use, reprocessed material must meet appropriate standards, specifications, and any other relevant criteria.",
+    "clause_number": "211.165(f)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "material has been reprocessed"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#1",
+   "section": "211.166",
+   "hash": "2f511ef58474f316",
+   "item": {
+    "statement": "Have a written testing program designed to assess the stability characteristics of drug products.",
+    "quote": "There shall be a written testing program designed to assess the stability characteristics of drug products.",
+    "clause_number": "211.166(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#2",
+   "section": "211.166",
+   "hash": "b1c5ccfd04f1639a",
+   "item": {
+    "statement": "Use the stability testing results to determine appropriate storage conditions and expiration dates.",
+    "quote": "The results of such stability testing shall be used in determining appropriate storage conditions and expiration dates.",
+    "clause_number": "211.166(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#3",
+   "section": "211.166",
+   "hash": "5d6c119019924a5e",
+   "item": {
+    "statement": "Follow the written stability testing program, and make it cover sample size and test intervals, sample storage conditions, test methods, testing in the marketed container-closure system, and testing of products for reconstitution.",
+    "quote": "The written program shall be followed and shall include:",
+    "clause_number": "211.166(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#4",
+   "section": "211.166",
+   "hash": "2261cf6328e196fe",
+   "item": {
+    "statement": "The written stability testing program includes sample size and test intervals based on statistical criteria for each attribute examined, to assure valid estimates of stability.",
+    "quote": "Sample size and test intervals based on statistical criteria for each attribute examined to assure valid estimates of stability;",
+    "clause_number": "211.166(a)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#5",
+   "section": "211.166",
+   "hash": "a5d47fc35c7c43c9",
+   "item": {
+    "statement": "The written stability testing program includes storage conditions for the samples retained for testing.",
+    "quote": "Storage conditions for samples retained for testing;",
+    "clause_number": "211.166(a)(2)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#6",
+   "section": "211.166",
+   "hash": "42def08b6b844da1",
+   "item": {
+    "statement": "The written stability testing program includes reliable, meaningful and specific test methods.",
+    "quote": "Reliable, meaningful, and specific test methods;",
+    "clause_number": "211.166(a)(3)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#7",
+   "section": "211.166",
+   "hash": "6a514678ae80a86c",
+   "item": {
+    "statement": "The written stability testing program includes testing of the drug product in the same container-closure system in which it is marketed.",
+    "quote": "Testing of the drug product in the same container-closure system as that in which the drug product is marketed;",
+    "clause_number": "211.166(a)(4)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#8",
+   "section": "211.166",
+   "hash": "709c959bb90905fa",
+   "item": {
+    "statement": "The written stability testing program includes testing of drug products for reconstitution at the time of dispensing (as directed in the labeling) and also after reconstitution.",
+    "quote": "Testing of drug products for reconstitution at the time of dispensing (as directed in the labeling) as well as after they are reconstituted.",
+    "clause_number": "211.166(a)(5)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "drug products for reconstitution"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#9",
+   "section": "211.166",
+   "hash": "11fe090c5b28a763",
+   "item": {
+    "statement": "Test an adequate number of batches of each drug product to determine an appropriate expiration date.",
+    "quote": "An adequate number of batches of each drug product shall be tested to determine an appropriate expiration date",
+    "clause_number": "211.166(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#10",
+   "section": "211.166",
+   "hash": "217a8539b371a3cc",
+   "item": {
+    "statement": "Maintain a record of the stability data used to determine the expiration date.",
+    "quote": "a record of such data shall be maintained.",
+    "clause_number": "211.166(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#11",
+   "section": "211.166",
+   "hash": "807d46a45e498c59",
+   "item": {
+    "statement": "Where full shelf life studies are not available and are being conducted, accelerated studies combined with basic stability information on the components, drug products and container-closure system may be used to support tentative expiration dates.",
+    "quote": "Accelerated studies, combined with basic stability information on the components, drug products, and container-closure system, may be used to support tentative expiration dates provided full shelf life studies are not available and are being conducted.",
+    "clause_number": "211.166(b)",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "full shelf life studies not available and being conducted"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#12",
+   "section": "211.166",
+   "hash": "000b70ae7802b3c5",
+   "item": {
+    "statement": "Where accelerated study data are used to project a tentative expiration date beyond the date supported by actual shelf life studies, conduct stability studies, including drug product testing at appropriate intervals, until the tentative expiration date is verified or the appropriate expiration date is determined.",
+    "quote": "Where data from accelerated studies are used to project a tentative expiration date that is beyond a date supported by actual shelf life studies, there must be stability studies conducted, including drug product testing at appropriate intervals, until the tentative expiration date is verified or the appropriate expiration date determined.",
+    "clause_number": "211.166(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "tentative expiry beyond actual shelf life data"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#13",
+   "section": "211.166",
+   "hash": "308908094bde2a6b",
+   "item": {
+    "statement": "For homeopathic drug products, have a written stability assessment based at least on testing or examination of the drug product for ingredient compatibility and on marketing experience with the product, showing no degradation of the product over its normal or expected period of use.",
+    "quote": "There shall be a written assessment of stability based at least on testing or examination of the drug product for compatibility of the ingredients, and based on marketing experience with the drug product to indicate that there is no degradation of the product for the normal or expected period of use.",
+    "clause_number": "211.166(c)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "homeopathic drug products"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#14",
+   "section": "211.166",
+   "hash": "2551b89f03957ad2",
+   "item": {
+    "statement": "For homeopathic drug products, base the stability evaluation on the same container-closure system in which the product is marketed.",
+    "quote": "Evaluation of stability shall be based on the same container-closure system in which the drug product is being marketed.",
+    "clause_number": "211.166(c)(2)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "homeopathic drug products"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  }
+ ]
+}

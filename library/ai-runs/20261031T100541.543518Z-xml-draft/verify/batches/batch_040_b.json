@@ -1,0 +1,580 @@
+{
+ "role": "b",
+ "instructions": "You are a second, independent auditor. Check one checklist item against the US regulation paragraph it claims to come from. You get\nthe section's paragraphs (reference and exact text, from the official eCFR XML) and the item. Start from the TEXT:\nread the cited paragraph and its lead-in fully, then compare the item.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the parent paragraph's\nlead-in (including a qualifier such as \"as are necessary to prevent contamination or mixups\"). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph requires what the statement asks for, the statement\n  adds nothing and omits nothing of that obligation, the strength (shall/must = mandatory, should = recommended,\n  may = optional; a sub-paragraph takes its lead-in's) matches, and the regulation applies to every listed plant\n  type (INJ = sterile injectables: a paragraph limited to products not required to be sterile does not apply to\n  INJ; one limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences saying what you checked for THIS item, in this item's own words: name the\n  condition, number, list or scope you compared with the text (e.g. \"the 30-day limit and 'each lot' are both in\n  the statement\", \"the list of components, containers and closures is complete\", \"drops the lead-in's 'for\n  sterile products'\"). Write each reason fresh for its item: a reason that would fit any item (\"quote exact,\n  strength matches, nothing added or omitted\") or that repeats another answer's reason is not an answer, and the\n  item then counts as unchecked.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "sections": [
+  {
+   "section": "211.167",
+   "paragraphs": [
+    {
+     "ref": "211.167",
+     "text": "§ 211.167 Special testing requirements."
+    },
+    {
+     "ref": "211.167(a)",
+     "text": "(a) For each batch of drug product purporting to be sterile and/or pyrogen-free, there shall be appropriate laboratory testing to determine conformance to such requirements. The test procedures shall be in writing and shall be followed."
+    },
+    {
+     "ref": "211.167(b)",
+     "text": "(b) For each batch of ophthalmic ointment, there shall be appropriate testing to determine conformance to specifications regarding the presence of foreign particles and harsh or abrasive substances. The test procedures shall be in writing and shall be followed."
+    },
+    {
+     "ref": "211.167(c)",
+     "text": "(c) For each batch of controlled-release dosage form, there shall be appropriate laboratory testing to determine conformance to the specifications for the rate of release of each active ingredient. The test procedures shall be in writing and shall be followed."
+    }
+   ]
+  },
+  {
+   "section": "211.170",
+   "paragraphs": [
+    {
+     "ref": "211.170",
+     "text": "§ 211.170 Reserve samples."
+    },
+    {
+     "ref": "211.170(a)",
+     "text": "(a) An appropriately identified reserve sample that is representative of each lot in each shipment of each active ingredient shall be retained. The reserve sample consists of at least twice the quantity necessary for all tests required to determine whether the active ingredient meets its established specifications, except for sterility and pyrogen testing. The retention time is as follows:"
+    },
+    {
+     "ref": "211.170(a)(1)",
+     "text": "(1) For an active ingredient in a drug product other than those described in paragraphs (a) (2) and (3) of this section, the reserve sample shall be retained for 1 year after the expiration date of the last lot of the drug product containing the active ingredient."
+    },
+    {
+     "ref": "211.170(a)(2)",
+     "text": "(2) For an active ingredient in a radioactive drug product, except for nonradioactive reagent kits, the reserve sample shall be retained for:"
+    },
+    {
+     "ref": "211.170(a)(2)(i)",
+     "text": "(i) Three months after the expiration date of the last lot of the drug product containing the active ingredient if the expiration dating period of the drug product is 30 days or less; or"
+    },
+    {
+     "ref": "211.170(a)(2)(ii)",
+     "text": "(ii) Six months after the expiration date of the last lot of the drug product containing the active ingredient if the expiration dating period of the drug product is more than 30 days."
+    },
+    {
+     "ref": "211.170(a)(3)",
+     "text": "(3) For an active ingredient in an OTC drug product that is exempt from bearing an expiration date under § 211.137, the reserve sample shall be retained for 3 years after distribution of the last lot of the drug product containing the active ingredient."
+    },
+    {
+     "ref": "211.170(b)",
+     "text": "(b) An appropriately identified reserve sample that is representative of each lot or batch of drug product shall be retained and stored under conditions consistent with product labeling. The reserve sample shall be stored in the same immediate container-closure system in which the drug product is marketed or in one that has essentially the same characteristics. The reserve sample consists of at least twice the quantity necessary to perform all the required tests, except those for sterility and pyrogens. Except for those for drug products described in paragraph (b)(2) of this section, reserve samples from representative sample lots or batches selected by acceptable statistical procedures shall be examined visually at least once a year for evidence of deterioration unless visual examination would affect the integrity of the reserve sample. Any evidence of reserve sample deterioration shall be investigated in accordance with § 211.192. The results of the examination shall be recorded and maintained with other stability data on the drug product. The retention time is as follows:"
+    },
+    {
+     "ref": "211.170(b)(1)",
+     "text": "(1) For a drug product other than those described in paragraphs (b) (2) and (3) of this section, the reserve sample shall be retained for 1 year after the expiration date of the drug product."
+    },
+    {
+     "ref": "211.170(b)(2)",
+     "text": "(2) For a radioactive drug product, except for nonradioactive reagent kits, the reserve sample shall be retained for:"
+    },
+    {
+     "ref": "211.170(b)(2)(i)",
+     "text": "(i) Three months after the expiration date of the drug product if the expiration dating period of the drug product is 30 days or less; or"
+    },
+    {
+     "ref": "211.170(b)(2)(ii)",
+     "text": "(ii) Six months after the expiration date of the drug product if the expiration dating period of the drug product is more than 30 days."
+    },
+    {
+     "ref": "211.170(b)(3)",
+     "text": "(3) For an OTC drug product that is exempt for bearing an expiration date under § 211.137, the reserve sample must be retained for 3 years after the lot or batch of drug product is distributed."
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.167#1",
+   "section": "211.167",
+   "hash": "17a29d70a0789bfb",
+   "item": {
+    "statement": "For every batch of drug product claimed to be sterile and/or pyrogen-free, perform appropriate laboratory testing to confirm it meets those requirements.",
+    "quote": "For each batch of drug product purporting to be sterile and/or pyrogen-free, there shall be appropriate laboratory testing to determine conformance to such requirements.",
+    "clause_number": "211.167(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "drug product purporting to be sterile and/or pyrogen-free"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.167#2",
+   "section": "211.167",
+   "hash": "31844508e6ef157a",
+   "item": {
+    "statement": "Have written test procedures for the sterility and/or pyrogen testing of each batch of drug product claimed to be sterile and/or pyrogen-free, and follow them.",
+    "quote": "The test procedures shall be in writing and shall be followed.",
+    "clause_number": "211.167(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "drug product purporting to be sterile and/or pyrogen-free"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.167#3",
+   "section": "211.167",
+   "hash": "f469d61555605792",
+   "item": {
+    "statement": "For every batch of ophthalmic ointment, perform appropriate testing to confirm it meets specifications for foreign particles and harsh or abrasive substances.",
+    "quote": "For each batch of ophthalmic ointment, there shall be appropriate testing to determine conformance to specifications regarding the presence of foreign particles and harsh or abrasive substances.",
+    "clause_number": "211.167(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "SEMI"
+    ],
+    "condition": "ophthalmic ointment"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.167#4",
+   "section": "211.167",
+   "hash": "f98b80650dc939ce",
+   "item": {
+    "statement": "Have written procedures for testing each batch of ophthalmic ointment for foreign particles and harsh or abrasive substances, and follow them.",
+    "quote": "The test procedures shall be in writing and shall be followed.",
+    "clause_number": "211.167(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "SEMI"
+    ],
+    "condition": "ophthalmic ointment"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.167#5",
+   "section": "211.167",
+   "hash": "deb635da7a33fabf",
+   "item": {
+    "statement": "For every batch of a controlled-release dosage form, perform appropriate laboratory testing to confirm it meets the release-rate specifications for each active ingredient.",
+    "quote": "For each batch of controlled-release dosage form, there shall be appropriate laboratory testing to determine conformance to the specifications for the rate of release of each active ingredient.",
+    "clause_number": "211.167(c)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "controlled-release dosage form"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.167#6",
+   "section": "211.167",
+   "hash": "75e6d398b0a72c61",
+   "item": {
+    "statement": "Have written procedures for release-rate testing of each batch of controlled-release dosage form, and follow them.",
+    "quote": "The test procedures shall be in writing and shall be followed.",
+    "clause_number": "211.167(c)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "controlled-release dosage form"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.170#1",
+   "section": "211.170",
+   "hash": "5dd9f4f2ab0d9bb1",
+   "item": {
+    "statement": "Keep an appropriately identified reserve sample, representative of each lot in each shipment of each active ingredient.",
+    "quote": "An appropriately identified reserve sample that is representative of each lot in each shipment of each active ingredient shall be retained.",
+    "clause_number": "211.170(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.170#2",
+   "section": "211.170",
+   "hash": "e50817f3b39246ba",
+   "item": {
+    "statement": "Make each active ingredient reserve sample at least twice the quantity needed for all tests required to show the active ingredient meets its established specifications, excluding sterility and pyrogen testing.",
+    "quote": "The reserve sample consists of at least twice the quantity necessary for all tests required to determine whether the active ingredient meets its established specifications, except for sterility and pyrogen testing.",
+    "clause_number": "211.170(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.170#3",
+   "section": "211.170",
+   "hash": "c5ba41a0aabc1ad7",
+   "item": {
+    "statement": "For an active ingredient used in a drug product that is neither radioactive nor an expiry-exempt OTC product, keep the active ingredient reserve sample for 1 year after the expiration date of the last drug product lot containing it.",
+    "quote": "For an active ingredient in a drug product other than those described in paragraphs (a) (2) and (3) of this section, the reserve sample shall be retained for 1 year after the expiration date of the last lot of the drug product containing the active ingredient.",
+    "clause_number": "211.170(a)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "drug product not radioactive and not expiry-exempt OTC"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.170#4",
+   "section": "211.170",
+   "hash": "dfa07b3e9bb5016f",
+   "item": {
+    "statement": "For an active ingredient in a radioactive drug product (other than nonradioactive reagent kits) whose expiration dating period is 30 days or less, keep the active ingredient reserve sample for three months after the expiration date of the last drug product lot containing it.",
+    "quote": "Three months after the expiration date of the last lot of the drug product containing the active ingredient if the expiration dating period of the drug product is 30 days or less; or",
+    "clause_number": "211.170(a)(2)(i)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "radioactive drug product, except nonradioactive reagent kits; dating period 30 days or less"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.170#5",
+   "section": "211.170",
+   "hash": "b1799cd40380f473",
+   "item": {
+    "statement": "For an active ingredient in a radioactive drug product (other than nonradioactive reagent kits) whose expiration dating period is more than 30 days, keep the active ingredient reserve sample for six months after the expiration date of the last drug product lot containing it.",
+    "quote": "Six months after the expiration date of the last lot of the drug product containing the active ingredient if the expiration dating period of the drug product is more than 30 days.",
+    "clause_number": "211.170(a)(2)(ii)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "radioactive drug product, except nonradioactive reagent kits; dating period more than 30 days"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.170#6",
+   "section": "211.170",
+   "hash": "5d9ab88ee21d9ba7",
+   "item": {
+    "statement": "For an active ingredient in an OTC drug product exempt from carrying an expiration date, keep the active ingredient reserve sample for 3 years after distribution of the last drug product lot containing it.",
+    "quote": "For an active ingredient in an OTC drug product that is exempt from bearing an expiration date under § 211.137, the reserve sample shall be retained for 3 years after distribution of the last lot of the drug product containing the active ingredient.",
+    "clause_number": "211.170(a)(3)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "OTC drug product exempt from expiration dating"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.170#7",
+   "section": "211.170",
+   "hash": "49c5215350aa5a93",
+   "item": {
+    "statement": "Keep an appropriately identified reserve sample, representative of each lot or batch of drug product, stored under conditions consistent with the product labeling.",
+    "quote": "An appropriately identified reserve sample that is representative of each lot or batch of drug product shall be retained and stored under conditions consistent with product labeling.",
+    "clause_number": "211.170(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.170#8",
+   "section": "211.170",
+   "hash": "329924a5731cd32c",
+   "item": {
+    "statement": "Store each drug product reserve sample in the same immediate container-closure system as the marketed product, or in one with essentially the same characteristics.",
+    "quote": "The reserve sample shall be stored in the same immediate container-closure system in which the drug product is marketed or in one that has essentially the same characteristics.",
+    "clause_number": "211.170(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.170#9",
+   "section": "211.170",
+   "hash": "91ed2329c3f287d8",
+   "item": {
+    "statement": "Make each drug product reserve sample at least twice the quantity needed to perform all required tests, excluding sterility and pyrogen tests.",
+    "quote": "The reserve sample consists of at least twice the quantity necessary to perform all the required tests, except those for sterility and pyrogens.",
+    "clause_number": "211.170(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.170#10",
+   "section": "211.170",
+   "hash": "0ca69b2b681a5033",
+   "item": {
+    "statement": "Visually examine reserve samples from representative lots or batches, chosen by acceptable statistical procedures, at least once a year for signs of deterioration, unless the examination would affect sample integrity; this does not apply to radioactive drug products other than nonradioactive reagent kits.",
+    "quote": "Except for those for drug products described in paragraph (b)(2) of this section, reserve samples from representative sample lots or batches selected by acceptable statistical procedures shall be examined visually at least once a year for evidence of deterioration unless visual examination would affect the integrity of the reserve sample.",
+    "clause_number": "211.170(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "unless examination affects sample integrity; not radioactive drug products"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.170#11",
+   "section": "211.170",
+   "hash": "688b557e28fae0a5",
+   "item": {
+    "statement": "Investigate any sign of deterioration found in a reserve sample, following the requirements for investigating unexplained discrepancies and failures.",
+    "quote": "Any evidence of reserve sample deterioration shall be investigated in accordance with § 211.192.",
+    "clause_number": "211.170(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "evidence of reserve sample deterioration"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.170#12",
+   "section": "211.170",
+   "hash": "d2519e3cf7f2def0",
+   "item": {
+    "statement": "Record the results of the reserve sample visual examination and keep them with the other stability data for the drug product.",
+    "quote": "The results of the examination shall be recorded and maintained with other stability data on the drug product.",
+    "clause_number": "211.170(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.170#13",
+   "section": "211.170",
+   "hash": "397d9f1fd19b0327",
+   "item": {
+    "statement": "For a drug product that is neither radioactive nor an expiry-exempt OTC product, keep the drug product reserve sample for 1 year after its expiration date.",
+    "quote": "For a drug product other than those described in paragraphs (b) (2) and (3) of this section, the reserve sample shall be retained for 1 year after the expiration date of the drug product.",
+    "clause_number": "211.170(b)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "drug product not radioactive and not expiry-exempt OTC"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.170#14",
+   "section": "211.170",
+   "hash": "0ecc7df5ea884542",
+   "item": {
+    "statement": "For a radioactive drug product (other than nonradioactive reagent kits) with an expiration dating period of 30 days or less, keep the drug product reserve sample for three months after its expiration date.",
+    "quote": "Three months after the expiration date of the drug product if the expiration dating period of the drug product is 30 days or less; or",
+    "clause_number": "211.170(b)(2)(i)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "radioactive drug product, except nonradioactive reagent kits; dating period 30 days or less"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  }
+ ]
+}

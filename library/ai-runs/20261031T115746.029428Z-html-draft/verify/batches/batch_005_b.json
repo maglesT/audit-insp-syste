@@ -1,0 +1,660 @@
+{
+ "role": "b",
+ "instructions": "You are a second, independent auditor. Check one checklist item against the FDA web page paragraph it claims to come from. You get\nthe unit's paragraphs (reference and exact text of the page; \"context\" entries are headings) and the item. Start from the TEXT:\nread the cited paragraph, the paragraphs its quote runs into, and its lead-in fully, then compare the item.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the lead-in above a list\nitem (the paragraph ending \":\" above it). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph expects what the statement asks for (an instruction\n  to the investigator, \"Determine whether the firm validated ...\", expects the firm to have that practice), the statement\n  adds nothing and omits nothing of that obligation, the strength (a legal requirement: shall/must/required = mandatory;\n  should, FDA expects/recommends, an inspection point = recommended; may/acceptable = optional; a list item takes\n  its lead-in's) matches, and the text applies to every listed plant\n  type (INJ = sterile injectables: text limited to non-sterile products does not apply to\n  INJ; text limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences saying what you checked for THIS item, in this item's own words: name the\n  condition, number, list or scope you compared with the text (e.g. \"the 30-day limit and 'each lot' are both in\n  the statement\", \"the list of components, containers and closures is complete\", \"drops the lead-in's 'for\n  sterile products'\"). Write each reason fresh for its item: a reason that would fit any item (\"quote exact,\n  strength matches, nothing added or omitted\") or that repeats another answer's reason is not an answer, and the\n  item then counts as unchecked.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+ "units": [
+  {
+   "unit": "Q1",
+   "paragraphs": [
+    {
+     "ref": "Q1",
+     "text": "Many leading analytical balance manufacturers provide built-in \"auto-calibration\" features in their balances. Are such auto-calibration procedures acceptable instead of external performance checks? If not, then what should the schedule for calibration be?"
+    },
+    {
+     "ref": "Q1.1",
+     "text": "The auto-calibration feature of a balance may not be relied upon to the exclusion of an external performance check (21 CFR 211.68). For a scale with a built-in auto-calibrator, we recommend that external performance checks be performed on a periodic basis, but less frequently as compared to a scale without this feature. The frequency of performance checks depends on the frequency of use of the scale and the criticality and tolerance of the process or analytical step. Note that all batches of a product manufactured between two successive verifications would be affected should the check of the auto-calibrator reveal a problem. Additionally, the calibration of an auto-calibrator should be periodically verified—a common frequency is once a year—using National Institute of Standards and Technology (NIST)-traceable standards or NIST-accredited standards in use in other countries."
+    }
+   ]
+  },
+  {
+   "unit": "Q2",
+   "paragraphs": [
+    {
+     "ref": "Q2",
+     "text": "Is there a list of CDER-approved drug manufacturing equipment?"
+    },
+    {
+     "ref": "Q2.1",
+     "text": "No. The CGMP regulations neither approve nor prohibit specific equipment for use in manufacturing of pharmaceutical products (with the exception of asbestos and fiber-releasing filters, see 21 CFR 211.72). We do not maintain a list of approved equipment. Firms are afforded the flexibility to select equipment that best satisfies their particular needs and that is capable of meeting the relevant CGMP requirements. Each firm is responsible for selecting all equipment used in their manufacturing process to produce quality products in accordance with CGMP. They are also responsible for selecting the appropriate intended use for the equipment's operation and are free to modify standard equipment designs to best suit their process and that are compatible with the product under process."
+    },
+    {
+     "ref": "Q2.2",
+     "text": "The CGMP regulations require that equipment be of appropriate design to facilitate operations for its intended use and for cleaning and maintenance (see 21 CFR 211.63 and 211.67) and, that any equipment surface in contact with components, in-process materials, or drug products not be reactive, additive, or absorptive so as to \"alter the safety, identity, strength, quality, or purity of the drug product beyond the official or other established requirements\" (see 21 CFR 211.65)."
+    }
+   ]
+  },
+  {
+   "unit": "Q3",
+   "paragraphs": [
+    {
+     "ref": "Q3",
+     "text": "Can Total Organic Carbon (TOC) be an acceptable method for detecting residues of contaminants in evaluating cleaning effectiveness?"
+    },
+    {
+     "ref": "Q3.1",
+     "text": "Yes. Since the publication of the inspection guide on cleaning validation in 1993, a number of studies have been published to demonstrate the adequacy of TOC in measuring contaminant residues."
+    },
+    {
+     "ref": "Q3.2",
+     "text": "TOC or TC can be an acceptable method for monitoring residues routinely and for cleaning validation. In order for TOC to be functionally suitable, it should first be established that a substantial amount of the contaminating material(s) is organic and contains carbon that can be oxidized under TOC test conditions. This is an important exercise because some organic compounds cannot be reliably detected using TOC."
+    },
+    {
+     "ref": "Q3.3",
+     "text": "TOC use may be justified for direct surface sample testing as well as indirect (rinse water) sample testing. In either case, because TOC does not identify or distinguish among different compounds containing oxidizable carbon, any detected carbon is to be attributed to the target compound(s) for comparing with the established limit. Thus, a firm should limit background carbon (i.e., carbon from sources other than the contaminant being removed) as much as possible. The established limit, or the amount of residue detected for comparison to the specification, should correct for the target material’s composition of carbon. As for any cleaning method, recovery studies are necessary (21 CFR 211.160(b)). If TOC samples are being held for long periods of time before analysis, a firm should verify the impact of sample holding time on accuracy and limit of quantitation."
+    },
+    {
+     "ref": "Q3.4",
+     "text": "21 CFR 211.67: Equipment cleaning and maintenance"
+    },
+    {
+     "ref": "Q3.5",
+     "text": "21 CFR 211.160(b): General requirements (Laboratory Controls)"
+    },
+    {
+     "ref": "Q3.6",
+     "text": "USP General Chapter <643> Total Organic Carbon"
+    },
+    {
+     "ref": "Q3.7",
+     "text": "FDA Guide to Inspections: Validation of Cleaning Processes"
+    }
+   ]
+  },
+  {
+   "unit": "Q4",
+   "paragraphs": [
+    {
+     "ref": "Q4",
+     "text": "A firm has multiple media fill failures. They conducted their media fills using TSB (tryptic soy broth) prepared by filtration through a 0.2 micron sterilizing filter. Investigation did not show any obvious causes. What could be the source of contamination?"
+    },
+    {
+     "ref": "Q4.1",
+     "text": "A firm had multiple media fill failures. The media fill runs, simulating the filling process during production, were conducted inside an isolator. The firm used TSB (nonsterile bulk powder) from a commercial source and prepared the sterile solution by filtering through a 0.2 micron sterilizing filter. An investigation was launched to trace the source of contamination. The investigation was not successful in isolating or recovering the contaminating organism using conventional microbiological techniques, including the use of selective (e.g., blood agar) and nonselective (e.g., TSB and tryptic soy agar) media, and examination under a microscope. The contaminant was eventually identified to be Acholeplasma laidlawii by using 16S rRNA gene sequence. The firm subsequently conducted studies to confirm the presence of Acholeplasma laidlawii in the lot of TSB used. Therefore, it was not a contaminant from the process, but from the media source."
+    },
+    {
+     "ref": "Q4.2",
+     "text": "Acholeplasma laidlawii belongs to an order of Mycoplasma. Mycoplasma contain only a cell membrane and have no cell wall. They are not susceptible to beta-lactams and do not take up Gram stain. Individual organisms are pleomorphic (assume various shapes from cocci to rods to filaments), varying in size from 0.2 to 0.3 microns or smaller. It has been shown that Acholeplasma laidlawii is capable of penetrating a 0.2 micron filter, but is retained by a 0.1 micron filter (see Sundaram, Eisenhuth, et al. 1999). Acholeplasma laidlawii is known to be associated with animal-derived material, and microbiological media is often from animal sources. Environmental monitoring of Mycoplasma requires selective media (PPLO broth or agar)."
+    },
+    {
+     "ref": "Q4.3",
+     "text": "Resolution:"
+    },
+    {
+     "ref": "Q4.4",
+     "text": "For now, this firm has decided to filter prepared TSB, for use in media fills, through a 0.1 micron filter (note: we do not expect or require firms to routinely use 0.1 micron filters for media preparation). In the future, the firm will use sterile, irradiated TSB when it becomes available from a commercial supplier. (Firm's autoclave is too small to permit processing of TSB for media fills, so this was not a viable option.) The firm will continue monitoring for Mycoplasma and has revalidated their cleaning procedure to verify its removal. In this case, a thorough investigation by the firm led to a determination of the cause of the failure and an appropriate corrective action."
+    }
+   ]
+  },
+  {
+   "unit": "Q5",
+   "paragraphs": [
+    {
+     "ref": "Q5",
+     "text": "What are the cleaning validation requirements for potent compounds (e.g., compounds that are cytotoxic, mutagenic, or have high pharmacologic activity), and is dedicated equipment required?"
+    },
+    {
+     "ref": "Q5.1",
+     "text": "Separation or dedication of equipment and facilities for the manufacture of potent compounds is not specifically required by CGMP regulations. However, manufacturers should identify drugs with such risks and define the controls necessary to eliminate risk of product cross-contamination in nondedicated equipment and facilities. Such controls include proper cleaning, cleaning validation, and other contaminant controls. Firms must validate that cleaning procedures are adequate to ensure that cross-contamination does not occur. CGMP regulations establish requirements to guide development and execution of cleaning validation plans."
+    },
+    {
+     "ref": "Q5.2",
+     "text": "In designing a facility, firms should carefully evaluate manufacturing processes to determine the best procedural controls and floor plan—optimizing the flow of materials, equipment, and people—to help prevent product contamination."
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "fda-cgmp-qa-equipment.html:Q1#1",
+   "unit": "Q1",
+   "hash": "42a24a9d5683b48c",
+   "item": {
+    "statement": "Do not rely on a balance's built-in auto-calibration alone; also carry out external performance checks.",
+    "quote": "The auto-calibration feature of a balance may not be relied upon to the exclusion of an external performance check (21 CFR 211.68).",
+    "clause_number": "Q1.1",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-equipment.html:Q1#2",
+   "unit": "Q1",
+   "hash": "81cd181f896d2003",
+   "item": {
+    "statement": "For scales with a built-in auto-calibrator, perform external performance checks periodically; these may be less frequent than for scales without that feature.",
+    "quote": "For a scale with a built-in auto-calibrator, we recommend that external performance checks be performed on a periodic basis, but less frequently as compared to a scale without this feature.",
+    "clause_number": "Q1.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "scale has built-in auto-calibrator"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-equipment.html:Q1#3",
+   "unit": "Q1",
+   "hash": "f4c40151ec82f007",
+   "item": {
+    "statement": "Set the frequency of balance performance checks according to how often the scale is used and how critical the process or analytical step is and its tolerance.",
+    "quote": "The frequency of performance checks depends on the frequency of use of the scale and the criticality and tolerance of the process or analytical step.",
+    "clause_number": "Q1.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-equipment.html:Q1#4",
+   "unit": "Q1",
+   "hash": "206a9f9f0867c476",
+   "item": {
+    "statement": "Verify the calibration of a balance's auto-calibrator periodically (commonly once a year) using NIST-traceable standards or nationally accredited equivalents used in other countries.",
+    "quote": "the calibration of an auto-calibrator should be periodically verified—a common frequency is once a year—using National Institute of Standards and Technology (NIST)-traceable standards or NIST-accredited standards in use in other countries.",
+    "clause_number": "Q1.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-equipment.html:Q2#1",
+   "unit": "Q2",
+   "hash": "ccef2210d5eff794",
+   "item": {
+    "statement": "Firms may choose the equipment that best fits their needs, provided it can meet the relevant CGMP requirements.",
+    "quote": "Firms are afforded the flexibility to select equipment that best satisfies their particular needs and that is capable of meeting the relevant CGMP requirements.",
+    "clause_number": "Q2.1",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "equipment capable of meeting CGMP"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-equipment.html:Q2#2",
+   "unit": "Q2",
+   "hash": "c89502b7c24e3b09",
+   "item": {
+    "statement": "Select all equipment used in the manufacturing process so that it produces quality products in line with CGMP.",
+    "quote": "Each firm is responsible for selecting all equipment used in their manufacturing process to produce quality products in accordance with CGMP.",
+    "clause_number": "Q2.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-equipment.html:Q2#3",
+   "unit": "Q2",
+   "hash": "8e5dc33135aaef3c",
+   "item": {
+    "statement": "Define the appropriate intended use for each piece of equipment's operation.",
+    "quote": "They are also responsible for selecting the appropriate intended use for the equipment's operation",
+    "clause_number": "Q2.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-equipment.html:Q2#4",
+   "unit": "Q2",
+   "hash": "54d00a43153eaf23",
+   "item": {
+    "statement": "Firms may modify standard equipment designs to suit their process, as long as the modified equipment is compatible with the product being processed.",
+    "quote": "are free to modify standard equipment designs to best suit their process and that are compatible with the product under process.",
+    "clause_number": "Q2.1",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "modification compatible with product"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-equipment.html:Q2#5",
+   "unit": "Q2",
+   "hash": "a377690fafb19f3f",
+   "item": {
+    "statement": "Equipment must be of a design suitable for its intended operations and for cleaning and maintenance.",
+    "quote": "The CGMP regulations require that equipment be of appropriate design to facilitate operations for its intended use and for cleaning and maintenance (see 21 CFR 211.63 and 211.67)",
+    "clause_number": "Q2.2",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-equipment.html:Q2#6",
+   "unit": "Q2",
+   "hash": "8b7fd4c9f1551bf2",
+   "item": {
+    "statement": "Equipment surfaces that contact components, in-process materials or drug products must not be reactive, additive or absorptive to an extent that changes the product's safety, identity, strength, quality or purity beyond official or other established requirements.",
+    "quote": "that any equipment surface in contact with components, in-process materials, or drug products not be reactive, additive, or absorptive so as to \"alter the safety, identity, strength, quality, or purity of the drug product beyond the official or other established requirements\" (see 21 CFR 211.65).",
+    "clause_number": "Q2.2",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-equipment.html:Q3#1",
+   "unit": "Q3",
+   "hash": "b3f0fd8bb7ea5f16",
+   "item": {
+    "statement": "Total organic carbon (or total carbon) testing may be used for routine residue monitoring and for cleaning validation.",
+    "quote": "TOC or TC can be an acceptable method for monitoring residues routinely and for cleaning validation.",
+    "clause_number": "Q3.2",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-equipment.html:Q3#2",
+   "unit": "Q3",
+   "hash": "3fbd9b63ed2dee45",
+   "item": {
+    "statement": "Before relying on TOC, establish that a substantial amount of the contaminating material is organic and contains carbon that can be oxidised under the TOC test conditions.",
+    "quote": "In order for TOC to be functionally suitable, it should first be established that a substantial amount of the contaminating material(s) is organic and contains carbon that can be oxidized under TOC test conditions.",
+    "clause_number": "Q3.2",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "when TOC is used"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-equipment.html:Q3#3",
+   "unit": "Q3",
+   "hash": "70379262534c89fe",
+   "item": {
+    "statement": "TOC may be used, where justified, for both direct surface samples and indirect rinse-water samples.",
+    "quote": "TOC use may be justified for direct surface sample testing as well as indirect (rinse water) sample testing.",
+    "clause_number": "Q3.3",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "where justified"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-equipment.html:Q3#4",
+   "unit": "Q3",
+   "hash": "98a023600f36ff2f",
+   "item": {
+    "statement": "When using TOC, attribute all detected carbon to the target compound(s) when comparing results against the established limit.",
+    "quote": "any detected carbon is to be attributed to the target compound(s) for comparing with the established limit.",
+    "clause_number": "Q3.3",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "when TOC is used"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-equipment.html:Q3#5",
+   "unit": "Q3",
+   "hash": "b44fc5084044874b",
+   "item": {
+    "statement": "When using TOC, keep carbon from sources other than the contaminant being removed as low as possible.",
+    "quote": "Thus, a firm should limit background carbon (i.e., carbon from sources other than the contaminant being removed) as much as possible.",
+    "clause_number": "Q3.3",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "when TOC is used"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-equipment.html:Q3#6",
+   "unit": "Q3",
+   "hash": "5d8aa5e9a63e06f8",
+   "item": {
+    "statement": "Correct the established TOC limit, or the detected residue amount compared with the specification, for the carbon content of the target material.",
+    "quote": "The established limit, or the amount of residue detected for comparison to the specification, should correct for the target material’s composition of carbon.",
+    "clause_number": "Q3.3",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "when TOC is used"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-equipment.html:Q3#7",
+   "unit": "Q3",
+   "hash": "7fea353b0c7306b1",
+   "item": {
+    "statement": "Perform recovery studies for the residue sampling and test method, as for any cleaning method.",
+    "quote": "As for any cleaning method, recovery studies are necessary (21 CFR 211.160(b)).",
+    "clause_number": "Q3.3",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-equipment.html:Q3#8",
+   "unit": "Q3",
+   "hash": "47c13fc07b914651",
+   "item": {
+    "statement": "If TOC samples are held for long periods before analysis, verify how the holding time affects accuracy and limit of quantitation.",
+    "quote": "If TOC samples are being held for long periods of time before analysis, a firm should verify the impact of sample holding time on accuracy and limit of quantitation.",
+    "clause_number": "Q3.3",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "TOC samples held long before analysis"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-equipment.html:Q4#1",
+   "unit": "Q4",
+   "hash": "7facd36314d68970",
+   "item": {
+    "statement": "When monitoring the environment for Mycoplasma, use selective media such as PPLO broth or agar.",
+    "quote": "Environmental monitoring of Mycoplasma requires selective media (PPLO broth or agar).",
+    "clause_number": "Q4.2",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "when monitoring for Mycoplasma"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-equipment.html:Q5#1",
+   "unit": "Q5",
+   "hash": "607c2adc66a98b7f",
+   "item": {
+    "statement": "Identify drugs that pose cross-contamination risks (such as potent compounds) and define the controls needed to eliminate the risk of cross-contamination in non-dedicated equipment and facilities, including proper cleaning, cleaning validation and other contaminant controls.",
+    "quote": "However, manufacturers should identify drugs with such risks and define the controls necessary to eliminate risk of product cross-contamination in nondedicated equipment and facilities. Such controls include proper cleaning, cleaning validation, and other contaminant controls.",
+    "clause_number": "Q5.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "non-dedicated equipment and facilities"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  }
+ ]
+}
