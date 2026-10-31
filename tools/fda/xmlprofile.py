@@ -95,7 +95,7 @@ def own_text(ref, text):
     heading ("Testing and approval or rejection of components, ..."): the parser joins the heading to the
     section's own text (211.142 "§ 211.142 Warehousing procedures. Written procedures ...")."""
     if re.match(r"^§\s*[\d.]+", text):
-        return re.sub(r"^§\s*[\d.]+\s*[^.]*\.\s*", "", text).strip()
+        return re.sub(r"^§\s*[\d.]+\s*[^.?]*[.?]\s*", "", text).strip()    # headings end in "." or "?" (Part 207)
     return re.sub(r"^(?:\([^()]{1,6}\)\s*)+", "", text).strip()
 
 

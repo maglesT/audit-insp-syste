@@ -191,6 +191,12 @@ class DescriptiveMay(unittest.TestCase):
         self.assertEqual(X.strength_words("The applicant may commence distribution"), "optional")
 
 
+class QuestionHeadings(unittest.TestCase):
+    def test_heading_ending_in_question_mark(self):
+        t = "§ 207.54 What listing information must a registrant submit for a drug that it salvages? A registrant must list."
+        self.assertEqual(X.own_text("207.54", t), "A registrant must list.")
+
+
 class CrossReferences(unittest.TestCase):
     def test_cross_references_are_not_numbers(self):
         self.assertNotIn("211", X.without_refs("as required in § 211.192 and parts 600 through 680"))
