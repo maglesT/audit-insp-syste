@@ -57,7 +57,7 @@ not-applicable sentences, 0 gaps).
 | Coverage gaps | 0 (after the 211.1 redraft) |
 | Items with deterministic findings | 30: conditions 19, lead-in 9, numbers 4, strength 2 (an item can have several) |
 | Verifiers | both correct 385, both incorrect 7, disagree 7 |
-| **Automatic route** | **359 of 399 (90.0 %)**; **review queue 40** (30 with findings, 10 by the verifiers only) |
+| **Automatic route** | **365 of 399 (91.5 %)** after `recheck` with the corrected lead-in check (first routing: 359, 90.0 %); **review queue 34** |
 | Usage (session agents, Max plan) | drafting about 700 k tokens (1.8 k per item), verifying about 1,520 k (3.8 k per item, both verifiers), 211.1 redraft 50 k |
 
 What the verifiers rejected (examples): 211.50 refuse "in and from" the building narrowed to "from"; 211.52

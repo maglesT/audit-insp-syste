@@ -4,6 +4,7 @@
   python3 tools/fda/xmlprofile.py ingest-draft RUN                     # checks, coverage -> RUN/items.jsonl, report.json
   python3 tools/fda/xmlprofile.py prepare-verify RUN                   # verifier A and B batches (section text + items)
   python3 tools/fda/xmlprofile.py ingest-verify RUN                    # agreement + automatic route -> RUN/route.json
+  python3 tools/fda/xmlprofile.py recheck RUN                          # deterministic checks again (items unchanged), re-route
 
 The XML is read as text (no rendering, no vision): tools/parse/ecfr.py gives every paragraph with its reference
 from the structure (211.84(c)(1)) and its exact text. Drafting agents get whole sections (all paragraphs with their
@@ -422,6 +423,32 @@ def ingest_verify(run):
     return out
 
 
+def recheck(run):
+    """Re-runs the deterministic checks on a run's items as they are (no item changes: same ids and hashes), then
+    routes again with the verifiers' existing answers: for a check that was corrected after verification."""
+    run = Path(run)
+    source = json.loads((run / "source.json").read_text())["source"]
+    items = [json.loads(ln) for ln in (run / "items.jsonl").read_text().splitlines() if ln.strip()]
+    for i in items:
+        before = item_hash(i)
+        i["findings"], i["quote_confirmed"] = check_item(i, source, i["section"])
+        assert item_hash(i) == before
+        i["hash"] = before
+    with open(run / "items.jsonl", "w", encoding="utf-8") as f:
+        for i in items:
+            f.write(json.dumps(i, ensure_ascii=False) + "\n")
+    rep = json.loads((run / "report.json").read_text())
+    rep["findings"] = {}
+    for i in items:
+        for c, _ in i["findings"]:
+            rep["findings"][c] = rep["findings"].get(c, 0) + 1
+    rep["quote_confirmed"] = sum(i["quote_confirmed"] for i in items)
+    rep["rechecked"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
+    (run / "report.json").write_text(json.dumps(rep, indent=1, ensure_ascii=False))
+    if (run / "verify" / "answers").exists():
+        return ingest_verify(run)
+
+
 def main():
     cmd, args = sys.argv[1], sys.argv[2:]
     if cmd == "prepare-draft":
@@ -432,6 +459,8 @@ def main():
         prepare_verify(args[0])
     elif cmd == "ingest-verify":
         ingest_verify(args[0])
+    elif cmd == "recheck":
+        recheck(args[0])
     else:
         raise SystemExit(__doc__)
 
