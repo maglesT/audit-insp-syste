@@ -98,14 +98,14 @@ class QuoteResult(unittest.TestCase):
     def test_stale_and_missing_entries(self):
         import json
         import tempfile
-        req = {"id": "X-1", "status": "draft", "mappings": [{"source": SRC, "quote": QUOTE}]}
+        req = {"id": "X-1", "status": "draft", "mappings": [{"source": SRC, "clause_ref": "4.27", "quote": QUOTE}]}
         entry = {"source": SRC, "quote_sha256": quotes.sha256(QUOTE), "source_sha256": "s", "reader": "pdfminer",
                  "found": True}
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "q.json"
             path.write_text(json.dumps({"code_sha256": quotes.code_sha256(), "mappings": {"X-1#1": entry}}))
             self.assertEqual(quotes.findings([req], path, {SRC: "s"}), [])
-            changed = {**req, "mappings": [{"source": SRC, "quote": QUOTE + " x"}]}
+            changed = {**req, "mappings": [{"source": SRC, "clause_ref": "4.27", "quote": QUOTE + " x"}]}
             self.assertEqual(quotes.findings([changed], path, {SRC: "s"})[0][2], "quote2")
             self.assertEqual(quotes.findings([req], path, {SRC: "other"})[0][2], "quote2")
             path.write_text(json.dumps({"code_sha256": "old", "mappings": {"X-1#1": entry}}))
