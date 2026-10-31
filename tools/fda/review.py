@@ -19,7 +19,8 @@ with the artifact db tools): a JSON list, {"docs": [...]} or JSON lines, each a 
 decision, by, note, at, statement} or a db document {"id", "data": record}. Each valid record is appended with its
 original "at" (and "via": "review page"); the run and item_hash rules apply: a record for a run or item that does
 not exist, or for an item that changed since it was shown (item_hash), is not imported and is listed. A record
-already in the file is not appended twice. "Latest" means latest by "at" (file order breaks ties), so an imported
+already in the file is not appended twice. "at" must be a full timestamp with a time zone and not lie in the
+future (more than SKEW seconds ahead of this machine). "Latest" means latest by "at" (file order breaks ties), so an imported
 decision made earlier than one already recorded does not supersede it.
 """
 import argparse
@@ -75,9 +76,17 @@ def decisions(path=DECISIONS, run=None, items=None):
 
 
 def when(d):
-    """A decision's time as an aware UTC datetime ("2026-10-31T12:00:00Z", "+00:00" or a naive UTC time)."""
-    t = datetime.fromisoformat(re.sub(r"Z$", "+00:00", d["at"]))
+    """A decision's time as an aware UTC datetime; a missing or unreadable time sorts first (never crashes)."""
+    try:
+        t = datetime.fromisoformat(re.sub(r"Z$", "+00:00", d["at"]))
+    except (KeyError, TypeError, ValueError):
+        return datetime.min.replace(tzinfo=timezone.utc)
     return t if t.tzinfo else t.replace(tzinfo=timezone.utc)
+
+
+# a full timestamp with seconds and an explicit zone: "2026-10-31T12:00:00Z", "...12:00:00.123+02:00"
+STAMP = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$")
+SKEW = 600          # seconds an imported time may lie ahead of this machine's clock
 
 
 def source_text(item):
@@ -142,40 +151,53 @@ FIELDS = ("id", "run", "item_hash", "decision", "by", "at", "note", "statement",
 
 
 def read_export(path):
-    """The records of a review-page export (see the module docstring)."""
+    """The rows of a review-page export (see the module docstring): records, or None for an unreadable row."""
     text = Path(path).read_text(encoding="utf-8").strip()
     try:
         rows = doc = json.loads(text)
         if isinstance(doc, dict):                 # {"docs": [...]}, or one record / document on a single line
             rows = doc["docs"] if "docs" in doc else doc.get("documents", [doc])
-    except json.JSONDecodeError:
-        rows = [json.loads(ln) for ln in text.splitlines() if ln.strip()]
-    return [r["data"] if isinstance(r.get("data"), dict) else r for r in rows]
+    except json.JSONDecodeError:                  # JSON lines: an unreadable line is one unreadable row
+        rows = []
+        for ln in text.splitlines():
+            if ln.strip():
+                try:
+                    rows.append(json.loads(ln))
+                except json.JSONDecodeError:
+                    rows.append(None)
+    if not isinstance(rows, list):
+        rows = [None]
+    return [(r["data"] if isinstance(r, dict) and isinstance(r.get("data"), dict) else r) for r in rows]
 
 
 def import_artifact(file, path=DECISIONS, runs=RUNS):
     """Appends the export's valid, new decisions to path; returns {"imported": [...], "skipped": [(record, why)]}."""
     seen = set()
     if Path(path).exists():
-        seen = {(d.get("run"), d["id"], d.get("item_hash"), d["decision"], d["by"], d["at"])
-                for d in (json.loads(ln) for ln in Path(path).read_text(encoding="utf-8").splitlines() if ln.strip())}
+        seen = {dup_key(d) for d in (json.loads(ln) for ln in Path(path).read_text(encoding="utf-8").splitlines()
+                                     if ln.strip())}
     loaded, imported, skipped = {}, [], []
+    now = datetime.now(timezone.utc)
+    duplicates = []
     for r in read_export(file):
         why = ""
-        if not all(isinstance(r.get(k), str) and r[k].strip() for k in ("id", "run", "item_hash", "decision", "by",
-                                                                         "at")):
+        if not isinstance(r, dict):
+            r, why = {}, "not a record"
+        elif not all(isinstance(r.get(k), str) and r[k].strip() for k in ("id", "run", "item_hash", "decision", "by",
+                                                                           "at")):
             why = "missing id, run, item_hash, decision, by or at"
+        elif any(r.get(k) is not None and not isinstance(r[k], str) for k in ("note", "statement", "quote")):
+            why = "note, statement and quote must be text"
+        elif not STAMP.match(r["at"]):
+            why = f"time {r['at']!r} is not a full timestamp with a time zone"
+        elif (when(r) - now).total_seconds() > SKEW:
+            why = f"time {r['at']!r} lies in the future"
         elif r["decision"] not in ("correct", "fix", "reject"):
             why = f"unknown decision {r['decision']!r}"
         elif r["decision"] == "fix" and not (r.get("statement") or "").strip():
             why = "fix without the corrected statement"
         elif "/" in r["run"] or r["run"].startswith(".") or not (Path(runs) / r["run"] / "route.json").exists():
             why = f"no routed run {r['run']!r}"
-        else:
-            try:
-                when(r)
-            except ValueError:
-                why = f"bad time {r['at']!r}"
         if not why:
             if r["run"] not in loaded:
                 loaded[r["run"]] = load(Path(runs) / r["run"])[1]
@@ -196,8 +218,9 @@ def import_artifact(file, path=DECISIONS, runs=RUNS):
         rec = {k: (r[k].strip() if k == "by" else r[k]) for k in FIELDS if r.get(k) not in (None, "") or k == "note"}
         rec.setdefault("note", "")
         rec["via"] = "review page"
-        key = (rec["run"], rec["id"], rec["item_hash"], rec["decision"], rec["by"], rec["at"])
+        key = dup_key(rec)
         if key in seen:
+            duplicates.append(rec)
             continue
         seen.add(key)
         imported.append(rec)
@@ -206,7 +229,13 @@ def import_artifact(file, path=DECISIONS, runs=RUNS):
         with open(path, "a", encoding="utf-8") as f:
             for rec in sorted(imported, key=when):
                 f.write(json.dumps(rec, ensure_ascii=False) + "\n")
-    return {"imported": imported, "skipped": skipped}
+    return {"imported": imported, "skipped": skipped, "duplicates": duplicates}
+
+
+def dup_key(d):
+    """Two records are the same decision when everything decided is the same and the time is the same instant."""
+    return (d.get("run"), d.get("id"), d.get("item_hash"), d.get("decision"), d.get("by"), when(d),
+            d.get("statement"), d.get("quote"), d.get("note") or "")
 
 
 def main():
@@ -226,7 +255,8 @@ def main():
     a = ap.parse_args()
     if a.cmd == "import-artifact":
         out = import_artifact(a.file)
-        print(f"imported {len(out['imported'])}, skipped {len(out['skipped'])}")
+        print(f"imported {len(out['imported'])}, already recorded {len(out['duplicates'])}, "
+              f"skipped {len(out['skipped'])}")
         for r, why in out["skipped"]:
             print(f"  skipped {r.get('run')} {r.get('id')}: {why}")
         return

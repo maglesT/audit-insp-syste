@@ -35,7 +35,7 @@ class ImportArtifact(unittest.TestCase):
 
     def rec(self, **kw):
         base = {"id": "i", "run": self.run.name, "item_hash": self.h["i"], "decision": "correct", "by": "Owner",
-                "note": "", "at": "2026-10-31T12:00:00Z"}
+                "note": "", "at": "2026-10-30T12:00:00Z"}
         return {**base, **kw}
 
     def export(self, rows, form="list"):
@@ -54,10 +54,10 @@ class ImportArtifact(unittest.TestCase):
 
     def test_imports_with_original_time_and_ships(self):
         out = self.imp([self.rec(), self.rec(id="j", item_hash=self.h["j"], decision="fix",
-                                             statement="Corrected.", at="2026-10-31T11:00:00+00:00")], form="docs")
+                                             statement="Corrected.", at="2026-10-30T11:00:00+00:00")], form="docs")
         self.assertEqual(len(out["imported"]), 2)
         lines = [json.loads(ln) for ln in self.dec.read_text().splitlines()]
-        self.assertEqual([d["at"] for d in lines], ["2026-10-31T11:00:00+00:00", "2026-10-31T12:00:00Z"])
+        self.assertEqual([d["at"] for d in lines], ["2026-10-30T11:00:00+00:00", "2026-10-30T12:00:00Z"])
         self.assertEqual(lines[0]["statement"], "Corrected.")
         self.assertTrue(all(d["via"] == "review page" for d in lines))
         self.assertEqual(sorted(review.shipped(self.run, self.dec)), ["i", "j"])
@@ -82,11 +82,44 @@ class ImportArtifact(unittest.TestCase):
         self.assertEqual(out["skipped"][0][1], "the corrected quote is not in the source text")
 
     def test_latest_by_time_not_by_file_order(self):
-        self.imp([self.rec(decision="reject", at="2026-10-31T13:00:00Z")])
-        self.imp([self.rec(decision="correct", at="2026-10-31T12:00:00Z")])      # older, imported later
+        self.imp([self.rec(decision="reject", at="2026-10-30T13:00:00Z")])
+        self.imp([self.rec(decision="correct", at="2026-10-30T12:00:00Z")])      # older, imported later
         self.assertEqual(review.decisions(self.dec, self.run, review.load(self.run)[1])["i"]["decision"], "reject")
         self.assertEqual(review.shipped(self.run, self.dec), [])
-        self.imp([self.rec(decision="correct", at="2026-10-31T14:00:00Z")])
+        self.imp([self.rec(decision="correct", at="2026-10-30T14:00:00Z")])
+        self.assertEqual(review.shipped(self.run, self.dec), ["i"])
+
+    def test_times_must_be_full_with_zone_and_not_future(self):
+        out = self.imp([self.rec(at="2026-10-31"), self.rec(at="2026-W44-6"), self.rec(at="2026-10-30T12:00:00"),
+                        self.rec(at="9999-12-31T00:00:00Z")])
+        self.assertEqual(out["imported"], [])
+        self.assertEqual(len(out["skipped"]), 4)
+        self.assertEqual(len(self.imp([self.rec(at="2026-10-30T14:00:00.5+02:00")])["imported"]), 1)
+
+    def test_malformed_exports_are_skipped_not_crashing(self):
+        for bad in ("[1, null]", '{"docs": {"a": 1}}', "5"):
+            f = Path(self.tmp.name) / "bad.json"
+            f.write_text(bad)
+            out = review.import_artifact(f, path=self.dec, runs=self.runs)
+            self.assertEqual(out["imported"], [])
+            self.assertTrue(out["skipped"])
+        f = Path(self.tmp.name) / "lines.json"
+        f.write_text(json.dumps(self.rec()) + "\n{not json\n")
+        out = review.import_artifact(f, path=self.dec, runs=self.runs)
+        self.assertEqual((len(out["imported"]), len(out["skipped"])), (1, 1))
+        out = self.imp([self.rec(decision="fix", statement=5), self.rec(note=["x"]), self.rec(quote=5)])
+        self.assertEqual((len(out["imported"]), len(out["skipped"])), (0, 3))
+
+    def test_duplicates_are_reported_and_same_instant_is_one(self):
+        self.imp([self.rec()])
+        out = self.imp([self.rec(at="2026-10-30T12:00:00+00:00"),
+                        self.rec(decision="fix", statement="One."), self.rec(decision="fix", statement="Two.")])
+        self.assertEqual(len(out["duplicates"]), 1)
+        self.assertEqual(len(out["imported"]), 2)
+
+    def test_a_record_without_time_does_not_crash_shipped(self):
+        self.dec.write_text(json.dumps({"id": "i", "run": self.run.name, "item_hash": self.h["i"],
+                                        "decision": "correct", "by": "x"}) + "\n")
         self.assertEqual(review.shipped(self.run, self.dec), ["i"])
 
 
