@@ -39,7 +39,7 @@ Columns: items = checklist items drafted; auto = items passing the automatic rou
 | 21 | Questions and Answers on CGMP for Drugs: Holding and Distribution | `fda-cgmp-qa-holding-distribution.html` | must | ALL | - | verified | 9 | 7 | 2 |
 | 22 | Questions and Answers on CGMP for Drugs: Laboratory Controls | `fda-cgmp-qa-laboratory-controls.html` | must | ALL | - | verified | 80 | 67 | 13 |
 | 23 | Questions and Answers on CGMP for Drugs: Production and Process Controls | `fda-cgmp-qa-production-process-controls.html` | must | ALL | - | not started | | | |
-| 24 | Questions and Answers on CGMP for Drugs: Records and Reports | `fda-cgmp-qa-records-reports.html` | must | ALL | - | not started | | | |
+| 24 | Questions and Answers on CGMP for Drugs: Records and Reports | `fda-cgmp-qa-records-reports.html` | must | ALL | - | verified | 31 | 26 | 5 |
 | 25 | Questions and Answers on CGMP for Drugs: Returned and Salvaged Drug Products | `fda-cgmp-qa-returned-salvaged.html` | must | ALL | - | not started | | | |
 | 26 | CPG Sec. 490.200 Parametric Release of Parenteral Drug Products Terminally Sterilized by Moist Heat | `fda-cpg-490-200-parametric-release.html` | should | INJ | - | not started | | | |
 | 27 | FDA alert to drug manufacturers on risk of benzene contamination | `fda-alert-benzene-contamination.html` | should | OSD, LIQ, SEMI | - | not started | | | |

@@ -289,7 +289,8 @@ def check_item(item, source, unit=None):
 _R = r"\d+\.\d+(?:\([^()\s]{1,5}\))*"
 _S = r"(?:\s*,\s*(?:and\s+|or\s+)?|\s+and\s+|\s+or\s+|\s*[-–]\s*|\s+through\s+)"
 CFR_REF = re.compile(rf"\b(?:\d+\s+)?CFR\s+(?:parts?\s+\d{{2,}}(?:{_S}\d{{2,}}\b)*|{_R}(?:{_S}{_R})*)"
-                     rf"|\bsection\s+\d+[A-Za-z]?(?:\([^()\s]{{1,5}}\))*|\bparts?\s+\d{{2,}}(?:{_S}\d{{3,}}\b)*", re.I)
+                     rf"|§§?\s*{_R}(?:{_S}{_R})*"
+                     rf"|\bsections?\s+\d+(?:\.\d+)?[A-Za-z]?(?:\([^()\s]{{1,5}}\))*|\bparts?\s+\d{{2,}}(?:{_S}\d{{3,}}\b)*", re.I)
 
 
 def coverage(source, unit, items, na):
