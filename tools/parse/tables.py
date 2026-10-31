@@ -192,25 +192,31 @@ def stray_words(table, words):
 
 
 def _cells(table, words):
-    """Cell texts of a table, row by row; a word belongs to the cell that holds its centre.
+    """Cell texts of a table, row by row (cells_boxed without the boxes)."""
+    return [[t for t, _ in r] for r in cells_boxed(table, words)]
+
+
+def cells_boxed(table, words):
+    """Cells of a table, row by row, as (text, box); a word belongs to the cell that holds its centre; box is None
+    for a cell the table leaves out.
 
     A ruled row whose first cell holds several numbered labels ("3.3", "3.4", ... with no rule between them, PIC/S
-    PI 038) is split at the height of each label, so every item becomes a row of its own.
+    PI 038) is split at the height of each label, so every item becomes a row of its own (the boxes are cut there
+    too).
     """
     rows = []
     for row, cells in zip(table.rows, _row_boxes(table)):
         first = cells[0] if cells else None
-        if first is None:
-            rows.append([_text(box, words) if box else "" for box in cells])
-            continue
-        labels = sorted({round(w[1], 1) for w in words if ROW_LABEL.fullmatch(w[4]) and _centre_in(w, first)
-                         and w[0] - first[0] < 25})
+        labels = [] if first is None else sorted({round(w[1], 1) for w in words if ROW_LABEL.fullmatch(w[4])
+                                                  and _centre_in(w, first) and w[0] - first[0] < 25})
         if len(labels) < 2:
-            rows.append([_text(box, words) if box else "" for box in cells])
+            rows.append([(_text(box, words), tuple(box)) if box else ("", None) for box in cells])
             continue
         cuts = [None] + [y - 0.5 for y in labels[1:]] + [None]       # cut just above each further label
         for top, bottom in zip(cuts, cuts[1:]):
-            rows.append([_text(box, words, top, bottom) if box else "" for box in cells])
+            rows.append([(_text(box, words, top, bottom),
+                          (box[0], box[1] if top is None else top, box[2], box[3] if bottom is None else bottom))
+                         if box else ("", None) for box in cells])
     return rows
 
 
@@ -263,18 +269,25 @@ def read(path):
             for n, t in enumerate(found):
                 above = _band(path, pno, page.width, top, t.bbox[1]) if t.bbox[1] > top else ""
                 parts.append(above)
-                rows = []
-                for r in _drop_empty_columns(_cells(t, words)):
-                    if not any(r):
+                rows, boxes = [], []
+                boxed = cells_boxed(t, words)
+                texts = [[x for x, _ in r] for r in boxed]
+                keep = [j for j in range(max((len(r) for r in texts), default=0)) if any(j < len(r) and r[j]
+                                                                                         for r in texts)]
+                for r in boxed:
+                    r = [r[j] if j < len(r) else ("", None) for j in keep]
+                    text = [x for x, _ in r]
+                    if not any(text):
                         continue
-                    if devanagari_share(" ".join(r)) >= 0.3:
-                        dropped += sum(len(c.replace(" ", "")) for c in r)
+                    if devanagari_share(" ".join(text)) >= 0.3:
+                        dropped += sum(len(c.replace(" ", "")) for c in text)
                         continue
-                    rows.append(r)
+                    rows.append(text)
+                    boxes.append([[pno, *[round(v, 2) for v in b]] if b and x else None for x, b in r])
                 if rows:
                     parts.append(MARKER.format(len(tables)))
-                    tables.append({"page": pno, "rows": rows, "before": _lines(above) if first is None else None,
-                                   "after": None})
+                    tables.append({"page": pno, "rows": rows, "boxes": boxes,
+                                   "before": _lines(above) if first is None else None, "after": None})
                     first = first if first is not None else len(tables) - 1
                 band = (0, max(top, t.bbox[1]), page.width, t.bbox[3])
                 beside = page.filter(lambda o, band=band: o.get("object_type") == "char" and _in_box(o, band)
@@ -484,6 +497,7 @@ def rows_to_clauses(source, tables, parent=None):
         par = parent.get(first_of[k], "")
         leading, prev_header = True, False
         for i, row in enumerate(t["rows"]):
+            rbox = t.get("boxes", [[None] * len(row)] * len(t["rows"]))[i]
             key = _row_key(row)
             filled = [j for j, c in enumerate(row) if c]
             caption = filled == [0] and len(row) > 1
@@ -494,28 +508,33 @@ def rows_to_clauses(source, tables, parent=None):
             if header:
                 if (k, key) not in headers:
                     headers.add((k, key))
-                    out.append(_row(_unique(f"Table {k} header", used), par, group, row, t["page"], "table_header"))
+                    out.append(_row(_unique(f"Table {k} header", used), par, group, row, t["page"], "table_header",
+                                    rbox))
                 continue
             if caption:
                 if leading and row[0] == group:          # the caption repeated at the top of the next page
                     continue
                 group, last = row[0], None
                 out.append(_row(_unique(f"Table {k} {_label(row[0])}", used), par, group, row, t["page"],
-                                "table_row"))
+                                "table_row", rbox))
                 continue
             leading = False
             if row[0] == "" and last is not None and len(last["cells"]) == len(row):
                 for j, c in enumerate(row):
                     if c:
                         last["cells"][j] = (last["cells"][j] + " " + c).strip()
+                        if rbox[j]:
+                            last["boxes"][j].append(rbox[j])
                 last["page_end"] = t["page"]
                 continue
             label = _label(row[0]) if row[0] else f"row {i + 1}"
-            last = _row(_unique(f"Table {k} {label}", used), par, group, row, t["page"], "table_row")
+            last = _row(_unique(f"Table {k} {label}", used), par, group, row, t["page"], "table_row", rbox)
             out.append(last)
     return [Clause(source=source, ref=c["ref"], section=c["group"], number="",
                    heading=(c["cells"][0] or c["ref"])[:160], text=normalise(" | ".join(x for x in c["cells"] if x)),
-                   page_start=c["page_start"], page_end=c["page_end"], kind=c["kind"], parent=c["parent"])
+                   page_start=c["page_start"], page_end=c["page_end"], kind=c["kind"], parent=c["parent"],
+                   cells=[b for x, b in zip(c["cells"], c["boxes"]) if x] if all(c["boxes"][j] for j, x in
+                                                                              enumerate(c["cells"]) if x) else [])
             for c in out]
 
 
@@ -535,9 +554,11 @@ def _label(text):
     return text[:LABEL_MAX].rsplit(" ", 1)[0].rstrip(" ,;:-–") + "…"
 
 
-def _row(ref, parent, group, row, page, kind):
+def _row(ref, parent, group, row, page, kind, boxes=None):
+    """A row being built; boxes[j] lists the boxes ([page, x0, top, x1, bottom]) cell j's text came from."""
+    boxes = boxes or [None] * len(row)
     return {"ref": ref, "parent": parent, "group": group, "cells": list(row), "page_start": page, "page_end": page,
-            "kind": kind}
+            "kind": kind, "boxes": [[b] if b else [] for b in boxes]}
 
 
 def _unique(ref, used):

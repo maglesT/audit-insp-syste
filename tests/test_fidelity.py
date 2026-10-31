@@ -112,6 +112,46 @@ class Tables(unittest.TestCase):
         self.assertTrue(fidelity.compare_table(T("Grade A 3 521 20"), window))
 
 
+class Cells(unittest.TestCase):
+    """Per-cell comparison (closes the D40 row-as-bag residual): a value dropped from a cell or moved to another
+    cell of the row is caught even when the row's bag of tokens still matches."""
+    # one row, three cells side by side on page 1: "B" | "3 520" | "352 000"
+    BOXES = [[[1, 0, 0, 50, 20]], [[1, 50, 0, 150, 20]], [[1, 150, 0, 250, 20]]]
+    WORDS = {1: [("B", False, 10, 5, 20, 15), ("3", False, 60, 5, 70, 15), ("520", False, 72, 5, 90, 15),
+                 ("352", False, 160, 5, 175, 15), ("000", False, 177, 5, 195, 15), ("a", True, 197, 3, 200, 9)]}
+
+    def flags(self, text, words=None, boxes=None):
+        return fidelity.compare_cells({"text": text, "cells": boxes or self.BOXES}, words or self.WORDS)
+
+    def test_correct_row(self):
+        self.assertEqual(self.flags("B | 3 520 | 352 000"), [])
+
+    def test_value_moved_between_cells(self):
+        # the row's bag is the same, so the row comparison misses it
+        self.assertEqual(Counter(T("B | 352 000 | 3 520")), Counter(T("B | 3 520 | 352 000")))
+        self.assertEqual(self.flags("B | 352 000 | 3 520"), [(2, ["352", "000"], ["3", "520"]),
+                                                              (3, ["3", "520"], ["352", "000"])])
+
+    def test_value_dropped_from_a_cell(self):
+        self.assertEqual(self.flags("B | 3 | 352 000"), [(2, [], ["520"])])
+
+    def test_digit_changed(self):
+        self.assertEqual(self.flags("B | 3 520 | 352 900"), [(3, ["900"], ["000"])])
+
+    def test_glued_footnote_letter_and_small_marks(self):
+        words = {1: self.WORDS[1][:4] + [("000a", False, 177, 5, 200, 15)]}
+        self.assertEqual(self.flags("B | 3 520 | 352 000 a", words), [])
+        self.assertEqual(self.flags("B | 3 520 | 352 000"), [])          # the small "a" mark may be left out
+
+    def test_without_boxes_or_on_an_unread_page(self):
+        self.assertIsNone(fidelity.compare_cells({"text": "B | 1"}, self.WORDS))
+        self.assertIsNone(self.flags("B | 3 520 | 352 000", boxes=[[[2, 0, 0, 50, 20]]] * 3))
+
+    def test_describe(self):
+        self.assertEqual(fidelity.describe_cells([(2, ["352"], ["3", "520"]), (3, [], ["9"])]),
+                         "cell 2: -352 +3 520 | cell 3: +9")
+
+
 class Check(unittest.TestCase):
     def doc(self, discrepancy="-25 | +52"):
         return {"code_sha256": fidelity.code_sha256(), "sources": {"a.pdf": {

@@ -29,7 +29,11 @@ only in these narrow cases, each of which leaves the words of the regulation unc
   - a footnote number or sign that only moved within the clause.
 Table rows (kinds table_row, table_header) are compared as a bag of tokens against the row's own stretch of the
 page (the tokens printed within the row's band of heights), since the two engines read cells in different orders;
-running header lines are kept for them, as a table's header row repeated at the top of each page is one. Coverage, the other direction at document level:
+running header lines are kept for them, as a table's header row repeated at the top of each page is one. Each
+table row is also compared cell by cell (compare_cells, D44): the parser stores the box each cell's words came
+from, and pdfminer's words inside that box must give the cell's tokens, so a value dropped from a cell or moved
+to another cell of the row is caught even when the row's bag matches (rows on turned pages keep the bag
+comparison only: their boxes are on the upright copy). Coverage, the other direction at document level:
 every run of three or more tokens of the second reading that no clause accounts for (text missing from every
 stored clause: a dropped paragraph, a clause end cut off) is flagged as "uncovered" with its page.
 
@@ -557,14 +561,95 @@ def pdf_sources():
     return sorted(p.stem + ".pdf" for p in CLAUSES.glob("*.jsonl") if (OFFICIAL / (p.stem + ".pdf")).exists())
 
 
+def cell_words(path, pages):
+    """{page: [(text, small font, x0, top, x1, bottom)]} of pdfminer's words on the given pages (1-based), for the
+    per-cell comparison; a page whose text is turned is left out (the parser's cell boxes are on the upright copy)."""
+    import pdfplumber
+    out = {}
+    with pdfplumber.open(path) as pdf:
+        for p in sorted(pages):
+            if not 1 <= p <= len(pdf.pages):
+                continue
+            page = pdf.pages[p - 1]
+            if sum(not c["upright"] for c in page.chars) > len(page.chars) / 2:
+                continue
+            words = page.extract_words(extra_attrs=["size"], keep_blank_chars=False, use_text_flow=True)
+            if not words:
+                continue
+            sizes = sorted(w["size"] for w in words)
+            body = sizes[len(sizes) // 2]
+            out[p] = [(cid_text(w["text"]), w["size"] < 0.8 * body, w["x0"], w["top"], w["x1"], w["bottom"])
+                      for w in words]
+    return out
+
+
+def compare_cells(clause, words):
+    """Per-cell discrepancies of a table row (closes the row-as-bag residual, D40): for each stored cell, the
+    tokens of pdfminer's words whose centre lies in the cell's boxes against the cell's stored tokens, as bags
+    (the engines may order a cell's lines differently). A value dropped from a cell, or moved to another cell
+    of the row, shows here even when the row's bag is complete. Tolerated as in the row comparison: ligature
+    letters, split or joined words, characters read one by one; small-font page tokens (footnote marks).
+    Returns [(cell number, missing, extra)] for cells that differ; None when the row has no boxes or one of its
+    pages is not read here (turned pages)."""
+    cells = [c for c in clause["text"].split(" | ")]
+    boxes = clause.get("cells") or []
+    if len(boxes) != len(cells) or not all(b[0] in words for bs in boxes for b in bs):
+        return None
+    out = []
+    for n, (text, bs) in enumerate(zip(cells, boxes), start=1):
+        inside = [w for b in bs for w in words[b[0]]
+                  if b[1] <= (w[2] + w[4]) / 2 <= b[3] and b[2] <= (w[3] + w[5]) / 2 <= b[4]]
+        page, small = [], []
+        for w in inside:
+            (small if w[1] else page).extend(tokens(w[0]))
+        stored = tokens(text)
+        have, missing = Counter(page + small), []
+        for t in stored:
+            if have[t] > 0:
+                have[t] -= 1
+            else:
+                missing.append(t)
+        left, extra = Counter(page) - Counter(stored), []     # small-font page tokens are never extra
+        for t in page:
+            if left[t] > 0:
+                left[t] -= 1
+                extra.append(t)
+        glued = {unlig(t) for t in page + small}            # stored words the page prints as one ("specifieda")
+        for k in range(len(stored)):
+            for m in (2, 3):
+                if len(stored[k:k + m]) == m and unlig("".join(stored[k:k + m])) in glued:
+                    for t in stored[k:k + m]:
+                        if t in missing:
+                            missing.remove(t)
+        near_page, near_stored = joins(page + small), joins(stored)
+        runs = char_runs(page + small)
+        missing = [t for t in missing if unlig(t) not in near_page and not any(same(t, x) for x in page + small)
+                   and not any(t in r for r in runs)]
+        extra = [t for t in extra if unlig(t) not in near_stored and not any(same(t, x) for x in stored)]
+        if missing or extra:
+            out.append((n, missing, extra))
+    return out
+
+
+def describe_cells(found):
+    """"cell 2: -x y +z" per differing cell, joined with " | "."""
+    return " | ".join(f"cell {n}: " + " ".join((["-" + " ".join(m)] if m else []) + (["+" + " ".join(e)] if e else []))
+                      for n, m, e in found)
+
+
 def check_source(f):
     """The report entry of one PDF source."""
     path = CLAUSES / (Path(f).stem + ".jsonl")
     clauses = [json.loads(ln) for ln in path.read_text(encoding="utf-8").splitlines() if ln.strip()]
     rows, uncovered = compare(clauses, second_reading(OFFICIAL / f))
+    boxed = [c for c in clauses if c.get("cells")]
+    words = cell_words(OFFICIAL / f, {b[0] for c in boxed for bs in c["cells"] for b in bs})
+    cells = [(c["ref"], describe_cells(found)) for c in boxed for found in [compare_cells(c, words)] if found]
     return {"pdf_sha256": sha256(OFFICIAL / f), "clauses_sha256": sha256(path), "clauses": len(rows),
             "tokens": sum(n for _, _, n, _ in rows),
+            "cells_compared": sum(1 for c in boxed if compare_cells(c, words) is not None),
             "flagged": [{"ref": r, "kind": k, "tokens": n, "discrepancy": d} for r, k, n, d in rows if d]
+            + [{"ref": r, "kind": "cell", "tokens": 0, "discrepancy": d} for r, d in cells]
             + [{"ref": f"page {p}", "kind": "uncovered", "tokens": len(t.split()), "discrepancy": "+" + t}
                for p, t in uncovered]}
 

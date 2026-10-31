@@ -33,9 +33,13 @@ class Clause:
     kind: str = "clause"   # clause | principle | section | unnumbered | toc | table_row | table_header
     notes: list = field(default_factory=list)
     parent: str = ""       # table rows: the clause the table sits in ("" when it sits before any clause)
+    cells: list = field(default_factory=list)   # table rows: per non-empty cell (in text order, " | "), the boxes
+    #                                             [page, x0, top, x1, bottom] its words came from (fidelity per cell)
 
     def to_json(self):
         d = asdict(self)
+        if not d["cells"]:
+            del d["cells"]
         d["sha256"] = hashlib.sha256(self.text.encode("utf-8")).hexdigest()
         return d
 

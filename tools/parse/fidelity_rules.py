@@ -1490,8 +1490,31 @@ rule(r"who-trs981-a2-qrm", r"[1-5]( #2)?", r".*",
      "text is readable (0b: glyph decoding) each row is stored as a numbered clause, with wrapped cells ('occur more "
      "/ than once a / year') in layout order. Same words, other order.")
 rule(r"who-trs981-a2-qrm", r"page 3[01]", r"\+in table row: (fmea|22201 3042)",
-     "Words printed in a QRM tool table row's band that belong to the neighbouring row or the source note "
-     "('(FMEA)', the PQRI address '22201-3042'); stored in that row or note. Readable since 0b.")
+     "Parser defect (0b): glyph-font words without the space glyph are not decoded (D42 decodes only words "
+     "holding it): '(FMEA)' is stored as the glyph text '\'.&\"' in the Failure modes effects analysis rows, and "
+     "the PQRI ZIP code '22201-3042' is missing from the table's source note. Found by the per-cell comparison "
+     "(D44); the earlier explanation ('stored in the neighbouring row') was wrong.")
+rule(r"who-trs981-a2-qrm", r"Table [34] (Failure modes.*|Source: Based on reference 9.*)",
+     r"cell 1: \+(fmea|22201 3042)",
+     "Parser defect (0b): glyph-font words without the space glyph are not decoded: '(FMEA)' stored as glyph "
+     "text, the ZIP code '22201-3042' missing from the source note (see the page flags).")
+rule(r"fda-guidance-nitrosamine-control-2024", r"Table 1 (𝑛𝑛𝑖𝑖=2 𝑋𝑋𝑋𝑋|∑ 𝐴𝐴𝐴𝐴𝐴𝐴 ∗ 100% ≤ 100%|row 6)",
+     r"cell 1: [-+].*",
+     "Parser defect (0b): the total-nitrosamine formula stored as bogus table rows of doubled math-italic glyphs "
+     "(see the row flags of these rows); its pieces sit in other cells of the bogus grid.")
+rule(r"fda-guidance-quality-systems-approach-2006", r"Table 4 2\. Examine Inputs",
+     r"cell 2: -211\.122 211\.125 \+211\.122,211\.125",
+     "pdfminer reads the citations '211.122, 211.125' as one token with the comma ('211.122,211.125'); the "
+     "same two section numbers are stored in this cell.")
+rule(r"ich-q7-qa", r"Table 3[01] row 1", r"cell \d+: -.*",
+     "Column headers of the Annex matrix set vertically: pdfminer reads them one character at a time and drops "
+     "some letters ('n r o d u c o n' for 'Introduction'); poppler reads them whole. Same headers, each in its "
+     "own cell (as in the row flags).")
+rule(r"india-cdsco-circ-2024-03", r"Table 29 4\.19", r"cell 4: -circulation rate",
+     "Parser defect (0b): 'circulation rate.' ends the sentence of row 4.18 ('... commensurate with the "
+     "circulation rate.') but is printed across the rule between the rows; poppler's word centre falls below the "
+     "rule, so it is stored at the start of row 4.19's cell. Found by the per-cell comparison (D44).")
+
 
 
 def flat(text):
@@ -1515,6 +1538,9 @@ def verify(f):
     out = {}
     for c in doc['sources'][f]['flagged']:
         d, verdict = c['discrepancy'], None
+        if c['kind'] == 'cell':                              # per-cell flags: explained by inspected rules only
+            out[(c['ref'], d)] = None
+            continue
         seg = segments(d)
         if c['kind'] == 'uncovered':
             if all(len(flat(" ".join(s))) >= 8 and any(flat(" ".join(s)) in t for t in store) for s in seg['+']):
