@@ -13,16 +13,25 @@ Last updated: 31 October 2026, session 8 (D48 lead-in fix, review-page import, D
   both directions). Recheck of all group 1 runs: lead-in findings 61 -> 23; Part 4 auto 27 (was 16), Part 207 121
   (was 115); group 1 now 867 items, 721 automatic (83.2 %), 146 review. The two superseded 211 trial runs route 0
   automatic (their verify batches predate item hashes; not counted anywhere).
-- **Step 2 done, PR #41 (`fda-review-import`):** `review.py import-artifact FILE` (review page slug
+- **Step 2 done and merged, PR #41 (`fda-review-import`):** `review.py import-artifact FILE` (review page slug
   f1a4b335-e5ec-4d90-993a-02abf9913cbe, db collection `decisions`; pull the docs with the artifact db tools
   (db_list), save as JSON, import). Latest decision = latest by `at`; future or zone-less times refused. The
   collection was empty on 31 Oct 12:00 UTC.
-- **Step 3 in progress, PR #42 (`fda-html-profile`, stacked on #40 and #41, D49):** `tools/fda/htmlprofile.py`
-  (same commands as xmlprofile: prepare-draft SOURCE [UNIT ...] / ingest-draft / prepare-verify / ingest-verify /
-  prepare-redraft / recheck). Trial `docs/fda-html-trial.md`: 20 units, 160 items, 160 quotes exact, 140 automatic
-  (87.5 %), 20 review. Full build started in work-list order: CGMP Q&A runs 20261031T120735.* (one per page;
-  Equipment = trial run 20261031T115746.029428Z + redraft 20261031T120736.030446Z). Worktrees used: /home/user/w2
-  (step 2), /home/user/w3 (step 3); run folders are written under the worktree that ran the tool.
+- **Step 2 merged (PR #41).** Step 1 (PR #40) waits for CI; merge it, then PR #42 (it contains #40 and #41).
+- **Step 3 in progress, PR #42 (`fda-html-profile`, D49):** `tools/fda/htmlprofile.py` (prepare-draft SOURCE
+  [UNIT ...] / ingest-draft / prepare-verify / ingest-verify / prepare-redraft / recheck; recheck also recomputes
+  coverage). Trial `docs/fda-html-trial.md` (160 items, 140 automatic). Independent review done, all findings fixed.
+  Per document: draft agent -> ingest-draft -> prepare-redraft (gaps) + prepare-verify -> verifier A and B agents ->
+  ingest-verify (draft and redraft runs) -> `tools/fda/status.py set FILE verified --items --auto --review --usage
+  --run` (once per run) -> report to the coordinator. A redraft whose gaps close on recheck is dropped.
+- **Group 2 status (all in `library/fda-status.json` / work list):** Q&A done: Equipment 57/51/6, Buildings 16/13/3,
+  General Provisions 0, Holding 9/7/2, Components 92/76/16, Laboratory 80/67/13, Records 31/26/5, Returned 15/9/6.
+  Q&A Production: draft run 20261031T121805.662742Z (143 items) verifying, redraft 20261031T122549.729806Z (10)
+  verifying; residual gaps Q7.4, Q19.1, Q22.1, Q23.5 (background lead clauses). Guides: dosage form
+  20261031T121844.199078Z (226 items; redraft 20261031T122644.999092Z prepared, verify batches prepared, not
+  launched); high purity water 20261031T121844.314705Z (72 items, 0 gaps) verifying; the other 7 guide runs
+  20261031T121844.*/121845.* are prepared, not drafted. Then ITGs, CPG 490.200, benzene alert (new whole-document
+  runs; the trial runs of those are trial-only).
 - **Agents:** drafting agent per run (reads only its batch files, writes answers/); verifiers A and B as separate
   agents per run group (blind, only their verify batch files). Max 3-4 at a time.
 - **Local test note:** 2 errors in tests/test_ai_runner locally = the `anthropic` package is not installed here
