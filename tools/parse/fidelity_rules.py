@@ -1535,10 +1535,21 @@ def verify(f):
                 verdict = 'footnote'
             else:
                 own = [t for i, t in enumerate(store) if clauses[i]['ref'] != c['ref']]
+                tables = {}                                  # rows of each table printed on the clause's pages
+                for i, o in enumerate(clauses):
+                    if o['kind'] in F.TABLE_KINDS and o['page_start'] <= cl['page_end'] + 1 \
+                            and o['page_end'] >= cl['page_start'] - 1:
+                        tables.setdefault(o['ref'].split()[1], []).append(store[i])
+
+                def whole_rows(run):
+                    """The run is exactly some consecutive whole rows of one table, in order."""
+                    return any("".join(rows[a:b]) == run for rows in tables.values()
+                               for a in range(len(rows)) for b in range(a + 2, len(rows) + 1))
                 ok_minus = all(len(s) >= 3 and len(flat(" ".join(s))) >= 12 and flat(" ".join(s)) in page_text
                                for s in seg['-'])
                 ok_plus = all(len(s) >= 3 and len(flat(" ".join(s))) >= 12
-                              and (any(flat(" ".join(s)) in t for t in own) or flat(" ".join(s)) in store[clauses.index(cl)])
+                              and (any(flat(" ".join(s)) in t for t in own) or flat(" ".join(s)) in store[clauses.index(cl)]
+                                   or whole_rows(flat(" ".join(s))))
                               for s in seg['+'])
                 if ok_minus and ok_plus:
                     verdict = 'order'
@@ -1551,7 +1562,8 @@ with ProcessPoolExecutor(4) as pool:
 
 AUTO = {
     'order': "Order or place only (verified mechanically): every stored word run of this discrepancy is printed on "
-             "the clause's pages, and every page run it lacks is stored word for word (in this clause or another), "
+             "the clause's pages, and every page run it lacks is stored word for word (in this clause, another, or exactly "
+             "some consecutive whole rows of one table on these pages), "
              "so no word is lost or added; the engines read table cells, columns or figure labels in different orders.",
     'footnote': "A footnote reference number (verified: it starts a line or is printed small on the clause's pages) "
                 "that the parser drops with the footnote mark; no regulation word changes.",

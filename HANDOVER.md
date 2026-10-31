@@ -1,6 +1,6 @@
 # Handover: read this first in every new session
 
-Last updated: 31 October 2026, session 5 (0b first PR: deterministic parser fixes, D42; next the D41 table-transformer trial).
+Last updated: 31 October 2026, session 6 (0b second PR: Table Transformer trial, D43; next the per-cell fidelity comparison).
 
 ## Mutation test results (30 Oct 2026, plan 2.6 / Layer 3, pilot scale)
 `tools/ai/mutate.py` planted errors in the 56 session-pilot mappings and mixed the mutants, shuffled, with the 56
@@ -184,12 +184,17 @@ finished in about 4 minutes in total.
     items, the main saving); adjudication of disagreements; reverse test (numbers, conditions, frequencies + 20 %);
     mutation test on the items; then the go/no-go and forecast. The drafter now assigns each obligation's
     sub-topic (S3 took it from the dropped consolidation).
-  - **START HERE (session 6): 0b is in progress on branch `parser-fixes-0b`.** First 0b PR (D42) done: the 4
+  - **START HERE (session 6): 0b is in progress.** First 0b PR (D42, PR #32) is merged to main; continue on
+    branch `parser-fixes-0b-2` (from main; `parser-fixes-0b` is merged, do not reuse it). It fixed the 4
     TEXT LOST cases, WHO TRS 981 glyph text, landscape pages read upright, turned side titles, superscripts
     (10^-6), PE 009 / EMA running footers, FDA margin numbers, CDSCO header band, grade tables one row per grade.
     Fidelity: 1,210 flags, all explained; 232 "Parser defect (0b)" rows left (`grep "Parser defect"
     library/fidelity-explanations.csv`). Tests: `tests/test_parse_0b.py`.
-    - **Next in 0b (second PR): the D41 trial.** Table Transformer (HF `microsoft/table-transformer-structure-
+    - **Session 6: the D41 trial is done (D43, branch `parser-fixes-0b-2`).** `tools/parse/tatr.py` (pinned
+      models; `run` needs torch CPU + `tools/parse/requirements-tatr.txt`, offline, never in CI); grids in
+      `library/tables-tatr/grids.json`, side by side in `trial.md`, verdicts in `verdicts.md`. Adopted on 2 of 34
+      pages only (WHO 1044 A2 p19, Q3C p11; `tatr.ADOPTED`). Next: the per-cell fidelity comparison (third PR).
+    - *(Was:)* **Next in 0b (second PR): the D41 trial.** Table Transformer (HF `microsoft/table-transformer-structure-
       recognition-v1.1-all`, reachable through the proxy; needs torch + transformers + timm, or an ONNX export run
       with the pinned onnxruntime) on rendered table pages (pypdfium2 is pinned); cell text from poppler words as
       now. Trial pages: grade tables (WHO 1044 A2 p17/19, EU Annex 1, PE 009 Annex 1), CDSCO checklist, ICH Q3C,
