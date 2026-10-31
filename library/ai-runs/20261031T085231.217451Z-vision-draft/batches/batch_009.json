@@ -1,0 +1,282 @@
+{
+ "instructions": "You read pages of a pharmaceutical GMP text and list the obligations printed on them. For each page you get the\nrendered page IMAGE (open it with your Read tool: the image is the truth) and the page's TEXT LAYER (extracted\ntext, which can be wrong: superscripts flattened, table cells merged, landscape pages, lost symbols). Your output\nis checked by software against two text readings of the page and by independent reviewers, so precision matters\nmore than wording.\n\nList each separate obligation printed on the page as its own item, so that together your items cover every\nobligation on the page (body text, list items, table rows and footnotes that require something). One obligation\nis one thing a site must, should or may do, with all its conditions, numbers and qualifiers; do not split one\nobligation across items. A sentence that starts on this page and ends on the next is drafted here (runs_over true;\nthe next page's text is given). A sentence that started on the previous page is not drafted again.\nFor each item:\n- statement: the obligation in your own plain English words, as one checklist item a site could be audited\n  against. Do not copy more than a few words in a row. Keep every condition (\"where\", \"if\", \"unless\", \"before\")\n  and every number. Do not add anything the page does not say.\n- quote: the exact span of the page that states the whole obligation, copied as printed, character for\n  character from the TEXT LAYER where the text layer is right (it is matched against the page by software; do not\n  fix typos or change punctuation). For a table row, quote the column header cells joined with \" | \", then\n  \" || \", then the row's cells joined with \" | \", starting with the row's first cell (its label), e.g.\n  \"Grade | Air sample CFU/m3 || B | 10\". Write a footnote mark printed after a word as \"^\" and the mark\n  (\"Cumene^1\", \"specified^a\"); a power of ten as \"10^7\" or \"10^-6\".\n- clause_number: the number exactly as printed for the clause or row (\"9.3\", \"4.22 iii\", \"Table 2\", \"4.19\"),\n  \"\" if none. Do not compose references that are not printed (\"Table 2 Note 1\", \"Table 1 Grade B\").\n- strength: \"mandatory\" for shall / must / is required / may not; \"recommended\" for should; \"optional\" for may.\n  Take it from the main verb of the quoted words, not from words in a condition. A row of an inspection\n  checklist (\"Specify ...\", \"Whether ...\", no modal verb) is \"mandatory\": inspectors grade sites against it.\n- plant_types: from OSD (oral solid dosage), LIQ (oral liquids), SEMI (semisolids), INJ (sterile injectables), API\n  (active substances); the plant scope given with the page unless the page itself narrows it.\n- numbers: every number, limit, frequency or period in the quote, as printed in the image (10⁷ written \"10^7\").\n- condition: the condition or trigger of the obligation in a few words, \"\" if none. A condition stated in a\n  lead-in belongs to every table row or list item under it: \"if their use is unavoidable ... levels should be\n  restricted as shown in Table 1, unless otherwise justified\" applies to each row of Table 1, so each row's\n  statement and condition carry it.\n- topic: the sub-topic id from TOPICS the obligation belongs to (an audit area).\n- runs_over: true when the quote continues on the next page.\n- text_layer_differs: \"\" normally. If the image shows something the text layer gets wrong inside your quote\n  (a superscript \"10^7\" printed as \"107\", a symbol lost, cells of two rows merged, words in another order), quote\n  what the image shows and describe the difference here in one sentence.\n\nObligation sentences on the page that are not drafted (a heading, a definition, an example, text that only\ndescribes, a sentence that started on the previous page) go in not_applicable: the first 8 or more words of the\nsentence copied from the text layer, and the reason in a few words. Running headers, footers and page numbers are\nignored.\n\nWrite the answers file named in your task: {\"answers\": [one object per page with \"page\" set to the page id]}.\n",
+ "topics": [
+  "QS.PQS",
+  "QS.MGMT",
+  "QS.QRM",
+  "QS.PQR",
+  "QS.CHANGE",
+  "QS.DEV",
+  "QS.CAPA",
+  "PER.ORG",
+  "PER.KEY",
+  "PER.TRAIN",
+  "PER.HYG",
+  "PER.GOWN",
+  "PREM.DESIGN",
+  "PREM.PROD",
+  "PREM.STORE",
+  "PREM.QC",
+  "PREM.ANC",
+  "EQ.DESIGN",
+  "EQ.MAINT",
+  "EQ.CLEAN",
+  "EQ.CAL",
+  "DOC.SYS",
+  "DOC.SPEC",
+  "DOC.MFR",
+  "DOC.BMR",
+  "DOC.SOP",
+  "DOC.RET",
+  "MAT.SUPP",
+  "MAT.RECV",
+  "MAT.SAMP",
+  "MAT.STATUS",
+  "MAT.PACK",
+  "MAT.REJ",
+  "PROD.GEN",
+  "PROD.XCONT",
+  "PROD.IPC",
+  "PROD.YIELD",
+  "PROD.PACK",
+  "PROD.REWORK",
+  "QC.GEN",
+  "QC.SAMP",
+  "QC.TEST",
+  "QC.OOS",
+  "QC.STAB",
+  "QC.REF",
+  "QC.MICRO",
+  "VAL.PLAN",
+  "VAL.QUAL",
+  "VAL.PROC",
+  "VAL.CLEAN",
+  "VAL.METH",
+  "CSV.VAL",
+  "CSV.ACCESS",
+  "CSV.AUDIT",
+  "CSV.ESIG",
+  "CSV.DI",
+  "UTIL.WATER",
+  "UTIL.HVAC",
+  "UTIL.GAS",
+  "CCS.STRAT",
+  "CCS.EM",
+  "CCS.CLEAN",
+  "CCS.PEST",
+  "STER.GRADE",
+  "STER.ASEPT",
+  "STER.APS",
+  "STER.STERIL",
+  "STER.FILT",
+  "STER.CCI",
+  "STER.LYO",
+  "API.START",
+  "API.PROC",
+  "API.IMP",
+  "API.SOLV",
+  "OUT.CONTRACT",
+  "OUT.AGREE",
+  "CMP.COMPL",
+  "CMP.RECALL",
+  "CMP.REPORT",
+  "SI.PROG",
+  "SI.TEAM",
+  "SI.REPORT",
+  "SI.FOLLOW",
+  "DIST.STORE",
+  "DIST.TRANS",
+  "DIST.RETURN",
+  "REL.QP",
+  "REL.REVIEW"
+ ],
+ "schema": {
+  "type": "object",
+  "required": [
+   "page",
+   "items",
+   "not_applicable"
+  ],
+  "properties": {
+   "page": {
+    "type": "string"
+   },
+   "items": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "statement",
+      "quote",
+      "clause_number",
+      "strength",
+      "plant_types",
+      "numbers",
+      "condition",
+      "topic",
+      "runs_over",
+      "text_layer_differs"
+     ],
+     "properties": {
+      "statement": {
+       "type": "string"
+      },
+      "quote": {
+       "type": "string"
+      },
+      "clause_number": {
+       "type": "string"
+      },
+      "strength": {
+       "enum": [
+        "mandatory",
+        "recommended",
+        "optional"
+       ]
+      },
+      "plant_types": {
+       "type": "array",
+       "items": {
+        "enum": [
+         "OSD",
+         "LIQ",
+         "SEMI",
+         "INJ",
+         "API"
+        ]
+       }
+      },
+      "numbers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "condition": {
+       "type": "string"
+      },
+      "topic": {
+       "type": "string"
+      },
+      "runs_over": {
+       "type": "boolean"
+      },
+      "text_layer_differs": {
+       "type": "string"
+      }
+     }
+    }
+   },
+   "not_applicable": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "text",
+      "reason"
+     ],
+     "properties": {
+      "text": {
+       "type": "string"
+      },
+      "reason": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  }
+ },
+ "pages": [
+  {
+   "id": "india-schedule-m-2023-GSR922E.pdf:155",
+   "source": "india-schedule-m-2023-GSR922E.pdf",
+   "page": 155,
+   "image": "work/vision-pages/india-schedule-m-2023-GSR922E-p155.png",
+   "image_sha256": "b2fd7d8171da34868426ffec0bd8ed83c073aa270039d2f65ac4d0fc67abf000",
+   "dpi": 150,
+   "pdf_sha256": "918704308629aefe5c800709d80b72c45de5b63cd44283a6268c3e4d8a9fd271",
+   "text_layer": "154                              THE GAZETTE OF INDIA : EXTRAORDINARY                                  [PART II—SEC. 3(i)]\n\n             samples of the intermediate or API or finished product produced by the modiﬁed process can be placed on an\n             accelerated stability programme or can be added to the stability monitoring programme or both.\n9.    Production under loan licence or contract and contract analysis and other activities:\n      9.1.     Principle- Production under loan licence or contract and contract analysis and any other activity covered\n               by good manufacturing practices must be correctly defined, agreed and controlled in order to avoid\n               misunderstandings that could result in a product, or work or analysis, of unsatisfactory quality.\n      9.2.     General-\n               9.2.1. All arrangements for production under loan licence or contract and analysis, including technology\n                      transfer and any proposed changes in technical or other arrangements, shall be in accordance with\n                      the licence for the product concerned.\n               9.2.2. The contract shall permit the loan licensee or contract giver to audit the facilities and activities of\n                      the manufacturing facility provider or contract acceptor or mutually agreed sub-contractors.\n               9.2.3. In the case of contract analysis, the final approval for release must be given by the authorised person\n                      in accordance with good manufacturing practices and the licence as specified in the contract.\n      9.3.     Loan licensee or contract giver-\n                9.3.1. The product quality system of the loan licensee or contract giver shall include the control and\n                       review of any outsourced activities. The contract giver is responsible for assessing the legality,\n                       suitability and competence of the manufacturing facility provider or contract acceptor to\n                       successfully carry out the work or tests required, for approval for contract activities, and for\n                       ensuring by means of the contract that the principles of good manufacturing practices\n                       incorporating quality risk management principles are followed.\n                9.3.2. The loan licensee or contract giver shall provide the manufacturing facility provider or contract\n                       acceptor with all the information necessary to carry out the contracted operations correctly in\n                       accordance with the licence and any other legal requirements. The loan licensee or contract giver\n                       shall ensure that the manufacturing facility provider or contract acceptor is fully aware of any\n                       hazards associated with the product, work or tests that might pose a risk to premises, equipment,\n                       personnel, other materials or other products.\n                9.3.3. The loan licensee or contract giver shall review and assess the records and results related to the\n                       outsourced activities. The contract giver shall ensure that all the products and materials delivered\n                       by the manufacturing facility provider or contract acceptor have been processed in accordance\n                       with good manufacturing practices and the licence; comply with their specifications and that the\n                       product has been released by the authorised person in accordance with good manufacturing\n                       practices and the licence.\n                9.3.4. The loan licensee or contract giver shall monitor and review the performance of the manufacturing\n                       facility provider or contract acceptor including the implementation of any needed improvements\n                       and their effectiveness.\n                9.3.5. The loan licensee or contract giver is responsible for ensuring that the manufacturing facility\n                       provider or contract acceptor understands that his or her activities may be subject to inspection by\n                       the competent authorities.\n      9.4.     Manufacturing facility provider or contract acceptor-\n               9.4.1. The manufacturing facility provider or contract acceptor must have adequate premises, equipment,\n                      knowledge, experience and competent personnel to satisfactorily carry out the work ordered by the\n                      loan licensee or contract giver. Contract manufacture shall be undertaken only by a manufacturer\n                      who holds a valid manufacturing licence.\n               9.4.2. The manufacturing facility provider or contract acceptor shall not pass to a third party any of the\n                      work entrusted to him or her under the contract without the loan licensee or contract giver’s prior\n                      evaluation and approval of the arrangements. Arrangements made between the manufacturing\n                      facility provider or contract acceptor and any third party shall ensure that information and\n                      knowledge, including that from assessments of the suitability of the third party, are made available\n                      in the same way as between the original loan licensee or contract giver and contract acceptor.\n             9.4.3.   The manufacturing facility provider or contract acceptor shall refrain from any activity (including\n                      unauthorised changes outside the terms of the contract) that may adversely affect the quality of the\n                      product manufactured oranalysed or both for the loan licensee or contract giver.\n",
+   "next_page_text": "[भाग II—खण्‍ड 3(i)]                           भारत‍का‍राजपत्र‍:‍असाधारण                                             155\n\n            9.5.    Contract-\n        9.5.1.      There must be a written contract between the loan licensee or contract giver and the manufacturing\n                    facility provider or contract acceptor which clearly establishes the responsibilities of each party,\n                    covering the outsourced activities, the products or operations to which they are related,\n                    communication processes relating to the outsourced activities and any technical arrangements made\n                    in connection with it.\n        9.5.2.      The contract must clearly state the way in which the authorised person, in releasing each batch of\n                    product for sale or issuing the certificate of analysis, exercises his or her full responsibility and\n                    ensures that each batch has been manufactured in, and checked for, compliance with the\n                    requirements of the licence.\n        9.5.3.      Technical aspects of the contract shall be drawn up by competent persons with suitable knowledge\n                    of pharmaceutical technology, analysis and good manufacturing practices.\n        9.5.4.      All arrangements for production and analysis must be in accordance with the licence and agreed by\n                    both parties.\n        9.5.5.      The contract shall clearly describe who is responsible for contracted activities e.g., knowledge\n                    management, technology transfer, supply chain, sub-contracting, testing and releasing materials and\n                    undertaking production and quality control, including in-process controls, and who has\n                    responsibility for sampling and analysis. In the case of contract analysis, the contract shall state\n                    whether or not the manufacturing facility provider or contract acceptor shall take samples at the\n                    premises of the manufacturer.\n        9.5.6.      Manufacturing, analytical and distribution records, and reference samples, shall be kept by, or be\n                    available to, the loan licensee or contract giver. Any records relevant to assessing the quality of a\n                    product in the event of complaints or a suspected defect, or to investigating a suspected product or\n                    laboratory fraud, must be accessible and specified in the procedures of the loan licensee or contract\n                    giver.\n        9.5.7.      The contract shall describe the handling of starting materials, intermediate, bulk and finished\n                    products, if they are rejected. It shall also describe the procedure to be followed if the contract\n                    analysis shows that the tested product must be rejected.\n10. Self-inspection, quality audits and suppliers’ audits and approval:\n    10.1.    The purpose of self-inspection is to ",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "india-schedule-m-2023-GSR922E.pdf:156",
+   "source": "india-schedule-m-2023-GSR922E.pdf",
+   "page": 156,
+   "image": "work/vision-pages/india-schedule-m-2023-GSR922E-p156.png",
+   "image_sha256": "1e865183a8a39babf7635e027a6addbd55d1ed6307576a83c1d5cfa85dc3ce8c",
+   "dpi": 150,
+   "pdf_sha256": "918704308629aefe5c800709d80b72c45de5b63cd44283a6268c3e4d8a9fd271",
+   "text_layer": "[भाग II—खण्‍ड 3(i)]                           भारत‍का‍राजपत्र‍:‍असाधारण                                             155\n\n            9.5.    Contract-\n        9.5.1.      There must be a written contract between the loan licensee or contract giver and the manufacturing\n                    facility provider or contract acceptor which clearly establishes the responsibilities of each party,\n                    covering the outsourced activities, the products or operations to which they are related,\n                    communication processes relating to the outsourced activities and any technical arrangements made\n                    in connection with it.\n        9.5.2.      The contract must clearly state the way in which the authorised person, in releasing each batch of\n                    product for sale or issuing the certificate of analysis, exercises his or her full responsibility and\n                    ensures that each batch has been manufactured in, and checked for, compliance with the\n                    requirements of the licence.\n        9.5.3.      Technical aspects of the contract shall be drawn up by competent persons with suitable knowledge\n                    of pharmaceutical technology, analysis and good manufacturing practices.\n        9.5.4.      All arrangements for production and analysis must be in accordance with the licence and agreed by\n                    both parties.\n        9.5.5.      The contract shall clearly describe who is responsible for contracted activities e.g., knowledge\n                    management, technology transfer, supply chain, sub-contracting, testing and releasing materials and\n                    undertaking production and quality control, including in-process controls, and who has\n                    responsibility for sampling and analysis. In the case of contract analysis, the contract shall state\n                    whether or not the manufacturing facility provider or contract acceptor shall take samples at the\n                    premises of the manufacturer.\n        9.5.6.      Manufacturing, analytical and distribution records, and reference samples, shall be kept by, or be\n                    available to, the loan licensee or contract giver. Any records relevant to assessing the quality of a\n                    product in the event of complaints or a suspected defect, or to investigating a suspected product or\n                    laboratory fraud, must be accessible and specified in the procedures of the loan licensee or contract\n                    giver.\n        9.5.7.      The contract shall describe the handling of starting materials, intermediate, bulk and finished\n                    products, if they are rejected. It shall also describe the procedure to be followed if the contract\n                    analysis shows that the tested product must be rejected.\n10. Self-inspection, quality audits and suppliers’ audits and approval:\n    10.1.    The purpose of self-inspection is to evaluate the manufacturer’s compliance with good manufacturing\n             practices in all aspects of production and QC. The self-inspection programme shall be designed to detect\n             any shortcomings in the implementation of good manufacturing practices and to recommend the\n             necessary corrective actions. Self-inspections shall be performed routinely, and may be, in addition,\n             performed on special occasions e.g., in the case of product recall or repeated rejections, or when an\n             inspection by the regulatory authorities is announced. The team responsible for self-inspection shall\n             consist of personnel who can evaluate the implementation of good manufacturing practices objectively.\n             All recommendations for corrective action shall be implemented. The procedure for self-inspection shall\n             be documented and there shall be an effective follow-up programme.\n    10.2.    Items for self-inspection-Written instructions for self-inspection shall be established to provide a\n             minimum and uniform standard of requirements. These may include questionnaires on good\n             manufacturing practices requirements covering at least the following items, namely:-\n              (a)   personnel;\n              (b)   premises including personnel facilities;\n              (c)   maintenance of buildings and equipment;\n              (d)   storage of starting materials and finished products;\n              (e)   equipment;\n              (f)   production and in-process controls;\n              (g)   quality control (QC);\n              (h)   documentation;\n              (i)   sanitation and hygiene;\n              (j)   validation and revalidation programmes;\n",
+   "next_page_text": "156                            THE GAZETTE OF INDIA : EXTRAORDINARY                                   [PART II—SEC. 3(i)]\n\n              (k)   calibration of instruments or measurement systems;\n              (l)   recall procedures;\n              (m) complaints management;\n              (n)   labels control; and\n              (o)   results of previous self-inspections and any corrective steps taken.\n      10.3.   Self-inspection team- Management shall appoint a self-inspection team consisting of experts in their\n              respective fields who are familiar with GMP. The members of the team may be appointed from inside or\n              outside the company.\n      10.4.   Frequency of self-inspection- The frequency with which self-inspections are conducted may depend on\n              company requirements but shall be at least once in a year. The frequency shall be stated in the procedure.\n      10.5.   Self-inspection report- A report shall be made at the completion of a self-inspection. The report shall\n              include the following, namely:-\n              (a) self-inspection results;\n              (b) evaluation and conclusions; and\n              (c) recommended corrective actions.\n      10.6.   Follow-up action- There shall be an effective follow-up programme. The company management shall\n              evaluate both the self-inspection report and the corrective actions as necessary.\n      10.7.   Quality audit- It may be useful to supplement self-inspections with a quality audit. A quality audit\n              consists of an examination and assessment of all or part of a quality system with the specific purpose of\n              improving it. A quality audit is usually conducted by outside or independent specialists or a team\n              designated by the management for this purpose. Such audits may also be extended to suppliers and\n              contractors.\n      10.8.   Suppliers’ audits and approval-\n              10.8.1.    The person responsible for quality control shall have responsibility, together with other\n                         relevant departments, for approving suppliers who can reliably supply starting and packaging\n                         materials that meet established specifications.\n              10.8.2.    Before suppliers are approved and included in the approved suppliers’ list or specifications,\n                         they shall be evaluated. The evaluation shall take into account a supplier’s history and the\n                         nature of the materials to be supplied. If an audit is required, it shall determine the supplier’s\n                         ability to conform with good manufacturing practices standards.\n11. Personnel:\n      11.1. Principle-The establishment and maintenance of a satisfactory system of Quality Assurance (QA) and the\n            correct manufacture and control of pharmaceutical products and active ingredients rely upon people. For\n            this reason there must be sufficient q",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "india-schedule-m-2023-GSR922E.pdf:157",
+   "source": "india-schedule-m-2023-GSR922E.pdf",
+   "page": 157,
+   "image": "work/vision-pages/india-schedule-m-2023-GSR922E-p157.png",
+   "image_sha256": "bd87a5fc2a4e92674d179536e7130c17cac7620d3dd5d67409957ab14e6854fd",
+   "dpi": 150,
+   "pdf_sha256": "918704308629aefe5c800709d80b72c45de5b63cd44283a6268c3e4d8a9fd271",
+   "text_layer": "156                            THE GAZETTE OF INDIA : EXTRAORDINARY                                   [PART II—SEC. 3(i)]\n\n              (k)   calibration of instruments or measurement systems;\n              (l)   recall procedures;\n              (m) complaints management;\n              (n)   labels control; and\n              (o)   results of previous self-inspections and any corrective steps taken.\n      10.3.   Self-inspection team- Management shall appoint a self-inspection team consisting of experts in their\n              respective fields who are familiar with GMP. The members of the team may be appointed from inside or\n              outside the company.\n      10.4.   Frequency of self-inspection- The frequency with which self-inspections are conducted may depend on\n              company requirements but shall be at least once in a year. The frequency shall be stated in the procedure.\n      10.5.   Self-inspection report- A report shall be made at the completion of a self-inspection. The report shall\n              include the following, namely:-\n              (a) self-inspection results;\n              (b) evaluation and conclusions; and\n              (c) recommended corrective actions.\n      10.6.   Follow-up action- There shall be an effective follow-up programme. The company management shall\n              evaluate both the self-inspection report and the corrective actions as necessary.\n      10.7.   Quality audit- It may be useful to supplement self-inspections with a quality audit. A quality audit\n              consists of an examination and assessment of all or part of a quality system with the specific purpose of\n              improving it. A quality audit is usually conducted by outside or independent specialists or a team\n              designated by the management for this purpose. Such audits may also be extended to suppliers and\n              contractors.\n      10.8.   Suppliers’ audits and approval-\n              10.8.1.    The person responsible for quality control shall have responsibility, together with other\n                         relevant departments, for approving suppliers who can reliably supply starting and packaging\n                         materials that meet established specifications.\n              10.8.2.    Before suppliers are approved and included in the approved suppliers’ list or specifications,\n                         they shall be evaluated. The evaluation shall take into account a supplier’s history and the\n                         nature of the materials to be supplied. If an audit is required, it shall determine the supplier’s\n                         ability to conform with good manufacturing practices standards.\n11. Personnel:\n      11.1. Principle-The establishment and maintenance of a satisfactory system of Quality Assurance (QA) and the\n            correct manufacture and control of pharmaceutical products and active ingredients rely upon people. For\n            this reason there must be sufficient qualified personnel to carry out all the tasks for which the\n            manufacturer is responsible. Individual responsibilities shall be clearly defined and understood by the\n            persons concerned and recorded as written descriptions.\n      11.2. General-\n              11.2.1.   The manufacturer shall have an adequate number of personnel with the necessary qualifications\n                        and practical experience. The responsibilities placed on any one individual shall not be so\n                        extensive as to present any risk to quality.\n              11.2.2.   Responsible staff shall have its specific duties recorded in written descriptions and adequate\n                        authority to carry out its responsibilities. Its duties may be delegated to designated deputies with\n                        a satisfactory level of qualifications. There shall be no gaps or unexplained overlaps in the\n                        responsibilities of personnel concerned with the application of good manufacturing practices.\n                        The manufacturer shall have an organisation chart.\n              11.2.3.   All personnel shall be aware of the principles of good manufacturing practices that affect them\n                        and receive initial and continuing training, including hygiene instruction, relevant to their needs.\n                        All personnel shall be motivated to support the establishment and maintenance of high quality\n                        standards.\n",
+   "next_page_text": "[भाग II—खण्‍ड 3(i)]                           भारत‍का‍राजपत्र‍:‍असाधारण                                             157\n\n           11.2.4.    Steps shall be taken to prevent unauthorised people from entering production, storage and QC\n                      areas. Personnel who do not work in these areas shall not use them as a passageway.\n     11.3. Key personnel-\n           11.3.1.    Key personnel include the heads of production, the heads of quality units and the authorised\n                      person. The quality units typically comprise the QA and QC functions. In some cases, these\n                      could be combined in one department. The authorised person may also be responsible for one or\n                      more of these quality units. Normally, key posts shall be occupied by full-time personnel. The\n                      heads of production and quality units shall be independent of each other. In large organisations,\n                      it may be necessary to delegate some of the functions; however, the responsibility cannot be\n                      delegated.\n           11.3.2.    Key personnel responsible for supervising the production and quality units for pharmaceutical\n                      products shall possess the qualifications and experience as specified under the rules. Their\n                      education shall include the study of an appropriate combination of the following, namely:-\n                      (a) chemistry (analytical or organic) or biochemistry;\n                      (b) chemical engineering;\n                      (c) microbiology;\n                      (d) pharmaceutical sciences and technology;\n                      (e) pharmacology and toxicology;\n                      (f)   physiology; or\n                      (g) other related sciences.\n                      They shall also have adequate practical experience in the manufacture and QA of\n                      pharmaceutical products. In order to gain such experience, a preparatory period may be\n                      required, during which they shall perform their duties under professional guidance. The\n                      scientific education and practical experience of experts shall be such, so as to enable them to\n                      exercise independent professional judgement, based on the application of scientific principles\n                      and understanding to the practical problems encountered in the manufacture and QC of\n                      pharmaceutical products.\n           11.3.3.    The heads of the production and the quality units shall have shared, or jointly exercised,\n                      responsibilities relating to quality. They may include the following, namely:-\n                      (a) authorisation of written procedures and other documents, including amendments;\n                      (b) monitoring and control of the manufacturing environment;\n                      (c) plant hygiene;\n                      (d) p",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "india-schedule-m-2023-GSR922E.pdf:163",
+   "source": "india-schedule-m-2023-GSR922E.pdf",
+   "page": 163,
+   "image": "work/vision-pages/india-schedule-m-2023-GSR922E-p163.png",
+   "image_sha256": "56ebc67ecde81c91a09142117f343bb5961746af0c564208cf931c3d8d4018bd",
+   "dpi": 150,
+   "pdf_sha256": "918704308629aefe5c800709d80b72c45de5b63cd44283a6268c3e4d8a9fd271",
+   "text_layer": "162                            THE GAZETTE OF INDIA : EXTRAORDINARY                                 [PART II—SEC. 3(i)]\n\n      12.7. Quality Control (QC) areas-\n               12.7.1.   QC laboratories shall be separated from production areas. Areas where biological,\n                         microbiological or radioisotope test methods are employed shall be separated from each other.\n               12.7.2.   QC laboratories shall be designed to suit the operations to be carried out in them. Sufficient\n                         space shall be given to avoid mix ups and cross-contamination. There shall be adequate\n                         suitable storage space for samples, reference standards (if necessary, with cooling), solvents,\n                         reagents and records.\n               12.7.3.   The design of the laboratories shall take into account the suitability of construction materials,\n                         prevention of fumes, and ventilation. There shall be separate air supply to laboratories and\n                         production areas. Separate air-handling units and other provisions are needed for biological,\n                         microbiological and radioisotope laboratories.\n               12.7.4.   A separate room may be needed for instruments to protect them against electrical interference,\n                         vibration, contact with excessive moisture and other external factors or where it is necessary to\n                         isolate the instruments.\n13. Equipment:\n      13.1.     Equipment must be located, designed, constructed, adapted and maintained to suit the operations to be\n                carried out. The layout and design of equipment must aim to minimise the risk of errors and permit\n                effective cleaning and maintenance in order to avoid cross-contamination, build-up of dust or dirt, and,\n                in general, any adverse effect on the quality of products.\n      13.2.     Equipment shall be installed in such a way so as to minimise any risk of error or of contamination.\n      13.3.     Fixed pipework shall be clearly labelled to indicate the contents and, where applicable, the direction of\n                flow.\n      13.4.     All service pipework and devices shall be adequately marked and special attention paid to the provision\n                of non-interchangeable connections or adaptors for dangerous gases and liquids.\n      13.5.     Balances and other measuring equipment of an appropriate range and precision shall be available for\n                production and control operations and shall be calibrated according to a fixed schedule.\n      13.6.     Production equipment shall be thoroughly cleaned according to a fixed schedule.\n      13.7.     Laboratory equipment and instruments shall be suited to the testing procedures undertaken.\n      13.8.     Washing, cleaning and drying equipment shall be chosen and used so as not to be a source of\n                contamination.\n      13.9.     Production equipment shall not present any hazard to the products. The parts of the production\n                equipment that come into contact with the product must not be reactive, additive or absorptive to an\n                extent that would affect the quality of the product.\n      13.10.    Defective equipment shall be removed from production and QC areas. If this is not possible, it shall be\n                clearly labelled as defective to prevent use.\n      13.11.    Closed equipment shall be used whenever appropriate. Where open equipment is used or equipment is\n                opened, precautions shall be taken to minimize the contamination.\n      13.12.    Non-dedicated equipment shall be cleaned according to validated cleaning procedures between being\n                used for production of different pharmaceutical products to prevent cross-contamination.\n      13.13.    Current drawings of critical equipment and support systems shall be maintained.\n14. Materials:\n      14.1.     The main objective of a pharmaceutical plant is to produce finished products for patients’ use from a\n                combination of materials (starting and packaging).\n      14.2.     Materials include starting materials, packaging materials, gases, solvents, process aids, reagents and\n                labelling materials.\n      14.3.     No materials used for operations such as cleaning, lubrication of equipment and pest control shall come\n                into direct contact with the product. Where possible, such materials shall be of a suitable grade (e.g.,\n                food grade) to minimise health risks.\n      14.4.     All incoming materials and finished products shall be quarantined immediately after receipt or\n                processing, until they are released for use or distribution.\n",
+   "next_page_text": "[भाग II—खण्‍ड 3(i)]                          भारत‍का‍राजपत्र‍:‍असाधारण                                                 163\n\n     14.5.   All materials and products shall be stored under the appropriate conditions established by the\n             manufacturer, and in an orderly fashion, to permit batch segregation and stock rotation by a first-expire,\n             first-out rule.\n     14.6.   Water used in the manufacture of pharmaceutical products shall be suitable for its intended use. There\n             shall be validated system for treatment of water drawn from own or any other source to render it potable\n             in accordance with the standards specified by the Bureau of Indian Standards or Local Municipality, as\n             the case may be, so as to produce purified water conforming to Pharmacopoeial specification. Purified\n             Water so produced shall only be used for all the operations except washing and cleaning operations\n             where potable water may be used. Water shall be stored in tanks, which do not adversely affect quality\n             of water and ensure freedom from microbiological growth. The tank shall be cleaned periodically and\n             records maintained by the licensee in this behalf. Good manufacturing practices regarding the design,\n             installation and operation of pharmaceutical water systems including guidance about which quality of\n             water to use for specific applications, such as the manufacture of active pharmaceutical ingredients and\n             dosage forms, shall be ensured.\n     14.7.   The purchase of starting materials is an important operation that shall involve staff who has a particular\n             and thorough knowledge of the products and suppliers.\n     14.8.   Starting materials shall be purchased only from the approved suppliers and, where possible, directly\n             from the producer. It is also recommended that the specifications established by the manufacturer for the\n             starting materials be discussed with the suppliers. It is beneficial for all critical aspects of the production\n             and control of the starting material in question, including handling, labelling and packaging\n             requirements as well as complaints and rejection procedures, to be contractually agreed between the\n             manufacturer and the supplier.\n     14.9.   For each consignment, at a minimum, the containers shall be checked at least for integrity of package\n             and seal and for correspondence between the order, the delivery note, and the supplier’s labels.\n     14.10. All incoming materials shall be checked to ensure that the consignment corresponds to the order.\n            Containers shall be cleaned where necessary and labelled, if required, with the prescribed information.\n            Where additional labels are attached to containers, the original information shall not be lost.\n     14.11. Damage to containers and any other problem",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "india-schedule-m-2023-GSR922E.pdf:271",
+   "source": "india-schedule-m-2023-GSR922E.pdf",
+   "page": 271,
+   "image": "work/vision-pages/india-schedule-m-2023-GSR922E-p271.png",
+   "image_sha256": "cfffd06cf900f28585fd0b6b5ea9333aaed6a3265d480f21f0d7706b0e266860",
+   "dpi": 150,
+   "pdf_sha256": "918704308629aefe5c800709d80b72c45de5b63cd44283a6268c3e4d8a9fd271",
+   "text_layer": "270                           THE GAZETTE OF INDIA : EXTRAORDINARY                                   [PART II—SEC. 3(i)]\n\n             4.   Filling, capping and sealing area-\n                  (1) Automatic ampoule or vial or bottle filling, sealing and capping machine under laminar air flow\n                      work station;\n                  (2) Gas lines (Nitrogen, Oxygen and Carbon di-oxide), wherever required; and\n                  (3) Stainless steel benches or stools.\n             5.   Sterilisation area-\n                  (1)    Steam steriliser (preferably with computer control for sterilisation cycle along with trolley sets\n                         for loading or unloading containers before and after sterilisation);\n                  (2)    Hot Air steriliser (preferably double ended); and\n                  (3)    Pressure leak test apparatus.\n             6.   Quarantine area-\n                  (1) Storage cabinets; and\n                  (2) Raised platforms or steel racks.\n             7.   Visual inspection area-\n                  (1) Visual inspection units (preferably conveyor belt type and composite white and black assembly\n                      supported with illumination); and\n                  (2) Stainless steel benches or stools.\n             8.   Packaging area-\n                  (1) Batch coding machine (preferably automatic);\n                  (2) Labeling unit (preferably conveyor belt type); and\n                  (3) benches or stools.\n          Area: (1) A minimum area of one hundred and fifty square meters for the basic installation and an ancillary\n          area of one hundred square meters for Small Volume Injectable are recommended. For Large Volume\n          Parenterals, an area of one hundred and fifty square meters each for the basic installation and for ancillary\n          area is recommended. These areas shall be partitioned into suitable enclosures with airlock arrangements.\n          (2) Areas for formulations meant for external use and internal use shall be separately provided to avoid mix-\n          up.\n          (3) Packaging materials for large volume Parenteral shall have a minimum area of one hundred square\n          meters.\n  11.2.     Parenteral preparations in plastic containers by Form-Fill-Seal or Blow, Fill-Seal technology- The\n            whole operation of manufacture of large volume parenteral preparations in plastic containers including\n            plastic pouches by automatic (all operations in one station) Form-Fill-Seal machine or by semi-automatic\n            blow moulding, filling-cum-sealing machine may be divided into following separate areas or rooms,\n            namely-\n           (1) Water management area;\n           (2) Solution preparation area;\n           (3) Container moulding-cum-filling and sealing area;\n           (4) Sterilisation area;\n           (5) Quarantine area;\n           (6) Visual inspection area; and\n           (7) Packaging area.\n          The following equipment is recommended for different above mentioned areas namely-\n                 1. Water management area-\n                        (1) RO or Electro-deionisation (EDI) water treatment unit;\n                        (2) Distillation unit (multi column with heat exchangers);\n                        (3) Thermostatically controlled water storage tank;\n                        (4) Transfer pumps; and\n",
+   "next_page_text": "[भाग II—खण्‍ड 3(i)]                         भारत‍का‍राजपत्र‍:‍असाधारण                                                           271\n\n                      (5) Service lines for carrying water into user areas through continuously circulating pipe work\n                          loop. The Material of Construction (MOC) for the storage tank and circulating pipe line\n                          shall be of SS-316 L Grade.\n                 2.   Solution preparation area-\n                      (1) Solution preparation and storage tanks;\n                      (2) Transfer pumps; and\n                      (3) Cartridge and membrane filters.\n\n\n                 3.   Container moulding-cum-filling and sealing area-\n                      (1) Sterile Form-Fill-Seal machine (all operations in one station with built-in laminar air flow\n                          work station having integrated container output conveyor belt through pass box); and\n                      (2) Arrangement for feeding plastic granules through feeding-cum-filling tank into the\n                          machine.\n                 4.   Sterilisation area- Super heated steam steriliser (with computer control for sterilisation cycle\n                      along with trolley sets for loading or unloading containers for sterilisation).\n                 5.   Quarantine area- Adequate number of platforms or racks with storage system.\n                 6.   Visual inspection area- Visual inspection unit (with conveyor belt and composite white and\n                      black assembly supported with illumination).\n                 7.   Packaging area-\n                          (1) Pressure leak test apparatus (pressure belt or rotating disc type);\n                          (2) Batch coding machine (preferably automatic); and\n                          (3) Labeling unit (preferably conveyor belt type).\n            Area: (1) A minimum area of two hundred and fifty square meters for the basic installation and an\n            ancillary area of one hundred and fifty square meters for large volume parenteral preparations in plastic\n            containers by Form-Fill-Seal technology is recommended. These areas shall be partitioned into suitable\n            enclosures with air-lock arrangements.\n            (2) Areas for formulations meant for external use and internal use shall be separately provided to avoid\n            mix up.\n            (3) Packaging materials for large volume Parenteral shall have a minimum area of one-hundred square\n            meters.\n6. These rules shall come into force for implementation as under:—\nCategory of manufacturers                                   Time line for implementation\n[Based on turnover (INR)]\nLarge manufacturers                                         Six months from the date of publication of these rules.\n(Turnover>250 crores)\nSmall and Medium manufacturers                              Twelve months from the date of publication of these\n                             ",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  }
+ ]
+}

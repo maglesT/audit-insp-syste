@@ -1,0 +1,282 @@
+{
+ "instructions": "You read pages of a pharmaceutical GMP text and list the obligations printed on them. For each page you get the\nrendered page IMAGE (open it with your Read tool: the image is the truth) and the page's TEXT LAYER (extracted\ntext, which can be wrong: superscripts flattened, table cells merged, landscape pages, lost symbols). Your output\nis checked by software against two text readings of the page and by independent reviewers, so precision matters\nmore than wording.\n\nList each separate obligation printed on the page as its own item, so that together your items cover every\nobligation on the page (body text, list items, table rows and footnotes that require something). One obligation\nis one thing a site must, should or may do, with all its conditions, numbers and qualifiers; do not split one\nobligation across items. A sentence that starts on this page and ends on the next is drafted here (runs_over true;\nthe next page's text is given). A sentence that started on the previous page is not drafted again.\nFor each item:\n- statement: the obligation in your own plain English words, as one checklist item a site could be audited\n  against. Do not copy more than a few words in a row. Keep every condition (\"where\", \"if\", \"unless\", \"before\")\n  and every number. Do not add anything the page does not say.\n- quote: the exact span of the page that states the whole obligation, copied as printed, character for\n  character from the TEXT LAYER where the text layer is right (it is matched against the page by software; do not\n  fix typos or change punctuation). For a table row, quote the column header cells joined with \" | \", then\n  \" || \", then the row's cells joined with \" | \", starting with the row's first cell (its label), e.g.\n  \"Grade | Air sample CFU/m3 || B | 10\". Write a footnote mark printed after a word as \"^\" and the mark\n  (\"Cumene^1\", \"specified^a\"); a power of ten as \"10^7\" or \"10^-6\".\n- clause_number: the number exactly as printed for the clause or row (\"9.3\", \"4.22 iii\", \"Table 2\", \"4.19\"),\n  \"\" if none. Do not compose references that are not printed (\"Table 2 Note 1\", \"Table 1 Grade B\").\n- strength: \"mandatory\" for shall / must / is required / may not; \"recommended\" for should; \"optional\" for may.\n  Take it from the main verb of the quoted words, not from words in a condition. A row of an inspection\n  checklist (\"Specify ...\", \"Whether ...\", no modal verb) is \"mandatory\": inspectors grade sites against it.\n- plant_types: from OSD (oral solid dosage), LIQ (oral liquids), SEMI (semisolids), INJ (sterile injectables), API\n  (active substances); the plant scope given with the page unless the page itself narrows it.\n- numbers: every number, limit, frequency or period in the quote, as printed in the image (10⁷ written \"10^7\").\n- condition: the condition or trigger of the obligation in a few words, \"\" if none. A condition stated in a\n  lead-in belongs to every table row or list item under it: \"if their use is unavoidable ... levels should be\n  restricted as shown in Table 1, unless otherwise justified\" applies to each row of Table 1, so each row's\n  statement and condition carry it.\n- topic: the sub-topic id from TOPICS the obligation belongs to (an audit area).\n- runs_over: true when the quote continues on the next page.\n- text_layer_differs: \"\" normally. If the image shows something the text layer gets wrong inside your quote\n  (a superscript \"10^7\" printed as \"107\", a symbol lost, cells of two rows merged, words in another order), quote\n  what the image shows and describe the difference here in one sentence.\n\nObligation sentences on the page that are not drafted (a heading, a definition, an example, text that only\ndescribes, a sentence that started on the previous page) go in not_applicable: the first 8 or more words of the\nsentence copied from the text layer, and the reason in a few words. Running headers, footers and page numbers are\nignored.\n\nWrite the answers file named in your task: {\"answers\": [one object per page with \"page\" set to the page id]}.\n",
+ "topics": [
+  "QS.PQS",
+  "QS.MGMT",
+  "QS.QRM",
+  "QS.PQR",
+  "QS.CHANGE",
+  "QS.DEV",
+  "QS.CAPA",
+  "PER.ORG",
+  "PER.KEY",
+  "PER.TRAIN",
+  "PER.HYG",
+  "PER.GOWN",
+  "PREM.DESIGN",
+  "PREM.PROD",
+  "PREM.STORE",
+  "PREM.QC",
+  "PREM.ANC",
+  "EQ.DESIGN",
+  "EQ.MAINT",
+  "EQ.CLEAN",
+  "EQ.CAL",
+  "DOC.SYS",
+  "DOC.SPEC",
+  "DOC.MFR",
+  "DOC.BMR",
+  "DOC.SOP",
+  "DOC.RET",
+  "MAT.SUPP",
+  "MAT.RECV",
+  "MAT.SAMP",
+  "MAT.STATUS",
+  "MAT.PACK",
+  "MAT.REJ",
+  "PROD.GEN",
+  "PROD.XCONT",
+  "PROD.IPC",
+  "PROD.YIELD",
+  "PROD.PACK",
+  "PROD.REWORK",
+  "QC.GEN",
+  "QC.SAMP",
+  "QC.TEST",
+  "QC.OOS",
+  "QC.STAB",
+  "QC.REF",
+  "QC.MICRO",
+  "VAL.PLAN",
+  "VAL.QUAL",
+  "VAL.PROC",
+  "VAL.CLEAN",
+  "VAL.METH",
+  "CSV.VAL",
+  "CSV.ACCESS",
+  "CSV.AUDIT",
+  "CSV.ESIG",
+  "CSV.DI",
+  "UTIL.WATER",
+  "UTIL.HVAC",
+  "UTIL.GAS",
+  "CCS.STRAT",
+  "CCS.EM",
+  "CCS.CLEAN",
+  "CCS.PEST",
+  "STER.GRADE",
+  "STER.ASEPT",
+  "STER.APS",
+  "STER.STERIL",
+  "STER.FILT",
+  "STER.CCI",
+  "STER.LYO",
+  "API.START",
+  "API.PROC",
+  "API.IMP",
+  "API.SOLV",
+  "OUT.CONTRACT",
+  "OUT.AGREE",
+  "CMP.COMPL",
+  "CMP.RECALL",
+  "CMP.REPORT",
+  "SI.PROG",
+  "SI.TEAM",
+  "SI.REPORT",
+  "SI.FOLLOW",
+  "DIST.STORE",
+  "DIST.TRANS",
+  "DIST.RETURN",
+  "REL.QP",
+  "REL.REVIEW"
+ ],
+ "schema": {
+  "type": "object",
+  "required": [
+   "page",
+   "items",
+   "not_applicable"
+  ],
+  "properties": {
+   "page": {
+    "type": "string"
+   },
+   "items": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "statement",
+      "quote",
+      "clause_number",
+      "strength",
+      "plant_types",
+      "numbers",
+      "condition",
+      "topic",
+      "runs_over",
+      "text_layer_differs"
+     ],
+     "properties": {
+      "statement": {
+       "type": "string"
+      },
+      "quote": {
+       "type": "string"
+      },
+      "clause_number": {
+       "type": "string"
+      },
+      "strength": {
+       "enum": [
+        "mandatory",
+        "recommended",
+        "optional"
+       ]
+      },
+      "plant_types": {
+       "type": "array",
+       "items": {
+        "enum": [
+         "OSD",
+         "LIQ",
+         "SEMI",
+         "INJ",
+         "API"
+        ]
+       }
+      },
+      "numbers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "condition": {
+       "type": "string"
+      },
+      "topic": {
+       "type": "string"
+      },
+      "runs_over": {
+       "type": "boolean"
+      },
+      "text_layer_differs": {
+       "type": "string"
+      }
+     }
+    }
+   },
+   "not_applicable": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "text",
+      "reason"
+     ],
+     "properties": {
+      "text": {
+       "type": "string"
+      },
+      "reason": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  }
+ },
+ "pages": [
+  {
+   "id": "pics-pe009-18-annexes.pdf:18",
+   "source": "pics-pe009-18-annexes.pdf",
+   "page": 18,
+   "image": "work/vision-pages/pics-pe009-18-annexes-p018.png",
+   "image_sha256": "d1d7e650b06ce6d60b2fb23386cff52c4cc5c820b5b5444f75be48c1ff1dca3e",
+   "dpi": 150,
+   "pdf_sha256": "061e785e317287e7658522d071ad188a480496b1eabea2f48b610ab53d49bbb8",
+   "text_layer": "                                       Annex 1       Manufacture of sterile medicinal products\n\n\n\n4.21   The materials used for glove systems (for both isolators and RABS) should be\n       demonstrated to have appropriate mechanical and chemical resistance. The\n       frequency of glove replacement should be defined within the CCS.\n\n       i.      Isolators:\n\n             a. For isolators, leak testing of the glove system should be performed using a\n                methodology demonstrated to be suitable for the task and criticality. The\n                testing should be performed at defined intervals. Generally glove integrity\n                testing should be performed at a minimum frequency of the beginning and\n                end of each batch or campaign. Additional glove integrity testing may be\n                necessary depending on the validated campaign length.\n               Glove integrity monitoring should include a visual inspection associated with\n               each use and following any manipulation that may affect the integrity of the\n               system.\n               For manual aseptic processing activities where single unit or small batch\n               sizes are produced, the frequency of integrity verification may be based on\n               other criteria, such as the beginning and end of each manufacturing session.\n             b. Integrity / leak testing of isolator systems should be performed at defined\n                intervals.\n\n       ii.     RABS:\n\n               For RABS, gloves used in the grade A area should be sterilised before\n               installation and sterilised or effectively bio-decontaminated by a validated\n               method prior to each manufacturing campaign. If exposed to the background\n               environment during operation, disinfection using an approved methodology\n               following each exposure should be completed. Gloves should be visually\n               examined with each use, and integrity testing should be performed at\n               periodic intervals.\n\n4.22   Decontamination methods (cleaning and bio-decontamination, and where\n       applicable inactivation for biological materials) should be appropriately defined\n       and controlled. The cleaning process prior to the bio-decontamination step is\n       essential; any residues that remain may inhibit the effectiveness of the\n       decontamination process. Evidence should also be available to demonstrate that\n       the cleaning and bio-decontamination agents used do not have adverse impact\n       on the product produced within the RABS or isolator.\n\n       i.      For isolators\n\n               The bio-decontamination process of the interior should be automated,\n               validated and controlled within defined cycle parameters and should include\n               a sporicidal agent in a suitable form (e.g. gaseous or vaporized form). Gloves\n               should be appropriately extended with fingers separated to ensure contact\n               with the agent. Methods used (cleaning and sporicidal bio-decontamination)\n               should render the interior surfaces and critical zone of the isolator free from\n               viable microorganisms.\n\n\n\n\n PE 009-18 (Annexes)                          -11-                        24 September 2026\n",
+   "next_page_text": "                                            Annex 1      Manufacture of sterile medicinal products\n\n\n\n         ii.      For RABS\n\n               The sporicidal disinfection should include the routine application of a sporicidal\n               agent using a method that has been validated and demonstrated to robustly\n               include all areas of the interior surfaces and ensure a suitable environment for\n               aseptic processing.\n\n\nCLEANROOM AND CLEAN AIR EQUIPMENT QUALIFICATION\n\n4.23     Cleanrooms and clean air equipment such as unidirectional airflow units (UDAFs),\n         RABS and isolators, used for the manufacture of sterile products, should be\n         qualified according to the required characteristics of the environment. Each\n         manufacturing operation requires an appropriate environmental cleanliness level\n         in the operational state in order to minimize the risk of contamination of the product\n         or materials being handled. Appropriate cleanliness levels in the “at rest” and\n         “operational” states should be maintained.\n\n4.24     Cleanrooms and clean air equipment should be qualified using methodology in\n         accordance with the requirements of Annex 15. Cleanroom qualification (including\n         classification) should be clearly differentiated from operational environmental\n         monitoring.\n\n4.25     Cleanroom and clean air equipment qualification is the overall process of\n         assessing the level of compliance of a classified cleanroom or clean air\n         equipment with its intended use. As part of the qualification requirements of\n         Annex 15, the qualification of cleanrooms and clean air equipment should include\n         (where relevant to the design/operation of the installation):\n\n          i.      installed filter system leakage and integrity testing,\n\n         ii.      airflow tests - volume and velocity,\n\n        iii.      air pressure difference test,\n\n        iv.       airflow direction test and visualisation,\n\n         v.       microbial airborne and surface contamination,\n\n        vi.       temperature measurement test,\n\n       vii.       relative humidity test,\n\n       viii.      recovery test,\n\n        ix.       containment leak test.\n\n       Reference for the qualification of the cleanrooms and clean air equipment can be\n       found in the ISO 14644 series of standards.\n\n4.26     Cleanroom classification is part of the cleanroom qualification and is a method of\n         assessing the level of air cleanliness against a specification for a cleanroom or\n         clean air equipment by measuring the total particle concentration. Classification\n\n\n PE 009-18 (Annexes)                              -12-                        24 September 2026\n",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "pics-pe009-18-annexes.pdf:19",
+   "source": "pics-pe009-18-annexes.pdf",
+   "page": 19,
+   "image": "work/vision-pages/pics-pe009-18-annexes-p019.png",
+   "image_sha256": "4db4a26b747ac64e981c34af1ba738917af011ae10451546466bfba8025d43dd",
+   "dpi": 150,
+   "pdf_sha256": "061e785e317287e7658522d071ad188a480496b1eabea2f48b610ab53d49bbb8",
+   "text_layer": "                                            Annex 1      Manufacture of sterile medicinal products\n\n\n\n         ii.      For RABS\n\n               The sporicidal disinfection should include the routine application of a sporicidal\n               agent using a method that has been validated and demonstrated to robustly\n               include all areas of the interior surfaces and ensure a suitable environment for\n               aseptic processing.\n\n\nCLEANROOM AND CLEAN AIR EQUIPMENT QUALIFICATION\n\n4.23     Cleanrooms and clean air equipment such as unidirectional airflow units (UDAFs),\n         RABS and isolators, used for the manufacture of sterile products, should be\n         qualified according to the required characteristics of the environment. Each\n         manufacturing operation requires an appropriate environmental cleanliness level\n         in the operational state in order to minimize the risk of contamination of the product\n         or materials being handled. Appropriate cleanliness levels in the “at rest” and\n         “operational” states should be maintained.\n\n4.24     Cleanrooms and clean air equipment should be qualified using methodology in\n         accordance with the requirements of Annex 15. Cleanroom qualification (including\n         classification) should be clearly differentiated from operational environmental\n         monitoring.\n\n4.25     Cleanroom and clean air equipment qualification is the overall process of\n         assessing the level of compliance of a classified cleanroom or clean air\n         equipment with its intended use. As part of the qualification requirements of\n         Annex 15, the qualification of cleanrooms and clean air equipment should include\n         (where relevant to the design/operation of the installation):\n\n          i.      installed filter system leakage and integrity testing,\n\n         ii.      airflow tests - volume and velocity,\n\n        iii.      air pressure difference test,\n\n        iv.       airflow direction test and visualisation,\n\n         v.       microbial airborne and surface contamination,\n\n        vi.       temperature measurement test,\n\n       vii.       relative humidity test,\n\n       viii.      recovery test,\n\n        ix.       containment leak test.\n\n       Reference for the qualification of the cleanrooms and clean air equipment can be\n       found in the ISO 14644 series of standards.\n\n4.26     Cleanroom classification is part of the cleanroom qualification and is a method of\n         assessing the level of air cleanliness against a specification for a cleanroom or\n         clean air equipment by measuring the total particle concentration. Classification\n\n\n PE 009-18 (Annexes)                              -12-                        24 September 2026\n",
+   "next_page_text": "                                         Annex 1       Manufacture of sterile medicinal products\n\n\n\n          activities should be scheduled and performed in order to avoid any impact on\n          process or product quality. For example, initial classification should be performed\n          during simulated operations and reclassification performed during simulated\n          operations or during aseptic process simulation (APS).\n\n4.27      For cleanroom classification, the total of particles equal to or greater than 0.5 and\n          5 µm should be measured. This measurement should be performed both at rest\n          and in simulated operations in accordance with the limits specified in Table 1.\n\nTable 1: Maximum permitted total particle concentration for classification\n\n                   Maximum limits for total particle       Maximum limits for total particle\n      Grade                ≥ 0.5 µm/m3                               ≥ 5 µm/m3\n\n                       at rest         in operation           at rest           in operation\n        A              3 520               3 520          Not specified (a)   Not specified (a)\n        B              3 520              352 000         Not specified (a)         2 930\n        C             352 000            3 520 000             2 930               29 300\n                     3 520 000              Not               29 300                 Not\n        D\n                                     predetermined (b)                        predetermined (b)\n\n(a)\n       Classification including 5µm particles may be considered where indicated by the\n       CCS or historical trends.\n(b)\n       For grade D, in operation limits are not predetermined. The manufacturer should\n       establish in operation limits based on a risk assessment and routine data where\n       applicable.\n\n4.28      For classification of the cleanroom, the minimum number of sampling locations\n          and their positioning can be found in ISO 14644 Part 1. For the aseptic processing\n          area and the background environment (the grade A and grade B areas,\n          respectively), additional sample locations should be considered and all critical\n          processing areas such as the point of fill and container closure feeder bowls\n          should be evaluated. Critical processing locations should be determined by\n          documented risk assessment and knowledge of the process and operations to\n          be performed in the area.\n\n4.29      Cleanroom classification should be carried out in the “at rest” and “in operation”\n          states.\n\n          i.    The definition of “at rest” state is the condition whereby the installation of all\n                the utilities is complete including any functioning HVAC, with the main\n                manufacturing equipment installed as specified but not operating and without\n                personnel present in the room.\n\n         ii.    The definition of “in operation” state is the condition whe",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "pics-pe009-18-annexes.pdf:20",
+   "source": "pics-pe009-18-annexes.pdf",
+   "page": 20,
+   "image": "work/vision-pages/pics-pe009-18-annexes-p020.png",
+   "image_sha256": "fb2d214447c331ed68218b78cc625de2cc99f8f56c8976d7197e1d813589732d",
+   "dpi": 150,
+   "pdf_sha256": "061e785e317287e7658522d071ad188a480496b1eabea2f48b610ab53d49bbb8",
+   "text_layer": "                                         Annex 1       Manufacture of sterile medicinal products\n\n\n\n          activities should be scheduled and performed in order to avoid any impact on\n          process or product quality. For example, initial classification should be performed\n          during simulated operations and reclassification performed during simulated\n          operations or during aseptic process simulation (APS).\n\n4.27      For cleanroom classification, the total of particles equal to or greater than 0.5 and\n          5 µm should be measured. This measurement should be performed both at rest\n          and in simulated operations in accordance with the limits specified in Table 1.\n\nTable 1: Maximum permitted total particle concentration for classification\n\n                   Maximum limits for total particle       Maximum limits for total particle\n      Grade                ≥ 0.5 µm/m3                               ≥ 5 µm/m3\n\n                       at rest         in operation           at rest           in operation\n        A              3 520               3 520          Not specified (a)   Not specified (a)\n        B              3 520              352 000         Not specified (a)         2 930\n        C             352 000            3 520 000             2 930               29 300\n                     3 520 000              Not               29 300                 Not\n        D\n                                     predetermined (b)                        predetermined (b)\n\n(a)\n       Classification including 5µm particles may be considered where indicated by the\n       CCS or historical trends.\n(b)\n       For grade D, in operation limits are not predetermined. The manufacturer should\n       establish in operation limits based on a risk assessment and routine data where\n       applicable.\n\n4.28      For classification of the cleanroom, the minimum number of sampling locations\n          and their positioning can be found in ISO 14644 Part 1. For the aseptic processing\n          area and the background environment (the grade A and grade B areas,\n          respectively), additional sample locations should be considered and all critical\n          processing areas such as the point of fill and container closure feeder bowls\n          should be evaluated. Critical processing locations should be determined by\n          documented risk assessment and knowledge of the process and operations to\n          be performed in the area.\n\n4.29      Cleanroom classification should be carried out in the “at rest” and “in operation”\n          states.\n\n          i.    The definition of “at rest” state is the condition whereby the installation of all\n                the utilities is complete including any functioning HVAC, with the main\n                manufacturing equipment installed as specified but not operating and without\n                personnel present in the room.\n\n         ii.    The definition of “in operation” state is the condition where the installation of\n                the cleanroom is complete, the HVAC system fully operational, equipment\n                installed and functioning in the manufacturer’s defined operating mode with\n                the maximum number of personnel present performing or simulating routine\n                operational work.\n\n         iii.   The total particle limits given in Table 1 above for the “at rest” state should\n                be achieved after a “clean up” period on completion of operations and line\n                clearance/cleaning activities. The \"clean up\" period (guidance value of less\n\n\n PE 009-18 (Annexes)                            -13-                          24 September 2026\n",
+   "next_page_text": "                                           Annex 1        Manufacture of sterile medicinal products\n\n\n\n                than 20 minutes) should be determined during the qualification of the rooms,\n                documented and adhered to in procedures to reinstate a qualified state of\n                cleanliness if disrupted during operation.\n\n4.30        The speed of air supplied by unidirectional airflow systems should be clearly\n            justified in the qualification protocol including the location for air speed\n            measurement. Air speed should be designed, measured and maintained to\n            ensure that appropriate unidirectional air movement provides protection of the\n            product and open components at the working position (e.g. where high-risk\n            operations occur and where product and/or components are exposed).\n            Unidirectional airflow systems should provide a homogeneous air speed in a\n            range of 0.36 – 0.54 m/s (guidance value) at the working position, unless\n            otherwise scientifically justified in the CCS. Airflow visualization studies should\n            correlate with the air speed measurement.\n\n4.31        The microbial contamination level of the cleanrooms should be determined as\n            part of the cleanroom qualification. The number of sampling locations should be\n            based on a documented risk assessment and the results obtained from room\n            classification, air visualization studies and knowledge of the process and\n            operations to be performed in the area. The maximum limits for microbial\n            contamination during qualification for each grade are given in Table 2.\n            Qualification should include both “at rest” and “in operation” states.\n\nTable 2: Maximum permitted microbial contamination level during qualification\n\n                                                              Settle plates          Contact plates\n            Grade            Air sample                    (diameter 90 mm)           (diameter 55\n                              CFU/m3                        CFU/4 hours (a)          mm) CFU/plate\n               A                                           No growth\n               B                     10                             5                        5\n               C                    100                            50                       25\n               D                    200                           100                       50\n\n       a)    Settle plates should be exposed for the duration of operations and changed as required\n             after a maximum of 4 hours. Exposure time should be based on recovery studies and\n             should not allow desiccation of the media used.\n\n       Note 1:      All methods indicated for a specific grade in the table should be used for qualifying\n                    the area of that specific grade. If one of the methods tabulated is not used, or\n            ",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "pics-pe009-18-annexes.pdf:21",
+   "source": "pics-pe009-18-annexes.pdf",
+   "page": 21,
+   "image": "work/vision-pages/pics-pe009-18-annexes-p021.png",
+   "image_sha256": "620c7d8e1f46cea7b563a2157bae2267ca42a9b000932a70cac1d877b63f6e61",
+   "dpi": 150,
+   "pdf_sha256": "061e785e317287e7658522d071ad188a480496b1eabea2f48b610ab53d49bbb8",
+   "text_layer": "                                           Annex 1        Manufacture of sterile medicinal products\n\n\n\n                than 20 minutes) should be determined during the qualification of the rooms,\n                documented and adhered to in procedures to reinstate a qualified state of\n                cleanliness if disrupted during operation.\n\n4.30        The speed of air supplied by unidirectional airflow systems should be clearly\n            justified in the qualification protocol including the location for air speed\n            measurement. Air speed should be designed, measured and maintained to\n            ensure that appropriate unidirectional air movement provides protection of the\n            product and open components at the working position (e.g. where high-risk\n            operations occur and where product and/or components are exposed).\n            Unidirectional airflow systems should provide a homogeneous air speed in a\n            range of 0.36 – 0.54 m/s (guidance value) at the working position, unless\n            otherwise scientifically justified in the CCS. Airflow visualization studies should\n            correlate with the air speed measurement.\n\n4.31        The microbial contamination level of the cleanrooms should be determined as\n            part of the cleanroom qualification. The number of sampling locations should be\n            based on a documented risk assessment and the results obtained from room\n            classification, air visualization studies and knowledge of the process and\n            operations to be performed in the area. The maximum limits for microbial\n            contamination during qualification for each grade are given in Table 2.\n            Qualification should include both “at rest” and “in operation” states.\n\nTable 2: Maximum permitted microbial contamination level during qualification\n\n                                                              Settle plates          Contact plates\n            Grade            Air sample                    (diameter 90 mm)           (diameter 55\n                              CFU/m3                        CFU/4 hours (a)          mm) CFU/plate\n               A                                           No growth\n               B                     10                             5                        5\n               C                    100                            50                       25\n               D                    200                           100                       50\n\n       a)    Settle plates should be exposed for the duration of operations and changed as required\n             after a maximum of 4 hours. Exposure time should be based on recovery studies and\n             should not allow desiccation of the media used.\n\n       Note 1:      All methods indicated for a specific grade in the table should be used for qualifying\n                    the area of that specific grade. If one of the methods tabulated is not used, or\n                    alternative methods are used, the approach taken should be appropriately\n                    justified.\n\n       Note 2:      Limits are applied using CFU throughout the document. If different or new\n                    technologies are used that present results in a manner different from CFU, the\n                    manufacturer should scientifically justify the limits applied and where possible\n                    correlate them to CFU.\n\n       Note 3:      For the qualification of personnel gowning, the limits given for contact plates and\n                    glove prints in Table 6 should apply.\n\n       Note 4:      Sampling methods should not pose a risk of contamination to the manufacturing\n                    operations.\n\n\n\n\n PE 009-18 (Annexes)                               -14-                           24 September 2026\n",
+   "next_page_text": "                                         Annex 1       Manufacture of sterile medicinal products\n\n\n\n4.32    The requalification of cleanrooms and clean air equipment should be carried out\n        periodically following defined procedures. The requalification should include at a\n        minimum the following:\n\n         i.   cleanroom classification (total particle concentration),\n         ii. integrity test of final filters,\n         iii. airflow volume measurement,\n        iv. verification of air pressure difference between rooms, and\n         v. air velocity test\n        (Note: For grade B, C and D the air velocity test should be performed according\n        to a risk assessment documented as part of the CCS. However, it is required for\n        filling zones supplied with unidirectional airflow (e.g. when filling terminally\n        sterilised products or background to grade A and RABS). For grades with non-\n        unidirectional airflow, a measurement of recovery testing should replace velocity\n        testing).\n\n        The maximum time interval for requalification of grade A & B areas, is 6 months.\n        The maximum time interval for requalification of grade C & D areas, is 12 months.\n\n        Appropriate requalification consisting of at least the above tests should also be\n        carried out following completion of remedial action implemented to rectify an out\n        of compliance equipment or facility condition or after changes to equipment,\n        facility or processes as appropriate. The significance of a change should be\n        determined through the change management process. Examples of changes to\n        be considered include but are not limited to the following:\n\n        i.    interruption of air movement which affects the operation of the installation,\n       ii.    change in the design of the cleanroom or of the operational setting\n              parameters of the HVAC system,\n       iii.   special maintenance which affects the operation of the installation (e.g.\n              change of final filters).\n\n\nDISINFECTION\n\n4.33    The disinfection of cleanrooms is particularly important. They should be cleaned\n        and disinfected thoroughly in accordance with a written programme. For\n        disinfection to be effective, prior cleaning to remove surface contamination should\n        be performed. Cleaning programmes should effectively remove disinfectant\n        residues. More than one type of disinfecting agent should be employed to ensure\n        that where they have different modes of action, their combined usage is effective\n        against bacteria and fungi. Disinfection should include the periodic use of a\n        sporicidal agent. Monitoring should be undertaken regularly in order to assess\n        the effectiveness of the disinfection programme and to detect changes in types\n        of microbial flora (e.g. organisms resistant to the disinfection regime currently in\n        use).\n\n4.34    The disinfection process should ",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "pics-pe009-18-annexes.pdf:22",
+   "source": "pics-pe009-18-annexes.pdf",
+   "page": 22,
+   "image": "work/vision-pages/pics-pe009-18-annexes-p022.png",
+   "image_sha256": "261eaf94f3a2fad9829ca0c945e1f987084c03d594b17a21e0cdf200d6a185e0",
+   "dpi": 150,
+   "pdf_sha256": "061e785e317287e7658522d071ad188a480496b1eabea2f48b610ab53d49bbb8",
+   "text_layer": "                                         Annex 1       Manufacture of sterile medicinal products\n\n\n\n4.32    The requalification of cleanrooms and clean air equipment should be carried out\n        periodically following defined procedures. The requalification should include at a\n        minimum the following:\n\n         i.   cleanroom classification (total particle concentration),\n         ii. integrity test of final filters,\n         iii. airflow volume measurement,\n        iv. verification of air pressure difference between rooms, and\n         v. air velocity test\n        (Note: For grade B, C and D the air velocity test should be performed according\n        to a risk assessment documented as part of the CCS. However, it is required for\n        filling zones supplied with unidirectional airflow (e.g. when filling terminally\n        sterilised products or background to grade A and RABS). For grades with non-\n        unidirectional airflow, a measurement of recovery testing should replace velocity\n        testing).\n\n        The maximum time interval for requalification of grade A & B areas, is 6 months.\n        The maximum time interval for requalification of grade C & D areas, is 12 months.\n\n        Appropriate requalification consisting of at least the above tests should also be\n        carried out following completion of remedial action implemented to rectify an out\n        of compliance equipment or facility condition or after changes to equipment,\n        facility or processes as appropriate. The significance of a change should be\n        determined through the change management process. Examples of changes to\n        be considered include but are not limited to the following:\n\n        i.    interruption of air movement which affects the operation of the installation,\n       ii.    change in the design of the cleanroom or of the operational setting\n              parameters of the HVAC system,\n       iii.   special maintenance which affects the operation of the installation (e.g.\n              change of final filters).\n\n\nDISINFECTION\n\n4.33    The disinfection of cleanrooms is particularly important. They should be cleaned\n        and disinfected thoroughly in accordance with a written programme. For\n        disinfection to be effective, prior cleaning to remove surface contamination should\n        be performed. Cleaning programmes should effectively remove disinfectant\n        residues. More than one type of disinfecting agent should be employed to ensure\n        that where they have different modes of action, their combined usage is effective\n        against bacteria and fungi. Disinfection should include the periodic use of a\n        sporicidal agent. Monitoring should be undertaken regularly in order to assess\n        the effectiveness of the disinfection programme and to detect changes in types\n        of microbial flora (e.g. organisms resistant to the disinfection regime currently in\n        use).\n\n4.34    The disinfection process should be validated. Validation studies should\n        demonstrate the suitability and effectiveness of disinfectants in the specific\n\n\n PE 009-18 (Annexes)                            -15-                        24 September 2026\n",
+   "next_page_text": "                                    Annex 1       Manufacture of sterile medicinal products\n\n\n\n        manner in which they are used and on the type of surface material, or\n        representative material if justified, and should support the in-use expiry periods\n        of prepared solutions.\n\n4.35    Disinfectants and detergents used in grade A and grade B areas should be sterile\n        prior to use. Disinfectants used in grade C and D may also be required to be\n        sterile where determined in the CCS. Where the disinfectants and detergents are\n        diluted / prepared by the sterile product manufacturer, this should be done in a\n        manner to prevent contamination and they should be monitored for microbial\n        contamination. Dilutions should be kept in previously cleaned containers (and\n        sterilized where applicable) and should only be stored for the defined period. If\n        the disinfectants and detergents are supplied “ready-made” then results from\n        certificates of analysis or conformance can be accepted subject to successful\n        completion of the appropriate vendor qualification.\n\n4.36    Where fumigation or vapour disinfection (e.g. Vapour-phase Hydrogen Peroxide)\n        of cleanrooms and associated surfaces are used, the effectiveness of any\n        fumigation agent and dispersion system should be understood and validated.\n\n\n5      Equipment\n5.1     A written, detailed description of the equipment design should be available\n        (including process and instrumentation diagrams as appropriate). This should\n        form part of the initial qualification package and be kept up to date.\n\n5.2     Equipment monitoring requirements should be defined in “user requirements\n        specifications” during early stages of development, and confirmed during\n        qualification. Process and equipment alarm events should be acknowledged and\n        evaluated for trends. The frequency at which alarms are assessed should be\n        based on their criticality (with critical alarms reviewed immediately).\n\n5.3     As far as practicable, equipment, fittings and services should be designed and\n        installed so that operations, maintenance, and repairs can be performed outside\n        the cleanroom. If maintenance has to be performed in the cleanroom, and the\n        required standards of cleanliness and/or asepsis cannot be maintained, then\n        precautions such as restricting access to the work area to specified personnel,\n        generation of clearly defined work protocols and maintenance procedures should\n        be considered. Additional cleaning, disinfection and environmental monitoring\n        should also be considered. If sterilisation of equipment is required, it should be\n        carried out, wherever possible, after complete reassembly.\n\n5.4     The cleaning process should be validated to be able to:\n\n        i.    remove any residue or debris that would detrimentally impact the\n              effectivene",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  }
+ ]
+}

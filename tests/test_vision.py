@@ -133,3 +133,93 @@ class ReviewRound2(unittest.TestCase):
         self.assertTrue(vision.clause_findings("4.22 iii", SRC, PAGE))     # 4.22 is printed on page 12
         self.assertTrue(vision.clause_findings("12", SRC, PAGE))           # a page number is not a clause
         self.assertEqual(vision.clause_findings("4.29", SRC, PAGE), [])
+
+
+class D46(unittest.TestCase):
+    """Owner decisions of 31 Oct (D46): header-carrying table quotes, footnote marks, lead-in conditions,
+    inspection-checklist strength."""
+
+    def test_footnote_mark_after_a_word(self):
+        self.assertEqual(quotes.toks("Cumene^1 | 0.7"), ["cumene", "1", "0.7"])
+        self.assertEqual(quotes.toks("10^-6"), ["10", "^", "−", "6"])               # a power of ten stays
+
+    def test_table_quote_with_its_headers(self):
+        top = "Grade | Maximum limits for total particle ≥ 0.5 µm/m3 | Maximum limits for total particle ≥ 5 µm/m3"
+        head = top + " | at rest | in operation | at rest^a | in operation^a"            # both header rows
+        q = head + " || C | 352 000 | 3 520 000 | 2 930 | 29 300"
+        self.assertEqual(vision.table_quote_found(q, SRC, PAGE), (True, True))
+        # the sub-header (at rest / in operation) dropped, or the row cut short: not the table's header and row
+        self.assertEqual(vision.table_quote_found(top + " || C | 352 000 | 3 520 000 | 2 930 | 29 300", SRC, PAGE),
+                         (False, False))
+        self.assertEqual(vision.table_quote_found(head + " || C | 352 000", SRC, PAGE), (False, False))
+        swapped = head + " || B | 352 000 | 3 520 000 | 2 930 | 29 300"
+        self.assertEqual(vision.table_quote_found(swapped, SRC, PAGE), (False, False))
+
+    def test_lead_in_condition_of_a_table(self):
+        row = item(quote="Benzene | 2 | Carcinogen", statement="Limit benzene to 2 ppm.", clause_number="",
+                   strength="recommended", topic="MAT.SPEC")
+        checks = {c for c, _ in vision.check_item(row, "ich-q3c-r9.pdf", 11)[0]}
+        self.assertIn("lead-in", checks)
+        kept = dict(row, statement="Unless otherwise justified, and only if its use is unavoidable in order to "
+                                   "produce a drug product with a significant therapeutic advance, limit benzene to "
+                                   "2 ppm.")
+        vague = dict(row, statement="When used, limit benzene to 2 ppm unless justified.")
+        self.assertIn("lead-in", {c for c, _ in vision.check_item(vague, "ich-q3c-r9.pdf", 11)[0]})
+        self.assertNotIn("lead-in", {c for c, _ in vision.check_item(kept, "ich-q3c-r9.pdf", 11)[0]})
+
+    def test_checklist_row_is_mandatory(self):
+        src = "india-cdsco-circ-2024-03-risk-based-inspection.pdf"
+        import layer1
+        self.assertIn(src, layer1.INSPECTION_CHECKLISTS)
+        row = item(quote="Specify the number of air changes in Grade A/B and Grade C areas.",
+                   statement="Specify the number of air changes in grade A/B and C areas.", clause_number="",
+                   strength="recommended", plant_types=["INJ"])
+        self.assertIn("strength", {c for c, _ in vision.check_item(row, src, 45)[0]})
+
+
+class D46Review(unittest.TestCase):
+    def test_drop_running_keeps_body_lines_with_other_numbers(self):
+        pages = [["Header line of the guide", "x"], ["Keep records for at least 5 years.", "body", "y",
+                 "Page 6 of 9"], ["Keep records for at least 1 years.", "z", "Page 7 of 9"]]
+        kept = quotes.drop_running(pages)
+        self.assertIn("Keep records for at least 5 years.", kept[1])
+        self.assertNotIn("Page 6 of 9", kept[1])
+
+    def test_caption_is_not_a_reference(self):
+        self.assertIsNone(vision.CAPTION.match("Table 6 should apply."))
+        self.assertTrue(vision.CAPTION.match("Table 2: Maximum permitted"))
+        self.assertTrue(vision.CAPTION.match("TABLE 2. Class 2 solvents"))
+
+    def test_footnote_mark_is_not_a_quote_number(self):
+        row = item(quote="Cumene^1 | 0.7 | 70", statement="Limit cumene to 0.7 mg/day (70 ppm).", clause_number="",
+                   topic="MAT.SPEC")
+        self.assertFalse([m for c, m in vision.check_item(row, "ich-q3c-r9.pdf", 12)[0] if c == "numbers"])
+
+    def test_checklist_rule_only_without_a_lead_in(self):
+        import layer1
+        self.assertEqual(layer1.lead_in_strength("visit the site", "Following criteria should be applied: visit the "
+                                                 "site"), "recommended")
+
+
+class D46Review2(unittest.TestCase):
+    def test_unruled_header_must_be_whole(self):
+        q3c = "ich-q3c-r9.pdf"
+        self.assertEqual(vision.table_quote_found("Solvent | Concentration limit | Concern || Benzene | 2 | Carcinogen",
+                                                  q3c, 11)[0], False)
+        self.assertEqual(vision.table_quote_found("Solvent | Concentration limit (ppm) | Concern || Benzene | 2 | "
+                                                  "Carcinogen", q3c, 11)[0], True)
+
+    def test_unruled_header_columns_in_order(self):
+        self.assertEqual(vision.table_quote_found("Solvent | Concern | Concentration limit (ppm) || Benzene | 2 | "
+                                                  "Carcinogen", "ich-q3c-r9.pdf", 11)[0], False)
+
+    def test_marks_out_keeps_grade_letters(self):
+        self.assertNotEqual(vision._marks_out("Grade A B C D"), vision._marks_out("Grade D C B A"))
+        self.assertEqual(vision._marks_out("at rest (a)"), vision._marks_out("at rest^a"))
+
+    def test_lead_in_needs_the_whole_condition(self):
+        lead = ("However, if their use is unavoidable in order to produce a drug product with a significant "
+                "therapeutic advance, then their levels should be restricted as shown in Table 1, unless otherwise "
+                "justified.")
+        part = "Only if use is unavoidable in order to produce a drug product, limit benzene to 2 ppm, unless otherwise justified."
+        self.assertTrue(vision.lead_in_missing(lead, part))

@@ -9,8 +9,8 @@ Checks, per mapping:
                (a changed source text means "re-verify")
   3 numbers    every number in the item text and the parameters appears in the quote
   4 strength   the mapping's strength matches the quote's words (shall/must -> mandatory, should ->
-               recommended, may -> optional; a list item without such words takes its lead-in's), and the
-               item's strength is its mapping's
+               recommended, may -> optional; a list item without such words takes its lead-in's; a row of an
+               inspection checklist without them is mandatory, D46), and the item's strength is its mapping's
   5 scope      the mapping's plant types are within the source's applies_to (catalog), and the item's plant
                types are its mapping's
 Per library:
@@ -42,6 +42,9 @@ import obligations  # noqa: E402
 from common import CITABLE, CLAUSES, OFFICIAL, normalise, twin_key  # noqa: E402
 
 RANK = {"optional": 0, "recommended": 1, "mandatory": 2}
+# Inspection checklists (D46, owner): their rows ("Specify ...", "Whether ...") carry no modal verb, and inspectors
+# grade sites against every row, so a row without shall/should/may is mandatory.
+INSPECTION_CHECKLISTS = {"india-cdsco-circ-2024-03-risk-based-inspection.pdf"}
 # condition and limit wording, by meaning (check 9, D35): a quote that says one of these must have an item that
 # says it too, in any of the group's words. Only the condition uses count: "where applicable", not "areas where";
 # "within 30 days", not "within the facility"; "after", not "the following".
@@ -257,7 +260,8 @@ def check_requirement(req, sources, changed=()):
             out.append((req["id"], n, "quote", f"quote not found word for word in {m['clause_ref']}"))
         else:
             quotes.append(m["quote"])
-        words = strength_of(m["quote"]) or lead_in_strength(m["quote"], clause["text"])
+        words = (strength_of(m["quote"]) or lead_in_strength(m["quote"], clause["text"])
+                 or ("mandatory" if m["source"] in INSPECTION_CHECKLISTS else None))   # D46: only without a lead-in
         if words is None:
             out.append((req["id"], n, "strength", "quote has no obligation wording (shall/should/may)"))
         elif words != m["strength"]:

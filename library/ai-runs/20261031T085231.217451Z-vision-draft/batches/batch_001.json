@@ -1,0 +1,262 @@
+{
+ "instructions": "You read pages of a pharmaceutical GMP text and list the obligations printed on them. For each page you get the\nrendered page IMAGE (open it with your Read tool: the image is the truth) and the page's TEXT LAYER (extracted\ntext, which can be wrong: superscripts flattened, table cells merged, landscape pages, lost symbols). Your output\nis checked by software against two text readings of the page and by independent reviewers, so precision matters\nmore than wording.\n\nList each separate obligation printed on the page as its own item, so that together your items cover every\nobligation on the page (body text, list items, table rows and footnotes that require something). One obligation\nis one thing a site must, should or may do, with all its conditions, numbers and qualifiers; do not split one\nobligation across items. A sentence that starts on this page and ends on the next is drafted here (runs_over true;\nthe next page's text is given). A sentence that started on the previous page is not drafted again.\nFor each item:\n- statement: the obligation in your own plain English words, as one checklist item a site could be audited\n  against. Do not copy more than a few words in a row. Keep every condition (\"where\", \"if\", \"unless\", \"before\")\n  and every number. Do not add anything the page does not say.\n- quote: the exact span of the page that states the whole obligation, copied as printed, character for\n  character from the TEXT LAYER where the text layer is right (it is matched against the page by software; do not\n  fix typos or change punctuation). For a table row, quote the column header cells joined with \" | \", then\n  \" || \", then the row's cells joined with \" | \", starting with the row's first cell (its label), e.g.\n  \"Grade | Air sample CFU/m3 || B | 10\". Write a footnote mark printed after a word as \"^\" and the mark\n  (\"Cumene^1\", \"specified^a\"); a power of ten as \"10^7\" or \"10^-6\".\n- clause_number: the number exactly as printed for the clause or row (\"9.3\", \"4.22 iii\", \"Table 2\", \"4.19\"),\n  \"\" if none. Do not compose references that are not printed (\"Table 2 Note 1\", \"Table 1 Grade B\").\n- strength: \"mandatory\" for shall / must / is required / may not; \"recommended\" for should; \"optional\" for may.\n  Take it from the main verb of the quoted words, not from words in a condition. A row of an inspection\n  checklist (\"Specify ...\", \"Whether ...\", no modal verb) is \"mandatory\": inspectors grade sites against it.\n- plant_types: from OSD (oral solid dosage), LIQ (oral liquids), SEMI (semisolids), INJ (sterile injectables), API\n  (active substances); the plant scope given with the page unless the page itself narrows it.\n- numbers: every number, limit, frequency or period in the quote, as printed in the image (10⁷ written \"10^7\").\n- condition: the condition or trigger of the obligation in a few words, \"\" if none. A condition stated in a\n  lead-in belongs to every table row or list item under it: \"if their use is unavoidable ... levels should be\n  restricted as shown in Table 1, unless otherwise justified\" applies to each row of Table 1, so each row's\n  statement and condition carry it.\n- topic: the sub-topic id from TOPICS the obligation belongs to (an audit area).\n- runs_over: true when the quote continues on the next page.\n- text_layer_differs: \"\" normally. If the image shows something the text layer gets wrong inside your quote\n  (a superscript \"10^7\" printed as \"107\", a symbol lost, cells of two rows merged, words in another order), quote\n  what the image shows and describe the difference here in one sentence.\n\nObligation sentences on the page that are not drafted (a heading, a definition, an example, text that only\ndescribes, a sentence that started on the previous page) go in not_applicable: the first 8 or more words of the\nsentence copied from the text layer, and the reason in a few words. Running headers, footers and page numbers are\nignored.\n\nWrite the answers file named in your task: {\"answers\": [one object per page with \"page\" set to the page id]}.\n",
+ "topics": [
+  "QS.PQS",
+  "QS.MGMT",
+  "QS.QRM",
+  "QS.PQR",
+  "QS.CHANGE",
+  "QS.DEV",
+  "QS.CAPA",
+  "PER.ORG",
+  "PER.KEY",
+  "PER.TRAIN",
+  "PER.HYG",
+  "PER.GOWN",
+  "PREM.DESIGN",
+  "PREM.PROD",
+  "PREM.STORE",
+  "PREM.QC",
+  "PREM.ANC",
+  "EQ.DESIGN",
+  "EQ.MAINT",
+  "EQ.CLEAN",
+  "EQ.CAL",
+  "DOC.SYS",
+  "DOC.SPEC",
+  "DOC.MFR",
+  "DOC.BMR",
+  "DOC.SOP",
+  "DOC.RET",
+  "MAT.SUPP",
+  "MAT.RECV",
+  "MAT.SAMP",
+  "MAT.STATUS",
+  "MAT.PACK",
+  "MAT.REJ",
+  "PROD.GEN",
+  "PROD.XCONT",
+  "PROD.IPC",
+  "PROD.YIELD",
+  "PROD.PACK",
+  "PROD.REWORK",
+  "QC.GEN",
+  "QC.SAMP",
+  "QC.TEST",
+  "QC.OOS",
+  "QC.STAB",
+  "QC.REF",
+  "QC.MICRO",
+  "VAL.PLAN",
+  "VAL.QUAL",
+  "VAL.PROC",
+  "VAL.CLEAN",
+  "VAL.METH",
+  "CSV.VAL",
+  "CSV.ACCESS",
+  "CSV.AUDIT",
+  "CSV.ESIG",
+  "CSV.DI",
+  "UTIL.WATER",
+  "UTIL.HVAC",
+  "UTIL.GAS",
+  "CCS.STRAT",
+  "CCS.EM",
+  "CCS.CLEAN",
+  "CCS.PEST",
+  "STER.GRADE",
+  "STER.ASEPT",
+  "STER.APS",
+  "STER.STERIL",
+  "STER.FILT",
+  "STER.CCI",
+  "STER.LYO",
+  "API.START",
+  "API.PROC",
+  "API.IMP",
+  "API.SOLV",
+  "OUT.CONTRACT",
+  "OUT.AGREE",
+  "CMP.COMPL",
+  "CMP.RECALL",
+  "CMP.REPORT",
+  "SI.PROG",
+  "SI.TEAM",
+  "SI.REPORT",
+  "SI.FOLLOW",
+  "DIST.STORE",
+  "DIST.TRANS",
+  "DIST.RETURN",
+  "REL.QP",
+  "REL.REVIEW"
+ ],
+ "schema": {
+  "type": "object",
+  "required": [
+   "page",
+   "items",
+   "not_applicable"
+  ],
+  "properties": {
+   "page": {
+    "type": "string"
+   },
+   "items": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "statement",
+      "quote",
+      "clause_number",
+      "strength",
+      "plant_types",
+      "numbers",
+      "condition",
+      "topic",
+      "runs_over",
+      "text_layer_differs"
+     ],
+     "properties": {
+      "statement": {
+       "type": "string"
+      },
+      "quote": {
+       "type": "string"
+      },
+      "clause_number": {
+       "type": "string"
+      },
+      "strength": {
+       "enum": [
+        "mandatory",
+        "recommended",
+        "optional"
+       ]
+      },
+      "plant_types": {
+       "type": "array",
+       "items": {
+        "enum": [
+         "OSD",
+         "LIQ",
+         "SEMI",
+         "INJ",
+         "API"
+        ]
+       }
+      },
+      "numbers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "condition": {
+       "type": "string"
+      },
+      "topic": {
+       "type": "string"
+      },
+      "runs_over": {
+       "type": "boolean"
+      },
+      "text_layer_differs": {
+       "type": "string"
+      }
+     }
+    }
+   },
+   "not_applicable": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "text",
+      "reason"
+     ],
+     "properties": {
+      "text": {
+       "type": "string"
+      },
+      "reason": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  }
+ },
+ "pages": [
+  {
+   "id": "eu-20220825_gmp-an1_en_0.pdf:12",
+   "source": "eu-20220825_gmp-an1_en_0.pdf",
+   "page": 12,
+   "image": "work/vision-pages/eu-20220825_gmp-an1_en_0-p012.png",
+   "image_sha256": "3c005c2bd63698e0f08685abbaef58fd1e3699d70b512c0379dac2362c4940e4",
+   "dpi": 150,
+   "pdf_sha256": "add86ed65ac9dbf007352a11ad102089c2225087d9a79f7cd4a8d75b2946a2ff",
+   "text_layer": "4.22 Decontamination methods (cleaning and bio-decontamination, and where applicable inactivation\nfor biological materials) should be appropriately defined and controlled. The cleaning process prior to\nthe bio-decontamination step is essential; any residues that remain may inhibit the effectiveness of the\ndecontamination process. Evidence should also be available to demonstrate that the cleaning and bio-\ndecontamination agents used do not have adverse impact on the product produced within the RABS or\nisolator.\n\n    i.   For isolators\n\n         The bio-decontamination process of the interior should be automated, validated and\n         controlled within defined cycle parameters and should include a sporicidal agent in a\n         suitable form (e.g. gaseous or vaporized form). Gloves should be appropriately extended\n         with fingers separated to ensure contact with the agent. Methods used (cleaning and\n         sporicidal bio-decontamination) should render the interior surfaces and critical zone of the\n         isolator free from viable microorganisms.\n\n   ii.   For RABS\n\n         The sporicidal disinfection should include the routine application of a sporicidal agent using\n         a method that has been validated and demonstrated to robustly include all areas of the\n         interior surfaces and ensure a suitable environment for aseptic processing.\n\n\nCleanroom and clean air equipment qualification\n\n4.23 Cleanrooms and clean air equipment such as unidirectional airflow units (UDAFs), RABS and\nisolators, used for the manufacture of sterile products, should be qualified according to the required\ncharacteristics of the environment. Each manufacturing operation requires an appropriate\nenvironmental cleanliness level in the operational state in order to minimize the risk of contamination\nof the product or materials being handled. Appropriate cleanliness levels in the “at rest” and\n“operational” states should be maintained.\n\n4.24 Cleanrooms and clean air equipment should be qualified using methodology in accordance with\nthe requirements of Annex 15. Cleanroom qualification (including classification) should be clearly\ndifferentiated from operational environmental monitoring.\n\n4.25 Cleanroom and clean air equipment qualification is the overall process of assessing the level of\ncompliance of a classified cleanroom or clean air equipment with its intended use. As part of the\nqualification requirements of Annex 15, the qualification of cleanrooms and clean air equipment\nshould include (where relevant to the design/operation of the installation):\n\n    i.   Installed filter system leakage and integrity testing.\n\n   ii.   Airflow tests - volume and velocity.\n\n  iii.   Air pressure difference test.\n\n  iv.    Airflow direction test and visualisation.\n\n   v.    Microbial airborne and surface contamination.\n\n  vi.    Temperature measurement test.\n\n vii.    Relative humidity test.\n\n\n\n                                                     11\n",
+   "next_page_text": " viii.          Recovery test.\n\n      ix.       Containment leak test.\n\nReference for the qualification of the cleanrooms and clean air equipment can be found in the ISO\n14644 series of standards.\n\n4.26 Cleanroom classification is part of the cleanroom qualification and is a method of assessing the\nlevel of air cleanliness against a specification for a cleanroom or clean air equipment by measuring\nthe total particle concentration. Classification activities should be scheduled and performed in order\nto avoid any impact on process or product quality. For example, initial classification should be\nperformed during simulated operations and reclassification performed during simulated operations or\nduring aseptic process simulation (APS).\n\n4.27 For cleanroom classification, the total of particles equal to or greater than 0.5 and 5 µm should\nbe measured. This measurement should be performed both at rest and in simulated operations in\naccordance with the limits specified in Table 1.\n\n\nTable 1: Maximum permitted total particle concentration for classification\n\n\n                         Maximum limits for total particle           Maximum limits for total particle\n\n            Grade                      ≥ 0.5 µm/m3                                  ≥ 5 µm/m3\n\n                             at rest            in operation              at rest           in operation\n\n               A              3 520                   3 520          Not specified (a)     Not specified (a)\n\n               B              3 520                  352 000         Not specified (a)          2 930\n\n               C             352 000              3 520 000               2 930                 29 300\n\n                            3 520 000               Not                   29 300                Not\n               D\n                                              predetermined (b)                           predetermined (b)\n\n(a)\n    Classification including 5µm particles may be considered where indicated by the CCS or\nhistorical trends.\n(b)\n    For grade D, in operation limits are not predetermined. The manufacturer should establish in\noperation limits based on a risk assessment and routine data where applicable.\n\n4.28 For classification of the cleanroom, the minimum number of sampling locations and their\npositioning can be found in ISO 14644 Part 1. For the aseptic processing area and the background\nenvironment (the grade A and grade B areas, respectively), additional sample locations should be\nconsidered and all critical processing areas such as the point of fill and container closure feeder bowls\nshould be evaluated. Critical processing locations should be determined by documented risk\nassessment and knowledge of the process and operations to be performed in the area.\n\n4.29 Cleanroom classification should be carried out in the “at rest” and “in operation” states.\n\n            i. The definition of “at rest” state is the condition whereby the installation of all the utilities is\n        ",
+   "plant_scope": [
+    "INJ"
+   ]
+  },
+  {
+   "id": "eu-20220825_gmp-an1_en_0.pdf:13",
+   "source": "eu-20220825_gmp-an1_en_0.pdf",
+   "page": 13,
+   "image": "work/vision-pages/eu-20220825_gmp-an1_en_0-p013.png",
+   "image_sha256": "4599d5a7eda3578815a713ef01b5c6ab833c892cf55a329ac1ad72f06fe24a0e",
+   "dpi": 150,
+   "pdf_sha256": "add86ed65ac9dbf007352a11ad102089c2225087d9a79f7cd4a8d75b2946a2ff",
+   "text_layer": " viii.          Recovery test.\n\n      ix.       Containment leak test.\n\nReference for the qualification of the cleanrooms and clean air equipment can be found in the ISO\n14644 series of standards.\n\n4.26 Cleanroom classification is part of the cleanroom qualification and is a method of assessing the\nlevel of air cleanliness against a specification for a cleanroom or clean air equipment by measuring\nthe total particle concentration. Classification activities should be scheduled and performed in order\nto avoid any impact on process or product quality. For example, initial classification should be\nperformed during simulated operations and reclassification performed during simulated operations or\nduring aseptic process simulation (APS).\n\n4.27 For cleanroom classification, the total of particles equal to or greater than 0.5 and 5 µm should\nbe measured. This measurement should be performed both at rest and in simulated operations in\naccordance with the limits specified in Table 1.\n\n\nTable 1: Maximum permitted total particle concentration for classification\n\n\n                         Maximum limits for total particle           Maximum limits for total particle\n\n            Grade                      ≥ 0.5 µm/m3                                  ≥ 5 µm/m3\n\n                             at rest            in operation              at rest           in operation\n\n               A              3 520                   3 520          Not specified (a)     Not specified (a)\n\n               B              3 520                  352 000         Not specified (a)          2 930\n\n               C             352 000              3 520 000               2 930                 29 300\n\n                            3 520 000               Not                   29 300                Not\n               D\n                                              predetermined (b)                           predetermined (b)\n\n(a)\n    Classification including 5µm particles may be considered where indicated by the CCS or\nhistorical trends.\n(b)\n    For grade D, in operation limits are not predetermined. The manufacturer should establish in\noperation limits based on a risk assessment and routine data where applicable.\n\n4.28 For classification of the cleanroom, the minimum number of sampling locations and their\npositioning can be found in ISO 14644 Part 1. For the aseptic processing area and the background\nenvironment (the grade A and grade B areas, respectively), additional sample locations should be\nconsidered and all critical processing areas such as the point of fill and container closure feeder bowls\nshould be evaluated. Critical processing locations should be determined by documented risk\nassessment and knowledge of the process and operations to be performed in the area.\n\n4.29 Cleanroom classification should be carried out in the “at rest” and “in operation” states.\n\n            i. The definition of “at rest” state is the condition whereby the installation of all the utilities is\n               complete including any functioning HVAC, with the main manufacturing equipment installed\n               as specified but not operating and without personnel present in the room.\n\n\n\n\n                                                              12\n",
+   "next_page_text": "    ii. The definition of “in operation” state is the condition where the installation of the cleanroom\n        is complete, the HVAC system fully operational, equipment installed and functioning in the\n        manufacturer’s defined operating mode with the maximum number of personnel present\n        performing or simulating routine operational work.\n\n   iii. The total particle limits given in Table 1 above for the “at rest” state should be achieved after\n        a “clean up” period on completion of operations and line clearance/cleaning activities. The\n        \"clean up\" period (guidance value of less than 20 minutes) should be determined during the\n        qualification of the rooms, documented and adhered to in procedures to reinstate a qualified\n        state of cleanliness if disrupted during operation.\n\n4.30 The speed of air supplied by unidirectional airflow systems should be clearly justified in the\nqualification protocol including the location for air speed measurement. Air speed should be designed,\nmeasured and maintained to ensure that appropriate unidirectional air movement provides protection\nof the product and open components at the working position (e.g. where high-risk operations occur\nand where product and/or components are exposed). Unidirectional airflow systems should provide a\nhomogeneous air speed in a range of 0.36 – 0.54 m/s (guidance value) at the working position, unless\notherwise scientifically justified in the CCS. Airflow visualization studies should correlate with the air\nspeed measurement.\n\n4.31 The microbial contamination level of the cleanrooms should be determined as part of the\ncleanroom qualification. The number of sampling locations should be based on a documented risk\nassessment and the results obtained from room classification, air visualization studies and knowledge\nof the process and operations to be performed in the area. The maximum limits for microbial\ncontamination during qualification for each grade are given in Table 2. Qualification should include\nboth “at rest” and “in operation” states.\n\nTable 2: Maximum permitted microbial contamination level during qualification\n\n                                                      Settle plates                 Contact plates\n        Grade             Air sample                 (diameter 90 mm)                (diameter 55\n                           CFU/m3                     CFU/4 hours (a)               mm) CFU/plate\n           A                                           No growth\n\n           B                      10                             5                          5\n           C                     100                             50                         25\n           D                     200                            100                         50\n\n(a) Settle plates should be exposed for the duration of operations and changed as required after a maximum\nof 4 hours. Exposure time should be based on recovery studies and should not allow desiccation ",
+   "plant_scope": [
+    "INJ"
+   ]
+  },
+  {
+   "id": "eu-20220825_gmp-an1_en_0.pdf:14",
+   "source": "eu-20220825_gmp-an1_en_0.pdf",
+   "page": 14,
+   "image": "work/vision-pages/eu-20220825_gmp-an1_en_0-p014.png",
+   "image_sha256": "e85f518d0e8df8d16ab7971f1266d66d34e8780abc2ab032ff3183ef1baab300",
+   "dpi": 150,
+   "pdf_sha256": "add86ed65ac9dbf007352a11ad102089c2225087d9a79f7cd4a8d75b2946a2ff",
+   "text_layer": "    ii. The definition of “in operation” state is the condition where the installation of the cleanroom\n        is complete, the HVAC system fully operational, equipment installed and functioning in the\n        manufacturer’s defined operating mode with the maximum number of personnel present\n        performing or simulating routine operational work.\n\n   iii. The total particle limits given in Table 1 above for the “at rest” state should be achieved after\n        a “clean up” period on completion of operations and line clearance/cleaning activities. The\n        \"clean up\" period (guidance value of less than 20 minutes) should be determined during the\n        qualification of the rooms, documented and adhered to in procedures to reinstate a qualified\n        state of cleanliness if disrupted during operation.\n\n4.30 The speed of air supplied by unidirectional airflow systems should be clearly justified in the\nqualification protocol including the location for air speed measurement. Air speed should be designed,\nmeasured and maintained to ensure that appropriate unidirectional air movement provides protection\nof the product and open components at the working position (e.g. where high-risk operations occur\nand where product and/or components are exposed). Unidirectional airflow systems should provide a\nhomogeneous air speed in a range of 0.36 – 0.54 m/s (guidance value) at the working position, unless\notherwise scientifically justified in the CCS. Airflow visualization studies should correlate with the air\nspeed measurement.\n\n4.31 The microbial contamination level of the cleanrooms should be determined as part of the\ncleanroom qualification. The number of sampling locations should be based on a documented risk\nassessment and the results obtained from room classification, air visualization studies and knowledge\nof the process and operations to be performed in the area. The maximum limits for microbial\ncontamination during qualification for each grade are given in Table 2. Qualification should include\nboth “at rest” and “in operation” states.\n\nTable 2: Maximum permitted microbial contamination level during qualification\n\n                                                      Settle plates                 Contact plates\n        Grade             Air sample                 (diameter 90 mm)                (diameter 55\n                           CFU/m3                     CFU/4 hours (a)               mm) CFU/plate\n           A                                           No growth\n\n           B                      10                             5                          5\n           C                     100                             50                         25\n           D                     200                            100                         50\n\n(a) Settle plates should be exposed for the duration of operations and changed as required after a maximum\nof 4 hours. Exposure time should be based on recovery studies and should not allow desiccation of the\nmedia used.\n\nNote 1: All methods indicated for a specific grade in the table should be used for qualifying the area of\nthat specific grade. If one of the methods tabulated is not used, or alternative methods are used, the\napproach taken should be appropriately justified.\n\nNote 2: Limits are applied using CFU throughout the document. If different or new technologies are\nused that present results in a manner different from CFU, the manufacturer should scientifically justify\nthe limits applied and where possible correlate them to CFU.\n\nNote 3: For the qualification of personnel gowning, the limits given for contact plates and glove prints in\nTable 6 should apply.\n\nNote 4: Sampling methods should not pose a risk of contamination to the manufacturing operations.\n\n\n                                                     13\n",
+   "next_page_text": "4.32 The requalification of cleanrooms and clean air equipment should be carried out periodically\nfollowing defined procedures. The requalification should include at a minimum the following:\n\n         - Cleanroom classification (total particle concentration).\n\n         - Integrity test of final filters.\n\n         - Airflow volume measurement.\n\n         - Verification of air pressure difference between rooms.\n\n         - Air velocity test (Note: For grade B, C and D the air velocity test should be performed\n         according to a risk assessment documented as part of the CCS. However, it is required for filling\n         zones supplied with unidirectional airflow (e.g. when filling terminally sterilised products or\n         background to grade A and RABS). For grades with non-unidirectional airflow, a measurement\n         of recovery testing should replace velocity testing).\n\nThe maximum time interval for requalification of grade A & B areas, is 6 months.\nThe maximum time interval for requalification of grade C & D areas, is 12 months.\n\nAppropriate requalification consisting of at least the above tests should also be carried out following\ncompletion of remedial action implemented to rectify an out of compliance equipment or facility\ncondition or after changes to equipment, facility or processes as appropriate. The significance of a\nchange should be determined through the change management process. Examples of changes to be\nconsidered include but are not limited to the following:\n\n    i.      Interruption of air movement which affects the operation of the installation.\n\n   ii.      Change in the design of the cleanroom or of the operational setting parameters of the\n            HVAC system.\n\n  iii.      Special maintenance which affects the operation of the installation (e.g. change of final\n            filters).\n\n\nDisinfection\n\n4.33 The disinfection of cleanrooms is particularly important. They should be cleaned and disinfected\nthoroughly in accordance with a written programme. For disinfection to be effective, prior cleaning to\nremove surface contamination should be performed. Cleaning programmes should effectively remove\ndisinfectant residues. More than one type of disinfecting agent should be employed to ensure that\nwhere they have different modes of action, their combined usage is effective against bacteria and\nfungi. Disinfection should include the periodic use of a sporicidal agent. Monitoring should be\nundertaken regularly in order to assess the effectiveness of the disinfection programme and to detect\nchanges in types of microbial flora (e.g. organisms resistant to the disinfection regime currently in\nuse).\n\n4.34 The disinfection process should be validated. Validation studies should demonstrate the\nsuitability and effectiveness of disinfectants in the specific manner in which they are used and on the\ntype of surface material, or representative material if justified, and should support the in-use expiry\nperiods of prepared solutions.\n\n4.35",
+   "plant_scope": [
+    "INJ"
+   ]
+  },
+  {
+   "id": "eu-20220825_gmp-an1_en_0.pdf:22",
+   "source": "eu-20220825_gmp-an1_en_0.pdf",
+   "page": 22,
+   "image": "work/vision-pages/eu-20220825_gmp-an1_en_0-p022.png",
+   "image_sha256": "381d8817b4c11052368a59e77e1d0ed5d0c14a444dbf00a3e2123c722ba9432e",
+   "dpi": 150,
+   "pdf_sha256": "add86ed65ac9dbf007352a11ad102089c2225087d9a79f7cd4a8d75b2946a2ff",
+   "text_layer": "clothing may damage fibres and increase the risk of shedding of particles. After washing and before\npacking, garments should be visually inspected for damage and visual cleanliness. The garment\nmanagement processes should be evaluated and determined as part of the garment qualification\nprogramme and should include a maximum number of laundry and sterilisation cycles.\n\n7.18 Activities in clean areas that are not critical to the production processes should be kept to a\nminimum, especially when aseptic operations are in progress. Movement of personnel should be\nslow, controlled and methodical to avoid excessive shedding of particles and organisms due to\nover-vigorous activity. Operators performing aseptic operations should adhere to aseptic technique\nat all times to prevent changes in air currents that may introduce air of lower quality into the critical\nzone. Movement adjacent to the critical zone should be restricted and the obstruction of the path of\nthe unidirectional (first air) airflow should be avoided. A review of airflow visualisation studies\nshould be considered as part of the training programme.\n\n\n8 Production and Specific Technologies\n\nTerminally sterilised products\n\n8.1 Preparation of components and materials should be performed in at least a grade D\ncleanroom in order to limit the risk of microbial, endotoxin/pyrogen and particle contamination, so\nthat the product is suitable for sterilisation. Where the product is at a high or unusual risk of\nmicrobial contamination (e.g. the product actively supports microbial growth, the product must be\nheld for long periods before filling or the product is not processed mostly in closed vessels), then\npreparation should be carried out in at least a grade C environment. Preparation of ointments,\ncreams, suspensions and emulsions should be carried out in at least a grade C environment before\nterminal sterilisation. Specific guidance regarding terminally sterilised veterinary medicinal products\ncan be found within Annex 4 of the GMP guidelines.\n\n8.2 Primary packaging containers and components should be cleaned using validated processes to\nensure that particle, endotoxin/pyrogen and bioburden contamination is appropriately controlled.\n\n8.3 Filling of products for terminal sterilisation should be carried out in at least a grade C\nenvironment.\n\n8.4 Where the CCS identifies that the product is at an unusual risk of contamination from the\nenvironment because, for example, the filling operation is slow, the containers are wide necked or are\nnecessarily exposed for more than a few seconds before closing, then the product should be filled in\ngrade A with at least a grade C background.\n\n8.5 Processing of the bulk solution should include a filtration step with a microorganism retaining\nfilter, where possible, to reduce bioburden levels and particles prior to filling into the final product\ncontainers and there should be a maximum permissible time between preparation and filling.\n\n8.6 Examples of operations to be carried out in the various grades are given in Table 3.\n\nTable 3: Examples of operations and grades for terminally sterilised preparation and\nprocessing operations\n\n       Grade A     -   Filling of products, when unusually at risk.\n       Grade C     -   Preparation of solutions, when unusually at risk.\n                   -   Filling of products.\n       Grade D     -   Preparation of solutions and components for subsequent filling.\n\n\n\n                                                    21\n",
+   "next_page_text": "Aseptic preparation and processing\n\n8.7 The aseptic process should be clearly defined. The risks associated with the aseptic process, and\nany associated requirements, should be identified, assessed and appropriately controlled. The site’s\nCCS should clearly define the acceptance criteria for these controls, requirements for monitoring and\nthe review of their effectiveness. Methods and procedures to control these risks should be described\nand implemented. Accepted residual risks should be formally documented.\n\n8.8 Precautions to minimize microbial, endotoxin/pyrogenic and particle contamination should be\ntaken, as per the site’s CCS, during the preparation of the aseptic environment, during all processing\nstages (including the stages before and after bulk product sterilisation), and until the product is sealed in\nits final container. The presence of materials liable to generate particles and fibres should be minimized\nin cleanrooms.\n\n8.9 Where possible, the use of equipment such as RABS, isolators or other systems, should be\nconsidered in order to reduce the need for critical interventions into grade A and to minimize the risk\nof contamination. Robotics and automation of processes can also be considered to eliminate direct\nhuman critical interventions (e.g. dry heat tunnel, automated lyophilizer loading, sterilisation in\nplace).\n\n8.10 Examples of operations to be carried out in the various environmental grades are given in Table 4.\n\nTable 4: Examples of operations and grades for aseptic preparation and processing operations\n\n                 -   Aseptic assembly of filling equipment.\n                 -   Connections made under aseptic conditions (where sterilised product contact\n                     surfaces are exposed) that are post the final sterilising grade filter. These\n                     connections should be sterilised by steam-in-place whenever possible.\n                 -   Aseptic compounding and mixing.\n                 -   Replenishment of sterile bulk product, containers and closures.\n    Grade A      -   Removal and cooling of unprotected (e.g. with no packaging) items from\n                     sterilisers.\n                 -   Staging and conveying of sterile primary packaging components in the aseptic\n                     filling line while not wrapped.\n                 -   Aseptic filling, sealing of containers such as ampoules, vial closure, transfer\n                     of open or partially stoppered vials.\n                 -   Loading of a lyophilizer.\n\n                 -   Background support for grade A (when not in an isolator).\n    Grade B      -   Conveying or staging, while protected from the surrounding environment, of\n                     equipment, components and ancillary items for introduction into grade A.\n\n    Grade C      -   Preparation of solutions to be filtered including sampling and dispensing.\n\n                 -   Cleaning of equipment.\n                 -   Handling of components, equipment and accessorie",
+   "plant_scope": [
+    "INJ"
+   ]
+  },
+  {
+   "id": "eu-20220825_gmp-an1_en_0.pdf:45",
+   "source": "eu-20220825_gmp-an1_en_0.pdf",
+   "page": 45,
+   "image": "work/vision-pages/eu-20220825_gmp-an1_en_0-p045.png",
+   "image_sha256": "d4b0b994c5ded1d6e9b6dfd3bbb919110d719b7f3713aa76c3d1b500eebd8aba",
+   "dpi": 150,
+   "pdf_sha256": "add86ed65ac9dbf007352a11ad102089c2225087d9a79f7cd4a8d75b2946a2ff",
+   "text_layer": "Environmental monitoring – total particle\n\n9.14 A total particle monitoring program should be established to obtain data for assessing potential\ncontamination risks and to ensure the maintenance of the environment for sterile operations in a\nqualified state.\n\n\n9.15 The limits for environmental monitoring of airborne particle concentration for each graded\narea are given in Table 5.\n\nTable 5: Maximum permitted total particle concentration for monitoring.\n\n                   Maximum limits for total particle           Maximum limits for total particle\n\n     Grade                       ≥ 0.5 μm/m3                                  ≥ 5 μm/m3\n\n                       at rest            in operation              at rest            in operation\n\n         A              3 520                   3 520                 29                    29\n\n         B              3 520                  352 000                29                   2 930\n\n         C            352 000               3 520 000               2 930                 29 300\n\n                     3 520 000                Not                   29 300                 Not\n         D\n                                        predetermined (a)                            predetermined (a)\n\n\n   (a)\n     For grade D, in operation limits are not predetermined. The manufacturer should establish in\n   operation limits based on a risk assessment and on routine data, where applicable.\n\n   Note 1: The particle limits given in the table for the “at rest” state should be achieved after a\n   short “clean up” period defined during qualification (guidance value of less than 20 minutes)\n   in an unmanned state, after the completion of operations (see paragraph 4.29).\n\n   Note 2: The occasional indication of macro particle counts, especially ≥ 5 µm, within grade A\n   may be considered to be false counts due to electronic noise, stray light, coincidence loss etc.\n   However, consecutive or regular counting of low levels may be indicative of a possible\n   contamination event and should be investigated. Such events may indicate early failure of the\n   room air supply filtration system, equipment failure, or may also be diagnostic of poor\n   practices during machine set-up and routine operation.\n\n9.16 For grade A, particle monitoring should be undertaken for the full duration of critical processing,\nincluding equipment assembly.\n\n9.17 The grade A area should be monitored continuously (for particles ≥0.5 and ≥5 µm) and with a\nsuitable sample flow rate (at least 28 litres (1ft3) per minute) so that all interventions, transient events\nand any system deterioration is captured. The system should frequently correlate each individual\nsample result with alert levels and action limits at such a frequency that any potential excursion can\nbe identified and responded to in a timely manner. Alarms should be triggered if alert levels are\nexceeded. Procedures should define the actions to be taken in response to alarms including the\nconsideration of additional microbial monitoring.\n\n9.18 It is recommended that a similar system be used for the grade B area although the sample\nfrequency may be decreased. The grade B area should be monitored at such a frequency and with\n\n\n\n                                                        44\n",
+   "next_page_text": "suitable sample size that the programme captures any increase in levels of contamination and system\ndeterioration. If alert levels are exceeded, alarms should be triggered.\n\n9.19 The selection of the monitoring system should take into account any risk presented by the\nmaterials used in the manufacturing operation (e.g. those involving live organisms, powdery\nproducts or radiopharmaceuticals) that may give rise to biological, chemical or radiation hazards.\n\n9.20 In the case where contaminants are present due to the processes involved and would potentially\ndamage the particle counter or present a hazard (e.g. live organisms, powdery products and radiation\nhazards), the frequency and strategy employed should be such as to assure the environmental\nclassification both prior to and post exposure to the risk. An increase in viable particle monitoring\nshould be considered to ensure comprehensive monitoring of the process. Additionally, monitoring\nshould be performed during simulated operations. Such operations should be performed at appropriate\nintervals. The approach should be defined in the CCS.\n\n9.21 The size of monitoring samples taken using automated systems will usually be a function of the\nsampling rate of the system used. It is not necessary for the sample volume to be the same as that\nused for formal classification of cleanrooms and clean air equipment. Monitoring sample volumes\nshould be justified.\n\nEnvironmental and personnel monitoring – viable particle\n\n9.22 Where aseptic operations are performed, microbial monitoring should be frequent using a\ncombination of methods such as settle plates, volumetric air sampling, glove, gown and surface\nsampling (e.g. swabs and contact plates). The method of sampling used should be justified within\nthe CCS and should be demonstrated not to have a detrimental impact on grade A and B airflow\npatterns. Cleanroom and equipment surfaces should be monitored at the end of an operation.\n\n9.23 Viable particle monitoring should also be performed within the cleanrooms when normal\nmanufacturing operations are not occurring (e.g. post disinfection, prior to start of manufacturing,\non completion of the batch and after a shutdown period), and in associated rooms that have not\nbeen used, in order to detect potential incidents of contamination which may affect the controls\nwithin the cleanrooms. In case of an incident, additional sample locations may be used as a\nverification of the effectiveness of a corrective action (e.g. cleaning and disinfection).\n\n9.24 Continuous viable air monitoring in grade A (e.g. air sampling or settle plates) should be\nundertaken for the full duration of critical processing, including equipment (aseptic set-up)\nassembly and critical processing. A similar approach should be considered for grade B cleanrooms\nbased on the risk of impact on the aseptic processing. The monitoring should be performed in such\na way that all interventions, transient events and any system deterioration would be captured ",
+   "plant_scope": [
+    "INJ"
+   ]
+  }
+ ]
+}

@@ -68,3 +68,40 @@ lead-in condition belongs to every row or list item under it; (2) footnote marke
 marker in "^" form ("Cumene^1"), so verifiers and checks agree; (3) coverage measure without running headers;
 (4) a strength rule for checklist rows without a modal verb (owner question: CDSCO "Specify/Whether" rows);
 (5) clause_number only as printed (the drafters composed references such as "Table 2 Note 1"; 52 clause findings with the strict clause check).
+
+## Re-run with the D46 fixes (31 October 2026)
+
+Run folder: `library/ai-runs/20261031T085231.217451Z-vision-draft/` (same 50 pages, new prompts: table quotes with
+their headers, lead-in conditions on every row, footnote marks "^1", clause numbers only as printed, checklist rows
+mandatory; checks after two more independent review rounds). Models recorded in `agents.json`.
+
+| Measure | First run | Re-run |
+|---|---|---|
+| Items | 481 | 522 |
+| Quote in both readings (strict) | 424 (88 %) | 441 (84 %) |
+| Verified sample (same 5 documents) | 236 items | 246 items |
+| Both verifiers correct | 223 (94.5 %) | **231 (93.9 %)** |
+| Both incorrect | 5 (Q3C Class 1 rows without the lead-in condition) | **2** (Q3C 11#3: "do not use Class 1 solvents" without the exception in the next sentence; CP 7356.002 21#4: a bare topic "Quarantine products" turned into a requirement) |
+| Disagreements | 8 | 13: 9 Q3C Table 2 rows on p13 whose header the drafter carried over from p12 (B: header not printed on p13); 2 CDSCO rows with an added "where fumigation is done"; EU 45#16 runs over (next-page text cut in the batch); WHO 19#17 note on grades B-D |
+| Lead-in check | (new) | 10 flags: 5 EU p12 ("where relevant to the design/operation" shortened), 5 Q3C p11 rows whose statements paraphrase the condition below the 80 % word share (the verifiers accepted them): strict, never a silent pass |
+| Coverage gaps | 28 | 39 |
+
+**Confirmed:** the 5 Q3C Class 1 table-row errors are gone in the verifiers' view; the drafter now carries the
+lead-in condition into each row.
+**Not confirmed:** the false coverage gaps are not gone. Of the 39, 4 are table captions read as sentences and most
+of the rest are descriptive "may" sentences ("inspection coverage may include", "amines may be present") that
+`obligations.py` counts as permissive obligations; a few look real (Schedule M p156 self-inspection procedure,
+p163 balances; "4.34 The disinfection process should be validated." on PE 009 p22 and WHO 1044 p20; PE 009 p18
+gloves): to inspect before scaling.
+**Quote failures (81):** 64 are table quotes, 44 of them header-carrying quotes, where drafters joined two header rows
+into combined phrases (the prompt now says to quote every header row in order; drafted before that line was
+added), CDSCO rows quoted without their long rating columns, and Q3C Table 2 rows with a header from the page
+before. They go to the "text layer differs" list.
+**Usage:** drafting about 830 k tokens (about 17 k per page, 1.6 k per item); verifiers about 742 k for 246 items
+(3.0 k per item).
+
+**Proposed before scaling:** (1) coverage counts "may" sentences only when they grant a permission to the site
+(not descriptive "may"), and table captions are excluded; (2) a continued table's header is quoted from the page
+where it is printed, with the page given; (3) the batch passes the whole next page when a quote runs over;
+(4) the residual the checks cannot see (an exception in the following sentence of running text, a bare topic made
+into a requirement) stays with the two verifiers and the spot check.

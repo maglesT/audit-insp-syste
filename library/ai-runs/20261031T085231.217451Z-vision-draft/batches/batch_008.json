@@ -1,0 +1,282 @@
+{
+ "instructions": "You read pages of a pharmaceutical GMP text and list the obligations printed on them. For each page you get the\nrendered page IMAGE (open it with your Read tool: the image is the truth) and the page's TEXT LAYER (extracted\ntext, which can be wrong: superscripts flattened, table cells merged, landscape pages, lost symbols). Your output\nis checked by software against two text readings of the page and by independent reviewers, so precision matters\nmore than wording.\n\nList each separate obligation printed on the page as its own item, so that together your items cover every\nobligation on the page (body text, list items, table rows and footnotes that require something). One obligation\nis one thing a site must, should or may do, with all its conditions, numbers and qualifiers; do not split one\nobligation across items. A sentence that starts on this page and ends on the next is drafted here (runs_over true;\nthe next page's text is given). A sentence that started on the previous page is not drafted again.\nFor each item:\n- statement: the obligation in your own plain English words, as one checklist item a site could be audited\n  against. Do not copy more than a few words in a row. Keep every condition (\"where\", \"if\", \"unless\", \"before\")\n  and every number. Do not add anything the page does not say.\n- quote: the exact span of the page that states the whole obligation, copied as printed, character for\n  character from the TEXT LAYER where the text layer is right (it is matched against the page by software; do not\n  fix typos or change punctuation). For a table row, quote the column header cells joined with \" | \", then\n  \" || \", then the row's cells joined with \" | \", starting with the row's first cell (its label), e.g.\n  \"Grade | Air sample CFU/m3 || B | 10\". Write a footnote mark printed after a word as \"^\" and the mark\n  (\"Cumene^1\", \"specified^a\"); a power of ten as \"10^7\" or \"10^-6\".\n- clause_number: the number exactly as printed for the clause or row (\"9.3\", \"4.22 iii\", \"Table 2\", \"4.19\"),\n  \"\" if none. Do not compose references that are not printed (\"Table 2 Note 1\", \"Table 1 Grade B\").\n- strength: \"mandatory\" for shall / must / is required / may not; \"recommended\" for should; \"optional\" for may.\n  Take it from the main verb of the quoted words, not from words in a condition. A row of an inspection\n  checklist (\"Specify ...\", \"Whether ...\", no modal verb) is \"mandatory\": inspectors grade sites against it.\n- plant_types: from OSD (oral solid dosage), LIQ (oral liquids), SEMI (semisolids), INJ (sterile injectables), API\n  (active substances); the plant scope given with the page unless the page itself narrows it.\n- numbers: every number, limit, frequency or period in the quote, as printed in the image (10⁷ written \"10^7\").\n- condition: the condition or trigger of the obligation in a few words, \"\" if none. A condition stated in a\n  lead-in belongs to every table row or list item under it: \"if their use is unavoidable ... levels should be\n  restricted as shown in Table 1, unless otherwise justified\" applies to each row of Table 1, so each row's\n  statement and condition carry it.\n- topic: the sub-topic id from TOPICS the obligation belongs to (an audit area).\n- runs_over: true when the quote continues on the next page.\n- text_layer_differs: \"\" normally. If the image shows something the text layer gets wrong inside your quote\n  (a superscript \"10^7\" printed as \"107\", a symbol lost, cells of two rows merged, words in another order), quote\n  what the image shows and describe the difference here in one sentence.\n\nObligation sentences on the page that are not drafted (a heading, a definition, an example, text that only\ndescribes, a sentence that started on the previous page) go in not_applicable: the first 8 or more words of the\nsentence copied from the text layer, and the reason in a few words. Running headers, footers and page numbers are\nignored.\n\nWrite the answers file named in your task: {\"answers\": [one object per page with \"page\" set to the page id]}.\n",
+ "topics": [
+  "QS.PQS",
+  "QS.MGMT",
+  "QS.QRM",
+  "QS.PQR",
+  "QS.CHANGE",
+  "QS.DEV",
+  "QS.CAPA",
+  "PER.ORG",
+  "PER.KEY",
+  "PER.TRAIN",
+  "PER.HYG",
+  "PER.GOWN",
+  "PREM.DESIGN",
+  "PREM.PROD",
+  "PREM.STORE",
+  "PREM.QC",
+  "PREM.ANC",
+  "EQ.DESIGN",
+  "EQ.MAINT",
+  "EQ.CLEAN",
+  "EQ.CAL",
+  "DOC.SYS",
+  "DOC.SPEC",
+  "DOC.MFR",
+  "DOC.BMR",
+  "DOC.SOP",
+  "DOC.RET",
+  "MAT.SUPP",
+  "MAT.RECV",
+  "MAT.SAMP",
+  "MAT.STATUS",
+  "MAT.PACK",
+  "MAT.REJ",
+  "PROD.GEN",
+  "PROD.XCONT",
+  "PROD.IPC",
+  "PROD.YIELD",
+  "PROD.PACK",
+  "PROD.REWORK",
+  "QC.GEN",
+  "QC.SAMP",
+  "QC.TEST",
+  "QC.OOS",
+  "QC.STAB",
+  "QC.REF",
+  "QC.MICRO",
+  "VAL.PLAN",
+  "VAL.QUAL",
+  "VAL.PROC",
+  "VAL.CLEAN",
+  "VAL.METH",
+  "CSV.VAL",
+  "CSV.ACCESS",
+  "CSV.AUDIT",
+  "CSV.ESIG",
+  "CSV.DI",
+  "UTIL.WATER",
+  "UTIL.HVAC",
+  "UTIL.GAS",
+  "CCS.STRAT",
+  "CCS.EM",
+  "CCS.CLEAN",
+  "CCS.PEST",
+  "STER.GRADE",
+  "STER.ASEPT",
+  "STER.APS",
+  "STER.STERIL",
+  "STER.FILT",
+  "STER.CCI",
+  "STER.LYO",
+  "API.START",
+  "API.PROC",
+  "API.IMP",
+  "API.SOLV",
+  "OUT.CONTRACT",
+  "OUT.AGREE",
+  "CMP.COMPL",
+  "CMP.RECALL",
+  "CMP.REPORT",
+  "SI.PROG",
+  "SI.TEAM",
+  "SI.REPORT",
+  "SI.FOLLOW",
+  "DIST.STORE",
+  "DIST.TRANS",
+  "DIST.RETURN",
+  "REL.QP",
+  "REL.REVIEW"
+ ],
+ "schema": {
+  "type": "object",
+  "required": [
+   "page",
+   "items",
+   "not_applicable"
+  ],
+  "properties": {
+   "page": {
+    "type": "string"
+   },
+   "items": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "statement",
+      "quote",
+      "clause_number",
+      "strength",
+      "plant_types",
+      "numbers",
+      "condition",
+      "topic",
+      "runs_over",
+      "text_layer_differs"
+     ],
+     "properties": {
+      "statement": {
+       "type": "string"
+      },
+      "quote": {
+       "type": "string"
+      },
+      "clause_number": {
+       "type": "string"
+      },
+      "strength": {
+       "enum": [
+        "mandatory",
+        "recommended",
+        "optional"
+       ]
+      },
+      "plant_types": {
+       "type": "array",
+       "items": {
+        "enum": [
+         "OSD",
+         "LIQ",
+         "SEMI",
+         "INJ",
+         "API"
+        ]
+       }
+      },
+      "numbers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "condition": {
+       "type": "string"
+      },
+      "topic": {
+       "type": "string"
+      },
+      "runs_over": {
+       "type": "boolean"
+      },
+      "text_layer_differs": {
+       "type": "string"
+      }
+     }
+    }
+   },
+   "not_applicable": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "text",
+      "reason"
+     ],
+     "properties": {
+      "text": {
+       "type": "string"
+      },
+      "reason": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  }
+ },
+ "pages": [
+  {
+   "id": "fda-guidance-nitrosamine-control-2024.pdf:10",
+   "source": "fda-guidance-nitrosamine-control-2024.pdf",
+   "page": 10,
+   "image": "work/vision-pages/fda-guidance-nitrosamine-control-2024-p010.png",
+   "image_sha256": "c23603d56eb3a32f5d54e366a50c4810aed778f5f1cd5e4b325eb3e54c512f95",
+   "dpi": 150,
+   "pdf_sha256": "f8afe14c18104405a1c42d374155dcfd6f2202c1e891d6e89d9f3458ac06e2a9",
+   "text_layer": "                               Contains Nonbinding Recommendations\n\n\non Cancer. 19 They are referred to as cohort of concern compounds in the International Council\nfor Harmonisation of Technical Requirements for Pharmaceuticals for Human Use (ICH)\nguidance for industry M7(R2) Assessment and Control of DNA Reactive (Mutagenic) Impurities\nin Pharmaceuticals to Limit Potential Carcinogenic Risk (July 2023). ICH M7(R2) recommends\ncontrol of any known mutagenic carcinogen, such as nitroso-compounds, at or below a level such\nthat there would be a negligible human cancer risk associated with the exposure to the\ncompound.\n\n        1.       Small-Molecule Nitrosamines\n\nSeveral small-molecule nitrosamine impurities could be present in APIs and/or drug products,\nincluding N-nitrosodimethylamine (NDMA), N-nitrosodiethylamine (NDEA), N-\nnitrosomethylphenylamine (NMPA), N-nitrosodiisopropylamine (NDIPA), N-\nnitrosoisophenylethylamine (NIPEA), N-nitrosodibutylamine (NDBA), and N-nitroso-N-methyl-4-\naminobutyric acid (NMBA) (see Figure 2).\n\nFigure 2. Chemical Structures of Potential Small-Molecule Nitrosamine Impurities in APIs\nand Drug Products\n\n\n\n\n19\n  See the International Agency for Research on Cancer Monographs on the Identification of Carcinogenic Hazards\nto Humans web page at https://monographs.iarc.who.int/list-of-classifications.\n\n                                                       5\n",
+   "next_page_text": "                                   Contains Nonbinding Recommendations\n\n\n\n\n           2.       NDSRIs\n\nNDSRIs are a class of nitrosamines sharing structural similarity to the API (having the API or an\nAPI fragment in the chemical structure) and are generally unique to each API. NDSRIs form\nthrough nitrosation of APIs (or API fragments) that have secondary, tertiary, or quaternary amines\nwhen exposed to nitrosating compounds such as nitrite impurities in excipients. Figure 3 shows the\nrepresentative reaction of an API containing a secondary amine functional group in its structure\nwith nitrite under acidic conditions.\n\nFigure 3. Representative Reaction of NDSRI Formation\n\n                                                        -   +\n                                                   NO2 /H\n                         API        N      H                     API        N      N       O\n                                                    N       O\n\n\n\n\n           B.       Root Causes of the Presence of Small-Molecule Nitrosamine Impurities in\n                    APIs\n\nInformation gathered by FDA suggests several general root causes of the presence of nitrosamine\nimpurities in APIs.\n\n           1.       General Conditions That Lead to Nitrosamine Formation\n\nFormation of nitrosamines is possible in the presence of secondary, tertiary, or quaternary amines 20\nand nitrite salts 21 under acidic reaction conditions. Under these conditions, nitrite salts may form\nnitrous acid, which can react with an amine to form a nitrosamine (see Figure 1). There is a greater\nrisk of nitrosamine formation if nitrous acid is used to quench residual azide (a reagent commonly\nused in tetrazole ring formation or introduction of azide functional group into a molecule) in the\npresence of precursor amines.\n\n\n\n20\n     Secondary and tertiary amines may be present as impurities or degradants of quaternary ammonium salts.\n21\n     Secondary, tertiary, and quaternary amines and nitrite also can be called nitrosamine precursors.\n\n                                                            6\n",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-guidance-nitrosamine-control-2024.pdf:11",
+   "source": "fda-guidance-nitrosamine-control-2024.pdf",
+   "page": 11,
+   "image": "work/vision-pages/fda-guidance-nitrosamine-control-2024-p011.png",
+   "image_sha256": "6b2ea9878ae957bb5ca34318c76d6522171a00c96c857b2cc1b622cdfaa8408e",
+   "dpi": 150,
+   "pdf_sha256": "f8afe14c18104405a1c42d374155dcfd6f2202c1e891d6e89d9f3458ac06e2a9",
+   "text_layer": "                                   Contains Nonbinding Recommendations\n\n\n\n\n           2.       NDSRIs\n\nNDSRIs are a class of nitrosamines sharing structural similarity to the API (having the API or an\nAPI fragment in the chemical structure) and are generally unique to each API. NDSRIs form\nthrough nitrosation of APIs (or API fragments) that have secondary, tertiary, or quaternary amines\nwhen exposed to nitrosating compounds such as nitrite impurities in excipients. Figure 3 shows the\nrepresentative reaction of an API containing a secondary amine functional group in its structure\nwith nitrite under acidic conditions.\n\nFigure 3. Representative Reaction of NDSRI Formation\n\n                                                        -   +\n                                                   NO2 /H\n                         API        N      H                     API        N      N       O\n                                                    N       O\n\n\n\n\n           B.       Root Causes of the Presence of Small-Molecule Nitrosamine Impurities in\n                    APIs\n\nInformation gathered by FDA suggests several general root causes of the presence of nitrosamine\nimpurities in APIs.\n\n           1.       General Conditions That Lead to Nitrosamine Formation\n\nFormation of nitrosamines is possible in the presence of secondary, tertiary, or quaternary amines 20\nand nitrite salts 21 under acidic reaction conditions. Under these conditions, nitrite salts may form\nnitrous acid, which can react with an amine to form a nitrosamine (see Figure 1). There is a greater\nrisk of nitrosamine formation if nitrous acid is used to quench residual azide (a reagent commonly\nused in tetrazole ring formation or introduction of azide functional group into a molecule) in the\npresence of precursor amines.\n\n\n\n20\n     Secondary and tertiary amines may be present as impurities or degradants of quaternary ammonium salts.\n21\n     Secondary, tertiary, and quaternary amines and nitrite also can be called nitrosamine precursors.\n\n                                                            6\n",
+   "next_page_text": "                                 Contains Nonbinding Recommendations\n\n\nNitrites used as reagents in one step can carry over into subsequent steps, despite purification\noperations, and react with amines to generate nitrosamine impurities. Therefore, whenever nitrite\nsalts are present, carryover into subsequent steps cannot be ruled out. In general, processes that use\nnitrites in the presence of secondary, tertiary, or quaternary amines are at risk of generating\nnitrosamine impurities.\n\n         2.           Sources of Secondary, Tertiary, and Quaternary Amines That Can Form\n                      Nitrosamines\n\nAmines may be present in a manufacturing process for a variety of reasons. The API (or API\ndegradants), intermediates, or API raw materials 22 may contain secondary or tertiary amine\nfunctional groups. Tertiary and quaternary amines may also be added intentionally as reagents or\ncatalysts. All of these types of amines can react with nitrous acid or other nitrosating agents to\nform nitrosamines (Smith and Loeppky 1967; Fiddler et al. 1972; Gillatt et al. 1984).\n\nAmide solvents, which are susceptible to degradation under certain reaction conditions, are another\nsource of secondary amines. For example, under high reaction temperatures for an extended\nreaction period, N,N-dimethylformamide can degrade into dimethylamine, which can react with\nnitrous acid to form NDMA (see Figure 4). N-methylpyrrolidone, N,N-dimethylacetamide, and\nN,N-diethylacetamide also have similar degradation pathways to form secondary amines that can\nreact with nitrous acid to form nitrosamine impurities. Secondary amines could also be present as\nimpurities in amide solvents. For example, dimethylamine, which can react with nitrous acid to\nform NDMA, may exist as an impurity in N,N-dimethylformamide.\n\nFigure 4. Formation of NDMA From N,N-Dimethylformamide\n                  O\n\n\n                  C       N                                            H+\n                                            NH          + NaNO2                     N      N\n              H\n                                                        Sodium Nitrite         O\n\n              Dimethylformamide          Dimethylamine                           N-Nitrosodimethylamine\n\n\n\nTertiary and quaternary amines used as reagents in the synthesis of APIs may contain other amine\nimpurities. Tertiary amines, such as triethylamine, have been shown to contain low levels of other\nsecondary amines (such as dipropylamine and isopropylethylamine). Secondary and tertiary\namines may be present as impurities or degradants formed by dealkylation of quaternary amines.\nFor example, a common phase-transfer catalyst, tetrabutylammonium bromide, may contain\ntributyl- and dibutylamine impurities. The amine impurity level that may lead to nitrosamine\nimpurities in the API is process-dependent and should be determined by each API manufacturer.\n\n\n\n\n22\n  For the purpose of this guidance, raw material is a general term used to mean starti",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-guidance-nitrosamine-control-2024.pdf:12",
+   "source": "fda-guidance-nitrosamine-control-2024.pdf",
+   "page": 12,
+   "image": "work/vision-pages/fda-guidance-nitrosamine-control-2024-p012.png",
+   "image_sha256": "8b68ebaa7fa9bc9033358d8a6c9127de978ee46cd178315a98701b4c448d8f42",
+   "dpi": 150,
+   "pdf_sha256": "f8afe14c18104405a1c42d374155dcfd6f2202c1e891d6e89d9f3458ac06e2a9",
+   "text_layer": "                                 Contains Nonbinding Recommendations\n\n\nNitrites used as reagents in one step can carry over into subsequent steps, despite purification\noperations, and react with amines to generate nitrosamine impurities. Therefore, whenever nitrite\nsalts are present, carryover into subsequent steps cannot be ruled out. In general, processes that use\nnitrites in the presence of secondary, tertiary, or quaternary amines are at risk of generating\nnitrosamine impurities.\n\n         2.           Sources of Secondary, Tertiary, and Quaternary Amines That Can Form\n                      Nitrosamines\n\nAmines may be present in a manufacturing process for a variety of reasons. The API (or API\ndegradants), intermediates, or API raw materials 22 may contain secondary or tertiary amine\nfunctional groups. Tertiary and quaternary amines may also be added intentionally as reagents or\ncatalysts. All of these types of amines can react with nitrous acid or other nitrosating agents to\nform nitrosamines (Smith and Loeppky 1967; Fiddler et al. 1972; Gillatt et al. 1984).\n\nAmide solvents, which are susceptible to degradation under certain reaction conditions, are another\nsource of secondary amines. For example, under high reaction temperatures for an extended\nreaction period, N,N-dimethylformamide can degrade into dimethylamine, which can react with\nnitrous acid to form NDMA (see Figure 4). N-methylpyrrolidone, N,N-dimethylacetamide, and\nN,N-diethylacetamide also have similar degradation pathways to form secondary amines that can\nreact with nitrous acid to form nitrosamine impurities. Secondary amines could also be present as\nimpurities in amide solvents. For example, dimethylamine, which can react with nitrous acid to\nform NDMA, may exist as an impurity in N,N-dimethylformamide.\n\nFigure 4. Formation of NDMA From N,N-Dimethylformamide\n                  O\n\n\n                  C       N                                            H+\n                                            NH          + NaNO2                     N      N\n              H\n                                                        Sodium Nitrite         O\n\n              Dimethylformamide          Dimethylamine                           N-Nitrosodimethylamine\n\n\n\nTertiary and quaternary amines used as reagents in the synthesis of APIs may contain other amine\nimpurities. Tertiary amines, such as triethylamine, have been shown to contain low levels of other\nsecondary amines (such as dipropylamine and isopropylethylamine). Secondary and tertiary\namines may be present as impurities or degradants formed by dealkylation of quaternary amines.\nFor example, a common phase-transfer catalyst, tetrabutylammonium bromide, may contain\ntributyl- and dibutylamine impurities. The amine impurity level that may lead to nitrosamine\nimpurities in the API is process-dependent and should be determined by each API manufacturer.\n\n\n\n\n22\n  For the purpose of this guidance, raw material is a general term used to mean starting materials, reagents, and\nsolvents intended for use in the production of intermediates or APIs.\n\n                                                          7\n",
+   "next_page_text": "                            Contains Nonbinding Recommendations\n\n\nThis list of the aforementioned sources is not exhaustive, as amine reagents can be used to mediate\na wide range of synthetic transformations. Manufacturers should evaluate other reagents containing\namine functional groups for potential risk of nitrosamine formation.\n\n       3.      Vendor-Sourced Raw Materials Containing Nitrosamine Impurities\n\nNitrosamine impurities can be introduced when vendor-sourced raw materials contain nitrosamines\nor precursors. The Agency has observed the following root causes of nitrosamine impurities in\nvendor-sourced materials:\n\n   •   Nitrosamines have been found in fresh solvents (ortho-xylene, toluene, and methylene\n       chloride) when impurities were carried over during transfer between storage vessels used in\n       the shipment of solvents.\n\n   •   Sodium nitrite is a known impurity in some starting materials (such as sodium azide) and\n       may be present and react with amines under acidic conditions to form nitrosamines.\n       Nitrate-containing raw materials, such as potassium nitrate, may contain nitrite impurities.\n       The amount of nitrite impurity that can be tolerated is process-dependent and should be\n       determined by each API manufacturer.\n\n   •   Secondary or tertiary amines have been reported as impurities in some raw materials (see\n       details in section III.B.2.) and in fresh solvents such as toluene.\n\n   •   API starting materials and API intermediates may be at risk through cross-contamination at\n       the manufacturing site if these materials are manufactured where nitrosamine impurities\n       can carry over from other processes.\n\nAwareness of the supply chain of API raw materials is an important factor in preventing\nnitrosamine impurities and cross-contamination of APIs. For example, without supplier\noversight, API manufacturers may not be aware of nitrosamine impurities or precursors in API\nstarting materials they have sourced from vendors; a manufacturer whose process is not normally\nsusceptible to nitrosamine formation may not realize that vendor-sourced material may have had\nimpurities introduced during production or transport.\n\n       4.      Recovered Solvents, Reagents, and Catalysts as Sources of Nitrosamine\n               Impurities\n\nRecovered materials such as solvents, reagents, and catalysts may pose a risk of nitrosamine\nimpurities due to the presence of residual amines (such as trimethylamine or\ndiisopropylethylamine). If the recovery process involves a quenching step (i.e., nitrous acid used to\ndecompose residual azide), nitrosamines could form during solvent recovery. These nitrosamines\nmay be entrained if they have boiling points or solubility properties similar to the recovered\nmaterials, depending on how recovery and subsequent purification takes place (e.g., aqueous\nwashes or distillation). This further increases the risk of nitrosamines in material recovery. For\n\n\n\n\n                          ",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-guidance-nitrosamine-control-2024.pdf:20",
+   "source": "fda-guidance-nitrosamine-control-2024.pdf",
+   "page": 20,
+   "image": "work/vision-pages/fda-guidance-nitrosamine-control-2024-p020.png",
+   "image_sha256": "afbc73ade24984249a165bf9ead9d14f613524e139fb77ef10ecf152130ec689",
+   "dpi": 150,
+   "pdf_sha256": "f8afe14c18104405a1c42d374155dcfd6f2202c1e891d6e89d9f3458ac06e2a9",
+   "text_layer": "                                Contains Nonbinding Recommendations\n\n\ndetected at levels that are higher than the recommended AI limits, FDA recommends that\nmanufacturers and applicants develop control strategies and/or design approaches to control\nNDSRIs within acceptable levels.\n\n         C.      Recommendations for API Manufacturers\n\nAlthough nitrosamines are not expected to form during the manufacture of the majority of APIs,\nall manufacturers of chemically synthesized APIs should take appropriate actions to mitigate the\nrisk of nitrosamine impurities in APIs where there is a potential for nitrosamine formation.\n\nAPI manufacturers should review their API manufacturing processes and conduct risk assessments\nto identify the potential for nitrosamine impurities. If a risk of nitrosamine impurities is identified,\nconfirmatory testing of batches should be performed using sensitive and appropriately validated\nmethods. If an appropriate risk assessment determines that there is no potential for nitrosamine\nimpurities, or a risk is identified but no nitrosamine is detected, there is no need to take further\naction. If a nitrosamine impurity is detected, API manufacturers should investigate the root cause.\nThey should implement appropriate follow-up actions, including changes in the manufacturing\nprocess to reduce or prevent nitrosamine impurities from forming (see section V.). 44 The Agency\nencourages API manufacturers to notify through the field alert reporting system if initial\nassessments and testing show nitrosamine formation in APIs that have been sold for use in the U.S.\nmarket and to inform drug product manufacturers that have been supplied the API lots so that they\ncan determine if a recall is warranted and contact the Agency, as appropriate, to prevent a drug\nshortage. 45\n\n         1.      Mitigating the Presence of Nitrosamine Impurities in APIs\n\nFDA recommends that API manufacturers take the following actions:\n\n     •   API manufacturers should optimize the design of the manufacturing process for APIs\n         during route of synthesis (ROS) development to minimize or prevent the formation of\n         nitrosamine impurities. API manufacturers should refer to the recommendations in ICH\n         M7(R2) and the ICH guidances for industry Q7 Good Manufacturing Practice Guidance\n         for Active Pharmaceutical Ingredients (September 2016) and Q11 Development and\n         Manufacture of Drug Substances (November 2012) in this respect. The following factors\n         should be considered during process development:\n\n         − Avoiding reaction conditions that may produce nitrosamines whenever possible;\n           when not possible, demonstrating that the process is adequately controlled and is\n           capable of consistently reducing nitrosamine impurities within the recommended AI\n           limits through appropriate and robust fate and purge studies\n\n         − Using bases other than secondary, tertiary, or quaternary amines (when possible) if\n           ROS conditions may form nitrosamines\n\n44\n  See section V.C. for reporting changes to approved applications and DMFs.\n45\n  See the guidance for industry Field Alert Report Submission: Questions and Answers (July 2021). The Center for\nDrug Evaluation and Research’s Drug Shortage Staff can be contacted at drugshortages@fda.hhs.gov.\n\n                                                       15\n",
+   "next_page_text": "                                  Contains Nonbinding Recommendations\n\n\n\n           − If possible, avoiding the use of amide solvents (e.g., N,N-dimethylformamide, N,N-\n             dimethylacetamide, and N-methylpyrrolidone), and when their use is unavoidable,\n             exercising caution including assessing whether nitrosamines can form\n\n           − Replacing nitrites with other quenching agents for azide decomposition processes\n\n           − Optimizing and consistently controlling the sequences of reactions, processes, and\n             reaction conditions (such as pH, temperature, and reaction time)\n\n           − Designing a manufacturing process that facilitates the purge of nitrosamine impurities\n             in the subsequent processing steps\n\n       •   API manufacturers should remove quenching steps (when there is a risk of nitrosamine\n           formation (e.g., using nitrous acid to decompose residual azide)) from the main reaction\n           mixture to reduce the risk of nitrosamine formation. The API, or an intermediate formed\n           through a reaction using an azide salt, can be separated from the mother liquor in the\n           organic phase. The aqueous waste phase separated from the organic phase should then be\n           quenched with nitrous acid without contacting the API, its intermediate, or solvents\n           intended for recovery.\n\n       •   API manufacturers should audit their supply chains and monitor them for any at-risk API\n           raw materials and intermediates. 46 API manufacturers should maintain records including\n           the name(s) of the raw material or intermediate supplier(s) and the raw material or\n           intermediate manufacturer(s) (if not the supplier), 47 and any repackers and distributors who\n           handle the materials before API manufacture. When appropriate, API manufacturers should\n           establish controls and consider additional specifications for at-risk materials to prevent\n           formation of nitrosamine impurities.\n\n       •   To avoid cross-contamination when recovered materials such as solvents, reagents, and\n           catalysts are used in the manufacturing process, API manufacturers should use recovered\n           material only in the same step or in an earlier step (if there is sufficient purification) of the\n           same process from which it was collected. The recovered materials should meet appropriate\n           standards before reuse. If the recovery of materials is outsourced to third-party contractors,\n           the API manufacturer should audit the contractors’ validation of cleaning procedures and\n           other controls. API manufacturers should follow recommendations in ICH Q7 to prevent\n           cross-contamination with nitrosamines or nitrosamine precursors. API manufacturers\n           should also verify with their suppliers whether the purchased materials used in their\n           processes are recovered.\n\n\n\n\n46\n     See section III.B. ",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-guidance-nitrosamine-control-2024.pdf:41",
+   "source": "fda-guidance-nitrosamine-control-2024.pdf",
+   "page": 41,
+   "image": "work/vision-pages/fda-guidance-nitrosamine-control-2024-p041.png",
+   "image_sha256": "671d4f267e56345f69aba2808a949f3b6fdc2c176b1f96b5970b20c9b26a1880",
+   "dpi": 150,
+   "pdf_sha256": "f8afe14c18104405a1c42d374155dcfd6f2202c1e891d6e89d9f3458ac06e2a9",
+   "text_layer": "                                Contains Nonbinding Recommendations\n\n\n                               APPENDIX A:\n    TIMELINE OF FDA INVESTIGATIONS REGARDING NITROSAMINE IMPURITIES\n\nThe following timeline details FDA’s investigations and actions regarding nitrosamine\nimpurities:\n\n     •   In June 2018, FDA was informed of the presence of an impurity identified as N-\n         nitrosodimethylamine (NDMA) in the angiotensin II receptor blocker valsartan. 1 Through\n         investigation, the Agency determined that numerous lots of valsartan and several other\n         angiotensin II receptor blocker drug products from different manufacturers and applicants\n         contained unacceptable levels of nitrosamines. The manufacturers and applicants\n         voluntarily recalled the affected batches of these drug products, 2 which led to a drug\n         shortage in some of the affected products. 3 In addition, FDA evaluated processes that use\n         amines that are common in API synthesis and learned that common synthetic pathways\n         could introduce other types of nitrosamine impurities besides NDMA.\n\n     •   In September 2019, FDA learned that some common heartburn products (ranitidine,\n         commonly known as Zantac, and nizatidine, commonly known as Axid) contained\n         unacceptable levels of NDMA. 4 FDA recommended that manufacturers and applicants\n         voluntarily recall ranitidine and nizatidine products with NDMA levels above those FDA\n         calculated using the methods in the International Council for Harmonisation of Technical\n         Requirements for Pharmaceuticals for Human Use guidance for industry M7(R2)\n         Assessment and Control of DNA Reactive (Mutagenic) Impurities in Pharmaceuticals to\n         Limit Potential Carcinogenic Risk (July 2023). 5,6,7 Preliminary findings from FDA stability\n         testing raised concerns that NDMA levels in some ranitidine products stored at room\n         temperature can increase with time to unacceptable levels. FDA’s preliminary results using\n         accelerated stability testing demonstrated that elevated levels of NDMA were measured in\n         products after 2 weeks. On April 1, 2020, FDA requested that all ranitidine products be\n         withdrawn from the U.S. market.\n\n     •   In December 2019, FDA became aware that some metformin diabetes medicines in other\n         countries were reported to have NDMA. In light of this information, FDA acquired samples\n         of metformin to test for NDMA. By February 2020, the Agency had identified NDMA in\n\n1\n  https://www.fda.gov/news-events/press-announcements/fda-statement-fdas-ongoing-investigation-valsartan-\nimpurities-and-recalls-and-update-fdas-current\n2\n  For a list of recalled products, see FDA’s Recalls, Market Withdrawals, & Safety Alerts web page at\nhttps://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts.\n3\n  See FDA’s web page on drug shortages at https://www.fda.gov/drugs/drug-safety-and-availability/drug-shortages\nand FDA’s list of recalled angiotensin II receptor blocker products at https://www.fda.gov/drugs/drug-safety-and-\navailability/search-list-recalled-angiotensin-ii-receptor-blockers-arbs-including-valsartan-losartan-and.\n4\n  https://www.fda.gov/drugs/drug-safety-and-availability/fda-updates-and-press-announcements-ndma-zantac-\nranitidine\n5\n  We update guidances periodically. For the most recent version of a guidance, check the FDA guidance web page at\nhttps://www.fda.gov/regulatory-information/search-fda-guidance-documents.\n6\n  https://www.fda.gov/news-events/press-announcements/statement-new-testing-results-including-low-levels-\nimpurities-ranitidine-drugs\n7\n  https://www.fda.gov/news-events/press-announcements/fda-statement-fdas-ongoing-investigation-valsartan-\nimpurities-and-recalls-and-update-fdas-current\n\n                                                       36\n",
+   "next_page_text": "                                Contains Nonbinding Recommendations\n\n\n        some samples but did not find levels exceeding the recommended acceptable intake (AI)\n        limit. In May 2020, further FDA testing revealed that certain lots of metformin extended-\n        release formulation contained NDMA above the Agency’s recommended AI limit. Based\n        on that testing, FDA requested that identified applicants voluntarily recall these lots of the\n        extended-release metformin.\n\n    •   In August 2020, FDA learned that two antibiotic drugs used to treat tuberculosis —\n        rifampin and rifapentine — contained 1-methyl-4-nitrosopiperazine (MNP) and 1-\n        cyclopentyl-4-nitrosopiperazine (CPNP), respectively. To avoid shortages and ensure\n        continued patient access to these necessary drugs, FDA did not object to manufacturers and\n        applicants distributing MNP-containing rifampin and CPNP-containing rifapentine until\n        they could reduce or eliminate these impurities.\n\n    •   In July 2021, FDA was informed that applicants were voluntarily recalling some batches of\n        the smoking cessation drug varenicline (commonly known as Chantix) because of the\n        potential presence of N-nitroso-varenicline, an NDSRI, above the recommended AI limit.\n        FDA did not object to manufacturers and applicants distributing varenicline tablets\n        containing N-nitroso-varenicline above FDA’s recommended AI limit, but below the\n        interim recommended AI limit, until they could eliminate the impurity or reduce it to\n        acceptable levels. 8 By August 2021, manufacturers were able to reduce levels in marketed\n        products to below FDA’s recommended AI limit.\n\n    •   In August 2022, FDA became aware of the NDSRI impurity 7-N-nitroso-3-\n        (trifluoromethyl)-5,6,7,8-tetrahydro[1,2,4]triazolo-[4,3-a]pyrazine (NTTP) in certain\n        samples of the antidiabetic drug sitagliptin. FDA encouraged manufacturers and applicants\n        to contact them if a marketed sitagliptin product had NTTP levels exceeding the\n        recommended AI limit. FDA determined on a case-by-case basis whether those drugs\n        should be released for distribution. 9\n\n\n\n\n8\n  https://www.fda.gov/drugs/drug-safety-and-availability/fda-updates-and-press-announcements-nitrosamine-\nvarenicline-chantix\n9\n  https://www.fda.gov/drugs/drug-safety-and-availability/fda-works-avoid-shortage-sitagliptin-following-detection-\nnitrosamine-impurity\n\n                                                        37\n",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  }
+ ]
+}

@@ -4,6 +4,7 @@
   python3 tools/pages/vision.py ingest-draft RUN                  # checks + measures -> RUN/items.jsonl, report.json
   python3 tools/pages/vision.py prepare-verify RUN [SOURCE ...]   # verifier A and B batches, one per document
   python3 tools/pages/vision.py ingest-verify RUN                 # verifier agreement -> RUN/verify-report.json
+  python3 tools/pages/vision.py record-model RUN ROLE MODEL       # which model answered drafting / verify_a / verify_b
 
 Each page is rendered to PNG at DPI with pypdfium2 (pinned in requirements.txt; image sha256 recorded) and its text
 layer taken with `pdftotext -layout`. A drafting agent gets, per page, the image path, the text layer, and the next
@@ -24,6 +25,10 @@ Checks on each item (deterministic, no AI):
              (layer1.number_found, word forms count)
   strength   the item's strength matches its quote's wording where the quote has one (layer1.strength_of)
   conditions condition wording in the quote has a counterpart in the statement (layer1.conditions_missing)
+  lead-in    a table row or list item states the scoping condition (if / where / when, unless, only) of the lead-in
+             that governs it (lead_in, D46): for a table row, an obligation sentence pointing to the row's table
+             ("Table n", from the page's caption, table_number)
+  strength   for an inspection checklist (layer1.INSPECTION_CHECKLISTS) a row without a modal verb is mandatory
 Coverage per page: every obligation sentence of the page's text layer (without running lines; obligations.py) has
 at least COVERED_SHARE of its words, and all its condition wording, in one item quote of that page or a carry-over
 quote of the page before, or is listed by the drafter as not applicable with a reason.
@@ -188,33 +193,11 @@ def _words(text):
     return re.findall(r"\w+", text.lower())
 
 
-EDGE = 3       # lines at the top and the bottom of a page where running headers and footers stand
-
-
-def _key(line):
-    """A line's key for running-line matching: digits masked only for a page-number line ("- 6 -", "Page 6 of 9")
-    or a footer of 4 or more words ("PE 009-18 (Annexes) -15- 24 September 2026"); a short body line such as
-    "6 months." must repeat exactly ("12 months." is another line)."""
-    line = re.sub(r"\s+", " ", line).strip().lower()
-    words = re.findall(r"[^\W\d_]+", line)
-    if len(line.split()) >= 4 or not [w for w in words if w not in ("page", "of")]:
-        return re.sub(r"\d+", "#", line)
-    return line
-
-
 def body(reader, source, pno):
-    """A page's text without its running lines: among its first and last EDGE non-empty lines, those that are
-    also among the first or last EDGE lines of the page before or after (digits masked, so "- 6 -" and "- 7 -" or
-    "Page 6" count; a body line, such as "6 months." ending a list, is never dropped)."""
-    def edges(p):
-        lines = [ln for ln in reader(source, p).splitlines() if ln.strip()] if p >= 1 else []
-        return lines, set(range(min(EDGE, len(lines)))) | set(range(max(len(lines) - EDGE, 0), len(lines)))
-    lines, edge = edges(pno)
-    near = set()
-    for p in (pno - 1, pno + 1):                              # edge lines of the neighbouring pages only
-        other, ks = edges(p)
-        near |= {_key(other[k]) for k in ks}
-    return "\n".join(ln for k, ln in enumerate(lines) if not (k in edge and _key(ln) in near))
+    """A page's text without its running lines (quotes.drop_running over the page and its neighbours)."""
+    pages = [[ln for ln in (reader(source, p).splitlines() if p >= 1 else []) if ln.strip()]
+             for p in (pno - 1, pno, pno + 1)]
+    return "\n".join(quotes.drop_running(pages)[1])
 
 
 def readings(reader, source, span):
@@ -223,22 +206,24 @@ def readings(reader, source, span):
             quotes.toks(" ".join(body(reader, source, p) for p in span))]
 
 
-def table_rows(source, pno, cache={}):
+def table_rows(source, pno, grouped=False, cache={}):
     """The rows of the ruled tables pdfplumber finds on a page: per row a list of (pdfminer cell text, cell box)
-    for its non-empty cells, in order."""
+    for its non-empty cells, in order; grouped: a list of tables, each a list of rows."""
     key = (source, pno)
     if key not in cache:
         import pdfplumber
-        rows = []
+        tables = []
         with pdfplumber.open(str(OFFICIAL / source)) as pdf:
             if pno <= len(pdf.pages):
                 page = pdf.pages[pno - 1]
                 for t in page.find_tables():
+                    rows = []
                     for r in t.rows:
                         cells = [(page.crop(b).extract_text() or "", b) for b in r.cells if b]
                         rows.append([(x, b) for x, b in cells if x.strip()])
-        cache[key] = rows
-    return cache[key]
+                    tables.append(rows)
+        cache[key] = tables
+    return cache[key] if grouped else [r for t in cache[key] for r in t]
 
 
 def poppler_words(source, pno, cache={}):
@@ -257,25 +242,101 @@ def _in_box(w, b):
     return b[0] <= (w[0] + w[2]) / 2 <= b[2] and b[1] <= (w[1] + w[3]) / 2 <= b[3]
 
 
+def table_quote_found(quote, source, pno):
+    """(in pdftotext, in pdfminer) for a table quote: "header cells || row cells" (D46: a row quote carries its
+    column headers) or "row cells". The row part must be a WHOLE row (every non-empty cell, from its label). The
+    header part must be the table's whole header: the cells of every row above the first full-width row (as
+    many non-empty cells as the quoted row), in order: a two-row header is quoted as both rows ("Grade | ≥ 0.5 µm
+    | ≥ 5 µm | at rest | in operation | at rest | in operation"). An unruled
+    table: the header line and the row line are whole lines of the page, the header line first."""
+    head, _, row = quote.rpartition(" || ")
+    pieces = [quotes.toks(x) for x in row.split(" | ")]
+    if not head:
+        return row_found(pieces, source, pno)
+    header = _marks_out(head.replace(" | ", " "))
+    if not table_rows(source, pno):
+        return tuple(_unruled_header(header, [t for p in pieces for t in p], reader, source, pno, loose)
+                     for reader, loose in ((layer_text, False), (pdfminer_text, True)))
+    out = [False, False]
+    for t in table_groups(source, pno):
+        k = next((i for i, r in enumerate(t) if len(r) == len(pieces)), 0)   # the first full-width row: rows
+        if k:                                                  # above it are the header, all of them
+            cells = [c for r in t[:k] for c in r]
+            if _marks_out(" ".join(c for c, _ in cells)) != header:
+                continue
+            words = poppler_words(source, pno)
+            head_layer = _marks_out(" ".join(" ".join(w[4] for w in words if _in_box(w, b)) for _, b in cells))
+            for r in t[k:]:
+                layer, miner = _row_match(r, pieces, source, pno)
+                out = [out[0] or (layer and head_layer == header), out[1] or miner]
+    return tuple(out)
+
+
+MARK = re.compile(r"\(\s*[a-z]\s*\)|\^[a-z]\b")
+
+
+def _marks_out(text):
+    """Header tokens without footnote marks written "(a)" or "^a" ("at rest (a)"): one reader may not see a small
+    mark inside a header cell, and a header mark carries no value. Other single letters ("Grade A | B") stay.
+    Data cells are compared with their marks."""
+    return quotes.toks(MARK.sub(" ", text))
+
+
+def _unruled_header(header, row, reader, source, pno, loose):
+    """An unruled table's header and row: the header is ALL the lines from the line after the table's caption
+    ("TABLE 1. ...", the nearest caption above the row) up to the first data line (a line with a number): the
+    same tokens as the quoted header, each line's tokens in the quote's order; the row is a whole line below it,
+    with no other caption in between."""
+    lines = [ln for ln in reader(source, pno).splitlines() if ln.strip()]
+    rows = [i for i, ln in enumerate(lines) if quotes.toks(ln) == row
+            or (loose and len(quotes.toks(ln)) == len(row) and quotes.contains(row, quotes.toks(ln), True))]
+    for r in rows:
+        cap = next((i for i in range(r - 1, -1, -1) if CAPTION.match(lines[i])), None)
+        if cap is None:
+            continue
+        end = next((i for i in range(cap + 1, r + 1) if re.search(r"\d", lines[i])), r)
+        block = [_marks_out(ln) for ln in lines[cap + 1:end]]
+        if block and sorted(t for b in block for t in b) == sorted(header) and all(_in_order(b, header) for b in block):
+            return True                                        # same tokens; each header line's in order (a unit
+    return False                                               # on a second line, "(ppm)", sits in between)
+
+
+def _in_order(sub, seq):
+    it = iter(seq)
+    return all(t in it for t in sub)
+
+
+def table_groups(source, pno):
+    """The rows of each ruled table on the page, table by table (table_rows' rows grouped)."""
+    return table_rows(source, pno, grouped=True)
+
+
+def _row_match(row, pieces, source, pno):
+    """(poppler, pdfminer): the row's non-empty cells are exactly the pieces (all of them, in order), token for
+    token."""
+    if len(row) != len(pieces):
+        return False, False
+    cells = row
+    miner = all(quotes.toks(x) == p for (x, _), p in zip(cells, pieces))
+    words = poppler_words(source, pno)
+    layer = miner and all(quotes.toks(" ".join(w[4] for w in words if _in_box(w, b))) == p
+                          for (_, b), p in zip(cells, pieces))
+    return layer, miner
+
+
 def row_found(pieces, source, pno):
     """(in pdftotext, in pdfminer) for a table-row quote: its cells, in order and each whole (token for token),
-    are consecutive non-empty cells of ONE row of a ruled table on the page, read by pdfminer (cell text) and by
+    are all the non-empty cells of ONE row of a ruled table on the page, read by pdfminer (cell text) and by
     poppler (its words inside the same cell boxes). An unruled row (no such table) must stand on one line of the
     reading, cells in order."""
     in_layer = in_miner = False
-    for row in table_rows(source, pno):
-        for k in range(min(1, len(row) - len(pieces) + 1)):      # from the row's first cell (its label)
-            cells = row[k:k + len(pieces)]
-            if all(quotes.toks(x) == p for (x, _), p in zip(cells, pieces)):
-                in_miner = True
-                words = poppler_words(source, pno)
-                if all(quotes.toks(" ".join(w[4] for w in words if _in_box(w, b))) == p
-                       for (_, b), p in zip(cells, pieces)):
-                    in_layer = True
-    if not table_rows(source, pno):
+    for row in table_rows(source, pno):                       # from the row's first cell (its label)
+        layer, miner = _row_match(row, pieces, source, pno)
+        in_layer, in_miner = in_layer or layer, in_miner or miner
+    if not table_rows(source, pno):                           # unruled: a whole line of the page
         flat = [t for p in pieces for t in p]
-        in_layer = any(quotes.contains(flat, quotes.toks(ln)) for ln in layer_text(source, pno).splitlines())
-        in_miner = any(quotes.contains(flat, quotes.toks(ln), loose=True)
+        in_layer = any(quotes.toks(ln) == flat for ln in layer_text(source, pno).splitlines())
+        in_miner = any(len(quotes.toks(ln)) == len(flat) and quotes.contains(flat, quotes.toks(ln), loose=True)
                        for ln in pdfminer_text(source, pno).splitlines())
     return in_layer, in_miner
 
@@ -315,12 +376,96 @@ def clause_findings(clause_number, source, pno):
     return [] if ok else [("clause", f"clause number {clause_number!r} is not printed as such on page {pno}")]
 
 
+SCOPING = {"condition", "unless", "only"}   # lead-in wording that limits where every row or item applies
+LIST_MARK = re.compile(r"^\s*(?:\(?[a-z]\)|\(?[ivx]+\)|\(?\d{1,2}\)|[ivx]+\.|[a-z]\.|[•■▪●◦‣\-–])\s", re.I)
+
+
+def lead_in(item, source, pno):
+    """The lead-in that governs a table row or list item (D46, owner): for a table row, the sentences of the page
+    (and the page before) that point to a table ("as shown in Table 1"); for a list item (its quote starts with a
+    list mark, or the page text before it ends with ":"), the sentence ending in that ":". "" when none."""
+    text = re.sub(r"\s+", " ", " ".join(body(layer_text, source, p) for p in (pno - 1, pno) if p >= 1))
+    sentences = obligations.sentences(text)
+    if " | " in item["quote"]:
+        n = table_number(source, pno)
+        if n is None:
+            return ""
+        return " ".join(x for x in sentences if re.search(rf"\btables?\s+{n}\b(?!\.\d|\s*[.:]\s)", x, re.I)
+                        and obligations.strength(x) and layer1_conditions(x))
+    lines = [ln.strip() for ln in body(layer_text, source, pno).splitlines() if ln.strip()]
+    q = quotes.toks(item["quote"])[:6]
+    at = next((i for i, ln in enumerate(lines) if q and quotes.contains(q, quotes.toks(" ".join(lines[i:i + 3])))),
+              None)
+    if at is None:
+        return ""
+    for i in range(at - 1, max(at - 61, -1), -1):              # the nearest ":" line above, within the clause
+        if re.match(r"\d+(?:\.\d+)+\.?\s", lines[i]) and not lines[i].endswith(":"):
+            return ""                                          # another numbered clause starts: no lead-in
+        if lines[i].endswith(":") and not lines[i].lower().startswith("note"):
+            if LIST_MARK.match(item["quote"]) or i == at - 1 or LIST_MARK.match(lines[at]):
+                start = max(i - 3, 0)                        # the sentence ending in ":" (up to 4 lines)
+                joined = " ".join(lines[start:i + 1])
+                return joined[joined.rfind(". ") + 2 if ". " in joined else 0:]
+            return ""
+    return ""
+
+
+CAPTION = re.compile(r"^\s*(?:(?i:table)\s+(\d+)\s*[:.\-–]|TABLE\s+(\d+)\b)", re.M)
+
+
+def table_number(source, pno):
+    """The number of the table on a page: its caption line ("TABLE 2. Class 2 solvents", "Table 1: ...") when the
+    page has exactly one; with none, the last caption of the page before (a table running over); else None."""
+    here = [a or b for a, b in CAPTION.findall(layer_text(source, pno))]
+    if len(set(here)) == 1:
+        return here[0]
+    if not here and pno > 1:
+        before = [a or b for a, b in CAPTION.findall(layer_text(source, pno - 1))]
+        return before[-1] if before else None
+    return None
+
+
+COND_CLAUSE = re.compile(r"\b(if|where|when|whenever|unless|only)\b(.*?)(?=,|;|\bthen\b|$)", re.I)
+
+
+def lead_in_missing(lead, statement):
+    """The scoping conditions of a lead-in that the statement does not carry: each condition clause ("if their
+    use is unavoidable in order to produce a drug product with a significant therapeutic advance", "unless
+    otherwise justified") must have its condition group in the statement and at least 80 % of its content words
+    (4+ letters), so "when used" does not stand in for "if their use is unavoidable ..."."""
+    import layer1
+    if not lead:
+        return []
+    said = set(re.findall(r"[a-z]{4,}", statement.lower()))
+    groups = layer1.conditions_in(statement)
+    out = []
+    for m in COND_CLAUSE.finditer(lead):
+        word, rest = m.group(1), m.group(2)
+        if len(re.findall(r"[a-z]{4,}", rest.lower())) < 2:     # "only if, after assessment, ...": take the
+            rest = lead[m.start(2):].split(";")[0]               # clause on past the comma
+            rest = re.split(r"\bthen\b|\.(?:\s|$)", rest)[0]
+        clause = f"{word} {rest}".strip()
+        group = layer1.conditions_in(clause) & SCOPING
+        if not group:
+            continue
+        content = set(re.findall(r"[a-z]{4,}", rest.lower())) - {"their", "there", "this", "that", "these", "with",
+                                                                   "from", "have", "been", "should", "shall", "must"}
+        if not (group & groups) or (content and len(content & said) / len(content) < 0.8):
+            out.append(clause)
+    return out
+
+
+def layer1_conditions(text):
+    import layer1
+    return layer1.conditions_in(text)
+
+
 def check_item(item, source, pno):
     """Findings of one item (list of (check, message)) and whether its quote is in each reading."""
     import layer1
     span = [pno, pno + 1] if item["runs_over"] else [pno]
     if " | " in item["quote"]:
-        in_layer, in_miner = row_found([quotes.toks(x) for x in item["quote"].split(" | ")], source, pno)
+        in_layer, in_miner = table_quote_found(item["quote"], source, pno)
     else:
         q = quotes.toks(item["quote"])
         in_layer = any(quotes.contains(q, t) for t in readings(layer_text, source, span))
@@ -333,12 +478,18 @@ def check_item(item, source, pno):
     for n in re.findall(r"\d+(?:[.,]\d+)?", item["statement"]):
         if not layer1.number_found(n, [item["quote"]]):
             out.append(("numbers", f"{n} in the statement, not in the quote"))
-    for n in re.findall(r"(?<![\w.])\d+(?:[.,]\d+)?", item["quote"]):
+    for n in re.findall(r"(?<![\w.^])\d+(?:[.,]\d+)?", item["quote"]):          # not a footnote mark "^1"
         if not layer1.number_found(n, [item["statement"]]):
             out.append(("numbers", f"{n} in the quote, not in the statement"))
-    words = layer1.strength_of(item["quote"])
+    lead = lead_in(item, source, pno)
+    words = (layer1.strength_of(item["quote"]) or (layer1.strength_of(lead) if lead and " | " not in item["quote"]
+                                                   else None)
+             or ("mandatory" if source in layer1.INSPECTION_CHECKLISTS else None))
     if words and words != item["strength"]:
         out.append(("strength", f"quote says {words}, item {item['strength']}"))
+    missing = lead_in_missing(lead, item["statement"])
+    if missing:
+        out.append(("lead-in", f"the statement lacks the lead-in's condition: {'; '.join(missing)[:160]}"))
     said = layer1.conditions_in(item["statement"])
     missing = layer1.conditions_missing(item["quote"], said)
     if missing:
@@ -397,7 +548,9 @@ def ingest_draft(run):
                 key = ("quote_both" if in_layer and in_miner else "quote_layer_only" if in_layer
                        else "quote_pdfminer_only" if in_miner else "quote_neither")
                 report[key] += 1
+                import layer1
                 rec = {"id": f"{p['id']}#{k}", "source": p["source"], "page": p["page"], **it,
+                       "inspection_checklist": p["source"] in layer1.INSPECTION_CHECKLISTS,
                        "image_sha256": p["image_sha256"], "findings": found, "in_pdftotext": in_layer,
                        "in_pdfminer": in_miner}
                 items.append(rec)
@@ -477,6 +630,14 @@ def ingest_verify(run):
     return rep
 
 
+def record_model(run, role, model):
+    """Records in RUN/agents.json which model answered a stage (D46: the audit trail names it; owner, D30)."""
+    path = Path(run) / "agents.json"
+    doc = json.loads(path.read_text()) if path.exists() else {}
+    doc[role] = {"model": model, "recorded": datetime.now(timezone.utc).isoformat(timespec="seconds")}
+    path.write_text(json.dumps(doc, indent=1) + "\n")
+
+
 def main():
     cmd, args = sys.argv[1], sys.argv[2:]
     if cmd == "prepare-draft":
@@ -489,6 +650,8 @@ def main():
         prepare_verify(args[0], args[1:] or None)
     elif cmd == "ingest-verify":
         ingest_verify(args[0])
+    elif cmd == "record-model":
+        record_model(*args)
     else:
         raise SystemExit(__doc__)
 
