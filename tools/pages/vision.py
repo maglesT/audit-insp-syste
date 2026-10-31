@@ -592,18 +592,17 @@ SIDE_TITLE = re.compile(r"WHO Technical Report Series,?\s*No\.\s*\d+,?\s*\d{4}",
 def counts_for_coverage(sentence):
     """An obligation sentence the page's items must cover: shall/must/should (and their equivalents), or a "may"
     that grants or denies the site something ("quality reviews may be grouped", "the QP may not be the head of
-    production"). Left out only: a sentence whose every clause with may/can/could states a possibility
-    ("inspection coverage may include", "amines may be present"; a "not" never counts as descriptive). A table
+    production"). Left out only: a sentence in which every may/can/could, each judged by the verb right after it,
+    states a possibility ("inspection coverage may include", "amines may be present"; "may not" is never
+    descriptive). A table
     caption glued to its table and footnotes stays in (its footnote may hold an obligation)."""
     strength = obligations.strength(sentence)
     if not strength:
         return False
     if strength == "permissive":
-        clauses = [c for c in re.split(r";|:|\bwhile\b|,\s*(?:and|but|whereas)\b", sentence)
-                   if re.search(r"\b(?:may|can|could)\b", c, re.I)]
-        if clauses and all(DESCRIPTIVE.search(c) and not re.search(r"\b(?:may|can|could)\s+not\b", c, re.I)
-                           for c in clauses):
-            return False
+        modals = list(re.finditer(r"\b(?:may|can|could)\b", sentence, re.I))
+        if modals and all(DESCRIPTIVE.match(sentence, m.start()) for m in modals):
+            return False                                       # every may/can/could states a possibility
     return True
 
 

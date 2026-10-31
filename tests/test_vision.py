@@ -252,7 +252,10 @@ class PreScalingReview(unittest.TestCase):
                          "Batch records may not contain unexplained corrections.",
                          "The responsible person may be a pharmacist.",
                          "The competent authority may require additional data.",
-                         "Contamination may occur; alternative methods may be used if validated."):
+                         "Contamination may occur; alternative methods may be used if validated.",
+                         "Contamination may occur, so alternative methods may be used if validated.",
+                         "Where residues may be present, the firm may omit the test.",
+                         "Secondary amines may be present and the limit may be raised to 10 ppm."):
             self.assertTrue(vision.counts_for_coverage(sentence), sentence)
 
     def test_union_needs_every_number(self):

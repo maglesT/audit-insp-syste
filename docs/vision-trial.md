@@ -122,3 +122,7 @@ into a requirement) stays with the two verifiers and the spot check.
    with no other caption in between; an unruled row must have as many layout columns as the header. Drafters get
    the previous page's text when a table continues; verifiers get that page's image and text.
 3. **Run-over quotes:** the whole next page goes into the drafting and verifier batches (no 3,000-character cut).
+
+Accepted residuals after the review (low): in a sentence covered by several quotes, numbers and condition words are
+compared as one set across the quotes (a number may be found in the "wrong" part); a sub-header row with as many
+cells as the data rows would be taken for the first data row. Both are left to the two verifiers and the spot check.
