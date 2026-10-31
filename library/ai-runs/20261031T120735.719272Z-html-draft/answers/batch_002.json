@@ -1,0 +1,690 @@
+{
+ "answers": [
+  {
+   "unit": "fda-cgmp-qa-laboratory-controls.html:Q11",
+   "items": [
+    {
+     "statement": "When decontaminating a former penicillin facility for non-penicillin production, include scientifically sound studies showing the decontamination agents are effective, extensive and statistically appropriate sampling throughout the areas before and after decontamination to verify cleanliness, and appropriate testing of the samples with a validated analytical method with an appropriate limit of detection.",
+     "quote": "The decontamination process must include scientifically sound studies demonstrating the efficacy of the decontamination agents, extensive and statistically appropriate sampling throughout the areas before and after decontamination to verify cleanliness, and appropriate testing of such samples with a validated analytical method having an appropriate limit of detection.",
+     "clause_number": "Q11",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "converting a penicillin facility",
+     "topic": "PROD.XCONT"
+    },
+    {
+     "statement": "If there is a reasonable possibility that a non-penicillin product was exposed to penicillin cross-contamination, test it for penicillin and do not market it if detectable levels are found with the codified method.",
+     "quote": "The CGMP regulations in 21 CFR 211.176 require that if a reasonable possibility exists that a non-penicillin drug product has been exposed to cross-contamination with penicillin, the non-penicillin product must be tested for the presence of penicillin and cannot be marketed if detectable levels are found using the codified method.",
+     "clause_number": "Q11",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "reasonable possibility of penicillin exposure",
+     "topic": "PROD.XCONT"
+    }
+   ],
+   "not_applicable": [
+    {
+     "clause_number": "Q11",
+     "text": "Can a facility that produced penicillin dosage forms be decontaminated",
+     "reason": "question"
+    },
+    {
+     "clause_number": "Q11",
+     "text": "Yes; however, decontamination can be extremely difficult.",
+     "reason": "answer and background"
+    },
+    {
+     "clause_number": "Q11",
+     "text": "Such a reasonable possibility may be present if decontamination has",
+     "reason": "explanation of condition"
+    },
+    {
+     "clause_number": "Q11",
+     "text": "Although CGMP regulations do not prohibit decontamination and conversion, the",
+     "reason": "background and reference"
+    },
+    {
+     "clause_number": "Q11.1",
+     "text": "Back to Top",
+     "reason": "page navigation text"
+    }
+   ]
+  },
+  {
+   "unit": "fda-cgmp-qa-laboratory-controls.html:Q12",
+   "items": [
+    {
+     "statement": "Adequately separate penicillin manufacturing facilities and air-handling systems from those used to manufacture other drugs.",
+     "quote": "The CGMP regulations in 21 CFR 211.42(d) and 211.46(d) require that penicillin-manufacturing facilities and air-handling systems must be adequately separated from those used to manufacture other drugs.",
+     "clause_number": "Q12",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "PREM.DESIGN"
+    },
+    {
+     "statement": "Do not market a non-penicillin drug product if penicillin is found when it is tested by the codified procedure.",
+     "quote": "21 CFR 211.176 states that a non-penicillin drug product must not be marketed if penicillin is found when tested according to the codified procedure.",
+     "clause_number": "Q12",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "PROD.XCONT"
+    },
+    {
+     "statement": "Alternative validated methods for detecting penicillin residues may be used if shown to be equivalent to or better than the codified method.",
+     "quote": "Alternative validated test methods to detect penicillin residues may be used if demonstrated to be equivalent to or better than the referenced method.",
+     "clause_number": "Q12",
+     "strength": "optional",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "if shown equivalent or better",
+     "topic": "QC.TEST"
+    }
+   ],
+   "not_applicable": [
+    {
+     "clause_number": "Q12",
+     "text": "Is there an acceptable level of penicillin residue in non-penicillin",
+     "reason": "question"
+    },
+    {
+     "clause_number": "Q12",
+     "text": "No.",
+     "reason": "answer word, no expectation"
+    },
+    {
+     "clause_number": "Q12",
+     "text": "There is no established safe level of penicillin residue in",
+     "reason": "background with reference"
+    },
+    {
+     "clause_number": "Q12.1",
+     "text": "Back to Top",
+     "reason": "page navigation text"
+    }
+   ]
+  },
+  {
+   "unit": "fda-cgmp-qa-laboratory-controls.html:Q13",
+   "items": [
+    {
+     "statement": "For injectable products in multiple-dose containers, include requirements for testing and evaluating container-closure integrity in stability protocols.",
+     "quote": "Although the expiration date assigned to such products would be based on the stability of the drug product, stability protocols should include requirements for testing and evaluating container-closure integrity.",
+     "clause_number": "Q13",
+     "strength": "recommended",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "QC.STAB"
+    },
+    {
+     "statement": "Container-closure integrity testing may include physically testing the closure seal with a leak test and monitoring the system's ability to prevent microbial contamination.",
+     "quote": "Container-closure integrity testing may include physically testing the closure seal by using a leak test and monitoring the system’s ability to prevent microbial contamination.",
+     "clause_number": "Q13",
+     "strength": "optional",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "STER.CCI"
+    },
+    {
+     "statement": "For multiple-dose injection containers, functionality testing may include a self-sealing capacity test with multiple hypodermic needle penetrations through the stopper.",
+     "quote": "For multiple-dose injection product containers, functionality testing can include a self-sealing capacity test involving multiple penetrations of a hypodermic needle through the container stopper",
+     "clause_number": "Q13",
+     "strength": "optional",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "STER.CCI"
+    },
+    {
+     "statement": "Ensure injectable products in multiple-dose containers, which are generally formulated with an antimicrobial agent or preservative or contain inherently antimicrobial ingredients, meet the requirements of the approved application and/or USP requirements.",
+     "quote": "Furthermore, injectable drug products in multiple-dose containers are generally formulated with an antimicrobial agent or preservative—or they contain inherently antimicrobial ingredients—and must meet requirements in accordance with the approved application (new drug application/abbreviated new drug application, biologics license application) and/or USP requirements.",
+     "clause_number": "Q13",
+     "strength": "mandatory",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "QC.TEST"
+    }
+   ],
+   "not_applicable": [
+    {
+     "clause_number": "Q13",
+     "text": "For injectable drugs in multiple-dose containers, is the number of",
+     "reason": "question"
+    },
+    {
+     "clause_number": "Q13",
+     "text": "Generally, no.",
+     "reason": "answer, no expectation"
+    },
+    {
+     "clause_number": "Q13",
+     "text": "Unless the multiple-dose container is labeled to yield a specific",
+     "reason": "describes product use, no manufacturer expectation"
+    },
+    {
+     "clause_number": "Q13",
+     "text": "The primary concern with multiple-dose containers is the potential for",
+     "reason": "background explanation"
+    },
+    {
+     "clause_number": "Q13.1",
+     "text": "Back to Top",
+     "reason": "page navigation text"
+    }
+   ]
+  },
+  {
+   "unit": "fda-cgmp-qa-laboratory-controls.html:Q14",
+   "items": [
+    {
+     "statement": "For chemically and physically stable in-process or intermediate materials, a risk- and science-based assessment may be used to identify which material attributes and process parameters might affect the critical quality attributes of the finished product.",
+     "quote": "For in-process/intermediate materials that are chemically and physically stable, a risk- and science-based assessment process can help identify which material attributes and process parameters might affect the critical quality attributes of the finished drug product in which they are to be used.",
+     "clause_number": "Q14",
+     "strength": "optional",
+     "plant_types": [
+      "OSD"
+     ],
+     "numbers": [],
+     "condition": "materials chemically and physically stable",
+     "topic": "QS.QRM"
+    },
+    {
+     "statement": "Design the hold-time risk assessment to ensure that materials held under appropriate storage conditions for a specified period are suitable for use in manufacturing the finished product without formal stability studies of the holding period.",
+     "quote": "This assessment should be designed to ensure that materials held (under appropriate storage conditions) for a specified period are appropriate for use in manufacturing the finished drug product without having to conduct formal stability studies to verify the holding periods.",
+     "clause_number": "Q14",
+     "strength": "recommended",
+     "plant_types": [
+      "OSD"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "PROD.GEN"
+    },
+    {
+     "statement": "The hold-time risk assessment may include sampling and testing the held material, at the stage the assessment determines, to verify the holding period.",
+     "quote": "In some instances, the risk assessment may include sampling and testing the material being held (at the stage determined by the risk assessment) to verify the manufacturing holding period.",
+     "clause_number": "Q14",
+     "strength": "optional",
+     "plant_types": [
+      "OSD"
+     ],
+     "numbers": [],
+     "condition": "in some instances",
+     "topic": "PROD.GEN"
+    },
+    {
+     "statement": "For unstable in-process or intermediate materials, or materials held longer than the period set in the risk assessment, conduct stability studies under an approved stability protocol to verify holding periods.",
+     "quote": "However, for unstable materials or for materials held longer than the period established in the risk assessment, firms should conduct stability studies according to an approved stability protocol to verify holding periods.",
+     "clause_number": "Q14",
+     "strength": "recommended",
+     "plant_types": [
+      "OSD"
+     ],
+     "numbers": [],
+     "condition": "unstable materials or hold beyond assessed period",
+     "topic": "QC.STAB"
+    },
+    {
+     "statement": "In hold-time stability studies, evaluate the in-process or intermediate materials up to the time they are used to manufacture the finished product.",
+     "quote": "The stability studies should include evaluations of the in-process/intermediate materials up to the time of their use in manufacturing a finished drug product",
+     "clause_number": "Q14",
+     "strength": "recommended",
+     "plant_types": [
+      "OSD"
+     ],
+     "numbers": [],
+     "condition": "hold-time stability studies required",
+     "topic": "QC.STAB"
+    },
+    {
+     "statement": "In hold-time stability studies, include long-term monitoring of finished product batches made with the held in-process or intermediate materials.",
+     "quote": "should include long-term monitoring of finished product batches manufactured with the in-process/intermediate materials.",
+     "clause_number": "Q14",
+     "strength": "recommended",
+     "plant_types": [
+      "OSD"
+     ],
+     "numbers": [],
+     "condition": "hold-time stability studies required",
+     "topic": "QC.STAB"
+    },
+    {
+     "statement": "For unstable materials or materials held longer than the assessed period, until appropriate stability data exist, calculate the finished product expiration date from the manufacture or release date of the in-process or intermediate material rather than that of the finished product.",
+     "quote": "In the latter case, until appropriate stability data are generated, firms should calculate the expiration date assigned to finished product batches based on the date of manufacture/release of the in-process/intermediate material rather than on that of the finished product.",
+     "clause_number": "Q14",
+     "strength": "recommended",
+     "plant_types": [
+      "OSD"
+     ],
+     "numbers": [],
+     "condition": "until appropriate stability data are generated",
+     "topic": "QC.STAB"
+    }
+   ],
+   "not_applicable": [
+    {
+     "clause_number": "Q14",
+     "text": "How long may a firm store in-process/intermediate powder blends and",
+     "reason": "question"
+    }
+   ]
+  },
+  {
+   "unit": "fda-cgmp-qa-laboratory-controls.html:Q15",
+   "items": [
+    {
+     "statement": "Choose instrument calibration standards for chromatographic systems from highly purified, well characterized materials that can be accurately weighed.",
+     "quote": "For chromatographic systems, instrument calibration standards should be chosen from highly purified materials that are well characterized and can be accurately weighed.",
+     "clause_number": "Q15",
+     "strength": "recommended",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "QC.REF"
+    },
+    {
+     "statement": "Chromatographic calibration standards may be compendial or non-compendial (for example from NIST, a chemical supplier, or produced in-house).",
+     "quote": "Standards can be compendial (from USP) or non-compendial (e.g., from NIST, a chemical supplier, or produced in-house).",
+     "clause_number": "Q15",
+     "strength": "optional",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "QC.REF"
+    },
+    {
+     "statement": "Purify and characterize standard substances obtained from a chemical supplier or produced in-house using validated purification processes and validated characterization methods.",
+     "quote": "Substances obtained from a chemical supplier or produced in-house should be purified and characterized using validated purification processes and validated characterization methods.",
+     "clause_number": "Q15",
+     "strength": "recommended",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "numbers": [],
+     "condition": "standard from supplier or made in-house",
+     "topic": "QC.REF"
+    },
+    {
+     "statement": "Generally avoid using finished dosage forms as chromatographic calibration standards, because excipients may interfere with the analysis.",
+     "quote": "Finished dosage forms generally should be avoided as standards because excipients in the finished dosage form may interfere with analysis.",
+     "clause_number": "Q15",
+     "strength": "recommended",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "QC.REF"
+    }
+   ],
+   "not_applicable": [
+    {
+     "clause_number": "Q15",
+     "text": "What material can be used as instrument calibration standards for",
+     "reason": "question"
+    },
+    {
+     "clause_number": "Q15",
+     "text": "Purification is necessary because impurities can add variation and interfere",
+     "reason": "rationale"
+    }
+   ]
+  },
+  {
+   "unit": "fda-cgmp-qa-laboratory-controls.html:Q16",
+   "items": [
+    {
+     "statement": "Check system suitability using qualified primary or secondary reference standards and any materials needed to ensure adequate method performance.",
+     "quote": "FDA expects system suitability to be checked using qualified primary or secondary reference standards and any materials necessary to ensure adequate method performance.",
+     "clause_number": "Q16",
+     "strength": "recommended",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "QC.REF"
+    },
+    {
+     "statement": "Qualify each new batch of highly pure reference standard material (for example from a chemical supplier or made in-house) against the primary reference standard.",
+     "quote": "A new batch of highly pure reference standard material (e.g., from a chemical supplier or produced in-house) should be qualified against the primary reference standard.",
+     "clause_number": "Q16",
+     "strength": "recommended",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "QC.REF"
+    },
+    {
+     "statement": "Do not use finished dosage forms or APIs that have not been qualified as reference standards for system suitability testing.",
+     "quote": "Finished dosage forms or APIs that have not been qualified as reference standards should not be used for system suitability testing.",
+     "clause_number": "Q16",
+     "strength": "recommended",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "QC.REF"
+    },
+    {
+     "statement": "Do not use a qualified API or finished dosage form reference standard for system suitability testing if it comes from the same batch as the samples being tested.",
+     "quote": "Even when API or a finished dosage form has been properly qualified as a reference standard, it should not be used for system suitability testing if it is from the same batch as sample(s) being tested.",
+     "clause_number": "Q16",
+     "strength": "recommended",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "numbers": [],
+     "condition": "same batch as samples tested",
+     "topic": "QC.REF"
+    },
+    {
+     "statement": "Establish and follow written laboratory procedures.",
+     "quote": "Written procedures must be established and followed (21 CFR 211.160 and 211.194).",
+     "clause_number": "Q16",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "DOC.SOP"
+    },
+    {
+     "statement": "Keep all data, including obvious errors and failing, passing and suspect data, in the CGMP records and subject it to review and oversight.",
+     "quote": "All data — including obvious errors and failing, passing, and suspect data — must be in the CGMP records and subject to review and oversight.",
+     "clause_number": "Q16",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "CSV.DI"
+    },
+    {
+     "statement": "Keep laboratory records complete and subject them to adequate review.",
+     "quote": "Records must be complete (e.g., 21 CFR 211.68(b), 211.188, and 211.194) and subjected to adequate review (21 CFR 211.68(b), 211.186(a), 211.192, and 211.194(a)(8)).",
+     "clause_number": "Q16",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "DOC.SYS"
+    }
+   ],
+   "not_applicable": [
+    {
+     "clause_number": "Q16",
+     "text": "What material can be used for system suitability?",
+     "reason": "question"
+    }
+   ]
+  },
+  {
+   "unit": "fda-cgmp-qa-laboratory-controls.html:Q17",
+   "items": [
+    {
+     "statement": "Use injections of a standard, with the sole intention of determining whether the chromatographic system is fit for purpose, rather than trial injections of samples.",
+     "quote": "This is in contrast to the appropriate practice where an injection of a standard is performed with the sole intention of determining if the chromatographic system is fit for purpose.",
+     "clause_number": "Q17",
+     "strength": "recommended",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "QC.TEST"
+    },
+    {
+     "statement": "Retain and review all data from the analysis of product samples.",
+     "quote": "all data from analysis of product samples must be retained and reviewed",
+     "clause_number": "Q17",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "CSV.DI"
+    },
+    {
+     "statement": "Promptly correct fundamental laboratory problems that uncertainty about system performance may point to, such as weaknesses in method design, validation status, analyst training or equipment maintenance.",
+     "quote": "Furthermore, uncertainty about system performance may also suggest a potential insufficiency of the method’s design, validation status, analyst training, equipment maintenance, or other fundamental problem(s) in the laboratory that should be promptly corrected.",
+     "clause_number": "Q17",
+     "strength": "recommended",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "numbers": [],
+     "condition": "uncertainty about system performance",
+     "topic": "QS.CAPA"
+    },
+    {
+     "statement": "Where column conditioning is scientifically justified, fully describe it, including the conditions needed for the measurement based on method validation data, in the method validation package, and define it clearly in an approved and appropriate procedure.",
+     "quote": "When its use is scientifically justified, column conditioning should be fully described in the method validation package as to the conditions needed to make the measurement (i.e., based on data from the method validation) and should be clearly defined in an approved and appropriate procedure.",
+     "clause_number": "Q17.1",
+     "strength": "recommended",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "numbers": [],
+     "condition": "column conditioning scientifically justified",
+     "topic": "VAL.METH"
+    },
+    {
+     "statement": "Test drugs only with validated test methods that demonstrate accuracy, sensitivity, specificity and reproducibility.",
+     "quote": "Only validated test methods that demonstrate accuracy, sensitivity, specificity, and reproducibility may be used to test drugs (21 CFR 211.165(e)).",
+     "clause_number": "Q17.1",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "VAL.METH"
+    },
+    {
+     "statement": "Use consistent and unambiguous injection naming in chromatographic runs.",
+     "quote": "Consistent and unambiguous injection nomenclature should be used",
+     "clause_number": "Q17.1",
+     "strength": "recommended",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "CSV.DI"
+    },
+    {
+     "statement": "Maintain all column conditioning data, including audit trail data, and subject it to review.",
+     "quote": "all data from the column conditioning, including audit trail data, should be maintained and subject to review.",
+     "clause_number": "Q17.1",
+     "strength": "recommended",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "CSV.DI"
+    },
+    {
+     "statement": "Do not perform trial injections of samples, including under the guise of column conditioning.",
+     "quote": "Therefore, FDA considers it a violative practice to perform a trial injection (including under the guise of column conditioning).",
+     "clause_number": "Q17.2",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "CSV.DI"
+    },
+    {
+     "statement": "Do not use an actual sample in test, prep or equilibration runs as a way of disguising testing into compliance.",
+     "quote": "FDA also considers it a violative practice to use an actual sample in test, prep, or equilibration runs as a means of disguising testing into compliance.",
+     "clause_number": "Q17.2",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "CSV.DI"
+    }
+   ],
+   "not_applicable": [
+    {
+     "clause_number": "Q17",
+     "text": "Is it ever appropriate to perform a “trial injection” of",
+     "reason": "question"
+    },
+    {
+     "clause_number": "Q17",
+     "text": "No.",
+     "reason": "answer word, no expectation"
+    },
+    {
+     "clause_number": "Q17",
+     "text": "FDA has observed at some drug manufacturers the practice of",
+     "reason": "description of observed firm practices"
+    },
+    {
+     "clause_number": "Q17.1",
+     "text": "Column conditioning does not involve injecting a sample from a",
+     "reason": "definition"
+    }
+   ]
+  }
+ ]
+}

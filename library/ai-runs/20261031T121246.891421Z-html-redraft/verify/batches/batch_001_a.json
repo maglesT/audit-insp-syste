@@ -1,0 +1,150 @@
+{
+ "role": "a",
+ "instructions": "You are an auditor checking one checklist item against the FDA web page paragraph it claims to come from. You get\nthe unit's paragraphs (reference and exact text of the page; \"context\" entries are headings) and the item. Start from the ITEM:\nread it, then find in the cited paragraph what it covers.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the lead-in above a list\nitem (the paragraph ending \":\" above it). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph expects what the statement asks for (an instruction\n  to the investigator, \"Determine whether the firm validated ...\", expects the firm to have that practice), the statement\n  adds nothing and omits nothing of that obligation, the strength (a legal requirement: shall/must/required = mandatory;\n  should, FDA expects/recommends, an inspection point = recommended; may/acceptable = optional; a list item takes\n  its lead-in's) matches, and the text applies to every listed plant\n  type (INJ = sterile injectables: text limited to non-sterile products does not apply to\n  INJ; text limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+ "units": [
+  {
+   "unit": "Q1",
+   "paragraphs": [
+    {
+     "ref": "Q1",
+     "text": "What is a recall?"
+    },
+    {
+     "ref": "Q1.1",
+     "text": "Recalls are actions taken by a firm to remove from the market any product that is in violation of laws administered by FDA. Recalls of a drug may be conducted on a firm’s own initiative or by FDA request. A recall is an alternative to an FDA-initiated court action for removing or correcting violative, distributed products (see 21 CFR 7.40(a)). Under FDA’s CGMP regulations for finished pharmaceuticals, manufacturers must establish and follow written procedures to facilitate the recall of defective products from the market (see 21 CFR 211.150(b))."
+    }
+   ]
+  },
+  {
+   "unit": "Q4",
+   "paragraphs": [
+    {
+     "ref": "Q4",
+     "text": "Do manufacturers of OTC products have to report quality defects?"
+    },
+    {
+     "ref": "Q4.1",
+     "text": "Manufacturers of OTC drugs approved in a new drug application are required to report quality defects (see 21 CFR 314.81). Manufacturers or distributors of OTC monograph drugs (these are drugs that are not approved in a product-specific application) are not required to submit quality defect reports. However, the manufacturer, packer, or distributor whose name appears on the label of an OTC drug without an approved application (i.e., OTC monograph drugs) must submit to FDA any report received of a serious adverse event associated with such drug when used in the United States (see section 760 of the Federal Food, Drug, and Cosmetic Act). Thus, if a serious adverse event is caused by a quality defect, FDA will receive a report about the event (see also the guidance for industry Postmarketing Adverse Event Reporting for Nonprescription Human Drug Products Marketed Without an Approved Application."
+    }
+   ]
+  },
+  {
+   "unit": "Q5",
+   "paragraphs": [
+    {
+     "ref": "Q5",
+     "text": "Does FDA expect firms to investigate both released and rejected lots for potential recalls?"
+    },
+    {
+     "ref": "Q5.1",
+     "text": "Yes. Under 21 CFR 211.180(e), manufacturers must establish and follow written procedures for periodically reviewing complaints, recalls, returned or salvaged drug products, and investigations of product discrepancies. Firms must also review an appropriate number of batches, whether approved or rejected, and, where applicable, records associated with the batches, to ensure that all potentially affected product is thoroughly investigated and appropriate follow-up action is taken (21 CFR 211.192)."
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "fda-cgmp-qa-holding-distribution.html:Q1#1",
+   "unit": "Q1",
+   "hash": "9f0e87c09897e081",
+   "item": {
+    "statement": "Establish written procedures that facilitate recalling defective finished drug products from the market, and follow them.",
+    "quote": "manufacturers must establish and follow written procedures to facilitate the recall of defective products from the market",
+    "clause_number": "Q1.1",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-holding-distribution.html:Q4#1",
+   "unit": "Q4",
+   "hash": "9f6ec1552676b25b",
+   "item": {
+    "statement": "Where an OTC drug is approved in a new drug application, report its quality defects to FDA.",
+    "quote": "Manufacturers of OTC drugs approved in a new drug application are required to report quality defects",
+    "clause_number": "Q4.1",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "OTC drug approved in a new drug application"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-holding-distribution.html:Q5#1",
+   "unit": "Q5",
+   "hash": "8450a5e84417649b",
+   "item": {
+    "statement": "Establish and follow written procedures for periodic review of complaints, recalls, returned or salvaged drug products, and investigations of product discrepancies.",
+    "quote": "manufacturers must establish and follow written procedures for periodically reviewing complaints, recalls, returned or salvaged drug products, and investigations of product discrepancies.",
+    "clause_number": "Q5.1",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  }
+ ]
+}

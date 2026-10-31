@@ -195,7 +195,7 @@ def quote_found(q, ref, source):
 
 
 EXPECTS = re.compile(r"\b(?:FDA|the agency|we)\s+(?:also\s+|further\s+|generally\s+)?(?:expects?|recommends?|"
-                     r"encourages?|advises?)\b", re.I)
+                     r"encourages?|advises?)\b|\bit is (?:important|essential|critical) (?:to|that)\b", re.I)
 # Inspection points in ORA guides and ITGs: a sentence that starts with an instruction to the investigator.
 IMPERATIVE = re.compile(r"^(?:Also,?\s+|Always\s+|In addition,?\s+|Then\s+)?(?:Determine|Check|Examine|Review|"
                         r"Evaluate|Verify|Confirm|Assure|Ensure|Inspect|Observe|Look|Find out|Establish|Compare|"
@@ -208,7 +208,13 @@ NOT_POSSIBLE = re.compile(r"\b(?:may|might|can|could)\s+not\s+(?:always\s+|neces
                           r"sufficient|suitable|appropriate|possible|necessary|effective|accurate|representative|"
                           r"feasible|practical|uniform|soluble|reliable)\b"
                           r"|\b(?:may|might|can|could)\s+(?:also\s+)?be\s+(?:more|less|very|particularly|difficult|"
-                          r"hard|easier|harder)\b", re.I)
+                          r"hard|easier|harder)\b"
+                          r"|\b(?:can|may|could)\s+be\s+(?:summarized|described|found|seen|viewed|accessed|in|present)\b"
+                          r"|\b(?:may|might|can|could)\s+(?:contaminate|harbor|enter|grow|survive|persist)\b", re.I)
+# "These regulations require ...", "§ 211.84 requires ...": a legal requirement stated in guidance
+REG_REQUIRES = re.compile(r"\b(?:regulations?|CGMPs?|CFR\s+[\d.()a-z]+|§\s*[\d.()a-z]+|section\s+\d[\d.()a-z]*|statute|Act)"
+                          r"\s+(?:also\s+|explicitly\s+|specifically\s+|clearly\s+)?"
+                          r"(?:require|requires|mandate|mandates|prohibit|prohibits)\b", re.I)
 # "determine if ...", "check if ...": an indirect question, not a condition
 ASK_IF = re.compile(r"\b(determine|check|see|verify|establish|ascertain|evaluate|assess|confirm|question|ask|know|"
                     r"find out)\s+if\b", re.I)
@@ -227,6 +233,8 @@ def strength_of(text):
     prohibition; "may ... only" is a restriction (mandatory)."""
     text = NOT_POSSIBLE.sub(" ", text or "")
     text = MAY_ONLY.sub("must only", text)
+    if REG_REQUIRES.search(text):
+        return "mandatory"
     return X.strength_words(text) or ("recommended" if EXPECTS.search(text) else None)
 
 
@@ -295,25 +303,37 @@ def coverage(source, unit, items, na):
         for s in obligations.sentences(p["text"]):
             if not counts(s):
                 continue
+            s0, s = s, bare(s)                    # measured without its regulation references
             ws, conds, st = vision._words(s), layer1.conditions_in(s), quotes.toks(s)
             if not ws:
                 continue
             if any(sum(w in set(vision._words(q)) for w in ws) / len(ws) >= vision.COVERED_SHARE
                    and not (conds - layer1.conditions_in(q)) for q in mine):
                 continue
-            parts = [q for q in mine if quotes.contains(quotes.toks(q), st)]
+            parts = [q for q in mine if quotes.contains(quotes.toks(bare(q)), st)]
             if parts:
                 union = set().union(*(set(vision._words(q)) for q in parts))
                 nums = set(re.findall(r"\d+(?:[.,]\d+)?", s)) - set(re.findall(r"\d+(?:[.,]\d+)?", " ".join(parts)))
                 if (sum(w in union for w in ws) / len(ws) >= vision.UNION_SHARE and not nums
                         and not (conds - layer1.conditions_in(" ".join(parts)))):
                     continue
-            if any(c == ref and (quotes.contains(k[:8], st) if len(st) >= 8 else k == st) for c, k in na_raw):
+            st0 = quotes.toks(s0)
+            if any(c == ref and (quotes.contains(k[:8], st0) if len(st0) >= 8 else k == st0) for c, k in na_raw):
                 continue
-            if lead_in_covered(ref, s, items, source):
+            if lead_in_covered(ref, s0, items, source):
                 continue
-            gaps.append({"clause": ref, "sentence": s[:300]})
+            gaps.append({"clause": ref, "sentence": s0[:300]})
     return gaps
+
+
+SEE = re.compile(r"\(\s*(?:see|cf\.?|refer to)?\s*\)|\bunder\s*,", re.I)
+
+
+def bare(sentence):
+    """A sentence without its regulation references ("(see 21 CFR 211.150(b))", "Under 21 CFR 211.180(e), ..."):
+    a quote that leaves them out still covers it."""
+    t = SEE.sub(" ", CFR_REF.sub(" ", sentence))
+    return re.sub(r"\s+", " ", re.sub(r"^\s*,\s*", "", t)).strip()
 
 
 def lead_in_ref(ref, source):
@@ -546,10 +566,28 @@ def recheck(run):
         for c, _ in i["findings"]:
             rep["findings"][c] = rep["findings"].get(c, 0) + 1
     rep["quote_confirmed"] = sum(i["quote_confirmed"] for i in items)
+    rep["coverage_gaps"] = coverage_of(run, source)
     rep["rechecked"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
     (run / "report.json").write_text(json.dumps(rep, indent=1, ensure_ascii=False))
     if (run / "verify" / "answers").exists():
         return ingest_verify(run)
+
+
+def coverage_of(run, source):
+    """The coverage gaps of a run's answers, computed again (a redraft is judged on the sentences it was given)."""
+    gaps = []
+    for af in sorted((run / "answers").glob("batch_*.json")):
+        batch = {u["unit"]: u for u in json.loads((run / "batches" / af.name).read_text())["units"]}
+        for a in json.loads(af.read_text())["answers"]:
+            u = batch.get(a.get("unit", "").rsplit(":", 1)[-1])
+            if not u:
+                continue
+            found = coverage(source, u["unit"], a["items"], a["not_applicable"])
+            if "gaps" in u:
+                asked = {(g["clause"], g["sentence"]) for g in u["gaps"]}
+                found = [g for g in found if (g["clause"], g["sentence"]) in asked]
+            gaps += [{"unit": u["unit"], **g} for g in found]
+    return gaps
 
 
 def main():
