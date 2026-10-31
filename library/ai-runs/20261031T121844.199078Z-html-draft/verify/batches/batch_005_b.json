@@ -1,0 +1,2410 @@
+{
+ "role": "b",
+ "instructions": "You are a second, independent auditor. Check one checklist item against the FDA web page paragraph it claims to come from. You get\nthe unit's paragraphs (reference and exact text of the page; \"context\" entries are headings) and the item. Start from the TEXT:\nread the cited paragraph, the paragraphs its quote runs into, and its lead-in fully, then compare the item.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the lead-in above a list\nitem (the paragraph ending \":\" above it). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph expects what the statement asks for (an instruction\n  to the investigator, \"Determine whether the firm validated ...\", expects the firm to have that practice), the statement\n  adds nothing and omits nothing of that obligation, the strength (a legal requirement: shall/must/required = mandatory;\n  should, FDA expects/recommends, an inspection point = recommended; may/acceptable = optional; a list item takes\n  its lead-in's) matches, and the text applies to every listed plant\n  type (INJ = sterile injectables: text limited to non-sterile products does not apply to\n  INJ; text limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+ "units": [
+  {
+   "unit": "¶77-¶96",
+   "paragraphs": [
+    {
+     "ref": "¶77",
+     "text": "Determine how the equipment operates including the cleaning and maintenance practices. Determine how equipment used in the filling room is sterilized, and if the sterilization cycle has been validated. Determine the practice of re-sterilizing equipment if sterility has been compromised.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶78",
+     "text": "Determine the type of filters used. Determine the purpose of the filters, how they are assembled, cleaned, and inspected for damage. Determine if a microbial retentive filter, and integrity testing is required.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "Water for Injection"
+    },
+    {
+     "ref": "¶79",
+     "text": "Water used in the production of sterile drugs must be controlled to assure that it meets U.S.P. specifications. Review the firm's water for injection production, storage, and delivery system. Determine that the stills, filters, storage tanks, and pipes are installed and operated in a manner that will not contaminate the water. Evaluate the firm's procedures and specifications that assure the quality of the water for injection. As reference material, review the \"FDA Guide to Inspecteons of High Purity Water Systems\" before initiating an inspection.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "Containers and Closures"
+    },
+    {
+     "ref": "¶80",
+     "text": "Determine how containers and closures are handled and stored. Decide if the cleaning, sterilization, and depyrogenization are adequate, and have been validated.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "Sterilization"
+    },
+    {
+     "context": "1. Methods"
+    },
+    {
+     "ref": "¶81",
+     "text": "Determine what method of sterilization is used. A good source of reference material on validation of various sterilization processes is the Parenteral Drug Association Technical Reports. For instance, Technical Report #1 covers \"Validation of Steam Sterilization Cycles.\" Review and evaluate the validation data whatever the method employed.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶82",
+     "text": "If steam under pressure is used, an essential control is a mercury thermometer and a recording thermometer installed in the exhaust line. The time required to heat the center of the largest container to the desired temperature must be known. Steam must expel all air from the sterilizer chamber to eliminate cold spots. The drain lines should be connected to the sewer by means of an air break to prevent back siphoning. The use of paper layers or liners and other practices which might block the flow of steam should be avoided. Charts of time, temperature, and pressure should be filed for each sterilizer load.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶83",
+     "text": "If sterile filtration is used, determine the firm's criteria for selecting the filter and the frequency of changing. Review the filter validation data. Determine if the firm knows the bioburden of the drug, and examine their procedures for filter integrity testing. Filters might not be changed after each batch is sterilized. Determine if there is data to justify the integrity of the filters for the time used and that \"grow through\" has not occurred.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶84",
+     "text": "If ethylene oxide sterilization is used, determine what tests are made for residues and degradation. Review the ETO sterilization cycle including preconditioning of the product, ETO concentration, gas exposure time, chamber and product temperature, and chamber humidity.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "2. Indicators"
+    },
+    {
+     "ref": "¶85",
+     "text": "Determine the type of indicator used to assure sterility. Such as, lag thermometers, peak controls, Steam Klox, test cultures, biological indicators, etc.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶86",
+     "text": "Caution: When spore test strips are used to test the effectiveness of ethylene oxide sterilization, be aware that refrigeration may cause condensation on removal to room temperature. Moisture on the strips converts the spore to the more susceptible vegetative forms of the organism which may affect the reliability of the sterilization test. The spore strips should not be stored where they could be exposed to low levels of ethylene oxide.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶87",
+     "text": "If biological indicators are used, review the current U.S.P. on sterilization and biological indicators. In some cases, testing biological indicators may become all or part of the sterility testing.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶88",
+     "text": "Biological indicators are of two forms, each of which incorporates a viable culture of a single species of microorganism. In one form, the culture is added to representative units of the lot to be sterilized or to a simulated product that offers no less resistance to sterilization than the product to be sterilized. The second form is used when the first form is not practical as in the case of solids. In the second form, the culture is added to disks or strips of filter paper, or metal, glass, or plastic beads.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶89",
+     "text": "During the inspection of a firm which relies on biological indicators, review background data complied by the firm to include:",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶90",
+     "text": "Surveys of the types and numbers of organisms in the product before sterilization.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶91",
+     "text": "Data on the resistance of the organism to the specific sterilization process.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶92",
+     "text": "Data used for selecting the most resistant organism and its form (spore or vegetative cell).",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶93",
+     "text": "Studies of the stability and resistance of the selected organism to the specific sterilization process.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶94",
+     "text": "Studies on the recovery of the organism used to inoculate the product.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶95",
+     "text": "If a simulated product or surface similar to the solid product is used, validation of the simulation or similarity. The simulated product or similar surface must not affect the recovery of the numbers of indicator organisms applied.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶96",
+     "text": "Validation of the number of organisms used to inoculate the product, simulated product, or similar surface, to include stability of the inoculum during the sterilization process.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    }
+   ]
+  },
+  {
+   "unit": "¶97-¶119",
+   "paragraphs": [
+    {
+     "ref": "¶97",
+     "text": "Since qualified personnel are crucial to the selection and application of these indicators, review their qualifications including experience dealing with the process, expected contaminants, testing of resistance of organisms, and technique.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶98",
+     "text": "Review the firm's instructions regarding use, control and testing, of the biological indicator by product including a description of the method used to demonstrate presence or absence of viable indicator in or on the product.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶99",
+     "text": "Review the data used to support the use of the indicator each time it is used. Include the counts of the inoculum used; recovery data to control the method used to demonstrate the sterilization of the indicator organism; counts on unprocessed, inoculated material to",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶100",
+     "text": "indicate the stability of the inoculum for the process time; and",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶101",
+     "text": "results of sterility testing specifically designed to demonstrate the presence or absence of the indicator organism for each batch or filling operation.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶102",
+     "text": "In using indicators, you must assure yourself that the organisms are handled so they don't contaminate the drug manufacturing area and product.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "3. Filled Containers"
+    },
+    {
+     "ref": "¶103",
+     "text": "Evaluate how the filled vials or ampules leave the filling room. Is the capping or sealing done in the sterile fill area? If not, how is sterility maintained until capped?",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶104",
+     "text": "Review the tests done on finished vials, ampules, or other containers, to assure proper fill and seal. For instance, leak and torque tests.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶105",
+     "text": "Review examinations made for particulcte contamination. You can quickly check for suspected particulate matter by using a polariscope. Employees doing visual examinations on line must be properly trained. If particle counts are done by machine, this operation must be validated.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "4. Personnel Practices"
+    },
+    {
+     "ref": "¶106",
+     "text": "Check how the employees sterilize and operate the equipment used in the filling area.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶107",
+     "text": "Observe filling room personnel practices. Are the employees properly dressed in sterile gowns, masks, caps, and shoe coverings? Observe and evaluate the gowning procedures, and determine if good aseptic technique is maintained in the dressing and filling rooms.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶108",
+     "text": "Check on the practices after lunch and other absences. Is fresh sterile garb supplied, or are soiled garments reused?",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶109",
+     "text": "Determine if the dressing room is next to the filling area and how employees and supplies enter the sterile area.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "o Laboratory Controls"
+    },
+    {
+     "ref": "¶110",
+     "text": "For guidance on how to inspect micro and chemistry labs, review the \"FDA Guide to Inspections of Pharmaceutical Quality Control Laboratories\" and \"FDA Guide to Inspections of Microbiological Pharmaceutical Quality Control Laboratories.\"",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "1. Retesting for Sterility"
+    },
+    {
+     "ref": "¶111",
+     "text": "See the USP for guidance on sterility testing. Sterility retesting is acceptable provided the cause of the initial non-sterility is known, and thereby invalidates the original results. It cannot be assumed that the initial sterility test failure is a false positive. This conclusion must be justified by sufficient documented investigation. Additionally, spotty or low level contamination may not be identified by repeated sampling and testing.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶112",
+     "text": "Review sterility test failures and determine the incidence, procedures for handling, and final disposition of the batches involved.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "2. Retesting for Pyrogens"
+    },
+    {
+     "ref": "¶113",
+     "text": "As with sterility, pyrogen retesting can be performed provided it is known that the test system was compromised. It cannot be assumed that the failure is a false positive without documented justification.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶114",
+     "text": "Review any initial pyrogen test failures and determine the firm's justification for retesting.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "3. Particulate Matter Testing"
+    },
+    {
+     "ref": "¶115",
+     "text": "Particulate matter consists of extraneous, mobile, undissolved substances, other than gas bubbles, unintentionally present in parenteral solutions.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶116",
+     "text": "Cleanliness specifications or levels of non-viable particulate contamination must be established. Limits are usually based on the history of the process. The particulate matter test procedure and limits for LVP's in the U.S.P. can be used as a general guideline. However, the levels of particulate contamination in sterile powders are generally greater than in LVP's. LVP solutions are filtered during the filling operation. However, sterile powders, except powders lyophilized in vials, cannot include filtration as a part of the filling operation. Considerable particulate contamination is also present in sterile powders which are spray dried due to charring during the process.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶117",
+     "text": "Review the particulate matter test procedure and release criteria. Review production and control records of any batches for which complaints of particulate matter have been received.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "o Production Records"
+    },
+    {
+     "ref": "¶118",
+     "text": "Production records should be similar to those for other dosage forms. Critical steps, such as integrity testing of filters, should be signed and dated by a second responsible person.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶119",
+     "text": "Review production records to ensure that directions for significant manufacturing steps are included and reflect a complete history of production.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "Ointments, Liquids, and Lotions"
+    }
+   ]
+  },
+  {
+   "unit": "¶120-¶158",
+   "paragraphs": [
+    {
+     "ref": "¶120",
+     "text": "Major factors in the preparation of these drugs are the selection of raw materials, manufacturing practices, equipment, controls, and laboratory testing.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶121",
+     "text": "Following the basic drug inspection fundamentals, fully evaluate the production procedures. In addition, evaluate specific information regarding:",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶122",
+     "text": "The selection and compatibility of ingredients.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶123",
+     "text": "Whether the drug is a homogeneous preparation free of extraneous matter.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶124",
+     "text": "The possibility of decomposition, separation, or crystallization of ingredients.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶125",
+     "text": "The adequacy of ultimate containers to hold and dispense contents.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶126",
+     "text": "Procedure for cleaning the containers before filling.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶127",
+     "text": "Maintenance of homogeneity during manufacturing and filling",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶128",
+     "text": "operations.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶129",
+     "text": "The most common problem associated with the production of these dosage forms is microbiological contamination caused by faulty design and/or control of purified water systems. During inspections, evaluate the adequacy of the water system. Review and evaluate the micro/chemistry test results on the routine monitoring of the water system including validation of the water system. Review any microbiological tests done on the finished drug including in-process testing.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶130",
+     "text": "Some of these drugs have preservatives added which protect them from microbial contamination. The preservatives are used primarily in multiple-dose containers to inhibit the growth of microorganisms introduced inadvertently during or after manufacturing. Evaluate the adequacy of preservative system. Preservative effectiveness testing for these products should be reviewed. For additional information, review the \"Antimicrobial Preservatives-Effectiveness\" section of the U.S.P..",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶131",
+     "text": "Equipment employed for manufacturing topical drugs is sometimes difficult to clean. This is especially true for those which contain insoluble active ingredients, such as the sulfa drugs. The firm's equipment cleaning procedures including cleaning validation data should be reviewed and evaluated.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶132",
+     "text": "Packaging and Labeling [21 CFR Subpart G]",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶133",
+     "text": "Packaging and labeling operations must be controlled so only those drugs which meet the specifications established in the master formula records are distributed. Review in detail the packaging and labeling operations to decide if the system will prevent drug and label mix-ups. Approximately 25% of all drug recalls originate in this area.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶134",
+     "text": "Evaluate what controls or procedures the firm has to provide positive assurance that all labels are correct. Determine if packaging and labeling operations include:",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶135",
+     "text": "Adequate physical separation of labeling and packaging operations from manufacturing process.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶136",
+     "text": "Review of:",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶137",
+     "text": "Label copy before delivery to the printer.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶138",
+     "text": "Printer's copy.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶139",
+     "text": "Whether firm's representative inspects the printer.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶140",
+     "text": "Whether or not gang printing is prohibited.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶141",
+     "text": "Whether labels are checked against the master label before released to stock. Determine who is responsible for label review prior to release of the labels to production. Also, whether the labels are identical to the labeling specified in the batch production records.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶142",
+     "text": "Separate storage of each label (including package inserts) to avoid mixups.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶143",
+     "text": "Inventory of label stocks. Determine if the printer's count is accepted or if labels are counted upon receipt.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶144",
+     "text": "Designation of one individual to be responsible for storage and issuance of all labels.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶145",
+     "text": "Receipt by the packaging and labeling department of a batch record, or other record, showing the quantity of labels needed for a batch. Determine if the batch record is retained by the packaging supervisor or accompanies the labels to the actual packaging and labeling line.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶146",
+     "text": "Adequate controls of the quantities of labeling issued, used, and returned. Determine if excess labels are accounted for and if excess labels bearing specific control codes, and obsolete or changed labels are destroyed.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶147",
+     "text": "Inspection of the facilities before labeling to ensure that all previously used labeling and drugs have been removed.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶148",
+     "text": "Assurance that batch identification is maintained during packaging.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶149",
+     "text": "Control procedures to follow if a significant unexplained discrepancy occurs between quantity of drug packaged and the quantity of labeling issued",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶150",
+     "text": "Segregated facilities for labeling one batch of the drug at a time. If this is not practiced, determine what steps are taken to prevent mix-ups.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶151",
+     "text": "Methods for checking similar type labels of different drugs or potencies to prevent mixing.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶152",
+     "text": "Quarantine of finished packaged products to permit adequate examination or testing of a representative sample to safeguard against errors. Also, to prevent distribution of any batch until all specified tests have been met.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶153",
+     "text": "An individual who makes the final decision that the drug should go to the warehouse, or the shipping department.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶154",
+     "text": "Utilization of any outside firms, such as contract packers, and what controls are exercised over such operations.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶155",
+     "text": "Special attention should be devoted to firms using \"rolls\" of pressure sensitive labels. Investigators have found instances where:",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶156",
+     "text": "Paper chips cut from label backing to help running the labels through a coder interfered with the code printer causing digits in the lot number to be blocked out.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶157",
+     "text": "Some rolls contained spliced sections resulting in label changes in the roll.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶158",
+     "text": "Some labels shifted on the roll when the labels were printed resulting in omitting required information.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶77-¶96#1",
+   "unit": "¶77-¶96",
+   "hash": "783091bcb8ae477a",
+   "item": {
+    "statement": "Validate the sterilization cycle used for equipment in the filling room.",
+    "quote": "Determine how equipment used in the filling room is sterilized, and if the sterilization cycle has been validated.",
+    "clause_number": "¶77",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶77-¶96#2",
+   "unit": "¶77-¶96",
+   "hash": "663b2df1233596b6",
+   "item": {
+    "statement": "Have a practice for re-sterilizing equipment if its sterility has been compromised.",
+    "quote": "Determine the practice of re-sterilizing equipment if sterility has been compromised.",
+    "clause_number": "¶77",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "sterility of equipment compromised"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶77-¶96#3",
+   "unit": "¶77-¶96",
+   "hash": "764efae17aa27b30",
+   "item": {
+    "statement": "Control water used in the production of sterile drugs so that it meets USP specifications.",
+    "quote": "Water used in the production of sterile drugs must be controlled to assure that it meets U.S.P. specifications.",
+    "clause_number": "¶79",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶77-¶96#4",
+   "unit": "¶77-¶96",
+   "hash": "ba9c7d2161535cda",
+   "item": {
+    "statement": "Install and operate the stills, filters, storage tanks and pipes of the water for injection system so they do not contaminate the water.",
+    "quote": "Determine that the stills, filters, storage tanks, and pipes are installed and operated in a manner that will not contaminate the water.",
+    "clause_number": "¶79",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶77-¶96#5",
+   "unit": "¶77-¶96",
+   "hash": "eb3160b69cb96988",
+   "item": {
+    "statement": "Have procedures and specifications that assure the quality of water for injection.",
+    "quote": "Evaluate the firm's procedures and specifications that assure the quality of the water for injection.",
+    "clause_number": "¶79",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶77-¶96#6",
+   "unit": "¶77-¶96",
+   "hash": "0fd8ec131246520f",
+   "item": {
+    "statement": "Make sure cleaning, sterilization and depyrogenation of containers and closures are adequate and validated.",
+    "quote": "Decide if the cleaning, sterilization, and depyrogenization are adequate, and have been validated.",
+    "clause_number": "¶80",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶77-¶96#7",
+   "unit": "¶77-¶96",
+   "hash": "8e788656e45a630e",
+   "item": {
+    "statement": "Validate the sterilization process, whatever method is used.",
+    "quote": "Review and evaluate the validation data whatever the method employed.",
+    "clause_number": "¶81",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶77-¶96#8",
+   "unit": "¶77-¶96",
+   "hash": "0be2c3ae6ad0af83",
+   "item": {
+    "statement": "Where steam under pressure is used, fit a mercury thermometer and a recording thermometer in the exhaust line as essential controls.",
+    "quote": "If steam under pressure is used, an essential control is a mercury thermometer and a recording thermometer installed in the exhaust line.",
+    "clause_number": "¶82",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "steam sterilization"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶77-¶96#9",
+   "unit": "¶77-¶96",
+   "hash": "73712428fa34c06d",
+   "item": {
+    "statement": "Where steam under pressure is used, know the time needed to heat the centre of the largest container to the desired temperature.",
+    "quote": "The time required to heat the center of the largest container to the desired temperature must be known.",
+    "clause_number": "¶82",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "steam sterilization"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶77-¶96#10",
+   "unit": "¶77-¶96",
+   "hash": "26be675ee86136c6",
+   "item": {
+    "statement": "Where steam under pressure is used, make sure steam expels all air from the sterilizer chamber to eliminate cold spots.",
+    "quote": "Steam must expel all air from the sterilizer chamber to eliminate cold spots.",
+    "clause_number": "¶82",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "steam sterilization"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶77-¶96#11",
+   "unit": "¶77-¶96",
+   "hash": "3aa5883203fa1458",
+   "item": {
+    "statement": "Where steam under pressure is used, connect sterilizer drain lines to the sewer through an air break to prevent back siphoning.",
+    "quote": "The drain lines should be connected to the sewer by means of an air break to prevent back siphoning.",
+    "clause_number": "¶82",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "steam sterilization"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶77-¶96#12",
+   "unit": "¶77-¶96",
+   "hash": "319b013c685e9177",
+   "item": {
+    "statement": "Where steam under pressure is used, avoid paper layers or liners and other practices that might block the flow of steam.",
+    "quote": "The use of paper layers or liners and other practices which might block the flow of steam should be avoided.",
+    "clause_number": "¶82",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "steam sterilization"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶77-¶96#13",
+   "unit": "¶77-¶96",
+   "hash": "50ba90c45a35060f",
+   "item": {
+    "statement": "Where steam under pressure is used, file time, temperature and pressure charts for each sterilizer load.",
+    "quote": "Charts of time, temperature, and pressure should be filed for each sterilizer load.",
+    "clause_number": "¶82",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "steam sterilization"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶77-¶96#14",
+   "unit": "¶77-¶96",
+   "hash": "817999fb2bf8f8ef",
+   "item": {
+    "statement": "Where sterile filtration is used, have criteria for selecting the filter and for how often it is changed.",
+    "quote": "If sterile filtration is used, determine the firm's criteria for selecting the filter and the frequency of changing.",
+    "clause_number": "¶83",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "sterile filtration"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶77-¶96#15",
+   "unit": "¶77-¶96",
+   "hash": "0e0ecd273d7103a8",
+   "item": {
+    "statement": "Where sterile filtration is used, validate the filters.",
+    "quote": "Review the filter validation data.",
+    "clause_number": "¶83",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "sterile filtration"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶77-¶96#16",
+   "unit": "¶77-¶96",
+   "hash": "35328e05e35b04c1",
+   "item": {
+    "statement": "Where sterile filtration is used, know the bioburden of the drug.",
+    "quote": "Determine if the firm knows the bioburden of the drug",
+    "clause_number": "¶83",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "sterile filtration"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶77-¶96#17",
+   "unit": "¶77-¶96",
+   "hash": "332ee8dd333b4e73",
+   "item": {
+    "statement": "Where sterile filtration is used, have procedures for filter integrity testing.",
+    "quote": "examine their procedures for filter integrity testing",
+    "clause_number": "¶83",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "sterile filtration"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶77-¶96#18",
+   "unit": "¶77-¶96",
+   "hash": "7ec4d56b3e679dd3",
+   "item": {
+    "statement": "Where sterile filtration is used, have data justifying filter integrity for the time the filter is used and showing that grow-through has not occurred.",
+    "quote": "Determine if there is data to justify the integrity of the filters for the time used and that \"grow through\" has not occurred.",
+    "clause_number": "¶83",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "sterile filtration"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶77-¶96#19",
+   "unit": "¶77-¶96",
+   "hash": "6702b49d27e57292",
+   "item": {
+    "statement": "Where ethylene oxide sterilization is used, test for residues and degradation.",
+    "quote": "If ethylene oxide sterilization is used, determine what tests are made for residues and degradation.",
+    "clause_number": "¶84",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "ethylene oxide sterilization"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶77-¶96#20",
+   "unit": "¶77-¶96",
+   "hash": "bd6b816ed7ba4800",
+   "item": {
+    "statement": "Do not store spore strips where they could be exposed to low levels of ethylene oxide.",
+    "quote": "The spore strips should not be stored where they could be exposed to low levels of ethylene oxide.",
+    "clause_number": "¶86",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶77-¶96#21",
+   "unit": "¶77-¶96",
+   "hash": "308e83f3c6fd4e58",
+   "item": {
+    "statement": "Where relying on biological indicators, compile background data including surveys of the types and numbers of organisms in the product before sterilization.",
+    "quote": "Surveys of the types and numbers of organisms in the product before sterilization.",
+    "clause_number": "¶90",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "relying on biological indicators"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶77-¶96#22",
+   "unit": "¶77-¶96",
+   "hash": "ad5ec8e8a33641ef",
+   "item": {
+    "statement": "Where relying on biological indicators, compile background data including data on the organism's resistance to the specific sterilization process.",
+    "quote": "Data on the resistance of the organism to the specific sterilization process.",
+    "clause_number": "¶91",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "relying on biological indicators"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶77-¶96#23",
+   "unit": "¶77-¶96",
+   "hash": "5cd0d93bdd1bce6b",
+   "item": {
+    "statement": "Where relying on biological indicators, compile background data including the data used to select the most resistant organism and its form (spore or vegetative cell).",
+    "quote": "Data used for selecting the most resistant organism and its form (spore or vegetative cell).",
+    "clause_number": "¶92",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "relying on biological indicators"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶77-¶96#24",
+   "unit": "¶77-¶96",
+   "hash": "1fcfc6894a521127",
+   "item": {
+    "statement": "Where relying on biological indicators, compile background data including studies of the stability and resistance of the selected organism to the specific sterilization process.",
+    "quote": "Studies of the stability and resistance of the selected organism to the specific sterilization process.",
+    "clause_number": "¶93",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "relying on biological indicators"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶77-¶96#25",
+   "unit": "¶77-¶96",
+   "hash": "4ba6889f653d2e06",
+   "item": {
+    "statement": "Where relying on biological indicators, compile background data including studies on recovery of the organism used to inoculate the product.",
+    "quote": "Studies on the recovery of the organism used to inoculate the product.",
+    "clause_number": "¶94",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "relying on biological indicators"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶77-¶96#26",
+   "unit": "¶77-¶96",
+   "hash": "7407ecb040bfdb06",
+   "item": {
+    "statement": "Where relying on biological indicators and a simulated product or a surface similar to the solid product is used, compile background data including validation of the simulation or similarity.",
+    "quote": "If a simulated product or surface similar to the solid product is used, validation of the simulation or similarity.",
+    "clause_number": "¶95",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "simulated product or similar surface used"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶77-¶96#27",
+   "unit": "¶77-¶96",
+   "hash": "3d4ccb3811cafc9e",
+   "item": {
+    "statement": "Make sure any simulated product or similar surface used with biological indicators does not affect recovery of the numbers of indicator organisms applied.",
+    "quote": "The simulated product or similar surface must not affect the recovery of the numbers of indicator organisms applied.",
+    "clause_number": "¶95",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "simulated product or similar surface used"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶77-¶96#28",
+   "unit": "¶77-¶96",
+   "hash": "84ea11cfb9ed2513",
+   "item": {
+    "statement": "Where relying on biological indicators, compile background data including validation of the number of organisms used to inoculate the product, simulated product or similar surface, covering stability of the inoculum during the sterilization process.",
+    "quote": "Validation of the number of organisms used to inoculate the product, simulated product, or similar surface, to include stability of the inoculum during the sterilization process.",
+    "clause_number": "¶96",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "relying on biological indicators"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶97-¶119#1",
+   "unit": "¶97-¶119",
+   "hash": "a12d5d133f9c40d2",
+   "item": {
+    "statement": "Make sure personnel who select and apply biological indicators are qualified, including experience with the process, expected contaminants, resistance testing of organisms, and technique.",
+    "quote": "Since qualified personnel are crucial to the selection and application of these indicators, review their qualifications including experience dealing with the process, expected contaminants, testing of resistance of organisms, and technique.",
+    "clause_number": "¶97",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶97-¶119#2",
+   "unit": "¶97-¶119",
+   "hash": "74fd49f6d868aa65",
+   "item": {
+    "statement": "Have product-specific instructions for the use, control and testing of biological indicators, including a description of the method used to show presence or absence of viable indicator in or on the product.",
+    "quote": "Review the firm's instructions regarding use, control and testing, of the biological indicator by product including a description of the method used to demonstrate presence or absence of viable indicator in or on the product.",
+    "clause_number": "¶98",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶97-¶119#3",
+   "unit": "¶97-¶119",
+   "hash": "31c71a79cc7fa5bc",
+   "item": {
+    "statement": "Have data supporting each use of a biological indicator, including inoculum counts, recovery data controlling the method used to show the indicator organism was sterilized, and counts on unprocessed inoculated material showing inoculum stability for the process time.",
+    "quote": "Review the data used to support the use of the indicator each time it is used. Include the counts of the inoculum used; recovery data to control the method used to demonstrate the sterilization of the indicator organism; counts on unprocessed, inoculated material to",
+    "clause_number": "¶99",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶97-¶119#4",
+   "unit": "¶97-¶119",
+   "hash": "a0c83403e6832a83",
+   "item": {
+    "statement": "Include in the data supporting each use of a biological indicator the results of sterility testing designed specifically to show presence or absence of the indicator organism, for each batch or filling operation.",
+    "quote": "results of sterility testing specifically designed to demonstrate the presence or absence of the indicator organism for each batch or filling operation.",
+    "clause_number": "¶101",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶97-¶119#5",
+   "unit": "¶97-¶119",
+   "hash": "4e1d3e71d89183c3",
+   "item": {
+    "statement": "Handle indicator organisms so they do not contaminate the drug manufacturing area and product.",
+    "quote": "you must assure yourself that the organisms are handled so they don't contaminate the drug manufacturing area and product",
+    "clause_number": "¶102",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶97-¶119#6",
+   "unit": "¶97-¶119",
+   "hash": "eeafd48e62bf7d29",
+   "item": {
+    "statement": "If capping or sealing is not done in the sterile fill area, maintain sterility of filled containers until they are capped.",
+    "quote": "If not, how is sterility maintained until capped?",
+    "clause_number": "¶103",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "capping not in sterile fill area"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶97-¶119#7",
+   "unit": "¶97-¶119",
+   "hash": "b32668f36ecf5c11",
+   "item": {
+    "statement": "Test finished vials, ampoules or other containers to assure proper fill and seal, for example leak and torque tests.",
+    "quote": "Review the tests done on finished vials, ampules, or other containers, to assure proper fill and seal. For instance, leak and torque tests.",
+    "clause_number": "¶104",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶97-¶119#8",
+   "unit": "¶97-¶119",
+   "hash": "6468f47fdab96637",
+   "item": {
+    "statement": "Properly train employees who perform on-line visual examinations.",
+    "quote": "Employees doing visual examinations on line must be properly trained.",
+    "clause_number": "¶105",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶97-¶119#9",
+   "unit": "¶97-¶119",
+   "hash": "608aeeedd4ebdf9b",
+   "item": {
+    "statement": "Where particle counts are done by machine, validate that operation.",
+    "quote": "If particle counts are done by machine, this operation must be validated.",
+    "clause_number": "¶105",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "machine particle counting"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶97-¶119#10",
+   "unit": "¶97-¶119",
+   "hash": "7a4911237d2359b8",
+   "item": {
+    "statement": "Dress filling room employees properly in sterile gowns, masks, caps and shoe coverings.",
+    "quote": "Are the employees properly dressed in sterile gowns, masks, caps, and shoe coverings?",
+    "clause_number": "¶107",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶97-¶119#11",
+   "unit": "¶97-¶119",
+   "hash": "966d00a2ddaaeefc",
+   "item": {
+    "statement": "Maintain good aseptic technique in the dressing and filling rooms.",
+    "quote": "determine if good aseptic technique is maintained in the dressing and filling rooms",
+    "clause_number": "¶107",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶97-¶119#12",
+   "unit": "¶97-¶119",
+   "hash": "9c3d60866809bba4",
+   "item": {
+    "statement": "After lunch and other absences, supply fresh sterile garb rather than reusing soiled garments.",
+    "quote": "Is fresh sterile garb supplied, or are soiled garments reused?",
+    "clause_number": "¶108",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "after lunch and other absences"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶97-¶119#13",
+   "unit": "¶97-¶119",
+   "hash": "858ef9ef60f955f2",
+   "item": {
+    "statement": "Retest for sterility only when the cause of the initial non-sterility is known and thereby invalidates the original result.",
+    "quote": "Sterility retesting is acceptable provided the cause of the initial non-sterility is known, and thereby invalidates the original results.",
+    "clause_number": "¶111",
+    "strength": "optional",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "cause of initial non-sterility known"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶97-¶119#14",
+   "unit": "¶97-¶119",
+   "hash": "609ee4d23b0c0a46",
+   "item": {
+    "statement": "Do not assume an initial sterility test failure is a false positive; justify any such conclusion by sufficient documented investigation.",
+    "quote": "It cannot be assumed that the initial sterility test failure is a false positive. This conclusion must be justified by sufficient documented investigation.",
+    "clause_number": "¶111",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶97-¶119#15",
+   "unit": "¶97-¶119",
+   "hash": "7af72d8315024b97",
+   "item": {
+    "statement": "Retest for pyrogens only when it is known that the test system was compromised.",
+    "quote": "pyrogen retesting can be performed provided it is known that the test system was compromised",
+    "clause_number": "¶113",
+    "strength": "optional",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "test system known to be compromised"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶97-¶119#16",
+   "unit": "¶97-¶119",
+   "hash": "f528d25ea9e4259d",
+   "item": {
+    "statement": "Do not assume a pyrogen test failure is a false positive without documented justification.",
+    "quote": "It cannot be assumed that the failure is a false positive without documented justification.",
+    "clause_number": "¶113",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶97-¶119#17",
+   "unit": "¶97-¶119",
+   "hash": "3cbe4d3a11ed83ad",
+   "item": {
+    "statement": "Establish cleanliness specifications or levels for non-viable particulate contamination.",
+    "quote": "Cleanliness specifications or levels of non-viable particulate contamination must be established.",
+    "clause_number": "¶116",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶97-¶119#18",
+   "unit": "¶97-¶119",
+   "hash": "adcfc133888209ca",
+   "item": {
+    "statement": "The USP particulate matter test procedure and limits for large volume parenterals may be used as a general guideline.",
+    "quote": "The particulate matter test procedure and limits for LVP's in the U.S.P. can be used as a general guideline.",
+    "clause_number": "¶116",
+    "strength": "optional",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶97-¶119#19",
+   "unit": "¶97-¶119",
+   "hash": "553f01276d3f1a68",
+   "item": {
+    "statement": "Keep production records for sterile products similar to those for other dosage forms.",
+    "quote": "Production records should be similar to those for other dosage forms.",
+    "clause_number": "¶118",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶97-¶119#20",
+   "unit": "¶97-¶119",
+   "hash": "4fa45bebe21a9a05",
+   "item": {
+    "statement": "Have critical steps, such as filter integrity testing, signed and dated by a second responsible person.",
+    "quote": "Critical steps, such as integrity testing of filters, should be signed and dated by a second responsible person.",
+    "clause_number": "¶118",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶97-¶119#21",
+   "unit": "¶97-¶119",
+   "hash": "6ae040028265b9e6",
+   "item": {
+    "statement": "Include directions for significant manufacturing steps in production records, and make the records reflect a complete history of production.",
+    "quote": "Review production records to ensure that directions for significant manufacturing steps are included and reflect a complete history of production.",
+    "clause_number": "¶119",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶120-¶158#1",
+   "unit": "¶120-¶158",
+   "hash": "9f918c2776761ae2",
+   "item": {
+    "statement": "Make sure ointments, liquids and lotions are homogeneous preparations free of extraneous matter.",
+    "quote": "Whether the drug is a homogeneous preparation free of extraneous matter.",
+    "clause_number": "¶123",
+    "strength": "recommended",
+    "plant_types": [
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶120-¶158#2",
+   "unit": "¶120-¶158",
+   "hash": "7f20d6d71041995c",
+   "item": {
+    "statement": "Use final containers for ointments, liquids and lotions that are adequate to hold and dispense the contents.",
+    "quote": "The adequacy of ultimate containers to hold and dispense contents.",
+    "clause_number": "¶125",
+    "strength": "recommended",
+    "plant_types": [
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶120-¶158#3",
+   "unit": "¶120-¶158",
+   "hash": "5ce9a84449288c6a",
+   "item": {
+    "statement": "Have a procedure for cleaning containers for ointments, liquids and lotions before filling.",
+    "quote": "Procedure for cleaning the containers before filling.",
+    "clause_number": "¶126",
+    "strength": "recommended",
+    "plant_types": [
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶120-¶158#4",
+   "unit": "¶120-¶158",
+   "hash": "5830c6ee3b4e321c",
+   "item": {
+    "statement": "Maintain homogeneity of ointments, liquids and lotions during manufacturing and filling operations.",
+    "quote": "Maintenance of homogeneity during manufacturing and filling",
+    "clause_number": "¶127",
+    "strength": "recommended",
+    "plant_types": [
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶120-¶158#5",
+   "unit": "¶120-¶158",
+   "hash": "7a7ef61ecf3cc062",
+   "item": {
+    "statement": "Have an adequate purified water system.",
+    "quote": "During inspections, evaluate the adequacy of the water system.",
+    "clause_number": "¶129",
+    "strength": "recommended",
+    "plant_types": [
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶120-¶158#6",
+   "unit": "¶120-¶158",
+   "hash": "b8ef7a1ef283a213",
+   "item": {
+    "statement": "Routinely monitor the water system with microbiological and chemical tests, and validate the water system.",
+    "quote": "Review and evaluate the micro/chemistry test results on the routine monitoring of the water system including validation of the water system.",
+    "clause_number": "¶129",
+    "strength": "recommended",
+    "plant_types": [
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶120-¶158#7",
+   "unit": "¶120-¶158",
+   "hash": "5bfdfcac2dd914cc",
+   "item": {
+    "statement": "Where preservatives are used, make sure the preservative system is adequate.",
+    "quote": "Evaluate the adequacy of preservative system.",
+    "clause_number": "¶130",
+    "strength": "recommended",
+    "plant_types": [
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": "preserved products"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶120-¶158#8",
+   "unit": "¶120-¶158",
+   "hash": "0df8dc2ef18950df",
+   "item": {
+    "statement": "Where preservatives are used, perform preservative effectiveness testing.",
+    "quote": "Preservative effectiveness testing for these products should be reviewed.",
+    "clause_number": "¶130",
+    "strength": "recommended",
+    "plant_types": [
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": "preserved products"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶120-¶158#9",
+   "unit": "¶120-¶158",
+   "hash": "c19707d858dd1463",
+   "item": {
+    "statement": "Have equipment cleaning procedures, with cleaning validation data, for equipment used to make topical drugs.",
+    "quote": "The firm's equipment cleaning procedures including cleaning validation data should be reviewed and evaluated.",
+    "clause_number": "¶131",
+    "strength": "recommended",
+    "plant_types": [
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶120-¶158#10",
+   "unit": "¶120-¶158",
+   "hash": "d1be5f73a67d165d",
+   "item": {
+    "statement": "Control packaging and labeling operations so that only drugs meeting the specifications in the master formula records are distributed.",
+    "quote": "Packaging and labeling operations must be controlled so only those drugs which meet the specifications established in the master formula records are distributed.",
+    "clause_number": "¶133",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶120-¶158#11",
+   "unit": "¶120-¶158",
+   "hash": "3f2ac8ec6e7cdd0e",
+   "item": {
+    "statement": "Have a packaging and labeling system that prevents drug and label mix-ups.",
+    "quote": "Review in detail the packaging and labeling operations to decide if the system will prevent drug and label mix-ups.",
+    "clause_number": "¶133",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶120-¶158#12",
+   "unit": "¶120-¶158",
+   "hash": "956f42475e4b67f3",
+   "item": {
+    "statement": "Have controls or procedures that give positive assurance that all labels are correct.",
+    "quote": "Evaluate what controls or procedures the firm has to provide positive assurance that all labels are correct.",
+    "clause_number": "¶134",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶120-¶158#13",
+   "unit": "¶120-¶158",
+   "hash": "1f7db81b3086396b",
+   "item": {
+    "statement": "Packaging and labeling operations include adequate physical separation of labeling and packaging from the manufacturing process.",
+    "quote": "Adequate physical separation of labeling and packaging operations from manufacturing process.",
+    "clause_number": "¶135",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶120-¶158#14",
+   "unit": "¶120-¶158",
+   "hash": "c8c970b7a52a56d8",
+   "item": {
+    "statement": "Packaging and labeling operations include review of label copy before it is delivered to the printer.",
+    "quote": "Label copy before delivery to the printer.",
+    "clause_number": "¶137",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶120-¶158#15",
+   "unit": "¶120-¶158",
+   "hash": "0183a94276eeaca2",
+   "item": {
+    "statement": "Packaging and labeling operations include review of the printer's copy.",
+    "quote": "Printer's copy.",
+    "clause_number": "¶138",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶120-¶158#16",
+   "unit": "¶120-¶158",
+   "hash": "70252c402c1c9b93",
+   "item": {
+    "statement": "Packaging and labeling operations include review of whether a representative of the firm inspects the printer.",
+    "quote": "Whether firm's representative inspects the printer.",
+    "clause_number": "¶139",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶120-¶158#17",
+   "unit": "¶120-¶158",
+   "hash": "36a11f2c480781e3",
+   "item": {
+    "statement": "Packaging and labeling operations include review of whether gang printing is prohibited.",
+    "quote": "Whether or not gang printing is prohibited.",
+    "clause_number": "¶140",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶120-¶158#18",
+   "unit": "¶120-¶158",
+   "hash": "3802c57a42bb862e",
+   "item": {
+    "statement": "Packaging and labeling operations include checking labels against the master label before they are released to stock.",
+    "quote": "Whether labels are checked against the master label before released to stock.",
+    "clause_number": "¶141",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶120-¶158#19",
+   "unit": "¶120-¶158",
+   "hash": "b7bd036445b9f7db",
+   "item": {
+    "statement": "Assign responsibility for reviewing labels before they are released to production.",
+    "quote": "Determine who is responsible for label review prior to release of the labels to production.",
+    "clause_number": "¶141",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶120-¶158#20",
+   "unit": "¶120-¶158",
+   "hash": "a04cfc8d4d16f00a",
+   "item": {
+    "statement": "Make sure labels are identical to the labeling specified in the batch production records.",
+    "quote": "Also, whether the labels are identical to the labeling specified in the batch production records.",
+    "clause_number": "¶141",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶120-¶158#21",
+   "unit": "¶120-¶158",
+   "hash": "72fed98b620ebe98",
+   "item": {
+    "statement": "Packaging and labeling operations include separate storage of each label, including package inserts, to avoid mix-ups.",
+    "quote": "Separate storage of each label (including package inserts) to avoid mixups.",
+    "clause_number": "¶142",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶120-¶158#22",
+   "unit": "¶120-¶158",
+   "hash": "dc5ba2366aadf6e3",
+   "item": {
+    "statement": "Packaging and labeling operations include an inventory of label stocks.",
+    "quote": "Inventory of label stocks.",
+    "clause_number": "¶143",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶120-¶158#23",
+   "unit": "¶120-¶158",
+   "hash": "18668f6002747e4e",
+   "item": {
+    "statement": "Packaging and labeling operations include designation of one person responsible for storing and issuing all labels.",
+    "quote": "Designation of one individual to be responsible for storage and issuance of all labels.",
+    "clause_number": "¶144",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶120-¶158#24",
+   "unit": "¶120-¶158",
+   "hash": "015c2d55024137c7",
+   "item": {
+    "statement": "Packaging and labeling operations include receipt by the packaging and labeling department of a batch record, or other record, showing the quantity of labels needed for the batch.",
+    "quote": "Receipt by the packaging and labeling department of a batch record, or other record, showing the quantity of labels needed for a batch.",
+    "clause_number": "¶145",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶120-¶158#25",
+   "unit": "¶120-¶158",
+   "hash": "a0e881f99edc4902",
+   "item": {
+    "statement": "Packaging and labeling operations include adequate control of the quantities of labeling issued, used and returned.",
+    "quote": "Adequate controls of the quantities of labeling issued, used, and returned.",
+    "clause_number": "¶146",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶120-¶158#26",
+   "unit": "¶120-¶158",
+   "hash": "5e3b3eff9f0bea1a",
+   "item": {
+    "statement": "Account for excess labels, and destroy excess labels bearing specific control codes as well as obsolete or changed labels.",
+    "quote": "Determine if excess labels are accounted for and if excess labels bearing specific control codes, and obsolete or changed labels are destroyed.",
+    "clause_number": "¶146",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶120-¶158#27",
+   "unit": "¶120-¶158",
+   "hash": "bff1568e0ec2009f",
+   "item": {
+    "statement": "Packaging and labeling operations include inspection of the facilities before labeling to ensure all previously used labeling and drugs have been removed.",
+    "quote": "Inspection of the facilities before labeling to ensure that all previously used labeling and drugs have been removed.",
+    "clause_number": "¶147",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶120-¶158#28",
+   "unit": "¶120-¶158",
+   "hash": "6811898f0c82e031",
+   "item": {
+    "statement": "Packaging and labeling operations include assurance that batch identification is maintained during packaging.",
+    "quote": "Assurance that batch identification is maintained during packaging.",
+    "clause_number": "¶148",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶120-¶158#29",
+   "unit": "¶120-¶158",
+   "hash": "ce64f7a0e1dac0ce",
+   "item": {
+    "statement": "Packaging and labeling operations include control procedures to follow if a significant unexplained discrepancy occurs between the quantity of drug packaged and the quantity of labeling issued.",
+    "quote": "Control procedures to follow if a significant unexplained discrepancy occurs between quantity of drug packaged and the quantity of labeling issued",
+    "clause_number": "¶149",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "significant unexplained discrepancy"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶120-¶158#30",
+   "unit": "¶120-¶158",
+   "hash": "08e3fa86b0aca49f",
+   "item": {
+    "statement": "Packaging and labeling operations include segregated facilities for labeling one batch of the drug at a time.",
+    "quote": "Segregated facilities for labeling one batch of the drug at a time.",
+    "clause_number": "¶150",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶120-¶158#31",
+   "unit": "¶120-¶158",
+   "hash": "acf667246df6e749",
+   "item": {
+    "statement": "If one batch at a time is not labeled in segregated facilities, take steps to prevent mix-ups.",
+    "quote": "If this is not practiced, determine what steps are taken to prevent mix-ups.",
+    "clause_number": "¶150",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "no segregated one-batch labeling"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶120-¶158#32",
+   "unit": "¶120-¶158",
+   "hash": "59cc372018857361",
+   "item": {
+    "statement": "Packaging and labeling operations include methods for checking similar labels of different drugs or potencies to prevent mixing.",
+    "quote": "Methods for checking similar type labels of different drugs or potencies to prevent mixing.",
+    "clause_number": "¶151",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶120-¶158#33",
+   "unit": "¶120-¶158",
+   "hash": "b8e7a9373e7c5841",
+   "item": {
+    "statement": "Packaging and labeling operations include quarantine of finished packaged products to allow adequate examination or testing of a representative sample to safeguard against errors.",
+    "quote": "Quarantine of finished packaged products to permit adequate examination or testing of a representative sample to safeguard against errors.",
+    "clause_number": "¶152",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶120-¶158#34",
+   "unit": "¶120-¶158",
+   "hash": "6c9b8f2c124edd61",
+   "item": {
+    "statement": "Quarantine finished packaged products to prevent distribution of any batch until all specified tests have been met.",
+    "quote": "Also, to prevent distribution of any batch until all specified tests have been met.",
+    "clause_number": "¶152",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶120-¶158#35",
+   "unit": "¶120-¶158",
+   "hash": "ffcc29b698f2825d",
+   "item": {
+    "statement": "Packaging and labeling operations include a person who makes the final decision that the drug should go to the warehouse or the shipping department.",
+    "quote": "An individual who makes the final decision that the drug should go to the warehouse, or the shipping department.",
+    "clause_number": "¶153",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶120-¶158#36",
+   "unit": "¶120-¶158",
+   "hash": "f840c250807a6297",
+   "item": {
+    "statement": "Exercise controls over any outside firms used, such as contract packers.",
+    "quote": "Utilization of any outside firms, such as contract packers, and what controls are exercised over such operations.",
+    "clause_number": "¶154",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  }
+ ]
+}

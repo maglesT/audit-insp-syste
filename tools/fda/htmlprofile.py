@@ -250,6 +250,16 @@ def counts(sentence):
     return vision.counts_for_coverage(sentence) or bool(EXPECTS.search(sentence)) or bool(IMPERATIVE.match(sentence))
 
 
+# The investigator's own framing in a lead-in is no condition of the firm's practice: "Determine if packaging and
+# labeling operations include:", "When checking the sterility testing procedures, determine:"
+INSPECTOR_WHEN = re.compile(r"\b(?:when|while|during)\s+(?:checking|reviewing|examining|inspecting|evaluating|auditing|"
+                            r"observing|covering|the inspection of)\b[^,:]*[,:]?", re.I)
+
+
+def investigator_frame(lead):
+    return INSPECTOR_WHEN.sub(" ", ASK_IF.sub(r"\1 whether", lead or ""))
+
+
 def check_item(item, source, unit=None):
     """(findings, quote confirmed); unit: the unit the drafter answered for (its items must cite it)."""
     import layer1
@@ -280,7 +290,8 @@ def check_item(item, source, unit=None):
                                                                     "provided that", item["statement"])))
     if missing:
         out.append(("conditions", "quote has " + ", ".join(missing) + " wording the statement lacks"))
-    lm = vision.lead_in_missing(lead, item["statement"]) + X.qualifier_missing(lead, item["statement"])
+    framed = investigator_frame(lead)
+    lm = vision.lead_in_missing(framed, item["statement"]) + X.qualifier_missing(framed, item["statement"])
     if lm:
         out.append(("lead-in", f"the statement lacks the lead-in's condition: {'; '.join(lm)[:160]}"))
     pf = X.plants_finding(NOT_SCOPE.sub(" ", item["quote"] + " " + lead), item["plant_types"])
@@ -401,7 +412,8 @@ def lead_in_covered(ref, sentence, items, source):
         mine = [i for i in items if i["clause_number"].strip() == k]
         if not mine:
             return False
-        if any(vision.lead_in_missing(sentence, i["statement"]) or X.qualifier_missing(sentence, i["statement"])
+        frame = investigator_frame(sentence)
+        if any(vision.lead_in_missing(frame, i["statement"]) or X.qualifier_missing(frame, i["statement"])
                for i in mine):
             return False
     return True
