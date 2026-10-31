@@ -15,6 +15,11 @@ Answer strictly:
   may = optional; a sub-paragraph takes its lead-in's) matches, and the regulation applies to every listed plant
   type (INJ = sterile injectables: a paragraph limited to products not required to be sterile does not apply to
   INJ; one limited to sterile products applies only to INJ and API); otherwise "incorrect".
-- reason: one or two sentences.
+- reason: one or two sentences saying what you checked for THIS item, in this item's own words: name the
+  condition, number, list or scope you compared with the text (e.g. "the 30-day limit and 'each lot' are both in
+  the statement", "the list of components, containers and closures is complete", "drops the lead-in's 'for
+  sterile products'"). Write each reason fresh for its item: a reason that would fit any item ("quote exact,
+  strength matches, nothing added or omitted") or that repeats another answer's reason is not an answer, and the
+  item then counts as unchecked.
 
 Write the answers file named in your task: {"answers": [{"id", "verdict", "quote_as_printed", "reason"}, ...]}.

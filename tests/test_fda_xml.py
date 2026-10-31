@@ -433,5 +433,21 @@ class LeadInWordForms(unittest.TestCase):
         self.assertTrue(X.qualifier_missing(lead, "Provide separate areas for storage."))
 
 
+
+
+class VerifyPromptsD50(unittest.TestCase):
+    """D50: every verifier prompt asks for a reason that says what was checked for that item, written fresh."""
+
+    def test_each_verify_prompt_asks_for_an_item_specific_reason(self):
+        prompts = sorted((Path(X.__file__).parent / "prompts").glob("verify_*.md"))
+        self.assertEqual([p.name for p in prompts], ["verify_html_a.md", "verify_html_b.md", "verify_xml_a.md",
+                                                     "verify_xml_b.md"])
+        for p in prompts:
+            text = " ".join(p.read_text().split())
+            for phrase in ("what you checked for THIS item", "condition, number, list or scope",
+                           "repeats another answer's reason", "counts as unchecked"):
+                self.assertIn(phrase, text, p.name)
+
+
 if __name__ == "__main__":
     unittest.main()
