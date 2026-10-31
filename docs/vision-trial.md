@@ -108,14 +108,17 @@ into a requirement) stays with the two verifiers and the spot check.
 
 ## Pre-scaling fixes (owner: "yes do the fixes before scaling", 31 October 2026)
 
-1. **Coverage** counts only real obligation sentences: not a descriptive "may"/"can" ("coverage may include",
-   "amines may be present"), not a table caption; a leading clause number and a glued WHO side title are left out
-   before matching; a sentence holding several obligations or a lead-in with its list is covered by the quotes
-   printed inside it, taken together (each still whole-token, with the sentence's condition words). On the re-run's
-   drafts: **39 -> 10 gaps**. Left: 2 caption fragments, 3 descriptive sentences (inspector notes, a purpose
-   statement, "may be facilitated through, for example"), and about 4 to look at by hand (EU Annex 1 p22 x2, PE 009
-   p19 and p22).
+1. **Coverage** counts every shall/must/should sentence and every "may" that grants or denies something; it
+   leaves out only a sentence whose every may/can/could clause states a possibility ("coverage may include",
+   "amines may be present"; "may not" always counts). A caption glued to its table and footnotes stays in (a
+   footnote can hold an obligation). A leading clause number and a glued WHO side title are left out before
+   matching. A sentence with several obligations, or a lead-in with its list, may be covered by the quotes printed
+   inside it taken together, with 90 % of its words, every number and its condition words (after an independent
+   review). On the re-run's drafts: **39 -> 13 gaps**: 5 caption blocks whose table footnotes the items do not
+   quote (to look at: e.g. Annex 1 "(a) Settle plates should be exposed ... maximum of 4 hours"), 3 descriptive or
+   inspector sentences, 1 caption fragment, and 4 to look at by hand (EU Annex 1 p22 x2, PE 009 p19 and p22).
 2. **A continued table's header** is quoted from the page where it is printed: the item gives `header_page`; the
    check takes the whole header of the last table on that page (ruled or unruled) and the whole row on this page,
-   with no other caption in between; the verifiers get that page's image too.
+   with no other caption in between; an unruled row must have as many layout columns as the header. Drafters get
+   the previous page's text when a table continues; verifiers get that page's image and text.
 3. **Run-over quotes:** the whole next page goes into the drafting and verifier batches (no 3,000-character cut).

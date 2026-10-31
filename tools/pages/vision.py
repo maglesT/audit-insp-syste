@@ -58,6 +58,7 @@ RUNS = ROOT / "library" / "ai-runs"
 IMAGES = ROOT / "work" / "vision-pages"            # rendered pages (not in git; sha256 in the run's pages.json)
 PROMPTS = HERE / "prompts"
 COVERED_SHARE = 0.8
+UNION_SHARE = 0.9          # a sentence covered by several quotes printed inside it: a stricter share, every number
 PAGES_PER_BATCH = 5
 STRENGTHS = ("mandatory", "recommended", "optional")
 PLANTS = ("OSD", "LIQ", "SEMI", "INJ", "API")
@@ -167,6 +168,19 @@ def new_run(stage):
     return run
 
 
+def continues_table(source, pno):
+    """A table may continue onto this page from the page before: that page has a table caption and this page has
+    no caption before its first line with a number."""
+    if pno < 2 or not CAPTION.search(layer_text(source, pno - 1)):
+        return False
+    for ln in layer_text(source, pno).splitlines():
+        if CAPTION.match(ln):
+            return False
+        if re.search(r"\d", ln):
+            return True
+    return False
+
+
 def prepare_draft(targets):
     run = new_run("vision-draft")
     pages, batch, n = [], [], 0
@@ -176,8 +190,10 @@ def prepare_draft(targets):
         entry = {"id": f"{source}:{pno}", "source": source, "page": pno, "image": str(image.relative_to(ROOT)),
                  "image_sha256": digest, "dpi": DPI, "pdf_sha256": sha256(OFFICIAL / source),
                  "text_layer": layer_text(source, pno), "next_page_text": layer_text(source, pno + 1),
+                 "previous_page_text": layer_text(source, pno - 1) if continues_table(source, pno) else "",
                  "plant_scope": scope(source)}
-        pages.append({k: v for k, v in entry.items() if k not in ("text_layer", "next_page_text")})
+        pages.append({k: v for k, v in entry.items() if k not in ("text_layer", "next_page_text",
+                                                                  "previous_page_text")})
         batch.append(entry)
         last = (source, pno) == targets[-1]
         if len(batch) == PAGES_PER_BATCH or last or targets[targets.index((source, pno)) + 1][0] != source:
@@ -261,15 +277,13 @@ def table_quote_found(quote, source, pno, header_page=0):
     if header_page and header_page != pno:                     # a table continued from an earlier page (D46+)
         return _continued(header, pieces, source, pno, header_page)
     if not table_rows(source, pno):
-        return tuple(_unruled_header(header, [t for p in pieces for t in p], reader, source, pno, loose)
+        return tuple(_unruled_header(header, [t for p in pieces for t in p], reader, source, pno, loose, pieces)
                      for reader, loose in ((layer_text, False), (pdfminer_text, True)))
     out = [False, False]
     for t in table_groups(source, pno):
-        k = next((i for i, r in enumerate(t) if len(r) == len(pieces)), 0)   # the first full-width row: rows
-        if k:                                                  # above it are the header, all of them
+        k = header_rows(t, header, len(pieces))
+        if k:
             cells = [c for r in t[:k] for c in r]
-            if _marks_out(" ".join(c for c, _ in cells)) != header:
-                continue
             words = poppler_words(source, pno)
             head_layer = _marks_out(" ".join(" ".join(w[4] for w in words if _in_box(w, b)) for _, b in cells))
             for r in t[k:]:
@@ -288,6 +302,22 @@ def _marks_out(text):
     return quotes.toks(MARK.sub(" ", text))
 
 
+def header_rows(table, header, width):
+    """How many rows (1-3) at the top of a ruled table make its whole header: their cells read in order equal the
+    quoted header, and the next row is a full-width data row (as many cells as the quoted row), so a header row
+    left out of the quote ("at rest / in operation" under the grade header) fails. 0 if none."""
+    for m in range(1, min(4, len(table))):
+        if (_marks_out(" ".join(c for r in table[:m] for c, _ in r)) == header and len(table[m]) == width):
+            return m
+    return 0
+
+
+def layout_row(line, pieces):
+    """A pdftotext -layout line is the row: its columns (split at 2+ spaces) are the quoted cells, in order."""
+    cols = [c for c in re.split(r"\s{2,}", line.strip()) if c]
+    return len(cols) == len(pieces) and all(quotes.toks(c) == p for c, p in zip(cols, pieces))
+
+
 def _continued(header, pieces, source, pno, hpage):
     """A row on page pno of a table whose header is printed on page hpage (at most 2 pages before): the header must
     be the whole header of the LAST table on hpage (ruled: the rows above its first full-width row; unruled: the
@@ -298,13 +328,13 @@ def _continued(header, pieces, source, pno, hpage):
         return False, False
     flat = [t for p in pieces for t in p]
     here = [ln for ln in layer_text(source, pno).splitlines() if ln.strip()]
-    at = next((i for i, ln in enumerate(here) if quotes.toks(ln) == flat), None)
+    at = next((i for i, ln in enumerate(here) if layout_row(ln, pieces)), None)
     if any(CAPTION.match(ln) for ln in here[:at if at is not None else len(here)]):
         return False, False                                    # another table starts above the row on its page
     if table_rows(source, hpage):
         t = table_groups(source, hpage)[-1]
-        k = next((i for i, r in enumerate(t) if len(r) == len(pieces)), 0)
-        if not k or _marks_out(" ".join(c for r in t[:k] for c, _ in r)) != header:
+        k = header_rows(t, header, len(pieces))
+        if not k:
             return False, False
         words = poppler_words(source, hpage)
         head_layer = _marks_out(" ".join(" ".join(w[4] for w in words if _in_box(w, b)) for r in t[:k] for _, b in r))
@@ -319,18 +349,24 @@ def _continued(header, pieces, source, pno, hpage):
     block = [_marks_out(ln) for ln in lines[caps[-1] + 1:end]]
     if not (block and sorted(t for b in block for t in b) == sorted(header) and all(_in_order(b, header) for b in block)):
         return False, False
-    return (any(quotes.toks(ln) == flat for ln in layer_text(source, pno).splitlines()),
-            any(len(quotes.toks(ln)) == len(flat) and quotes.contains(flat, quotes.toks(ln), True)
-                for ln in pdfminer_text(source, pno).splitlines()))
+    if at is None or len(header) and len(pieces) != header_columns(lines[caps[-1] + 1:end]):
+        return False, False
+    return (True, any(len(quotes.toks(ln)) == len(flat) and quotes.contains(flat, quotes.toks(ln), True)
+                      for ln in pdfminer_text(source, pno).splitlines()))
 
 
-def _unruled_header(header, row, reader, source, pno, loose):
+def header_columns(lines):
+    """The number of columns of an unruled header: the most columns (split at 2+ spaces) on one of its lines."""
+    return max((len([c for c in re.split(r"\s{2,}", ln.strip()) if c]) for ln in lines), default=0)
+
+
+def _unruled_header(header, row, reader, source, pno, loose, pieces=None):
     """An unruled table's header and row: the header is ALL the lines from the line after the table's caption
     ("TABLE 1. ...", the nearest caption above the row) up to the first data line (a line with a number): the
     same tokens as the quoted header, each line's tokens in the quote's order; the row is a whole line below it,
     with no other caption in between."""
     lines = [ln for ln in reader(source, pno).splitlines() if ln.strip()]
-    rows = [i for i, ln in enumerate(lines) if quotes.toks(ln) == row
+    rows = [i for i, ln in enumerate(lines) if (not loose and layout_row(ln, pieces))
             or (loose and len(quotes.toks(ln)) == len(row) and quotes.contains(row, quotes.toks(ln), True))]
     for r in rows:
         cap = next((i for i in range(r - 1, -1, -1) if CAPTION.match(lines[i])), None)
@@ -338,6 +374,8 @@ def _unruled_header(header, row, reader, source, pno, loose):
             continue
         end = next((i for i in range(cap + 1, r + 1) if re.search(r"\d", lines[i])), r)
         block = [_marks_out(ln) for ln in lines[cap + 1:end]]
+        if pieces is not None and not loose and header_columns(lines[cap + 1:end]) != len(pieces):
+            continue
         if block and sorted(t for b in block for t in b) == sorted(header) and all(_in_order(b, header) for b in block):
             return True                                        # same tokens; each header line's in order (a unit
     return False                                               # on a second line, "(ppm)", sits in between)
@@ -377,7 +415,7 @@ def row_found(pieces, source, pno):
         in_layer, in_miner = in_layer or layer, in_miner or miner
     if not table_rows(source, pno):                           # unruled: a whole line of the page
         flat = [t for p in pieces for t in p]
-        in_layer = any(quotes.toks(ln) == flat for ln in layer_text(source, pno).splitlines())
+        in_layer = any(layout_row(ln, pieces) for ln in layer_text(source, pno).splitlines())
         in_miner = any(len(quotes.toks(ln)) == len(flat) and quotes.contains(flat, quotes.toks(ln), loose=True)
                        for ln in pdfminer_text(source, pno).splitlines())
     return in_layer, in_miner
@@ -539,12 +577,12 @@ def check_item(item, source, pno):
     return out, in_layer, in_miner
 
 
-DESCRIPTIVE = re.compile(r"\b(?:may|can|could)\s+(?:also\s+|not\s+|even\s+|well\s+)?(?:include|contain|exist|occur|"
-                         r"indicate|form|react|result|lead|cause|arise|vary|differ|affect|increase|decrease|have|necessitate|"
-                         r"represent|appear|reflect|require|incorporate|help|be\s+(?:present|found|formed|due|caused|"
-                         r"called|generated|introduced|seen|observed|contacted|something|added\s+intentionally|"
-                         r"used\s+to\s+help|considered\s+to\s+be|an?\b|the\b|more|less|"
-                         r"higher|lower|useful|helpful|possible|difficult|necessary\s+for\s+FDA))\b", re.I)
+DESCRIPTIVE = re.compile(r"\b(?:may|can|could)\s+(?:also\s+|even\s+|well\s+)?(?:include|contain|exist|occur|"
+                         r"indicate|form|react|result|lead|cause|arise|vary|differ|affect|increase|decrease|"
+                         r"necessitate|represent|appear|reflect|incorporate|help|be\s+(?:present|found|formed|due|"
+                         r"caused|called|generated|introduced|seen|observed|contacted|something|"
+                         r"added\s+intentionally|used\s+to\s+help|considered\s+to\s+be|more|less|higher|lower|"
+                         r"useful|helpful|possible|difficult|facilitated))\b", re.I)
 
 
 LEADING_REF = re.compile(r"^(?:\d+(?:\.\d+)+\.?|\(?[a-z]{1,4}\)|[ivx]+\.)\s+", re.I)
@@ -553,15 +591,19 @@ SIDE_TITLE = re.compile(r"WHO Technical Report Series,?\s*No\.\s*\d+,?\s*\d{4}",
 
 def counts_for_coverage(sentence):
     """An obligation sentence the page's items must cover: shall/must/should (and their equivalents), or a "may"
-    that grants the site a permission ("quality reviews may be grouped by product type"). A descriptive "may" that
-    states a possibility ("inspection coverage may include", "amines may be present") and a table caption
-    ("Table 1: Maximum permitted ...") are not obligations."""
+    that grants or denies the site something ("quality reviews may be grouped", "the QP may not be the head of
+    production"). Left out only: a sentence whose every clause with may/can/could states a possibility
+    ("inspection coverage may include", "amines may be present"; a "not" never counts as descriptive). A table
+    caption glued to its table and footnotes stays in (its footnote may hold an obligation)."""
     strength = obligations.strength(sentence)
-    if not strength or CAPTION.match(sentence):
+    if not strength:
         return False
-    if strength == "permissive" and DESCRIPTIVE.search(sentence) and not re.search(
-            r"\b(?:shall|must|should|required)\b", sentence, re.I):
-        return False
+    if strength == "permissive":
+        clauses = [c for c in re.split(r";|:|\bwhile\b|,\s*(?:and|but|whereas)\b", sentence)
+                   if re.search(r"\b(?:may|can|could)\b", c, re.I)]
+        if clauses and all(DESCRIPTIVE.search(c) and not re.search(r"\b(?:may|can|could)\s+not\b", c, re.I)
+                           for c in clauses):
+            return False
     return True
 
 
@@ -588,9 +630,10 @@ def coverage(source, pno, items_here, items_before, na):
         parts = [q for q in quotes_here if quotes.contains(quotes.toks(q), st)]   # and its list), drafted one by
         if parts:                                             # one: the quotes printed inside it, together
             union = set().union(*(set(_words(q)) for q in parts))
-            if sum(w in union for w in ws) / len(ws) >= COVERED_SHARE and not (
-                    conds - layer1.conditions_in(" ".join(parts))):
-                continue
+            numbers = set(re.findall(r"\d+(?:[.,]\d+)?", s)) - set(re.findall(r"\d+(?:[.,]\d+)?", " ".join(parts)))
+            if (sum(w in union for w in ws) / len(ws) >= UNION_SHARE and not numbers
+                    and not (conds - layer1.conditions_in(" ".join(parts)))):
+                continue                                      # 90 % of its words, every number, its conditions
         if any(k and k in " ".join(quotes.toks(s)) for k in na_keys):
             continue
         gaps.append(s[:300])
@@ -670,11 +713,14 @@ def prepare_verify(run, sources=None):
             chunk = [{"id": it["id"], "image": pages[f"{it['source']}:{it['page']}"]["image"],
                       "text_layer": layer_text(it["source"], it["page"]),
                       "next_page_text": layer_text(it["source"], it["page"] + 1) if it["runs_over"] else "",
-                      "item": {k: it.get(k, 0) for k in ("statement", "quote", "clause_number", "strength",
-                                                         "plant_types", "condition", "runs_over", "header_page")},
+                      "item": {**{k: it[k] for k in ("statement", "quote", "clause_number", "strength",
+                                                       "plant_types", "condition", "runs_over")},
+                               "header_page": it.get("header_page") or 0},
                       "plant_scope": pages[f"{it['source']}:{it['page']}"]["plant_scope"],
                       "header_image": (str(render(it["source"], it["header_page"])[0].relative_to(ROOT))
-                                       if it.get("header_page") else "")}
+                                       if 1 <= (it.get("header_page") or 0) < it["page"] else ""),
+                      "header_page_text": (layer_text(it["source"], it["header_page"])
+                                           if 1 <= (it.get("header_page") or 0) < it["page"] else "")}
                      for it in group]
             (vdir / "batches" / f"batch_{n:03d}_{role}.json").write_text(json.dumps(
                 {"role": role, "instructions": instructions, "schema": VERIFY_SCHEMA, "items": chunk},
