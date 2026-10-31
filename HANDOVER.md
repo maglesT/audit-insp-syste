@@ -34,13 +34,19 @@ Last updated: 31 October 2026, session 8 (D48 lead-in fix, review-page import, D
   .663955Z, pharma QC labs .767509Z, sterile drug substance .888503Z, cleaning validation 20261031T121845.016687Z,
   foreign manufacturers .105247Z. Then ITGs (bacterial endotoxins, expiration dating, water), CPG 490.200, benzene
   alert: new whole-document runs (`prepare-draft FILE`); the trial runs of those are trial-only.
-- **OPEN QUALITY FLAG (sent to the coordinator 31 Oct, decision pending):** many verifier "correct" answers carry
-  one generic reason repeated across a batch (21 of 48 group 1 XML answer files, most group 2 files; scan:
-  distinct reasons / answers per file). Proposed: a "correct" counts for the automatic route only with an
-  item-specific reason (deterministic check), re-verify affected batches, tighten the verify prompts; until decided
-  the automatic-route numbers are provisional. Dosage Form guide: verifier B's first pass (232/232 correct, one
-  repeated reason pair) moved to `verify/superseded-b/`; a fresh B agent was asked for item-specific reasons;
-  verifier A done (231/232 correct). When the new B answers exist: ingest-verify both runs, status set, report.
+- **NEXT SESSION FIRST (D50, coordinator approved 31 Oct 12:32):** (1) implement the rule in
+  `xmlprofile.proven_by_both` (used by both profiles): a "correct" counts only if its reason names a content word or
+  number of the item's statement or quote (not stop words / quote, statement, obligation, strength, condition...)
+  and its normalised text repeats no other reason in that batch; else it counts as unanswered; tests. (2) Tighten
+  `verify_xml_a/b.md` and `verify_html_a/b.md` (each answer states the condition, number, list or scope compared);
+  cap verify batches at ~20 items per agent in both `prepare-verify`s. (3) Re-verify every affected batch of groups 1
+  and 2 (new verify folders; keep the old answers as superseded), re-route, set the statuses back to "verified" with
+  the new numbers (all are now "verified (auto provisional, D50)"). (4) Mutation spot-check on one re-verified batch
+  (3 planted errors; both verifiers must catch them with specific reasons). Then continue group 2 (Dosage Form
+  guide, the 7 other guides, ITGs, CPG 490.200, benzene alert).
+- **Dosage Form guide:** verifier A answers in (231/232 correct); verifier B first pass superseded
+  (`verify/superseded-b/`, one repeated reason); a fresh B agent was running at handover; if its answers are not
+  in the run folders, re-verify B under D50.
 - **Agents:** drafting agent per run (reads only its batch files, writes answers/); verifiers A and B as separate
   agents per run group (blind, only their verify batch files). Max 3-4 at a time.
 - **Local test note:** 2 errors in tests/test_ai_runner locally = the `anthropic` package is not installed here
