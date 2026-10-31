@@ -13,19 +13,26 @@ Last updated: 31 October 2026, session 7 (FDA build, D47: 21 CFR 211 built and v
   sterile plant scope, lead-in coverage, cross-references are not numbers). **21 CFR 211 full build: 399 items
   (60 sections; not 107), 399 quotes exact, 0 coverage gaps, automatic route 359 (90.0 %), review queue 40**
   (`docs/fda-211-trial.md`, run `library/ai-runs/20261031T100541.543518Z-xml-draft`).
-- **Branches:** PR #38 = `fda-build` (head 344a9ba; do not push to it, so its CI can go green; merge on green).
-  All later work is on **`fda-group1`** (stacked on fda-build): open its PR after #38 merges, with an independent
-  review of the xmlprofile.py changes made there (lead-in = list-introducing sentence, numbers from parent
-  paragraphs, descriptive may, nearest lead-in for strength, recheck, prepare-redraft, size-packed batches).
-- **Group 1 status (`library/fda-status.json`, `docs/fda-worklist.md`):** 211 verified 399/365/34; 210 verified
-  1/0/1; Part 11 verified 48/45/3; 314.81 verified 104/90 (89 after the descriptive-may recheck: update its row)/13-14.
-  In flight at handover: 314.70 run `20261031T102852.310999Z-xml-draft` (76 items, verify batches ready, gap
-  redraft `20261031T103227.810350Z-xml-redraft`); Part 200 run `20261031T102852.396410Z-xml-draft` (21 items,
-  verify ready; redraft `20261031T103111.556865Z-xml-redraft`, 3 items, verify ready); Part 207 run
-  `20261031T102852.481194Z-xml-draft` (6 batches; 1-4 answered, 5-6 to draft); Part 4 run
-  `20261031T102852.577194Z-xml-draft` (5 batches, none drafted). For each: answers -> ingest-draft -> (redraft if
-  real gaps) -> prepare-verify -> verifiers -> ingest-verify -> record-model -> status.py set -> report.
-- **Next after group 1:** group 2 (FDA HTML) needs an HTML profile (D47 D), then group 3 and group 4.
+- **Branches:** PR #38 = `fda-build` (group 1 tooling + 211, 210, Part 11, 314.81, 314.70, 200, 207; main merged in
+  so it is mergeable again; CI had created no runs while it conflicted with main). Merge on green CI; four
+  independent review passes done, all findings fixed. Part 4 is on **`fda-part4`** (stacked): open its PR after #38.
+- **Group 1 done** (`library/fda-status.json`, `docs/fda-worklist.md`), items / automatic / review: 211 399/365/34;
+  210 1/0/1; Part 11 48/45/3; 314.81 104/91/13; 314.70 78/53/25; Part 200 24/18/6; Part 207 149/115/34;
+  Part 4 64/16/48. Total 867 items, 704 automatic (81.2 %), 163 in the owner's review queue.
+- **Owner review page (coordinator, 31 Oct):** private claude.ai artifact, slug
+  f1a4b335-e5ec-4d90-993a-02abf9913cbe, with the group 1 review queue (164 items, exported with review.load /
+  fingerprint / source_text; the superseded 211 trial run left out). Decisions are saved in its db collection
+  `decisions`, one doc per run+id: {id, run, item_hash, decision: correct|fix|reject, by, note, at (UTC),
+  statement for fix}. **To build:** `tools/fda/review.py import-artifact FILE` reads the db export (pulled with
+  the artifact db tools), appends the records to `library/review/decisions.jsonl` keeping their original `at`;
+  the existing rules apply (a decision counts only for a matching run and item_hash).
+- **Tune next (profile only):** the lead-in check (`vision.lead_in_missing`) compares 4+ letter words exactly, so
+  "If you manufacture ..." vs "When manufacturing ..." is flagged (Part 4: 32 items); allow word forms (a light
+  stemmer) and re-run `xmlprofile.py recheck` on all runs. `recheck` refuses a changed source file.
+- **Next after group 1:** group 2 (FDA HTML, 25 documents) needs an HTML profile (D47 D: text read directly, exact
+  quote, Q&A or paragraph number): reuse xmlprofile's checks with units = Q&A entries / headed sections from the
+  HTML; trial on about 20 units, tune, then document by document. Then group 3 (guidance PDFs, text first) and
+  group 4 (compliance programs).
 - **Status files:** `library/fda-status.json` + `docs/fda-worklist.md` (the coordinator's file; only the Status /
   Items / Auto / Review cells change, via `tools/fda/status.py`). Owner review queue: CLI `review.py next|decide|
   status RUN`; an owner-friendly page is still to build.
