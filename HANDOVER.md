@@ -1,8 +1,21 @@
 # Handover: read this first in every new session
 
-Last updated: 31 October 2026, session 8 (D48 lead-in fix, review-page import, D49 HTML profile and trial; group 2 build started).
+Last updated: 31 October 2026, session 9 (D50 implemented; re-verification under way).
 
-## START HERE (session 8, FDA build continued; this session: session_01PybpFuJR5wE5nR6XF1JaNe)
+## START HERE (session 9, D50 and re-verification; this session: session_01PybpFuFFaUiKGfuSJYWvtS)
+- **Order (coordinator brief, 31 Oct):** (1) implement D50; (2) tighten both verifier prompt pairs (each answer
+  states what was checked for that item); (3) cap verify batches at ~20 items; (4) re-verify every affected batch of
+  groups 1 and 2 (incl. the Dosage Form borderline passes), lift "provisional" document by document; (5) mutation
+  spot-check (3 planted errors in one re-verified batch, both verifiers catch them with specific reasons); (6)
+  continue group 2 (7 guides with batches prepared, ITGs, CPG 490.200, benzene alert). One PR per step, independent
+  review, merge on green CI. Report to the coordinator (session_01PybpFuvG6mX9B3zK3YZjZ1) after D50 (before/after
+  per document) and after each new document. Max plan only.
+- **Step 1 (D50, branch `fda-d50-specific-reasons`, D51):** rule in `xmlprofile.proven_by_both` + tests; all
+  route.json files of groups 1 and 2 re-routed with the existing answers: automatic 1374 -> 218 of 1721. Status:
+  Part 11, Part 200, Q&A buildings unchanged -> "verified"; the rest "verified (re-verify pending, D50)" with the
+  strict numbers (library/fda-status.json, docs/fda-worklist.md).
+
+## Session 8 notes (kept for reference), FDA build continued; this session: session_01PybpFuJR5wE5nR6XF1JaNe)
 - **Owner rules unchanged (D47):** FDA first, document by document; nothing ships unless proven (automatic route or
   the owner's review queue). Max plan only; NO paid API build without direct owner confirmation. After each document
   report to the coordinator (session_01PybpFuvG6mX9B3zK3YZjZ1, send_message): items, automatic-route pass rate,

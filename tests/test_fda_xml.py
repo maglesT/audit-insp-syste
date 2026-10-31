@@ -270,10 +270,12 @@ class ReviewFixes(unittest.TestCase):
             its = [dict(item(), id=n, hash=X.item_hash(item())) for n in ("x", "y", "z")]
             for role, n in (("a", 1), ("b", 2)):
                 (run / "verify" / "batches" / f"batch_00{n}_{role}.json").write_text(json.dumps(
-                    {"role": role, "items": [{"id": i["id"], "hash": i["hash"]} for i in its]}))
-            a = [{"id": "x", "verdict": "correct"}, {"id": "y", "verdict": "correct"}, {"id": "y", "verdict": "correct"},
-                 {"id": "z", "verdict": "correct"}]
-            b = [{"id": "x", "verdict": "correct"}, {"id": "y", "verdict": "correct"}]
+                    {"role": role, "items": [{"id": i["id"], "hash": i["hash"], "item": item()} for i in its]}))
+
+            def ok(i, n):
+                return {"id": i, "verdict": "correct", "reason": f"Withheld until released by the QC unit ({i}{n})."}
+            a = [ok("x", 1), ok("y", 2), ok("y", 3), ok("z", 4)]
+            b = [ok("x", 5), ok("y", 6)]
             (run / "verify" / "answers" / "batch_001_a.json").write_text(json.dumps({"answers": a}))
             (run / "verify" / "answers" / "batch_002_b.json").write_text(json.dumps({"answers": b}))
             self.assertEqual(X.proven_by_both(run, its), {"x"})              # y answered twice by A, z never by B
@@ -283,7 +285,57 @@ class ReviewFixes(unittest.TestCase):
             self.assertEqual(X.proven_by_both(run, [dict(its[0], condition="changed")]), set())   # stale stored hash
             # one verifier's answers saved under both names: the B batch file decides the role, so it counts once
             (run / "verify" / "batches" / "batch_002_b.json").write_text(json.dumps(
-                {"role": "a", "items": [{"id": i["id"], "hash": i["hash"]} for i in its]}))
+                {"role": "a", "items": [{"id": i["id"], "hash": i["hash"], "item": item()} for i in its]}))
+            self.assertEqual(X.proven_by_both(run, its), set())
+
+    def test_d50_correct_counts_only_with_an_item_specific_reason(self):
+        import json
+        import tempfile
+        self.assertTrue(X.specific("The lot is withheld until QC release; nothing dropped.", item()))
+        self.assertTrue(X.specific("Withholding until released matches the quote.", item()))   # word forms
+        self.assertTrue(X.specific("Keeps the 30 days.", item(statement="Review within 30 days.", quote="x")))
+        for generic in ("The quote is exact and the statement matches the obligation and strength.",
+                        "Correct: exact quote, mandatory strength, applies to all plant types.", "", None,
+                        "The lead-in condition is carried; nothing added or omitted."):
+            self.assertFalse(X.specific(generic, item()), generic)
+        self.assertFalse(X.specific("Keeps 31, as quoted.", item(statement="Review within 30 days.", quote="x")))
+        self.assertEqual(X.norm_reason("  Withheld -- until QC release. "), X.norm_reason("withheld until qc release"))
+        with tempfile.TemporaryDirectory() as tmp:
+            run = Path(tmp)
+            (run / "verify" / "batches").mkdir(parents=True)
+            (run / "verify" / "answers").mkdir()
+            ids = ("specific", "generic", "dup1", "dup2", "dupcase", "other_b")
+            its = [dict(item(), id=n, hash=X.item_hash(item())) for n in ids]
+            for role, n in (("a", 1), ("b", 2)):
+                (run / "verify" / "batches" / f"batch_00{n}_{role}.json").write_text(json.dumps(
+                    {"role": role, "items": [{"id": i["id"], "hash": i["hash"], "item": item()} for i in its]}))
+            same = "Lot withheld from use until QC release, as quoted."
+            a = [{"id": "specific", "verdict": "correct", "reason": "Each lot is withheld until the QC unit releases it."},
+                 {"id": "generic", "verdict": "correct", "reason": "Quote exact; statement matches; strength mandatory."},
+                 {"id": "dup1", "verdict": "correct", "reason": same},
+                 {"id": "dup2", "verdict": "correct", "reason": same},
+                 {"id": "dupcase", "verdict": "correct", "reason": same.upper() + "  "},
+                 {"id": "other_b", "verdict": "correct", "reason": "Components and closures are withheld until tested."}]
+            b = [{"id": i, "verdict": "correct", "reason": f"Sampled, tested or examined before release ({i})."}
+                 for i in ids]
+            (run / "verify" / "answers" / "batch_001_a.json").write_text(json.dumps({"answers": a}))
+            (run / "verify" / "answers" / "batch_002_b.json").write_text(json.dumps({"answers": b}))
+            rep = {}
+            self.assertEqual(X.proven_by_both(run, its, rep), {"specific", "other_b"})
+            self.assertEqual(rep, {"generic_correct": 1, "duplicate_reason_correct": 3})
+            # the same reason in another role's file is not a duplicate (the test is per answers file)
+            b[0]["reason"] = a[0]["reason"]
+            (run / "verify" / "answers" / "batch_002_b.json").write_text(json.dumps({"answers": b}))
+            self.assertIn("specific", X.proven_by_both(run, its))
+            # an "incorrect" with a repeated reason does not make another answer a duplicate of anything it counts
+            a[1] = {"id": "generic", "verdict": "incorrect", "reason": a[5]["reason"]}
+            (run / "verify" / "answers" / "batch_001_a.json").write_text(json.dumps({"answers": a}))
+            self.assertNotIn("other_b", X.proven_by_both(run, its))
+            # the reason is judged against the item as its batch showed it, not another item's words
+            (run / "verify" / "batches" / "batch_001_a.json").write_text(json.dumps(
+                {"role": "a", "items": [{"id": i["id"], "hash": i["hash"], "item": item(statement="Clean the floors.",
+                                                                                    quote="Floors shall be clean.")}
+                                        for i in its]}))
             self.assertEqual(X.proven_by_both(run, its), set())
 
     def test_decisions_belong_to_their_run_and_item_and_reject_beats_auto(self):

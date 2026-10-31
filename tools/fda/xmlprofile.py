@@ -466,24 +466,89 @@ def prepare_verify(run):
     print(vdir, n, "batches")
 
 
-def proven_by_both(run, items):
+# D50: words a reason may use without saying anything about the item (they fit any item of any batch).
+GENERIC = {
+    # the verifier's own vocabulary
+    "quote", "quoted", "quotes", "statement", "statements", "obligation", "obligations", "strength", "condition",
+    "conditions", "item", "items", "paragraph", "paragraphs", "text", "texts", "correct", "correctly", "exact",
+    "exactly", "verbatim", "printed", "match", "matches", "matched", "matching", "mandatory", "recommended",
+    "optional", "required", "requires", "require", "requirement", "requirements", "shall", "should", "must", "may",
+    "plant", "plants", "type", "types", "applies", "apply", "applicable", "cited", "cites", "section", "sections",
+    "regulation", "regulations", "whole", "faithful", "faithfully", "accurately", "accurate", "adds", "added",
+    "nothing", "omits", "omitted", "omission", "omissions", "scope", "scoped", "states", "stated", "state",
+    "captures", "captured", "reflects", "reflected", "restates", "lead", "leadin", "inj", "osd", "api", "liq",
+    "ste", "all", "every", "listed", "list", "number", "numbers", "qualifier", "qualifiers", "unit", "page",
+    "guide", "fda", "firm", "investigator", "expects", "expected", "expectation", "verdict", "issue", "issues",
+    "problem", "fully", "full", "same", "also", "both", "sub", "parent",
+    # function words
+    "and", "the", "for", "with", "without", "that", "this", "its", "not", "are", "was", "were", "has", "have",
+    "into", "from", "under", "over", "any", "each", "one", "two", "only", "here", "there", "than", "then", "which",
+    "what", "who", "whom", "does", "did", "but", "nor", "yet", "can", "could", "would", "will", "being", "been",
+    "such", "these", "those", "their", "them", "they", "you", "your", "our", "out", "per", "via", "within",
+    "between", "about", "above", "below", "where", "when", "while", "because", "since", "true", "false"}
+_WORD = re.compile(r"[a-z]+|\d+(?:\.\d+)*")
+
+
+def _content(text):
+    """Content words (as light stems) and numbers of a text: GENERIC words and words under 3 letters left out."""
+    out = set()
+    for w in _WORD.findall(text.lower()):
+        if w[0].isdigit():
+            out.add(w)
+        elif len(w) >= 3 and w not in GENERIC:
+            out.add(vision.stem(w))
+    return out
+
+
+def norm_reason(reason):
+    """A reason's text for the duplicate test: lower case, every run of other characters one space."""
+    return " ".join(re.findall(r"[a-z0-9]+", (reason or "").lower()))
+
+
+def specific(reason, item):
+    """D50: the reason names at least one content word or number of the item's own statement or quote."""
+    return bool(_content(reason or "") & _content(f"{item.get('statement') or ''} {item.get('quote') or ''}"))
+
+
+def proven_by_both(run, items, report=None):
     """Ids that exactly one verifier A and exactly one verifier B answer "correct", each answer read with the
     batch file of the same name (the role and the item hash that batch showed): the hash must equal the item's
     hash as it is now (recomputed). A duplicate answer, a missing role, an answer to an item its batch did not
-    show, or a batch without hashes does not count."""
+    show, or a batch without hashes does not count.
+
+    D50: a "correct" counts only if its reason is item-specific (specific(): it names a content word or number of
+    the item's statement or quote, as its batch showed the item) and its normalised text repeats no other reason
+    of the same answers file; any other "correct" counts as unanswered. With report (a dict), the numbers of
+    generic and duplicate-reason "correct" answers are added to it."""
     run = Path(run)
     seen, bad = {}, set()
+    generic = duplicate = 0
     for af in sorted((run / "verify" / "answers").glob("batch_*.json")):
         bf = run / "verify" / "batches" / af.name
         if not bf.exists():
             continue
         batch = json.loads(bf.read_text())
-        role, shown = batch.get("role"), {e["id"]: e.get("hash") for e in batch["items"]}
-        for a in json.loads(af.read_text())["answers"]:
+        role = batch.get("role")
+        shown = {e["id"]: e for e in batch["items"]}
+        answers = json.loads(af.read_text())["answers"]
+        times = {}
+        for a in answers:
+            r = norm_reason(a.get("reason"))
+            times[r] = times.get(r, 0) + 1
+        for a in answers:
             key = (role, a["id"])
             if key in seen:
                 bad.add(a["id"])
-            seen[key] = (a["verdict"], shown.get(a["id"]))
+            e = shown.get(a["id"]) or {}
+            verdict = a.get("verdict")
+            if verdict == "correct":
+                if times[norm_reason(a.get("reason"))] > 1:
+                    verdict, duplicate = "unanswered (duplicate reason, D50)", duplicate + 1
+                elif not specific(a.get("reason"), e.get("item") or {}):
+                    verdict, generic = "unanswered (generic reason, D50)", generic + 1
+            seen[key] = (verdict, e.get("hash"))
+    if report is not None:
+        report.update({"generic_correct": generic, "duplicate_reason_correct": duplicate})
     out = set()
     for i in items:
         h = item_hash(i)
@@ -497,13 +562,14 @@ def ingest_verify(run):
     run = Path(run)
     rep = vision.ingest_verify(run)
     items = [json.loads(ln) for ln in (run / "items.jsonl").read_text().splitlines() if ln.strip()]
-    ok = proven_by_both(run, items)
+    d50 = {}
+    ok = proven_by_both(run, items, d50)
     route = {i["id"]: ("auto" if not i["findings"] and i["quote_confirmed"] and i["id"] in ok else "review")
              for i in items}
     hashes = {i["id"]: item_hash(i) for i in items}
     out = {"items": len(items), "auto": sum(v == "auto" for v in route.values()),
            "review": sum(v == "review" for v in route.values()), "route": route, "hashes": hashes,
-           "decided": datetime.now(timezone.utc).isoformat(timespec="seconds"), "verify": {k: v for k, v in rep.items()
+           "decided": datetime.now(timezone.utc).isoformat(timespec="seconds"), "d50": d50, "verify": {k: v for k, v in rep.items()
                                                                                          if k != "cases"}}
     (run / "route.json").write_text(json.dumps(out, indent=1))
     print({k: out[k] for k in ("items", "auto", "review")})
