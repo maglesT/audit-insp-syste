@@ -19,7 +19,7 @@ text, no drafter notes or check results.
 | Items drafted | 481 from 50 pages (9.6 per page); 236 not-applicable sentences with reasons |
 | Quote in BOTH readings (pdftotext and pdfminer), whole tokens in order | **424 of 481 (88 %)**; 5 pdftotext only, 8 pdfminer only, 44 neither (37 of the 57 are table rows) |
 | "Text layer differs" list | 70 items: 57 failing one or both readings, 13 more noted by the drafter although both readings match |
-| Coverage gaps (obligation sentences not in a quote with their condition words, nor marked n/a) | 29 sentences on 50 pages, to inspect (FDA nitrosamine guidance and PI 011 hold most) |
+| Coverage gaps (obligation sentences not in a quote with their condition words, nor marked n/a) | 28 sentences on 50 pages, to inspect (FDA nitrosamine guidance and PI 011 hold most) |
 | Verifier agreement (236 items) | **both correct 223 (94.5 %)**, both incorrect 5, disagree 8 |
 | Usage, drafting | about 840 k agent tokens: **about 17 k per page, 1.75 k per item** (text-only drafting in S3: 0.5 k per item) |
 | Usage, two verifiers | about 740 k tokens for 236 items: **about 3.1 k per item** (text-only S3: 4.5 k per item) |
@@ -53,8 +53,7 @@ the first report said 92 % (443) pass, the corrected figure is 88 % (424). The d
 - **Deterministic findings worth fixing before scaling:** the number check (now both ways) gives 205 findings: table-row
   statements that name a column-header value (0.5 µm) the row quote lacks, and quote numbers the statement drops or
   words differently; table quotes should carry their header
-  ("header cells || row cells") or the check should read the table header; the coverage measure should drop
-  running headers before the 80 % rule; strength for checklist rows without a modal verb ("Specify ...",
+  ("header cells || row cells") or the check should read the table header; strength for checklist rows without a modal verb ("Specify ...",
   "Whether ...") needs a rule (the CDSCO agent chose mandatory for Sch-M rows, recommended for WHO rows).
 
 ## Assessment

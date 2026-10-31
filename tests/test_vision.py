@@ -69,7 +69,7 @@ class Checks(unittest.TestCase):
 
     def test_clause_number_must_be_on_the_page(self):
         self.assertEqual(vision.check_item(item(clause_number="4.31"), SRC, PAGE)[0][0][0], "clause")
-        self.assertEqual(vision.check_item(item(clause_number="4.27 iii"), SRC, PAGE)[0], [])
+        self.assertTrue(vision.check_item(item(clause_number="4.27 iii"), SRC, PAGE)[0])   # no "iii" in 4.27
         self.assertEqual(vision.check_item(item(clause_number="9.18"), SRC, PAGE)[0][0][0], "clause")
 
     def test_number_strength_and_condition(self):
@@ -113,3 +113,23 @@ class QuoteResult(unittest.TestCase):
             path.write_text(json.dumps({"code_sha256": quotes.code_sha256(),
                                         "mappings": {"X-1#1": {**entry, "found": False}}}))
             self.assertIn("not found", quotes.findings([req], path, {SRC: "s"})[0][3])
+
+
+class ReviewRound2(unittest.TestCase):
+    def test_minus_before_a_number(self):
+        self.assertFalse(quotes.contains(quotes.toks("store at 20 °C"), quotes.toks("store at -20 °C")))
+        self.assertFalse(quotes.contains(quotes.toks("store at 20 °C"), quotes.toks("store at –20 °C")))
+        self.assertTrue(quotes.contains(quotes.toks("cross-contamination"), quotes.toks("cross-contamination")))
+
+    def test_row_needs_its_label(self):
+        for wrong in ("352 000 | 3 520 000 | 2 930 | 29 300", "3 520 | 3 520"):
+            found, in_layer, in_miner = vision.check_item(item(quote=wrong, clause_number=""), SRC, PAGE)
+            self.assertFalse(in_layer or in_miner, wrong)
+
+    def test_body_keeps_a_list_end(self):
+        self.assertIn("6 months", vision.body(vision.layer_text, "who-trs1044-a2-sterile.pdf", 19))
+
+    def test_clause_sub_part_and_page_numbers(self):
+        self.assertTrue(vision.clause_findings("4.22 iii", SRC, PAGE))     # 4.22 is printed on page 12
+        self.assertTrue(vision.clause_findings("12", SRC, PAGE))           # a page number is not a clause
+        self.assertEqual(vision.clause_findings("4.29", SRC, PAGE), [])

@@ -10,8 +10,8 @@ entities resolved), not the parser's reader. The quote is found when its letters
 folded, Unicode NFKC, whole tokens in order; see toks() and contains()), are a stretch of the second
 reading; running headers and footers and small-font footnote marks between them are skipped (a quote may run
 over a page break or past a footnote mark). A quote from a table row is checked cell by cell (its " | " pieces),
-each piece in the pdfminer words inside one of the row's cell boxes (Clause.cells, D44), cells in order; without
-cell boxes a table quote is not found.
+each piece equal (token for token) to the pdfminer words inside the row's cell boxes (Clause.cells, D44), from
+the row's first cell on, consecutive; without cell boxes a table quote is not found.
 
 Each entry records the sha256 of the quote, of the source file and of this code; `check` (and Layer 1) treat an
 entry as missing when any of them changed. This file never runs in CI: CI reads the result.
@@ -41,17 +41,17 @@ def code_sha256():
     return sha256(Path(__file__).read_bytes())
 
 
-TOKEN = re.compile(r"\d+(?:[.,]\d+)*|[^\W\d_]+|[<>≤≥±%^−]|(?<=\^)-")
+TOKEN = re.compile(r"\d+(?:[.,]\d+)*|[^\W\d_]+|[<>≤≥±%^−]|(?:(?<=\^)|(?<![\w.]))[-–](?=\s?\d)")
 LIGATURE = re.compile(r"ff[il]?|f[il]")
 
 
 def toks(text):
     """Comparable tokens: words, numbers with their decimal point or comma ("1.5", "3,520"), and the signs
-    < > ≤ ≥ ± % ^ and a minus after ^ ("10^-6"); case folded, NFKC, soft hyphens dropped. Punctuation and
+    < > ≤ ≥ ± % ^ and a minus (−, or - and – before a number not after a word: "-20 °C", "10^-6"); case folded, NFKC, soft hyphens dropped. Punctuation and
     spacing do not count, but every token must match whole: "15" is not "1.5", "inappropriate" is not
     "appropriate"."""
     text = unicodedata.normalize("NFKC", text).replace("\u00ad", "").casefold().replace("-", "-")
-    return [("−" if t == "-" else t) for t in TOKEN.findall(text)]
+    return [("−" if t in "-–" else t) for t in TOKEN.findall(text)]
 
 
 def letters(text):
@@ -153,16 +153,10 @@ def found(quote, clause, reading):
         return contains(toks(quote), reading)
     first, last = clause["page_start"], clause["page_end"]
     texts = (reading.text(first, last), reading.text(first, last, full=True))
-    if " | " in quote:                                        # a table row: each cell in its own cell box, in order
-        cells = [reading.cell_text(bs) for bs in clause.get("cells") or []]
-        k = 0
-        for piece in (toks(x) for x in quote.split(" | ")):
-            while k < len(cells) and not contains(piece, cells[k], loose=True):
-                k += 1
-            if k == len(cells):
-                return False
-            k += 1
-        return True
+    if " | " in quote:                                        # a table row: its cells, whole and in order, are
+        cells = [reading.cell_text(bs) for bs in clause.get("cells") or []]   # the row's cells from the first one
+        pieces = [toks(x) for x in quote.split(" | ")]
+        return len(cells) >= len(pieces) and all(c == p for c, p in zip(cells, pieces))
     return any(contains(toks(quote), t, loose=True) for t in texts)
 
 

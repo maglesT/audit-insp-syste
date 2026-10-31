@@ -18,8 +18,8 @@ Checks on each item (deterministic, no AI):
              each cell whole, read by pdfminer and by poppler inside the same cell boxes; an unruled row must stand
              on one line. A quote found in one reading only, or in neither, goes to the "text layer differs" list
              (the image-true reading is kept for the verifiers and the spot check; never accepted silently).
-  clause     the clause's own number (the last part with a digit: "4.22" of "4.22 i") starts a line on the page or
-             the page before (a cross-reference inside a sentence does not count)
+  clause     the clause number as printed (clause_findings): its main number starts a line on the page, its first
+             sub-part too ("4.22 iii"); a cross-reference inside a sentence or a page-number line does not count
   numbers    every number of the statement is in its quote, and every number of the quote in its statement
              (layer1.number_found, word forms count)
   strength   the item's strength matches its quote's wording where the quote has one (layer1.strength_of)
@@ -192,18 +192,29 @@ EDGE = 3       # lines at the top and the bottom of a page where running headers
 
 
 def _key(line):
-    return re.sub(r"\s+", " ", line).strip().lower()
+    """A line's key for running-line matching: digits masked only for a page-number line ("- 6 -", "Page 6 of 9")
+    or a footer of 4 or more words ("PE 009-18 (Annexes) -15- 24 September 2026"); a short body line such as
+    "6 months." must repeat exactly ("12 months." is another line)."""
+    line = re.sub(r"\s+", " ", line).strip().lower()
+    words = re.findall(r"[^\W\d_]+", line)
+    if len(line.split()) >= 4 or not [w for w in words if w not in ("page", "of")]:
+        return re.sub(r"\d+", "#", line)
+    return line
 
 
 def body(reader, source, pno):
-    """A page's text without its running lines: among its first and last EDGE non-empty lines, those that stand
-    on the page before or after too (digits masked, so "- 6 -" and "- 7 -" or "Page 6" count; a line of a list
-    in the body is never dropped)."""
-    lines = [ln for ln in reader(source, pno).splitlines() if ln.strip()]
-    near = {re.sub(r"\d+", "#", _key(ln)) for p in (pno - 1, pno + 1) if p >= 1
-            for ln in reader(source, p).splitlines() if ln.strip()}
-    edge = set(range(min(EDGE, len(lines)))) | set(range(max(len(lines) - EDGE, 0), len(lines)))
-    return "\n".join(ln for k, ln in enumerate(lines) if not (k in edge and re.sub(r"\d+", "#", _key(ln)) in near))
+    """A page's text without its running lines: among its first and last EDGE non-empty lines, those that are
+    also among the first or last EDGE lines of the page before or after (digits masked, so "- 6 -" and "- 7 -" or
+    "Page 6" count; a body line, such as "6 months." ending a list, is never dropped)."""
+    def edges(p):
+        lines = [ln for ln in reader(source, p).splitlines() if ln.strip()] if p >= 1 else []
+        return lines, set(range(min(EDGE, len(lines)))) | set(range(max(len(lines) - EDGE, 0), len(lines)))
+    lines, edge = edges(pno)
+    near = set()
+    for p in (pno - 1, pno + 1):                              # edge lines of the neighbouring pages only
+        other, ks = edges(p)
+        near |= {_key(other[k]) for k in ks}
+    return "\n".join(ln for k, ln in enumerate(lines) if not (k in edge and _key(ln) in near))
 
 
 def readings(reader, source, span):
@@ -253,7 +264,7 @@ def row_found(pieces, source, pno):
     reading, cells in order."""
     in_layer = in_miner = False
     for row in table_rows(source, pno):
-        for k in range(len(row) - len(pieces) + 1):
+        for k in range(min(1, len(row) - len(pieces) + 1)):      # from the row's first cell (its label)
             cells = row[k:k + len(pieces)]
             if all(quotes.toks(x) == p for (x, _), p in zip(cells, pieces)):
                 in_miner = True
@@ -267,6 +278,41 @@ def row_found(pieces, source, pno):
         in_miner = any(quotes.contains(flat, quotes.toks(ln), loose=True)
                        for ln in pdfminer_text(source, pno).splitlines())
     return in_layer, in_miner
+
+
+def _starts(source, p):
+    """First tokens of the lines of a page that hold more than a number (a page-number line does not count)."""
+    out = set()
+    for ln in (layer_text(source, p).splitlines() if p >= 1 else []):
+        t = ln.split()
+        if len(t) > 1 or (t and not re.fullmatch(r"[\d\W]+", t[0])):
+            out.add(t[0].strip("().:;,").lower())
+    return out
+
+
+def _lines(source, p):
+    return [ln.strip().lower() for ln in (layer_text(source, p).splitlines() if p >= 1 else []) if ln.strip()]
+
+
+def clause_findings(clause_number, source, pno):
+    """The clause number as printed: its main number (the first part with a digit: "4.22" of "4.22 iii", "2" of
+    "Table 2 Note 1") starts a line, or its reference up to that number does ("Table 2:"), on the page; and its
+    first sub-part ("iii", "Note") starts a line on the page. The main number may stand on the page before only
+    when a sub-part is given (a list running over the page break)."""
+    parts = clause_number.split()
+    main = next((i for i, t in enumerate(parts) if re.search(r"\d", t)), None)
+    if main is None:
+        return []
+    num, ref = parts[main].strip("().:").lower(), " ".join(parts[:main + 1]).lower().rstrip(".:")
+    subs = [t.strip("().:").lower() for t in parts[main + 1:] if t.strip("().:")]
+
+    def printed(p):
+        return num in _starts(source, p) or (main > 0 and any(re.match(re.escape(ref) + r"\b", ln)
+                                                             for ln in _lines(source, p)))
+    ok = printed(pno) or (bool(subs) and printed(pno - 1))
+    if ok and subs:
+        ok = subs[0] in _starts(source, pno)
+    return [] if ok else [("clause", f"clause number {clause_number!r} is not printed as such on page {pno}")]
 
 
 def check_item(item, source, pno):
@@ -283,17 +329,7 @@ def check_item(item, source, pno):
     if not (in_layer and in_miner):
         out.append(("quote", f"quote not found in {'pdftotext' if not in_layer else ''}"
                              f"{' and ' if not in_layer and not in_miner else ''}{'pdfminer' if not in_miner else ''}"))
-    num = next((t for t in reversed(item["clause_number"].split()) if re.search(r"\d", t)), "")
-    if num:                                                   # the clause's own number starts a line, or its
-        lines = [ln.strip().lower() for p in (pno - 1, pno) if p >= 1   # whole reference does ("Table 1:")
-                 for ln in layer_text(source, p).splitlines() if ln.strip()]
-        ref = item["clause_number"].strip().lower()
-        ref = ref[:ref.index(num.lower()) + len(num)]         # "table 1 (a)" -> "table 1"
-        starts = {ln.split()[0].strip("()").rstrip(".") for ln in lines}
-        if num.strip("()").rstrip(".") not in starts and not any(re.match(re.escape(ref) + r"\b", ln)
-                                                                 for ln in lines):
-            out.append(("clause", f"clause number {item['clause_number']!r} does not start a line on page {pno} "
-                                  f"or the page before"))
+    out += clause_findings(item["clause_number"], source, pno)
     for n in re.findall(r"\d+(?:[.,]\d+)?", item["statement"]):
         if not layer1.number_found(n, [item["quote"]]):
             out.append(("numbers", f"{n} in the statement, not in the quote"))
