@@ -110,3 +110,24 @@ class Tuning(unittest.TestCase):
                      "contamination or mixups.") for n in range(1, 11)]
         self.assertFalse(X.lead_in_covered("211.42(c)", self.LEAD, subs[:9], SRC))  # (c)(10) has no item
         self.assertTrue(X.lead_in_covered("211.42(c)", self.LEAD, subs, SRC))
+
+
+class Status(unittest.TestCase):
+    def test_row_and_json(self):
+        import json
+        import tempfile
+        import status
+        md = ("| # | Document | File | Priority | Plant types | Pages | Status | Items | Auto | Review |\n"
+              "|---|---|---|---|---|---|---|---|---|---|\n"
+              "| 1 | 21 CFR 211 | `a.xml` | must | OSD | - | not started | | | |\n"
+              "| 2 | 21 CFR 210 | `b.xml` | must | ALL | - | not started | | | |\n")
+        with tempfile.TemporaryDirectory() as tmp:
+            wl, st = Path(tmp) / "w.md", Path(tmp) / "s.json"
+            wl.write_text(md)
+            status.set_status("a.xml", "verified", items=10, auto=8, review=2, usage=50, run="r1", path=st, worklist=wl)
+            rows = wl.read_text().splitlines()
+            self.assertEqual(rows[2], "| 1 | 21 CFR 211 | `a.xml` | must | OSD | - | verified | 10 | 8 | 2 |")
+            self.assertEqual(rows[3], md.splitlines()[3])
+            self.assertEqual(json.loads(st.read_text())["documents"]["a.xml"]["runs"], ["r1"])
+            with self.assertRaises(SystemExit):
+                status.set_status("zzz.xml", "drafted", path=st, worklist=wl)
