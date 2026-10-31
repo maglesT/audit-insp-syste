@@ -17,10 +17,13 @@ Checks (deterministic):
   numbers    both ways (statement <-> quote); strength (an obligation word of the quote, else of the parent lead-in);
   conditions condition wording of the quote in the statement; lead-in: a parent paragraph ending in ":" (e.g.
              211.84(c) "... in accordance with the following procedures:") states a scoping condition the statement
-             must carry (vision.lead_in_missing)
+             must carry (vision.lead_in_missing), or a qualifier "as are necessary to ..." (qualifier_missing)
+  plants     a text limited to products not required to be sterile excludes INJ; one limited to sterile products
+             lists only INJ (and API)
 Coverage: every obligation sentence of every paragraph (vision.counts_for_coverage) is in an item quote citing that
 paragraph or one of its sub-paragraphs (whole-token, 80 % of its words, its condition words; or the quotes printed
-inside it together with 90 %, every number), or listed by the drafter as not applicable.
+inside it together with 90 %, every number), or listed by the drafter as not applicable; a lead-in sentence ending
+":" with one obligation word is covered by its sub-paragraphs' items when each has one and all carry the lead-in.
 Automatic route (D47): no finding, quote confirmed, and both blind verifiers say correct; everything else goes to
 the review queue (tools/fda/review.py).
 """
@@ -108,6 +111,20 @@ def prepare_draft(source, wanted=None):
     return run
 
 
+def lead_in_text(ref, paras):
+    """The lead-ins over a paragraph: every ancestor paragraph whose own text ends in ":", nearest first
+    (211.42(c)(10)(i) takes (c)(10) "Aseptic processing, which includes as appropriate:" and (c)'s "... as are
+    necessary to prevent contamination or mixups during the course of the following procedures:")."""
+    out, r = [], parent(ref)
+    while r:
+        t = own_text(r, paras.get(r, ""))
+        if not t.rstrip().endswith(":"):
+            break
+        out.append(t)
+        r = parent(r)
+    return " ".join(out)
+
+
 def check_item(item, source):
     """(findings, quote confirmed)."""
     import layer1
@@ -127,18 +144,86 @@ def check_item(item, source):
     for n in re.findall(r"(?<![\w.^§])\d+(?:[.,]\d+)?", item["quote"]):
         if not layer1.number_found(n, [item["statement"]]):
             out.append(("numbers", f"{n} in the quote, not in the statement"))
-    lead = own_text(parent(ref), paras.get(parent(ref), "")) if parent(ref) else ""
-    lead = lead if lead.rstrip().endswith(":") else ""
+    lead = lead_in_text(ref, paras)
     words = layer1.strength_of(item["quote"]) or (layer1.strength_of(lead) if lead else None)
     if words and words != item["strength"]:
         out.append(("strength", f"quote says {words}, item {item['strength']}"))
     missing = layer1.conditions_missing(item["quote"], layer1.conditions_in(item["statement"]))
     if missing:
         out.append(("conditions", "quote has " + ", ".join(missing) + " wording the statement lacks"))
-    lm = vision.lead_in_missing(lead, item["statement"])
+    lm = vision.lead_in_missing(lead, item["statement"]) + qualifier_missing(lead, item["statement"])
     if lm:
         out.append(("lead-in", f"the statement lacks the lead-in's condition: {'; '.join(lm)[:160]}"))
+    pf = plants_finding(item["quote"] + " " + lead, item["plant_types"])
+    if pf:
+        out.append(("plants", pf))
     return out, found
+
+
+# A lead-in qualifier that limits what every sub-paragraph asks for: "such other control systems ... as are
+# necessary to prevent contamination or mixups during the course of the following procedures:" (211.42(c)).
+QUALIFIER = re.compile(r"\bas (?:(?:is|are|may be) )?(necessary|needed|required|appropriate)\b(?:\s+(?:to|for)\s+([^:;.]*))?",
+                       re.I)
+LIST_TAIL = re.compile(r"\b(?:during the course of |in |for |of )?(?:each of )?the following\b.*$", re.I)
+NEED_WORDS = {"necessary": {"necessary", "needed", "need", "needs", "required", "require", "requires"},
+              "needed": {"necessary", "needed", "need", "needs", "required", "require", "requires"},
+              "required": {"necessary", "needed", "need", "needs", "required", "require", "requires"},
+              "appropriate": {"appropriate", "appropriately", "suitable", "suitably"}}
+
+
+def qualifier_missing(lead, statement):
+    """The "as are necessary to ..." qualifiers of a lead-in that the statement lacks: the statement needs a word
+    of the qualifier's kind (necessary / needed / required, or appropriate / suitable) and 80 % of the content
+    words (4+ letters) of its purpose ("prevent contamination or mixups"); the list tail ("during the course of
+    the following procedures") is not part of the purpose."""
+    if not lead:
+        return []
+    said = set(re.findall(r"[a-z]{4,}", statement.lower()))
+    out = []
+    for m in QUALIFIER.finditer(lead):
+        kind, purpose = m.group(1).lower(), LIST_TAIL.sub("", m.group(2) or "").strip()
+        content = set(re.findall(r"[a-z]{4,}", purpose.lower())) - {"their", "there", "this", "that", "these",
+                                                                    "with", "from", "such"}
+        if not (said & NEED_WORDS[kind]) or (content and len(content & said) / len(content) < 0.8):
+            out.append(f"as ... {kind}" + (f" to {purpose}" if purpose else ""))
+    return out
+
+
+# Plant types the text itself rules in or out (the brief: INJ is sterile injectables).
+NONSTERILE = re.compile(r"\bnot (?:required|intended|represented|purporting) to be sterile\b|\bnon-?sterile\b", re.I)
+STERILE = re.compile(r"\b(?:purporting|required|represented|intended) to be sterile\b|\bsterile drug products?\b", re.I)
+
+
+def plants_finding(text, plants):
+    """'' or why the item's plant types do not fit the text: a paragraph only for products not required to be
+    sterile cannot list INJ (211.113(a)); one only for sterile products lists only INJ (and API)."""
+    if NONSTERILE.search(text):
+        return "the text is limited to non-sterile products, the item lists INJ" if "INJ" in plants else ""
+    if STERILE.search(text) and set(plants) - {"INJ", "API"}:
+        return "the text is limited to sterile products, the item lists " + ", ".join(sorted(set(plants) - {"INJ", "API"}))
+    return ""
+
+
+def lead_in_covered(ref, sentence, items, source):
+    """A lead-in sentence (ending ":") with a single obligation word is covered when every sub-paragraph under it
+    has an item and none of those items lacks the lead-in's condition or qualifier; a lead-in that also states
+    its own duty ("The written program shall be followed and shall include:") needs its own item."""
+    import layer1
+    if not sentence.rstrip().endswith(":"):
+        return False
+    if len(re.findall(r"\b(?:shall|must|should|may|is required|are required)\b", sentence, re.I)) != 1:
+        return False
+    kids = [r for r, _ in sections(source)[section_of(ref)] if parent(r) == ref]
+    if not kids:
+        return False
+    for k in kids:
+        mine = [i for i in items if i["clause_number"] == k or i["clause_number"].startswith(k + "(")]
+        if not mine:
+            return False
+        for i in mine:
+            if vision.lead_in_missing(sentence, i["statement"]) or qualifier_missing(sentence, i["statement"]):
+                return False
+    return True
 
 
 def coverage(source, section, items, na):
@@ -166,6 +251,8 @@ def coverage(source, section, items, na):
                         and not (conds - layer1.conditions_in(" ".join(parts)))):
                     continue
             if any(c in (ref, "") and k and k in " ".join(st) for c, k in na_keys):
+                continue
+            if lead_in_covered(ref, s, items, source):
                 continue
             gaps.append({"clause": ref, "sentence": s[:300]})
     return gaps
