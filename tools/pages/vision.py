@@ -508,15 +508,66 @@ def table_number(source, pno):
 COND_CLAUSE = re.compile(r"\b(if|where|when|whenever|unless|only)\b(.*?)(?=,|;|\bthen\b|$)", re.I)
 
 
+# Suffixes a light stemmer strips (longest first), so a word form does not count as a missing word: "If you
+# manufacture" and "When manufacturing", "you elect" and "is elected" (Part 4). Only inflection and a few
+# derivations; words that differ in GMP meaning stay apart (sterile / sterility / sterilized, valid / validated,
+# contain / container, state / statement / station).
+_SUFFIXES = (("ions", 5), ("ion", 5), ("ments", 6), ("ment", 6), ("ings", 4), ("ing", 4), ("ies", 4), ("ied", 4),
+             ("ed", 4), ("es", 4), ("age", 4), ("ly", 4), ("s", 4))
+STOP = {"their", "there", "this", "that", "these", "with", "from", "have", "been", "should", "shall", "must", "your",
+        "they", "them", "which", "will"}
+
+
+def stem(word):
+    """A light stemmer: lower case, one suffix of _SUFFIXES off when the stem keeps its minimum length (ies/ied ->
+    y; not the "s" of "ss"), then a final "e" off (manufacture, manufacturing, manufactured -> manufactur;
+    contaminate, contamination -> contaminat), and "izat" -> "iz" (sterilization = sterilize)."""
+    w = word.lower()
+    for suf, keep in _SUFFIXES:
+        if w.endswith(suf) and len(w) - len(suf) >= keep and not (suf == "s" and w.endswith("ss")):
+            w = w[:-len(suf)] + ("y" if suf in ("ies", "ied") else "")
+            break
+    w = w[:-1] if w.endswith("e") and len(w) > 4 else w
+    return w[:-2] if w.endswith("izat") else w
+
+
+def stems(text):
+    """The stems of a text's content words (4+ letters, without STOP), references left out and CGMP spelled out."""
+    text = CGMP.sub(lambda m: ("current " if m.group(0)[0] in "cC" else "") + "good manufacturing practice",
+                    REF_PHRASE.sub(" ", text))
+    return {stem(w) for w in re.findall(r"[a-z]{4,}", text.lower()) if w not in STOP}
+
+
+# "If you are a constituent part applicant:" is carried by a statement that opens "As a constituent part
+# applicant, ...": only for if/where/when with "you", and only with "As a/an" at the start of the statement (the
+# role words must still match).
+ROLE_LEAD = re.compile(r"^\s*you\s+are\s+an?\b", re.I)
+ROLE_SAID = re.compile(r"^\s*as an?\b", re.I)
+
+
+# Wording that is not part of a condition's content: cross-references ("in accordance with paragraph (b) of this
+# section", "under § 4.4"; a customer statement carries no references) and the CGMP abbreviation, spelled out.
+REF_PHRASE = re.compile(r"(?:\b(?:in accordance with|as described in|under|in|of)\s+)?(?:\bparagraphs?\s*(?:\([^()\s]{1,5}\))+"
+                        r"(?:\s*(?:,|and|or|through)\s*(?:\([^()\s]{1,5}\))+)*|§§?\s*[\d.]+(?:\([^()\s]{1,5}\))*)"
+                        r"(?:\s+of this (?:section|part|chapter|subpart))?", re.I)
+# a list tail at the very end of a lead-in ("a change to any of the following information:"); words after "the
+# following" that scope it ("... the following occur during sterile manufacturing:") stay
+FOLLOWING = re.compile(r"\b(?:to |in |for |of )?(?:any |each |all )?(?:one )?(?:of )?the following(?:\s+[a-z]+)?\s*:?\s*$",
+                       re.I)
+CGMP = re.compile(r"\bc?gmps?\b", re.I)
+NEGATION = re.compile(r"\b(?:not|no|non|never|neither|nor|without)\b|n't\b|\bnon-", re.I)
+
+
 def lead_in_missing(lead, statement):
     """The scoping conditions of a lead-in that the statement does not carry: each condition clause ("if their
     use is unavoidable in order to produce a drug product with a significant therapeutic advance", "unless
     otherwise justified") must have its condition group in the statement and at least 80 % of its content words
-    (4+ letters), so "when used" does not stand in for "if their use is unavoidable ..."."""
+    (4+ letters, compared by stem: "manufacture" = "manufacturing"), so "when used" does not stand in for "if
+    their use is unavoidable ...". A role lead-in ("if you are a ...") may be carried by "as a ..."."""
     import layer1
     if not lead:
         return []
-    said = set(re.findall(r"[a-z]{4,}", statement.lower()))
+    said = stems(statement)
     groups = layer1.conditions_in(statement)
     out = []
     for m in COND_CLAUSE.finditer(lead):
@@ -528,9 +579,11 @@ def lead_in_missing(lead, statement):
         group = layer1.conditions_in(clause) & SCOPING
         if not group:
             continue
-        content = set(re.findall(r"[a-z]{4,}", rest.lower())) - {"their", "there", "this", "that", "these", "with",
-                                                                   "from", "have", "been", "should", "shall", "must"}
-        if not (group & groups) or (content and len(content & said) / len(content) < 0.8):
+        content = stems(FOLLOWING.sub("", rest))      # "a change to any of the following information:" -> "a change"
+        carried = group <= groups or bool(word.lower() in ("if", "where", "when") and ROLE_LEAD.match(rest)
+                                               and ROLE_SAID.match(statement))
+        negated = NEGATION.search(rest) and not NEGATION.search(statement)     # "if the drug is not sterile"
+        if not carried or negated or (content and len(content & said) / len(content) < 0.8):
             out.append(clause)
     return out
 

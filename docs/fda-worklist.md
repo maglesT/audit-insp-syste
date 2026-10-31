@@ -17,8 +17,8 @@ Columns: items = checklist items drafted; auto = items passing the automatic rou
 | 4 | 21 CFR Part 11 Electronic Records; Electronic Signatures | `fda-cfr-21-part-11.xml` | must | ALL | - | verified | 48 | 45 | 3 |
 | 5 | 21 CFR 314.70 Supplements and other changes to an approved NDA | `fda-cfr-21-314.70.xml` | should | OSD, LIQ, SEMI, INJ | - | verified | 78 | 53 | 25 |
 | 6 | 21 CFR Part 200 General (incl. 200.10 contract facilities  200.50 ophthalmic sterility) | `fda-cfr-21-part-200.xml` | should | ALL | - | verified | 24 | 18 | 6 |
-| 7 | 21 CFR Part 207 Establishment registration  drug listing | `fda-cfr-21-part-207.xml` | should | ALL | - | verified | 149 | 115 | 34 |
-| 8 | 21 CFR Part 4 Regulation of combination products (Subpart A CGMP relevant for prefilled syringes/co-packaged; device QS parts not fetched) | `fda-cfr-21-part-4.xml` | should | INJ | - | verified | 64 | 16 | 48 |
+| 7 | 21 CFR Part 207 Establishment registration  drug listing | `fda-cfr-21-part-207.xml` | should | ALL | - | verified | 149 | 121 | 28 |
+| 8 | 21 CFR Part 4 Regulation of combination products (Subpart A CGMP relevant for prefilled syringes/co-packaged; device QS parts not fetched) | `fda-cfr-21-part-4.xml` | should | INJ | - | verified | 64 | 27 | 37 |
 
 ## Group 2: FDA web pages (HTML, read directly)
 

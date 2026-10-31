@@ -309,5 +309,77 @@ class ReviewFixes(unittest.TestCase):
             self.assertEqual(review.shipped(r2, dec), [])
 
 
+class LeadInWordForms(unittest.TestCase):
+    """Equivalent wording of a lead-in condition is not flagged; a dropped or changed condition still is (Part 4)."""
+    P4 = "fda-cfr-21-part-4.xml"
+
+    def lead(self, ref):
+        return X.lead_in_text(ref, dict(X.paragraphs(self.P4)))
+
+    def test_word_forms_carry_the_condition(self):
+        import vision
+        lead = "If you manufacture a combination product, the requirements listed in this section apply as follows:"
+        self.assertEqual(vision.stem("manufacture"), vision.stem("manufacturing"))
+        self.assertEqual(vision.stem("elect"), vision.stem("elected"))
+        self.assertEqual(vision.lead_in_missing(lead, "When manufacturing a combination product, comply with the "
+                                                      "drug CGMP regulations."), [])
+        self.assertEqual(vision.lead_in_missing(lead, "If combination products are manufactured, comply with ..."), [])
+
+    def test_dropped_or_changed_condition_still_caught(self):
+        import vision
+        lead = "If you manufacture a combination product, the requirements listed in this section apply as follows:"
+        self.assertTrue(vision.lead_in_missing(lead, "Comply with the drug CGMP regulations."))           # dropped
+        self.assertTrue(vision.lead_in_missing(lead, "When manufacturing a drug, comply with the drug CGMP."))  # changed
+        self.assertTrue(vision.lead_in_missing("If cut labeling is used for immediate container labels, ...:",
+                                               "Where cut labeling is used, examine it."))        # part of it dropped
+        q3c = ("However, if their use is unavoidable in order to produce a drug product with a significant "
+               "therapeutic advance, then their levels should be restricted as shown in Table 1.")
+        self.assertTrue(vision.lead_in_missing(q3c, "When used, limit benzene to 2 ppm."))
+
+    def test_role_as_a(self):
+        import vision
+        lead = "If you are a constituent part applicant:"
+        self.assertEqual(vision.lead_in_missing(lead, "As a constituent part applicant, keep the records."), [])
+        self.assertTrue(vision.lead_in_missing(lead, "As a manufacturer, keep the records."))       # another role
+        self.assertTrue(vision.lead_in_missing(lead, "Keep the records as required."))              # no role at all
+
+    def test_references_list_tail_and_cgmp_are_not_condition_words(self):
+        import vision
+        lead = self.lead("4.4(b)(1)")
+        self.assertIn("paragraph (b) of this section", lead)
+        self.assertEqual(vision.lead_in_missing(lead, "Where you elect to establish a CGMP operating system under the "
+                                                      "streamlined approach, also meet ..."), [])
+        self.assertTrue(vision.lead_in_missing(lead, "Where a CGMP operating system exists, also meet ..."))
+        change = "Registrants must update the NDC when there is a change to any of the following information:"
+        self.assertEqual(vision.lead_in_missing(change, "Use a new product code when the drug's name changes."), [])
+        self.assertTrue(vision.lead_in_missing(change, "Use a new product code for the drug."))
+
+    def test_review_cases_stay_flagged(self):
+        import vision
+        m = vision.lead_in_missing
+        self.assertTrue(m("Unless you are a small business, keep the records:", "As a small business, keep the records."))
+        self.assertTrue(m("If it is a combination product, the following apply:", "Label the drug as a combination product."))
+        self.assertTrue(m("Where the firm is a contract manufacturer:", "The firm keeps records as the contract manufacturer requires."))
+        self.assertTrue(m("If you are a contract manufacturer:", "Keep the records, as a contract manufacturer may be audited."))
+        self.assertTrue(m("If any of the following occur during sterile drug manufacturing:", "If a deviation occurs, investigate it."))
+        self.assertTrue(m("Where the products are manufactured for each of the following markets in the European Union:",
+                          "Where products are manufactured, test them."))
+        self.assertTrue(m("If the product is terminally sterilized:", "If the product is terminally sterile, test it."))
+        self.assertTrue(m("If the method is validated:", "If the method is valid, use it."))
+        self.assertTrue(m("If the drug is not sterile:", "If the drug is sterile, test it."))
+        self.assertTrue(m("Only if the batch fails:", "If the batch fails, investigate."))
+        self.assertEqual(m("If you process the drug:", "When processing the drug, test it."), [])
+        self.assertEqual(m("If the product is sterilized:", "When sterilization is used for the product, ..."), [])
+
+    def test_qualifier_by_stem(self):
+        lead = ("such other control systems for the firm's operations as are necessary to prevent contamination or "
+                "mixups during the course of the following procedures:")
+        self.assertEqual(X.qualifier_missing(lead, "Provide control systems as needed to prevent contaminating or "
+                                                   "mixups during storage."), [])
+        self.assertEqual(X.qualifier_missing(lead, "Provide control systems as needed to prevent contamination or "
+                                                   "mixups during storage."), [])
+        self.assertTrue(X.qualifier_missing(lead, "Provide separate areas for storage."))
+
+
 if __name__ == "__main__":
     unittest.main()

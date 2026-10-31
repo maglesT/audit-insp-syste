@@ -305,7 +305,7 @@ NEED_WORDS = {"necessary": {"necessary", "needed", "need", "needs", "required", 
 def qualifier_missing(lead, statement):
     """The "as are necessary to ..." qualifiers of a lead-in that the statement lacks: the statement needs a word
     of the qualifier's kind (necessary / needed / required, or appropriate / suitable) and 80 % of the content
-    words (4+ letters) of its purpose ("prevent contamination or mixups"); the list tail ("during the course of
+    words (4+ letters, compared by stem) of its purpose ("prevent contamination or mixups"); the list tail ("during the course of
     the following procedures") is not part of the purpose."""
     if not lead:
         return []
@@ -313,9 +313,8 @@ def qualifier_missing(lead, statement):
     out = []
     for m in QUALIFIER.finditer(lead):
         kind, purpose = m.group(1).lower(), LIST_TAIL.sub("", m.group(2) or "").strip()
-        content = set(re.findall(r"[a-z]{4,}", purpose.lower())) - {"their", "there", "this", "that", "these",
-                                                                    "with", "from", "such"}
-        if not (said & NEED_WORDS[kind]) or (content and len(content & said) / len(content) < 0.8):
+        content = vision.stems(purpose) - {"such"}                 # by stem, as vision.lead_in_missing
+        if not (said & NEED_WORDS[kind]) or (content and len(content & vision.stems(statement)) / len(content) < 0.8):
             out.append(f"as ... {kind}" + (f" to {purpose}" if purpose else ""))
     return out
 
