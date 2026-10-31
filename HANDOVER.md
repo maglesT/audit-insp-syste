@@ -14,7 +14,15 @@ Last updated: 31 October 2026, session 6 (D45/D46 page-based vision drafting; tr
   whole-token matching, table rows as whole rows with their whole header); verifiers both-correct 93.9 % of 246;
   the Q3C lead-in errors are gone; coverage gaps NOT yet clean (descriptive "may" sentences, table captions, a few
   real gaps). Usage about 17 k tokens per page drafting, 3 k per item verifying (two verifiers).
-- **Next, in order (one PR each, independent review, merge on green CI):**
+- **D47 (owner, 31 Oct) sets the build: FDA first, document by document, "nothing ships unless proven"** (automatic
+  route = quote confirmed + all Layer 1 checks + both verifiers correct; else the owner's review queue). Work list:
+  `docs/fda-worklist.md` (`tools/fda/worklist.py`, status `library/fda-status.json`). **Start with 21 CFR 211**
+  (XML profile: text read directly, exact-text quote check, clause number from the XML structure, no vision).
+  Per group report to the coordinator: items, automatic-route pass rate, review-queue size, usage. Steps for the
+  XML group: (a) XML profile in the page pipeline (units = eCFR sections/paragraphs from `tools/parse/ecfr.py`'s
+  reading of the XML, not PDF pages); (b) review queue tool (one item at a time beside its source text; correct /
+  fix / reject, name + time, attributable); (c) 20-unit trial of 211, tune; (d) full 211, then 210, Part 11, ...
+- **Earlier plan, still valid where it does not conflict with D47 (one PR each, independent review, merge on green CI):**
   1. (Done in PR #36: coverage measure, continued-table headers, whole next page; coverage gaps 39 -> 13, about 9
      to look at by hand, listed in `docs/vision-trial.md`.)
   2. Layer 1 on page items (no library/clauses dependency; reuse `vision.check_item`, `quotes.findings`).
