@@ -24,7 +24,7 @@ Columns: items = checklist items drafted; auto = items passing the automatic rou
 
 | # | Document | File | Priority | Plant types | Pages | Status | Items | Auto | Review |
 |---|---|---|---|---|---|---|---|---|---|
-| 9 | Guide to Inspections of Dosage Form Drug Manufacturers - CGMPs | `fda-ora-guide-dosage-form-cgmps-1993.html` | must | OSD, LIQ, SEMI, INJ | - | not started | | | |
+| 9 | Guide to Inspections of Dosage Form Drug Manufacturers - CGMPs | `fda-ora-guide-dosage-form-cgmps-1993.html` | must | OSD, LIQ, SEMI, INJ | - | verified (auto provisional, D50) | 232 | 214 | 18 |
 | 10 | Guide to Inspections of High Purity Water Systems | `fda-ora-guide-high-purity-water-1993.html` | must | ALL | - | verified (auto provisional, D50) | 72 | 58 | 14 |
 | 11 | Guide to Inspections of Lyophilization of Parenterals | `fda-ora-guide-lyophilization-parenterals-1993.html` | must | INJ | - | not started | | | |
 | 12 | Guide to Inspections of Microbiological Pharmaceutical QC Laboratories | `fda-ora-guide-micro-qc-labs-1993.html` | must | ALL | - | not started | | | |

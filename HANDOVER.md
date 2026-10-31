@@ -44,9 +44,8 @@ Last updated: 31 October 2026, session 8 (D48 lead-in fix, review-page import, D
   the new numbers (all are now "verified (auto provisional, D50)"). (4) Mutation spot-check on one re-verified batch
   (3 planted errors; both verifiers must catch them with specific reasons). Then continue group 2 (Dosage Form
   guide, the 7 other guides, ITGs, CPG 490.200, benzene alert).
-- **Dosage Form guide:** verifier A answers in (231/232 correct); verifier B first pass superseded
-  (`verify/superseded-b/`, one repeated reason); a fresh B agent was running at handover; if its answers are not
-  in the run folders, re-verify B under D50.
+- **Dosage Form guide:** verified (provisional): 232 items, 214 automatic, 18 review; B re-run with item-specific reasons;
+  borderline passes listed in the status note.
 - **Agents:** drafting agent per run (reads only its batch files, writes answers/); verifiers A and B as separate
   agents per run group (blind, only their verify batch files). Max 3-4 at a time.
 - **Local test note:** 2 errors in tests/test_ai_runner locally = the `anthropic` package is not installed here
