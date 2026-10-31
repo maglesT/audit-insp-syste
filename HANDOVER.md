@@ -34,6 +34,13 @@ Last updated: 31 October 2026, session 8 (D48 lead-in fix, review-page import, D
   .663955Z, pharma QC labs .767509Z, sterile drug substance .888503Z, cleaning validation 20261031T121845.016687Z,
   foreign manufacturers .105247Z. Then ITGs (bacterial endotoxins, expiration dating, water), CPG 490.200, benzene
   alert: new whole-document runs (`prepare-draft FILE`); the trial runs of those are trial-only.
+- **OPEN QUALITY FLAG (sent to the coordinator 31 Oct, decision pending):** many verifier "correct" answers carry
+  one generic reason repeated across a batch (21 of 48 group 1 XML answer files, most group 2 files; scan:
+  distinct reasons / answers per file). Proposed: a "correct" counts for the automatic route only with an
+  item-specific reason (deterministic check), re-verify affected batches, tighten the verify prompts; until decided
+  the automatic-route numbers are provisional. Dosage Form guide: verifier B's first pass (232/232 correct, one
+  repeated reason pair) moved to `verify/superseded-b/`; a fresh B agent was asked for item-specific reasons;
+  verifier A done (231/232 correct). When the new B answers exist: ingest-verify both runs, status set, report.
 - **Agents:** drafting agent per run (reads only its batch files, writes answers/); verifiers A and B as separate
   agents per run group (blind, only their verify batch files). Max 3-4 at a time.
 - **Local test note:** 2 errors in tests/test_ai_runner locally = the `anthropic` package is not installed here
