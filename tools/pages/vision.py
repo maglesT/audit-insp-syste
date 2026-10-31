@@ -253,7 +253,7 @@ def table_quote_found(quote, source, pno):
     pieces = [quotes.toks(x) for x in row.split(" | ")]
     if not head:
         return row_found(pieces, source, pno)
-    header = _marks_out(quotes.toks(head.replace(" | ", " ")))
+    header = _marks_out(head.replace(" | ", " "))
     if not table_rows(source, pno):
         return tuple(_unruled_header(header, [t for p in pieces for t in p], reader, source, pno, loose)
                      for reader, loose in ((layer_text, False), (pdfminer_text, True)))
@@ -262,28 +262,48 @@ def table_quote_found(quote, source, pno):
         k = next((i for i, r in enumerate(t) if len(r) == len(pieces)), 0)   # the first full-width row: rows
         if k:                                                  # above it are the header, all of them
             cells = [c for r in t[:k] for c in r]
-            if _marks_out([x for c, _ in cells for x in quotes.toks(c)]) != header:
+            if _marks_out(" ".join(c for c, _ in cells)) != header:
                 continue
             words = poppler_words(source, pno)
-            head_layer = _marks_out([x for _, b in cells
-                                     for x in quotes.toks(" ".join(w[4] for w in words if _in_box(w, b)))])
+            head_layer = _marks_out(" ".join(" ".join(w[4] for w in words if _in_box(w, b)) for _, b in cells))
             for r in t[k:]:
                 layer, miner = _row_match(r, pieces, source, pno)
                 out = [out[0] or (layer and head_layer == header), out[1] or miner]
     return tuple(out)
 
 
-def _marks_out(tokens):
-    """Header tokens without single-letter footnote marks ("at rest (a)"): one reader may not see a small mark
-    inside a header cell, and a header mark carries no value. Data cells are compared with their marks."""
-    return [t for t in tokens if not (len(t) == 1 and t.isalpha())]
+MARK = re.compile(r"\(\s*[a-z]\s*\)|\^[a-z]\b")
+
+
+def _marks_out(text):
+    """Header tokens without footnote marks written "(a)" or "^a" ("at rest (a)"): one reader may not see a small
+    mark inside a header cell, and a header mark carries no value. Other single letters ("Grade A | B") stay.
+    Data cells are compared with their marks."""
+    return quotes.toks(MARK.sub(" ", text))
 
 
 def _unruled_header(header, row, reader, source, pno, loose):
-    lines = [quotes.toks(ln) for ln in reader(source, pno).splitlines()]
-    hs = [i for i, ln in enumerate(lines) if _marks_out(ln) == header]
-    rs = [i for i, ln in enumerate(lines) if ln == row or (loose and quotes.contains(row, ln, True) and len(ln) == len(row))]
-    return bool(hs and rs and min(hs) < max(rs))
+    """An unruled table's header and row: the header is ALL the lines from the line after the table's caption
+    ("TABLE 1. ...", the nearest caption above the row) up to the first data line (a line with a number): the
+    same tokens as the quoted header, each line's tokens in the quote's order; the row is a whole line below it,
+    with no other caption in between."""
+    lines = [ln for ln in reader(source, pno).splitlines() if ln.strip()]
+    rows = [i for i, ln in enumerate(lines) if quotes.toks(ln) == row
+            or (loose and len(quotes.toks(ln)) == len(row) and quotes.contains(row, quotes.toks(ln), True))]
+    for r in rows:
+        cap = next((i for i in range(r - 1, -1, -1) if CAPTION.match(lines[i])), None)
+        if cap is None:
+            continue
+        end = next((i for i in range(cap + 1, r + 1) if re.search(r"\d", lines[i])), r)
+        block = [_marks_out(ln) for ln in lines[cap + 1:end]]
+        if block and sorted(t for b in block for t in b) == sorted(header) and all(_in_order(b, header) for b in block):
+            return True                                        # same tokens; each header line's in order (a unit
+    return False                                               # on a second line, "(ppm)", sits in between)
+
+
+def _in_order(sub, seq):
+    it = iter(seq)
+    return all(t in it for t in sub)
 
 
 def table_groups(source, pno):
@@ -378,7 +398,9 @@ def lead_in(item, source, pno):
               None)
     if at is None:
         return ""
-    for i in range(at - 1, max(at - 9, -1), -1):               # the nearest ":" line above, within 8 lines
+    for i in range(at - 1, max(at - 61, -1), -1):              # the nearest ":" line above, within the clause
+        if re.match(r"\d+(?:\.\d+)+\.?\s", lines[i]) and not lines[i].endswith(":"):
+            return ""                                          # another numbered clause starts: no lead-in
         if lines[i].endswith(":") and not lines[i].lower().startswith("note"):
             if LIST_MARK.match(item["quote"]) or i == at - 1 or LIST_MARK.match(lines[at]):
                 start = max(i - 3, 0)                        # the sentence ending in ":" (up to 4 lines)
@@ -409,7 +431,7 @@ COND_CLAUSE = re.compile(r"\b(if|where|when|whenever|unless|only)\b(.*?)(?=,|;|\
 def lead_in_missing(lead, statement):
     """The scoping conditions of a lead-in that the statement does not carry: each condition clause ("if their
     use is unavoidable in order to produce a drug product with a significant therapeutic advance", "unless
-    otherwise justified") must have its condition group in the statement and at least 60 % of its content words
+    otherwise justified") must have its condition group in the statement and at least 80 % of its content words
     (4+ letters), so "when used" does not stand in for "if their use is unavoidable ..."."""
     import layer1
     if not lead:
@@ -417,14 +439,18 @@ def lead_in_missing(lead, statement):
     said = set(re.findall(r"[a-z]{4,}", statement.lower()))
     groups = layer1.conditions_in(statement)
     out = []
-    for word, rest in COND_CLAUSE.findall(lead):
+    for m in COND_CLAUSE.finditer(lead):
+        word, rest = m.group(1), m.group(2)
+        if len(re.findall(r"[a-z]{4,}", rest.lower())) < 2:     # "only if, after assessment, ...": take the
+            rest = lead[m.start(2):].split(";")[0]               # clause on past the comma
+            rest = re.split(r"\bthen\b|\.(?:\s|$)", rest)[0]
         clause = f"{word} {rest}".strip()
         group = layer1.conditions_in(clause) & SCOPING
         if not group:
             continue
         content = set(re.findall(r"[a-z]{4,}", rest.lower())) - {"their", "there", "this", "that", "these", "with",
                                                                    "from", "have", "been", "should", "shall", "must"}
-        if not (group & groups) or (content and len(content & said) / len(content) < 0.6):
+        if not (group & groups) or (content and len(content & said) / len(content) < 0.8):
             out.append(clause)
     return out
 

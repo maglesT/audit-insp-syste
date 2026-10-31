@@ -199,3 +199,27 @@ class D46Review(unittest.TestCase):
         import layer1
         self.assertEqual(layer1.lead_in_strength("visit the site", "Following criteria should be applied: visit the "
                                                  "site"), "recommended")
+
+
+class D46Review2(unittest.TestCase):
+    def test_unruled_header_must_be_whole(self):
+        q3c = "ich-q3c-r9.pdf"
+        self.assertEqual(vision.table_quote_found("Solvent | Concentration limit | Concern || Benzene | 2 | Carcinogen",
+                                                  q3c, 11)[0], False)
+        self.assertEqual(vision.table_quote_found("Solvent | Concentration limit (ppm) | Concern || Benzene | 2 | "
+                                                  "Carcinogen", q3c, 11)[0], True)
+
+    def test_unruled_header_columns_in_order(self):
+        self.assertEqual(vision.table_quote_found("Solvent | Concern | Concentration limit (ppm) || Benzene | 2 | "
+                                                  "Carcinogen", "ich-q3c-r9.pdf", 11)[0], False)
+
+    def test_marks_out_keeps_grade_letters(self):
+        self.assertNotEqual(vision._marks_out("Grade A B C D"), vision._marks_out("Grade D C B A"))
+        self.assertEqual(vision._marks_out("at rest (a)"), vision._marks_out("at rest^a"))
+
+    def test_lead_in_needs_the_whole_condition(self):
+        lead = ("However, if their use is unavoidable in order to produce a drug product with a significant "
+                "therapeutic advance, then their levels should be restricted as shown in Table 1, unless otherwise "
+                "justified.")
+        part = "Only if use is unavoidable in order to produce a drug product, limit benzene to 2 ppm, unless otherwise justified."
+        self.assertTrue(vision.lead_in_missing(lead, part))
