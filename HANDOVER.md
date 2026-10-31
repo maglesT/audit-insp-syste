@@ -205,6 +205,9 @@ finished in about 4 minutes in total.
       Residual: table rows are compared as a bag, so a value dropped from or moved within a row is often missed;
       per-cell comparison belongs with the 0b table work. Harness: the reviewer's scripts were in the session
       scratchpad (gone); rebuild from D40's description if needed.
+    - **0b also includes the table-transformer trial (D41, owner-approved, rendering pages is fine):** Table
+      Transformer or TableFormer/Docling for table grids, text from the PDF text layer; trial on the worst tables
+      first, adopt only where better, then per-cell fidelity comparison.
     - **0b work list** = every explanation starting "Parser defect (0b)" (396 rows; `grep "Parser defect" library/fidelity-explanations.csv`), plus the 10 known parser limits below. Most important first:
       1. **TEXT LOST (4):** FDA CP 7346.832 and CP 7356.002 Attachment A (first sentence stored as bogus
          "Table 3" rows, "its inspectional authority" in no clause); FDA nitrosamine guidance 2024 Appendix A
