@@ -26,3 +26,20 @@ part of the statement; (2) the lead-in check also covers qualifiers such as "as 
 parent paragraph ending ":" (today only if / where / when / unless / only); (3) the two coverage gaps get items
 (211.166(a) "shall be followed"). Then the full 211 build, section by section, and the review queue for what is not
 proven.
+
+## Tuning done (31 October 2026, session 7)
+
+Code: `xmlprofile.qualifier_missing` (lead-in qualifiers "as are necessary to ...", "as appropriate"),
+`lead_in_text` (all lead-in ancestors ending ":", so 211.42(c)(10)(i) carries both (c)(10) and (c)),
+`plants_finding` (a text limited to products not required to be sterile excludes INJ; one limited to sterile
+products lists only INJ/API), `lead_in_covered` (a lead-in sentence with one obligation word is covered by its
+sub-paragraphs' items when each has one and all carry the lead-in; a lead-in with its own duty needs its own item).
+Prompts: the statement carries every lead-in qualifier (the condition field only repeats it; verifiers treat it
+as a label); INJ = sterile injectables; no paragraph references in statements (customer-facing, option A).
+
+- On the trial's own drafts the new checks flag exactly the 16 verifier disagreements (15 lead-in, 1 plants) and
+  nothing else.
+- Redraft of 211.42, 211.113, 211.166 (`20261031T100331.802997Z-xml-draft`): 37 items, 37 quotes exact, **0
+  coverage gaps**, 211.113(a) now OSD/LIQ/SEMI; both verifiers 37/37 correct; **automatic route 36 of 37**. The one
+  in review cited "211.166(a)(1)-(5)" in its statement (numbers check), which the prompt now forbids.
+- Part 211 has **60 sections** in the eCFR XML (324 paragraphs), not 107: the full build is 12 batches of 5.

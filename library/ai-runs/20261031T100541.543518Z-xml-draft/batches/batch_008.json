@@ -1,0 +1,429 @@
+{
+ "instructions": "You read sections of a US regulation (21 CFR, from the official eCFR XML) and list the obligations they state. Each\nsection is given as its paragraphs, each with its reference from the XML structure (\"211.84(c)(1)\") and its exact\ntext. Your output is checked by software against that exact text and by independent reviewers, so precision\nmatters more than wording.\n\nList each separate obligation as its own item, so that together your items cover every obligation in the section.\nOne obligation is one thing a manufacturer must, should or may do, with all its conditions, numbers and\nqualifiers; do not split one obligation across items. For each item:\n- statement: the obligation in your own plain English words, as one checklist item a site could be audited\n  against. Do not copy more than a few words in a row. Keep every condition (\"where\", \"if\", \"unless\", \"when\",\n  \"except\") and every number. Do not add anything the text does not say. The statement itself must carry every\n  condition or qualifier of the lead-ins above its paragraph (a parent paragraph ending in \":\", and its parent if\n  that also ends in \":\"): for 211.42(c)(1) under \"... such other control systems ... as are necessary to prevent\n  contamination or mixups during the course of the following procedures:\", write e.g. \"Provide separate or defined\n  areas, or other control systems as necessary to prevent contamination or mixups, for receipt ...\". Putting the\n  qualifier only in the condition field is not enough. The statement is shown to customers: never cite a\n  paragraph or section reference in it (\"211.166(a)(1)-(5)\", \"this section\"); say what is required instead\n  (\"contains the elements listed below\" is not enough: name them, or let each sub-paragraph's own item carry it).\n- quote: the exact span of ONE paragraph's text that states the whole obligation, copied character for character\n  (matched against the XML text by software; do not fix typos or change punctuation). Leave out the paragraph's\n  designation (\"(c)\"). A quote may continue into that paragraph's sub-paragraphs, in order.\n- clause_number: the reference of the paragraph the quote comes from, exactly as given (\"211.84(c)(1)\").\n- strength: \"mandatory\" for shall / must / is required / may not; \"recommended\" for should; \"optional\" for may.\n  A sub-paragraph without such a word takes its parent's lead-in (\"(c) Samples shall be collected in accordance\n  with the following procedures:\" makes (c)(1)-(c)(6) mandatory).\n- plant_types: from OSD, LIQ, SEMI, INJ, API (INJ = sterile injectables); the plant scope given unless the text\n  narrows it. A paragraph limited to drug products not required to be sterile does not apply to INJ; one limited to\n  sterile drug products (\"purporting to be sterile\") applies only to INJ (and API where in scope).\n- numbers: every number, limit, frequency or period in the quote, as written.\n- condition: the condition or trigger in a few words, \"\" if none. A condition stated in a parent paragraph's\n  lead-in belongs to every sub-paragraph under it. This field only repeats what the statement already says.\n\nA lead-in sentence that also states a duty of its own (\"The written program shall be followed and shall include:\")\nneeds its own item for that duty, quoting the whole sentence including \"shall include:\".\n- topic: the sub-topic id from TOPICS the obligation belongs to.\n\nSentences that state no obligation for the manufacturer (a heading, a definition, a scope statement, a statement\nof purpose) go in not_applicable: the paragraph reference, the first 8 or more words copied exactly, and the\nreason in a few words.\n\nWrite the answers file named in your task: {\"answers\": [one object per section with \"section\" set to the section's\n\"id\" exactly]}.\n",
+ "topics": [
+  "QS.PQS",
+  "QS.MGMT",
+  "QS.QRM",
+  "QS.PQR",
+  "QS.CHANGE",
+  "QS.DEV",
+  "QS.CAPA",
+  "PER.ORG",
+  "PER.KEY",
+  "PER.TRAIN",
+  "PER.HYG",
+  "PER.GOWN",
+  "PREM.DESIGN",
+  "PREM.PROD",
+  "PREM.STORE",
+  "PREM.QC",
+  "PREM.ANC",
+  "EQ.DESIGN",
+  "EQ.MAINT",
+  "EQ.CLEAN",
+  "EQ.CAL",
+  "DOC.SYS",
+  "DOC.SPEC",
+  "DOC.MFR",
+  "DOC.BMR",
+  "DOC.SOP",
+  "DOC.RET",
+  "MAT.SUPP",
+  "MAT.RECV",
+  "MAT.SAMP",
+  "MAT.STATUS",
+  "MAT.PACK",
+  "MAT.REJ",
+  "PROD.GEN",
+  "PROD.XCONT",
+  "PROD.IPC",
+  "PROD.YIELD",
+  "PROD.PACK",
+  "PROD.REWORK",
+  "QC.GEN",
+  "QC.SAMP",
+  "QC.TEST",
+  "QC.OOS",
+  "QC.STAB",
+  "QC.REF",
+  "QC.MICRO",
+  "VAL.PLAN",
+  "VAL.QUAL",
+  "VAL.PROC",
+  "VAL.CLEAN",
+  "VAL.METH",
+  "CSV.VAL",
+  "CSV.ACCESS",
+  "CSV.AUDIT",
+  "CSV.ESIG",
+  "CSV.DI",
+  "UTIL.WATER",
+  "UTIL.HVAC",
+  "UTIL.GAS",
+  "CCS.STRAT",
+  "CCS.EM",
+  "CCS.CLEAN",
+  "CCS.PEST",
+  "STER.GRADE",
+  "STER.ASEPT",
+  "STER.APS",
+  "STER.STERIL",
+  "STER.FILT",
+  "STER.CCI",
+  "STER.LYO",
+  "API.START",
+  "API.PROC",
+  "API.IMP",
+  "API.SOLV",
+  "OUT.CONTRACT",
+  "OUT.AGREE",
+  "CMP.COMPL",
+  "CMP.RECALL",
+  "CMP.REPORT",
+  "SI.PROG",
+  "SI.TEAM",
+  "SI.REPORT",
+  "SI.FOLLOW",
+  "DIST.STORE",
+  "DIST.TRANS",
+  "DIST.RETURN",
+  "REL.QP",
+  "REL.REVIEW"
+ ],
+ "schema": {
+  "type": "object",
+  "required": [
+   "section",
+   "items",
+   "not_applicable"
+  ],
+  "properties": {
+   "section": {
+    "type": "string"
+   },
+   "items": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "statement",
+      "quote",
+      "clause_number",
+      "strength",
+      "plant_types",
+      "numbers",
+      "condition",
+      "topic"
+     ],
+     "properties": {
+      "statement": {
+       "type": "string"
+      },
+      "quote": {
+       "type": "string"
+      },
+      "clause_number": {
+       "type": "string"
+      },
+      "strength": {
+       "enum": [
+        "mandatory",
+        "recommended",
+        "optional"
+       ]
+      },
+      "plant_types": {
+       "type": "array",
+       "items": {
+        "enum": [
+         "OSD",
+         "LIQ",
+         "SEMI",
+         "INJ",
+         "API"
+        ]
+       }
+      },
+      "numbers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "condition": {
+       "type": "string"
+      },
+      "topic": {
+       "type": "string"
+      }
+     }
+    }
+   },
+   "not_applicable": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "clause_number",
+      "text",
+      "reason"
+     ],
+     "properties": {
+      "clause_number": {
+       "type": "string"
+      },
+      "text": {
+       "type": "string"
+      },
+      "reason": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  }
+ },
+ "sections": [
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.125",
+   "source": "ecfr-21cfr211-2026-10-27.xml",
+   "section": "211.125",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "211.125",
+     "text": "§ 211.125 Labeling issuance."
+    },
+    {
+     "ref": "211.125(a)",
+     "text": "(a) Strict control shall be exercised over labeling issued for use in drug product labeling operations."
+    },
+    {
+     "ref": "211.125(b)",
+     "text": "(b) Labeling materials issued for a batch shall be carefully examined for identity and conformity to the labeling specified in the master or batch production records."
+    },
+    {
+     "ref": "211.125(c)",
+     "text": "(c) Procedures shall be used to reconcile the quantities of labeling issued, used, and returned, and shall require evaluation of discrepancies found between the quantity of drug product finished and the quantity of labeling issued when such discrepancies are outside narrow preset limits based on historical operating data. Such discrepancies shall be investigated in accordance with § 211.192. Labeling reconciliation is waived for cut or roll labeling if a 100-percent examination for correct labeling is performed in accordance with § 211.122(g)(2)."
+    },
+    {
+     "ref": "211.125(d)",
+     "text": "(d) All excess labeling bearing lot or control numbers shall be destroyed."
+    },
+    {
+     "ref": "211.125(e)",
+     "text": "(e) Returned labeling shall be maintained and stored in a manner to prevent mixups and provide proper identification."
+    },
+    {
+     "ref": "211.125(f)",
+     "text": "(f) Procedures shall be written describing in sufficient detail the control procedures employed for the issuance of labeling; such written procedures shall be followed."
+    }
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.130",
+   "source": "ecfr-21cfr211-2026-10-27.xml",
+   "section": "211.130",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "211.130",
+     "text": "§ 211.130 Packaging and labeling operations. There shall be written procedures designed to assure that correct labels, labeling, and packaging materials are used for drug products; such written procedures shall be followed. These procedures shall incorporate the following features:"
+    },
+    {
+     "ref": "211.130(a)",
+     "text": "(a) Prevention of mixups and cross-contamination by physical or spatial separation from operations on other drug products."
+    },
+    {
+     "ref": "211.130(b)",
+     "text": "(b) Identification and handling of filled drug product containers that are set aside and held in unlabeled condition for future labeling operations to preclude mislabeling of individual containers, lots, or portions of lots. Identification need not be applied to each individual container but shall be sufficient to determine name, strength, quantity of contents, and lot or control number of each container."
+    },
+    {
+     "ref": "211.130(c)",
+     "text": "(c) Identification of the drug product with a lot or control number that permits determination of the history of the manufacture and control of the batch."
+    },
+    {
+     "ref": "211.130(d)",
+     "text": "(d) Examination of packaging and labeling materials for suitability and correctness before packaging operations, and documentation of such examination in the batch production record."
+    },
+    {
+     "ref": "211.130(e)",
+     "text": "(e) Inspection of the packaging and labeling facilities immediately before use to assure that all drug products have been removed from previous operations. Inspection shall also be made to assure that packaging and labeling materials not suitable for subsequent operations have been removed. Results of inspection shall be documented in the batch production records."
+    }
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.132",
+   "source": "ecfr-21cfr211-2026-10-27.xml",
+   "section": "211.132",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "211.132",
+     "text": "§ 211.132 Tamper-evident packaging requirements for over-the-counter (OTC) human drug products."
+    },
+    {
+     "ref": "211.132(a)",
+     "text": "(a) General. The Food and Drug Administration has the authority under the Federal Food, Drug, and Cosmetic Act (the act) to establish a uniform national requirement for tamper-evident packaging of OTC drug products that will improve the security of OTC drug packaging and help assure the safety and effectiveness of OTC drug products. An OTC drug product (except a dermatological, dentifrice, insulin, or lozenge product) for retail sale that is not packaged in a tamper-resistant package or that is not properly labeled under this section is adulterated under section 501 of the act or misbranded under section 502 of the act, or both."
+    },
+    {
+     "ref": "211.132(b)",
+     "text": "(b) Requirements for tamper-evident package."
+    },
+    {
+     "ref": "211.132(b)(1)",
+     "text": "(1) Each manufacturer and packer who packages an OTC drug product (except a dermatological, dentifrice, insulin, or lozenge product) for retail sale shall package the product in a tamper-evident package, if this product is accessible to the public while held for sale. A tamper-evident package is one having one or more indicators or barriers to entry which, if breached or missing, can reasonably be expected to provide visible evidence to consumers that tampering has occurred. To reduce the likelihood of successful tampering and to increase the likelihood that consumers will discover if a product has been tampered with, the package is required to be distinctive by design or by the use of one or more indicators or barriers to entry that employ an identifying characteristic (e.g., a pattern, name, registered trademark, logo, or picture). For purposes of this section, the term “distinctive by design” means the packaging cannot be duplicated with commonly available materials or through commonly available processes. A tamper-evident package may involve an immediate-container and closure system or secondary-container or carton system or any combination of systems intended to provide a visual indication of package integrity. The tamper-evident feature shall be designed to and shall remain intact when handled in a reasonable manner during manufacture, distribution, and retail display."
+    },
+    {
+     "ref": "211.132(b)(2)",
+     "text": "(2) In addition to the tamper-evident packaging feature described in paragraph (b)(1) of this section, any two-piece, hard gelatin capsule covered by this section must be sealed using an acceptable tamper-evident technology."
+    },
+    {
+     "ref": "211.132(c)",
+     "text": "(c) Labeling."
+    },
+    {
+     "ref": "211.132(c)(1)",
+     "text": "(1) In order to alert consumers to the specific tamper-evident feature(s) used, each retail package of an OTC drug product covered by this section (except ammonia inhalant in crushable glass ampules or aerosol products that depend upon the power of a liquefied or compressed gas to expel the contents from the container) is required to bear a statement that:"
+    },
+    {
+     "ref": "211.132(c)(1)(i)",
+     "text": "(i) Identifies all tamper-evident feature(s) and any capsule sealing technologies used to comply with paragraph (b) of this section;"
+    },
+    {
+     "ref": "211.132(c)(1)(ii)",
+     "text": "(ii) Is prominently placed on the package; and"
+    },
+    {
+     "ref": "211.132(c)(1)(iii)",
+     "text": "(iii) Is so placed that it will be unaffected if the tamper-evident feature of the package is breached or missing."
+    },
+    {
+     "ref": "211.132(c)(2)",
+     "text": "(2) If the tamper-evident feature chosen to meet the requirements in paragraph (b) of this section uses an identifying characteristic, that characteristic is required to be referred to in the labeling statement. For example, the labeling statement on a bottle with a shrink band could say “For your protection, this bottle has an imprinted seal around the neck.”"
+    },
+    {
+     "ref": "211.132(d)",
+     "text": "(d) Request for exemptions from packaging and labeling requirements. A manufacturer or packer may request an exemption from the packaging and labeling requirements of this section. A request for an exemption is required to be submitted in the form of a citizen petition under § 10.30 of this chapter and should be clearly identified on the envelope as a “Request for Exemption from the Tamper-Evident Packaging Rule.” The petition is required to contain the following:"
+    },
+    {
+     "ref": "211.132(d)(1)",
+     "text": "(1) The name of the drug product or, if the petition seeks an exemption for a drug class, the name of the drug class, and a list of products within that class."
+    },
+    {
+     "ref": "211.132(d)(2)",
+     "text": "(2) The reasons that the drug product's compliance with the tamper-evident packaging or labeling requirements of this section is unnecessary or cannot be achieved."
+    },
+    {
+     "ref": "211.132(d)(3)",
+     "text": "(3) A description of alternative steps that are available, or that the petitioner has already taken, to reduce the likelihood that the product or drug class will be the subject of malicious adulteration."
+    },
+    {
+     "ref": "211.132(d)(4)",
+     "text": "(4) Other information justifying an exemption."
+    },
+    {
+     "ref": "211.132(e)",
+     "text": "(e) OTC drug products subject to approved new drug applications. Holders of approved new drug applications for OTC drug products are required under § 314.70 of this chapter to provide the agency with notification of changes in packaging and labeling to comply with the requirements of this section. Changes in packaging and labeling required by this regulation may be made before FDA approval, as provided under § 314.70(c) of this chapter. Manufacturing changes by which capsules are to be sealed require prior FDA approval under § 314.70(b) of this chapter."
+    },
+    {
+     "ref": "211.132(f)",
+     "text": "(f) Poison Prevention Packaging Act of 1970. This section does not affect any requirements for “special packaging” as defined under § 310.3(l) of this chapter and required under the Poison Prevention Packaging Act of 1970."
+    }
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.134",
+   "source": "ecfr-21cfr211-2026-10-27.xml",
+   "section": "211.134",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "211.134",
+     "text": "§ 211.134 Drug product inspection."
+    },
+    {
+     "ref": "211.134(a)",
+     "text": "(a) Packaged and labeled products shall be examined during finishing operations to provide assurance that containers and packages in the lot have the correct label."
+    },
+    {
+     "ref": "211.134(b)",
+     "text": "(b) A representative sample of units shall be collected at the completion of finishing operations and shall be visually examined for correct labeling."
+    },
+    {
+     "ref": "211.134(c)",
+     "text": "(c) Results of these examinations shall be recorded in the batch production or control records."
+    }
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.137",
+   "source": "ecfr-21cfr211-2026-10-27.xml",
+   "section": "211.137",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "211.137",
+     "text": "§ 211.137 Expiration dating."
+    },
+    {
+     "ref": "211.137(a)",
+     "text": "(a) To assure that a drug product meets applicable standards of identity, strength, quality, and purity at the time of use, it shall bear an expiration date determined by appropriate stability testing described in § 211.166."
+    },
+    {
+     "ref": "211.137(b)",
+     "text": "(b) Expiration dates shall be related to any storage conditions stated on the labeling, as determined by stability studies described in § 211.166."
+    },
+    {
+     "ref": "211.137(c)",
+     "text": "(c) If the drug product is to be reconstituted at the time of dispensing, its labeling shall bear expiration information for both the reconstituted and unreconstituted drug products."
+    },
+    {
+     "ref": "211.137(d)",
+     "text": "(d) Expiration dates shall appear on labeling in accordance with the requirements of § 201.17 of this chapter."
+    },
+    {
+     "ref": "211.137(e)",
+     "text": "(e) Homeopathic drug products shall be exempt from the requirements of this section."
+    },
+    {
+     "ref": "211.137(f)",
+     "text": "(f) Allergenic extracts that are labeled “No U.S. Standard of Potency” are exempt from the requirements of this section."
+    },
+    {
+     "ref": "211.137(g)",
+     "text": "(g) New drug products for investigational use are exempt from the requirements of this section, provided that they meet appropriate standards or specifications as demonstrated by stability studies during their use in clinical investigations. Where new drug products for investigational use are to be reconstituted at the time of dispensing, their labeling shall bear expiration information for the reconstituted drug product."
+    },
+    {
+     "ref": "211.137(h)",
+     "text": "(h) Pending consideration of a proposed exemption, published in the Federal Register of September 29, 1978, the requirements in this section shall not be enforced for human OTC drug products if their labeling does not bear dosage limitations and they are stable for at least 3 years as supported by appropriate stability data."
+    }
+   ]
+  }
+ ]
+}
