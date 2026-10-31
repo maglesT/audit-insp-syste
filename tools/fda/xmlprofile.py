@@ -136,11 +136,15 @@ def prepare_draft(source, wanted=None):
 
 
 def ancestors_text(ref, paras):
-    """Own texts of a paragraph's ancestors (without references), where a statement may rightly take a number
-    from: 314.81(b)(1) "... within 3 working days of receipt ..." governs (b)(1)(i) and (ii)."""
+    """The sentences of a paragraph's ancestors that introduce their sub-paragraphs ("... the following ...",
+    or ending ":"), without references: where a statement may rightly take a number from (314.81(b)(1) "... of
+    the following kinds ... within 3 working days of receipt" governs (b)(1)(i) and (ii)); other duties of the
+    parent paragraph lend no numbers."""
     out, r = [], parent(ref)
     while r:
-        out.append(without_refs(own_text(r, paras.get(r, ""))))
+        for sent in obligations.sentences(own_text(r, paras.get(r, ""))):
+            if sent.rstrip().endswith(":") or re.search(r"\bthe following\b", sent, re.I):
+                out.append(without_refs(sent))       # only the sentence that governs the sub-paragraphs
         r = parent(r)
     return out
 
@@ -160,8 +164,10 @@ def lead_ins(ref, paras):
         if not t.rstrip().endswith(":"):
             break
         sents = obligations.sentences(t) or [t]
-        out.append(sents[-1])          # the sentence that introduces the list (D46), not the paragraph's other
-        r = parent(r)                  # sentences (11.10: "when appropriate, the confidentiality ..." is not one)
+        # the sentence that introduces the list (D46), plus earlier sentences without an obligation word of their
+        # own ("For products labeled for adults only.", 201.326); not the paragraph's other duties (11.10)
+        out.append(" ".join([x for x in sents[:-1] if not obligations.strength(x)] + [sents[-1]]))
+        r = parent(r)
     return out
 
 
@@ -169,7 +175,14 @@ def strength_words(text):
     """layer1.strength_of without the may/can/could that state a possibility ("changes that may affect sterility
     assurance", vision.DESCRIPTIVE, the coverage rule of PR #36): those are not permissions."""
     import layer1
-    return layer1.strength_of(vision.DESCRIPTIVE.sub(" ", text)) if text else None
+    return layer1.strength_of(POSSIBILITY.sub(" ", text)) if text else None
+
+
+# Only verbs that state a possibility; "may include / contain / appear / be considered" stay permissions (Part 201
+# "The declaration may contain common or decimal fractions"), unlike vision.DESCRIPTIVE used for coverage.
+POSSIBILITY = re.compile(r"\b(?:may|can|could)\s+(?:also\s+|even\s+|well\s+)?(?:affect|cause|result|occur|increase|"
+                         r"decrease|vary|differ|arise|lead|indicate|exist|be\s+(?:present|found|formed|due|caused|"
+                         r"generated|introduced|seen|observed))\b", re.I)
 
 
 MIN_QUOTE_TOKENS = 3
@@ -215,7 +228,10 @@ def prepare_redraft(run):
     the drafter writes items (or not-applicable entries) for those sentences only; coverage is then judged on them."""
     run = Path(run)
     src = json.loads((run / "source.json").read_text())["source"]
-    gaps = json.loads((run / "report.json").read_text())["coverage_gaps"]
+    rep = json.loads((run / "report.json").read_text())
+    if rep.get("failed"):
+        raise SystemExit(f"sections without a usable answer: {rep['failed']}; draft them again in a new run first")
+    gaps = rep["coverage_gaps"]
     if not gaps:
         raise SystemExit("no coverage gaps")
     new = vision.new_run("xml-redraft")
@@ -254,7 +270,7 @@ def check_item(item, source, section=None):
                              f"at least {MIN_QUOTE_TOKENS} tokens)"))
     lead = lead_in_text(ref, paras)
     for n in re.findall(r"\d+(?:[.,]\d+)?", item["statement"]):
-        if not layer1.number_found(n, [item["quote"], lead] + ancestors_text(ref, paras)):
+        if not layer1.number_found(n, [item["quote"]] + ancestors_text(ref, paras)):
             out.append(("numbers", f"{n} in the statement, not in the quote or its parent paragraphs"))
     for n in re.findall(r"(?<![\w.^§])\d+(?:[.,]\d+)?", without_refs(item["quote"])):
         if not layer1.number_found(n, [item["statement"]]):
@@ -499,12 +515,16 @@ def recheck(run):
     """Re-runs the deterministic checks on a run's items as they are (no item changes: same ids and hashes), then
     routes again with the verifiers' existing answers: for a check that was corrected after verification."""
     run = Path(run)
-    source = json.loads((run / "source.json").read_text())["source"]
+    meta = json.loads((run / "source.json").read_text())
+    source = meta["source"]
+    if vision.sha256(OFFICIAL / source) != meta["sha256"]:
+        raise SystemExit(f"{source} changed since {run.name} was drafted: draft and verify a new run")
     items = [json.loads(ln) for ln in (run / "items.jsonl").read_text().splitlines() if ln.strip()]
     for i in items:
         before = item_hash(i)
         i["findings"], i["quote_confirmed"] = check_item(i, source, i["section"])
-        assert item_hash(i) == before
+        if item_hash(i) != before:
+            raise SystemExit(f"{i['id']} changed during recheck")
         i["hash"] = before
     with open(run / "items.jsonl", "w", encoding="utf-8") as f:
         for i in items:

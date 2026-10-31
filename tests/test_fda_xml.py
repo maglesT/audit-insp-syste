@@ -197,6 +197,22 @@ class QuestionHeadings(unittest.TestCase):
         self.assertEqual(X.own_text("207.54", t), "A registrant must list.")
 
 
+class ThirdReview(unittest.TestCase):
+    def test_permission_may_stays_optional(self):
+        self.assertEqual(X.strength_words("The declaration may contain common or decimal fractions."), "optional")
+        self.assertEqual(X.strength_words("The statement may appear highlighted."), "optional")
+
+    def test_reference_numbers_in_lead_in_lend_nothing(self):
+        src = "fda-cfr-21-314.81.xml"
+        paras = dict(X.paragraphs(src))
+        self.assertFalse(any("(3)" in t or "(a)" in t for t in X.ancestors_text("314.81(b)(3)(iii)(c)(1)", paras)))
+
+    def test_scoping_fragment_before_list_sentence_is_kept(self):
+        lead = X.lead_in_text("201.326(a)(1)(iii)(A)", dict(X.paragraphs("fda-cfr-21-part-201.xml"))) \
+            if "fda-cfr-21-part-201.xml" in {p.name for p in X.OFFICIAL.iterdir()} else "For products labeled for adults only. x:"
+        self.assertIn("adults only", lead)
+
+
 class CrossReferences(unittest.TestCase):
     def test_cross_references_are_not_numbers(self):
         self.assertNotIn("211", X.without_refs("as required in § 211.192 and parts 600 through 680"))

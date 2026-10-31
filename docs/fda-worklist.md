@@ -13,9 +13,9 @@ Columns: items = checklist items drafted; auto = items passing the automatic rou
 |---|---|---|---|---|---|---|---|---|---|
 | 1 | 21 CFR Part 211 - CGMP for finished pharmaceuticals | `ecfr-21cfr211-2026-10-27.xml` | must | OSD, LIQ, SEMI, INJ | - | verified (60 of 60 sections) | 399 | 365 | 34 |
 | 2 | 21 CFR Part 210 - CGMP in manufacturing processing packing or holding of drugs; general | `ecfr-21cfr210-2026-10-27.xml` | must | ALL | - | verified | 1 | 0 | 1 |
-| 3 | 21 CFR 314.81 Other postmarketing reports (incl. field alert reports  annual reports) | `fda-cfr-21-314.81.xml` | must | OSD, LIQ, SEMI, INJ | - | verified | 104 | 90 | 14 |
+| 3 | 21 CFR 314.81 Other postmarketing reports (incl. field alert reports  annual reports) | `fda-cfr-21-314.81.xml` | must | OSD, LIQ, SEMI, INJ | - | verified | 104 | 91 | 13 |
 | 4 | 21 CFR Part 11 Electronic Records; Electronic Signatures | `fda-cfr-21-part-11.xml` | must | ALL | - | verified | 48 | 45 | 3 |
-| 5 | 21 CFR 314.70 Supplements and other changes to an approved NDA | `fda-cfr-21-314.70.xml` | should | OSD, LIQ, SEMI, INJ | - | verified | 78 | 57 | 21 |
+| 5 | 21 CFR 314.70 Supplements and other changes to an approved NDA | `fda-cfr-21-314.70.xml` | should | OSD, LIQ, SEMI, INJ | - | verified | 78 | 53 | 25 |
 | 6 | 21 CFR Part 200 General (incl. 200.10 contract facilities  200.50 ophthalmic sterility) | `fda-cfr-21-part-200.xml` | should | ALL | - | verified | 24 | 18 | 6 |
 | 7 | 21 CFR Part 207 Establishment registration  drug listing | `fda-cfr-21-part-207.xml` | should | ALL | - | verified | 149 | 115 | 34 |
 | 8 | 21 CFR Part 4 Regulation of combination products (Subpart A CGMP relevant for prefilled syringes/co-packaged; device QS parts not fetched) | `fda-cfr-21-part-4.xml` | should | INJ | - | not started | | | |
