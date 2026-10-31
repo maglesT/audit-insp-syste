@@ -13,7 +13,9 @@ qualifiers; do not split one obligation across items. For each item:
   that also ends in ":"): for 211.42(c)(1) under "... such other control systems ... as are necessary to prevent
   contamination or mixups during the course of the following procedures:", write e.g. "Provide separate or defined
   areas, or other control systems as necessary to prevent contamination or mixups, for receipt ...". Putting the
-  qualifier only in the condition field is not enough.
+  qualifier only in the condition field is not enough. The statement is shown to customers: never cite a
+  paragraph or section reference in it ("211.166(a)(1)-(5)", "this section"); say what is required instead
+  ("contains the elements listed below" is not enough: name them, or let each sub-paragraph's own item carry it).
 - quote: the exact span of ONE paragraph's text that states the whole obligation, copied character for character
   (matched against the XML text by software; do not fix typos or change punctuation). Leave out the paragraph's
   designation ("(c)"). A quote may continue into that paragraph's sub-paragraphs, in order.

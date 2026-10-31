@@ -1,0 +1,1016 @@
+{
+ "role": "a",
+ "instructions": "You are an auditor checking one checklist item against the US regulation paragraph it claims to come from. You get\nthe section's paragraphs (reference and exact text, from the official eCFR XML) and the item. Start from the ITEM:\nread it, then find in the cited paragraph what it covers.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the parent paragraph's\nlead-in (including a qualifier such as \"as are necessary to prevent contamination or mixups\"). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph requires what the statement asks for, the statement\n  adds nothing and omits nothing of that obligation, the strength (shall/must = mandatory, should = recommended,\n  may = optional; a sub-paragraph takes its lead-in's) matches, and the regulation applies to every listed plant\n  type (INJ = sterile injectables: a paragraph limited to products not required to be sterile does not apply to\n  INJ; one limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "sections": [
+  {
+   "section": "211.42",
+   "paragraphs": [
+    {
+     "ref": "211.42",
+     "text": "§ 211.42 Design and construction features."
+    },
+    {
+     "ref": "211.42(a)",
+     "text": "(a) Any building or buildings used in the manufacture, processing, packing, or holding of a drug product shall be of suitable size, construction and location to facilitate cleaning, maintenance, and proper operations."
+    },
+    {
+     "ref": "211.42(b)",
+     "text": "(b) Any such building shall have adequate space for the orderly placement of equipment and materials to prevent mixups between different components, drug product containers, closures, labeling, in-process materials, or drug products, and to prevent contamination. The flow of components, drug product containers, closures, labeling, in-process materials, and drug products through the building or buildings shall be designed to prevent contamination."
+    },
+    {
+     "ref": "211.42(c)",
+     "text": "(c) Operations shall be performed within specifically defined areas of adequate size. There shall be separate or defined areas or such other control systems for the firm's operations as are necessary to prevent contamination or mixups during the course of the following procedures:"
+    },
+    {
+     "ref": "211.42(c)(1)",
+     "text": "(1) Receipt, identification, storage, and withholding from use of components, drug product containers, closures, and labeling, pending the appropriate sampling, testing, or examination by the quality control unit before release for manufacturing or packaging;"
+    },
+    {
+     "ref": "211.42(c)(2)",
+     "text": "(2) Holding rejected components, drug product containers, closures, and labeling before disposition;"
+    },
+    {
+     "ref": "211.42(c)(3)",
+     "text": "(3) Storage of released components, drug product containers, closures, and labeling;"
+    },
+    {
+     "ref": "211.42(c)(4)",
+     "text": "(4) Storage of in-process materials;"
+    },
+    {
+     "ref": "211.42(c)(5)",
+     "text": "(5) Manufacturing and processing operations;"
+    },
+    {
+     "ref": "211.42(c)(6)",
+     "text": "(6) Packaging and labeling operations;"
+    },
+    {
+     "ref": "211.42(c)(7)",
+     "text": "(7) Quarantine storage before release of drug products;"
+    },
+    {
+     "ref": "211.42(c)(8)",
+     "text": "(8) Storage of drug products after release;"
+    },
+    {
+     "ref": "211.42(c)(9)",
+     "text": "(9) Control and laboratory operations;"
+    },
+    {
+     "ref": "211.42(c)(10)",
+     "text": "(10) Aseptic processing, which includes as appropriate:"
+    },
+    {
+     "ref": "211.42(c)(10)(i)",
+     "text": "(i) Floors, walls, and ceilings of smooth, hard surfaces that are easily cleanable;"
+    },
+    {
+     "ref": "211.42(c)(10)(ii)",
+     "text": "(ii) Temperature and humidity controls;"
+    },
+    {
+     "ref": "211.42(c)(10)(iii)",
+     "text": "(iii) An air supply filtered through high-efficiency particulate air filters under positive pressure, regardless of whether flow is laminar or nonlaminar;"
+    },
+    {
+     "ref": "211.42(c)(10)(iv)",
+     "text": "(iv) A system for monitoring environmental conditions;"
+    },
+    {
+     "ref": "211.42(c)(10)(v)",
+     "text": "(v) A system for cleaning and disinfecting the room and equipment to produce aseptic conditions;"
+    },
+    {
+     "ref": "211.42(c)(10)(vi)",
+     "text": "(vi) A system for maintaining any equipment used to control the aseptic conditions."
+    },
+    {
+     "ref": "211.42(d)",
+     "text": "(d) Operations relating to the manufacture, processing, and packing of penicillin shall be performed in facilities separate from those used for other drug products for human use."
+    }
+   ]
+  },
+  {
+   "section": "211.113",
+   "paragraphs": [
+    {
+     "ref": "211.113",
+     "text": "§ 211.113 Control of microbiological contamination."
+    },
+    {
+     "ref": "211.113(a)",
+     "text": "(a) Appropriate written procedures, designed to prevent objectionable microorganisms in drug products not required to be sterile, shall be established and followed."
+    },
+    {
+     "ref": "211.113(b)",
+     "text": "(b) Appropriate written procedures, designed to prevent microbiological contamination of drug products purporting to be sterile, shall be established and followed. Such procedures shall include validation of all aseptic and sterilization processes."
+    }
+   ]
+  },
+  {
+   "section": "211.166",
+   "paragraphs": [
+    {
+     "ref": "211.166",
+     "text": "§ 211.166 Stability testing."
+    },
+    {
+     "ref": "211.166(a)",
+     "text": "(a) There shall be a written testing program designed to assess the stability characteristics of drug products. The results of such stability testing shall be used in determining appropriate storage conditions and expiration dates. The written program shall be followed and shall include:"
+    },
+    {
+     "ref": "211.166(a)(1)",
+     "text": "(1) Sample size and test intervals based on statistical criteria for each attribute examined to assure valid estimates of stability;"
+    },
+    {
+     "ref": "211.166(a)(2)",
+     "text": "(2) Storage conditions for samples retained for testing;"
+    },
+    {
+     "ref": "211.166(a)(3)",
+     "text": "(3) Reliable, meaningful, and specific test methods;"
+    },
+    {
+     "ref": "211.166(a)(4)",
+     "text": "(4) Testing of the drug product in the same container-closure system as that in which the drug product is marketed;"
+    },
+    {
+     "ref": "211.166(a)(5)",
+     "text": "(5) Testing of drug products for reconstitution at the time of dispensing (as directed in the labeling) as well as after they are reconstituted."
+    },
+    {
+     "ref": "211.166(b)",
+     "text": "(b) An adequate number of batches of each drug product shall be tested to determine an appropriate expiration date and a record of such data shall be maintained. Accelerated studies, combined with basic stability information on the components, drug products, and container-closure system, may be used to support tentative expiration dates provided full shelf life studies are not available and are being conducted. Where data from accelerated studies are used to project a tentative expiration date that is beyond a date supported by actual shelf life studies, there must be stability studies conducted, including drug product testing at appropriate intervals, until the tentative expiration date is verified or the appropriate expiration date determined."
+    },
+    {
+     "ref": "211.166(c)",
+     "text": "(c) For homeopathic drug products, the requirements of this section are as follows:"
+    },
+    {
+     "ref": "211.166(c)(1)",
+     "text": "(1) There shall be a written assessment of stability based at least on testing or examination of the drug product for compatibility of the ingredients, and based on marketing experience with the drug product to indicate that there is no degradation of the product for the normal or expected period of use."
+    },
+    {
+     "ref": "211.166(c)(2)",
+     "text": "(2) Evaluation of stability shall be based on the same container-closure system in which the drug product is being marketed."
+    },
+    {
+     "ref": "211.166(d)",
+     "text": "(d) Allergenic extracts that are labeled “No U.S. Standard of Potency” are exempt from the requirements of this section."
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#1",
+   "section": "211.42",
+   "item": {
+    "statement": "Ensure every building used to manufacture, process, pack or hold drug product is suitably sized, built and located so that cleaning, maintenance and proper operations are facilitated.",
+    "quote": "Any building or buildings used in the manufacture, processing, packing, or holding of a drug product shall be of suitable size, construction and location to facilitate cleaning, maintenance, and proper operations.",
+    "clause_number": "211.42(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#2",
+   "section": "211.42",
+   "item": {
+    "statement": "Provide enough space in each building for orderly placement of equipment and materials so that mixups between different components, containers, closures, labeling, in-process materials or drug products are prevented, and so that contamination is prevented.",
+    "quote": "Any such building shall have adequate space for the orderly placement of equipment and materials to prevent mixups between different components, drug product containers, closures, labeling, in-process materials, or drug products, and to prevent contamination.",
+    "clause_number": "211.42(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#3",
+   "section": "211.42",
+   "item": {
+    "statement": "Design the movement of components, containers, closures, labeling, in-process materials and drug products through the building(s) to prevent contamination.",
+    "quote": "The flow of components, drug product containers, closures, labeling, in-process materials, and drug products through the building or buildings shall be designed to prevent contamination.",
+    "clause_number": "211.42(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#4",
+   "section": "211.42",
+   "item": {
+    "statement": "Perform operations within specifically defined areas that are of adequate size.",
+    "quote": "Operations shall be performed within specifically defined areas of adequate size.",
+    "clause_number": "211.42(c)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#5",
+   "section": "211.42",
+   "item": {
+    "statement": "Provide separate or defined areas, or other control systems as necessary to prevent contamination or mixups, for receipt, identification, storage and withholding from use of components, drug product containers, closures and labeling pending appropriate quality control unit sampling, testing or examination before release for manufacturing or packaging.",
+    "quote": "Receipt, identification, storage, and withholding from use of components, drug product containers, closures, and labeling, pending the appropriate sampling, testing, or examination by the quality control unit before release for manufacturing or packaging;",
+    "clause_number": "211.42(c)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "as necessary to prevent contamination or mixups"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#6",
+   "section": "211.42",
+   "item": {
+    "statement": "Provide separate or defined areas, or other control systems as necessary to prevent contamination or mixups, for holding rejected components, drug product containers, closures and labeling before disposition.",
+    "quote": "Holding rejected components, drug product containers, closures, and labeling before disposition;",
+    "clause_number": "211.42(c)(2)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "as necessary to prevent contamination or mixups"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#7",
+   "section": "211.42",
+   "item": {
+    "statement": "Provide separate or defined areas, or other control systems as necessary to prevent contamination or mixups, for storing released components, drug product containers, closures and labeling.",
+    "quote": "Storage of released components, drug product containers, closures, and labeling;",
+    "clause_number": "211.42(c)(3)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "as necessary to prevent contamination or mixups"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#8",
+   "section": "211.42",
+   "item": {
+    "statement": "Provide separate or defined areas, or other control systems as necessary to prevent contamination or mixups, for storing in-process materials.",
+    "quote": "Storage of in-process materials;",
+    "clause_number": "211.42(c)(4)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "as necessary to prevent contamination or mixups"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#9",
+   "section": "211.42",
+   "item": {
+    "statement": "Provide separate or defined areas, or other control systems as necessary to prevent contamination or mixups, for manufacturing and processing operations.",
+    "quote": "Manufacturing and processing operations;",
+    "clause_number": "211.42(c)(5)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "as necessary to prevent contamination or mixups"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#10",
+   "section": "211.42",
+   "item": {
+    "statement": "Provide separate or defined areas, or other control systems as necessary to prevent contamination or mixups, for packaging and labeling operations.",
+    "quote": "Packaging and labeling operations;",
+    "clause_number": "211.42(c)(6)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "as necessary to prevent contamination or mixups"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#11",
+   "section": "211.42",
+   "item": {
+    "statement": "Provide separate or defined areas, or other control systems as necessary to prevent contamination or mixups, for quarantine storage of drug products before release.",
+    "quote": "Quarantine storage before release of drug products;",
+    "clause_number": "211.42(c)(7)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "as necessary to prevent contamination or mixups"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#12",
+   "section": "211.42",
+   "item": {
+    "statement": "Provide separate or defined areas, or other control systems as necessary to prevent contamination or mixups, for storing drug products after release.",
+    "quote": "Storage of drug products after release;",
+    "clause_number": "211.42(c)(8)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "as necessary to prevent contamination or mixups"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#13",
+   "section": "211.42",
+   "item": {
+    "statement": "Provide separate or defined areas, or other control systems as necessary to prevent contamination or mixups, for control and laboratory operations.",
+    "quote": "Control and laboratory operations;",
+    "clause_number": "211.42(c)(9)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "as necessary to prevent contamination or mixups"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#14",
+   "section": "211.42",
+   "item": {
+    "statement": "Provide separate or defined areas, or other control systems as necessary to prevent contamination or mixups, for aseptic processing.",
+    "quote": "Aseptic processing, which includes as appropriate:",
+    "clause_number": "211.42(c)(10)",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "as necessary to prevent contamination or mixups"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#15",
+   "section": "211.42",
+   "item": {
+    "statement": "In the aseptic processing areas provided as necessary to prevent contamination or mixups, include as appropriate floors, walls and ceilings with smooth, hard, easily cleanable surfaces.",
+    "quote": "Floors, walls, and ceilings of smooth, hard surfaces that are easily cleanable;",
+    "clause_number": "211.42(c)(10)(i)",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "aseptic processing; as appropriate; as necessary to prevent contamination or mixups"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#16",
+   "section": "211.42",
+   "item": {
+    "statement": "In the aseptic processing areas provided as necessary to prevent contamination or mixups, include as appropriate controls for temperature and humidity.",
+    "quote": "Temperature and humidity controls;",
+    "clause_number": "211.42(c)(10)(ii)",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "aseptic processing; as appropriate; as necessary to prevent contamination or mixups"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#17",
+   "section": "211.42",
+   "item": {
+    "statement": "In the aseptic processing areas provided as necessary to prevent contamination or mixups, include as appropriate an air supply passed through HEPA filters under positive pressure, whether the airflow is laminar or not.",
+    "quote": "An air supply filtered through high-efficiency particulate air filters under positive pressure, regardless of whether flow is laminar or nonlaminar;",
+    "clause_number": "211.42(c)(10)(iii)",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "aseptic processing; as appropriate; as necessary to prevent contamination or mixups"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#18",
+   "section": "211.42",
+   "item": {
+    "statement": "In the aseptic processing areas provided as necessary to prevent contamination or mixups, include as appropriate a system to monitor environmental conditions.",
+    "quote": "A system for monitoring environmental conditions;",
+    "clause_number": "211.42(c)(10)(iv)",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "aseptic processing; as appropriate; as necessary to prevent contamination or mixups"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#19",
+   "section": "211.42",
+   "item": {
+    "statement": "In the aseptic processing areas provided as necessary to prevent contamination or mixups, include as appropriate a system to clean and disinfect the room and equipment so that aseptic conditions are produced.",
+    "quote": "A system for cleaning and disinfecting the room and equipment to produce aseptic conditions;",
+    "clause_number": "211.42(c)(10)(v)",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "aseptic processing; as appropriate; as necessary to prevent contamination or mixups"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#20",
+   "section": "211.42",
+   "item": {
+    "statement": "In the aseptic processing areas provided as necessary to prevent contamination or mixups, include as appropriate a system to maintain any equipment used to control aseptic conditions.",
+    "quote": "A system for maintaining any equipment used to control the aseptic conditions.",
+    "clause_number": "211.42(c)(10)(vi)",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "aseptic processing; as appropriate; as necessary to prevent contamination or mixups"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#21",
+   "section": "211.42",
+   "item": {
+    "statement": "Carry out penicillin manufacturing, processing and packing operations in facilities separate from those used for other human drug products.",
+    "quote": "Operations relating to the manufacture, processing, and packing of penicillin shall be performed in facilities separate from those used for other drug products for human use.",
+    "clause_number": "211.42(d)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "penicillin operations"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.113#1",
+   "section": "211.113",
+   "item": {
+    "statement": "For drug products not required to be sterile, establish and follow appropriate written procedures designed to prevent objectionable microorganisms in the product.",
+    "quote": "Appropriate written procedures, designed to prevent objectionable microorganisms in drug products not required to be sterile, shall be established and followed.",
+    "clause_number": "211.113(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": "drug products not required to be sterile"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.113#2",
+   "section": "211.113",
+   "item": {
+    "statement": "For drug products purporting to be sterile, establish and follow appropriate written procedures designed to prevent microbiological contamination.",
+    "quote": "Appropriate written procedures, designed to prevent microbiological contamination of drug products purporting to be sterile, shall be established and followed.",
+    "clause_number": "211.113(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "drug products purporting to be sterile"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.113#3",
+   "section": "211.113",
+   "item": {
+    "statement": "For drug products purporting to be sterile, include in the contamination-prevention procedures the validation of all aseptic and sterilization processes.",
+    "quote": "Such procedures shall include validation of all aseptic and sterilization processes.",
+    "clause_number": "211.113(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "drug products purporting to be sterile"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#1",
+   "section": "211.166",
+   "item": {
+    "statement": "Have a written stability testing program designed to assess the stability characteristics of drug products.",
+    "quote": "There shall be a written testing program designed to assess the stability characteristics of drug products.",
+    "clause_number": "211.166(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#2",
+   "section": "211.166",
+   "item": {
+    "statement": "Use stability testing results to determine appropriate storage conditions and expiration dates.",
+    "quote": "The results of such stability testing shall be used in determining appropriate storage conditions and expiration dates.",
+    "clause_number": "211.166(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#3",
+   "section": "211.166",
+   "item": {
+    "statement": "Follow the written stability program and make sure it contains the elements listed in 211.166(a)(1)-(5).",
+    "quote": "The written program shall be followed and shall include:",
+    "clause_number": "211.166(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#4",
+   "section": "211.166",
+   "item": {
+    "statement": "Include in the written stability program sample sizes and test intervals based on statistical criteria for each attribute examined, so that stability estimates are valid.",
+    "quote": "Sample size and test intervals based on statistical criteria for each attribute examined to assure valid estimates of stability;",
+    "clause_number": "211.166(a)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#5",
+   "section": "211.166",
+   "item": {
+    "statement": "Include in the written stability program the storage conditions for samples retained for testing.",
+    "quote": "Storage conditions for samples retained for testing;",
+    "clause_number": "211.166(a)(2)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#6",
+   "section": "211.166",
+   "item": {
+    "statement": "Include in the written stability program test methods that are reliable, meaningful and specific.",
+    "quote": "Reliable, meaningful, and specific test methods;",
+    "clause_number": "211.166(a)(3)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#7",
+   "section": "211.166",
+   "item": {
+    "statement": "Include in the written stability program testing of the drug product in the same container-closure system in which it is marketed.",
+    "quote": "Testing of the drug product in the same container-closure system as that in which the drug product is marketed;",
+    "clause_number": "211.166(a)(4)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#8",
+   "section": "211.166",
+   "item": {
+    "statement": "Include in the written stability program testing of drug products intended for reconstitution both at the time of dispensing (as the labeling directs) and after reconstitution.",
+    "quote": "Testing of drug products for reconstitution at the time of dispensing (as directed in the labeling) as well as after they are reconstituted.",
+    "clause_number": "211.166(a)(5)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "drug products for reconstitution"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#9",
+   "section": "211.166",
+   "item": {
+    "statement": "Test an adequate number of batches of each drug product to determine an appropriate expiration date, and maintain a record of the data.",
+    "quote": "An adequate number of batches of each drug product shall be tested to determine an appropriate expiration date and a record of such data shall be maintained.",
+    "clause_number": "211.166(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#10",
+   "section": "211.166",
+   "item": {
+    "statement": "Accelerated studies combined with basic stability information on components, drug products and container-closure system may be used to support tentative expiration dates, provided full shelf life studies are not available and are being conducted.",
+    "quote": "Accelerated studies, combined with basic stability information on the components, drug products, and container-closure system, may be used to support tentative expiration dates provided full shelf life studies are not available and are being conducted.",
+    "clause_number": "211.166(b)",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "full shelf life studies not available and being conducted"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#11",
+   "section": "211.166",
+   "item": {
+    "statement": "Where accelerated data are used to project a tentative expiration date beyond what actual shelf life studies support, conduct stability studies, including drug product testing at appropriate intervals, until the tentative date is verified or the appropriate expiration date is determined.",
+    "quote": "Where data from accelerated studies are used to project a tentative expiration date that is beyond a date supported by actual shelf life studies, there must be stability studies conducted, including drug product testing at appropriate intervals, until the tentative expiration date is verified or the appropriate expiration date determined.",
+    "clause_number": "211.166(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "tentative expiry projected from accelerated data beyond actual shelf life data"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#12",
+   "section": "211.166",
+   "item": {
+    "statement": "For homeopathic drug products, have a written stability assessment based at least on testing or examination of the product for ingredient compatibility and on marketing experience showing no product degradation over the normal or expected period of use.",
+    "quote": "There shall be a written assessment of stability based at least on testing or examination of the drug product for compatibility of the ingredients, and based on marketing experience with the drug product to indicate that there is no degradation of the product for the normal or expected period of use.",
+    "clause_number": "211.166(c)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "homeopathic drug products"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#13",
+   "section": "211.166",
+   "item": {
+    "statement": "For homeopathic drug products, base the stability evaluation on the same container-closure system in which the product is marketed.",
+    "quote": "Evaluation of stability shall be based on the same container-closure system in which the drug product is being marketed.",
+    "clause_number": "211.166(c)(2)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "homeopathic drug products"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  }
+ ]
+}
