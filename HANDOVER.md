@@ -1,41 +1,32 @@
 # Handover: read this first in every new session
 
-Last updated: 31 October 2026, session 7 (FDA build, D47: 21 CFR 211 built and verified; next: 210, Part 11, 314.81).
+Last updated: 31 October 2026, session 8 (D48 lead-in fix, review-page import, D49 HTML profile and trial; group 2 build started).
 
-## START HERE (session 8)
-- **FDA build (D46/D47), owned by session 7 (session_01PybpFspEA75VUpLPy2kLTG) and its successors.** FDA first,
-  document by document; nothing ships unless proven (automatic route, or the owner's review queue). The paid API
-  build is NOT started and needs direct owner confirmation. Report after each document to the coordinator
-  (session_01PybpFuvG6mX9B3zK3YZjZ1, send_message): items, automatic-route pass rate, review-queue size, usage.
-- **Done in session 7:** PR #36 merged. PR #38 (branch `fda-build`: D47, `tools/fda/xmlprofile.py`, prompts,
-  `tools/fda/review.py`, `tools/fda/status.py`, tests `tests/test_fda_xml.py`, runs) open; two independent review
-  passes, all findings fixed; merge on green CI. XML profile tuned (lead-in qualifiers over all lead-in ancestors,
-  sterile plant scope, lead-in coverage, cross-references are not numbers). **21 CFR 211 full build: 399 items
-  (60 sections; not 107), 399 quotes exact, 0 coverage gaps, automatic route 359 (90.0 %), review queue 40**
-  (`docs/fda-211-trial.md`, run `library/ai-runs/20261031T100541.543518Z-xml-draft`).
-- **Branches:** PR #38 = `fda-build` (group 1 tooling + 211, 210, Part 11, 314.81, 314.70, 200, 207; main merged in
-  so it is mergeable again; CI had created no runs while it conflicted with main). Merge on green CI; four
-  independent review passes done, all findings fixed. Part 4 is on **`fda-part4`** (stacked): open its PR after #38.
-- **Group 1 done** (`library/fda-status.json`, `docs/fda-worklist.md`), items / automatic / review: 211 399/365/34;
-  210 1/0/1; Part 11 48/45/3; 314.81 104/91/13; 314.70 78/53/25; Part 200 24/18/6; Part 207 149/115/34;
-  Part 4 64/16/48. Total 867 items, 704 automatic (81.2 %), 163 in the owner's review queue.
-- **Owner review page (coordinator, 31 Oct):** private claude.ai artifact, slug
-  f1a4b335-e5ec-4d90-993a-02abf9913cbe, with the group 1 review queue (164 items, exported with review.load /
-  fingerprint / source_text; the superseded 211 trial run left out). Decisions are saved in its db collection
-  `decisions`, one doc per run+id: {id, run, item_hash, decision: correct|fix|reject, by, note, at (UTC),
-  statement for fix}. **To build:** `tools/fda/review.py import-artifact FILE` reads the db export (pulled with
-  the artifact db tools), appends the records to `library/review/decisions.jsonl` keeping their original `at`;
-  the existing rules apply (a decision counts only for a matching run and item_hash).
-- **Tune next (profile only):** the lead-in check (`vision.lead_in_missing`) compares 4+ letter words exactly, so
-  "If you manufacture ..." vs "When manufacturing ..." is flagged (Part 4: 32 items); allow word forms (a light
-  stemmer) and re-run `xmlprofile.py recheck` on all runs. `recheck` refuses a changed source file.
-- **Next after group 1:** group 2 (FDA HTML, 25 documents) needs an HTML profile (D47 D: text read directly, exact
-  quote, Q&A or paragraph number): reuse xmlprofile's checks with units = Q&A entries / headed sections from the
-  HTML; trial on about 20 units, tune, then document by document. Then group 3 (guidance PDFs, text first) and
-  group 4 (compliance programs).
-- **Status files:** `library/fda-status.json` + `docs/fda-worklist.md` (the coordinator's file; only the Status /
-  Items / Auto / Review cells change, via `tools/fda/status.py`). Owner review queue: CLI `review.py next|decide|
-  status RUN`; an owner-friendly page is still to build.
+## START HERE (session 8, FDA build continued; this session: session_01PybpFuJR5wE5nR6XF1JaNe)
+- **Owner rules unchanged (D47):** FDA first, document by document; nothing ships unless proven (automatic route or
+  the owner's review queue). Max plan only; NO paid API build without direct owner confirmation. After each document
+  report to the coordinator (session_01PybpFuvG6mX9B3zK3YZjZ1, send_message): items, automatic-route pass rate,
+  review-queue size, usage. One PR per step, independent review pass, merge on green CI. Commit trailers exactly
+  "Co-Authored-By: Claude <noreply@anthropic.com>" + "Claude-Session: <session URL>", no model name anywhere.
+- **Step 1 done, PR #40 (`fda-leadin-wordforms`, D48):** lead-in check compares word forms (light stemmer), role
+  "As a ..." lead-ins, references/list tails/CGMP not condition words; review found leniency holes, fixed (tests for
+  both directions). Recheck of all group 1 runs: lead-in findings 61 -> 23; Part 4 auto 27 (was 16), Part 207 121
+  (was 115); group 1 now 867 items, 721 automatic (83.2 %), 146 review. The two superseded 211 trial runs route 0
+  automatic (their verify batches predate item hashes; not counted anywhere).
+- **Step 2 done, PR #41 (`fda-review-import`):** `review.py import-artifact FILE` (review page slug
+  f1a4b335-e5ec-4d90-993a-02abf9913cbe, db collection `decisions`; pull the docs with the artifact db tools
+  (db_list), save as JSON, import). Latest decision = latest by `at`; future or zone-less times refused. The
+  collection was empty on 31 Oct 12:00 UTC.
+- **Step 3 in progress, PR #42 (`fda-html-profile`, stacked on #40 and #41, D49):** `tools/fda/htmlprofile.py`
+  (same commands as xmlprofile: prepare-draft SOURCE [UNIT ...] / ingest-draft / prepare-verify / ingest-verify /
+  prepare-redraft / recheck). Trial `docs/fda-html-trial.md`: 20 units, 160 items, 160 quotes exact, 140 automatic
+  (87.5 %), 20 review. Full build started in work-list order: CGMP Q&A runs 20261031T120735.* (one per page;
+  Equipment = trial run 20261031T115746.029428Z + redraft 20261031T120736.030446Z). Worktrees used: /home/user/w2
+  (step 2), /home/user/w3 (step 3); run folders are written under the worktree that ran the tool.
+- **Agents:** drafting agent per run (reads only its batch files, writes answers/); verifiers A and B as separate
+  agents per run group (blind, only their verify batch files). Max 3-4 at a time.
+- **Local test note:** 2 errors in tests/test_ai_runner locally = the `anthropic` package is not installed here
+  (CI installs requirements.txt); not a code fault.
 
 ## Session 7 start notes (kept for reference)
 - **Plan since 31 Oct (D45, D46): checklist items are drafted from PDF PAGES with vision** (page image + text layer),
