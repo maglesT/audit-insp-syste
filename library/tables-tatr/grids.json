@@ -1,7 +1,39 @@
 {
+ "runs": [
+  {
+   "models": {
+    "detection": {
+     "repo": "microsoft/table-transformer-detection",
+     "revision": "2357cbe2b5a5d1c03e54f32764f06058933b65ab",
+     "files": {
+      "config.json": "ed5b93df2c3a59d473ddea853553a6d545d52bd4e9f8f72bf40b8a974aba4c1d",
+      "model.safetensors": "8f1aa73170102c038d40155e2734b343bf07e0fe12594228a8590943b01dccf7"
+     }
+    },
+    "structure": {
+     "repo": "microsoft/table-transformer-structure-recognition-v1.1-all",
+     "revision": "7587a7ef111d9dcbf8ac695f1376ab7014340a0c",
+     "files": {
+      "config.json": "17a8a6edfb9e394263fa6ba9b82176ebccdfcc5d6cd29121ec91572c7d6be22c",
+      "model.safetensors": "9df416575a3a36ebd0129342d4f597f14d6e5170268f3d52d28584ab4466a501"
+     }
+    }
+   },
+   "settings": {
+    "scale": 2.0,
+    "detect_min": 0.7,
+    "keep": 0.5,
+    "pad": 12,
+    "torch": "2.14.1+cpu",
+    "transformers": "5.22.1",
+    "code_sha256": "a556151514538c576ea13799a4dd923d7982ee6cae932ae2ec89a7328179b070"
+   }
+  }
+ ],
  "pages": {
   "eu-20220825_gmp-an1_en_0.pdf:13": {
    "sha256": "add86ed65ac9dbf007352a11ad102089c2225087d9a79f7cd4a8d75b2946a2ff",
+   "run": 0,
    "tables": [
     {
      "bbox": [
@@ -121,6 +153,7 @@
   },
   "eu-20220825_gmp-an1_en_0.pdf:14": {
    "sha256": "add86ed65ac9dbf007352a11ad102089c2225087d9a79f7cd4a8d75b2946a2ff",
+   "run": 0,
    "tables": [
     {
      "bbox": [
@@ -203,6 +236,7 @@
   },
   "eu-20220825_gmp-an1_en_0.pdf:22": {
    "sha256": "add86ed65ac9dbf007352a11ad102089c2225087d9a79f7cd4a8d75b2946a2ff",
+   "run": 0,
    "tables": [
     {
      "bbox": [
@@ -267,6 +301,7 @@
   },
   "eu-20220825_gmp-an1_en_0.pdf:23": {
    "sha256": "add86ed65ac9dbf007352a11ad102089c2225087d9a79f7cd4a8d75b2946a2ff",
+   "run": 0,
    "tables": [
     {
      "bbox": [
@@ -331,6 +366,7 @@
   },
   "eu-20220825_gmp-an1_en_0.pdf:45": {
    "sha256": "add86ed65ac9dbf007352a11ad102089c2225087d9a79f7cd4a8d75b2946a2ff",
+   "run": 0,
    "tables": [
     {
      "bbox": [
@@ -450,6 +486,7 @@
   },
   "eu-20220825_gmp-an1_en_0.pdf:47": {
    "sha256": "add86ed65ac9dbf007352a11ad102089c2225087d9a79f7cd4a8d75b2946a2ff",
+   "run": 0,
    "tables": [
     {
      "bbox": [
@@ -538,6 +575,7 @@
   },
   "fda-cp-7346-832-preapproval-inspections.pdf:44": {
    "sha256": "b4ea049fbf061f1e7f772785d500f4be4d7e91a8e7124fd1411453211c33ace4",
+   "run": 0,
    "tables": [
     {
      "bbox": [
@@ -583,6 +621,7 @@
   },
   "fda-cp-7346-832-preapproval-inspections.pdf:53": {
    "sha256": "b4ea049fbf061f1e7f772785d500f4be4d7e91a8e7124fd1411453211c33ace4",
+   "run": 0,
    "tables": [
     {
      "bbox": [
@@ -678,6 +717,7 @@
   },
   "fda-cp-7346-832-preapproval-inspections.pdf:54": {
    "sha256": "b4ea049fbf061f1e7f772785d500f4be4d7e91a8e7124fd1411453211c33ace4",
+   "run": 0,
    "tables": [
     {
      "bbox": [
@@ -773,14 +813,17 @@
   },
   "fda-cp-7356-002-drug-manufacturing-inspections.pdf:41": {
    "sha256": "3d7a85dde385feee720b8d88250190747ef9e66be2b8cdcf38b1cbfc7ee2ebf1",
+   "run": 0,
    "tables": []
   },
   "fda-guidance-nitrosamine-control-2024.pdf:41": {
    "sha256": "f8afe14c18104405a1c42d374155dcfd6f2202c1e891d6e89d9f3458ac06e2a9",
+   "run": 0,
    "tables": []
   },
   "ich-q3c-r9.pdf:11": {
    "sha256": "fe6405857bffcd3ee1e519e0f6536e690627885a934b7cda191b5aea364ae493",
+   "run": 0,
    "tables": [
     {
      "bbox": [
@@ -863,6 +906,7 @@
   },
   "ich-q3c-r9.pdf:12": {
    "sha256": "fe6405857bffcd3ee1e519e0f6536e690627885a934b7cda191b5aea364ae493",
+   "run": 0,
    "tables": [
     {
      "bbox": [
@@ -1047,6 +1091,7 @@
   },
   "ich-q3c-r9.pdf:13": {
    "sha256": "fe6405857bffcd3ee1e519e0f6536e690627885a934b7cda191b5aea364ae493",
+   "run": 0,
    "tables": [
     {
      "bbox": [
@@ -1141,6 +1186,7 @@
   },
   "ich-q3c-r9.pdf:17": {
    "sha256": "fe6405857bffcd3ee1e519e0f6536e690627885a934b7cda191b5aea364ae493",
+   "run": 0,
    "tables": [
     {
      "bbox": [
@@ -1344,6 +1390,7 @@
   },
   "ich-q3c-r9.pdf:18": {
    "sha256": "fe6405857bffcd3ee1e519e0f6536e690627885a934b7cda191b5aea364ae493",
+   "run": 0,
    "tables": [
     {
      "bbox": [
@@ -1589,6 +1636,7 @@
   },
   "india-cdsco-circ-2024-03-risk-based-inspection.pdf:116": {
    "sha256": "b1dbb9cac363a265e6fe673bab63752f51e390203b1b5e390675a8b1cffd5ea3",
+   "run": 0,
    "tables": [
     {
      "bbox": [
@@ -1707,6 +1755,7 @@
   },
   "india-cdsco-circ-2024-03-risk-based-inspection.pdf:119": {
    "sha256": "b1dbb9cac363a265e6fe673bab63752f51e390203b1b5e390675a8b1cffd5ea3",
+   "run": 0,
    "tables": [
     {
      "bbox": [
@@ -1862,6 +1911,7 @@
   },
   "india-cdsco-circ-2024-03-risk-based-inspection.pdf:120": {
    "sha256": "b1dbb9cac363a265e6fe673bab63752f51e390203b1b5e390675a8b1cffd5ea3",
+   "run": 0,
    "tables": [
     {
      "bbox": [
@@ -1979,6 +2029,7 @@
   },
   "india-cdsco-circ-2024-03-risk-based-inspection.pdf:45": {
    "sha256": "b1dbb9cac363a265e6fe673bab63752f51e390203b1b5e390675a8b1cffd5ea3",
+   "run": 0,
    "tables": [
     {
      "bbox": [
@@ -2091,6 +2142,7 @@
   },
   "india-cdsco-circ-2024-03-risk-based-inspection.pdf:48": {
    "sha256": "b1dbb9cac363a265e6fe673bab63752f51e390203b1b5e390675a8b1cffd5ea3",
+   "run": 0,
    "tables": [
     {
      "bbox": [
@@ -2227,6 +2279,7 @@
   },
   "india-cdsco-circ-2024-03-risk-based-inspection.pdf:49": {
    "sha256": "b1dbb9cac363a265e6fe673bab63752f51e390203b1b5e390675a8b1cffd5ea3",
+   "run": 0,
    "tables": [
     {
      "bbox": [
@@ -2369,6 +2422,7 @@
   },
   "india-cdsco-circ-2024-03-risk-based-inspection.pdf:52": {
    "sha256": "b1dbb9cac363a265e6fe673bab63752f51e390203b1b5e390675a8b1cffd5ea3",
+   "run": 0,
    "tables": [
     {
      "bbox": [
@@ -2480,6 +2534,7 @@
   },
   "india-cdsco-circ-2024-03-risk-based-inspection.pdf:53": {
    "sha256": "b1dbb9cac363a265e6fe673bab63752f51e390203b1b5e390675a8b1cffd5ea3",
+   "run": 0,
    "tables": [
     {
      "bbox": [
@@ -2598,6 +2653,7 @@
   },
   "india-cdsco-circ-2024-03-risk-based-inspection.pdf:54": {
    "sha256": "b1dbb9cac363a265e6fe673bab63752f51e390203b1b5e390675a8b1cffd5ea3",
+   "run": 0,
    "tables": [
     {
      "bbox": [
@@ -2716,6 +2772,7 @@
   },
   "india-cdsco-circ-2024-03-risk-based-inspection.pdf:57": {
    "sha256": "b1dbb9cac363a265e6fe673bab63752f51e390203b1b5e390675a8b1cffd5ea3",
+   "run": 0,
    "tables": [
     {
      "bbox": [
@@ -2871,6 +2928,7 @@
   },
   "india-cdsco-circ-2024-03-risk-based-inspection.pdf:66": {
    "sha256": "b1dbb9cac363a265e6fe673bab63752f51e390203b1b5e390675a8b1cffd5ea3",
+   "run": 0,
    "tables": [
     {
      "bbox": [
@@ -2952,6 +3010,7 @@
   },
   "pics-pe009-18-annexes.pdf:20": {
    "sha256": "061e785e317287e7658522d071ad188a480496b1eabea2f48b610ab53d49bbb8",
+   "run": 0,
    "tables": [
     {
      "bbox": [
@@ -3071,6 +3130,7 @@
   },
   "pics-pe009-18-annexes.pdf:21": {
    "sha256": "061e785e317287e7658522d071ad188a480496b1eabea2f48b610ab53d49bbb8",
+   "run": 0,
    "tables": [
     {
      "bbox": [
@@ -3153,6 +3213,7 @@
   },
   "who-trs1010-a8-hvac-nonsterile.pdf:15": {
    "sha256": "1fe8543d62cdfabe23a4087532c3ed3769ab57a494272c7111e4f58b76e8f62b",
+   "run": 0,
    "tables": [
     {
      "bbox": [
@@ -3398,6 +3459,7 @@
   },
   "who-trs1010-a8-hvac-nonsterile.pdf:16": {
    "sha256": "1fe8543d62cdfabe23a4087532c3ed3769ab57a494272c7111e4f58b76e8f62b",
+   "run": 0,
    "tables": [
     {
      "bbox": [
@@ -3625,6 +3687,7 @@
   },
   "who-trs1010-a8-hvac-nonsterile.pdf:17": {
    "sha256": "1fe8543d62cdfabe23a4087532c3ed3769ab57a494272c7111e4f58b76e8f62b",
+   "run": 0,
    "tables": [
     {
      "bbox": [
@@ -3810,6 +3873,7 @@
   },
   "who-trs1044-a2-sterile.pdf:17": {
    "sha256": "44fefcf2cf25b1e50b7816eed3ce0a8fde6b7a70e96cdc6aeeb1e0fb64fd033b",
+   "run": 0,
    "tables": [
     {
      "bbox": [
@@ -3923,6 +3987,7 @@
   },
   "who-trs1044-a2-sterile.pdf:19": {
    "sha256": "44fefcf2cf25b1e50b7816eed3ce0a8fde6b7a70e96cdc6aeeb1e0fb64fd033b",
+   "run": 0,
    "tables": [
     {
      "bbox": [
@@ -4003,32 +4068,5 @@
     }
    ]
   }
- },
- "models": {
-  "detection": {
-   "repo": "microsoft/table-transformer-detection",
-   "revision": "2357cbe2b5a5d1c03e54f32764f06058933b65ab",
-   "files": {
-    "config.json": "ed5b93df2c3a59d473ddea853553a6d545d52bd4e9f8f72bf40b8a974aba4c1d",
-    "model.safetensors": "8f1aa73170102c038d40155e2734b343bf07e0fe12594228a8590943b01dccf7"
-   }
-  },
-  "structure": {
-   "repo": "microsoft/table-transformer-structure-recognition-v1.1-all",
-   "revision": "7587a7ef111d9dcbf8ac695f1376ab7014340a0c",
-   "files": {
-    "config.json": "17a8a6edfb9e394263fa6ba9b82176ebccdfcc5d6cd29121ec91572c7d6be22c",
-    "model.safetensors": "9df416575a3a36ebd0129342d4f597f14d6e5170268f3d52d28584ab4466a501"
-   }
-  }
- },
- "settings": {
-  "scale": 2.0,
-  "detect_min": 0.7,
-  "keep": 0.5,
-  "pad": 12,
-  "torch": "2.14.1+cpu",
-  "transformers": "5.22.1",
-  "code_sha256": "a556151514538c576ea13799a4dd923d7982ee6cae932ae2ec89a7328179b070"
  }
 }

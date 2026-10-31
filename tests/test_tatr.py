@@ -20,9 +20,11 @@ def parse(name, regulator="WHO"):
 class Pins(unittest.TestCase):
     def test_grids_carry_the_pins_and_every_trial_page(self):
         doc = json.loads(tatr.GRIDS.read_text())
-        for name, pin in tatr.PINS.items():
-            self.assertEqual(doc["models"][name]["revision"], pin["revision"])
-            self.assertEqual(doc["models"][name]["files"], pin["files"])
+        for page in doc["pages"].values():                   # each page names the run (pins) that made it
+            made = doc["runs"][page["run"]]["models"]
+            for name, pin in tatr.PINS.items():
+                self.assertEqual(made[name]["revision"], pin["revision"])
+                self.assertEqual(made[name]["files"], pin["files"])
         trial = {f"{s}:{p}" for s, pages in tatr.TRIAL.items() for p in pages}
         self.assertEqual(set(doc["pages"]), trial)
         for key in doc["pages"]:
@@ -33,6 +35,24 @@ class Pins(unittest.TestCase):
             source, page = key.rsplit(":", 1)
             self.assertIn(int(page), tatr.TRIAL[source])
             self.assertTrue(tatr.adopted_grids(source)[int(page)])
+
+    def test_an_adopted_page_without_a_grid_is_refused(self):
+        import tempfile
+        key = next(iter(tatr.ADOPTED))
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "grids.json"
+            path.write_text(json.dumps({"runs": [], "pages": {}}))
+            with self.assertRaises(SystemExit):
+                tatr.adopted_grids(key.rsplit(":", 1)[0], path)
+
+    def test_parsing_never_loads_the_model(self):
+        import subprocess
+        code = ("import sys; sys.path.insert(0, 'tools/parse'); import run, common; "
+                "run.parser_for({'file': 'ich-q3c-r9.pdf', 'regulator': 'ICH'})(common.OFFICIAL / 'ich-q3c-r9.pdf'); "
+                "print(any(m in sys.modules for m in ('torch', 'transformers', 'timm')))")
+        out = subprocess.run([sys.executable, "-c", code], capture_output=True, text=True, check=True,
+                             cwd=Path(__file__).resolve().parents[1]).stdout.strip()
+        self.assertEqual(out, "False")
 
     def test_a_changed_pdf_is_refused(self):
         doc = json.loads(tatr.GRIDS.read_text())
@@ -61,8 +81,34 @@ class GridAdapter(unittest.TestCase):
         self.assertEqual(tables._cells(g, words), [["Grade", "Limits", ""], ["A", "1", "2"], ["B", "", "3"]])
         self.assertEqual(tables.stray_words(g, words), [])
 
+    def test_span_takes_whole_cells_only(self):
+        # a span box that reaches a little into the next column: only the cells whose centre it covers join it
+        grid = dict(self.GRID, spanning=[[100, 0, 240, 20]])
+        g = tables.Grid(grid)
+        self.assertEqual(g.rows[0].cells, [(0, 0, 100, 20), (100, 0, 200, 20), (200, 0, 300, 20)])
+        words = [(230, 5, 238, 15, "x")]
+        self.assertEqual(tables.twice_words(g, words), [])
+        # a span over two rows of one column
+        g = tables.Grid(dict(self.GRID, spanning=[[0, 20, 100, 60]]))
+        self.assertEqual(g.rows[1].cells[0], (0, 20, 100, 60))
+        self.assertIsNone(g.rows[2].cells[0])
+
+    def test_outline_holds_every_cell(self):
+        g = tables.Grid(dict(self.GRID, bbox=[2, 3, 298, 58]))
+        self.assertEqual(g.bbox, (0, 0, 300, 60))
+
+    def test_twice_words(self):
+        g = tables.Grid(self.GRID)
+        g.rows[0].cells[2] = (150, 0, 300, 20)               # overlaps cell 2 of row 1
+        self.assertEqual([w[4] for w in tables.twice_words(g, [(160, 5, 170, 15, "y")])], ["y"])
+
 
 class AdoptedPages(unittest.TestCase):
+    def test_a_trial_page_not_adopted_keeps_the_pdfplumber_grid(self):
+        self.assertNotIn("who-trs1044-a2-sterile.pdf:17", tatr.ADOPTED)
+        rows = {c.ref: c.text for c in parse("who-trs1044-a2-sterile.pdf") if c.kind == "table_row"}
+        self.assertEqual(rows["Table 1 C"], "C | 352 000 | 3 520 000 | 2 930 | 29 300")
+
     def test_who_1044_microbial_limits_have_their_grades(self):
         rows = {c.ref: c.text for c in parse("who-trs1044-a2-sterile.pdf") if c.kind == "table_row"}
         self.assertEqual(rows["Table 2 B"], "B | 10 | 5 | 5")

@@ -17,7 +17,8 @@ Rules:
   column's box (_row_boxes).
   Tables on pages that are not English are skipped with the page (bilingual gazettes).
 - On the few pages listed in tatr.ADOPTED the grid is the Table Transformer's (D41, D43), read from the committed
-  library/tables-tatr/grids.json (Grid); the model itself never runs here.
+  library/tables-tatr/grids.json (Grid); the model itself never runs here. The page's pdfplumber tables are not
+  used there, and an adopted grid that leaves a word in no cell or in two cells stops the parse.
 - Where a table sat, the page text gets a marker line; the clause the marker lands in becomes the table's parent
   (field `parent`). When the marker lands in a contents list or an unnumbered segment, the parent is the nearest
   clause before it that has a reference of its own ("" if none). The marker is removed again.
@@ -84,28 +85,44 @@ class _Box:
 class Grid:
     """A table grid from the Table Transformer trial (tatr.py, D41) in the shape of a pdfplumber table (bbox, rows
     with their cell boxes, columns), so the rest of this module treats it like a ruled table. A cell is a row's
-    band within a column; a spanning cell takes the place of the first grid cell it covers and the others it
-    covers are left out (None), as pdfplumber leaves out the cells a merged cell covers."""
+    band within a column; a spanning cell becomes the union of the grid cells whose centre it covers, put in the
+    place of the first of them, and the others are left out (None), as pdfplumber leaves out the cells a merged
+    cell covers. The outline is the union of the model's table box and its cells, so no cell sticks out of it
+    (the text bands above, below and beside a table are cut at the outline)."""
 
     def __init__(self, grid):
-        self.bbox = tuple(grid["bbox"])
-        self.columns = [_Box(c) for c in grid["columns"]]
-        spans = [tuple(b) for b in grid["spanning"]]
+        rows, cols = grid["rows"], grid["columns"]
+        grid_cells = [[(max(c[0], r[0]), r[1], min(c[2], r[2]), r[3]) for c in cols] for r in rows]
+        spans = {}
+        for b in map(tuple, grid["spanning"]):
+            covered = [(i, j) for i, row in enumerate(grid_cells) for j, cell in enumerate(row)
+                       if _centre_box_in(cell, b)]
+            for ij in covered:
+                spans.setdefault(ij, covered)
+        self.columns = [_Box(c) for c in cols]
         self.rows = []
-        placed = set()
-        for r in grid["rows"]:
+        for i, r in enumerate(rows):
             cells = []
-            for c in grid["columns"]:
-                cell = (max(c[0], r[0]), r[1], min(c[2], r[2]), r[3])
-                span = next((b for b in spans if _centre_box_in(cell, b)), None)
-                if span is None:
+            for j, cell in enumerate(grid_cells[i]):
+                covered = spans.get((i, j))
+                if covered is None:
                     cells.append(cell)
-                elif span in placed:
-                    cells.append(None)
+                elif covered[0] == (i, j):
+                    boxes = [grid_cells[a][b] for a, b in covered]
+                    cells.append((min(x[0] for x in boxes), min(x[1] for x in boxes),
+                                  max(x[2] for x in boxes), max(x[3] for x in boxes)))
                 else:
-                    placed.add(span)
-                    cells.append(span)
+                    cells.append(None)
             self.rows.append(_Box(r, cells))
+        boxes = [tuple(grid["bbox"])] + [c for r in grid_cells for c in r]
+        self.bbox = (min(x[0] for x in boxes), min(x[1] for x in boxes), max(x[2] for x in boxes),
+                     max(x[3] for x in boxes))
+
+
+def twice_words(table, words):
+    """Words whose centre lies in two or more cells of a table (a word would be stored twice)."""
+    boxes = [b for r in _row_boxes(table) for b in r if b]
+    return [w for w in words if sum(_centre_in(w, b) for b in boxes) > 1]
 
 
 def _centre_box_in(a, b):
@@ -231,6 +248,11 @@ def read(path):
             found = page_tables(page) if english_page(plain) else []
             if pno in model:                                 # the Table Transformer's grid (tatr.ADOPTED, D43)
                 found = [Grid(g) for g in model[pno]]
+                words = _words(path, pno)
+                bad = [w[4] for t in found for w in stray_words(t, words) + twice_words(t, words)]
+                if bad:
+                    raise SystemExit(f"{Path(path).name} page {pno}: the adopted grid leaves words in no cell or "
+                                     f"in two cells ({' '.join(bad[:10])}); review tatr.ADOPTED")
             words = _words(path, pno) if found else []
             found = [t for t in found if not stray_words(t, words)]
             exps = exponents(page)

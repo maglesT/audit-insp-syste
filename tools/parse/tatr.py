@@ -84,13 +84,16 @@ ADOPTED = {
 
 def adopted_grids(source, path=GRIDS):
     """{page: [grid, ...]} of the adopted pages of one source, from the committed grids. A grid whose PDF sha256
-    differs from the PDF's is refused (the boxes belong to that exact file)."""
+    differs from the source PDF's is refused (the boxes belong to that exact file; the upright copy the parser
+    may read is made from it, page sizes unchanged)."""
     out = {}
     keys = [k for k in ADOPTED if k.rsplit(":", 1)[0] == source]
     if not keys:
         return out
     doc = json.loads(Path(path).read_text())["pages"]
     for k in keys:
+        if k not in doc:
+            raise SystemExit(f"{k}: adopted but has no grid in {path}; re-run tatr.py run")
         if doc[k]["sha256"] != sha256(OFFICIAL / source):
             raise SystemExit(f"{k}: the PDF differs from the one the grid was made on; re-run tatr.py run")
         out[int(k.rsplit(":", 1)[1])] = doc[k]["tables"]
@@ -239,14 +242,19 @@ def run(targets):
     det, struct = load("detection"), load("structure")
     doc = json.loads(GRIDS.read_text()) if GRIDS.exists() else {"pages": {}}
     import transformers
-    doc["models"] = {k: {"repo": v["repo"], "revision": v["revision"], "files": v["files"]} for k, v in PINS.items()}
-    doc["settings"] = {"scale": SCALE, "detect_min": DETECT_MIN, "keep": KEEP, "pad": PAD,
-                       "torch": torch.__version__, "transformers": transformers.__version__,
-                       "code_sha256": sha256(Path(__file__))}
+    made = {"models": {k: {"repo": v["repo"], "revision": v["revision"], "files": v["files"]}
+                       for k, v in PINS.items()},
+            "settings": {"scale": SCALE, "detect_min": DETECT_MIN, "keep": KEEP, "pad": PAD,
+                         "torch": torch.__version__, "transformers": transformers.__version__,
+                         "code_sha256": sha256(Path(__file__))}}
+    runs = doc.setdefault("runs", [])
+    if made not in runs:
+        runs.append(made)
     for source, pno in targets:
         path = OFFICIAL / source
         key = f"{source}:{pno}"
-        doc["pages"][key] = {"sha256": sha256(path), "tables": page_grids(det, struct, path, pno)}
+        doc["pages"][key] = {"sha256": sha256(path), "run": runs.index(made),
+                             "tables": page_grids(det, struct, path, pno)}
         print(key, len(doc["pages"][key]["tables"]), "table(s)", flush=True)
     doc["pages"] = dict(sorted(doc["pages"].items()))
     GRIDS.parent.mkdir(parents=True, exist_ok=True)

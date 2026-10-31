@@ -13,7 +13,7 @@ B | 3 520 | 352 000 | Not specified (a) | 2 930
 C | 352 000 | 3 520 000 | 2 930 | 29 300
 D | 3 520 000 | Not predetermined (b) | 29 300 | Not predetermined (b)
 ```
-### model table 1: bbox [94, 347, 500, 507], 6 rows x 5 columns, lost 0, twice 0
+### model table 1: bbox [94, 345, 500, 507], 6 rows x 5 columns, lost 0, twice 0
 ```
 Grade | Maximum limits for total particle ≥ 0.5 µm/m 3 |  | Maximum limits for total particle ≥ 5 µm/m 3 | 
  | at rest | in operation | at rest | in operation
@@ -33,7 +33,7 @@ B | 10 | 5 | 5
 C | 100 | 50 | 25
 D | 200 | 100 | 50
 ```
-### model table 1: bbox [105, 460, 494, 561], 5 rows x 4 columns, lost 0, twice 0
+### model table 1: bbox [105, 458, 494, 561], 5 rows x 4 columns, lost 0, twice 0
 ```
 Grade | Air sample CFU/m 3 | Settle plates (diameter 90 mm) CFU/4 hours (a) | Contact plates (diameter 55 mm) CFU/plate
 A |  | No growth | 
@@ -50,7 +50,7 @@ Grade A | - Filling of products, when unusually at risk.
 Grade C | - - Preparation of solutions, when unusually at risk. Filling of products.
 Grade D | - Preparation of solutions and components for subsequent filling.
 ```
-### model table 1: bbox [100, 698, 450, 753], 3 rows x 3 columns, lost 0, twice 0
+### model table 1: bbox [100, 694, 450, 753], 3 rows x 3 columns, lost 0, twice 0
 ```
 Grade A | - | Filling of products, when unusually at risk.
 Grade C | - - | Preparation of solutions, when unusually at risk. Filling of products.
@@ -86,7 +86,7 @@ B | 3 520 | 352 000 | 29 | 2 930
 C | 352 000 | 3 520 000 | 2 930 | 29 300
 D | 3 520 000 | Not predetermined (a) | 29 300 | Not predetermined (a)
 ```
-### model table 1: bbox [93, 220, 498, 381], 6 rows x 5 columns, lost 0, twice 0
+### model table 1: bbox [93, 219, 498, 381], 6 rows x 5 columns, lost 0, twice 0
 ```
 Grade | Maximum limits for total particle ≥ 0.5 μm/m 3 |  | Maximum limits for total particle ≥ 5 μm/m 3 | 
  | at rest | in operation | at rest | in operation
@@ -106,7 +106,7 @@ B | 10 | 5 | 5 | 5
 C | 100 | 50 | 25 | -
 D | 200 | 100 | 50 | -
 ```
-### model table 1: bbox [95, 328, 500, 430], 5 rows x 5 columns, lost 0, twice 0
+### model table 1: bbox [95, 325, 500, 430], 5 rows x 5 columns, lost 0, twice 0
 ```
 Grade | Air sample CFU /m 3 | Settle plates (diam. 90 mm) CFU /4 hours (a) | Contact plates (diam. 55mm), CFU / plate (b) | Glove print, Including 5 f
 A |  |  | No growth (c) | 
@@ -152,12 +152,12 @@ Quality Topic | Integrated Approach |  |
 Manufacturing and control of finished product • Established conditions • Proposed changes to established conditions | The IQA team assesses the applic
  | The inspection team finds that the change management system is deficient and includes its observations on Form FDA 483. The IQA team works with the
 ```
-### model table 1: bbox [64, 139, 564, 595], 4 rows x 4 columns, lost 124, twice 0
-lost: Manufacturing and control of finished product The inspection team finds that the change management system is deficient and includes its observations o
+### model table 1: bbox [64, 139, 564, 595], 4 rows x 4 columns, lost 118, twice 0
+lost: The inspection team finds that the change management system is deficient and includes its observations on Form FDA 483. The IQA team works with the in
 ```
 Quality Topic | Integrated Approach |  | 
  | IQA Team Assessment Before PAI | PAI | IQA Team Assessment After PAI
-• Established conditions • Proposed changes to established conditions | The IQA team assesses the application to determine whether ECs and reporting c
+Manufacturing and control of finished product • Established conditions • Proposed changes to established conditions | The IQA team assesses the applic
  | If coverage of development studies supporting ECs is needed, or if coverage of the PQS is needed to address risks related to potential EC changes o
 ```
 
@@ -169,7 +169,7 @@ tables.py: 0 table(s) (1 rejected for stray words); model: 0 table(s)
 
 ## ich-q3c-r9.pdf:11
 tables.py: 0 table(s) (0 rejected for stray words); model: 1 table(s)
-### model table 1: bbox [85, 305, 472, 428], 6 rows x 3 columns, lost 0, twice 0
+### model table 1: bbox [85, 304, 472, 428], 6 rows x 3 columns, lost 0, twice 0
 ```
 Solvent | Concentration limit (ppm) | Concern
 Benzene | 2 | Carcinogen
@@ -210,7 +210,7 @@ N-Methylpyrrolidone 4 | 5.3 | 530
 
 ## ich-q3c-r9.pdf:13
 tables.py: 0 table(s) (0 rejected for stray words); model: 1 table(s)
-### model table 1: bbox [88, 440, 405, 589], 9 rows x 2 columns, lost 0, twice 0
+### model table 1: bbox [88, 436, 405, 589], 9 rows x 2 columns, lost 0, twice 0
 ```
 Acetic acid | Heptane
 Acetone | Isobutyl acetate
@@ -251,7 +251,7 @@ Cyclohexane | Hexamethylene |  | Class 2
 
 ## ich-q3c-r9.pdf:18
 tables.py: 0 table(s) (0 rejected for stray words); model: 1 table(s)
-### model table 1: bbox [72, 68, 507, 670], 24 rows x 4 columns, lost 0, twice 1
+### model table 1: bbox [72, 68, 507, 674], 24 rows x 4 columns, lost 0, twice 0
 ```
 Solvent | Other Names | Structure | Class
 Cyclopentyl ether 3 methyl | CPME |  | Class 2
@@ -270,7 +270,7 @@ N,N- Dimethylformamide | DMF | HCON(CH3)2 | Class 2
 Dimethyl sulfoxide | Methylsulfinylmethane | (CH3)2SO | Class 3
  | Methyl sulfoxide |  | 
  | DMSO |  | 
-1,4-Dioxane Ethanol | p-Dioxane | O O | Class 2
+1,4-Dioxane | p-Dioxane | O O | Class 2
  | [1,4]Dioxane |  | 
 Ethanol | Ethyl alcohol | CH3CH2OH | Class 3
 2-Ethoxyethanol | Cellosolve | CH3CH2OCH2CH2OH | Class 2
@@ -293,7 +293,7 @@ S.No | Reference |  | 2 | 1 | 0 | X
 27.7 | Sch-M | In case the cooling is affected with any fluid or gas in contact with the product , is it sterilized. | NA | Cooling air was found filt
 27.8 | Sch-M | Whether the equipment air inlet and outlets been provided with bacteria retaining filters | NA | Inlet and outlet was found provided wi
 ```
-### model table 1: bbox [16, 56, 738, 465], 8 rows x 7 columns, lost 0, twice 0
+### model table 1: bbox [16, 55, 738, 465], 8 rows x 7 columns, lost 0, twice 0
 ```
 S.No | Reference |  | 2 | Quality Rating 1 | 0 | X
 1 Building 27.2 | Sch-M and premises: | Whether - the position of temperature probes used for controlling and / or recording determined during validat
@@ -353,7 +353,7 @@ S.No | Reference |  | 2 | 1 | 0 | X
 31.1 | Sch-M | Whether the printing is in bright colour and legible on labels and other printed materials? | NA | Printing on labels and other printin
 31.2 | Sch-M | How printed labels (art work) are approved. Verify the SOP. | NA | Specified SOP was found in place in this regard. | No specified SOP 
 ```
-### model table 1: bbox [17, 55, 716, 538], 9 rows x 7 columns, lost 6, twice 0
+### model table 1: bbox [17, 54, 716, 538], 9 rows x 7 columns, lost 6, twice 0
 lost: S.No Reference 2 1 0 X
 ```
  |  |  |  | Quality Rating |  | 
@@ -392,7 +392,7 @@ tables.py: 1 table(s) (0 rejected for stray words); model: 1 table(s)
 18.13 | WHO TRS-961 |  | Specify the air classification in final change room to
  |  |  | enter A/B area.
 ```
-### model table 1: bbox [70, 67, 664, 517], 11 rows x 3 columns, lost 0, twice 0
+### model table 1: bbox [70, 67, 664, 518], 11 rows x 3 columns, lost 0, twice 0
 ```
 18.3 | WHO TRS-961 ANNEXE- 06 | Specify the steps taken in air handling system to achieve the Grade A, B, C and D of air as per designated classified 
 18.4 | Sch-M | Specify the recovery time of B & C zone from the time of personnel leaving the room after completion of operations and verify the recor
@@ -499,7 +499,7 @@ tables.py: 1 table(s) (0 rejected for stray words); model: 1 table(s)
 22.1 |  | Sch-M |  |  | Specify SOPs available for each equipment for its
  |  |  |  |  | operation and cleaning.
 ```
-### model table 1: bbox [65, 80, 660, 535], 16 rows x 3 columns, lost 1, twice 0
+### model table 1: bbox [65, 73, 660, 535], 16 rows x 3 columns, lost 1, twice 0
 lost: 06
 ```
  | ANNEXE- 06 | 
@@ -665,7 +665,7 @@ tables.py: 1 table(s) (0 rejected for stray words); model: 1 table(s)
 28.8 |  | Sch-M |  |  | Whether all items to be sterilized (other than sealed
  |  |  |  |  | containers) are wrapped for sterilization.
 ```
-### model table 1: bbox [64, 72, 656, 518], 12 rows x 3 columns, lost 0, twice 0
+### model table 1: bbox [64, 72, 656, 519], 12 rows x 3 columns, lost 0, twice 0
 ```
  |  | 2) Positive pressure to prevent entry of non-sterile air
 27.10 | WHO TRS-961 ANNEXE- 06 | Verify the sterilizer loading pattern & whether is complied with the validated loading pattern.
@@ -718,7 +718,7 @@ tables.py: 1 table(s) (0 rejected for stray words); model: 1 table(s)
  |  |  |  |  | product of various pack size and type are maintained
  |  |  |  |  | and complied with.
 ```
-### model table 1: bbox [62, 84, 660, 522], 17 rows x 3 columns, lost 0, twice 0
+### model table 1: bbox [62, 73, 660, 523], 17 rows x 3 columns, lost 0, twice 0
 ```
 material, and Signature of the competent technical staff responsible for manufacture and testing. 31 Labels and Other Printed Materials:- |  | 
 31.1 | Sch-M | Whether the printing is in bright colour and legible on labels and other printed materials?
@@ -798,7 +798,7 @@ B | 3 520 | 352 000 | Not specified (a) | 2 930
 C | 352 000 | 3 520 000 | 2 930 | 29 300
 D | 3 520 000 | Not predetermined (b) | 29 300 | Not predetermined (b)
 ```
-### model table 1: bbox [102, 225, 490, 331], 6 rows x 5 columns, lost 0, twice 0
+### model table 1: bbox [102, 223, 490, 331], 6 rows x 5 columns, lost 0, twice 0
 ```
 Grade | Maximum limits for total particle ≥ 0.5 µm/m 3 |  | Maximum limits for total particle ≥ 5 µm/m 3 | 
  | at rest | in operation | at rest Not specified (a) | in operation
@@ -818,7 +818,7 @@ B | 10 | 5 | 5
 C | 100 | 50 | 25
 D | 200 | 100 | 50
 ```
-### model table 1: bbox [126, 400, 501, 486], 5 rows x 4 columns, lost 0, twice 0
+### model table 1: bbox [126, 399, 501, 486], 5 rows x 4 columns, lost 0, twice 0
 ```
 Grade | Air sample CFU/m 3 | Settle plates (diameter 90 mm) CFU/4 hours (a) | Contact plates (diameter 55 mm) CFU/plate
 A |  | No growth | 
@@ -846,10 +846,10 @@ EU 8 EU 7 | Merv 14 |  | 90 |  | F8 |  |
  | Merv 13 | >98 | 85 |  | F7 |  | 
 EU 7 |  | >98 | 80 |  |  |  | 
 ```
-### model table 1: bbox [65, 87, 587, 396], 14 rows x 8 columns, lost 0, twice 4
+### model table 1: bbox [65, 87, 587, 397], 14 rows x 8 columns, lost 0, twice 3
 ```
 (superseded) Eurovent 4/5 rating | ASHRAE 52.2 Merv rating | Eurovent 4/5 ASHRAE 52.1 BS6540 Part 1 Average arrestance Am (%) (superseded) | Eurovent 
- |  |  |  | MPPS integral overall efficiency (%) 99.999995 | EN rating |  | ISO 29463 75E
+ |  |  |  | MPPS integral overall efficiency (%) 99.999995 | EN rating |  | ISO
  |  |  |  |  | U17 | EN 1822: 2009 | 75E 65E 55E 35E 25E 45E
  |  |  |  | 99.99995 | U16 |  | 
 EU 14 |  |  |  | 99.9995 | U15 | EN 1822: 2009 | 
@@ -884,23 +884,23 @@ EU 4 |  | >90 | 30 |  | G4 |  |
 EU 3 | Merv 5 | 85 | 20 |  | G3 |  | 
  |  | 80 | <20 |  |  |  | 
 ```
-### model table 1: bbox [64, 69, 575, 394], 15 rows x 7 columns, lost 0, twice 0
+### model table 1: bbox [64, 69, 575, 395], 15 rows x 6 columns, lost 0, twice 0
 ```
 (superseded) Eurovent 4/5 rating | ASHRAE 52.2 Merv rating | Eurovent 4/5 ASHRAE 52.1 BS6540 Part 1 Average arrestance Am (%) (superseded) | Eurovent 
- |  |  |  | MPPS integral overall efficiency (%) | EN rating | 
-EU 6 | Merv 12 | >95 | 75 |  |  | 
- |  | >95 | 70 |  | M6 | 
- | Merv 11 | >95 | 65 |  |  | 
- |  | >95 | 60 |  |  | 
- | Merv 10 | >95 | 55 |  |  | 
-EU 5 | Merv 9 | >95 | 50 |  | M5 2012 | 
- | Merv 8 | >95 | 45 |  |  | 
- |  | >95 | 40 |  | 779: | 
- | Merv 7 | >90 | 35 |  | EN | 
-EU 4 |  | >90 | 30 |  | G4 | 
- | Merv 6 | 90 | 25 |  |  | 
-EU 3 | Merv 5 | 85 | 20 |  | G3 | 
- |  | 80 | <20 |  |  | 
+ |  |  |  | MPPS integral overall efficiency (%) | EN rating
+EU 6 | Merv 12 | >95 | 75 |  | 
+ |  | >95 | 70 |  | M6
+ | Merv 11 | >95 | 65 |  | 
+ |  | >95 | 60 |  | 
+ | Merv 10 | >95 | 55 |  | 
+EU 5 | Merv 9 | >95 | 50 |  | M5 2012
+ | Merv 8 | >95 | 45 |  | 
+ |  | >95 | 40 |  | 779:
+ | Merv 7 | >90 | 35 |  | EN
+EU 4 |  | >90 | 30 |  | G4
+ | Merv 6 | 90 | 25 |  | 
+EU 3 | Merv 5 | 85 | 20 |  | G3
+ |  | 80 | <20 |  | 
 ```
 
 ## who-trs1010-a8-hvac-nonsterile.pdf:17
@@ -917,7 +917,7 @@ EU 1 | Merv 1 | <65 |  |  | G1 |  |
 ### model table 1: bbox [65, 69, 577, 229], 6 rows x 8 columns, lost 0, twice 0
 ```
 (superseded) Eurovent 4/5 rating | Merv rating Merv 4 ASHRAE 52.2 | Eurovent 4/5 ASHRAE 52.1 BS6540 Part 1 Average arrestance Am (%) (superseded) 75 |
- |  |  |  | MPPS integral overall efficiency (%) | EN rating |  | ISO 29463
+ |  |  |  | MPPS integral overall efficiency (%) | EN rating |  | ISO
  |  |  |  |  |  | EN 779: 2012 | 
 EU 2 | Merv 3 | 70 |  |  | G2 |  | 
  | Merv 2 | 65 |  |  |  |  | 
@@ -951,7 +951,7 @@ tables.py: 1 table(s) (0 rejected for stray words); model: 1 table(s)
 ```
 Grade | Air sample CFU/m3 | Settle plates (diameter 90 mm) CFU/4 hours a | Contact plates (diameter 55 mm) CFU/plate
 ```
-### model table 1: bbox [58, 122, 387, 229], 5 rows x 4 columns, lost 0, twice 0
+### model table 1: bbox [58, 121, 387, 229], 5 rows x 4 columns, lost 0, twice 0
 ```
 Grade | Air sample CFU/m3 | Settle plates (diameter 90 mm) CFU/4 hours a | Contact plates (diameter 55 mm) CFU/plate
 A |  | No growth | 
