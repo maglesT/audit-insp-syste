@@ -8,14 +8,15 @@ Last updated: 31 October 2026, session 6 (D45/D46 page-based vision drafting; tr
   Read D43-D46 in `docs/decisions.md` and `docs/vision-trial.md`. CLAUDE.md lets drafting/verifier agents get images.
 - **Merged this session:** PR #33 (D43 Table Transformer trial, 2 of 34 pages adopted), PR #34 (D45: quote check in
   two readings `tools/library/quotes.py`; page pipeline `tools/pages/vision.py` + `tools/pages/prompts/`; first
-  trial). PR #35 (D46 fixes + re-run) merges on green CI. Per-cell fidelity parked on branch `fidelity-per-cell`.
+  trial), PR #35 (D46 fixes + re-run). PR #36 (pre-scaling fixes, owner "yes do the fixes before scaling") merges
+  on green CI. Per-cell fidelity parked on branch `fidelity-per-cell`.
 - **Trial results** (`docs/vision-trial.md`): re-run 522 items / 50 pages; 84 % of quotes in both readings (strict
   whole-token matching, table rows as whole rows with their whole header); verifiers both-correct 93.9 % of 246;
   the Q3C lead-in errors are gone; coverage gaps NOT yet clean (descriptive "may" sentences, table captions, a few
   real gaps). Usage about 17 k tokens per page drafting, 3 k per item verifying (two verifiers).
 - **Next, in order (one PR each, independent review, merge on green CI):**
-  1. The four "before scaling" proposals at the end of `docs/vision-trial.md` (coverage without descriptive "may"
-     and captions; continued-table headers with their page; whole next page for run-over quotes).
+  1. (Done in PR #36: coverage measure, continued-table headers, whole next page; coverage gaps 39 -> 13, about 9
+     to look at by hand, listed in `docs/vision-trial.md`.)
   2. Layer 1 on page items (no library/clauses dependency; reuse `vision.check_item`, `quotes.findings`).
   3. 0c version currency (`tools/currency.py`, not started).
   4. 0d spot-check sheet by page (50 pages with their items, for the owner to check quotes against the PDF).
