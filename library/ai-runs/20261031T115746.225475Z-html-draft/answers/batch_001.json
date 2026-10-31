@@ -1,0 +1,522 @@
+{
+ "answers": [
+  {
+   "unit": "fda-cpg-490-200-parametric-release.html:¶12-¶21",
+   "items": [
+    {
+     "statement": "Show through sterilization validation that the bioburden is reduced, in line with existing agency guidance, to a probability of a non-sterile unit of 1 in 106 units or better.",
+     "quote": "Sterilization validation should demonstrate microbial bioburden reduction consistent with existing Agency guidance to achieve a probability of non-sterile unit of 1 in 106 units or better.",
+     "clause_number": "¶12",
+     "strength": "recommended",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [
+      "1 in 106"
+     ],
+     "condition": "",
+     "topic": "STER.STERIL"
+    },
+    {
+     "statement": "When bioburden is identified as a critical parameter, test the drug product before sterilization for bioburden, covering total aerobic and anaerobic microorganisms and determining their spore-forming capacity.",
+     "quote": "When bioburden is identified as a critical parameter, bioburden testing (covering total aerobic and anaerobic microorganisms along with determining their spore forming capacity) should be conducted on presterilized drug product.",
+     "clause_number": "¶12",
+     "strength": "recommended",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "when bioburden is a critical parameter",
+     "topic": "QC.MICRO"
+    },
+    {
+     "statement": "Perform bioburden testing as a routine in-process requirement.",
+     "quote": "Bioburden testing is a routine requirement under 21 CFR 211.110(a)(6).",
+     "clause_number": "¶12",
+     "strength": "mandatory",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "QC.MICRO"
+    },
+    {
+     "statement": "Fail the load if a recovered bioburden organism has a D-value higher than the biological indicator organism used to validate the cycle and the quantitative data are not enough to calculate lethality for that more resistant organism.",
+     "quote": "If a recovered bioburden organism possesses a D-value4 greater than the biological indicator (BI) organism used to validate the sterilization cycle and quantitative data are inadequate to calculate lethality for the higher resistance organism, then the load fails.",
+     "clause_number": "¶13",
+     "strength": "recommended",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "bioburden organism more resistant than BI and lethality cannot be calculated",
+     "topic": "STER.STERIL"
+    },
+    {
+     "statement": "Identify the sterilization cycle process parameters as either critical (for example time, temperature, pressure) or key (for example cooling time, heat-up time).",
+     "quote": "Cycle process parameters should be identified by the manufacturer as critical (e.g., time, temperature, pressure) or key (e.g., cooling time, heat-up time)",
+     "clause_number": "¶14",
+     "strength": "recommended",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "STER.STERIL"
+    },
+    {
+     "statement": "Where parametric release is used, at a minimum know, document and control the critical parameters so that sterilization cycle efficacy is demonstrated.",
+     "quote": "At a minimum, any firm employing parametric release must know, document, and control critical parameters to demonstrate sterilization cycle efficacy",
+     "clause_number": "¶15",
+     "strength": "mandatory",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "where parametric release is used",
+     "topic": "STER.STERIL"
+    },
+    {
+     "statement": "Under a parametric release program, reject the load and investigate thoroughly whenever any identified critical parameter is not met.",
+     "quote": "Under a parametric release program, failure to meet any of the identified critical parameters would require the rejection of the load and a thorough investigation (21 CFR 211.192).",
+     "clause_number": "¶15",
+     "strength": "mandatory",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "any critical parameter not met under parametric release",
+     "topic": "QS.DEV"
+    },
+    {
+     "statement": "Depending on the investigation results and the nature of the product, a rejected load may be reprocessed with a second full sterilization cycle, but only if the Quality Unit has approved a provision for re-sterilization and, for application products, the reprocessing step is described in the approved application.",
+     "quote": "Depending on the results of the investigation and the nature of the product, the rejected load could possibly be reprocessed with a second full sterilization cycle if a provision for re-sterilization is approved by the Quality Unit (21 CFR 211.115), and, for application products, if such a reprocessing step is described in the product's approved application.",
+     "clause_number": "¶15",
+     "strength": "optional",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [
+      "second"
+     ],
+     "condition": "re-sterilization provision approved by Quality Unit; for application products, step in approved application",
+     "topic": "PROD.REWORK"
+    },
+    {
+     "statement": "Define and document the key process parameters of the sterilization operation in the manufacturing records (examples given include chamber come-up time, product hold times before sterilization, loading patterns, total steam flow into the chamber and chamber leak testing).",
+     "quote": "These parameters must be documented and defined by the firm in its manufacturing records (21 CFR 211.186 and 211.188).",
+     "clause_number": "¶16",
+     "strength": "mandatory",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "DOC.MFR"
+    },
+    {
+     "statement": "Where key parameters have not been achieved, support the final disposition of the load with a suitably justified, documented rationale.",
+     "quote": "Final disposition of the load where these key parameters have not been achieved should be supported by a suitably justified and documented rationale, as required by 21 CFR 211.192.",
+     "clause_number": "¶17",
+     "strength": "mandatory",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "key parameters not achieved",
+     "topic": "QS.DEV"
+    },
+    {
+     "statement": "Determine and understand the critical and key parameters for each product subject to parametric release.",
+     "quote": "It is important for a firm to determine and understand the critical and key parameters for each product subject to parametric release.",
+     "clause_number": "¶18",
+     "strength": "recommended",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "products subject to parametric release",
+     "topic": "STER.STERIL"
+    },
+    {
+     "statement": "Where the sterility assurance program is in a demonstrated state of control, an appropriate load monitor, treated as a critical process parameter under the parametric release program, may be used to meet the laboratory test requirement.",
+     "quote": "If a firm's sterility assurance program is in a demonstrated state of control, as defined above, an appropriate load monitor, considered a critical process parameter under a parametric release program, would satisfy the requirements for a laboratory test (21 CFR 211.167(a)).",
+     "clause_number": "¶19",
+     "strength": "optional",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "sterility assurance program in demonstrated state of control",
+     "topic": "STER.STERIL"
+    },
+    {
+     "statement": "Place each load monitor in an appropriate position in the load, based on evaluation of development and qualification data.",
+     "quote": "The load monitor(s) is placed in an appropriate position in the load based on the evaluation of development and qualification data.",
+     "clause_number": "¶19",
+     "strength": "recommended",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "STER.STERIL"
+    },
+    {
+     "statement": "For a direct load monitor that measures temperature in the load to calculate delivered lethality, use instruments accurate to within +/-0.5°C or better.",
+     "quote": "Temperature measurements for this purpose should be with instruments that are accurate to within +/-0.5°C or better.",
+     "clause_number": "¶21",
+     "strength": "recommended",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [
+      "+/-0.5°C"
+     ],
+     "condition": "direct temperature load monitor",
+     "topic": "EQ.CAL"
+    }
+   ],
+   "not_applicable": [
+    {
+     "clause_number": "¶12",
+     "text": "Validation of any operation depends upon the use of qualified",
+     "reason": "background statement"
+    },
+    {
+     "clause_number": "¶13",
+     "text": "Robust sterilization cycles are effective at virtually eliminating the",
+     "reason": "background"
+    },
+    {
+     "clause_number": "¶15",
+     "text": "Strict control of the critical parameters will serve as an",
+     "reason": "explanation of purpose"
+    },
+    {
+     "clause_number": "¶16",
+     "text": "In addition to the defined critical parameters which address",
+     "reason": "background/definition"
+    },
+    {
+     "clause_number": "¶16",
+     "text": "Investigators should not expect to see these key process parameters",
+     "reason": "FDA's own review expectation"
+    },
+    {
+     "clause_number": "¶16",
+     "text": "Key process parameters may include some or all of the",
+     "reason": "lead-in to examples list (covered in item)"
+    },
+    {
+     "clause_number": "¶18",
+     "text": "Critical parameters have a direct bearing on cycle efficacy,",
+     "reason": "definition"
+    },
+    {
+     "clause_number": "¶18",
+     "text": "For example, the cycle dwell time at sterilization temperature is",
+     "reason": "example"
+    },
+    {
+     "clause_number": "¶18",
+     "text": "The come-up time for the chamber temperature could be defined",
+     "reason": "example"
+    },
+    {
+     "clause_number": "¶19",
+     "text": "The load monitor, in the form of a physical temperature probe,",
+     "reason": "description"
+    },
+    {
+     "clause_number": "¶20",
+     "text": "There are three typical types of load monitors that are",
+     "reason": "description/lead-in"
+    },
+    {
+     "clause_number": "¶21",
+     "text": "A direct load monitor that uses temperature measurements in the",
+     "reason": "description"
+    },
+    {
+     "clause_number": "¶21",
+     "text": "(Note that a 0.5°C error results in an approximate 10%",
+     "reason": "explanatory note"
+    }
+   ]
+  },
+  {
+   "unit": "fda-cpg-490-200-parametric-release.html:¶22-¶34",
+   "items": [
+    {
+     "statement": "A biological load monitor may be used either as a direct load monitor (in the product) or as an indirect load monitor (in the chamber).",
+     "quote": "It is possible to use a biological load monitor as a direct load monitor (in the product) or an indirect load monitor (in the chamber).",
+     "clause_number": "¶22",
+     "strength": "optional",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "STER.STERIL"
+    },
+    {
+     "statement": "In certain instances, where justified, a chemical load monitor may be used.",
+     "quote": "In certain instances, a chemical load monitor might also be justified.",
+     "clause_number": "¶23",
+     "strength": "optional",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "where justified",
+     "topic": "STER.STERIL"
+    },
+    {
+     "statement": "Before using a chemical load monitor, qualify and characterize it extensively to determine its capability and suitability for the parametric release program.",
+     "quote": "Since a chemical load monitor does not provide a direct measurement of critical product attributes, extensive qualification and characterization of the proposed load monitor should be conducted to determine its capability and suitability for the parametric release program.",
+     "clause_number": "¶23",
+     "strength": "recommended",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "chemical load monitor proposed",
+     "topic": "STER.STERIL"
+    },
+    {
+     "statement": "Treat load monitor results that do not meet the established lot release limits, including loss of the indicator, as a critical process parameter failure.",
+     "quote": "When results of the use of a load monitor do not meet the established limits for lot release (including loss of the indicator), this should be considered a critical process parameter failure.",
+     "clause_number": "¶24",
+     "strength": "recommended",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "load monitor outside lot release limits or lost",
+     "topic": "STER.STERIL"
+    },
+    {
+     "statement": "Do not use the load monitor to evaluate cycle lethality when an equipment malfunction prevents measurement of one or more critical cycle parameters.",
+     "quote": "When equipment malfunction prevents measurement of one or more critical cycle parameters, the load monitor cannot be used to evaluate cycle lethality",
+     "clause_number": "¶24",
+     "strength": "mandatory",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [
+      "one or more"
+     ],
+     "condition": "equipment malfunction prevents measuring critical parameters",
+     "topic": "STER.STERIL"
+    },
+    {
+     "statement": "Validate the integrity of each container/closure system to show that it can maintain sterility.",
+     "quote": "The integrity of each container/closure system should be validated to demonstrate that sterility can be maintained by the container closure system (21 CFR 211.94).",
+     "clause_number": "¶25",
+     "strength": "recommended",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "STER.CCI"
+    },
+    {
+     "statement": "Assess the container closure system's ability to maintain sterility throughout the intended shelf-life or dating period by a sterility test or a container closure integrity test.",
+     "quote": "The ability of the container closure system to maintain sterility throughout the product's intended shelf-life or dating period should be assessed by performing either a sterility test or a container closure integrity test.",
+     "clause_number": "¶25",
+     "strength": "recommended",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "STER.CCI"
+    },
+    {
+     "statement": "Establish a successful record of sterilization process control within the quality system.",
+     "quote": "It is essential for a firm to establish a successful record of sterilization process control as part of its Quality System (21 CFR 211.113(b)).",
+     "clause_number": "¶26",
+     "strength": "recommended",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "QS.PQS"
+    },
+    {
+     "statement": "Monitor and appropriately control the key sterilization parameters.",
+     "quote": "Key parameters should also be monitored and appropriately controlled.",
+     "clause_number": "¶26",
+     "strength": "recommended",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "STER.STERIL"
+    },
+    {
+     "statement": "Have the Quality Unit carry out its review and approval duties, including batch disposition procedures.",
+     "quote": "As part of FDA's evaluation of the firm's Quality System, inspections should assess the firm's Quality Unit's review and approval duties, including the firm’s batch disposition procedures (21 CFR 211.22).",
+     "clause_number": "¶27",
+     "strength": "recommended",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "REL.REVIEW"
+    },
+    {
+     "statement": "Have CGMP controls adequate to ensure a robust parametric release program for terminally moist-heat sterilized parenteral products, including periodic data review to monitor for process drift.",
+     "quote": "In addition, inspections should determine if the CGMP controls implemented by a firm are adequate to ensure a robust program for parametric release of a terminally moist-heat sterilized parenteral drug product, including periodic data review to monitor for process drift (21 CFR 211.180(e) and ICH Q10).",
+     "clause_number": "¶27",
+     "strength": "recommended",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "QS.PQR"
+    },
+    {
+     "statement": "Have the Quality Unit ensure that deviations or discrepancies, whether related to critical or key parameters, load monitors or the container/closure system, are appropriately investigated and that effective corrective and preventive actions are implemented.",
+     "quote": "In addition, the inspection should verify that the firm's Quality Unit ensures that deviations or discrepancies, whether related to critical or key parameters, load monitors, or container/closure system, are appropriately investigated, with effective corrective and preventive measures implemented (21 CFR 211.192).",
+     "clause_number": "¶28",
+     "strength": "recommended",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "QS.DEV"
+    },
+    {
+     "statement": "Have the Quality Unit ensure that any significant change in equipment or process triggers reevaluation (qualification or verification) of the equipment or process under a change control program.",
+     "quote": "The firm's Quality Unit should ensure that any significant change in equipment or process requires reevaluation (qualification or verification) of the equipment or process under a change control program (21 CFR 211.68 and 211.100).",
+     "clause_number": "¶28",
+     "strength": "recommended",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "significant change in equipment or process",
+     "topic": "QS.CHANGE"
+    },
+    {
+     "statement": "For drugs requiring application approval, include in the application a description of the principles of the terminal sterilization process and related summary data.",
+     "quote": "For drugs requiring application approval, the application is required to contain a description of the principles of the terminal sterilization process and related summary data.",
+     "clause_number": "¶29",
+     "strength": "mandatory",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "drugs requiring application approval",
+     "topic": "STER.STERIL"
+    },
+    {
+     "statement": "Identify in the application the use of parametric release, instead of the sterility test, as the release method for a terminally moist-heat sterilized parenteral product.",
+     "quote": "The application should identify the use of parametric release, in lieu of the sterility test, as the release method for a terminally moist-heat sterilized parenteral drug product.",
+     "clause_number": "¶29",
+     "strength": "recommended",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "REL.REVIEW"
+    },
+    {
+     "statement": "Conform to the approved application.",
+     "quote": "The inspection should verify conformance with the approved application.",
+     "clause_number": "¶29",
+     "strength": "recommended",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "REL.REVIEW"
+    },
+    {
+     "statement": "If parametric release is used, state in the appropriate manufacturing records (e.g., SOPs, batch record or release specification sheet) \"Meets the requirements for parametric release\" instead of a statement that the product meets conventional sterility test requirements for batch release.",
+     "quote": "The statement, \"Meets the requirements for parametric release,\" should be used in lieu of a statement indicating that the product meets conventional sterility test requirements (e.g., USP) for batch release purposes.",
+     "clause_number": "¶32",
+     "strength": "recommended",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "if parametric release is used",
+     "topic": "DOC.MFR"
+    },
+    {
+     "statement": "If parametric release is used, include in the appropriate manufacturing records (e.g., SOPs, batch record or release specification sheet) a statement that a sterility test cannot be used as an alternate lot release test if any critical process parameter fails its acceptance criteria.",
+     "quote": "A statement verifying that in the event that any critical process parameter fails to meet the established acceptance criteria, a sterility test cannot be used as an alternate test for lot release.",
+     "clause_number": "¶33",
+     "strength": "recommended",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "if parametric release is used",
+     "topic": "DOC.MFR"
+    },
+    {
+     "statement": "If parametric release is used, include in the appropriate manufacturing records (e.g., SOPs, batch record or release specification sheet) a commitment to reject product lots that fail any of the established critical process parameters.",
+     "quote": "A statement committing to reject product lots that fail to meet any of the performance acceptance criteria (i.e., the established critical process parameters).",
+     "clause_number": "¶34",
+     "strength": "recommended",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "if parametric release is used",
+     "topic": "DOC.MFR"
+    }
+   ],
+   "not_applicable": [
+    {
+     "clause_number": "¶22",
+     "text": "A biological load monitor utilizes an actual bacterial spore population",
+     "reason": "description"
+    },
+    {
+     "clause_number": "¶23",
+     "text": "A chemical load monitor is an indirect indicator that is",
+     "reason": "definition"
+    },
+    {
+     "clause_number": "¶26",
+     "text": "Production data for such an operation show that critical process",
+     "reason": "description"
+    },
+    {
+     "clause_number": "¶28",
+     "text": "In many cases, this reevaluation includes use of biological indicator",
+     "reason": "background"
+    },
+    {
+     "clause_number": "¶29",
+     "text": "When FDA reviews this information in the application, it will",
+     "reason": "FDA's own action"
+    },
+    {
+     "clause_number": "¶30",
+     "text": "When an investigator encounters a parametric release product that is",
+     "reason": "FDA's own action/scope"
+    },
+    {
+     "clause_number": "¶31",
+     "text": "If a firm chooses to use parametric release, the firm",
+     "reason": "lead-in to list (covered by list items)"
+    }
+   ]
+  }
+ ]
+}

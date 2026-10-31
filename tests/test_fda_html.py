@@ -83,5 +83,14 @@ class Checks(unittest.TestCase):
         self.assertEqual(H.coverage(QA, "Q8", [item()], na), [])
         self.assertEqual(len(H.coverage(QA, "Q8", [item()], [dict(n, clause_number="Q8.3") for n in na])), 3)
 
+class Review(unittest.TestCase):
+    def test_review_queue_reads_html_items(self):
+        import review
+        it = dict(item(), source=QA)
+        self.assertIn("Q8.1", review.source_text(it))
+        self.assertTrue(review.quote_in_source(it, it["quote"]))
+        self.assertFalse(review.quote_in_source(it, "words that are not on the page at all"))
+
+
 if __name__ == "__main__":
     unittest.main()

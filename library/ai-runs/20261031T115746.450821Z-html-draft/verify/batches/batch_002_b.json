@@ -1,0 +1,467 @@
+{
+ "role": "b",
+ "instructions": "You are a second, independent auditor. Check one checklist item against the FDA web page paragraph it claims to come from. You get\nthe unit's paragraphs (reference and exact text of the page; \"context\" entries are headings) and the item. Start from the TEXT:\nread the cited paragraph, the paragraphs its quote runs into, and its lead-in fully, then compare the item.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the lead-in above a list\nitem (the paragraph ending \":\" above it). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph expects what the statement asks for (an instruction\n  to the investigator, \"Determine whether the firm validated ...\", expects the firm to have that practice), the statement\n  adds nothing and omits nothing of that obligation, the strength (a legal requirement: shall/must/required = mandatory;\n  should, FDA expects/recommends, an inspection point = recommended; may/acceptable = optional; a list item takes\n  its lead-in's) matches, and the text applies to every listed plant\n  type (INJ = sterile injectables: text limited to non-sterile products does not apply to\n  INJ; text limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+ "units": [
+  {
+   "unit": "¶8-¶18",
+   "paragraphs": [
+    {
+     "ref": "¶8",
+     "text": "Drug manufacturers are required to ensure the safety and quality of their drugs. FDA reminds manufacturers of drugs marketed under approved applications and manufacturers of other drugs, including over-the-counter monograph drug products, of their obligation to ensure their products conform to appropriate quality specifications. As noted above, benzene contamination may be related to inactive ingredients, such as carbomers and isobutane, or to degradation of certain active ingredients. Drug components that are hydrocarbons (or are manufactured with benzene or other hydrocarbons) may indicate a higher likelihood of benzene contamination.",
+     "heading_path": "FDA alerts drug manufacturers to the risk of benzene contamination in certain drugs > What drug manufacturers should do"
+    },
+    {
+     "ref": "¶9",
+     "text": "Benzoyl peroxide, a commonly used active ingredient in acne treatment drug products, may degrade into benzene under certain conditions (such as extreme temperatures). FDA is also aware of ingredients, such as the antifungal preservative sodium benzoate, that in combination with chemicals, such as antioxidants in a drug formulation, may yield benzene under certain conditions. The formation of benzene from benzoate can lead to an increase in benzene content over a drug’s shelf-life and should be considered when determining the appropriate timing for benzene testing, e.g., testing at release and on stability (21 CFR 211.165, 211.166), and establishment of an appropriate expiration date (21 CFR 211.137). FDA reminds manufacturers that changes in raw materials throughout the lifecycle of the drug, including changes in raw material suppliers, warrant additional scrutiny for the potential risk of benzene contamination.",
+     "heading_path": "FDA alerts drug manufacturers to the risk of benzene contamination in certain drugs > What drug manufacturers should do"
+    },
+    {
+     "ref": "¶10",
+     "text": "Manufacturers of drug products at risk for benzene contamination should test their drugs accordingly and should not release any drug product batch that would expose consumers to more than 20 mcg per day of benzene from the product. For products that have a 10 g daily dose, this means that benzene levels should be limited to no more than 2 ppm. For products that have a daily dose above 10 g, manufacturers should determine the appropriate concentration limit for their product that ensures consumers are not exposed to more than 20 mcg per day of benzene from the product. If any drug product batches containing benzene above this level are already in distribution, the manufacturer should contact the appropriate Division of Pharmaceutical Quality Operations in the Office of Inspections and Investigations (OII) at FDA to discuss the voluntary initiation of a recall.",
+     "heading_path": "FDA alerts drug manufacturers to the risk of benzene contamination in certain drugs > What drug manufacturers should do"
+    },
+    {
+     "context": "Assessing Supply Disruptions"
+    },
+    {
+     "ref": "¶11",
+     "text": "If decisions to not release a drug product or to initiate a recall are likely to disrupt the drug supply, manufacturers should contact CDER’s Drug Shortages Staff immediately at drugshortages@fda.hhs.gov. Contacting the Drug Shortages Staff in writing allows manufacturers of certain covered drug products to meet applicable obligations to report discontinuances or interruptions in drug manufacture under 21 U.S.C. 356C(b) and FDA’s associated regulations. This also allows FDA to evaluate the market and determine if additional steps are needed to avoid a supply disruption that may impact public health.",
+     "heading_path": "FDA alerts drug manufacturers to the risk of benzene contamination in certain drugs > Assessing Supply Disruptions"
+    },
+    {
+     "context": "Submitting Field Alert Reports"
+    },
+    {
+     "ref": "¶12",
+     "text": "NDA and ANDA holders are required to submit a Field Alert Report (FAR) if testing reveals that one or more distributed batches of a drug product fails to meet the specification established for it in the application (21 CFR 314.81(b)(1)(ii)). For products at risk of benzene contamination, this would encompass products for which testing reveals benzene above 2 ppm, or, for drug products that have daily doses of more than 10 g, if testing reveals benzene above the level that would expose consumers to more than 20 mcg per day from the product. FDA’s guidance Field Alert Report Submission: Questions and Answers Guidance for Industry addresses how to submit a FAR.",
+     "heading_path": "FDA alerts drug manufacturers to the risk of benzene contamination in certain drugs > Submitting Field Alert Reports"
+    },
+    {
+     "context": "Contacting FDA"
+    },
+    {
+     "ref": "¶13",
+     "text": "Manufacturers of nonapplication products, including over-the-counter monograph drug products, should contact FDA using the information in the table below when testing reveals benzene in a product.",
+     "list_item": true,
+     "heading_path": "FDA alerts drug manufacturers to the risk of benzene contamination in certain drugs > Contacting FDA"
+    },
+    {
+     "ref": "¶14",
+     "text": "Manufacturers should also be prepared to provide FDA with test results and any information available on the potential source of the benzene to assist in FDA’s analysis.",
+     "list_item": true,
+     "heading_path": "FDA alerts drug manufacturers to the risk of benzene contamination in certain drugs > Contacting FDA"
+    },
+    {
+     "ref": "¶15",
+     "text": "The following chart explains when and how manufacturers should contact FDA if testing reveals the presence of benzene and the information FDA may request from drug manufacturers when following up:",
+     "heading_path": "FDA alerts drug manufacturers to the risk of benzene contamination in certain drugs > Contacting FDA"
+    },
+    {
+     "context": "Finding"
+    },
+    {
+     "context": "Contact Method"
+    },
+    {
+     "context": "Notes"
+    },
+    {
+     "ref": "¶16",
+     "text": "Drug product batches already in distribution with benzene levels above 2 ppm (or, if the product has a daily dose of more than 10 g/day, with benzene above a level that would expose consumers to more than 20 mcg/day of benzene)",
+     "heading_path": "FDA alerts drug manufacturers to the risk of benzene contamination in certain drugs > Contacting FDA"
+    },
+    {
+     "ref": "¶17",
+     "text": "Contact appropriate OII Division Recall Coordinators",
+     "heading_path": "FDA alerts drug manufacturers to the risk of benzene contamination in certain drugs > Contacting FDA"
+    },
+    {
+     "ref": "¶18",
+     "text": "Field Alert Reports are required for ANDAs and NDAs with such findings for distributed drug products (21 CFR 314.81(b)(1)). Application holders notified of benzene results from the manufacturer of an API used in their product are required to submit FARs.",
+     "heading_path": "FDA alerts drug manufacturers to the risk of benzene contamination in certain drugs > Contacting FDA"
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "fda-alert-benzene-contamination.html:¶8-¶18#1",
+   "unit": "¶8-¶18",
+   "hash": "dca2adb5238e7765",
+   "item": {
+    "statement": "Ensure the safety and quality of every drug the site makes.",
+    "quote": "Drug manufacturers are required to ensure the safety and quality of their drugs.",
+    "clause_number": "¶8",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "fda-alert-benzene-contamination.html:¶8-¶18#2",
+   "unit": "¶8-¶18",
+   "hash": "3e0bbbaac217cf90",
+   "item": {
+    "statement": "Ensure products, whether marketed under approved applications or not (including over-the-counter monograph products), conform to appropriate quality specifications.",
+    "quote": "FDA reminds manufacturers of drugs marketed under approved applications and manufacturers of other drugs, including over-the-counter monograph drug products, of their obligation to ensure their products conform to appropriate quality specifications.",
+    "clause_number": "¶8",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "fda-alert-benzene-contamination.html:¶8-¶18#3",
+   "unit": "¶8-¶18",
+   "hash": "38a010726253e832",
+   "item": {
+    "statement": "Where benzene can form from benzoate and rise over shelf life, take this into account when deciding when to test for benzene (for example at release and on stability) and when setting an appropriate expiration date.",
+    "quote": "The formation of benzene from benzoate can lead to an increase in benzene content over a drug’s shelf-life and should be considered when determining the appropriate timing for benzene testing, e.g., testing at release and on stability (21 CFR 211.165, 211.166), and establishment of an appropriate expiration date (21 CFR 211.137).",
+    "clause_number": "¶9",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": "where benzene can form from benzoate"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "fda-alert-benzene-contamination.html:¶8-¶18#4",
+   "unit": "¶8-¶18",
+   "hash": "5ba8cb443e467884",
+   "item": {
+    "statement": "Give extra scrutiny to the potential risk of benzene contamination whenever raw materials change during the product lifecycle, including a change of raw material supplier.",
+    "quote": "FDA reminds manufacturers that changes in raw materials throughout the lifecycle of the drug, including changes in raw material suppliers, warrant additional scrutiny for the potential risk of benzene contamination.",
+    "clause_number": "¶9",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": "when raw materials or their suppliers change"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "fda-alert-benzene-contamination.html:¶8-¶18#5",
+   "unit": "¶8-¶18",
+   "hash": "b7d8b15c806f587e",
+   "item": {
+    "statement": "For drug products at risk of benzene contamination, test the products for benzene accordingly.",
+    "quote": "Manufacturers of drug products at risk for benzene contamination should test their drugs accordingly",
+    "clause_number": "¶10",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": "products at risk of benzene contamination"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "fda-alert-benzene-contamination.html:¶8-¶18#6",
+   "unit": "¶8-¶18",
+   "hash": "e574ef7ed1be54d9",
+   "item": {
+    "statement": "For drug products at risk of benzene contamination, do not release any batch that would expose consumers to more than 20 mcg of benzene per day from the product.",
+    "quote": "should not release any drug product batch that would expose consumers to more than 20 mcg per day of benzene from the product",
+    "clause_number": "¶10",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": "products at risk of benzene contamination"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "fda-alert-benzene-contamination.html:¶8-¶18#7",
+   "unit": "¶8-¶18",
+   "hash": "4769d4200d324cca",
+   "item": {
+    "statement": "For at-risk products with a 10 g daily dose, limit benzene to no more than 2 ppm.",
+    "quote": "For products that have a 10 g daily dose, this means that benzene levels should be limited to no more than 2 ppm.",
+    "clause_number": "¶10",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": "products with a 10 g daily dose"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "fda-alert-benzene-contamination.html:¶8-¶18#8",
+   "unit": "¶8-¶18",
+   "hash": "21d47be9aadb50bd",
+   "item": {
+    "statement": "For at-risk products with a daily dose above 10 g, set a product-specific benzene concentration limit that ensures consumers are not exposed to more than 20 mcg of benzene per day from the product.",
+    "quote": "For products that have a daily dose above 10 g, manufacturers should determine the appropriate concentration limit for their product that ensures consumers are not exposed to more than 20 mcg per day of benzene from the product.",
+    "clause_number": "¶10",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": "daily dose above 10 g"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "fda-alert-benzene-contamination.html:¶8-¶18#9",
+   "unit": "¶8-¶18",
+   "hash": "f9a1bc03809751a0",
+   "item": {
+    "statement": "If any batches already in distribution contain benzene above the acceptable level, contact the appropriate FDA field quality operations division to discuss voluntarily starting a recall.",
+    "quote": "If any drug product batches containing benzene above this level are already in distribution, the manufacturer should contact the appropriate Division of Pharmaceutical Quality Operations in the Office of Inspections and Investigations (OII) at FDA to discuss the voluntary initiation of a recall.",
+    "clause_number": "¶10",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": "distributed batches exceed the benzene level"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "fda-alert-benzene-contamination.html:¶8-¶18#10",
+   "unit": "¶8-¶18",
+   "hash": "2708e9ac7d6747d8",
+   "item": {
+    "statement": "If a decision not to release a product or to start a recall is likely to disrupt the drug supply, contact FDA's drug shortages staff immediately by email.",
+    "quote": "If decisions to not release a drug product or to initiate a recall are likely to disrupt the drug supply, manufacturers should contact CDER’s Drug Shortages Staff immediately at drugshortages@fda.hhs.gov.",
+    "clause_number": "¶11",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": "non-release or recall likely to disrupt supply"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "fda-alert-benzene-contamination.html:¶8-¶18#11",
+   "unit": "¶8-¶18",
+   "hash": "e6bd072b2cc2b413",
+   "item": {
+    "statement": "Holders of new or abbreviated drug applications must submit a Field Alert Report if testing shows that one or more distributed batches fail their application specification; for products at risk of benzene contamination this covers benzene above 2 ppm or, for products with daily doses of more than 10 g, benzene above the level that would expose consumers to more than 20 mcg per day.",
+    "quote": "NDA and ANDA holders are required to submit a Field Alert Report (FAR) if testing reveals that one or more distributed batches of a drug product fails to meet the specification established for it in the application (21 CFR 314.81(b)(1)(ii)). For products at risk of benzene contamination, this would encompass products for which testing reveals benzene above 2 ppm, or, for drug products that have daily doses of more than 10 g, if testing reveals benzene above the level that would expose consumers to more than 20 mcg per day from the product.",
+    "clause_number": "¶12",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": "distributed batches fail the application specification"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "fda-alert-benzene-contamination.html:¶8-¶18#12",
+   "unit": "¶8-¶18",
+   "hash": "ca74fe2e6879ffb4",
+   "item": {
+    "statement": "Manufacturers of products not marketed under an application, including over-the-counter monograph products, should contact FDA through the designated contact route when testing reveals benzene in a product.",
+    "quote": "Manufacturers of nonapplication products, including over-the-counter monograph drug products, should contact FDA using the information in the table below when testing reveals benzene in a product.",
+    "clause_number": "¶13",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": "testing reveals benzene in a nonapplication product"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "fda-alert-benzene-contamination.html:¶8-¶18#13",
+   "unit": "¶8-¶18",
+   "hash": "dd9bb7ed7a86cb27",
+   "item": {
+    "statement": "Be prepared to give FDA the test results and any available information on the potential source of the benzene.",
+    "quote": "Manufacturers should also be prepared to provide FDA with test results and any information available on the potential source of the benzene to assist in FDA’s analysis.",
+    "clause_number": "¶14",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": "testing reveals benzene"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "fda-alert-benzene-contamination.html:¶8-¶18#14",
+   "unit": "¶8-¶18",
+   "hash": "4f566e7d9e8f92de",
+   "item": {
+    "statement": "Where batches already in distribution contain benzene above 2 ppm (or, for products with a daily dose of more than 10 g, above the level that would expose consumers to more than 20 mcg per day), contact the appropriate FDA field division recall coordinators.",
+    "quote": "Contact appropriate OII Division Recall Coordinators",
+    "clause_number": "¶17",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": "distributed batches above the benzene level"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "fda-alert-benzene-contamination.html:¶8-¶18#15",
+   "unit": "¶8-¶18",
+   "hash": "ebddb80bdd4a2724",
+   "item": {
+    "statement": "Holders of new or abbreviated drug applications must submit Field Alert Reports for distributed products with benzene findings above the acceptable level.",
+    "quote": "Field Alert Reports are required for ANDAs and NDAs with such findings for distributed drug products (21 CFR 314.81(b)(1)).",
+    "clause_number": "¶18",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": "distributed products with such benzene findings"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI"
+   ]
+  },
+  {
+   "id": "fda-alert-benzene-contamination.html:¶8-¶18#16",
+   "unit": "¶8-¶18",
+   "hash": "ac2b18051b71f7d0",
+   "item": {
+    "statement": "Application holders notified by the manufacturer of an API used in their product of benzene results must submit Field Alert Reports.",
+    "quote": "Application holders notified of benzene results from the manufacturer of an API used in their product are required to submit FARs.",
+    "clause_number": "¶18",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": "notified of benzene results by the API manufacturer"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI"
+   ]
+  }
+ ]
+}

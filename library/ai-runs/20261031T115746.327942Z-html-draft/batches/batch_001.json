@@ -1,0 +1,425 @@
+{
+ "instructions": "You read an FDA web page (a Q&A page on CGMP, a Guide to Inspections, an Inspection Technical Guide, a Compliance\nPolicy Guide or an alert to manufacturers) and list what it expects of a drug manufacturer. Each unit is given as\nits paragraphs, each with its reference (\"Q4.2\" on a Q&A page: question 4, answer paragraph 2; \"¶17\" elsewhere) and\nits exact text; \"context\" entries are headings or labels (not citable); \"list_item\" marks a list item, whose\nlead-in is the paragraph ending in \":\" above it. Your output is checked by software against that exact text and by\nindependent reviewers, so precision matters more than wording.\n\nList each separate expectation as its own item, so that together your items cover every expectation in the unit.\nOne expectation is one thing a manufacturer must, should or may do, with all its conditions, numbers and\nqualifiers; do not split one expectation across items. What counts:\n- what FDA says a firm must, should or may do (\"FDA expects firms to have written procedures ...\", \"manufacturers\n  should ...\", \"are required by the CGMP regulations to ...\");\n- in a Guide to Inspections or Inspection Technical Guide, what the investigator is told to check (\"Determine\n  whether the firm has validated ...\", \"Check that ...\", \"Review the ...\"): write the practice the firm is expected\n  to have (\"Validate ...\"), not the investigator's task. When the text only says what to look at (\"Examine the\n  design of equipment\") and states no expectation, write the expectation the text itself gives in the same\n  paragraph; if it gives none, put the sentence in not_applicable (\"inspection step without a stated expectation\").\nFor each item:\n- statement: the expectation in your own plain English words, as one checklist item a site could be audited\n  against. Do not copy more than a few words in a row. Keep every condition (\"where\", \"if\", \"unless\", \"when\",\n  \"except\") and every number. Do not add anything the text does not say. The statement itself must carry every\n  condition or qualifier of the lead-in above a list item. The statement is shown to customers: never cite a\n  regulation, section, question or paragraph number in it (\"21 CFR 211.42(d)\", \"Q4\", \"see above\"); say what is\n  required instead.\n- quote: the exact span of ONE paragraph's text that states the whole expectation, copied character for character\n  (matched against the page text by software; do not fix typos or change punctuation, keep footnote marks as\n  printed). A quote may continue into the paragraphs after it in the same unit, in order (e.g. a lead-in and its\n  list items), but must start in the cited paragraph.\n- clause_number: the reference of the paragraph the quote starts in, exactly as given (\"Q4.2\", \"¶17\").\n- strength: \"mandatory\" where the text states a legal requirement (shall / must / is required / may not, \"the\n  CGMP regulations require\"); \"recommended\" for should, \"FDA expects\", \"FDA recommends\", and for an inspection\n  point; \"optional\" for may / is acceptable. A list item without such a word takes its lead-in's.\n- plant_types: from OSD, LIQ, SEMI, INJ, API (INJ = sterile injectables); the plant scope given unless the text\n  narrows it. Text limited to non-sterile products does not apply to INJ; text limited to sterile products\n  (parenterals, aseptic processing, terminal sterilization) applies only to INJ (and API where in scope).\n- numbers: every number, limit, frequency or period in the quote, as written (not regulation references).\n- condition: the condition or trigger in a few words, \"\" if none. This field only repeats what the statement\n  already says.\n- topic: the sub-topic id from TOPICS the expectation belongs to.\n\nDo not narrow or widen a term. Where the text gives examples (\"such as ...\"), keep them as examples; where it\ngives a closed list, keep it closed.\n\nSentences that state no expectation for the manufacturer go in not_applicable: the question itself, background and\nhistory, definitions, descriptions of what happened at a firm, FDA's own actions or enforcement, statements of\npurpose or scope, references, an inspection step without a stated expectation. One entry per SENTENCE, each with\nthe paragraph reference, the sentence's first 8 or more words copied exactly, and the reason in a few words. A\nsentence with \"should\", \"must\", \"FDA expects\" or an instruction to the investigator needs an item or a\nnot_applicable entry.\n\nWrite the answers file named in your task: {\"answers\": [one object per unit with \"unit\" set to the unit's \"id\"\nexactly, \"items\" and \"not_applicable\"]}.\n",
+ "topics": [
+  "QS.PQS",
+  "QS.MGMT",
+  "QS.QRM",
+  "QS.PQR",
+  "QS.CHANGE",
+  "QS.DEV",
+  "QS.CAPA",
+  "PER.ORG",
+  "PER.KEY",
+  "PER.TRAIN",
+  "PER.HYG",
+  "PER.GOWN",
+  "PREM.DESIGN",
+  "PREM.PROD",
+  "PREM.STORE",
+  "PREM.QC",
+  "PREM.ANC",
+  "EQ.DESIGN",
+  "EQ.MAINT",
+  "EQ.CLEAN",
+  "EQ.CAL",
+  "DOC.SYS",
+  "DOC.SPEC",
+  "DOC.MFR",
+  "DOC.BMR",
+  "DOC.SOP",
+  "DOC.RET",
+  "MAT.SUPP",
+  "MAT.RECV",
+  "MAT.SAMP",
+  "MAT.STATUS",
+  "MAT.PACK",
+  "MAT.REJ",
+  "PROD.GEN",
+  "PROD.XCONT",
+  "PROD.IPC",
+  "PROD.YIELD",
+  "PROD.PACK",
+  "PROD.REWORK",
+  "QC.GEN",
+  "QC.SAMP",
+  "QC.TEST",
+  "QC.OOS",
+  "QC.STAB",
+  "QC.REF",
+  "QC.MICRO",
+  "VAL.PLAN",
+  "VAL.QUAL",
+  "VAL.PROC",
+  "VAL.CLEAN",
+  "VAL.METH",
+  "CSV.VAL",
+  "CSV.ACCESS",
+  "CSV.AUDIT",
+  "CSV.ESIG",
+  "CSV.DI",
+  "UTIL.WATER",
+  "UTIL.HVAC",
+  "UTIL.GAS",
+  "CCS.STRAT",
+  "CCS.EM",
+  "CCS.CLEAN",
+  "CCS.PEST",
+  "STER.GRADE",
+  "STER.ASEPT",
+  "STER.APS",
+  "STER.STERIL",
+  "STER.FILT",
+  "STER.CCI",
+  "STER.LYO",
+  "API.START",
+  "API.PROC",
+  "API.IMP",
+  "API.SOLV",
+  "OUT.CONTRACT",
+  "OUT.AGREE",
+  "CMP.COMPL",
+  "CMP.RECALL",
+  "CMP.REPORT",
+  "SI.PROG",
+  "SI.TEAM",
+  "SI.REPORT",
+  "SI.FOLLOW",
+  "DIST.STORE",
+  "DIST.TRANS",
+  "DIST.RETURN",
+  "REL.QP",
+  "REL.REVIEW"
+ ],
+ "schema": {
+  "type": "object",
+  "required": [
+   "unit",
+   "items",
+   "not_applicable"
+  ],
+  "properties": {
+   "unit": {
+    "type": "string"
+   },
+   "items": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "statement",
+      "quote",
+      "clause_number",
+      "strength",
+      "plant_types",
+      "numbers",
+      "condition",
+      "topic"
+     ],
+     "properties": {
+      "statement": {
+       "type": "string"
+      },
+      "quote": {
+       "type": "string"
+      },
+      "clause_number": {
+       "type": "string"
+      },
+      "strength": {
+       "enum": [
+        "mandatory",
+        "recommended",
+        "optional"
+       ]
+      },
+      "plant_types": {
+       "type": "array",
+       "items": {
+        "enum": [
+         "OSD",
+         "LIQ",
+         "SEMI",
+         "INJ",
+         "API"
+        ]
+       }
+      },
+      "numbers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "condition": {
+       "type": "string"
+      },
+      "topic": {
+       "type": "string"
+      }
+     }
+    }
+   },
+   "not_applicable": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "clause_number",
+      "text",
+      "reason"
+     ],
+     "properties": {
+      "clause_number": {
+       "type": "string"
+      },
+      "text": {
+       "type": "string"
+      },
+      "reason": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  }
+ },
+ "units": [
+  {
+   "id": "fda-itg-water-pharmaceutical-use.html:¶1-¶16",
+   "source": "fda-itg-water-pharmaceutical-use.html",
+   "unit": "¶1-¶16",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "context": "Water for Pharmaceutical Use"
+    },
+    {
+     "context": "DEPT. OF HEALTH, EDUCATION, AND"
+    },
+    {
+     "context": "WELFARE PUBLIC HEALTH SERVICE"
+    },
+    {
+     "context": "FOOD AND DRUG ADMINISTRATION"
+    },
+    {
+     "context": "*ORA/ORO/DEIO/IB*"
+    },
+    {
+     "context": "Date: 12/31/86 Number: 46"
+    },
+    {
+     "context": "Related Program Areas:"
+    },
+    {
+     "context": "Drugs, Biologics, Medical Devices"
+    },
+    {
+     "context": "ITG SUBJECT: WATER FOR PHARMACEUTICAL USE"
+    },
+    {
+     "context": "PURPOSE"
+    },
+    {
+     "ref": "¶1",
+     "text": "This ITG will cover the different types of water used in the manufacture of drug products.",
+     "heading_path": "Water for Pharmaceutical Use > PURPOSE"
+    },
+    {
+     "context": "THE 8 TYPES OF WATER ARE:"
+    },
+    {
+     "context": "Non-potable"
+    },
+    {
+     "context": "Potable (drinkable) water"
+    },
+    {
+     "context": "USP purified water"
+    },
+    {
+     "context": "USP water for injection (WFI)"
+    },
+    {
+     "context": "USP sterile water for injection"
+    },
+    {
+     "context": "LUSP sterile water for inhalation"
+    },
+    {
+     "context": "USP bacteriostatic water for injection"
+    },
+    {
+     "context": "USP sterile water for irrigation"
+    },
+    {
+     "ref": "¶2",
+     "text": "The USP designation means that the water is the subject of an official monograph in the current US PHARMACOPEIA with various specifications for each type. The latter 4 waters are \"finished\" products that are packaged and labeled as such and need not be of concern during an inspection outside of plants which actually produce these products.",
+     "heading_path": "Water for Pharmaceutical Use > THE 8 TYPES OF WATER ARE:"
+    },
+    {
+     "ref": "¶3",
+     "text": "The USP purified water and the USP WFI on the other hand are components or \"ingredient materials\" as they are termed by the USP, intended to be used in the production of drug products.",
+     "heading_path": "Water for Pharmaceutical Use > THE 8 TYPES OF WATER ARE:"
+    },
+    {
+     "ref": "¶4",
+     "text": "But what about potable water as a component? Is it required to undergo routine sampling and testing before use in production? According to the preamble to the Current Good Manufacturing Practice regulations (CGMPs), no acceptance testing is required for potable water unless it is obtained from sources that do not control water quality to Environmental Protection Agency (EPA) standards. It is important to know that potable water may not be used to prepare USP dosage form drug products or for laboratory reagents to test solutions. However, potable water may be used to manufacture drug substances (also known as bulk drugs or bulk pharmaceutical chemicals).",
+     "heading_path": "Water for Pharmaceutical Use > THE 8 TYPES OF WATER ARE:"
+    },
+    {
+     "ref": "¶5",
+     "text": "During your inspection, determine the source of the water used for wet granulations or for any aqueous liquid preparations as well as for the laboratory. It should be of USP purified water quality both chemically and microbiologically.",
+     "heading_path": "Water for Pharmaceutical Use > THE 8 TYPES OF WATER ARE:"
+    },
+    {
+     "ref": "¶6",
+     "text": "Is non-potable water a concern during drug inspections? It may be present in a plant in the boiler feed water, cooling water for the air conditioning or the fire-sprinkler systems. Look carefully for any cross-connections to the potable water supply. Non-potable water supply lines should be clearly marked as such, especially when adjacent to potable water supply connections.",
+     "heading_path": "Water for Pharmaceutical Use > THE 8 TYPES OF WATER ARE:"
+    },
+    {
+     "context": "WATER PRODUCTION SOURCES"
+    },
+    {
+     "ref": "¶7",
+     "text": "The USP defines acceptable means of producing the various types of component waters. USP WFI may be made only by distillation or reverse osmosis.",
+     "heading_path": "Water for Pharmaceutical Use > WATER PRODUCTION SOURCES"
+    },
+    {
+     "ref": "¶8",
+     "text": "Potable water is obtained primarily from municipal water systems but may also be drawn from wells, rivers, or ponds.",
+     "heading_path": "Water for Pharmaceutical Use > WATER PRODUCTION SOURCES"
+    },
+    {
+     "context": "SOURCES OF WATER CONTAMINATION"
+    },
+    {
+     "ref": "¶9",
+     "text": "Piping system defects may cause contamination of clean incoming water. Because of this possibility, point-of-use sampling is indicated, that is, drawing the water sample after it has passed through the piping system.",
+     "heading_path": "Water for Pharmaceutical Use > SOURCES OF WATER CONTAMINATION"
+    },
+    {
+     "ref": "¶10",
+     "text": "Microbial contamination of oral liquid and topical drug products continues to be a significant problem, and is usually rooted in the use of contaminated water. Because of the potential health risks involved with the use of contaminated water, particular attention should be paid to deionized (DI) water systems, especially at small, less sophisticated manufacturers.",
+     "heading_path": "Water for Pharmaceutical Use > SOURCES OF WATER CONTAMINATION"
+    },
+    {
+     "ref": "¶11",
+     "text": "To minimize this contamination, the USP notes that water systems for pharmaceutical manufacturing should have \"corrective facilities.\" By this they mean access to the system for sanitization or introduction of steam, chlorinators, storage at elevated temperatures, filtration, etc. Inquire about these during your inspection.",
+     "heading_path": "Water for Pharmaceutical Use > SOURCES OF WATER CONTAMINATION"
+    },
+    {
+     "ref": "¶12",
+     "text": "Seasonal variations in temperature and growth of flora may also cause fluctuations in microbial content of source water. Monitoring should be frequent enough to cover these variations.",
+     "heading_path": "Water for Pharmaceutical Use > SOURCES OF WATER CONTAMINATION"
+    },
+    {
+     "context": "IN-PLANT WATER TREATMENT SYSTEMS"
+    },
+    {
+     "ref": "¶13",
+     "text": "Sand bed filters with or without chlorination equipment are common in larger plants. However, these may be centrally located and the water piped to the pharmaceutical manufacturing site. The operations of these systems should be validated along with any subsequent treatment.",
+     "heading_path": "Water for Pharmaceutical Use > IN-PLANT WATER TREATMENT SYSTEMS"
+    },
+    {
+     "ref": "¶14",
+     "text": "If storage tanks are used, determine the capacity, the rate of use, the frequency of flushing and sanitizing the internal surfaces.",
+     "heading_path": "Water for Pharmaceutical Use > IN-PLANT WATER TREATMENT SYSTEMS"
+    },
+    {
+     "ref": "¶15",
+     "text": "While depth or membrane type filters are often used in water systems, final filtration as the sole treatment for water purification is generally not acceptable. However, filtration could be acceptable, for example, when used for reducing microbial/particulate loads in potable water used as an ingredient in chemical manufacturing where water need not be sterile.",
+     "heading_path": "Water for Pharmaceutical Use > IN-PLANT WATER TREATMENT SYSTEMS"
+    },
+    {
+     "ref": "¶16",
+     "text": "Chlorination of potable water is an effective treatment if minimum levels of 0.2mg/liter of free chlorine are attained. Be aware however, that any carbon or charcoal filters in the system will remove this protective chlorine and thus eliminate any inhibitory effect on microbial growth after this point.",
+     "heading_path": "Water for Pharmaceutical Use > IN-PLANT WATER TREATMENT SYSTEMS"
+    }
+   ]
+  },
+  {
+   "id": "fda-itg-water-pharmaceutical-use.html:¶17-¶27",
+   "source": "fda-itg-water-pharmaceutical-use.html",
+   "unit": "¶17-¶27",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "¶17",
+     "text": "USP WFI is usually produced in a continuously circulating system maintained at an elevated temperature. The high temperature, maintained uniformly throughout the system by constant circulation, prevents significant microbial growth. A temperature of 80^oC is commonly used and is acceptable. Somewhat lower temperatures may also be acceptable, provided the firm has adequate data to demonstrate that a lower temperature works as intended. If WFI is held at ambient temperature rather than recirculation at elevated temperature, it must be dumped or diverted to non-WFI use 24 hours after being produced.",
+     "heading_path": "Water for Pharmaceutical Use > IN-PLANT WATER TREATMENT SYSTEMS"
+    },
+    {
+     "context": "GENERAL COMMENT"
+    },
+    {
+     "ref": "¶18",
+     "text": "Although there are no absolute microbial standards for water (other than water intended to be sterile), the CGMP regulations require that appropriate specifications be established and monitored. The specification must take into account the intended use of the water; i.e., water used to formulate a product should contain no organisms capable of growing in the product. Action or alert limits must be based upon validation data and must be set low enough to signal significant changes from normal operating conditions.",
+     "heading_path": "Water for Pharmaceutical Use > GENERAL COMMENT"
+    },
+    {
+     "context": "REFERENCES"
+    },
+    {
+     "ref": "¶19",
+     "text": "FDA Current Good Manufacturing Practice regulations, Federal Register, Vol.43, No. 190 - Sept. 29, 1978, I. General Comments and Subpart C, para. 211.48.",
+     "heading_path": "Water for Pharmaceutical Use > GENERAL COMMENT"
+    },
+    {
+     "ref": "¶20",
+     "text": "Water Programs, Environmental Protection Agency, National Interim Primary Drinking Water Regulations, Dec. 16, 1985, 40 Code of Federal Regulations, Part 141, para. 141.14 and 141.21.",
+     "heading_path": "Water for Pharmaceutical Use > GENERAL COMMENT"
+    },
+    {
+     "ref": "¶21",
+     "text": "United States Pharmacopeia XXI, Water for Pharmaceutical Purposes, section 1231 and Official Monographs-various types of water, 1985.",
+     "heading_path": "Water for Pharmaceutical Use > GENERAL COMMENT"
+    },
+    {
+     "ref": "¶22",
+     "text": "FDA LETTER TO THE PHARMACEUTICAL INDUSTRY Re: Validation and Control of Deionized Water Systems, - Daniel L. Michels, Bureau of Drugs, Aug. 1981.",
+     "heading_path": "Water for Pharmaceutical Use > GENERAL COMMENT"
+    },
+    {
+     "ref": "¶23",
+     "text": "FDA Inspection Technical Guide, Number 36, Reverse Osmosis, Oct. 1980.",
+     "heading_path": "Water for Pharmaceutical Use > GENERAL COMMENT"
+    },
+    {
+     "ref": "¶24",
+     "text": "FDA Inspection Technical Guide, Number 40, Bacterial Endotoxins/Pyrogens, March 1985.",
+     "heading_path": "Water for Pharmaceutical Use > GENERAL COMMENT"
+    },
+    {
+     "ref": "¶25",
+     "text": "Protection of Water Treatment Systems series, PMA Deionized Water Committee, PHARMACEUTICAL TECHNOLOGY - May, Sept. and Oct., 1983; Sept. 1984, and Nov. 1985.",
+     "heading_path": "Water for Pharmaceutical Use > GENERAL COMMENT"
+    },
+    {
+     "ref": "¶26",
+     "text": "Parenteral Drug Association, Design Concepts for the Validation of a Water for Injection System, Technical Report No. 4, 1983.",
+     "heading_path": "Water for Pharmaceutical Use > GENERAL COMMENT"
+    },
+    {
+     "ref": "¶27",
+     "text": "Monitoring and Validation of High Purity Water Systems with the LAL test for pyrogens, T.J. Novistsky, Pharmaceutical Engineering, March-April, 1984.",
+     "heading_path": "Water for Pharmaceutical Use > GENERAL COMMENT"
+    }
+   ]
+  }
+ ]
+}

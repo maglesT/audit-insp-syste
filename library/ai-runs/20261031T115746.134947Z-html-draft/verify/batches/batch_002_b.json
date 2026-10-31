@@ -1,0 +1,992 @@
+{
+ "role": "b",
+ "instructions": "You are a second, independent auditor. Check one checklist item against the FDA web page paragraph it claims to come from. You get\nthe unit's paragraphs (reference and exact text of the page; \"context\" entries are headings) and the item. Start from the TEXT:\nread the cited paragraph, the paragraphs its quote runs into, and its lead-in fully, then compare the item.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the lead-in above a list\nitem (the paragraph ending \":\" above it). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph expects what the statement asks for (an instruction\n  to the investigator, \"Determine whether the firm validated ...\", expects the firm to have that practice), the statement\n  adds nothing and omits nothing of that obligation, the strength (a legal requirement: shall/must/required = mandatory;\n  should, FDA expects/recommends, an inspection point = recommended; may/acceptable = optional; a list item takes\n  its lead-in's) matches, and the text applies to every listed plant\n  type (INJ = sterile injectables: text limited to non-sterile products does not apply to\n  INJ; text limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+ "units": [
+  {
+   "unit": "¶9-¶17",
+   "paragraphs": [
+    {
+     "ref": "¶9",
+     "text": "FDA expects firms to have written procedures (SOP's) detailing the cleaning processes used for various pieces of equipment. If firms have one cleaning process for cleaning between different batches of the same product and use a different process for cleaning between product changes, we expect the written procedures to address these different scenario. Similarly, if firms have one process for removing water soluble residues and another process for non-water soluble residues, the written procedure should address both scenarios and make it clear when a given procedure is to be followed. Bulk pharmaceutical firms may decide to dedicate certain equipment for certain chemical manufacturing process steps that produce tarry or gummy residues that are difficult to remove from the equipment. Fluid bed dryer bags are another example of equipment that is difficult to clean and is often dedicated to a specific product. Any residues from the cleaning process itself (detergents, solvents, etc.) also have to be removed from the equipment.",
+     "heading_path": "Validation of Cleaning Processes (7/93) > GUIDE TO INSPECTIONS VALIDATION OF CLEANING PROCESSES"
+    },
+    {
+     "ref": "¶10",
+     "text": "FDA expects firms to have written general procedures on how cleaning processes will be validated.",
+     "heading_path": "Validation of Cleaning Processes (7/93) > GUIDE TO INSPECTIONS VALIDATION OF CLEANING PROCESSES"
+    },
+    {
+     "ref": "¶11",
+     "text": "FDA expects the general validation procedures to address who is responsible for performing and approving the validation study, the acceptance criteria, and when revalidation will be required.",
+     "heading_path": "Validation of Cleaning Processes (7/93) > GUIDE TO INSPECTIONS VALIDATION OF CLEANING PROCESSES"
+    },
+    {
+     "ref": "¶12",
+     "text": "FDA expects firms to prepare specific written validation protocols in advance for the studies to be performed on each manufacturing system or piece of equipment which should address such issues as sampling procedures, and analytical methods to be used including the sensitivity of those methods.",
+     "heading_path": "Validation of Cleaning Processes (7/93) > GUIDE TO INSPECTIONS VALIDATION OF CLEANING PROCESSES"
+    },
+    {
+     "ref": "¶13",
+     "text": "FDA expects firms to conduct the validation studies in accordance with the protocols and to document the results of studies.",
+     "heading_path": "Validation of Cleaning Processes (7/93) > GUIDE TO INSPECTIONS VALIDATION OF CLEANING PROCESSES"
+    },
+    {
+     "ref": "¶14",
+     "text": "FDA expects a final validation report which is approved by management and which states whether or not the cleaning process is valid. The data should support a conclusion that residues have been reduced to an \"acceptable level.\"",
+     "heading_path": "Validation of Cleaning Processes (7/93) > GUIDE TO INSPECTIONS VALIDATION OF CLEANING PROCESSES"
+    },
+    {
+     "ref": "¶15",
+     "text": "The first step is to focus on the objective of the validation process, and we have seen that some companies have failed to develop such objectives. It is not unusual to see manufacturers use extensive sampling and testing programs following the cleaning process without ever really evaluating the effectiveness of the steps used to clean the equipment. Several questions need to be addressed when evaluating the cleaning process. For example, at what point does a piece of equipment or system become clean? Does it have to be scrubbed by hand? What is accomplished by hand scrubbing rather than just a solvent wash? How variable are manual cleaning processes from batch to batch and product to product? The answers to these questions are obviously important to the inspection and evaluation of the cleaning process since one must determine the overall effectiveness of the process. Answers to these questions may also identify steps that can be eliminated for more effective measures and result in resource savings for the company.",
+     "heading_path": "Validation of Cleaning Processes (7/93) > GUIDE TO INSPECTIONS VALIDATION OF CLEANING PROCESSES"
+    },
+    {
+     "ref": "¶16",
+     "text": "Determine the number of cleaning processes for each piece of equipment. Ideally, a piece of equipment or system will have one process for cleaning, however this will depend on the products being produced and whether the cleanup occurs between batches of the same product (as in a large campaign) or between batches of different products. When the cleaning process is used only between batches of the same product (or different lots of the same intermediate in a bulk process) the firm need only meet a criteria of, \"visibly clean\" for the equipment. Such between batch cleaning processes do not require validation.",
+     "heading_path": "Validation of Cleaning Processes (7/93) > GUIDE TO INSPECTIONS VALIDATION OF CLEANING PROCESSES"
+    },
+    {
+     "ref": "¶17",
+     "text": "FDA does not intend to set acceptance specifications or methods for determining whether a cleaning process is validated. It is impractical for FDA to do so due to the wide variation in equipment and products used throughout the bulk and finished dosage form industries. The firm's rationale for the residue limits established should be logical based on the manufacturer's knowledge of the materials involved and be practical, achievable, and verifiable. It is important to define the sensitivity of the analytical methods in order to set reasonable limits. Some limits that have been mentioned by industry representatives in the literature or in presentations include analytical detection levels such as 10 PPM, biological activity levels such as 1/1000 of the normal therapeutic dose, and organoleptic levels such as no visible residue.",
+     "heading_path": "Validation of Cleaning Processes (7/93) > GUIDE TO INSPECTIONS VALIDATION OF CLEANING PROCESSES"
+    }
+   ]
+  },
+  {
+   "unit": "¶18-¶26",
+   "paragraphs": [
+    {
+     "ref": "¶18",
+     "text": "Check the manner in which limits are established. Unlike finished pharmaceuticals where the chemical identity of residuals are known (i.e., from actives, inactives, detergents) bulk processes may have partial reactants and unwanted by-products which may never have been chemically identified. In establishing residual limits, it may not be adequate to focus only on the principal reactant since other chemical variations may be more difficult to remove. There are circumstances where TLC screening, in addition to chemical analyses, may be needed. In a bulk process, particularly for very potent chemicals such as some steroids, the issue of by-products needs to be considered if equipment is not dedicated. The objective of the inspection is to ensure that the basis for any limits is scientifically justifiable.",
+     "heading_path": "Validation of Cleaning Processes (7/93) > GUIDE TO INSPECTIONS VALIDATION OF CLEANING PROCESSES"
+    },
+    {
+     "context": "INTRODUCTION"
+    },
+    {
+     "context": "BACKGROUND"
+    },
+    {
+     "context": "GENERAL REQUIREMENTS"
+    },
+    {
+     "context": "EVALUATION OF CLEANING VALIDATION"
+    },
+    {
+     "ref": "¶19",
+     "text": "Examine the design of equipment, particularly in those large systems that may employ semi-automatic or fully automatic clean-in-place (CIP) systems since they represent significant concern. For example, sanitary type piping without ball valves should be used. When such nonsanitary ball valves are used, as is common in the bulk drug industry, the cleaning process is more difficult.",
+     "heading_path": "Validation of Cleaning Processes (7/93) > GUIDE TO INSPECTIONS VALIDATION OF CLEANING PROCESSES > IV. EVALUATION OF CLEANING VALIDATION"
+    },
+    {
+     "ref": "¶20",
+     "text": "When such systems are identified, it is important that operators performing cleaning operations be aware of problems and have special training in cleaning these systems and valves. Determine whether the cleaning operators have knowledge of these systems and the level of training and experience in cleaning these systems. Also check the written and validated cleaning process to determine if these systems have been properly identified and validated.",
+     "heading_path": "Validation of Cleaning Processes (7/93) > GUIDE TO INSPECTIONS VALIDATION OF CLEANING PROCESSES > IV. EVALUATION OF CLEANING VALIDATION"
+    },
+    {
+     "ref": "¶21",
+     "text": "In larger systems, such as those employing long transfer lines or piping, check the flow charts and piping diagrams for the identification of valves and written cleaning procedures. Piping and valves should be tagged and easily identifiable by the operator performing the cleaning function. Sometimes, inadequately identified valves, both on prints and physically, have led to incorrect cleaning practices.",
+     "heading_path": "Validation of Cleaning Processes (7/93) > GUIDE TO INSPECTIONS VALIDATION OF CLEANING PROCESSES > IV. EVALUATION OF CLEANING VALIDATION"
+    },
+    {
+     "ref": "¶22",
+     "text": "Always check for the presence of an often critical element in the documentation of the cleaning processes; identifying and controlling the length of time between the end of processing and each cleaning step. This is especially important for topicals, suspensions, and bulk drug operations. In such operations, the drying of residues will directly affect the efficiency of a cleaning process.",
+     "heading_path": "Validation of Cleaning Processes (7/93) > GUIDE TO INSPECTIONS VALIDATION OF CLEANING PROCESSES > IV. EVALUATION OF CLEANING VALIDATION"
+    },
+    {
+     "ref": "¶23",
+     "text": "Whether or not CIP systems are used for cleaning of processing equipment, microbiological aspects of equipment cleaning should be considered. This consists largely of preventive measures rather than removal of contamination once it has occurred. There should be some evidence that routine cleaning and storage of equipment does not allow microbial proliferation. For example, equipment should be dried before storage, and under no circumstances should stagnant water be allowed to remain in equipment subsequent to cleaning operations.",
+     "heading_path": "Validation of Cleaning Processes (7/93) > GUIDE TO INSPECTIONS VALIDATION OF CLEANING PROCESSES > IV. EVALUATION OF CLEANING VALIDATION"
+    },
+    {
+     "ref": "¶24",
+     "text": "Subsequent to the cleaning process, equipment may be subjected to sterilization or sanitization procedures where such equipment is used for sterile processing, or for nonsterile processing where the products may support microbial growth. While such sterilization or sanitization procedures are beyond the scope of this guide, it is important to note that control of the bioburden through adequate cleaning and storage of equipment is important to ensure that subsequent sterilization or sanitization procedures achieve the necessary assurance of sterility. This is also particularly important from the standpoint of the control of pyrogens in sterile processing since equipment sterilization processes may not be adequate to achieve significant inactivation or removal of pyrogens.",
+     "heading_path": "Validation of Cleaning Processes (7/93) > GUIDE TO INSPECTIONS VALIDATION OF CLEANING PROCESSES > IV. EVALUATION OF CLEANING VALIDATION"
+    },
+    {
+     "context": "Procedure and Documentation"
+    },
+    {
+     "ref": "¶25",
+     "text": "Examine the detail and specificity of the procedure for the (cleaning) process being validated, and the amount of documentation required. We have seen general SOPs, while others use a batch record or log sheet system that requires some type of specific documentation for performing each step. Depending upon the complexity of the system and cleaning process and the ability and training of operators, the amount of documentation necessary for executing various cleaning steps or procedures will vary.",
+     "heading_path": "Validation of Cleaning Processes (7/93) > GUIDE TO INSPECTIONS VALIDATION OF CLEANING PROCESSES > IV. EVALUATION OF CLEANING VALIDATION"
+    },
+    {
+     "ref": "¶26",
+     "text": "When more complex cleaning procedures are required, it is important to document the critical cleaning steps (for example certain bulk drug synthesis processes). In this regard, specific documentation on the equipment itself which includes information about who cleaned it and when is valuable. However, for relatively simple cleaning operations, the mere documentation that the overall cleaning process was performed might be sufficient.",
+     "heading_path": "Validation of Cleaning Processes (7/93) > GUIDE TO INSPECTIONS VALIDATION OF CLEANING PROCESSES > IV. EVALUATION OF CLEANING VALIDATION"
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "fda-ora-guide-cleaning-validation-1993.html:¶9-¶17#1",
+   "unit": "¶9-¶17",
+   "hash": "8b362d215e4187c0",
+   "item": {
+    "statement": "Have written cleaning procedures that describe the cleaning process used for each of the various pieces of equipment.",
+    "quote": "FDA expects firms to have written procedures (SOP's) detailing the cleaning processes used for various pieces of equipment.",
+    "clause_number": "¶9",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-cleaning-validation-1993.html:¶9-¶17#2",
+   "unit": "¶9-¶17",
+   "hash": "395a9fc68b836033",
+   "item": {
+    "statement": "Where one cleaning process is used between batches of the same product and a different one is used between product changes, make the written procedures cover both situations.",
+    "quote": "If firms have one cleaning process for cleaning between different batches of the same product and use a different process for cleaning between product changes, we expect the written procedures to address these different scenario.",
+    "clause_number": "¶9",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "different processes for same-product batches and product changes"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-cleaning-validation-1993.html:¶9-¶17#3",
+   "unit": "¶9-¶17",
+   "hash": "4b4495a1322abc66",
+   "item": {
+    "statement": "Where one process removes water-soluble residues and another removes non-water-soluble residues, make the written procedure cover both and state clearly when each procedure is to be followed.",
+    "quote": "Similarly, if firms have one process for removing water soluble residues and another process for non-water soluble residues, the written procedure should address both scenarios and make it clear when a given procedure is to be followed.",
+    "clause_number": "¶9",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "separate processes for water-soluble and non-water-soluble residues"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-cleaning-validation-1993.html:¶9-¶17#4",
+   "unit": "¶9-¶17",
+   "hash": "c6f725897c8238ee",
+   "item": {
+    "statement": "Bulk drug manufacturers may dedicate certain equipment to chemical process steps that leave tarry or gummy residues that are hard to remove.",
+    "quote": "Bulk pharmaceutical firms may decide to dedicate certain equipment for certain chemical manufacturing process steps that produce tarry or gummy residues that are difficult to remove from the equipment.",
+    "clause_number": "¶9",
+    "strength": "optional",
+    "plant_types": [
+     "API"
+    ],
+    "condition": "steps producing tarry or gummy residues"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-cleaning-validation-1993.html:¶9-¶17#5",
+   "unit": "¶9-¶17",
+   "hash": "cc0420aa6a30098b",
+   "item": {
+    "statement": "Remove from the equipment any residues left by the cleaning process itself, such as detergents and solvents.",
+    "quote": "Any residues from the cleaning process itself (detergents, solvents, etc.) also have to be removed from the equipment.",
+    "clause_number": "¶9",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-cleaning-validation-1993.html:¶9-¶17#6",
+   "unit": "¶9-¶17",
+   "hash": "7211f53ddc114e05",
+   "item": {
+    "statement": "Have written general procedures describing how cleaning processes will be validated.",
+    "quote": "FDA expects firms to have written general procedures on how cleaning processes will be validated.",
+    "clause_number": "¶10",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-cleaning-validation-1993.html:¶9-¶17#7",
+   "unit": "¶9-¶17",
+   "hash": "6b61c86e9194e689",
+   "item": {
+    "statement": "Make the general cleaning validation procedures state who is responsible for performing and for approving the validation study, the acceptance criteria, and when revalidation is required.",
+    "quote": "FDA expects the general validation procedures to address who is responsible for performing and approving the validation study, the acceptance criteria, and when revalidation will be required.",
+    "clause_number": "¶11",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-cleaning-validation-1993.html:¶9-¶17#8",
+   "unit": "¶9-¶17",
+   "hash": "75a20c7886069023",
+   "item": {
+    "statement": "Prepare specific written cleaning validation protocols in advance for the studies on each manufacturing system or piece of equipment, covering issues such as sampling procedures and the analytical methods to be used, including their sensitivity.",
+    "quote": "FDA expects firms to prepare specific written validation protocols in advance for the studies to be performed on each manufacturing system or piece of equipment which should address such issues as sampling procedures, and analytical methods to be used including the sensitivity of those methods.",
+    "clause_number": "¶12",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-cleaning-validation-1993.html:¶9-¶17#9",
+   "unit": "¶9-¶17",
+   "hash": "189dbdf6fcc39153",
+   "item": {
+    "statement": "Carry out cleaning validation studies according to the protocols and document the study results.",
+    "quote": "FDA expects firms to conduct the validation studies in accordance with the protocols and to document the results of studies.",
+    "clause_number": "¶13",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-cleaning-validation-1993.html:¶9-¶17#10",
+   "unit": "¶9-¶17",
+   "hash": "0cb9bee6fa24e10e",
+   "item": {
+    "statement": "Issue a final cleaning validation report, approved by management, that states whether or not the cleaning process is valid.",
+    "quote": "FDA expects a final validation report which is approved by management and which states whether or not the cleaning process is valid.",
+    "clause_number": "¶14",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-cleaning-validation-1993.html:¶9-¶17#11",
+   "unit": "¶9-¶17",
+   "hash": "f5ebb39162fd857c",
+   "item": {
+    "statement": "Ensure the cleaning validation data support a conclusion that residues have been reduced to an acceptable level.",
+    "quote": "The data should support a conclusion that residues have been reduced to an \"acceptable level.\"",
+    "clause_number": "¶14",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-cleaning-validation-1993.html:¶9-¶17#12",
+   "unit": "¶9-¶17",
+   "hash": "bf5d7c3d0c1050fa",
+   "item": {
+    "statement": "Where a cleaning process is used only between batches of the same product (or between lots of the same intermediate in a bulk process), the equipment need only meet a visibly clean criterion, and such between-batch cleaning does not need validation.",
+    "quote": "When the cleaning process is used only between batches of the same product (or different lots of the same intermediate in a bulk process) the firm need only meet a criteria of, \"visibly clean\" for the equipment. Such between batch cleaning processes do not require validation.",
+    "clause_number": "¶16",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "cleaning only between batches of the same product or intermediate"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-cleaning-validation-1993.html:¶9-¶17#13",
+   "unit": "¶9-¶17",
+   "hash": "370f16cca7ad33bc",
+   "item": {
+    "statement": "Base the rationale for established residue limits logically on knowledge of the materials involved, and make the limits practical, achievable and verifiable.",
+    "quote": "The firm's rationale for the residue limits established should be logical based on the manufacturer's knowledge of the materials involved and be practical, achievable, and verifiable.",
+    "clause_number": "¶17",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-cleaning-validation-1993.html:¶9-¶17#14",
+   "unit": "¶9-¶17",
+   "hash": "36416f691e6b3ced",
+   "item": {
+    "statement": "Define the sensitivity of the analytical methods so that reasonable residue limits can be set.",
+    "quote": "It is important to define the sensitivity of the analytical methods in order to set reasonable limits.",
+    "clause_number": "¶17",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-cleaning-validation-1993.html:¶18-¶26#1",
+   "unit": "¶18-¶26",
+   "hash": "b3cb346633ae7a6b",
+   "item": {
+    "statement": "Make sure the basis for any cleaning residue limits is scientifically justifiable.",
+    "quote": "The objective of the inspection is to ensure that the basis for any limits is scientifically justifiable.",
+    "clause_number": "¶18",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-cleaning-validation-1993.html:¶18-¶26#2",
+   "unit": "¶18-¶26",
+   "hash": "f9ae41b2f99d1c47",
+   "item": {
+    "statement": "When setting residue limits for bulk processes, do not rely only on the principal reactant where other chemical variations may be more difficult to remove.",
+    "quote": "In establishing residual limits, it may not be adequate to focus only on the principal reactant since other chemical variations may be more difficult to remove.",
+    "clause_number": "¶18",
+    "strength": "recommended",
+    "plant_types": [
+     "API"
+    ],
+    "condition": "other chemical variations harder to remove"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-cleaning-validation-1993.html:¶18-¶26#3",
+   "unit": "¶18-¶26",
+   "hash": "1b44878b22a9ef09",
+   "item": {
+    "statement": "In some circumstances, use TLC screening in addition to chemical analyses when establishing residue limits.",
+    "quote": "There are circumstances where TLC screening, in addition to chemical analyses, may be needed.",
+    "clause_number": "¶18",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "in some circumstances"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-cleaning-validation-1993.html:¶18-¶26#4",
+   "unit": "¶18-¶26",
+   "hash": "145de762fa7cc69a",
+   "item": {
+    "statement": "In a bulk process where equipment is not dedicated, consider by-products, particularly for very potent chemicals such as some steroids.",
+    "quote": "In a bulk process, particularly for very potent chemicals such as some steroids, the issue of by-products needs to be considered if equipment is not dedicated.",
+    "clause_number": "¶18",
+    "strength": "recommended",
+    "plant_types": [
+     "API"
+    ],
+    "condition": "equipment not dedicated"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-cleaning-validation-1993.html:¶18-¶26#5",
+   "unit": "¶18-¶26",
+   "hash": "be20ef335ed80b51",
+   "item": {
+    "statement": "Use sanitary type piping without ball valves, for example in large semi-automatic or fully automatic clean-in-place systems.",
+    "quote": "For example, sanitary type piping without ball valves should be used.",
+    "clause_number": "¶19",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-cleaning-validation-1993.html:¶18-¶26#6",
+   "unit": "¶18-¶26",
+   "hash": "fb5aef344aa1f10a",
+   "item": {
+    "statement": "Where systems with nonsanitary ball valves or clean-in-place systems are identified, ensure the operators who clean them are aware of the problems, have special training in cleaning these systems and valves, and have the related knowledge and experience.",
+    "quote": "When such systems are identified, it is important that operators performing cleaning operations be aware of problems and have special training in cleaning these systems and valves. Determine whether the cleaning operators have knowledge of these systems and the level of training and experience in cleaning these systems.",
+    "clause_number": "¶20",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "such systems identified"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-cleaning-validation-1993.html:¶18-¶26#7",
+   "unit": "¶18-¶26",
+   "hash": "91c7983dcead0382",
+   "item": {
+    "statement": "Make sure the written, validated cleaning process properly identifies and validates such clean-in-place and ball-valve systems.",
+    "quote": "Also check the written and validated cleaning process to determine if these systems have been properly identified and validated.",
+    "clause_number": "¶20",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-cleaning-validation-1993.html:¶18-¶26#8",
+   "unit": "¶18-¶26",
+   "hash": "7d76dd3f687490ba",
+   "item": {
+    "statement": "In larger systems, such as those with long transfer lines or piping, identify the valves in the flow charts, piping diagrams and written cleaning procedures.",
+    "quote": "In larger systems, such as those employing long transfer lines or piping, check the flow charts and piping diagrams for the identification of valves and written cleaning procedures.",
+    "clause_number": "¶21",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "larger systems with long transfer lines or piping"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-cleaning-validation-1993.html:¶18-¶26#9",
+   "unit": "¶18-¶26",
+   "hash": "de667570da8d76bd",
+   "item": {
+    "statement": "Tag piping and valves so that the operator doing the cleaning can identify them easily.",
+    "quote": "Piping and valves should be tagged and easily identifiable by the operator performing the cleaning function.",
+    "clause_number": "¶21",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-cleaning-validation-1993.html:¶18-¶26#10",
+   "unit": "¶18-¶26",
+   "hash": "d1084032f3f79121",
+   "item": {
+    "statement": "In the cleaning documentation, identify and control the time between the end of processing and each cleaning step, especially for topicals, suspensions and bulk drug operations.",
+    "quote": "Always check for the presence of an often critical element in the documentation of the cleaning processes; identifying and controlling the length of time between the end of processing and each cleaning step. This is especially important for topicals, suspensions, and bulk drug operations.",
+    "clause_number": "¶22",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-cleaning-validation-1993.html:¶18-¶26#11",
+   "unit": "¶18-¶26",
+   "hash": "8915a8fc1bd76ca1",
+   "item": {
+    "statement": "Consider the microbiological aspects of equipment cleaning, whether or not clean-in-place systems are used.",
+    "quote": "Whether or not CIP systems are used for cleaning of processing equipment, microbiological aspects of equipment cleaning should be considered.",
+    "clause_number": "¶23",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-cleaning-validation-1993.html:¶18-¶26#12",
+   "unit": "¶18-¶26",
+   "hash": "85255b08388f4a97",
+   "item": {
+    "statement": "Have evidence that routine cleaning and storage of equipment does not allow microbial growth.",
+    "quote": "There should be some evidence that routine cleaning and storage of equipment does not allow microbial proliferation.",
+    "clause_number": "¶23",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-cleaning-validation-1993.html:¶18-¶26#13",
+   "unit": "¶18-¶26",
+   "hash": "447fbc6f524943eb",
+   "item": {
+    "statement": "Dry equipment before storage and never allow stagnant water to remain in equipment after cleaning.",
+    "quote": "For example, equipment should be dried before storage, and under no circumstances should stagnant water be allowed to remain in equipment subsequent to cleaning operations.",
+    "clause_number": "¶23",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-cleaning-validation-1993.html:¶18-¶26#14",
+   "unit": "¶18-¶26",
+   "hash": "f01218477596a4d1",
+   "item": {
+    "statement": "Where equipment is later sterilized or sanitized, control bioburden through adequate cleaning and storage so that the sterilization or sanitization achieves the necessary assurance.",
+    "quote": "While such sterilization or sanitization procedures are beyond the scope of this guide, it is important to note that control of the bioburden through adequate cleaning and storage of equipment is important to ensure that subsequent sterilization or sanitization procedures achieve the necessary assurance of sterility.",
+    "clause_number": "¶24",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "equipment later sterilized or sanitized"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-cleaning-validation-1993.html:¶18-¶26#15",
+   "unit": "¶18-¶26",
+   "hash": "8752826b652bc137",
+   "item": {
+    "statement": "In sterile processing, control bioburden through adequate cleaning and storage of equipment to control pyrogens, since equipment sterilization may not adequately inactivate or remove pyrogens.",
+    "quote": "This is also particularly important from the standpoint of the control of pyrogens in sterile processing since equipment sterilization processes may not be adequate to achieve significant inactivation or removal of pyrogens.",
+    "clause_number": "¶24",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "sterile processing"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-cleaning-validation-1993.html:¶18-¶26#16",
+   "unit": "¶18-¶26",
+   "hash": "af4c78081a0a2ffc",
+   "item": {
+    "statement": "Set the amount of documentation for carrying out cleaning steps according to the complexity of the system and cleaning process and the ability and training of operators.",
+    "quote": "Depending upon the complexity of the system and cleaning process and the ability and training of operators, the amount of documentation necessary for executing various cleaning steps or procedures will vary.",
+    "clause_number": "¶25",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-cleaning-validation-1993.html:¶18-¶26#17",
+   "unit": "¶18-¶26",
+   "hash": "4d96c0060d05b0d2",
+   "item": {
+    "statement": "Where more complex cleaning procedures are required, such as certain bulk drug synthesis processes, document the critical cleaning steps.",
+    "quote": "When more complex cleaning procedures are required, it is important to document the critical cleaning steps (for example certain bulk drug synthesis processes).",
+    "clause_number": "¶26",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "more complex cleaning procedures"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-cleaning-validation-1993.html:¶18-¶26#18",
+   "unit": "¶18-¶26",
+   "hash": "a06a2b1fe605ae3f",
+   "item": {
+    "statement": "For complex cleaning procedures, keep specific documentation on the equipment itself showing who cleaned it and when.",
+    "quote": "In this regard, specific documentation on the equipment itself which includes information about who cleaned it and when is valuable.",
+    "clause_number": "¶26",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "more complex cleaning procedures"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-ora-guide-cleaning-validation-1993.html:¶18-¶26#19",
+   "unit": "¶18-¶26",
+   "hash": "47e6024967af9c96",
+   "item": {
+    "statement": "For relatively simple cleaning operations, documenting only that the overall cleaning process was performed may be sufficient.",
+    "quote": "However, for relatively simple cleaning operations, the mere documentation that the overall cleaning process was performed might be sufficient.",
+    "clause_number": "¶26",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "relatively simple cleaning operations"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  }
+ ]
+}
