@@ -32,7 +32,9 @@ For each item:
   point; "optional" for may / is acceptable. A list item without such a word takes its lead-in's.
 - plant_types: from OSD, LIQ, SEMI, INJ, API (INJ = sterile injectables); the plant scope given unless the text
   narrows it. Text limited to non-sterile products does not apply to INJ; text limited to sterile products
-  (parenterals, aseptic processing, terminal sterilization) applies only to INJ (and API where in scope).
+  (parenterals, aseptic processing, terminal sterilization) applies only to INJ (and API where in scope). Text
+  that rests on the CGMP regulations for finished pharmaceuticals (21 CFR 210/211, "drug product manufacturers",
+  "finished drug products") does not apply to API unless it speaks of APIs or bulk drug substances too.
 - numbers: every number, limit, frequency or period in the quote, as written (not regulation references).
 - condition: the condition or trigger in a few words, "" if none. This field only repeats what the statement
   already says.

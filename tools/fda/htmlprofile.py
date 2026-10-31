@@ -210,14 +210,15 @@ NOT_POSSIBLE = re.compile(r"\b(?:may|might|can|could)\s+not\s+(?:always\s+|neces
                           r"|\b(?:may|might|can|could)\s+(?:also\s+)?be\s+(?:more|less|very|particularly|difficult|"
                           r"hard|easier|harder)\b"
                           r"|\b(?:can|may|could)\s+be\s+(?:summarized|described|found|seen|viewed|accessed|in|present)\b"
-                          r"|\b(?:may|might|can|could)\s+(?:contaminate|harbor|enter|grow|survive|persist)\b", re.I)
+                          r"|\b(?:may|might|can|could)\s+(?:contaminate|harbor|enter|grow|survive|persist|need|be needed)\b",
+                          re.I)
 # "These regulations require ...", "§ 211.84 requires ...": a legal requirement stated in guidance
 REG_REQUIRES = re.compile(r"\b(?:regulations?|CGMPs?|CFR\s+[\d.()a-z]+|§\s*[\d.()a-z]+|section\s+\d[\d.()a-z]*|statute|Act)"
                           r"\s+(?:also\s+|explicitly\s+|specifically\s+|clearly\s+)?"
                           r"(?:require|requires|mandate|mandates|prohibit|prohibits)\b", re.I)
 # "determine if ...", "check if ...": an indirect question, not a condition
-ASK_IF = re.compile(r"\b(determine|check|see|verify|establish|ascertain|evaluate|assess|confirm|question|ask|know|"
-                    r"find out)\s+if\b", re.I)
+ASK_IF = re.compile(r"\b(determin(?:e|es|ed|ing)|check(?:s|ed|ing)?|see|verify(?:ing)?|establish(?:ing)?|ascertain|"
+                    r"evaluat(?:e|ing)|assess(?:ing)?|confirm(?:ing)?|question|ask|know|find out)\s+if\b", re.I)
 
 
 PLUSMINUS = re.compile(r"\+\s*/\s*-\s*")
@@ -233,6 +234,8 @@ def strength_of(text):
     prohibition; "may ... only" is a restriction (mandatory)."""
     text = NOT_POSSIBLE.sub(" ", text or "")
     text = MAY_ONLY.sub("must only", text)
+    if re.match(r"\s*Only\b", text) and re.search(r"\bmay\b", text):      # "Only validated methods may be used"
+        return "mandatory"
     if REG_REQUIRES.search(text):
         return "mandatory"
     return X.strength_words(text) or ("recommended" if EXPECTS.search(text) else None)
