@@ -125,23 +125,51 @@ def lead_in_text(ref, paras):
     return " ".join(out)
 
 
-def check_item(item, source):
-    """(findings, quote confirmed)."""
+MIN_QUOTE_TOKENS = 3
+DESIGNATION = re.compile(r"\((?:\d{1,2}|[ivx]{1,5}|[a-z])\)")
+
+
+def quote_found(q, ref, source):
+    """The quote's tokens are in the exact text of ref, starting in ref's own text and running on, if at all, into
+    its sub-paragraphs in order (designations "(1)" left out, as the prompt asks): whole tokens, and not a quote
+    found in the sub-paragraphs alone (that one cites the wrong paragraph)."""
+    if len(q) < MIN_QUOTE_TOKENS:
+        return False
+    rows = [(r, own_text(r, t)) for r, t in paragraphs(source) if r == ref or r.startswith(ref + "(")]
+    whole = quotes.toks(" ".join(t for _, t in rows))
+    kids = quotes.toks(" ".join(t for r, t in rows if r != ref))
+    return quotes.contains(q, whole) and not (kids and quotes.contains(q, kids))
+
+
+def item_hash(item):
+    """Fingerprint of what a verifier or reviewer judged: statement, quote, clause, strength, plant types."""
+    import hashlib
+    key = json.dumps([item.get(k) for k in ("statement", "quote", "clause_number", "strength", "plant_types")],
+                     ensure_ascii=False)
+    return hashlib.sha256(key.encode()).hexdigest()[:16]
+
+
+def check_item(item, source, section=None):
+    """(findings, quote confirmed); section: the section the drafter answered for (its items must cite it)."""
     import layer1
     paras = dict(paragraphs(source))
     ref = item["clause_number"].strip()
     out = []
     if ref not in paras:
         return [("clause", f"{ref!r} is not a paragraph of {source}")], False
-    kids = [t for r, t in paragraphs(source) if r == ref or r.startswith(ref + "(")]
+    if "(" not in ref and any(r.startswith(ref + "(") for r in paras):
+        return [("clause", f"{ref!r} is a section heading over paragraphs; cite the paragraph")], False
+    if section and section_of(ref) != section:
+        out.append(("clause", f"{ref!r} is not in section {section}"))
     q = quotes.toks(item["quote"])
-    found = quotes.contains(q, quotes.toks(" ".join(kids)))
+    found = quote_found(q, ref, source)
     if not found:
-        out.append(("quote", f"quote not in the text of {ref} (exact XML text)"))
+        out.append(("quote", f"quote not in the text of {ref} (exact XML text, starting in {ref} itself, "
+                             f"at least {MIN_QUOTE_TOKENS} tokens)"))
     for n in re.findall(r"\d+(?:[.,]\d+)?", item["statement"]):
         if not layer1.number_found(n, [item["quote"]]):
             out.append(("numbers", f"{n} in the statement, not in the quote"))
-    for n in re.findall(r"(?<![\w.^§])\d+(?:[.,]\d+)?", item["quote"]):
+    for n in re.findall(r"(?<![\w.^§])\d+(?:[.,]\d+)?", DESIGNATION.sub(" ", item["quote"])):
         if not layer1.number_found(n, [item["statement"]]):
             out.append(("numbers", f"{n} in the quote, not in the statement"))
     lead = lead_in_text(ref, paras)
@@ -217,7 +245,7 @@ def lead_in_covered(ref, sentence, items, source):
     if not kids:
         return False
     for k in kids:
-        mine = [i for i in items if i["clause_number"] == k or i["clause_number"].startswith(k + "(")]
+        mine = [i for i in items if i["clause_number"].strip() == k or i["clause_number"].strip().startswith(k + "(")]
         if not mine:
             return False
         for i in mine:
@@ -230,10 +258,11 @@ def coverage(source, section, items, na):
     """Obligation sentences of the section's paragraphs not covered (module docstring)."""
     import layer1
     gaps = []
-    na_keys = [(x["clause_number"], " ".join(quotes.toks(x["text"])[:8])) for x in na]
+    na_keys = [(x["clause_number"].strip(), quotes.toks(x["text"])) for x in na
+               if len(quotes.toks(x["text"])) >= 8]          # the first 8+ words, copied exactly (prompt)
     for ref, text in sections(source)[section]:
-        mine = [i["quote"] for i in items if i["clause_number"] == ref or ref.startswith(i["clause_number"] + "(")
-                or i["clause_number"].startswith(ref + "(")]
+        cl = [(i["clause_number"].strip(), i["quote"]) for i in items]
+        mine = [q for c, q in cl if c == ref or ref.startswith(c + "(") or c.startswith(ref + "(")]
         for s in obligations.sentences(own_text(ref, text)):
             if not vision.counts_for_coverage(s):
                 continue
@@ -250,7 +279,7 @@ def coverage(source, section, items, na):
                 if (sum(w in union for w in ws) / len(ws) >= vision.UNION_SHARE and not nums
                         and not (conds - layer1.conditions_in(" ".join(parts)))):
                     continue
-            if any(c in (ref, "") and k and k in " ".join(st) for c, k in na_keys):
+            if any(c == ref and quotes.contains(k[:max(8, min(len(k), len(st)))], st) for c, k in na_keys):
                 continue
             if lead_in_covered(ref, s, items, source):
                 continue
@@ -266,21 +295,25 @@ def ingest_draft(run):
     for bf in sorted((run / "batches").glob("batch_*.json")):
         batch = json.loads(bf.read_text())
         af = run / "answers" / bf.name
-        answers = {a["section"]: a for a in json.loads(af.read_text())["answers"]} if af.exists() else {}
+        answers, dup = {}, set()
+        for a in (json.loads(af.read_text())["answers"] if af.exists() else []):
+            if a["section"] in answers:
+                dup.add(a["section"])
+            answers[a["section"]] = a
         for u in batch["sections"]:
             a = answers.get(u["id"]) or answers.get(u["section"])
-            if a is None:
+            if a is None or {u["id"], u["section"]} & dup:     # missing, or answered twice: redraft
                 rep["failed"].append(u["id"])
                 continue
             rep["sections"] += 1
             rep["not_applicable"] += len(a["not_applicable"])
             for k, it in enumerate(a["items"], start=1):
-                found, ok = check_item(it, source)
+                found, ok = check_item(it, source, u["section"])
                 rep["quote_confirmed"] += ok
                 for c, _ in found:
                     rep["findings"][c] = rep["findings"].get(c, 0) + 1
                 items.append({"id": f"{u['id']}#{k}", "source": source, "section": u["section"], **it,
-                              "findings": found, "quote_confirmed": ok})
+                              "findings": found, "quote_confirmed": ok, "hash": item_hash(it)})
             rep["coverage_gaps"] += [{"section": u["section"], **g}
                                      for g in coverage(source, u["section"], a["items"], a["not_applicable"])]
     rep["items"] = len(items)
@@ -314,7 +347,7 @@ def prepare_verify(run):
             payload = {"role": role, "instructions": instructions, "schema": vision.VERIFY_SCHEMA,
                        "sections": [{"section": s, "paragraphs": [{"ref": r, "text": t} for r, t in secs[s]]}
                                     for s in chunk],
-                       "items": [{"id": it["id"], "section": it["section"],
+                       "items": [{"id": it["id"], "section": it["section"], "hash": it["hash"],
                                   "item": {k: it[k] for k in ("statement", "quote", "clause_number", "strength",
                                                               "plant_types", "condition")},
                                   "plant_scope": vision.scope(source)} for s in chunk for it in groups[s]]}
@@ -323,17 +356,43 @@ def prepare_verify(run):
     print(vdir, n, "batches")
 
 
+def proven_by_both(run, items):
+    """Ids that exactly one verifier A and exactly one verifier B answer "correct", each in a batch that showed
+    the item as it is now (same hash): a duplicate answer, a missing role, or an item redrafted since the
+    verify batches were made does not count."""
+    run = Path(run)
+    shown = {}
+    for bf in sorted((run / "verify" / "batches").glob("batch_*.json")):
+        role = bf.stem.rsplit("_", 1)[1]
+        for e in json.loads(bf.read_text())["items"]:
+            shown[(role, e["id"])] = e.get("hash")
+    seen, bad = {}, set()
+    for af in sorted((run / "verify" / "answers").glob("batch_*.json")):
+        role = af.stem.rsplit("_", 1)[1]
+        for a in json.loads(af.read_text())["answers"]:
+            key = (role, a["id"])
+            if key in seen:
+                bad.add(a["id"])
+            seen[key] = a["verdict"]
+    out = set()
+    for i in items:
+        h = i.get("hash") or item_hash(i)
+        if i["id"] in bad:
+            continue
+        if all(seen.get((r, i["id"])) == "correct" and shown.get((r, i["id"])) in (h, None) and (r, i["id"]) in shown
+               for r in ("a", "b")):
+            out.add(i["id"])
+    return out
+
+
 def ingest_verify(run):
     """Verifier agreement (vision.ingest_verify) and the automatic route per item -> route.json."""
     run = Path(run)
     rep = vision.ingest_verify(run)
-    verdicts = {}
-    for af in sorted((run / "verify" / "answers").glob("batch_*.json")):
-        for a in json.loads(af.read_text())["answers"]:
-            verdicts.setdefault(a["id"], []).append(a["verdict"])
     items = [json.loads(ln) for ln in (run / "items.jsonl").read_text().splitlines() if ln.strip()]
-    route = {i["id"]: ("auto" if not i["findings"] and i["quote_confirmed"] and verdicts.get(i["id"]) == ["correct", "correct"]
-                       else "review") for i in items}
+    ok = proven_by_both(run, items)
+    route = {i["id"]: ("auto" if not i["findings"] and i["quote_confirmed"] and i["id"] in ok else "review")
+             for i in items}
     out = {"items": len(items), "auto": sum(v == "auto" for v in route.values()),
            "review": sum(v == "review" for v in route.values()), "route": route,
            "decided": datetime.now(timezone.utc).isoformat(timespec="seconds"), "verify": {k: v for k, v in rep.items()

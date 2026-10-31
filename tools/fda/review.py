@@ -8,9 +8,10 @@
 
 The queue is every item of RUN/route.json routed to "review". Each decision is appended to
 library/review/decisions.jsonl with the reviewer's name and the UTC time (attributable, never edited in place; a
-later decision on the same item supersedes an earlier one). An item ships when its route is "auto", or when its
-latest decision is "correct", or "fix" (with the corrected statement; a corrected quote must still be found in the
-source text). Everything else does not ship.
+later decision on the same item supersedes an earlier one). A decision counts only for its run and for the item as
+it was decided (fingerprint of statement, quote, clause, strength, plant types). An item ships when its latest
+decision is "correct" or "fix" (with the corrected statement; a corrected quote must still be found in the source
+text), or when its route is "auto" and it has not been rejected. Everything else does not ship.
 """
 import argparse
 import json
@@ -30,13 +31,23 @@ def load(run):
     return run, items, route
 
 
-def decisions(path=DECISIONS):
-    """{item id: latest decision}."""
+def fingerprint(item):
+    sys.path.insert(0, str(HERE))
+    import xmlprofile
+    return item.get("hash") or xmlprofile.item_hash(item)
+
+
+def decisions(path=DECISIONS, run=None, items=None):
+    """{item id: latest decision}; with run and items, only decisions recorded for that run on the item as it is
+    now (same fingerprint), so a decision never carries over to a redrafted item with the same id."""
     out = {}
     if Path(path).exists():
         for ln in Path(path).read_text(encoding="utf-8").splitlines():
             if ln.strip():
                 d = json.loads(ln)
+                if run is not None and (d.get("run") != Path(run).name or d["id"] not in items
+                                        or d.get("item_hash") != fingerprint(items[d["id"]])):
+                    continue
                 out[d["id"]] = d
     return out
 
@@ -60,8 +71,15 @@ def queue(run):
 
 def shipped(run, path=DECISIONS):
     run, items, route = load(run)
-    dec = decisions(path)
-    return [k for k, v in route.items() if v == "auto" or dec.get(k, {}).get("decision") in ("correct", "fix")]
+    dec = decisions(path, run, items)
+    out = []
+    for k, v in route.items():
+        d = dec.get(k, {}).get("decision")
+        if d == "reject":                    # a reject (e.g. after the spot check) stops even an automatic item
+            continue
+        if v == "auto" or d in ("correct", "fix"):
+            out.append(k)
+    return out
 
 
 def decide(run, item_id, decision, by, statement=None, quote=None, note="", path=DECISIONS):
@@ -78,7 +96,8 @@ def decide(run, item_id, decision, by, statement=None, quote=None, note="", path
         it = dict(items[item_id], quote=quote)
         if items[item_id]["source"].endswith(".xml") and not xmlprofile.check_item(it, it["source"])[1]:
             raise SystemExit("the corrected quote is not in the source text")
-    rec = {"id": item_id, "run": Path(run).name, "decision": decision, "by": by.strip(),
+    rec = {"id": item_id, "run": Path(run).name, "item_hash": fingerprint(items[item_id]), "decision": decision,
+           "by": by.strip(),
            "at": datetime.now(timezone.utc).isoformat(timespec="seconds"), "note": note}
     if statement:
         rec["statement"] = statement
@@ -105,7 +124,8 @@ def main():
     d.add_argument("--note", default="")
     a = ap.parse_args()
     if a.cmd == "next":
-        dec = decisions()
+        run, items, _ = load(a.run)
+        dec = decisions(DECISIONS, run, items)
         todo = [i for i in queue(a.run) if i["id"] not in dec]
         if not todo:
             print("queue empty")
@@ -118,7 +138,7 @@ def main():
         print(decide(a.run, a.id, a.decision, a.by, a.statement, a.quote, a.note))
     else:
         run, items, route = load(a.run)
-        dec = decisions()
+        dec = decisions(DECISIONS, run, items)
         q = [k for k, v in route.items() if v == "review"]
         print({"items": len(items), "auto": sum(v == "auto" for v in route.values()), "queued": len(q),
                "decided": sum(k in dec for k in q), "shipped": len(shipped(a.run))})

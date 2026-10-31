@@ -44,9 +44,6 @@ class Checks(unittest.TestCase):
         self.assertIn("strength", {c for c, _ in X.check_item(sub, SRC)[0]})
 
 
-if __name__ == "__main__":
-    unittest.main()
-
 
 class ReviewQueue(unittest.TestCase):
     def test_decisions_are_attributable_and_ship_only_when_proven(self):
@@ -131,3 +128,79 @@ class Status(unittest.TestCase):
             self.assertEqual(json.loads(st.read_text())["documents"]["a.xml"]["runs"], ["r1"])
             with self.assertRaises(SystemExit):
                 status.set_status("zzz.xml", "drafted", path=st, worklist=wl)
+
+
+class ReviewFixes(unittest.TestCase):
+    """Findings of the independent review of the XML profile and the review queue (31 Oct 2026)."""
+
+    def test_empty_heading_or_child_quote_is_not_confirmed(self):
+        self.assertFalse(X.check_item(item(quote=""), SRC)[1])
+        self.assertFalse(X.check_item(item(quote=".;"), SRC)[1])
+        child = "Floors, walls, and ceilings of smooth, hard surfaces that are easily cleanable"
+        self.assertEqual(X.check_item(item(clause_number="211.42", quote=child), SRC)[0][0][0], "clause")
+        self.assertFalse(X.check_item(item(clause_number="211.42(c)", quote=child), SRC)[1])
+        self.assertTrue(X.check_item(item(clause_number="211.42(c)(10)(i)", quote=child), SRC)[1])
+        undivided = "A written record of the investigation shall be made and shall include the conclusions and followup."
+        self.assertTrue(X.check_item(item(clause_number="211.192", quote=undivided), SRC)[1])   # no paragraphs
+
+    def test_quote_runs_into_sub_paragraph_without_designation(self):
+        q = ("Samples shall be collected in accordance with the following procedures: The containers of components "
+             "selected shall be cleaned")
+        found, ok = X.check_item(item(clause_number="211.84(c)", quote=q, statement="Collect samples as follows."), SRC)
+        self.assertTrue(ok)
+        q2 = q.replace("procedures: The", "procedures: (1) The")
+        found, ok = X.check_item(item(clause_number="211.84(c)", quote=q2, statement="Collect samples as follows."), SRC)
+        self.assertNotIn("numbers", {c for c, _ in found})
+
+    def test_item_from_another_section(self):
+        self.assertIn("clause", {c for c, _ in X.check_item(item(), SRC, "211.42")[0]})
+
+    def test_not_applicable_needs_eight_words_of_its_paragraph(self):
+        base = len(X.coverage(SRC, "211.84", [], []))
+        self.assertGreater(base, 0)
+        self.assertEqual(len(X.coverage(SRC, "211.84", [], [{"clause_number": "", "text": "a", "reason": "x"}])), base)
+        self.assertEqual(len(X.coverage(SRC, "211.84", [], [{"clause_number": "", "text": "shall", "reason": "x"}])),
+                         base)
+
+    def test_route_needs_one_a_and_one_b_on_the_item_as_shown(self):
+        import json
+        import tempfile
+        with tempfile.TemporaryDirectory() as tmp:
+            run = Path(tmp)
+            (run / "verify" / "batches").mkdir(parents=True)
+            (run / "verify" / "answers").mkdir()
+            its = [dict(item(), id=n, hash=X.item_hash(item())) for n in ("x", "y", "z")]
+            for role, n in (("a", 1), ("b", 2)):
+                (run / "verify" / "batches" / f"batch_00{n}_{role}.json").write_text(json.dumps(
+                    {"items": [{"id": i["id"], "hash": i["hash"]} for i in its]}))
+            a = [{"id": "x", "verdict": "correct"}, {"id": "y", "verdict": "correct"}, {"id": "y", "verdict": "correct"},
+                 {"id": "z", "verdict": "correct"}]
+            b = [{"id": "x", "verdict": "correct"}, {"id": "y", "verdict": "correct"}]
+            (run / "verify" / "answers" / "batch_001_a.json").write_text(json.dumps({"answers": a}))
+            (run / "verify" / "answers" / "batch_002_b.json").write_text(json.dumps({"answers": b}))
+            self.assertEqual(X.proven_by_both(run, its), {"x"})              # y answered twice by A, z never by B
+            redrafted = [dict(its[0], statement="something else")]
+            redrafted[0]["hash"] = X.item_hash(redrafted[0])
+            self.assertEqual(X.proven_by_both(run, redrafted), set())
+
+    def test_decisions_belong_to_their_run_and_item_and_reject_beats_auto(self):
+        import json
+        import tempfile
+        import review
+        with tempfile.TemporaryDirectory() as tmp:
+            r1, r2 = Path(tmp) / "r1", Path(tmp) / "r2"
+            dec = Path(tmp) / "decisions.jsonl"
+            for r, stmt in ((r1, item()["statement"]), (r2, "A different redrafted statement.")):
+                r.mkdir()
+                (r / "items.jsonl").write_text(json.dumps(dict(item(statement=stmt), id="i", source=SRC)) + "\n" +
+                                               json.dumps(dict(item(), id="j", source=SRC)))
+                (r / "route.json").write_text(json.dumps({"route": {"i": "review", "j": "auto"}}))
+            review.decide(r1, "i", "correct", by="QA lead", path=dec)
+            self.assertEqual(sorted(review.shipped(r1, dec)), ["i", "j"])
+            self.assertEqual(review.shipped(r2, dec), ["j"])                 # r1's decision is not r2's item
+            review.decide(r1, "j", "reject", by="QA lead", note="spot check", path=dec)
+            self.assertEqual(review.shipped(r1, dec), ["i"])
+
+
+if __name__ == "__main__":
+    unittest.main()
