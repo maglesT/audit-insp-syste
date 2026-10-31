@@ -133,3 +133,37 @@ class ReviewRound2(unittest.TestCase):
         self.assertTrue(vision.clause_findings("4.22 iii", SRC, PAGE))     # 4.22 is printed on page 12
         self.assertTrue(vision.clause_findings("12", SRC, PAGE))           # a page number is not a clause
         self.assertEqual(vision.clause_findings("4.29", SRC, PAGE), [])
+
+
+class D46(unittest.TestCase):
+    """Owner decisions of 31 Oct (D46): header-carrying table quotes, footnote marks, lead-in conditions,
+    inspection-checklist strength."""
+
+    def test_footnote_mark_after_a_word(self):
+        self.assertEqual(quotes.toks("Cumene^1 | 0.7"), ["cumene", "1", "0.7"])
+        self.assertEqual(quotes.toks("10^-6"), ["10", "^", "−", "6"])               # a power of ten stays
+
+    def test_table_quote_with_its_headers(self):
+        head = "Grade | Maximum limits for total particle ≥ 0.5 µm/m3 | Maximum limits for total particle ≥ 5 µm/m3"
+        q = head + " || C | 352 000 | 3 520 000 | 2 930 | 29 300"
+        self.assertEqual(vision.table_quote_found(q, SRC, PAGE), (True, True))
+        swapped = head + " || B | 352 000 | 3 520 000 | 2 930 | 29 300"
+        self.assertEqual(vision.table_quote_found(swapped, SRC, PAGE), (False, False))
+
+    def test_lead_in_condition_of_a_table(self):
+        row = item(quote="Benzene | 2 | Carcinogen", statement="Limit benzene to 2 ppm.", clause_number="",
+                   strength="recommended", topic="MAT.SPEC")
+        checks = {c for c, _ in vision.check_item(row, "ich-q3c-r9.pdf", 11)[0]}
+        self.assertIn("lead-in", checks)
+        kept = dict(row, statement="Unless otherwise justified, and only if its use is unavoidable for a significant "
+                                   "therapeutic advance, limit benzene to 2 ppm.")
+        self.assertNotIn("lead-in", {c for c, _ in vision.check_item(kept, "ich-q3c-r9.pdf", 11)[0]})
+
+    def test_checklist_row_is_mandatory(self):
+        src = "india-cdsco-circ-2024-03-risk-based-inspection.pdf"
+        import layer1
+        self.assertIn(src, layer1.INSPECTION_CHECKLISTS)
+        row = item(quote="Specify the number of air changes in Grade A/B and Grade C areas.",
+                   statement="Specify the number of air changes in grade A/B and C areas.", clause_number="",
+                   strength="recommended", plant_types=["INJ"])
+        self.assertIn("strength", {c for c, _ in vision.check_item(row, src, 45)[0]})

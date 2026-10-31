@@ -48,10 +48,12 @@ LIGATURE = re.compile(r"ff[il]?|f[il]")
 def toks(text):
     """Comparable tokens: words, numbers with their decimal point or comma ("1.5", "3,520"), and the signs
     < > ≤ ≥ ± % ^ and a minus (−, or - and – before a number not after a word: "-20 °C", "10^-6"); case folded, NFKC, soft hyphens dropped. Punctuation and
-    spacing do not count, but every token must match whole: "15" is not "1.5", "inappropriate" is not
+    spacing do not count, and a footnote mark written "^1" right after a word counts as "1" (D46: the drafters quote
+footnote marks so; the readings print them flat), but every token must match whole: "15" is not "1.5", "inappropriate" is not
     "appropriate"."""
     text = unicodedata.normalize("NFKC", text).replace("\u00ad", "").casefold().replace("-", "-")
-    return [("−" if t in "-–" else t) for t in TOKEN.findall(text)]
+    text = re.sub(r"(?:(?<=[^\W\d_])|(?<=\)))\^(?=\d)", " ", text)     # a footnote mark after a word, "Cumene^1": the
+    return [("−" if t in "-–" else t) for t in TOKEN.findall(text)]   # readings print it flat ("Cumene1")
 
 
 def letters(text):

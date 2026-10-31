@@ -15,14 +15,22 @@ For each item:
   and every number. Do not add anything the page does not say.
 - quote: the exact span of the page that states the whole obligation, copied as printed, character for
   character from the TEXT LAYER where the text layer is right (it is matched against the page by software; do not
-  fix typos or change punctuation). For a table row, quote the cells of the row joined with " | ".
-- clause_number: the number printed for the clause or row ("9.3", "Part I 10.4", "4.19"), "" if none.
+  fix typos or change punctuation). For a table row, quote the column header cells joined with " | ", then
+  " || ", then the row's cells joined with " | ", starting with the row's first cell (its label), e.g.
+  "Grade | Air sample CFU/m3 || B | 10". Write a footnote mark printed after a word as "^" and the mark
+  ("Cumene^1", "specified^a"); a power of ten as "10^7" or "10^-6".
+- clause_number: the number exactly as printed for the clause or row ("9.3", "4.22 iii", "Table 2", "4.19"),
+  "" if none. Do not compose references that are not printed ("Table 2 Note 1", "Table 1 Grade B").
 - strength: "mandatory" for shall / must / is required / may not; "recommended" for should; "optional" for may.
-  Take it from the main verb of the quoted words, not from words in a condition.
+  Take it from the main verb of the quoted words, not from words in a condition. A row of an inspection
+  checklist ("Specify ...", "Whether ...", no modal verb) is "mandatory": inspectors grade sites against it.
 - plant_types: from OSD (oral solid dosage), LIQ (oral liquids), SEMI (semisolids), INJ (sterile injectables), API
   (active substances); the plant scope given with the page unless the page itself narrows it.
 - numbers: every number, limit, frequency or period in the quote, as printed in the image (10⁷ written "10^7").
-- condition: the condition or trigger of the obligation in a few words, "" if none.
+- condition: the condition or trigger of the obligation in a few words, "" if none. A condition stated in a
+  lead-in belongs to every table row or list item under it: "if their use is unavoidable ... levels should be
+  restricted as shown in Table 1, unless otherwise justified" applies to each row of Table 1, so each row's
+  statement and condition carry it.
 - topic: the sub-topic id from TOPICS the obligation belongs to (an audit area).
 - runs_over: true when the quote continues on the next page.
 - text_layer_differs: "" normally. If the image shows something the text layer gets wrong inside your quote
