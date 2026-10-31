@@ -37,7 +37,8 @@ Rules:
 - The row label is the first cell (cut to its first words, about 40 characters, with "…"), or "row <n>" when the
   first cell is empty. The reference is "Table <k> <label>"; a label already used gets "#2", "#3".
 - Text beside a table (in the same vertical band, outside the table) is read with pdfplumber and kept after the
-  marker, so nothing is dropped. Turned text outside the tables is added as lines of its own (_put_turned).
+  marker, so nothing is dropped; its turned text is read along its own line. The WHO side title is put right on
+  table pages (_put_turned).
 """
 import html
 import math
@@ -50,7 +51,8 @@ import pdfplumber
 
 if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parent))
-from common import CITABLE, Clause, devanagari_share, english_page, normalise, pdf_pages, unshift_glyphs  # noqa: E402
+from common import (CITABLE, SIDE_HEADER, Clause, devanagari_share, english_page, line_key, normalise,  # noqa: E402
+                    pdf_pages, unshift_glyphs)
 
 LABEL_MAX = 40
 ROW_LABEL = re.compile(r"\d{1,2}\.\d{1,2}(?:\.\d{1,2})?\.?")
@@ -252,13 +254,15 @@ def exponents(page):
 
 
 def mark_exponents(text, exps):
-    """Writes the exponents found by exponents() as "10^-6" where the flat text has "10-6" (in order, each once);
-    returns the text and the exponents not found in it."""
+    """Writes the exponents found by exponents() as "10^-6" where the flat text has "10-6" (in order, each once),
+    only where the text has no more flat matches than raised exponents of that form ("paragraph 107" and "107
+    CFU" with one raised 7: neither is marked); returns the text and the exponents not marked."""
     rest = []
     for exp in exps:
         rx = re.compile(r"(?<![\d.,^])10 ?" + re.escape(exp) + r"(?![\d^])")
-        m = rx.search(text)
-        if m:
+        hits = list(rx.finditer(text))
+        if hits and len(hits) <= exps.count(exp):     # more flat matches than raised exponents: which one is the
+            m = hits[0]                               # power of ten is not known, so none is marked
             text = text[:m.start()] + "10^" + exp + text[m.end():]
         else:
             rest.append(exp)
@@ -266,38 +270,69 @@ def mark_exponents(text, exps):
 
 
 def _beside_text(part):
-    """Text of a page part beside a table, upright text only: turned text (the running title WHO prints up the
-    margin) comes out backwards here ("4202 ,2501 .oN WHO Technical Report Series"); _put_turned adds it."""
-    return part.filter(lambda o: o.get("upright", True)).extract_text() or ""
+    """Text of a page part beside a table: upright text as pdfplumber reads it, then its turned lines read along
+    their own line (read as upright text they come out backwards, "4202 ,2501 .oN WHO Technical Report Series").
+    The WHO side title is left to _put_turned."""
+    text = part.filter(lambda o: o.get("upright", True)).extract_text() or ""
+    for words in _turned_lines(part):
+        if not _side_title(words):
+            text += "\n" + " ".join(words)
+    return text
+
+
+def _side_title(words):
+    return bool(SIDE_HEADER.match(line_key(" ".join(words))))
+
+
+def _prefix(toks, j, words):
+    """How many words of the turned line, from its start, toks[j:] holds in order; the last may be cut short
+    ("Serie" for "Series,"), as a table band cuts the line."""
+    n = 0
+    while j + n < len(toks) and n < len(words) and toks[j + n] == words[n]:
+        n += 1
+    if 0 < n < len(words) and j + n < len(toks) and len(toks[j + n]) >= 3 and words[n].startswith(toks[j + n]):
+        n += 1
+    return n
+
+
+def _suffix(toks, j, words):
+    """The longest m >= 2 such that toks[j:j + m] are the last m words of the turned line, in order (0 if none)."""
+    for m in range(min(len(words), len(toks) - j), 1, -1):
+        if toks[j:j + m] == words[-m:]:
+            return m
+    return 0
 
 
 def _put_turned(page, text, found):
-    """A table page's text with its turned lines outside the tables (the WHO side title up the margin) put right:
-    the table bands cut such a line in pieces, poppler prints its piece inside a body line in reversed order ("No.
-    1052, 2024 WHO Technical Report Series,"). Every run of tokens of a line that are words of a turned line, at
-    least 2 and at least half of that line's words, is taken out, and each turned line is added once as a line of its own, in reading order, where the
-    running-line rules recognise it."""
+    """A table page's text with the WHO side title (a turned line matching common.SIDE_HEADER, "WHO Technical
+    Report Series, No. 1052, 2024") put right: the table bands cut it, and poppler prints the pieces inside body
+    lines ("No. 1052, 2024 WHO Technical Report Series,"). Only in-order pieces of the title are taken out: a
+    prefix of at least 2 words and a suffix of at least 2 words that together make the whole title (or the whole
+    title in one run), so body words that merely share its words stay. The title is then added once as a line of
+    its own, where the running-line rules drop it. Other turned text is not touched here."""
     outside = page.filter(lambda o: o.get("object_type") != "char" or not any(_in_box(o, t.bbox) for t in found))
-    turned = _turned_lines(outside)
-    if not turned:
-        return text
     lines = text.split("\n")
-    for words in turned:
-        for i, ln in enumerate(lines):
-            toks, keep, j = ln.split(), [], 0
-            while j < len(toks):
-                pool, k = list(words), j
-                while k < len(toks) and toks[k] in pool:
-                    pool.remove(toks[k])
-                    k += 1
-                if k - j >= max(2, len(words) / 2):
-                    j = k
-                else:
-                    keep.append(toks[j])
-                    j += 1
-            if len(keep) < len(toks):
-                lines[i] = " ".join(keep)
-        lines.append(" ".join(words))
+    for words in (w for w in _turned_lines(outside) if _side_title(w)):
+        toks = [ln.split() for ln in lines]
+        whole = pre = suf = None
+        for i, tk in enumerate(toks):
+            for j in range(len(tk)):
+                n = _prefix(tk, j, words)
+                if n == len(words) and whole is None:
+                    whole = (i, j, n)
+                if 2 <= n < len(words) and (pre is None or n > pre[2]):
+                    pre = (i, j, n)
+                m = _suffix(tk, j, words)
+                if m and (suf is None or m > suf[2]):
+                    suf = (i, j, m)
+        if pre and suf and pre[:2] == suf[:2]:
+            suf = None
+        cuts = [whole] if whole else ([pre, suf] if pre and suf and pre[2] + suf[2] >= len(words) else [])
+        if not cuts:
+            continue
+        for i, j, n in sorted(cuts, key=lambda c: (c[0], -c[1])):
+            toks[i][j:j + n] = []
+        lines = [" ".join(tk) for tk in toks] + [" ".join(words)]
     return "\n".join(lines)
 
 

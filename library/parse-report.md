@@ -6,7 +6,7 @@ Totals: 180 sources, 22644 clauses (4642 table rows), 32752 obligation sentences
 
 A flag means the source needs a look: duplicate references; clauses over 4,000 characters (FDA guidance sections: 15,000); more than 10 % of the obligation sentences outside citable clauses; obligation sentences that an independent second extraction (`pdftotext -raw`, `tools/parse/crosscheck.py`) finds but the parse does not (possible misses); or text not assigned to any clause. Restarts = clauses whose numbering starts again (references with "#2"; each carries a note naming the heading it follows). Explanations are kept in `library/parse-explanations.csv`.
 
-Source fidelity (D39, `library/fidelity-report.md`): 20426 clauses of 146 PDF sources compared in both directions with a pdfminer.six reading; 1206 flagged, 68 not yet fixed or explained in `library/fidelity-explanations.csv`.
+Source fidelity (D39, `library/fidelity-report.md`): 20431 clauses of 146 PDF sources compared in both directions with a pdfminer.six reading; 1210 flagged, 0 not yet fixed or explained in `library/fidelity-explanations.csv`.
 
 | Source | Clauses | Table rows | Restarts | Numbered share | Obligations | Outside | Missed | Flags | Explanation |
 |---|---|---|---|---|---|---|---|---|---|

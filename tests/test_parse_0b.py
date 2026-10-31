@@ -93,11 +93,27 @@ class Turned(unittest.TestCase):
         self.assertIn("Comparison of filter test standards", t)
 
     def test_turned_margin_title_beside_a_table(self):
-        for name, backwards in (("who-trs1052-a4-qc-labs.pdf", "2501 .oN"), ("who-trs1033-a2-hbel-cleaning.pdf",
-                                                                             "3301 .oN")):
+        for name, backwards, title in (("who-trs1052-a4-qc-labs.pdf", "2501 .oN", "No. 1052, 2024"),
+                                       ("who-trs1033-a2-hbel-cleaning.pdf", "3301 .oN", "No. 1033, 2021")):
             t = text_of(parse(name))
             self.assertNotIn(backwards, t)
-            self.assertNotIn("WHO Technical Report Series, No. 1052, 2024", t)
+            self.assertNotIn(title, t)
+            self.assertNotIn("Technical Report Serie ", t)            # no piece cut by a table band is left
+
+    def test_side_title_rule_keeps_body_words(self):
+        words = "WHO Technical Report Series, No. 1052, 2024".split()
+        self.assertEqual(tables._prefix("published in the WHO Technical Report Series (3).".split(), 3, words), 4)
+        self.assertEqual(tables._suffix("(WHO Technical Report Series, No. 1044, 2022)".split(), 0, words), 0)
+        # a prefix alone (no suffix completing the title on the page) is never cut: inline citations stay
+        t = text_of(parse("who-trs1044-a4-tech-transfer.pdf"))
+        self.assertIn("published in the WHO Technical Report Series (3)", t)
+
+    def test_other_turned_text_is_kept(self):
+        # figure labels set turned (review finding): "Risk Management" must stay in the figure title
+        c = {x.ref: x for x in parse("fda-guidance-drug-shortage-risk-mgmt-draft-2022.pdf", "FDA")}
+        self.assertIn("Recommended Risk Management Plan Steps", c["IV.B"].text)
+        t = text_of(parse("japan-pmda-computerized-systems-guideline-2010-en.pdf", "OTHER"))
+        self.assertIn("5. Validation Plan Procedures", t)
 
 
 class Superscripts(unittest.TestCase):
@@ -105,6 +121,10 @@ class Superscripts(unittest.TestCase):
         self.assertEqual(tables.mark_exponents("SAL of ≤10-6 and 107 CFU", ["-6", "7"]),
                          ("SAL of ≤10^-6 and 10^7 CFU", []))
         self.assertEqual(tables.mark_exponents("page 1107", ["7"]), ("page 1107", ["7"]))   # not a power of ten
+        # an ordinary 107 before the power of ten on the same page: which one is meant is unknown, none is marked
+        self.assertEqual(tables.mark_exponents("paragraph 107 of the Act. Challenge with 107 CFU", ["7"]),
+                         ("paragraph 107 of the Act. Challenge with 107 CFU", ["7"]))
+        self.assertEqual(tables.mark_exponents("≤10-6 and ≤10-6", ["-6", "-6"]), ("≤10^-6 and ≤10^-6", []))
 
     def test_powers_of_ten(self):
         t = text_of(parse("ema-sterilisation-guideline.pdf", "EMA"))

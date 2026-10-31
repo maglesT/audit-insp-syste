@@ -8,6 +8,7 @@ A run of numbers that restarts at 1 is treated as a table of contents if the sam
 """
 import re
 import sys
+from collections import Counter
 from pathlib import Path
 
 if __package__ in (None, ""):
@@ -100,7 +101,9 @@ def parse(path, pages=None):
     margin_numbers = sum(1 for ln in every if MARGIN_NO.match(ln)) > 0.3 * max(1, len(every))
     # the side header as printed ("WHO Technical Report Series, No. 1052, 2024"); a table band read in layout mode
     # can put it inside a body line, where it is cut out
-    side = {ln.strip() for pg in pages for ln in pg.splitlines() if ln.strip() and line_key(ln) in running}
+    # (only text printed exactly so on several pages: a wrapped citation alone on its line is not the side header)
+    printed = Counter(t for pg in pages for t in {ln.strip() for ln in pg.splitlines() if line_key(ln) in running})
+    side = {t for t, n in printed.items() if t and n >= 3}
     side_rx = re.compile(r"\s*(?:" + "|".join(map(re.escape, sorted(side, key=len, reverse=True))) + r")\s*") \
         if side else None
     for pno, (page, is_en) in enumerate(zip(pages, english), start=1):
