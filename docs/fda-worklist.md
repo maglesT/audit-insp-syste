@@ -11,36 +11,36 @@ Columns: items = checklist items drafted; auto = items passing the automatic rou
 
 | # | Document | File | Priority | Plant types | Pages | Status | Items | Auto | Review |
 |---|---|---|---|---|---|---|---|---|---|
-| 1 | 21 CFR Part 211 - CGMP for finished pharmaceuticals | `ecfr-21cfr211-2026-10-27.xml` | must | OSD, LIQ, SEMI, INJ | - | verified (auto provisional, D50) | 399 | 365 | 34 |
-| 2 | 21 CFR Part 210 - CGMP in manufacturing processing packing or holding of drugs; general | `ecfr-21cfr210-2026-10-27.xml` | must | ALL | - | verified (auto provisional, D50) | 1 | 0 | 1 |
-| 3 | 21 CFR 314.81 Other postmarketing reports (incl. field alert reports  annual reports) | `fda-cfr-21-314.81.xml` | must | OSD, LIQ, SEMI, INJ | - | verified (auto provisional, D50) | 104 | 91 | 13 |
-| 4 | 21 CFR Part 11 Electronic Records; Electronic Signatures | `fda-cfr-21-part-11.xml` | must | ALL | - | verified (auto provisional, D50) | 48 | 45 | 3 |
-| 5 | 21 CFR 314.70 Supplements and other changes to an approved NDA | `fda-cfr-21-314.70.xml` | should | OSD, LIQ, SEMI, INJ | - | verified (auto provisional, D50) | 78 | 53 | 25 |
-| 6 | 21 CFR Part 200 General (incl. 200.10 contract facilities  200.50 ophthalmic sterility) | `fda-cfr-21-part-200.xml` | should | ALL | - | verified (auto provisional, D50) | 24 | 18 | 6 |
-| 7 | 21 CFR Part 207 Establishment registration  drug listing | `fda-cfr-21-part-207.xml` | should | ALL | - | verified (auto provisional, D50) | 149 | 121 | 28 |
-| 8 | 21 CFR Part 4 Regulation of combination products (Subpart A CGMP relevant for prefilled syringes/co-packaged; device QS parts not fetched) | `fda-cfr-21-part-4.xml` | should | INJ | - | verified (auto provisional, D50) | 64 | 27 | 37 |
+| 1 | 21 CFR Part 211 - CGMP for finished pharmaceuticals | `ecfr-21cfr211-2026-10-27.xml` | must | OSD, LIQ, SEMI, INJ | - | verified (re-verify pending, D50) | 399 | 71 | 328 |
+| 2 | 21 CFR Part 210 - CGMP in manufacturing processing packing or holding of drugs; general | `ecfr-21cfr210-2026-10-27.xml` | must | ALL | - | verified | 1 | 0 | 1 |
+| 3 | 21 CFR 314.81 Other postmarketing reports (incl. field alert reports  annual reports) | `fda-cfr-21-314.81.xml` | must | OSD, LIQ, SEMI, INJ | - | verified (re-verify pending, D50) | 104 | 1 | 103 |
+| 4 | 21 CFR Part 11 Electronic Records; Electronic Signatures | `fda-cfr-21-part-11.xml` | must | ALL | - | verified | 48 | 45 | 3 |
+| 5 | 21 CFR 314.70 Supplements and other changes to an approved NDA | `fda-cfr-21-314.70.xml` | should | OSD, LIQ, SEMI, INJ | - | verified (re-verify pending, D50) | 78 | 5 | 73 |
+| 6 | 21 CFR Part 200 General (incl. 200.10 contract facilities  200.50 ophthalmic sterility) | `fda-cfr-21-part-200.xml` | should | ALL | - | verified | 24 | 18 | 6 |
+| 7 | 21 CFR Part 207 Establishment registration  drug listing | `fda-cfr-21-part-207.xml` | should | ALL | - | verified (re-verify pending, D50) | 149 | 16 | 133 |
+| 8 | 21 CFR Part 4 Regulation of combination products (Subpart A CGMP relevant for prefilled syringes/co-packaged; device QS parts not fetched) | `fda-cfr-21-part-4.xml` | should | INJ | - | verified (re-verify pending, D50) | 64 | 0 | 64 |
 
 ## Group 2: FDA web pages (HTML, read directly)
 
 | # | Document | File | Priority | Plant types | Pages | Status | Items | Auto | Review |
 |---|---|---|---|---|---|---|---|---|---|
-| 9 | Guide to Inspections of Dosage Form Drug Manufacturers - CGMPs | `fda-ora-guide-dosage-form-cgmps-1993.html` | must | OSD, LIQ, SEMI, INJ | - | verified (auto provisional, D50) | 232 | 214 | 18 |
-| 10 | Guide to Inspections of High Purity Water Systems | `fda-ora-guide-high-purity-water-1993.html` | must | ALL | - | verified (auto provisional, D50) | 72 | 58 | 14 |
+| 9 | Guide to Inspections of Dosage Form Drug Manufacturers - CGMPs | `fda-ora-guide-dosage-form-cgmps-1993.html` | must | OSD, LIQ, SEMI, INJ | - | verified (re-verify pending, D50) | 232 | 1 | 231 |
+| 10 | Guide to Inspections of High Purity Water Systems | `fda-ora-guide-high-purity-water-1993.html` | must | ALL | - | verified (re-verify pending, D50) | 72 | 30 | 42 |
 | 11 | Guide to Inspections of Lyophilization of Parenterals | `fda-ora-guide-lyophilization-parenterals-1993.html` | must | INJ | - | not started | | | |
 | 12 | Guide to Inspections of Microbiological Pharmaceutical QC Laboratories | `fda-ora-guide-micro-qc-labs-1993.html` | must | ALL | - | not started | | | |
 | 13 | Guide to Inspections of Oral Solid Dosage Forms Pre/Post Approval Issues | `fda-ora-guide-osd-pre-post-approval-1994.html` | must | OSD | - | not started | | | |
 | 14 | Guide to Inspections of Pharmaceutical QC Laboratories | `fda-ora-guide-pharma-qc-labs-1993.html` | must | ALL | - | not started | | | |
 | 15 | Guide to Inspections of Sterile Drug Substance Manufacturers | `fda-ora-guide-sterile-drug-substance-1994.html` | must | API, INJ | - | not started | | | |
 | 16 | Guide to Inspections: Validation of Cleaning Processes | `fda-ora-guide-cleaning-validation-1993.html` | must | ALL | - | not started | | | |
-| 17 | Questions and Answers on CGMP for Drugs: Buildings and Facilities | `fda-cgmp-qa-buildings-facilities.html` | must | ALL | - | verified (auto provisional, D50) | 16 | 14 | 2 |
-| 18 | Questions and Answers on CGMP for Drugs: Control of Components and Drug Product Containers and Closures | `fda-cgmp-qa-components-containers-closures.html` | must | ALL | - | verified (auto provisional, D50) | 92 | 76 | 16 |
-| 19 | Questions and Answers on CGMP for Drugs: Equipment | `fda-cgmp-qa-equipment.html` | must | ALL | - | verified (auto provisional, D50) | 57 | 51 | 6 |
+| 17 | Questions and Answers on CGMP for Drugs: Buildings and Facilities | `fda-cgmp-qa-buildings-facilities.html` | must | ALL | - | verified | 16 | 14 | 2 |
+| 18 | Questions and Answers on CGMP for Drugs: Control of Components and Drug Product Containers and Closures | `fda-cgmp-qa-components-containers-closures.html` | must | ALL | - | verified (re-verify pending, D50) | 92 | 2 | 90 |
+| 19 | Questions and Answers on CGMP for Drugs: Equipment | `fda-cgmp-qa-equipment.html` | must | ALL | - | verified (re-verify pending, D50) | 57 | 2 | 55 |
 | 20 | Questions and Answers on CGMP for Drugs: General Provisions | `fda-cgmp-qa-general-provisions.html` | must | ALL | - | verified | 0 | 0 | 0 |
-| 21 | Questions and Answers on CGMP for Drugs: Holding and Distribution | `fda-cgmp-qa-holding-distribution.html` | must | ALL | - | verified (auto provisional, D50) | 9 | 7 | 2 |
-| 22 | Questions and Answers on CGMP for Drugs: Laboratory Controls | `fda-cgmp-qa-laboratory-controls.html` | must | ALL | - | verified (auto provisional, D50) | 80 | 67 | 13 |
-| 23 | Questions and Answers on CGMP for Drugs: Production and Process Controls | `fda-cgmp-qa-production-process-controls.html` | must | ALL | - | verified (auto provisional, D50) | 153 | 131 | 22 |
-| 24 | Questions and Answers on CGMP for Drugs: Records and Reports | `fda-cgmp-qa-records-reports.html` | must | ALL | - | verified (auto provisional, D50) | 31 | 26 | 5 |
-| 25 | Questions and Answers on CGMP for Drugs: Returned and Salvaged Drug Products | `fda-cgmp-qa-returned-salvaged.html` | must | ALL | - | verified (auto provisional, D50) | 15 | 10 | 5 |
+| 21 | Questions and Answers on CGMP for Drugs: Holding and Distribution | `fda-cgmp-qa-holding-distribution.html` | must | ALL | - | verified (re-verify pending, D50) | 9 | 4 | 5 |
+| 22 | Questions and Answers on CGMP for Drugs: Laboratory Controls | `fda-cgmp-qa-laboratory-controls.html` | must | ALL | - | verified (re-verify pending, D50) | 80 | 2 | 78 |
+| 23 | Questions and Answers on CGMP for Drugs: Production and Process Controls | `fda-cgmp-qa-production-process-controls.html` | must | ALL | - | verified (re-verify pending, D50) | 153 | 7 | 146 |
+| 24 | Questions and Answers on CGMP for Drugs: Records and Reports | `fda-cgmp-qa-records-reports.html` | must | ALL | - | verified (re-verify pending, D50) | 31 | 0 | 31 |
+| 25 | Questions and Answers on CGMP for Drugs: Returned and Salvaged Drug Products | `fda-cgmp-qa-returned-salvaged.html` | must | ALL | - | verified (re-verify pending, D50) | 15 | 0 | 15 |
 | 26 | CPG Sec. 490.200 Parametric Release of Parenteral Drug Products Terminally Sterilized by Moist Heat | `fda-cpg-490-200-parametric-release.html` | should | INJ | - | not started | | | |
 | 27 | FDA alert to drug manufacturers on risk of benzene contamination | `fda-alert-benzene-contamination.html` | should | OSD, LIQ, SEMI | - | not started | | | |
 | 28 | Guide to Inspections of Foreign Pharmaceutical Manufacturers | `fda-ora-guide-foreign-pharma-manufacturers-1996.html` | should | ALL | - | not started | | | |
