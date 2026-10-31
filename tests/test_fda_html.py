@@ -83,6 +83,49 @@ class Checks(unittest.TestCase):
         self.assertEqual(H.coverage(QA, "Q8", [item()], na), [])
         self.assertEqual(len(H.coverage(QA, "Q8", [item()], [dict(n, clause_number="Q8.3") for n in na])), 3)
 
+class ReviewFixes(unittest.TestCase):
+    DOSAGE = "fda-ora-guide-dosage-form-cgmps-1993.html"
+
+    def test_an_earlier_item_does_not_cover_the_next_paragraph(self):
+        ps = H.cited(self.DOSAGE)
+        unit = ps["¶18"]["unit"]
+        own17 = ps["¶17"]["text"]
+        it = item(clause_number="¶17", quote=own17)
+        gaps = H.coverage(self.DOSAGE, unit, [it], [])
+        self.assertIn("¶18", {g["clause"] for g in gaps})
+
+    def test_units_do_not_split_a_list_from_its_lead_in(self):
+        for src in ("fda-cpg-490-200-parametric-release.html", "fda-itg-lyophilization-parenterals.html",
+                    self.DOSAGE, "fda-ora-guide-osd-pre-post-approval-1994.html"):
+            for ref, p in H.cited(src).items():
+                if p["li"]:
+                    paras = [x for x in H.units(src)[p["unit"]] if x["cite"]]
+                    self.assertFalse(paras[0]["ref"] == ref, f"{src} {ref} opens a unit")
+
+    def test_quote_must_take_three_tokens_from_its_own_paragraph(self):
+        g = "fda-ora-guide-cleaning-validation-1993.html"
+        ps = H.cited(g)
+        last = ps["¶9"]["text"].split()[-1]
+        q = H.quotes.toks(last + " " + ps["¶10"]["text"])
+        self.assertFalse(H.quote_found(q, "¶9", g))
+        self.assertTrue(H.quote_found(H.quotes.toks(ps["¶10"]["text"]), "¶10", g))
+
+    def test_strength_words(self):
+        self.assertEqual(H.strength_of("Components may not be removed from quarantine until released."), "mandatory")
+        self.assertIsNone(H.strength_of("Sterilization may not be adequate to remove pyrogens."))
+        self.assertEqual(H.strength_of("USP WFI may be made only by distillation or reverse osmosis."), "mandatory")
+        self.assertNotEqual(H.strength_of("The residue may be only a milligram."), "mandatory")
+
+    def test_references_do_not_swallow_numbers(self):
+        self.assertIn("30", H.CFR_REF.sub(" ", "see 21 CFR 211.166, 30 days"))
+        self.assertIn("5", H.CFR_REF.sub(" ", "part 211 and 5 batches"))
+        self.assertNotIn("211.188", H.CFR_REF.sub(" ", "(21 CFR 211.186 and 211.188)"))
+
+    def test_review_text_for_an_unknown_clause(self):
+        import review
+        self.assertIn("not a paragraph", review.source_text(dict(item(clause_number="Q99.1"), source=QA, section="Q8")))
+
+
 class Review(unittest.TestCase):
     def test_review_queue_reads_html_items(self):
         import review

@@ -95,9 +95,14 @@ def source_text(item):
     if item.get("source", "").endswith(".html"):
         sys.path.insert(0, str(HERE))
         import htmlprofile
-        own, after = htmlprofile.run_on(item["clause_number"].strip(), item["source"])
-        lead = htmlprofile.lead_in(item["clause_number"].strip(), item["source"])
-        return "\n".join(([f"(lead-in) {lead}"] if lead else []) + [f"{item['clause_number']}  {own}"] + after[:3])
+        ref = item["clause_number"].strip()
+        if ref not in htmlprofile.cited(item["source"]):
+            unit = htmlprofile.units(item["source"]).get(item.get("section", ""), [])
+            return f"({ref!r} is not a paragraph of the page; the unit's text:)\n" + "\n".join(
+                f"{p['ref']}  {p['text']}" for p in unit if p["cite"])
+        own, after = htmlprofile.run_on(ref, item["source"])
+        lead = htmlprofile.lead_in(ref, item["source"])
+        return "\n".join(([f"(lead-in) {lead}"] if lead else []) + [f"{ref}  {own}"] + after)
     if item.get("source", "").endswith(".xml"):
         sys.path.insert(0, str(HERE))
         import xmlprofile

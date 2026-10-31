@@ -48,6 +48,8 @@ DRAFT_SCHEMA = json.loads(json.dumps(X.DRAFT_SCHEMA).replace('"section"', '"unit
 REFS_LABEL = re.compile(r"^(?:References?|Resources?|Related (?:Information|Links?)|For more information|"
                         r"Contact for further information)\s*:?\s*$", re.I)
 DATE = re.compile(r"^(?:Date|Posted|Last updated|Updated)\s*:", re.I)
+# Q&A blocks that are no answer text: they keep their number (references stay stable) but are not citable
+NOISE = re.compile(r"^(?:Back to Top|Date(?: Revised| Posted)?\s*:?\s*\d.*|CDER Key Officials)$", re.I)
 EMAIL = re.compile(r"^\S+@\S+$")
 
 
@@ -88,7 +90,7 @@ def paragraphs(source, cache={}):
             skip_li = False
             k += 1
             out.append({"ref": f"{q}.{k}", "unit": q, "text": t, "li": b["tag"] == "li", "heading": "",
-                        "cite": True})
+                        "cite": not NOISE.match(t)})
     else:
         heads, para = [], 0
         for b in bl:
@@ -107,7 +109,7 @@ def paragraphs(source, cache={}):
                             "heading": " > ".join(h for _, h in heads), "cite": True})
         size, start = 0, None
         for p in out:                             # units: runs of about UNIT_CHARS characters
-            if p["cite"] and (start is None or size + len(p["text"]) > UNIT_CHARS and size):
+            if p["cite"] and (start is None or size + len(p["text"]) > UNIT_CHARS and size and not p["li"]):
                 start, size = p["ref"], 0
             p["unit"] = start or "¶1"
             size += len(p["text"])
@@ -164,22 +166,32 @@ def lead_in(ref, source):
 
 
 def run_on(ref, source):
-    """The paragraph's text and the cited blocks after it in its unit: (own text, following texts)."""
-    paras = [p for p in units(source)[cited(source)[ref]["unit"]] if p["cite"]]
-    pos = next(k for k, p in enumerate(paras) if p["ref"] == ref)
-    return paras[pos]["text"], [p["text"] for p in paras[pos + 1:]]
+    """The paragraph's text and the cited blocks after it in its unit, up to the next heading or label:
+    (own text, following texts)."""
+    blocks = units(source)[cited(source)[ref]["unit"]]
+    pos = next(k for k, p in enumerate(blocks) if p["ref"] == ref)
+    after = []
+    for p in blocks[pos + 1:]:
+        if not p["cite"]:
+            break
+        after.append(p["text"])
+    return blocks[pos]["text"], after
+
+
+MIN_OWN = 3
 
 
 def quote_found(q, ref, source):
-    """The quote's tokens are in ref's text, starting there and running on, if at all, into the blocks after it in
-    the unit; not a quote found in the following blocks alone (that one cites the wrong paragraph)."""
+    """The quote is a run of the exact tokens of ref's text, running on, if at all, into the blocks after it in
+    the unit (not across a heading), and at least MIN_OWN of its tokens (or all of it) come from ref itself: a
+    quote that only touches ref's last word and is really the next paragraph's cites the wrong paragraph."""
     own, after = run_on(ref, source)
     if not q or (len(q) < X.MIN_QUOTE_TOKENS and q != quotes.toks(own)):
         return False
-    if not quotes.contains(q, quotes.toks(" ".join([own] + after))):
-        return False
-    rest = quotes.toks(" ".join(after))
-    return not (rest and quotes.contains(q, rest)) or quotes.contains(q, quotes.toks(own))
+    o = quotes.toks(own)
+    whole = o + quotes.toks(" ".join(after))
+    need = min(MIN_OWN, len(q))
+    return any(whole[s:s + len(q)] == q and len(o) - s >= need for s in range(len(o)))
 
 
 EXPECTS = re.compile(r"\b(?:FDA|the agency|we)\s+(?:also\s+|further\s+|generally\s+)?(?:expects?|recommends?|"
@@ -187,17 +199,16 @@ EXPECTS = re.compile(r"\b(?:FDA|the agency|we)\s+(?:also\s+|further\s+|generally
 # Inspection points in ORA guides and ITGs: a sentence that starts with an instruction to the investigator.
 IMPERATIVE = re.compile(r"^(?:Also,?\s+|Always\s+|In addition,?\s+|Then\s+)?(?:Determine|Check|Examine|Review|"
                         r"Evaluate|Verify|Confirm|Assure|Ensure|Inspect|Observe|Look|Find out|Establish|Compare|"
-                        r"Obtain|Audit|Document|Assess|Identify|Note|Ask|Question)\b")
+                        r"Obtain|Audit|Document|Assess|Identify|Note|Ask|Question)\b(?!\s+(?:of|that|is|was|were|are)\b)")
 
 
 # "may not be adequate" states a possibility, not a prohibition (Guide to Inspections: "equipment sterilization
 # processes may not be adequate to achieve significant inactivation ... of pyrogens")
-NOT_POSSIBLE = re.compile(r"\b(?:may|might|can|could)\s+not\s+(?:always\s+|necessarily\s+)?(?:be\s+)?(?:adequate|"
+NOT_POSSIBLE = re.compile(r"\b(?:may|might|can|could)\s+not\s+(?:always\s+|necessarily\s+)?be\s+(?:adequate|"
                           r"sufficient|suitable|appropriate|possible|necessary|effective|accurate|representative|"
-                          r"reliable|detected|detect|reflect|remove|available|feasible|practical|uniform|soluble)\w*"
+                          r"feasible|practical|uniform|soluble|reliable)\b"
                           r"|\b(?:may|might|can|could)\s+(?:also\s+)?be\s+(?:more|less|very|particularly|difficult|"
-                          r"hard|easier|harder)\b",
-                          re.I)
+                          r"hard|easier|harder)\b", re.I)
 # "determine if ...", "check if ...": an indirect question, not a condition
 ASK_IF = re.compile(r"\b(determine|check|see|verify|establish|ascertain|evaluate|assess|confirm|question|ask|know|"
                     r"find out)\s+if\b", re.I)
@@ -208,7 +219,7 @@ PLUSMINUS = re.compile(r"\+\s*/\s*-\s*")
 # non-sterile unit", "(other than water intended to be sterile)"
 NOT_SCOPE = re.compile(r"\bprobability of (?:a )?non-?sterile units?\b|\((?:other than|except|excluding)[^()]*\)", re.I)
 # "may be made only by distillation": a restriction, not a permission
-MAY_ONLY = re.compile(r"\bmay\s+(?:\w+\s+){0,2}only\b", re.I)
+MAY_ONLY = re.compile(r"\bmay\s+(?:be\s+\w+\s+)?only\b(?!\s+(?:a|an|one|be|rarely|occasionally)\b)", re.I)
 
 
 def strength_of(text):
@@ -264,10 +275,10 @@ def check_item(item, source, unit=None):
 
 
 # "21 CFR 211.42(d)", "section 501(a)(2)(B)", "Part 11": references, not numbers a statement must repeat
-_R = r"[\d.]+(?:\([^()\s]{1,5}\))*"
+_R = r"\d+\.\d+(?:\([^()\s]{1,5}\))*"
 _S = r"(?:\s*,\s*(?:and\s+|or\s+)?|\s+and\s+|\s+or\s+|\s*[-–]\s*|\s+through\s+)"
-CFR_REF = re.compile(rf"\b(?:\d+\s+)?CFR\s+(?:parts?\s+)?{_R}(?:{_S}{_R})*"
-                     rf"|\bsection\s+\d+[A-Za-z]?(?:\([^()\s]{{1,5}}\))*|\bparts?\s+\d+(?:{_S}\d+)*", re.I)
+CFR_REF = re.compile(rf"\b(?:\d+\s+)?CFR\s+(?:parts?\s+\d{{2,}}(?:{_S}\d{{2,}}\b)*|{_R}(?:{_S}{_R})*)"
+                     rf"|\bsection\s+\d+[A-Za-z]?(?:\([^()\s]{{1,5}}\))*|\bparts?\s+\d{{2,}}(?:{_S}\d{{3,}}\b)*", re.I)
 
 
 def coverage(source, unit, items, na):
@@ -280,9 +291,7 @@ def coverage(source, unit, items, na):
     order = [p["ref"] for p in paras]
     for p in paras:
         ref, pos = p["ref"], order.index(p["ref"])
-        mine = [i["quote"] for i in items if i["clause_number"].strip() in order
-                and (i["clause_number"].strip() == ref or order.index(i["clause_number"].strip()) < pos
-                     or lead_in(i["clause_number"].strip(), source) and i["clause_number"].strip() in order[pos + 1:])]
+        mine = [i["quote"] for i in items if covers(i, ref, source)]
         for s in obligations.sentences(p["text"]):
             if not counts(s):
                 continue
@@ -305,6 +314,43 @@ def coverage(source, unit, items, na):
                 continue
             gaps.append({"clause": ref, "sentence": s[:300]})
     return gaps
+
+
+def lead_in_ref(ref, source):
+    """The reference of the paragraph whose ":" introduces the list item ref ("" if none; see lead_in)."""
+    paras = [p for p in units(source)[cited(source)[ref]["unit"]] if p["cite"]]
+    pos = next(k for k, p in enumerate(paras) if p["ref"] == ref)
+    if not paras[pos]["li"]:
+        return ""
+    for p in reversed(paras[:pos]):
+        if not p["li"]:
+            return p["ref"] if p["text"].rstrip().endswith(":") else ""
+    return ""
+
+
+def covers(item, ref, source):
+    """Can the item's quote cover sentences of paragraph ref? When it cites ref; when it cites an earlier paragraph
+    and its quote runs on into ref (its last tokens are in ref's text, not in the cited paragraph alone); when it
+    cites a list item whose lead-in is ref."""
+    c = item["clause_number"].strip()
+    if c not in cited(source):
+        return False
+    if c == ref:
+        return True
+    if lead_in_ref(c, source) == ref:
+        return True
+    own, after = run_on(c, source)
+    if ref not in [p["ref"] for p in units(source)[cited(source)[c]["unit"]]]:
+        return False
+    q = quotes.toks(item["quote"])
+    if not q or quotes.contains(q, quotes.toks(own)):
+        return False
+    texts = [p for p in units(source)[cited(source)[c]["unit"]] if p["cite"]]
+    k = next(i for i, p in enumerate(texts) if p["ref"] == c)
+    if ref not in [p["ref"] for p in texts[k + 1:k + 1 + len(after)]]:
+        return False
+    return bool(set(q[-4:]) & set(quotes.toks(cited(source)[ref]["text"]))) or quotes.contains(
+        quotes.toks(cited(source)[ref]["text"])[:4], q)
 
 
 def lead_in_covered(ref, sentence, items, source):

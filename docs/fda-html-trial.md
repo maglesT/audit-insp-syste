@@ -53,3 +53,17 @@ Verifiers (blind, A starts from the item, B from the text): both correct 140 of 
 - Full build: document by document in work-list order (9 CGMP Q&A pages, Guides to Inspections, ITGs, CPG
   490.200, benzene alert). Whole-document runs from the trial (Q&A Equipment, ITG Water) count as builds after the
   redraft of their gaps.
+
+## Review fixes (independent review of PR #42)
+- Coverage: an item covers only its own paragraph, the paragraphs its quote really runs into, and (for a list
+  item) its lead-in; before, any item citing an earlier paragraph in the unit counted (18 sentences hidden in a
+  probe).
+- Units never start at a list item, so a list stays with its lead-in (CPG ¶21/¶22, ITG lyophilization ¶9/¶10, ...).
+- A quote must take at least 3 of its tokens (or all) from its cited paragraph and does not run across a heading.
+- "may not be removed" stays a prohibition (only "may not be adequate / sufficient / ..." is a possibility);
+  "may be only a milligram" is no restriction; references no longer swallow a following number ("211.166, 30 days").
+- Q&A "Back to Top", "Date Revised 6/18/2015", "CDER Key Officials" are not citable (they keep their number, so
+  references stay stable). The review queue shows the unit's text for an item citing an unknown paragraph.
+- Effect on the documents already built (Q&A Equipment, Buildings and Facilities, General Provisions): none (same
+  gaps, same route); the trial's guide runs (cleaning validation, CPG, ITG water, benzene) are trial-only, their
+  documents are built whole in new runs.
