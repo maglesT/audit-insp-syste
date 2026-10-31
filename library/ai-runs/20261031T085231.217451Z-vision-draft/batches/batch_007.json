@@ -1,0 +1,282 @@
+{
+ "instructions": "You read pages of a pharmaceutical GMP text and list the obligations printed on them. For each page you get the\nrendered page IMAGE (open it with your Read tool: the image is the truth) and the page's TEXT LAYER (extracted\ntext, which can be wrong: superscripts flattened, table cells merged, landscape pages, lost symbols). Your output\nis checked by software against two text readings of the page and by independent reviewers, so precision matters\nmore than wording.\n\nList each separate obligation printed on the page as its own item, so that together your items cover every\nobligation on the page (body text, list items, table rows and footnotes that require something). One obligation\nis one thing a site must, should or may do, with all its conditions, numbers and qualifiers; do not split one\nobligation across items. A sentence that starts on this page and ends on the next is drafted here (runs_over true;\nthe next page's text is given). A sentence that started on the previous page is not drafted again.\nFor each item:\n- statement: the obligation in your own plain English words, as one checklist item a site could be audited\n  against. Do not copy more than a few words in a row. Keep every condition (\"where\", \"if\", \"unless\", \"before\")\n  and every number. Do not add anything the page does not say.\n- quote: the exact span of the page that states the whole obligation, copied as printed, character for\n  character from the TEXT LAYER where the text layer is right (it is matched against the page by software; do not\n  fix typos or change punctuation). For a table row, quote the column header cells joined with \" | \", then\n  \" || \", then the row's cells joined with \" | \", starting with the row's first cell (its label), e.g.\n  \"Grade | Air sample CFU/m3 || B | 10\". Write a footnote mark printed after a word as \"^\" and the mark\n  (\"Cumene^1\", \"specified^a\"); a power of ten as \"10^7\" or \"10^-6\".\n- clause_number: the number exactly as printed for the clause or row (\"9.3\", \"4.22 iii\", \"Table 2\", \"4.19\"),\n  \"\" if none. Do not compose references that are not printed (\"Table 2 Note 1\", \"Table 1 Grade B\").\n- strength: \"mandatory\" for shall / must / is required / may not; \"recommended\" for should; \"optional\" for may.\n  Take it from the main verb of the quoted words, not from words in a condition. A row of an inspection\n  checklist (\"Specify ...\", \"Whether ...\", no modal verb) is \"mandatory\": inspectors grade sites against it.\n- plant_types: from OSD (oral solid dosage), LIQ (oral liquids), SEMI (semisolids), INJ (sterile injectables), API\n  (active substances); the plant scope given with the page unless the page itself narrows it.\n- numbers: every number, limit, frequency or period in the quote, as printed in the image (10⁷ written \"10^7\").\n- condition: the condition or trigger of the obligation in a few words, \"\" if none. A condition stated in a\n  lead-in belongs to every table row or list item under it: \"if their use is unavoidable ... levels should be\n  restricted as shown in Table 1, unless otherwise justified\" applies to each row of Table 1, so each row's\n  statement and condition carry it.\n- topic: the sub-topic id from TOPICS the obligation belongs to (an audit area).\n- runs_over: true when the quote continues on the next page.\n- text_layer_differs: \"\" normally. If the image shows something the text layer gets wrong inside your quote\n  (a superscript \"10^7\" printed as \"107\", a symbol lost, cells of two rows merged, words in another order), quote\n  what the image shows and describe the difference here in one sentence.\n\nObligation sentences on the page that are not drafted (a heading, a definition, an example, text that only\ndescribes, a sentence that started on the previous page) go in not_applicable: the first 8 or more words of the\nsentence copied from the text layer, and the reason in a few words. Running headers, footers and page numbers are\nignored.\n\nWrite the answers file named in your task: {\"answers\": [one object per page with \"page\" set to the page id]}.\n",
+ "topics": [
+  "QS.PQS",
+  "QS.MGMT",
+  "QS.QRM",
+  "QS.PQR",
+  "QS.CHANGE",
+  "QS.DEV",
+  "QS.CAPA",
+  "PER.ORG",
+  "PER.KEY",
+  "PER.TRAIN",
+  "PER.HYG",
+  "PER.GOWN",
+  "PREM.DESIGN",
+  "PREM.PROD",
+  "PREM.STORE",
+  "PREM.QC",
+  "PREM.ANC",
+  "EQ.DESIGN",
+  "EQ.MAINT",
+  "EQ.CLEAN",
+  "EQ.CAL",
+  "DOC.SYS",
+  "DOC.SPEC",
+  "DOC.MFR",
+  "DOC.BMR",
+  "DOC.SOP",
+  "DOC.RET",
+  "MAT.SUPP",
+  "MAT.RECV",
+  "MAT.SAMP",
+  "MAT.STATUS",
+  "MAT.PACK",
+  "MAT.REJ",
+  "PROD.GEN",
+  "PROD.XCONT",
+  "PROD.IPC",
+  "PROD.YIELD",
+  "PROD.PACK",
+  "PROD.REWORK",
+  "QC.GEN",
+  "QC.SAMP",
+  "QC.TEST",
+  "QC.OOS",
+  "QC.STAB",
+  "QC.REF",
+  "QC.MICRO",
+  "VAL.PLAN",
+  "VAL.QUAL",
+  "VAL.PROC",
+  "VAL.CLEAN",
+  "VAL.METH",
+  "CSV.VAL",
+  "CSV.ACCESS",
+  "CSV.AUDIT",
+  "CSV.ESIG",
+  "CSV.DI",
+  "UTIL.WATER",
+  "UTIL.HVAC",
+  "UTIL.GAS",
+  "CCS.STRAT",
+  "CCS.EM",
+  "CCS.CLEAN",
+  "CCS.PEST",
+  "STER.GRADE",
+  "STER.ASEPT",
+  "STER.APS",
+  "STER.STERIL",
+  "STER.FILT",
+  "STER.CCI",
+  "STER.LYO",
+  "API.START",
+  "API.PROC",
+  "API.IMP",
+  "API.SOLV",
+  "OUT.CONTRACT",
+  "OUT.AGREE",
+  "CMP.COMPL",
+  "CMP.RECALL",
+  "CMP.REPORT",
+  "SI.PROG",
+  "SI.TEAM",
+  "SI.REPORT",
+  "SI.FOLLOW",
+  "DIST.STORE",
+  "DIST.TRANS",
+  "DIST.RETURN",
+  "REL.QP",
+  "REL.REVIEW"
+ ],
+ "schema": {
+  "type": "object",
+  "required": [
+   "page",
+   "items",
+   "not_applicable"
+  ],
+  "properties": {
+   "page": {
+    "type": "string"
+   },
+   "items": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "statement",
+      "quote",
+      "clause_number",
+      "strength",
+      "plant_types",
+      "numbers",
+      "condition",
+      "topic",
+      "runs_over",
+      "text_layer_differs"
+     ],
+     "properties": {
+      "statement": {
+       "type": "string"
+      },
+      "quote": {
+       "type": "string"
+      },
+      "clause_number": {
+       "type": "string"
+      },
+      "strength": {
+       "enum": [
+        "mandatory",
+        "recommended",
+        "optional"
+       ]
+      },
+      "plant_types": {
+       "type": "array",
+       "items": {
+        "enum": [
+         "OSD",
+         "LIQ",
+         "SEMI",
+         "INJ",
+         "API"
+        ]
+       }
+      },
+      "numbers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "condition": {
+       "type": "string"
+      },
+      "topic": {
+       "type": "string"
+      },
+      "runs_over": {
+       "type": "boolean"
+      },
+      "text_layer_differs": {
+       "type": "string"
+      }
+     }
+    }
+   },
+   "not_applicable": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "text",
+      "reason"
+     ],
+     "properties": {
+      "text": {
+       "type": "string"
+      },
+      "reason": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  }
+ },
+ "pages": [
+  {
+   "id": "fda-cp-7356-002-drug-manufacturing-inspections.pdf:10",
+   "source": "fda-cp-7356-002-drug-manufacturing-inspections.pdf",
+   "page": 10,
+   "image": "work/vision-pages/fda-cp-7356-002-drug-manufacturing-inspections-p010.png",
+   "image_sha256": "38d2fc8b929566ddfc40d1f9a5ac8c72c7b9d09597b49150d01316ade78a04a0",
+   "dpi": 150,
+   "pdf_sha256": "3d7a85dde385feee720b8d88250190747ef9e66be2b8cdcf38b1cbfc7ee2ebf1",
+   "text_layer": "                                                                          PROGRAM           7356.002\n\n\n    It is not practical for FDA to audit every aspect of CGMP in every manufacturing establishment\n    during every inspection visit. Profile classes generalize inspection coverage from a small number\n    of specific products to all the products in that class. Reporting coverage for every profile class as\n    defined in eNSpect, for each inspection, provides the most broadly resource-efficient approach.\n    This compliance program uses a risk-based systems approach to further generalize inspection\n    coverage from a small number of profile classes to an overall evaluation of the establishment.\n    Risk-based inspectional approaches allow updating of all profile classes.\n    The inspection is defined as audit coverage of two or more systems, with mandatory coverage of\n    the quality system (see system definitions below). Depending on the purpose of the inspection,\n    inspection coverage may include different numbers of systems. Inspecting the minimum number\n    of systems, or more systems as deemed necessary by the ORA division, will provide the basis for\n    an overall CGMP classification decision.\n\n        B. Inspection of Systems\n\n    Inspections of drug manufacturers should be made and reported using the system definitions and\n    industry codes in this compliance program. Focusing on systems, rather than profile classes, will\n    increase efficiency in conducting inspections because the systems are often applicable to\n    multiple profile classes. System inspection coverage should represent all profile classes at the\n    establishment and determine their acceptability/non-acceptability.\n    Coverage of a system should be sufficiently detailed, with specific examples selected, so that the\n    system inspection outcome reflects the state of control in that system for every profile class. If a\n    particular system is adequate, it should be adequate for all profile classes manufactured by the\n    establishment. For example, the way an establishment handles “materials” (i.e., receipt,\n    sampling, testing, acceptance, etc.) should be the same for all profile classes. An inspection does\n    not have to include every profile class attribute when covering a given system provided that\n    inspection coverage includes related controls for all types of drugs and operations. Likewise in\n    the production system, there are general requirements like use of standard operating procedures\n    (SOPs), charge-in of components, equipment identification, in-process sampling, and testing that\n    can be evaluated through selection of example products in various profile classes. Under each\n    system, there may be something unique for a particular profile class: e.g., under the materials\n    system, the production of Water for Injection USP (United States Pharmacopeia) for use in\n    manufacturing. Selecting unique functions within a system will be at the discretion of the lead\n    investigator. Any given inspection need not cover every system. See Part III of this compliance\n    program.\n    Complete inspection of one system may necessitate further follow up of some items within the\n    activities of other systems to fully document the findings. However, this coverage does not\n    constitute nor require complete coverage of these other systems.\n\n        C. Scheme of Systems for the Manufacture of Drugs/Drug Products\n\n    The overall theme in devising the following scheme of systems was the subchapter structure of\n    the 21 CFR part 211 CGMP regulations. Every effort was made to group whole subchapters\n\n\nDate of Issuance: 09/16/2022                                                                 Page 10 of 44\n",
+   "next_page_text": "                                                                                        PROGRAM             7356.002\n\n\n    together in a rational set of six systems numbered below that incorporates the general scheme of\n    pharmaceutical manufacturing operations.\n    The organization and personnel, including appropriate qualifications and training, employed in\n    any given system will be evaluated as part of that system’s operation. Production, control, and\n    distribution records required to be maintained by the CGMP regulations and selected for review\n    should be included for inspection audit within the context of each of the six systems. Inspections\n    of contract companies should be within the system for which the product or service is contracted\n    as well as their quality system.\n    A general scheme of systems for auditing the manufacture of drugs and drug products consists of\n    the following:\n         1. Quality System. This system ensures overall compliance with CGMP and internal\n            procedures and specifications. A robust quality system relies on documentation and\n            strong senior management oversight of CGMP operations and quality-related matters,\n            supports and facilitates the activities conducted under all of the six systems, monitors its\n            effectiveness, and ensures a commitment to an established quality policy. 11 This system\n            also includes the quality unit and its review and approval duties (e.g., quality agreements,\n            change management, risk management, reprocessing, batch release, annual record review,\n            investigations, continued process verification, validation protocols and reports). It\n            includes product defect evaluations and evaluations of returned and salvaged drug\n            products. See the CGMP regulations, 21 CFR part 211, subparts B, E, F, G, I, J, and K.\n         2. Facilities and Equipment System. This system includes the measures and activities that\n            provide an appropriate physical environment and resources used in the production of\n            drugs or drug products. It includes the following:\n             a. Buildings and facilities along with maintenance\n             b. Equipment qualifications (installation and operation), equipment calibration and\n                preventive maintenance, and cleaning and validation of cleaning processes as\n                appropriate; process performance qualification will be evaluated as part of the\n                inspection of the overall process validation, which is done within the system where the\n                process is employed\n             c. Utilities that are not intended to be incorporated into the product, such as HVAC,\n                compressed gases, steam, and water systems\n             See the CGMP regulations, 21 CFR part 211, subparts B, C, D, and J.\n         3. Materials System. This system includes measures and activities to control finished\n            pr",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cp-7356-002-drug-manufacturing-inspections.pdf:11",
+   "source": "fda-cp-7356-002-drug-manufacturing-inspections.pdf",
+   "page": 11,
+   "image": "work/vision-pages/fda-cp-7356-002-drug-manufacturing-inspections-p011.png",
+   "image_sha256": "694326a054f4cf798953129244f8bcf5050ead8548b47ceb70364d06aa97e396",
+   "dpi": 150,
+   "pdf_sha256": "3d7a85dde385feee720b8d88250190747ef9e66be2b8cdcf38b1cbfc7ee2ebf1",
+   "text_layer": "                                                                                        PROGRAM             7356.002\n\n\n    together in a rational set of six systems numbered below that incorporates the general scheme of\n    pharmaceutical manufacturing operations.\n    The organization and personnel, including appropriate qualifications and training, employed in\n    any given system will be evaluated as part of that system’s operation. Production, control, and\n    distribution records required to be maintained by the CGMP regulations and selected for review\n    should be included for inspection audit within the context of each of the six systems. Inspections\n    of contract companies should be within the system for which the product or service is contracted\n    as well as their quality system.\n    A general scheme of systems for auditing the manufacture of drugs and drug products consists of\n    the following:\n         1. Quality System. This system ensures overall compliance with CGMP and internal\n            procedures and specifications. A robust quality system relies on documentation and\n            strong senior management oversight of CGMP operations and quality-related matters,\n            supports and facilitates the activities conducted under all of the six systems, monitors its\n            effectiveness, and ensures a commitment to an established quality policy. 11 This system\n            also includes the quality unit and its review and approval duties (e.g., quality agreements,\n            change management, risk management, reprocessing, batch release, annual record review,\n            investigations, continued process verification, validation protocols and reports). It\n            includes product defect evaluations and evaluations of returned and salvaged drug\n            products. See the CGMP regulations, 21 CFR part 211, subparts B, E, F, G, I, J, and K.\n         2. Facilities and Equipment System. This system includes the measures and activities that\n            provide an appropriate physical environment and resources used in the production of\n            drugs or drug products. It includes the following:\n             a. Buildings and facilities along with maintenance\n             b. Equipment qualifications (installation and operation), equipment calibration and\n                preventive maintenance, and cleaning and validation of cleaning processes as\n                appropriate; process performance qualification will be evaluated as part of the\n                inspection of the overall process validation, which is done within the system where the\n                process is employed\n             c. Utilities that are not intended to be incorporated into the product, such as HVAC,\n                compressed gases, steam, and water systems\n             See the CGMP regulations, 21 CFR part 211, subparts B, C, D, and J.\n         3. Materials System. This system includes measures and activities to control finished\n            products, components (including water or gases that are incorporated into the product),\n            containers, and closures. It includes validation of computerized inventory control\n            processes; management of lifecycle risks from components, containers, and closures;\n\n\n\n    11\n      Quality policy is defined as the overall intentions and direction of an organization related to quality as formally\n    expressed by senior management. See ICH Q10.\n\n\nDate of Issuance: 09/16/2022                                                                                  Page 11 of 44\n",
+   "next_page_text": "                                                                           PROGRAM          7356.002\n\n\n            drug storage; distribution controls; and records. See the CGMP regulations, 21 CFR part\n            211, subparts B, E, H, and J.\n        4. Production System. This system includes measures and activities to control the\n           manufacture of drugs and drug products, including batch compounding, dosage form\n           production, in-process sampling and testing, and process validation. It also includes\n           establishing, following, and documenting performance of approved manufacturing\n           procedures. See the CGMP regulations, 21 CFR part 211, subparts B, F, and J.\n        5. Packaging and Labeling System. This system includes measures and activities that\n           control the packaging and labeling of drugs and drug products. It includes written\n           procedures, label examination and usage, label storage and issuance, packaging and\n           labeling operations controls, and validation of these operations. See the CGMP\n           regulations, 21 CFR part 211, subparts B, G, and J.\n        6. Laboratory Control System. This system includes measures and activities related to\n           laboratory procedures, testing, analytical methods development and validation or\n           verification, and the stability program. See the CGMP regulations, 21 CFR part 211,\n           subparts B, I, J, and K.\n\n    3. Program Management Instructions\n\n        A. Definitions\n\n         (1) Surveillance Inspections\n\n            (a) Full Inspection Option\n\n    The full surveillance inspection option is a CGMP inspection meant to provide a broad and in-\n    depth evaluation of the establishment’s conformance with CGMP requirements. A full inspection\n    may change to an abbreviated inspection with concurrence of the ORA division. During the\n    course of a full inspection, verification of quality system activities may require limited coverage in\n    other systems. The full inspection option will normally include an inspection audit of at least four\n    of the systems, one of which must be the quality system (the system that includes management’s\n    responsibility for overseeing an ongoing state of control).\n\n            (b) Abbreviated Inspection Option\n\n    The abbreviated surveillance inspection option is a CGMP inspection meant to provide an\n    efficient, updated evaluation of an establishment’s conformance with CGMP requirements. The\n    abbreviated inspection will provide documentation for continuing an establishment in a\n    satisfactory CGMP compliance status. Generally, this will be done when an establishment has a\n    record of satisfactory CGMP compliance, with no significant recall, or product defect or alert\n    incidents, or with little shift in the manufacturing profiles of the establishment since the last\n    inspection. See Part III.2.B—Selecting the Abbreviated Inspection Option. An abbreviated\n    inspection may ch",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cp-7356-002-drug-manufacturing-inspections.pdf:20",
+   "source": "fda-cp-7356-002-drug-manufacturing-inspections.pdf",
+   "page": 20,
+   "image": "work/vision-pages/fda-cp-7356-002-drug-manufacturing-inspections-p020.png",
+   "image_sha256": "bd8e76f3d66c28fb7348a4547d23189fe1d07d0e2096d455030305cee8737ade",
+   "dpi": 150,
+   "pdf_sha256": "3d7a85dde385feee720b8d88250190747ef9e66be2b8cdcf38b1cbfc7ee2ebf1",
+   "text_layer": "                                                                                   PROGRAM             7356.002\n\n\n    products but may also incorporate components and in-process materials. These areas may\n    indicate deficiencies not only in this system but also in other major systems that would warrant\n    expansion of coverage. All areas under this system should be covered; however, the depth of\n    coverage may vary depending on inspectional findings.\n         •   Quality oversight of contracted operations and material suppliers: Effective monitoring\n             strategy has been implemented; incoming material monitoring, lifecycle qualification\n             program, quality agreements, and timely communication mechanisms are included\n         •   Management oversight of the development, implementation, monitoring, and continual\n             improvement of the quality system: Quality risk management and knowledge\n             management 18 are incorporated (e.g., providing an early warning system for appropriate\n             resource allocation)\n         •   Quality risk management program:\n             o Documented and implemented to ensure hazards (e.g., cross-contamination,\n               adulteration, hazardous impurities such as nitrosamines, 19 nitrosating agents, nitrites,\n               nitrates, and azides) are identified, evaluated, addressed, communicated (to the\n               establishment’s management and FDA), and continuously reviewed as needed\n               throughout a product’s lifecycle\n             o Hazardous impurity risk is assessed and control strategies are implemented to\n               mitigate the risk (e.g., actions to address sources of variability, release testing,\n               reduction or elimination of impurities, cleaning validation); control strategies are\n               reviewed following changes and throughout a product’s lifecycle\n         •   Product reviews: Conducted at least annually; product quality is reviewed to assess risk\n             and determine the need for changes, such as changes in drug product specifications,\n             manufacturing, or control procedures; statistical analysis is conducted to identify areas\n             (e.g., trends, patterns, correlations, anomalies) for action and improvement; refer to 21\n             CFR 211.180(e)\n         •   Complaint reviews (quality and medical): Documented; evaluated; investigated in a\n             timely manner; corrective action is included where appropriate\n         •   Discrepancy and failure investigations: Documented; investigated in a timely manner\n             using scientific evidence to identify the root cause; corrective actions and preventive\n             actions (CAPAs) are included and effectiveness of the CAPAs is evaluated\n         •   Change management for the manufacturing of all products: Documented (with\n             justification); quality risk management 20 is used to evaluate proposed changes for\n\n\n    18\n       Effective knowledge management (e.g., acquiring, analyzing, storing, and disseminating information) supports\n    effective risk management, along with timely risk review, corrective actions and preventive actions, and change\n    management.\n    19\n       See guidance for industry Control of Nitrosamine Impurities in Human Drugs.\n    20\n       See PIC/S recommendation PI 054-1 How To Evaluate and Demonstrate the Effectiveness of a Pharmaceutical\n    Quality System in Relation to Risk-Based Change Management.\n\n\nDate of Issuance: 09/16/2022                                                                            Page 20 of 44\n",
+   "next_page_text": "                                                                                   PROGRAM            7356.002\n\n\n             potential risks (e.g., hazardous impurities) and impact on product quality; reviewed by\n             subject matter experts; approved before implementation; evaluated for effectiveness;\n             revalidated, reverified, requalified as needed; changes are reported to FDA as appropriate\n         •   Reporting of changes for approved application products: Changes to ECs are documented\n             and reported as defined by the PLCM document in the application or as described in the\n             regulations and existing guidance 21\n         •   Rejects: Investigation is expanded where warranted; CAPAs are implemented where\n             appropriate\n         •   Stability failures: Investigation is expanded where warranted; need for FARs, BPDRs,\n             and recalls are evaluated; disposition is documented\n         •   Quarantine products\n         •   Validation: Approval of required validation/revalidation (e.g., computer, manufacturing\n             process, laboratory methods) is documented\n         •   Training/qualification of employees in CGMP: Includes coverage of quality functions,\n             risk management, and specific CGMP operations assigned to individual employees\n         •   Programs for the ongoing monitoring of process performance and product quality\n             throughout a product’s lifecycle: Significant issues are escalated to senior management\n         •   Reprocess/Rework: Evaluation is conducted and approval is documented; impact on\n             validation and stability is assessed\n         •   Returns/Salvages: Assessment is conducted; investigation is expanded where warranted;\n             disposition is completed\n\n         B. Facilities and Equipment System\n\n    For each of the following, the establishment should have written and approved procedures and\n    documentation resulting therefrom. The establishment’s adherence to written procedures should\n    be verified through observation whenever possible. These areas are not limited to finished\n    products but may also incorporate components and in-process materials. These areas may\n    indicate deficiencies not only in this system but also in other systems that would warrant\n    expansion of coverage. When this system is selected for coverage in addition to the quality\n    system, all areas listed below should be covered; however, the depth of coverage may vary\n    depending on inspectional findings.\n\n\n\n\n    21\n      See e.g., FDA’s Scale-Up and Postapproval Changes (SUPAC) guidances and the guidances for industry Changes\n    to an Approved Application for Specified Biotechnology and Specified Synthetic Biological Products, Changes to an\n    Approved NDA or ANDA, Chemistry, Manufacturing, and Controls Changes to an Approved Application: Certain\n    Biological Products, and CMC Postapproval Manufacturing Changes To Be Documented in Annual Re",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cp-7356-002-drug-manufacturing-inspections.pdf:21",
+   "source": "fda-cp-7356-002-drug-manufacturing-inspections.pdf",
+   "page": 21,
+   "image": "work/vision-pages/fda-cp-7356-002-drug-manufacturing-inspections-p021.png",
+   "image_sha256": "d933a6c616bac01f2b911acc9a8a5b6930c757c3dcbabc087c5f67b8fadcba9a",
+   "dpi": 150,
+   "pdf_sha256": "3d7a85dde385feee720b8d88250190747ef9e66be2b8cdcf38b1cbfc7ee2ebf1",
+   "text_layer": "                                                                                   PROGRAM            7356.002\n\n\n             potential risks (e.g., hazardous impurities) and impact on product quality; reviewed by\n             subject matter experts; approved before implementation; evaluated for effectiveness;\n             revalidated, reverified, requalified as needed; changes are reported to FDA as appropriate\n         •   Reporting of changes for approved application products: Changes to ECs are documented\n             and reported as defined by the PLCM document in the application or as described in the\n             regulations and existing guidance 21\n         •   Rejects: Investigation is expanded where warranted; CAPAs are implemented where\n             appropriate\n         •   Stability failures: Investigation is expanded where warranted; need for FARs, BPDRs,\n             and recalls are evaluated; disposition is documented\n         •   Quarantine products\n         •   Validation: Approval of required validation/revalidation (e.g., computer, manufacturing\n             process, laboratory methods) is documented\n         •   Training/qualification of employees in CGMP: Includes coverage of quality functions,\n             risk management, and specific CGMP operations assigned to individual employees\n         •   Programs for the ongoing monitoring of process performance and product quality\n             throughout a product’s lifecycle: Significant issues are escalated to senior management\n         •   Reprocess/Rework: Evaluation is conducted and approval is documented; impact on\n             validation and stability is assessed\n         •   Returns/Salvages: Assessment is conducted; investigation is expanded where warranted;\n             disposition is completed\n\n         B. Facilities and Equipment System\n\n    For each of the following, the establishment should have written and approved procedures and\n    documentation resulting therefrom. The establishment’s adherence to written procedures should\n    be verified through observation whenever possible. These areas are not limited to finished\n    products but may also incorporate components and in-process materials. These areas may\n    indicate deficiencies not only in this system but also in other systems that would warrant\n    expansion of coverage. When this system is selected for coverage in addition to the quality\n    system, all areas listed below should be covered; however, the depth of coverage may vary\n    depending on inspectional findings.\n\n\n\n\n    21\n      See e.g., FDA’s Scale-Up and Postapproval Changes (SUPAC) guidances and the guidances for industry Changes\n    to an Approved Application for Specified Biotechnology and Specified Synthetic Biological Products, Changes to an\n    Approved NDA or ANDA, Chemistry, Manufacturing, and Controls Changes to an Approved Application: Certain\n    Biological Products, and CMC Postapproval Manufacturing Changes To Be Documented in Annual Reports.\n\n\nDate of Issuance: 09/16/2022                                                                           Page 21 of 44\n",
+   "next_page_text": "                                                                           PROGRAM          7356.002\n\n\n         (1) Facilities\n\n        •   Cleaning and maintenance\n        •   Facility layout and air handling systems for prevention of cross-contamination (e.g.,\n            penicillin, beta-lactams, steroids, hormones, cytotoxics)\n        •   Specifically designed areas for the manufacturing operations performed by the\n            establishment to prevent cross-contamination or mix-ups\n        •   General air handling systems\n        •   Control system for implementing changes in the building\n        •   Lighting, potable water, washing and toilet facilities, sewage and refuse disposal\n        •   Sanitation of the building, use of rodenticides, fungicides, insecticides, cleaning and\n            sanitizing agents\n        •   Oversight of facility infrastructure and suitability of manufacturing operations by\n            responsible operations managers\n\n         (2) Equipment\n\n        •   Equipment installation and operational qualification where appropriate\n        •   Adequacy of equipment design, size, and location\n        •   Equipment surfaces that are not reactive, additive, or absorptive\n        •   Appropriate use of equipment operations substances (e.g., lubricants, coolants,\n            refrigerants) contacting products/containers\n        •   Cleaning procedures and cleaning validation for reusable or multiproduct equipment\n        •   Controls to prevent contamination, particularly with pesticides or other toxic materials, or\n            other drug or non-drug chemicals\n        •   Qualification, calibration, and maintenance of storage equipment (e.g., refrigerators,\n            freezers) for ensuring that standards, raw materials, reagents, and so forth are stored at\n            the proper temperatures\n        •   Equipment qualification, calibration, and maintenance, including computer\n            qualification/validation and security\n        •   Control system for implementing changes in the equipment\n        •   Equipment identification practices (where appropriate)\n        •   Documented investigation into unexpected discrepancies\n\n\n\n\nDate of Issuance: 09/16/2022                                                                 Page 22 of 44\n",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cp-7356-002-drug-manufacturing-inspections.pdf:41",
+   "source": "fda-cp-7356-002-drug-manufacturing-inspections.pdf",
+   "page": 41,
+   "image": "work/vision-pages/fda-cp-7356-002-drug-manufacturing-inspections-p041.png",
+   "image_sha256": "0ad3af5659e84243628ec891565a1e3994bac33248339fda1f272d97bbdc4b3a",
+   "dpi": 150,
+   "pdf_sha256": "3d7a85dde385feee720b8d88250190747ef9e66be2b8cdcf38b1cbfc7ee2ebf1",
+   "text_layer": "                                                                                    PROGRAM            7356.002\n\n\n                   ATTACHMENT A: REMOTE REGULATORY ASSESSMENTS\n\n    In addition to its inspectional authority, FDA may conduct remote regulatory assessments\n    (RRAs), under certain circumstances, to support oversight of FDA-regulated products and\n    establishments. 1 An RRA is an examination of an FDA-regulated establishment and/or its\n    records, conducted entirely remotely, to evaluate compliance with applicable FDA requirements.\n    RRAs assist in protecting human health, informing regulatory decisions, and verifying certain\n    information submitted to the Agency.\n    RRAs used in lieu of or in advance of inspections have allowed FDA to remotely evaluate drug\n    manufacturing establishments to mitigate risks. However, RRAs are not the same as an\n    inspection as described in section 704(a)(1) of the Federal Food, Drug, and Cosmetic Act\n    (FD&C Act), and FDA does not consider them to satisfy the statutory requirement for an\n    inspection under section 510(h) of the FD&C Act.\n    The following RRAs, along with applicable FDA policies, may be used to help meet the\n    objectives of this compliance program to determine whether the establishment meets CGMP\n    requirements.\n\n    1. FDA Records and Other Information Requests Under Section 704(a)(4) of the FD&C\n       Act (Statutorily Authorized RRA)\n\n    In 2012, with the passage of the Food and Drug Administration Safety and Innovation Act to\n    amend the FD&C Act, Congress gave FDA the authority to request “any records or other\n    information” in advance of or in lieu of an inspection related to human or animal drugs,\n    including human biological drug products. Section 704(a)(4) of the FD&C Act requires “a\n    person that owns or operates an establishment that is engaged in the manufacture, preparation,\n    propagation, compounding, or processing of a drug” to provide FDA, upon request, records or\n    other information that FDA may inspect under section 704(a)(1).\n    With regards to this compliance program, the use of this authority helps strengthen FDA’s\n    surveillance program and improve the overall effectiveness of the drug inspection program. The\n    records received from an establishment can be used to help assess an establishment’s compliance\n    with current good manufacturing practice, support regulatory decisions, inform inspection\n    planning (e.g., a risk-based inspection schedule), and prepare for a scheduled inspection (e.g.,\n    inspection coverage). The use of 704(a)(4) authority does not prevent an FDA investigator from\n    requesting records or other information on inspection. During an inspection, FDA may collect\n    copies of previously received documents and other documents not previously requested.\n\n\n\n\n    1\n      See the draft guidance for industry Conducting Remote Regulatory Assessments: Questions and Answers (July\n    2022). When final, this guidance will represent FDA’s current thinking on this topic. Also see FDA’s An Update to\n    the Resiliency Roadmap for FDA Inspectional Oversight and section 704 of the Federal Food, Drug, and Cosmetic\n    Act.\n\n\nDate of Issuance: 09/16/2022                                                                            Page 41 of 44\n",
+   "next_page_text": "                                                                                 PROGRAM            7356.002\n\n\n    2. Remote Interactive Evaluation (Voluntary RRA)\n\n    A remote interactive evaluation (RIE) is an evaluation of a firm’s compliance with regulations\n    that a firm participates in voluntarily. 2 RIEs are defined as FDA’s use of any combination of\n    remote interactive tools (e.g., remote livestreaming video of operations, teleconferences, screen\n    sharing) to evaluate establishments where drugs are manufactured, processed, packaged, or held.\n    FDA may request to conduct an RIE whenever a program office determines it is appropriate\n    based on mission needs.\n    With regards to this compliance program, the use of RIEs helps strengthen FDA’s surveillance\n    program and improve the overall effectiveness of the drug inspection program. Information\n    evaluated from an RIE may be used to help assess an establishment’s compliance with current\n    good manufacturing practice, support regulatory decisions, inform inspection planning (e.g., a\n    risk-based inspection schedule), and prepare for a scheduled inspection (e.g., inspection\n    coverage).\n\n\n\n\n    2\n     See the guidance for industry Remote Interactive Evaluations of Drug Manufacturing and Bioresearch Monitoring\n    Facilities During the COVID-19 Public Health Emergency.\n\n\nDate of Issuance: 09/16/2022                                                                         Page 42 of 44\n",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  }
+ ]
+}

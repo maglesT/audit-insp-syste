@@ -1,0 +1,282 @@
+{
+ "instructions": "You read pages of a pharmaceutical GMP text and list the obligations printed on them. For each page you get the\nrendered page IMAGE (open it with your Read tool: the image is the truth) and the page's TEXT LAYER (extracted\ntext, which can be wrong: superscripts flattened, table cells merged, landscape pages, lost symbols). Your output\nis checked by software against two text readings of the page and by independent reviewers, so precision matters\nmore than wording.\n\nList each separate obligation printed on the page as its own item, so that together your items cover every\nobligation on the page (body text, list items, table rows and footnotes that require something). One obligation\nis one thing a site must, should or may do, with all its conditions, numbers and qualifiers; do not split one\nobligation across items. A sentence that starts on this page and ends on the next is drafted here (runs_over true;\nthe next page's text is given). A sentence that started on the previous page is not drafted again.\nFor each item:\n- statement: the obligation in your own plain English words, as one checklist item a site could be audited\n  against. Do not copy more than a few words in a row. Keep every condition (\"where\", \"if\", \"unless\", \"before\")\n  and every number. Do not add anything the page does not say.\n- quote: the exact span of the page that states the whole obligation, copied as printed, character for\n  character from the TEXT LAYER where the text layer is right (it is matched against the page by software; do not\n  fix typos or change punctuation). For a table row, quote the column header cells joined with \" | \", then\n  \" || \", then the row's cells joined with \" | \", starting with the row's first cell (its label), e.g.\n  \"Grade | Air sample CFU/m3 || B | 10\". Write a footnote mark printed after a word as \"^\" and the mark\n  (\"Cumene^1\", \"specified^a\"); a power of ten as \"10^7\" or \"10^-6\".\n- clause_number: the number exactly as printed for the clause or row (\"9.3\", \"4.22 iii\", \"Table 2\", \"4.19\"),\n  \"\" if none. Do not compose references that are not printed (\"Table 2 Note 1\", \"Table 1 Grade B\").\n- strength: \"mandatory\" for shall / must / is required / may not; \"recommended\" for should; \"optional\" for may.\n  Take it from the main verb of the quoted words, not from words in a condition. A row of an inspection\n  checklist (\"Specify ...\", \"Whether ...\", no modal verb) is \"mandatory\": inspectors grade sites against it.\n- plant_types: from OSD (oral solid dosage), LIQ (oral liquids), SEMI (semisolids), INJ (sterile injectables), API\n  (active substances); the plant scope given with the page unless the page itself narrows it.\n- numbers: every number, limit, frequency or period in the quote, as printed in the image (10⁷ written \"10^7\").\n- condition: the condition or trigger of the obligation in a few words, \"\" if none. A condition stated in a\n  lead-in belongs to every table row or list item under it: \"if their use is unavoidable ... levels should be\n  restricted as shown in Table 1, unless otherwise justified\" applies to each row of Table 1, so each row's\n  statement and condition carry it.\n- topic: the sub-topic id from TOPICS the obligation belongs to (an audit area).\n- runs_over: true when the quote continues on the next page.\n- text_layer_differs: \"\" normally. If the image shows something the text layer gets wrong inside your quote\n  (a superscript \"10^7\" printed as \"107\", a symbol lost, cells of two rows merged, words in another order), quote\n  what the image shows and describe the difference here in one sentence.\n\nObligation sentences on the page that are not drafted (a heading, a definition, an example, text that only\ndescribes, a sentence that started on the previous page) go in not_applicable: the first 8 or more words of the\nsentence copied from the text layer, and the reason in a few words. Running headers, footers and page numbers are\nignored.\n\nWrite the answers file named in your task: {\"answers\": [one object per page with \"page\" set to the page id]}.\n",
+ "topics": [
+  "QS.PQS",
+  "QS.MGMT",
+  "QS.QRM",
+  "QS.PQR",
+  "QS.CHANGE",
+  "QS.DEV",
+  "QS.CAPA",
+  "PER.ORG",
+  "PER.KEY",
+  "PER.TRAIN",
+  "PER.HYG",
+  "PER.GOWN",
+  "PREM.DESIGN",
+  "PREM.PROD",
+  "PREM.STORE",
+  "PREM.QC",
+  "PREM.ANC",
+  "EQ.DESIGN",
+  "EQ.MAINT",
+  "EQ.CLEAN",
+  "EQ.CAL",
+  "DOC.SYS",
+  "DOC.SPEC",
+  "DOC.MFR",
+  "DOC.BMR",
+  "DOC.SOP",
+  "DOC.RET",
+  "MAT.SUPP",
+  "MAT.RECV",
+  "MAT.SAMP",
+  "MAT.STATUS",
+  "MAT.PACK",
+  "MAT.REJ",
+  "PROD.GEN",
+  "PROD.XCONT",
+  "PROD.IPC",
+  "PROD.YIELD",
+  "PROD.PACK",
+  "PROD.REWORK",
+  "QC.GEN",
+  "QC.SAMP",
+  "QC.TEST",
+  "QC.OOS",
+  "QC.STAB",
+  "QC.REF",
+  "QC.MICRO",
+  "VAL.PLAN",
+  "VAL.QUAL",
+  "VAL.PROC",
+  "VAL.CLEAN",
+  "VAL.METH",
+  "CSV.VAL",
+  "CSV.ACCESS",
+  "CSV.AUDIT",
+  "CSV.ESIG",
+  "CSV.DI",
+  "UTIL.WATER",
+  "UTIL.HVAC",
+  "UTIL.GAS",
+  "CCS.STRAT",
+  "CCS.EM",
+  "CCS.CLEAN",
+  "CCS.PEST",
+  "STER.GRADE",
+  "STER.ASEPT",
+  "STER.APS",
+  "STER.STERIL",
+  "STER.FILT",
+  "STER.CCI",
+  "STER.LYO",
+  "API.START",
+  "API.PROC",
+  "API.IMP",
+  "API.SOLV",
+  "OUT.CONTRACT",
+  "OUT.AGREE",
+  "CMP.COMPL",
+  "CMP.RECALL",
+  "CMP.REPORT",
+  "SI.PROG",
+  "SI.TEAM",
+  "SI.REPORT",
+  "SI.FOLLOW",
+  "DIST.STORE",
+  "DIST.TRANS",
+  "DIST.RETURN",
+  "REL.QP",
+  "REL.REVIEW"
+ ],
+ "schema": {
+  "type": "object",
+  "required": [
+   "page",
+   "items",
+   "not_applicable"
+  ],
+  "properties": {
+   "page": {
+    "type": "string"
+   },
+   "items": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "statement",
+      "quote",
+      "clause_number",
+      "strength",
+      "plant_types",
+      "numbers",
+      "condition",
+      "topic",
+      "runs_over",
+      "text_layer_differs"
+     ],
+     "properties": {
+      "statement": {
+       "type": "string"
+      },
+      "quote": {
+       "type": "string"
+      },
+      "clause_number": {
+       "type": "string"
+      },
+      "strength": {
+       "enum": [
+        "mandatory",
+        "recommended",
+        "optional"
+       ]
+      },
+      "plant_types": {
+       "type": "array",
+       "items": {
+        "enum": [
+         "OSD",
+         "LIQ",
+         "SEMI",
+         "INJ",
+         "API"
+        ]
+       }
+      },
+      "numbers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "condition": {
+       "type": "string"
+      },
+      "topic": {
+       "type": "string"
+      },
+      "runs_over": {
+       "type": "boolean"
+      },
+      "text_layer_differs": {
+       "type": "string"
+      }
+     }
+    }
+   },
+   "not_applicable": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "text",
+      "reason"
+     ],
+     "properties": {
+      "text": {
+       "type": "string"
+      },
+      "reason": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  }
+ },
+ "pages": [
+  {
+   "id": "ich-q3c-r9.pdf:8",
+   "source": "ich-q3c-r9.pdf",
+   "page": 8,
+   "image": "work/vision-pages/ich-q3c-r9-p008.png",
+   "image_sha256": "8afcc6b98ddfdccd846b7cb40134813db95019d81ca87e55ff6aad65d08b130c",
+   "dpi": 150,
+   "pdf_sha256": "fe6405857bffcd3ee1e519e0f6536e690627885a934b7cda191b5aea364ae493",
+   "text_layer": "This guideline does not apply to potential new drug substances, excipients, or drug products used\nduring the clinical research stages of development, nor does it apply to existing marketed drug\nproducts.\nThe guideline applies to all dosage forms and routes of administration. Higher levels of residual\nsolvents may be acceptable in certain cases such as short term (30 days or less) or topical\napplication. Justification for these levels should be made on a case by case basis.\nSee Appendix 2 for additional background information related to residual solvents.\n\n3.     GENERAL PRINCIPLES\n3.1 Classification of Residual Solvents by Risk Assessment\nThe term \"tolerable daily intake\" (TDI) is used by the International Program on Chemical Safety\n(IPCS) to describe exposure limits of toxic chemicals and \"acceptable daily intake\" (ADI) is used\nby the World Health Organization (WHO) and other national and international health authorities\nand institutes. The new term \"permitted daily exposure\" (PDE) is defined in the present guideline\nas a pharmaceutically acceptable intake of residual solvents to avoid confusion of differing values\nfor ADI's of the same substance.\nResidual solvents assessed in this guideline are listed in Appendix 1 by common names and\nstructures. They were evaluated for their possible risk to human health and placed into one of three\nclasses as follows:\n\n     Class 1 solvents: Solvents to be avoided\n     Known human carcinogens, strongly suspected human carcinogens, and environmental\n     hazards.\n\n     Class 2 solvents: Solvents to be limited\n     Non-genotoxic animal carcinogens or possible causative agents of other irreversible toxicity\n     such as neurotoxicity or teratogenicity.\n     Solvents suspected of other significant but reversible toxicities.\n\n     Class 3 solvents: Solvents with low toxic potential\n     Solvents with low toxic potential to man; no health-based exposure limit is needed. Class 3\n     solvents have PDEs of 50 mg or more per day.\n\n3.2 Methods for Establishing Exposure Limits\nThe method used to establish permitted daily exposures for residual solvents is presented in\nAppendix 3. Summaries of the toxicity data that were used to establish limits are published in\nPharmeuropa, Vol. 9, No. 1, Supplement, April 1997.\n\n\n\n\n                                                   2\n",
+   "next_page_text": "                                                                Impurities: Guideline for Residual Solvents\n\n\n3.3 Options for Describing Limits of Class 2 Solvents\nTwo options are available when setting limits for Class 2 solvents.\nOption 1: The concentration limits in ppm stated in Table 2 can be used. They were calculated\nusing equation (1) below by assuming a product mass of 10 g administered daily.\n                                               1000 x PDE\n                    Concentration (ppm) =                                         (1)\n                                                  dose\nHere, PDE is given in terms of mg/day and dose is given in g/day.\nThese limits are considered acceptable for all substances, excipients, or products. Therefore this\noption may be applied if the daily dose is not known or fixed. If all excipients and drug substances\nin a formulation meet the limits given in Option 1, then these components may be used in any\nproportion. No further calculation is necessary provided the daily dose does not exceed 10 g.\nProducts that are administered in doses greater than 10 g per day should be considered under\nOption 2.\nOption 2: It is not considered necessary for each component of the drug product to comply with the\nlimits given in Option 1. The PDE in terms of mg/day as stated in Table 2 can be used with the\nknown maximum daily dose and equation (1) above to determine the concentration of residual\nsolvent allowed in drug product. Such limits are considered acceptable provided that it has been\ndemonstrated that the residual solvent has been reduced to the practical minimum. The limits\nshould be realistic in relation to analytical precision, manufacturing capability, reasonable variation\nin the manufacturing process, and the limits should reflect contemporary manufacturing standards.\nOption 2 may be applied by adding the amounts of a residual solvent present in each of the\ncomponents of the drug product. The sum of the amounts of solvent per day should be less than\nthat given by the PDE.\nConsider an example of the use of Option 1 and Option 2 applied to acetonitrile in a drug product.\nThe permitted daily exposure to acetonitrile is 4.1 mg per day; thus, the Option 1 limit is 410 ppm.\nThe maximum administered daily mass of a drug product is 5.0 g, and the drug product contains\ntwo excipients. The composition of the drug product and the calculated maximum content of\nresidual acetonitrile are given in the following table.\n\nComponent                 Amount in formulation       Acetonitrile content       Daily exposure\nDrug substance            0.3 g                       800 ppm                    0.24 mg\nExcipient 1               0.9 g                       400 ppm                    0.36 mg\nExcipient 2               3.8 g                       800 ppm                    3.04 mg\nDrug Product              5.0 g                       728 ppm                    3.64 mg\n\nExcipient 1 meets the Option 1 limit, but the drug substance",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "ich-q3c-r9.pdf:11",
+   "source": "ich-q3c-r9.pdf",
+   "page": 11,
+   "image": "work/vision-pages/ich-q3c-r9-p011.png",
+   "image_sha256": "c3aa5cbba20256d6040971f48a13e585284bd761dc26895c3da2775051818adc",
+   "dpi": 150,
+   "pdf_sha256": "fe6405857bffcd3ee1e519e0f6536e690627885a934b7cda191b5aea364ae493",
+   "text_layer": "                                                              Impurities: Guideline for Residual Solvents\n\n\nIf Class 1 solvents are likely to be present, they should be identified and quantified.\n\"Likely to be present\" refers to the solvent used in the final manufacturing step and to solvents that\nare used in earlier manufacturing steps and not removed consistently by a validated process.\nIf solvents of Class 2 or Class 3 are present at greater than their Option 1 limits or 0.5%,\nrespectively, they should be identified and quantified.\n\n4.     LIMITS OF RESIDUAL SOLVENTS\n4.1 Solvents to Be Avoided\nSolvents in Class 1 should not be employed in the manufacture of drug substances, excipients, and\ndrug products because of their unacceptable toxicity or their deleterious environmental effect.\nHowever, if their use is unavoidable in order to produce a drug product with a significant\ntherapeutic advance, then their levels should be restricted as shown in Table 1, unless otherwise\njustified. 1,1,1-Trichloroethane is included in Table 1 because it is an environmental hazard. The\nstated limit of 1500 ppm is based on a review of the safety data.\n\nTABLE 1. Class 1 solvents in pharmaceutical products (solvents that should be avoided).\nSolvent                        Concentration limit                    Concern\n                                    (ppm)\nBenzene                                  2                          Carcinogen\nCarbon tetrachloride                     4               Toxic and environmental hazard\n1,2-Dichloroethane                       5                             Toxic\n1,1-Dichloroethene                       8                             Toxic\n1,1,1-Trichloroethane                  1500                    Environmental hazard\n\n\n\n\n                                                   5\n",
+   "next_page_text": "4.2 Solvents to Be Limited\nSolvents in Table 2 should be limited in pharmaceutical products because of their inherent\ntoxicity. PDEs are given to the nearest 0.1 mg/day, and concentrations are given to the\nnearest 10 ppm. The stated values do not reflect the necessary analytical precision of\ndetermination. Precision should be determined as part of the validation of the method.\n\nTABLE 2. Class 2 solvents in pharmaceutical products.\n\nSolvent                          PDE (mg/day)       Concentration limit (ppm)\n\n\nAcetonitrile                          4.1                      410\nChlorobenzene                         3.6                      360\nChloroform                            0.6                       60\nCumene1                               0.7                       70\nCyclohexane                          38.8                      3880\nCyclopentyl methyl ether2            15.0                      1500\n1,2-Dichloroethene                   18.7                      1870\nDichloromethane                       6.0                      600\n1,2-Dimethoxyethane                   1.0                      100\nN,N-Dimethylacetamide                10.9                      1090\nN,N-Dimethylformamide                 8.8                      880\n1,4-Dioxane                           3.8                      380\n2-Ethoxyethanol                       1.6                      160\nEthyleneglycol                        6.2                      620\nFormamide                             2.2                      220\nHexane                                2.9                      290\nMethanol                             30.0                      3000\n2-Methoxyethanol                      0.5                       50\nMethylbutyl ketone                    0.5                       50\nMethylcyclohexane                    11.8                      1180\n                      3\nMethylisobutylketone                  45                       4500\nN-Methylpyrrolidone4                  5.3                      530\n\n\n1 The information included for Cumene reflects that included in the Revision of PDE\nInformation for Cumene which reached Step 4 in February 2011 and was subsequently\nincorporated into the core Guideline. See Part IV (pages 24-27).\n2 The information included for Cyclopentyl Methyl Ether reflects that included in the Revision\n\nof PDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n3 The information included for Methylisobutylketone reflects that included in the Revision of\n\nPDE Information for Methylisobutylketone which reached Step 4 in November 2016 and was\nsubsequently incorporated into the core Guideline. See Part V (pages 28-34).\n4 The information included for N-Methylpyrrolidone reflects that included in the Revision of\n\nPDE Information for NMP which reached Step 4 in September 2002 (two mistyping corrections\n\n\n\n                                      ",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "ich-q3c-r9.pdf:12",
+   "source": "ich-q3c-r9.pdf",
+   "page": 12,
+   "image": "work/vision-pages/ich-q3c-r9-p012.png",
+   "image_sha256": "f99905667cfb49e61929956799dbe3784694b7c359c93bcb2c46133ea1434269",
+   "dpi": 150,
+   "pdf_sha256": "fe6405857bffcd3ee1e519e0f6536e690627885a934b7cda191b5aea364ae493",
+   "text_layer": "4.2 Solvents to Be Limited\nSolvents in Table 2 should be limited in pharmaceutical products because of their inherent\ntoxicity. PDEs are given to the nearest 0.1 mg/day, and concentrations are given to the\nnearest 10 ppm. The stated values do not reflect the necessary analytical precision of\ndetermination. Precision should be determined as part of the validation of the method.\n\nTABLE 2. Class 2 solvents in pharmaceutical products.\n\nSolvent                          PDE (mg/day)       Concentration limit (ppm)\n\n\nAcetonitrile                          4.1                      410\nChlorobenzene                         3.6                      360\nChloroform                            0.6                       60\nCumene1                               0.7                       70\nCyclohexane                          38.8                      3880\nCyclopentyl methyl ether2            15.0                      1500\n1,2-Dichloroethene                   18.7                      1870\nDichloromethane                       6.0                      600\n1,2-Dimethoxyethane                   1.0                      100\nN,N-Dimethylacetamide                10.9                      1090\nN,N-Dimethylformamide                 8.8                      880\n1,4-Dioxane                           3.8                      380\n2-Ethoxyethanol                       1.6                      160\nEthyleneglycol                        6.2                      620\nFormamide                             2.2                      220\nHexane                                2.9                      290\nMethanol                             30.0                      3000\n2-Methoxyethanol                      0.5                       50\nMethylbutyl ketone                    0.5                       50\nMethylcyclohexane                    11.8                      1180\n                      3\nMethylisobutylketone                  45                       4500\nN-Methylpyrrolidone4                  5.3                      530\n\n\n1 The information included for Cumene reflects that included in the Revision of PDE\nInformation for Cumene which reached Step 4 in February 2011 and was subsequently\nincorporated into the core Guideline. See Part IV (pages 24-27).\n2 The information included for Cyclopentyl Methyl Ether reflects that included in the Revision\n\nof PDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n3 The information included for Methylisobutylketone reflects that included in the Revision of\n\nPDE Information for Methylisobutylketone which reached Step 4 in November 2016 and was\nsubsequently incorporated into the core Guideline. See Part V (pages 28-34).\n4 The information included for N-Methylpyrrolidone reflects that included in the Revision of\n\nPDE Information for NMP which reached Step 4 in September 2002 (two mistyping corrections\n\n\n\n                                                6\n",
+   "next_page_text": "                                                              Impurities: Guideline for Residual Solvents\n\n\nNitromethane                            0.5                          50\nPyridine                                 2.0                        200\nSulfolane                               1.6                         160\n\n\nTertiary-butyl alcohol5                  35                         3500\nTetrahydrofuran6                        7.2                         720\nTetralin                                1.0                         100\nToluene                                 8.9                         890\n1,1,2-Trichloroethene                   0.8                          80\nXylene*                                 21.7                        2170\n*\n usually 60% m-xylene, 14% p-xylene, 9% o-xylene with 17% ethyl benzene\n\n4.3 Solvents with Low Toxic Potential\nSolvents in Class 3 (shown in Table 3) may be regarded as less toxic and of lower risk to human\nhealth. Class 3 includes no solvent known as a human health hazard at levels normally accepted in\npharmaceuticals. However, there are no long-term toxicity or carcinogenicity studies for many of\nthe solvents in Class 3. Available data indicate that they are less toxic in acute or short-term studies\nand negative in genotoxicity studies. It is considered that amounts of these residual solvents of 50\nmg per day or less (corresponding to 5000 ppm or 0.5% under Option 1) would be acceptable\nwithout justification. Higher amounts may also be acceptable provided they are realistic in relation\nto manufacturing capability and good manufacturing practice.\n\nTABLE 3. Class 3 solvents which should be limited by GMP or other quality-based\nrequirements.\n    Acetic acid                                 Heptane\n    Acetone                                     Isobutyl acetate\n    Anisole                                     Isopropyl acetate\n    1-Butanol                                   Methyl acetate\n    2-Butanol                                   3-Methyl-1-butanol\n    Butyl acetate                               Methylethyl ketone\n    tert-Butylmethyl ether                      2-Methyl-1-propanol\n    Dimethyl sulfoxide                          2-Methyltetrahydrofuran7\n    Ethanol                                     Pentane\n\n\nmade in October 2002), and was incorporated into the core guideline in November 2005. See\nPart III (pages 22-23).\n5 The information included for Tertiary-butyl Alcohol reflects that included in the Revision of\n\nPDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n6 The information included for Tetrahydrofuran reflects that included in the Revision of PDE\n\nInformation for THF which reached Step 4 in September 2002, and was incorporated into the\ncore guideline in November 2005. See Part II (pages 20-21).\n7 The information included for 2-Methyltetrahydrofuran reflects that included in t",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "ich-q3c-r9.pdf:13",
+   "source": "ich-q3c-r9.pdf",
+   "page": 13,
+   "image": "work/vision-pages/ich-q3c-r9-p013.png",
+   "image_sha256": "aa234c08ca7853895cc4d5cdd48a4f6c245306f3cf541b8156b5c055e8e2cbaa",
+   "dpi": 150,
+   "pdf_sha256": "fe6405857bffcd3ee1e519e0f6536e690627885a934b7cda191b5aea364ae493",
+   "text_layer": "                                                              Impurities: Guideline for Residual Solvents\n\n\nNitromethane                            0.5                          50\nPyridine                                 2.0                        200\nSulfolane                               1.6                         160\n\n\nTertiary-butyl alcohol5                  35                         3500\nTetrahydrofuran6                        7.2                         720\nTetralin                                1.0                         100\nToluene                                 8.9                         890\n1,1,2-Trichloroethene                   0.8                          80\nXylene*                                 21.7                        2170\n*\n usually 60% m-xylene, 14% p-xylene, 9% o-xylene with 17% ethyl benzene\n\n4.3 Solvents with Low Toxic Potential\nSolvents in Class 3 (shown in Table 3) may be regarded as less toxic and of lower risk to human\nhealth. Class 3 includes no solvent known as a human health hazard at levels normally accepted in\npharmaceuticals. However, there are no long-term toxicity or carcinogenicity studies for many of\nthe solvents in Class 3. Available data indicate that they are less toxic in acute or short-term studies\nand negative in genotoxicity studies. It is considered that amounts of these residual solvents of 50\nmg per day or less (corresponding to 5000 ppm or 0.5% under Option 1) would be acceptable\nwithout justification. Higher amounts may also be acceptable provided they are realistic in relation\nto manufacturing capability and good manufacturing practice.\n\nTABLE 3. Class 3 solvents which should be limited by GMP or other quality-based\nrequirements.\n    Acetic acid                                 Heptane\n    Acetone                                     Isobutyl acetate\n    Anisole                                     Isopropyl acetate\n    1-Butanol                                   Methyl acetate\n    2-Butanol                                   3-Methyl-1-butanol\n    Butyl acetate                               Methylethyl ketone\n    tert-Butylmethyl ether                      2-Methyl-1-propanol\n    Dimethyl sulfoxide                          2-Methyltetrahydrofuran7\n    Ethanol                                     Pentane\n\n\nmade in October 2002), and was incorporated into the core guideline in November 2005. See\nPart III (pages 22-23).\n5 The information included for Tertiary-butyl Alcohol reflects that included in the Revision of\n\nPDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n6 The information included for Tetrahydrofuran reflects that included in the Revision of PDE\n\nInformation for THF which reached Step 4 in September 2002, and was incorporated into the\ncore guideline in November 2005. See Part II (pages 20-21).\n7 The information included for 2-Methyltetrahydrofuran reflects that included in the Revision\n\nof PDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n\n\n\n                                                   7\n",
+   "next_page_text": "Ethyl acetate                              1-Pentanol\nEthyl ether                                1-Propanol\nEthyl formate                              2-Propanol\nFormic acid                                Propyl acetate\n                                           Triethylamine8\n\n\n\n\n8 The information included for Triethylamine    reflects that included in the Revision of PDE\nInformation for Triethylamine which reached Step 4 in November 2016 and was subsequently\nincorporated into the core Guideline. See Part V (pages 28-34).\n\n\n\n                                             8\n",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "ich-q3c-r9.pdf:17",
+   "source": "ich-q3c-r9.pdf",
+   "page": 17,
+   "image": "work/vision-pages/ich-q3c-r9-p017.png",
+   "image_sha256": "e53001a274d7b0cfa9844a9d6b47448ba2baa4335d5f55519f699ec2cc1dc457",
+   "dpi": 150,
+   "pdf_sha256": "fe6405857bffcd3ee1e519e0f6536e690627885a934b7cda191b5aea364ae493",
+   "text_layer": "Impurities: Guideline for Residual Solvents\n\n\n\nAPPENDIX 1. LIST OF SOLVENTS INCLUDED IN THE GUIDELINE\n\nSolvent                   Other Names                    Structure                     Class\nAcetic acid               Ethanoic acid                  CH3COOH                       Class 3\n\n\nAcetone                   2-Propanone                    CH3COCH3                      Class 3\n                          Propan-2-one\nAcetonitrile                                             CH3CN                         Class 2\n\n\nAnisole                   Methoxybenzene                        OCH3                   Class 3\n\n\nBenzene                   Benzol                                                       Class 1\n\n\n1-Butanol                 n-Butyl alcohol                CH3(CH2)3OH                   Class 3\n                          Butan-1-ol\n2-Butanol                 sec-Butyl alcohol              CH3CH2CH(OH)CH3               Class 3\n                          Butan-2-ol\nButyl acetate             Acetic acid butyl ester        CH3COO(CH2)3CH3               Class 3\n\n\ntert-Butylmethyl ether    2-Methoxy-2-methyl-            (CH3)3COCH3                   Class 3\n                          propane\nTertiary-butyl alcohol1   t-Butyl alcohol                (CH3)3COH                     Class 2\n                          tert-butanol\nCarbon tetrachloride      Tetrachloromethane             CCl4                          Class 1\n\n\nChlorobenzene                                                   Cl                     Class 2\n\n\nChloroform                Trichloromethane               CHCl3                         Class 2\n\n\nCumene2                   Isopropylbenzene                      CH(CH3)2               Class 2\n                          (1-Methyl)ethylbenzene\nCyclohexane               Hexamethylene                                                Class 2\n\n\n\n\n1 The information included for Tertiary-butyl alcohol reflects that included in the Revision of\n\nPDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n2 The information included for Cumene reflects that included in the Revision of PDE\nInformation for Cumene which reached Step 4 in February 2011 and was subsequently\nincorporated into the core Guideline. See Part IV (pages 24-27).\n\n\n\n                                               11\n",
+   "next_page_text": "Solvent                   Other Names                    Structure                    Class\nCyclopentyl       methyl CPME                                                         Class 2\nether3\n\n\n\n1,2-Dichloroethane        sym-Dichloroethane             CH2ClCH2Cl                   Class 1\n                          Ethylene dichloride\n                          Ethylene chloride\n\n1,1-Dichloroethene        1,1-Dichloroethylene           H2C=CCl2                     Class 1\n                          Vinylidene chloride\n1,2-Dichloroethene        1,2-Dichloroethylene           ClHC=CHCl                    Class 2\n                          Acetylene dichloride\nDichloromethane           Methylene chloride             CH2Cl2                       Class 2\n\n1,2-Dimethoxyethane       Ethyleneglycol dimethyl ether H3COCH2CH2OCH3                Class 2\n                          Monoglyme\n                          Dimethyl Cellosolve\nN,N-Dimethylacetamide     DMA                            CH3CON(CH3)2                 Class 2\n\n\nN,N-                      DMF                            HCON(CH3)2                   Class 2\nDimethylformamide\nDimethyl sulfoxide        Methylsulfinylmethane          (CH3)2SO                     Class 3\n                          Methyl sulfoxide\n                          DMSO\n1,4-Dioxane               p-Dioxane                                                   Class 2\n                                                         O   O\n                          [1,4]Dioxane\nEthanol                   Ethyl alcohol                  CH3CH2OH                     Class 3\n\n\n2-Ethoxyethanol           Cellosolve                     CH3CH2OCH2CH2OH              Class 2\n\n\nEthyl acetate             Acetic acid ethyl ester        CH3COOCH2CH3                 Class 3\n\n\nEthyleneglycol            1,2-Dihydroxyethane            HOCH2CH2OH                   Class 2\n                          1,2-Ethanediol\n\n\n\n\n3 The information included for Cyclopentyl methyl ether reflects that included in the Revision\n\nof PDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n\n\n\n                                                12\n",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  }
+ ]
+}

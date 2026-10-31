@@ -1,0 +1,282 @@
+{
+ "instructions": "You read pages of a pharmaceutical GMP text and list the obligations printed on them. For each page you get the\nrendered page IMAGE (open it with your Read tool: the image is the truth) and the page's TEXT LAYER (extracted\ntext, which can be wrong: superscripts flattened, table cells merged, landscape pages, lost symbols). Your output\nis checked by software against two text readings of the page and by independent reviewers, so precision matters\nmore than wording.\n\nList each separate obligation printed on the page as its own item, so that together your items cover every\nobligation on the page (body text, list items, table rows and footnotes that require something). One obligation\nis one thing a site must, should or may do, with all its conditions, numbers and qualifiers; do not split one\nobligation across items. A sentence that starts on this page and ends on the next is drafted here (runs_over true;\nthe next page's text is given). A sentence that started on the previous page is not drafted again.\nFor each item:\n- statement: the obligation in your own plain English words, as one checklist item a site could be audited\n  against. Do not copy more than a few words in a row. Keep every condition (\"where\", \"if\", \"unless\", \"before\")\n  and every number. Do not add anything the page does not say.\n- quote: the exact span of the page that states the whole obligation, copied as printed, character for\n  character from the TEXT LAYER where the text layer is right (it is matched against the page by software; do not\n  fix typos or change punctuation). For a table row, quote the column header cells joined with \" | \", then\n  \" || \", then the row's cells joined with \" | \", starting with the row's first cell (its label), e.g.\n  \"Grade | Air sample CFU/m3 || B | 10\". Write a footnote mark printed after a word as \"^\" and the mark\n  (\"Cumene^1\", \"specified^a\"); a power of ten as \"10^7\" or \"10^-6\".\n- clause_number: the number exactly as printed for the clause or row (\"9.3\", \"4.22 iii\", \"Table 2\", \"4.19\"),\n  \"\" if none. Do not compose references that are not printed (\"Table 2 Note 1\", \"Table 1 Grade B\").\n- strength: \"mandatory\" for shall / must / is required / may not; \"recommended\" for should; \"optional\" for may.\n  Take it from the main verb of the quoted words, not from words in a condition. A row of an inspection\n  checklist (\"Specify ...\", \"Whether ...\", no modal verb) is \"mandatory\": inspectors grade sites against it.\n- plant_types: from OSD (oral solid dosage), LIQ (oral liquids), SEMI (semisolids), INJ (sterile injectables), API\n  (active substances); the plant scope given with the page unless the page itself narrows it.\n- numbers: every number, limit, frequency or period in the quote, as printed in the image (10⁷ written \"10^7\").\n- condition: the condition or trigger of the obligation in a few words, \"\" if none. A condition stated in a\n  lead-in belongs to every table row or list item under it: \"if their use is unavoidable ... levels should be\n  restricted as shown in Table 1, unless otherwise justified\" applies to each row of Table 1, so each row's\n  statement and condition carry it.\n- topic: the sub-topic id from TOPICS the obligation belongs to (an audit area).\n- runs_over: true when the quote continues on the next page.\n- text_layer_differs: \"\" normally. If the image shows something the text layer gets wrong inside your quote\n  (a superscript \"10^7\" printed as \"107\", a symbol lost, cells of two rows merged, words in another order), quote\n  what the image shows and describe the difference here in one sentence.\n\nObligation sentences on the page that are not drafted (a heading, a definition, an example, text that only\ndescribes, a sentence that started on the previous page) go in not_applicable: the first 8 or more words of the\nsentence copied from the text layer, and the reason in a few words. Running headers, footers and page numbers are\nignored.\n\nWrite the answers file named in your task: {\"answers\": [one object per page with \"page\" set to the page id]}.\n",
+ "topics": [
+  "QS.PQS",
+  "QS.MGMT",
+  "QS.QRM",
+  "QS.PQR",
+  "QS.CHANGE",
+  "QS.DEV",
+  "QS.CAPA",
+  "PER.ORG",
+  "PER.KEY",
+  "PER.TRAIN",
+  "PER.HYG",
+  "PER.GOWN",
+  "PREM.DESIGN",
+  "PREM.PROD",
+  "PREM.STORE",
+  "PREM.QC",
+  "PREM.ANC",
+  "EQ.DESIGN",
+  "EQ.MAINT",
+  "EQ.CLEAN",
+  "EQ.CAL",
+  "DOC.SYS",
+  "DOC.SPEC",
+  "DOC.MFR",
+  "DOC.BMR",
+  "DOC.SOP",
+  "DOC.RET",
+  "MAT.SUPP",
+  "MAT.RECV",
+  "MAT.SAMP",
+  "MAT.STATUS",
+  "MAT.PACK",
+  "MAT.REJ",
+  "PROD.GEN",
+  "PROD.XCONT",
+  "PROD.IPC",
+  "PROD.YIELD",
+  "PROD.PACK",
+  "PROD.REWORK",
+  "QC.GEN",
+  "QC.SAMP",
+  "QC.TEST",
+  "QC.OOS",
+  "QC.STAB",
+  "QC.REF",
+  "QC.MICRO",
+  "VAL.PLAN",
+  "VAL.QUAL",
+  "VAL.PROC",
+  "VAL.CLEAN",
+  "VAL.METH",
+  "CSV.VAL",
+  "CSV.ACCESS",
+  "CSV.AUDIT",
+  "CSV.ESIG",
+  "CSV.DI",
+  "UTIL.WATER",
+  "UTIL.HVAC",
+  "UTIL.GAS",
+  "CCS.STRAT",
+  "CCS.EM",
+  "CCS.CLEAN",
+  "CCS.PEST",
+  "STER.GRADE",
+  "STER.ASEPT",
+  "STER.APS",
+  "STER.STERIL",
+  "STER.FILT",
+  "STER.CCI",
+  "STER.LYO",
+  "API.START",
+  "API.PROC",
+  "API.IMP",
+  "API.SOLV",
+  "OUT.CONTRACT",
+  "OUT.AGREE",
+  "CMP.COMPL",
+  "CMP.RECALL",
+  "CMP.REPORT",
+  "SI.PROG",
+  "SI.TEAM",
+  "SI.REPORT",
+  "SI.FOLLOW",
+  "DIST.STORE",
+  "DIST.TRANS",
+  "DIST.RETURN",
+  "REL.QP",
+  "REL.REVIEW"
+ ],
+ "schema": {
+  "type": "object",
+  "required": [
+   "page",
+   "items",
+   "not_applicable"
+  ],
+  "properties": {
+   "page": {
+    "type": "string"
+   },
+   "items": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "statement",
+      "quote",
+      "clause_number",
+      "strength",
+      "plant_types",
+      "numbers",
+      "condition",
+      "topic",
+      "runs_over",
+      "text_layer_differs"
+     ],
+     "properties": {
+      "statement": {
+       "type": "string"
+      },
+      "quote": {
+       "type": "string"
+      },
+      "clause_number": {
+       "type": "string"
+      },
+      "strength": {
+       "enum": [
+        "mandatory",
+        "recommended",
+        "optional"
+       ]
+      },
+      "plant_types": {
+       "type": "array",
+       "items": {
+        "enum": [
+         "OSD",
+         "LIQ",
+         "SEMI",
+         "INJ",
+         "API"
+        ]
+       }
+      },
+      "numbers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "condition": {
+       "type": "string"
+      },
+      "topic": {
+       "type": "string"
+      },
+      "runs_over": {
+       "type": "boolean"
+      },
+      "text_layer_differs": {
+       "type": "string"
+      }
+     }
+    }
+   },
+   "not_applicable": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "text",
+      "reason"
+     ],
+     "properties": {
+      "text": {
+       "type": "string"
+      },
+      "reason": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  }
+ },
+ "pages": [
+  {
+   "id": "pics-pi011-3-computerised-systems.pdf:8",
+   "source": "pics-pi011-3-computerised-systems.pdf",
+   "page": 8,
+   "image": "work/vision-pages/pics-pi011-3-computerised-systems-p008.png",
+   "image_sha256": "4ba14eed5ca05a80546de95b932c884d96a8fabf9a0da2ba7e978b3ae1cc6aaa",
+   "dpi": 150,
+   "pdf_sha256": "cc7ce49a671d52f850ab5336a1596227a75d5dfeea0ad1d69f085b24ec632c73",
+   "text_layer": "       regulated applications it is essential for the regulated user to define a\n       requirement specification prior to selection and to carry out a properly\n       documented supplier assessment and risk analysis for the various system\n       options. Information for such exercises may come from supplier audits and\n       research into the supplier’s product versions in the user community and\n       literature. This risk-based approach is one way for a firm to demonstrate that\n       they have applied a controlled methodology, to determine the degree of\n       assurance that a computerised system is fit for purpose. It will certainly be\n       useful evidence for consideration by an inspector. (Note: What constitutes a\n       ‘critical application’ may vary considerably, depending on the situation –\n       perhaps more so in GLP than in other disciplines).\n4.4    Whilst much of the detailed industry guidance relates to ‘bespoke’ and\n       configured applications there are a number of tools and assessment techniques\n       recommended for commercial packages and standard automated equipment.\n       Complex automated state of the art processing equipment (such as high output\n       tabletting machinery with in-process monitoring and feedback control\n       functionality), or complex analytical instrumentation, for example, is difficult to\n       assess without the supplier’s help. The co-operation of the supplier is essential\n       and it is important for suppliers to anticipate the needs of regulated user’s for\n       relevant product development life cycle quality and validation information. Such\n       an approach also provides added value for the automated products. The QA\n       and validation aspects for large automation aspects will inevitably be complex\n       and may be subsumed in major engineering projects activated by the potential\n       regulated user. Inspectors will be interested in the evidence relating to the firm’s\n       assessment of the supplier’s critical automated features as well as the\n       traditional engineering, qualification and process performance aspects. Much of\n       the guidance given in the GAMP Guide (Ref: 4), for example, is scaleable to\n       complex projects and equipment with sub-contracted features. (Note: The risk\n       assessment described in ‘4.3’ above should identify critical features and\n       functions for both the project team and the inspector).\n4.5    When a GxP inspector has to assess an installed computerised system at a\n       regulated user’s site, s/he may consider some, or all, of the elements shown in\n       Figure 1: “Computerised system”, (viz.: the controlling system and the\n       controlled process in an operating environment). The inspector will consider\n       the potential risks, from the automated system to product/material quality or\n       data integrity, as identified and documented by the regulated user, in order\n       to assess the fitness for purpose of the particular system(s). The company’s risk\n       assessment records may also be referred to as part of this process. The\n       inspector’s assessment may also involve a consideration of system life cycle,\n       quality assurance measures, validation and operational control evidence for the\n       controlling system, as well as validation and operational experience with the\n       controlled process.\n4.6    The validation documentation should cover all the steps of the life-cycle with\n       appropriate methods for measurement and reporting, (e.g. assessment reports\n       and details of quality and test measures), as required. Regulated users should\n       be able to justify and defend their standards, protocols, acceptance criteria,\n       procedures and records in the light of their own documented risk and\n       complexity assessments, aimed at ensuring fitness for purpose and regulatory\n       compliance.\n\n\n\n\nPI 011-3                              Page 4 of 50                      25 September 2007\n",
+   "next_page_text": "4.7    The Pharmaceutical Industry Systems Validation Forum in the UK developed\n       the Good Automated Manufacturing Practice (GAMP) Supplier Guide to assist\n       software suppliers in implementing an appropriate quality management system.\n       The GAMP Guide (and appendices) has evolved largely to define best practices\n       in specifying, designing, building, testing, qualifying and documenting these\n       systems to a rigorous validation management scheme, largely for the\n       controlling system. GAMP Forum is now sponsored by ISPE and has\n       international membership and participation, including ‘GAMP Americas’.\n       (Websites: www.gamp.org and www.ispe.org)\n\n4.8    Apart from user acceptance testing (OQ) versus the functional specification,\n       which may include ‘Factory Acceptance Testing’ (FAT), for example, at the\n       supplier, the regulated user also has responsibility for the (PQ) performance\n       qualification of the system. In this context the PQ user acceptance test of the\n                                                 3\n       system is in its operating environment , and will again be against a User\n       Requirements Specification (URS) that will include protocols and criteria for the\n       performance and quality acceptance, not only for the controlling system but\n       also for the controlled (pharmaceutical related) process application. Cross-\n       references to any related, relevant process validation documentation should be\n       clearly stated in respect of the latter. The GAMP Guide and PDA technical\n       report No 18 (Further Reading Ref: 6) provide good practice guidance to\n       drafting and using a URS, whereas pharmaceutical process validation guidance\n       is given elsewhere (see PIC/S PI 006 and related EU/USFDA documents).\n\n4.9    Computerised systems may simplistically be considered to exist as three main\n       application types, i.e.: process control systems, data processing systems,\n       (including data collection/capture) and data record/ storage systems. There may\n       be links between these three types of system, described as ‘interfaces’. For\n       critical systems, the inspector should study the user’s specifications, reports,\n       data, acceptance criteria and other documentation for various phases of the\n       project. The regulated user should be able to demonstrate through the\n       validation evidence that they have a high level of confidence in the integrity of\n       both the processes executed within the controlling computer system and in\n       those processes controlled by the computer system within the prescribed\n       operating environment.\n\n4.10   The simplification of application system types may at first sight seem to be\n       misleading for some readers. For GCP, examples of specific clinical systems\n       have been described in ‘Computer Systems Validation in Clinical Research’\n       Section 9 (Further Reading Ref: 12). It can be seen that ma",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "pics-pi011-3-computerised-systems.pdf:9",
+   "source": "pics-pi011-3-computerised-systems.pdf",
+   "page": 9,
+   "image": "work/vision-pages/pics-pi011-3-computerised-systems-p009.png",
+   "image_sha256": "12946a7f1583f57f03e9f971079899ee73ecdd0440cd9d17f6bad105251e5b66",
+   "dpi": 150,
+   "pdf_sha256": "cc7ce49a671d52f850ab5336a1596227a75d5dfeea0ad1d69f085b24ec632c73",
+   "text_layer": "4.7    The Pharmaceutical Industry Systems Validation Forum in the UK developed\n       the Good Automated Manufacturing Practice (GAMP) Supplier Guide to assist\n       software suppliers in implementing an appropriate quality management system.\n       The GAMP Guide (and appendices) has evolved largely to define best practices\n       in specifying, designing, building, testing, qualifying and documenting these\n       systems to a rigorous validation management scheme, largely for the\n       controlling system. GAMP Forum is now sponsored by ISPE and has\n       international membership and participation, including ‘GAMP Americas’.\n       (Websites: www.gamp.org and www.ispe.org)\n\n4.8    Apart from user acceptance testing (OQ) versus the functional specification,\n       which may include ‘Factory Acceptance Testing’ (FAT), for example, at the\n       supplier, the regulated user also has responsibility for the (PQ) performance\n       qualification of the system. In this context the PQ user acceptance test of the\n                                                 3\n       system is in its operating environment , and will again be against a User\n       Requirements Specification (URS) that will include protocols and criteria for the\n       performance and quality acceptance, not only for the controlling system but\n       also for the controlled (pharmaceutical related) process application. Cross-\n       references to any related, relevant process validation documentation should be\n       clearly stated in respect of the latter. The GAMP Guide and PDA technical\n       report No 18 (Further Reading Ref: 6) provide good practice guidance to\n       drafting and using a URS, whereas pharmaceutical process validation guidance\n       is given elsewhere (see PIC/S PI 006 and related EU/USFDA documents).\n\n4.9    Computerised systems may simplistically be considered to exist as three main\n       application types, i.e.: process control systems, data processing systems,\n       (including data collection/capture) and data record/ storage systems. There may\n       be links between these three types of system, described as ‘interfaces’. For\n       critical systems, the inspector should study the user’s specifications, reports,\n       data, acceptance criteria and other documentation for various phases of the\n       project. The regulated user should be able to demonstrate through the\n       validation evidence that they have a high level of confidence in the integrity of\n       both the processes executed within the controlling computer system and in\n       those processes controlled by the computer system within the prescribed\n       operating environment.\n\n4.10   The simplification of application system types may at first sight seem to be\n       misleading for some readers. For GCP, examples of specific clinical systems\n       have been described in ‘Computer Systems Validation in Clinical Research’\n       Section 9 (Further Reading Ref: 12). It can be seen that many of these systems\n       have much in common with requirements for other GxP sectors, (e.g. Electronic\n       transfer of data and/or software systems, (clinical) database management\n       systems, statistical systems, derived data systems, electronic document\n       management systems, electronic records and electronic signatures).\n\n4.11   The regulated users of the system have the ultimate responsibility for ensuring\n       that documented validation evidence is available to GxP inspectors for review.\n\n\n\n\n3\n       Large enterprise or MRP-II systems may be tested in a pilot mode environment initially,\n       followed by controlled ‘roll-out’ to the user environment.\n\n\nPI 011-3                                Page 5 of 50                      25 September 2007\n",
+   "next_page_text": "4.12   In addition to the validation considerations, the inspector will also be concerned\n       with assessing the basic operational controls, quality system and security\n       features for these systems, as indicated in the PIC/S GMP Annex 11 and\n       amplified in the APV Guidance, q.v. For a copy of the APV Guidance, see\n       GAMP 4 Appendix 09 (Further Reading Ref: 15).\n\n\nPART TWO - IMPLEMENTATION OF SYSTEM\n\n\n5.     IMPLEMENTATION OF COMPUTERISED SYSTEMS\n\n5.1    The assurance of the reliability of a Supplier’s software products is attributable\n       to the quality of the software engineering processes followed during\n       development. This should include design, coding, verification testing,\n       integration, and change control features of the development life cycle, (including\n       after sales support). In order for customers to have confidence in the reliability\n       of the products, they should evaluate the quality methodology of the supplier for\n                                                                             4\n       the design, construction, supply and maintenance of the software . A formal,\n       extensive review of the history of the Supply Company and the software\n       package may be an option to consider where an additional degree of assurance\n       of the reliability of the software is needed. This should be documented in a\n                                5\n       Supplier Audit Report . Prospective purchasers should consider any known\n       limitations and problems for particular software packages or versions and the\n       adequacy of any corrective actions by the Supplier. Appropriate,\n       comprehensive documented customer acceptance testing should support the\n       final selection of the software package. Errors often come to light after\n       implementation and it is important for the Supplier to advise/assist the\n       Customer concerning any problems and modifications to resolve errors. For so\n       called ‘standard software packages’ and COTS (as referenced in the GAMP\n       guide and commercial literature), it is important that purchasers are vigilant in\n       maintaining reliable systems. This may include documented reviews of their\n       own experiences, (e.g. log books and error reporting and resolution), from\n       reading relevant literature or from interacting with application ‘User Groups’ to\n       identify and resolve any serious problems. Conclusions and recommendations\n       from such activities should be recorded.\n\n5.2    Where the reliability and structural integrity of complex software products\n       cannot be directly assessed, or completely evaluated, then it is even more\n       important to assure that a good construction process has been used and has\n       been properly documented. It is recognised that complex commercial\n       proprietary applications can be extremely difficult to assess due to commercial\n                                                      ",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "pics-pi011-3-computerised-systems.pdf:10",
+   "source": "pics-pi011-3-computerised-systems.pdf",
+   "page": 10,
+   "image": "work/vision-pages/pics-pi011-3-computerised-systems-p010.png",
+   "image_sha256": "10d82600a6496695d128ea46daeb82e34f02bbfd409834ec3d6cd09dddc18ea8",
+   "dpi": 150,
+   "pdf_sha256": "cc7ce49a671d52f850ab5336a1596227a75d5dfeea0ad1d69f085b24ec632c73",
+   "text_layer": "4.12   In addition to the validation considerations, the inspector will also be concerned\n       with assessing the basic operational controls, quality system and security\n       features for these systems, as indicated in the PIC/S GMP Annex 11 and\n       amplified in the APV Guidance, q.v. For a copy of the APV Guidance, see\n       GAMP 4 Appendix 09 (Further Reading Ref: 15).\n\n\nPART TWO - IMPLEMENTATION OF SYSTEM\n\n\n5.     IMPLEMENTATION OF COMPUTERISED SYSTEMS\n\n5.1    The assurance of the reliability of a Supplier’s software products is attributable\n       to the quality of the software engineering processes followed during\n       development. This should include design, coding, verification testing,\n       integration, and change control features of the development life cycle, (including\n       after sales support). In order for customers to have confidence in the reliability\n       of the products, they should evaluate the quality methodology of the supplier for\n                                                                             4\n       the design, construction, supply and maintenance of the software . A formal,\n       extensive review of the history of the Supply Company and the software\n       package may be an option to consider where an additional degree of assurance\n       of the reliability of the software is needed. This should be documented in a\n                                5\n       Supplier Audit Report . Prospective purchasers should consider any known\n       limitations and problems for particular software packages or versions and the\n       adequacy of any corrective actions by the Supplier. Appropriate,\n       comprehensive documented customer acceptance testing should support the\n       final selection of the software package. Errors often come to light after\n       implementation and it is important for the Supplier to advise/assist the\n       Customer concerning any problems and modifications to resolve errors. For so\n       called ‘standard software packages’ and COTS (as referenced in the GAMP\n       guide and commercial literature), it is important that purchasers are vigilant in\n       maintaining reliable systems. This may include documented reviews of their\n       own experiences, (e.g. log books and error reporting and resolution), from\n       reading relevant literature or from interacting with application ‘User Groups’ to\n       identify and resolve any serious problems. Conclusions and recommendations\n       from such activities should be recorded.\n\n5.2    Where the reliability and structural integrity of complex software products\n       cannot be directly assessed, or completely evaluated, then it is even more\n       important to assure that a good construction process has been used and has\n       been properly documented. It is recognised that complex commercial\n       proprietary applications can be extremely difficult to assess due to commercial\n                                                                              6\n       secrecy and rivalry between suppliers, competing for market share . Market\n\n4\n       Refer also to ISO15504 (1998) ‘Information Technology Software Process Assessment’\n       and see GAMP 4 Appendix M2 ‘Guideline for Supplier Audit’.\n5\n       A minority of suppliers are not responsive to requests for an audit. The need to perform\n       a supplier audit should be linked to the regulated user’s risk assessment and quality\n       assurance standards.\n6\n       The UK Government’s Interdepartmental Committee on Software Engineering (ICSE)\n       and the Real Time Engineering Group, have referred to such software as SOUP\n       (‘Software of Uncertain Pedigree’) (1999).\n\n\nPI 011-3                                Page 6 of 50                       25 September 2007\n",
+   "next_page_text": "                                                                                     7\n       research plus focused quality system and product specific audits of the\n       suppliers by the regulated user (or by an accredited third party auditor) may be\n       beneficial here. The business/GxP criticality and risks relating to the application\n       will determine the nature and extent of any assessment of suppliers and\n       software products. GAMP Forum and PDA have provided advice and guidance\n       in the GxP field on these matters.\n\n5.3    At all times there is a need for complete and accurate documentation and\n       records to cover all aspects of the design phase, implementation & validation of\n       the computerised system(s). Operating and reporting requirements for the\n       important phases of the Software development Life Cycle related qualifications\n       and testing exercises and commissioning should be covered by comprehensive\n       Standard Operating Procedures or quality plans. The need for control and\n       documentation of the development, implementation and operation of computer\n       systems is extremely important for the validation of the system. There needs to\n       be a strong emphasis on quality assurance in the development stages. It is\n       fundamental for system life cycle documents to be controlled and maintained\n       (version, audit trails as appropriate), within a quality assured document\n       management system and available for inspection, if necessary. Regulated\n       users may choose to implement these requirements using either robust paper,\n       electronic or hybrid systems.\n\n6.     THE STRUCTURE AND FUNCTIONS OF THE COMPUTER SYSTEM(S)\n                                     8\n6.1    A recent USFDA document identifies three premises that constitute the basic\n       principles of quality assurance, which apply to software engineering:\n       \u0001     Quality, safety and effectiveness must be designed and built into the\n             software.\n       \u0001     Quality cannot be inspected or tested into the finished software.\n       \u0001     Each phase of the development process must be controlled to maximise\n             the probability that the finished software meets all quality and design\n             specifications.\n\n6.2    A computerised system is composed of the computer system and the controlled\n       function or process. The computer system is composed of all computer\n       hardware, firmware, installed devices, and software controlling the operation of\n                                                                                9\n       the computer. The controlled function may be composed of equipment to be\n       controlled and operating procedures that define the function of such equipment,\n       or it may be an operation, which does not require equipment other than the\n       hardware in the computer system. Interfaces and networked functions through\n       LAN and WAN are aspects of the co",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "pics-pi011-3-computerised-systems.pdf:20",
+   "source": "pics-pi011-3-computerised-systems.pdf",
+   "page": 20,
+   "image": "work/vision-pages/pics-pi011-3-computerised-systems-p020.png",
+   "image_sha256": "fc8c35ecc5c8eaba1da837bbde7cf8868c85d101eb316b7f2f51ec64a4d648a4",
+   "dpi": 150,
+   "pdf_sha256": "cc7ce49a671d52f850ab5336a1596227a75d5dfeea0ad1d69f085b24ec632c73",
+   "text_layer": "13.3   For some simpler GxP systems, for example certain PLCs and systems based\n       on basic algorithms or logic sets, the functional testing may provide adequate\n       assurance of reliability of the computerised system. For critical and/or more\n       complex systems the verification testing that is conducted at the IQ, OQ & PQ\n       stages provides only a limited level of assurance that the system does what it\n       purports to do, reliably. This level of testing provides only limited assurance of\n       the operation and reliability of hidden functions and code. For complex systems\n       there should also be a high level of assurance that the development of the\n       software has ensured delivery and operation of a quality product that is\n       structurally sound, clearly defined and controlled.\n\n13.4   Test scripts should be developed, formally documented and used to\n       demonstrate that the system has been installed, and is operating and\n       performing satisfactorily. These test scripts should be related to the User\n       Requirements Specifications and the Functional specifications for the system.\n       This schedule of testing should be specifically aimed at demonstrating the\n                                 22\n       validation of the system . In software engineering terms satisfactory results\n       obtained from the testing should confirm design validation.\n\n13.5   Any processing equipment and activities related to or controlled by the\n       computer system would require additional IQ, OQ and PQ testing regimes. It\n       may be appropriate to combine test phases and test scopes for a group of\n       equipment or activities, and this should be defined in a test plan or strategy.\n\n13.6   Regulated Users should be able to demonstrate formal acceptance of systems\n       after testing and controlled transfer into the live operational environment.\n\n\n14.    VALIDATION STRATEGIES AND PRIORITIES\n\n14.1   Regulated users need to be able to provide evidence for their computerised\n       systems to demonstrate their range, complexity, functionality, control and\n       validation status.\n\n14.2   For the validation of computerised systems there should be a system in place\n       that assures the formal assessment and reporting of quality and performance\n       measures for all the life-cycle stages of software and system development, its\n       implementation, qualification and acceptance, operation, modification, re-\n                                                    23\n       qualification, maintenance and retirement . This should enable both the\n       regulated user, and competent authority, to have a high level of confidence in\n       the integrity of both the processes executed within the controlling computer\n       system(s) and in those processes controlled by and/or linked to the computer\n\n\n\n22\n       The supplier/developer should draft test scripts according to the project quality plan to\n       verify performance to the functional specifications. The scripts should stress test the\n       structural integrity, critical algorithms and ‘boundary value’ aspects of the integrated\n       software. The test scripts related to the user requirements specification are the\n       responsibility of the regulated users.\n23\n       Tools and controls within the QMS, such as audits, change controls, configuration\n       management and continuous improvement programmes may feature here.\n\n\nPI 011-3                                Page 16 of 50                      25 September 2007\n",
+   "next_page_text": "                                                                                24\n       system(s), within the prescribed operating environment(s).                    (See also\n       Section ‘4.6’)\n\n14.3   The regulated user’s range of computerised systems needs to be formally\n       listed in an inventory and the scope/extent of validation for each detailed in a\n                                                    25\n       consolidated written Validation programme . Validation scope should include\n       GxP compliance criteria, ranked for product/process quality and data integrity\n       risk criticality, should the system fail or malfunction. This process represents\n       one of the most important pre-requisites of Validation Master Planning (see\n       PIC/S doc. PI 006), in that it is essential to assign priorities and attention to\n       those systems (and features within systems) that represent the highest potential\n       for disaster, should they malfunction or become inoperative. The risk analyses\n       and the results, together with reasoning for critical or non-critical\n       classifications, should be documented. Risks potentially impacting on GxP\n       compliance should be clearly identified. There are a number of techniques to\n       help identify and analyse risks and to select risk reduction and control\n       measures. For further information refer to the GAMP Guide appendix and the\n       GAMP Forum special interest group paper on ‘Functional Risk Assessment’.\n                                                                                               26\n14.4   GxP compliance evidence is essential for the following aspects and activities\n       related to computerised systems:\n       \u0001     data input (capture and integrity), data filing, data-processing, networks,\n             process control and monitoring, electronic records, archiving, retrieval,\n             printing, access, change management, audit trails and decisions\n             associated with any automated GxP related activity;\n       \u0001     in this context, examples of GxP related activities might include:\n             regulatory    submissions,     R&D,     clinical   trials, procurement,\n             dispensing/weighing, manufacturing, assembly, testing, quality control,\n             quality assurance, inventory control, storage and distribution, training,\n             calibration, maintenance, contracts/technical agreements and associated\n             records and reports.\n\n14.5   Historically, these systems have relied on manual systems, some electro-\n       mechanical controls and paper based documentation. The introduction of\n       computerised systems does not diminish the need for compliance with GxP\n       requirements and guidelines.\n\n\n\n\n24\n       The italicised-bold part of this definition should be interpreted as requiring controlled\n       documented methodology and records based on best compliance practices. This is to\n       ensure that firms h",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "pics-pi011-3-computerised-systems.pdf:21",
+   "source": "pics-pi011-3-computerised-systems.pdf",
+   "page": 21,
+   "image": "work/vision-pages/pics-pi011-3-computerised-systems-p021.png",
+   "image_sha256": "e19224c5218edea578fe708cd7d25933c0bac69bfd5e3fdb318318b3b788cee5",
+   "dpi": 150,
+   "pdf_sha256": "cc7ce49a671d52f850ab5336a1596227a75d5dfeea0ad1d69f085b24ec632c73",
+   "text_layer": "                                                                                24\n       system(s), within the prescribed operating environment(s).                    (See also\n       Section ‘4.6’)\n\n14.3   The regulated user’s range of computerised systems needs to be formally\n       listed in an inventory and the scope/extent of validation for each detailed in a\n                                                    25\n       consolidated written Validation programme . Validation scope should include\n       GxP compliance criteria, ranked for product/process quality and data integrity\n       risk criticality, should the system fail or malfunction. This process represents\n       one of the most important pre-requisites of Validation Master Planning (see\n       PIC/S doc. PI 006), in that it is essential to assign priorities and attention to\n       those systems (and features within systems) that represent the highest potential\n       for disaster, should they malfunction or become inoperative. The risk analyses\n       and the results, together with reasoning for critical or non-critical\n       classifications, should be documented. Risks potentially impacting on GxP\n       compliance should be clearly identified. There are a number of techniques to\n       help identify and analyse risks and to select risk reduction and control\n       measures. For further information refer to the GAMP Guide appendix and the\n       GAMP Forum special interest group paper on ‘Functional Risk Assessment’.\n                                                                                               26\n14.4   GxP compliance evidence is essential for the following aspects and activities\n       related to computerised systems:\n       \u0001     data input (capture and integrity), data filing, data-processing, networks,\n             process control and monitoring, electronic records, archiving, retrieval,\n             printing, access, change management, audit trails and decisions\n             associated with any automated GxP related activity;\n       \u0001     in this context, examples of GxP related activities might include:\n             regulatory    submissions,     R&D,     clinical   trials, procurement,\n             dispensing/weighing, manufacturing, assembly, testing, quality control,\n             quality assurance, inventory control, storage and distribution, training,\n             calibration, maintenance, contracts/technical agreements and associated\n             records and reports.\n\n14.5   Historically, these systems have relied on manual systems, some electro-\n       mechanical controls and paper based documentation. The introduction of\n       computerised systems does not diminish the need for compliance with GxP\n       requirements and guidelines.\n\n\n\n\n24\n       The italicised-bold part of this definition should be interpreted as requiring controlled\n       documented methodology and records based on best compliance practices. This is to\n       ensure that firms have generated documented evidence (electronic and/ or paper\n       based), that gives a high level of assurance that both the computer system and the\n       computerised system, will consistently perform as specified, designed, implemented\n       and validated. Related validation dossiers for complex integrated projects should be\n       clearly cross-linked for audit purposes.\n25\n       The scope or extent of validation for each system can be detailed in individual validation\n       plans. A hierarchy of linked validation plans may be appropriate as outlined in GAMP 4\n       guidance Appendix M1: ‘Guideline for validation planning’.\n26\n       These examples are intended to be illustrative, not exhaustive.\n\n\nPI 011-3                                Page 17 of 50                       25 September 2007\n",
+   "next_page_text": "14.6       The current Good Automated Manufacturing Practice (GAMP) Supplier Guide\n           provides essential guidance to suppliers of software to the Industry. The guide\n           also provides a concise explanation of the interrelationship between various\n           stages of software development and the requirements for Installation,\n           Operational & Performance Qualification. The GAMP Guide identifies five\n           different categories of software.\n\n\n15.        GAMP VALIDATION APPROACH BASED ON DIFFERENT CATEGORIES\n           OF SOFTWARE PRODUCTS\n\n15.1       The GAMP Guide may be referred to as appropriate for detailed guidance both\n           in the core project management section, the quality narrative and the specific\n           appendices. The following are category summaries from GAMP 4:\n\nReproduced from the GAMP 4 Guide (with permission) Appendix M4\n\nTable 2.1:        Summary of Software Categories\n\n\nCategory           Software Type                        Validation Approach\n       1         Operating System        Record version (including service pack). The\n                                         Operating System will be challenged indirectly by\n                                         the functional testing of the application.\n       2         Firmware                For non-configurable firmware record version.\n                                         Calibrate instruments as necessary. Verify\n                                         operation against user requirements.\n                                         For configurable firmware record version and\n                                         configuration. Calibrate instruments as\n                                         necessary and verify operation against user\n                                         requirements.\n                                         Manage custom (bespoke) firmware as Category\n                                         5 software.\n       3         Standard Software       Record version (and configuration of\n                 Packages                environment) and verify operation against user\n                                         requirements.\n                                         Consider auditing the supplier for critical and\n                                         complex applications.\n       4         Configurable            Record version and configuration, and verify\n                 Software Packages       operation against user requirements.\n                                         Normally audit the supplier for critical and\n                                         complex applications.\n                                         Manage any custom (bespoke) programming as\n                                         Category 5.\n\n       5         Custom (Bespoke)        Audit supplier and validate complete system.\n                 Software\n\n\n\n\nPI 011-3                                Page 18 of 50                    25 September 2007",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  }
+ ]
+}

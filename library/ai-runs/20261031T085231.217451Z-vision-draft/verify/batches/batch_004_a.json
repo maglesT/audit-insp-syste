@@ -1,0 +1,800 @@
+{
+ "role": "a",
+ "instructions": "You are an auditor checking one checklist item against the page it claims to come from. You get the page IMAGE\n(open it with your Read tool: the image is the truth), the page's TEXT LAYER (extracted text, which can be wrong)\nand the item. Start from the ITEM: read it, then find on the page what it covers.\n\nThe item must state one whole obligation printed on the page. If a condition, number, frequency or qualifier that\nbelongs to the same obligation is left out of the item, it counts as omitted. Judge only what the item's own words\nsay: do not read the page back into the item. A condition in a lead-in (a sentence pointing to a table, or\nending in \":\" before a list) belongs to every row or item under it; a row or item that leaves it out omits it. A condition, trigger, timing or qualifier that is on the page but\nnot in the item is omitted, even if it seems implied. A trigger such as \"if\", \"where ... is required\", \"when\" or\n\"before\" is part of the obligation.\n\nAnswer strictly:\n- quote_as_printed: is the item's quote printed on the page exactly (as the image shows it; for a table row, its\n  column headers, \" || \", then the row's cells, each part joined with \" | \"; a footnote mark written \"^1\" after\n  its word, a power of ten as \"10^7\") (true/false)?\n- verdict: \"correct\" only if the quote is as printed, the page requires what the statement asks for, the\n  statement adds nothing and omits nothing of that obligation, the strength (shall/must = mandatory, should =\n  recommended, may = optional; an inspection-checklist row without such a word, \"Specify ...\" or \"Whether ...\", is\n  mandatory) matches the quoted words, and the page applies to every listed plant type;\n  otherwise \"incorrect\".\n- reason: one or two sentences.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "items": [
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:45#1",
+   "image": "work/vision-pages/india-cdsco-circ-2024-03-risk-based-inspection-p045.png",
+   "text_layer": "                                          Risk Based Joint Inspection Report\n\n\n         WHO\n                  Specify the steps taken in air handling system to\n        TRS-961\n18.3              achieve the Grade A, B, C and D of air as per\n        ANNEXE-\n                  designated classified areas.\n          06\n                  Specify the recovery time of B & C zone from the time\n18.4     Sch-M    of personnel leaving the room after completion of\n                  operations and verify the records in this regard.\n                  Specify whether filling operations are challenged\n18.5     Sch-M    initially and there after periodically by simulation trials\n                  including sterile media fill.\n         WHO\n        TRS-961   Specify the procedure followed for medial fill and the\n18.6\n        ANNEXE-   acceptance criteria.\n          06\n         WHO      Whether the medial fill trial is based on worst case\n        TRS-961   situation taking into consideration all interventions,\n18.7\n        ANNEXE-   activities occurring during normal activity as well as\n          06      worst case.\n         WHO\n                  Whether simulation tests are repeated at defined\n        TRS-961\n18.8              intervals and after any significant modification to HVAC\n        ANNEXE-\n                  system, equipment or process.\n          06\n                  Specify the number of air changes in Grade A/B and\n18.9     Sch-M\n                  Grade C areas.\n                  Specify the air velocity maintained in Grade A Laminar\n18.10    Sch-M\n                  Air Flow stations\n                  Specify the differential pressure between areas of\n18.1     Sch-M\n                  different environmental standards.\n                  Specify type of manometer installed for measurement\n18.1     Sch-M\n                  and verification of Air Pressure Differential.\n         WHO      Specify the air classification in final change room to\n18.13\n        TRS-961   enter A/B area.\n\n\n\n\n                                                        Page 24 of 55\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Describe the measures in the air handling system that achieve Grade A, B, C and D air in the designated classified areas.",
+    "quote": "18.3 | WHO TRS-961 ANNEXE-06 | Specify the steps taken in air handling system to achieve the Grade A, B, C and D of air as per designated classified areas.",
+    "clause_number": "18.3",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:45#2",
+   "image": "work/vision-pages/india-cdsco-circ-2024-03-risk-based-inspection-p045.png",
+   "text_layer": "                                          Risk Based Joint Inspection Report\n\n\n         WHO\n                  Specify the steps taken in air handling system to\n        TRS-961\n18.3              achieve the Grade A, B, C and D of air as per\n        ANNEXE-\n                  designated classified areas.\n          06\n                  Specify the recovery time of B & C zone from the time\n18.4     Sch-M    of personnel leaving the room after completion of\n                  operations and verify the records in this regard.\n                  Specify whether filling operations are challenged\n18.5     Sch-M    initially and there after periodically by simulation trials\n                  including sterile media fill.\n         WHO\n        TRS-961   Specify the procedure followed for medial fill and the\n18.6\n        ANNEXE-   acceptance criteria.\n          06\n         WHO      Whether the medial fill trial is based on worst case\n        TRS-961   situation taking into consideration all interventions,\n18.7\n        ANNEXE-   activities occurring during normal activity as well as\n          06      worst case.\n         WHO\n                  Whether simulation tests are repeated at defined\n        TRS-961\n18.8              intervals and after any significant modification to HVAC\n        ANNEXE-\n                  system, equipment or process.\n          06\n                  Specify the number of air changes in Grade A/B and\n18.9     Sch-M\n                  Grade C areas.\n                  Specify the air velocity maintained in Grade A Laminar\n18.10    Sch-M\n                  Air Flow stations\n                  Specify the differential pressure between areas of\n18.1     Sch-M\n                  different environmental standards.\n                  Specify type of manometer installed for measurement\n18.1     Sch-M\n                  and verification of Air Pressure Differential.\n         WHO      Specify the air classification in final change room to\n18.13\n        TRS-961   enter A/B area.\n\n\n\n\n                                                        Page 24 of 55\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "State the clean-up (recovery) time of Grade B and C zones measured from when personnel leave the room after operations end, and keep records that can be verified.",
+    "quote": "18.4 | Sch-M | Specify the recovery time of B & C zone from the time of personnel leaving the room after completion of operations and verify the records in this regard.",
+    "clause_number": "18.4",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:45#3",
+   "image": "work/vision-pages/india-cdsco-circ-2024-03-risk-based-inspection-p045.png",
+   "text_layer": "                                          Risk Based Joint Inspection Report\n\n\n         WHO\n                  Specify the steps taken in air handling system to\n        TRS-961\n18.3              achieve the Grade A, B, C and D of air as per\n        ANNEXE-\n                  designated classified areas.\n          06\n                  Specify the recovery time of B & C zone from the time\n18.4     Sch-M    of personnel leaving the room after completion of\n                  operations and verify the records in this regard.\n                  Specify whether filling operations are challenged\n18.5     Sch-M    initially and there after periodically by simulation trials\n                  including sterile media fill.\n         WHO\n        TRS-961   Specify the procedure followed for medial fill and the\n18.6\n        ANNEXE-   acceptance criteria.\n          06\n         WHO      Whether the medial fill trial is based on worst case\n        TRS-961   situation taking into consideration all interventions,\n18.7\n        ANNEXE-   activities occurring during normal activity as well as\n          06      worst case.\n         WHO\n                  Whether simulation tests are repeated at defined\n        TRS-961\n18.8              intervals and after any significant modification to HVAC\n        ANNEXE-\n                  system, equipment or process.\n          06\n                  Specify the number of air changes in Grade A/B and\n18.9     Sch-M\n                  Grade C areas.\n                  Specify the air velocity maintained in Grade A Laminar\n18.10    Sch-M\n                  Air Flow stations\n                  Specify the differential pressure between areas of\n18.1     Sch-M\n                  different environmental standards.\n                  Specify type of manometer installed for measurement\n18.1     Sch-M\n                  and verification of Air Pressure Differential.\n         WHO      Specify the air classification in final change room to\n18.13\n        TRS-961   enter A/B area.\n\n\n\n\n                                                        Page 24 of 55\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Challenge filling operations with simulation trials, including sterile media fill, at the start and periodically afterwards.",
+    "quote": "18.5 | Sch-M | Specify whether filling operations are challenged initially and there after periodically by simulation trials including sterile media fill.",
+    "clause_number": "18.5",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:45#4",
+   "image": "work/vision-pages/india-cdsco-circ-2024-03-risk-based-inspection-p045.png",
+   "text_layer": "                                          Risk Based Joint Inspection Report\n\n\n         WHO\n                  Specify the steps taken in air handling system to\n        TRS-961\n18.3              achieve the Grade A, B, C and D of air as per\n        ANNEXE-\n                  designated classified areas.\n          06\n                  Specify the recovery time of B & C zone from the time\n18.4     Sch-M    of personnel leaving the room after completion of\n                  operations and verify the records in this regard.\n                  Specify whether filling operations are challenged\n18.5     Sch-M    initially and there after periodically by simulation trials\n                  including sterile media fill.\n         WHO\n        TRS-961   Specify the procedure followed for medial fill and the\n18.6\n        ANNEXE-   acceptance criteria.\n          06\n         WHO      Whether the medial fill trial is based on worst case\n        TRS-961   situation taking into consideration all interventions,\n18.7\n        ANNEXE-   activities occurring during normal activity as well as\n          06      worst case.\n         WHO\n                  Whether simulation tests are repeated at defined\n        TRS-961\n18.8              intervals and after any significant modification to HVAC\n        ANNEXE-\n                  system, equipment or process.\n          06\n                  Specify the number of air changes in Grade A/B and\n18.9     Sch-M\n                  Grade C areas.\n                  Specify the air velocity maintained in Grade A Laminar\n18.10    Sch-M\n                  Air Flow stations\n                  Specify the differential pressure between areas of\n18.1     Sch-M\n                  different environmental standards.\n                  Specify type of manometer installed for measurement\n18.1     Sch-M\n                  and verification of Air Pressure Differential.\n         WHO      Specify the air classification in final change room to\n18.13\n        TRS-961   enter A/B area.\n\n\n\n\n                                                        Page 24 of 55\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Have a defined procedure for media fills with stated acceptance criteria.",
+    "quote": "18.6 | WHO TRS-961 ANNEXE-06 | Specify the procedure followed for medial fill and the acceptance criteria.",
+    "clause_number": "18.6",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:45#5",
+   "image": "work/vision-pages/india-cdsco-circ-2024-03-risk-based-inspection-p045.png",
+   "text_layer": "                                          Risk Based Joint Inspection Report\n\n\n         WHO\n                  Specify the steps taken in air handling system to\n        TRS-961\n18.3              achieve the Grade A, B, C and D of air as per\n        ANNEXE-\n                  designated classified areas.\n          06\n                  Specify the recovery time of B & C zone from the time\n18.4     Sch-M    of personnel leaving the room after completion of\n                  operations and verify the records in this regard.\n                  Specify whether filling operations are challenged\n18.5     Sch-M    initially and there after periodically by simulation trials\n                  including sterile media fill.\n         WHO\n        TRS-961   Specify the procedure followed for medial fill and the\n18.6\n        ANNEXE-   acceptance criteria.\n          06\n         WHO      Whether the medial fill trial is based on worst case\n        TRS-961   situation taking into consideration all interventions,\n18.7\n        ANNEXE-   activities occurring during normal activity as well as\n          06      worst case.\n         WHO\n                  Whether simulation tests are repeated at defined\n        TRS-961\n18.8              intervals and after any significant modification to HVAC\n        ANNEXE-\n                  system, equipment or process.\n          06\n                  Specify the number of air changes in Grade A/B and\n18.9     Sch-M\n                  Grade C areas.\n                  Specify the air velocity maintained in Grade A Laminar\n18.10    Sch-M\n                  Air Flow stations\n                  Specify the differential pressure between areas of\n18.1     Sch-M\n                  different environmental standards.\n                  Specify type of manometer installed for measurement\n18.1     Sch-M\n                  and verification of Air Pressure Differential.\n         WHO      Specify the air classification in final change room to\n18.13\n        TRS-961   enter A/B area.\n\n\n\n\n                                                        Page 24 of 55\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Design media fill trials on worst-case conditions, covering all interventions and activities of normal operation as well as worst case.",
+    "quote": "18.7 | WHO TRS-961 ANNEXE-06 | Whether the medial fill trial is based on worst case situation taking into consideration all interventions, activities occurring during normal activity as well as worst case.",
+    "clause_number": "18.7",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:45#6",
+   "image": "work/vision-pages/india-cdsco-circ-2024-03-risk-based-inspection-p045.png",
+   "text_layer": "                                          Risk Based Joint Inspection Report\n\n\n         WHO\n                  Specify the steps taken in air handling system to\n        TRS-961\n18.3              achieve the Grade A, B, C and D of air as per\n        ANNEXE-\n                  designated classified areas.\n          06\n                  Specify the recovery time of B & C zone from the time\n18.4     Sch-M    of personnel leaving the room after completion of\n                  operations and verify the records in this regard.\n                  Specify whether filling operations are challenged\n18.5     Sch-M    initially and there after periodically by simulation trials\n                  including sterile media fill.\n         WHO\n        TRS-961   Specify the procedure followed for medial fill and the\n18.6\n        ANNEXE-   acceptance criteria.\n          06\n         WHO      Whether the medial fill trial is based on worst case\n        TRS-961   situation taking into consideration all interventions,\n18.7\n        ANNEXE-   activities occurring during normal activity as well as\n          06      worst case.\n         WHO\n                  Whether simulation tests are repeated at defined\n        TRS-961\n18.8              intervals and after any significant modification to HVAC\n        ANNEXE-\n                  system, equipment or process.\n          06\n                  Specify the number of air changes in Grade A/B and\n18.9     Sch-M\n                  Grade C areas.\n                  Specify the air velocity maintained in Grade A Laminar\n18.10    Sch-M\n                  Air Flow stations\n                  Specify the differential pressure between areas of\n18.1     Sch-M\n                  different environmental standards.\n                  Specify type of manometer installed for measurement\n18.1     Sch-M\n                  and verification of Air Pressure Differential.\n         WHO      Specify the air classification in final change room to\n18.13\n        TRS-961   enter A/B area.\n\n\n\n\n                                                        Page 24 of 55\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Repeat process simulation tests at defined intervals and after any significant change to the HVAC system, equipment or process.",
+    "quote": "18.8 | WHO TRS-961 ANNEXE-06 | Whether simulation tests are repeated at defined intervals and after any significant modification to HVAC system, equipment or process.",
+    "clause_number": "18.8",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "at defined intervals and after significant HVAC, equipment or process change",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:45#7",
+   "image": "work/vision-pages/india-cdsco-circ-2024-03-risk-based-inspection-p045.png",
+   "text_layer": "                                          Risk Based Joint Inspection Report\n\n\n         WHO\n                  Specify the steps taken in air handling system to\n        TRS-961\n18.3              achieve the Grade A, B, C and D of air as per\n        ANNEXE-\n                  designated classified areas.\n          06\n                  Specify the recovery time of B & C zone from the time\n18.4     Sch-M    of personnel leaving the room after completion of\n                  operations and verify the records in this regard.\n                  Specify whether filling operations are challenged\n18.5     Sch-M    initially and there after periodically by simulation trials\n                  including sterile media fill.\n         WHO\n        TRS-961   Specify the procedure followed for medial fill and the\n18.6\n        ANNEXE-   acceptance criteria.\n          06\n         WHO      Whether the medial fill trial is based on worst case\n        TRS-961   situation taking into consideration all interventions,\n18.7\n        ANNEXE-   activities occurring during normal activity as well as\n          06      worst case.\n         WHO\n                  Whether simulation tests are repeated at defined\n        TRS-961\n18.8              intervals and after any significant modification to HVAC\n        ANNEXE-\n                  system, equipment or process.\n          06\n                  Specify the number of air changes in Grade A/B and\n18.9     Sch-M\n                  Grade C areas.\n                  Specify the air velocity maintained in Grade A Laminar\n18.10    Sch-M\n                  Air Flow stations\n                  Specify the differential pressure between areas of\n18.1     Sch-M\n                  different environmental standards.\n                  Specify type of manometer installed for measurement\n18.1     Sch-M\n                  and verification of Air Pressure Differential.\n         WHO      Specify the air classification in final change room to\n18.13\n        TRS-961   enter A/B area.\n\n\n\n\n                                                        Page 24 of 55\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "State the air change rate in Grade A/B and Grade C areas.",
+    "quote": "18.9 | Sch-M | Specify the number of air changes in Grade A/B and Grade C areas.",
+    "clause_number": "18.9",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:45#8",
+   "image": "work/vision-pages/india-cdsco-circ-2024-03-risk-based-inspection-p045.png",
+   "text_layer": "                                          Risk Based Joint Inspection Report\n\n\n         WHO\n                  Specify the steps taken in air handling system to\n        TRS-961\n18.3              achieve the Grade A, B, C and D of air as per\n        ANNEXE-\n                  designated classified areas.\n          06\n                  Specify the recovery time of B & C zone from the time\n18.4     Sch-M    of personnel leaving the room after completion of\n                  operations and verify the records in this regard.\n                  Specify whether filling operations are challenged\n18.5     Sch-M    initially and there after periodically by simulation trials\n                  including sterile media fill.\n         WHO\n        TRS-961   Specify the procedure followed for medial fill and the\n18.6\n        ANNEXE-   acceptance criteria.\n          06\n         WHO      Whether the medial fill trial is based on worst case\n        TRS-961   situation taking into consideration all interventions,\n18.7\n        ANNEXE-   activities occurring during normal activity as well as\n          06      worst case.\n         WHO\n                  Whether simulation tests are repeated at defined\n        TRS-961\n18.8              intervals and after any significant modification to HVAC\n        ANNEXE-\n                  system, equipment or process.\n          06\n                  Specify the number of air changes in Grade A/B and\n18.9     Sch-M\n                  Grade C areas.\n                  Specify the air velocity maintained in Grade A Laminar\n18.10    Sch-M\n                  Air Flow stations\n                  Specify the differential pressure between areas of\n18.1     Sch-M\n                  different environmental standards.\n                  Specify type of manometer installed for measurement\n18.1     Sch-M\n                  and verification of Air Pressure Differential.\n         WHO      Specify the air classification in final change room to\n18.13\n        TRS-961   enter A/B area.\n\n\n\n\n                                                        Page 24 of 55\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "State the air velocity maintained in Grade A laminar air flow stations.",
+    "quote": "18.10 | Sch-M | Specify the air velocity maintained in Grade A Laminar Air Flow stations",
+    "clause_number": "18.10",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:45#9",
+   "image": "work/vision-pages/india-cdsco-circ-2024-03-risk-based-inspection-p045.png",
+   "text_layer": "                                          Risk Based Joint Inspection Report\n\n\n         WHO\n                  Specify the steps taken in air handling system to\n        TRS-961\n18.3              achieve the Grade A, B, C and D of air as per\n        ANNEXE-\n                  designated classified areas.\n          06\n                  Specify the recovery time of B & C zone from the time\n18.4     Sch-M    of personnel leaving the room after completion of\n                  operations and verify the records in this regard.\n                  Specify whether filling operations are challenged\n18.5     Sch-M    initially and there after periodically by simulation trials\n                  including sterile media fill.\n         WHO\n        TRS-961   Specify the procedure followed for medial fill and the\n18.6\n        ANNEXE-   acceptance criteria.\n          06\n         WHO      Whether the medial fill trial is based on worst case\n        TRS-961   situation taking into consideration all interventions,\n18.7\n        ANNEXE-   activities occurring during normal activity as well as\n          06      worst case.\n         WHO\n                  Whether simulation tests are repeated at defined\n        TRS-961\n18.8              intervals and after any significant modification to HVAC\n        ANNEXE-\n                  system, equipment or process.\n          06\n                  Specify the number of air changes in Grade A/B and\n18.9     Sch-M\n                  Grade C areas.\n                  Specify the air velocity maintained in Grade A Laminar\n18.10    Sch-M\n                  Air Flow stations\n                  Specify the differential pressure between areas of\n18.1     Sch-M\n                  different environmental standards.\n                  Specify type of manometer installed for measurement\n18.1     Sch-M\n                  and verification of Air Pressure Differential.\n         WHO      Specify the air classification in final change room to\n18.13\n        TRS-961   enter A/B area.\n\n\n\n\n                                                        Page 24 of 55\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "State the pressure differential maintained between areas of different environmental standards.",
+    "quote": "18.1 | Sch-M | Specify the differential pressure between areas of different environmental standards.",
+    "clause_number": "18.1",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:45#10",
+   "image": "work/vision-pages/india-cdsco-circ-2024-03-risk-based-inspection-p045.png",
+   "text_layer": "                                          Risk Based Joint Inspection Report\n\n\n         WHO\n                  Specify the steps taken in air handling system to\n        TRS-961\n18.3              achieve the Grade A, B, C and D of air as per\n        ANNEXE-\n                  designated classified areas.\n          06\n                  Specify the recovery time of B & C zone from the time\n18.4     Sch-M    of personnel leaving the room after completion of\n                  operations and verify the records in this regard.\n                  Specify whether filling operations are challenged\n18.5     Sch-M    initially and there after periodically by simulation trials\n                  including sterile media fill.\n         WHO\n        TRS-961   Specify the procedure followed for medial fill and the\n18.6\n        ANNEXE-   acceptance criteria.\n          06\n         WHO      Whether the medial fill trial is based on worst case\n        TRS-961   situation taking into consideration all interventions,\n18.7\n        ANNEXE-   activities occurring during normal activity as well as\n          06      worst case.\n         WHO\n                  Whether simulation tests are repeated at defined\n        TRS-961\n18.8              intervals and after any significant modification to HVAC\n        ANNEXE-\n                  system, equipment or process.\n          06\n                  Specify the number of air changes in Grade A/B and\n18.9     Sch-M\n                  Grade C areas.\n                  Specify the air velocity maintained in Grade A Laminar\n18.10    Sch-M\n                  Air Flow stations\n                  Specify the differential pressure between areas of\n18.1     Sch-M\n                  different environmental standards.\n                  Specify type of manometer installed for measurement\n18.1     Sch-M\n                  and verification of Air Pressure Differential.\n         WHO      Specify the air classification in final change room to\n18.13\n        TRS-961   enter A/B area.\n\n\n\n\n                                                        Page 24 of 55\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "State the type of manometer installed to measure and verify air pressure differentials.",
+    "quote": "18.1 | Sch-M | Specify type of manometer installed for measurement and verification of Air Pressure Differential.",
+    "clause_number": "18.1",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:45#11",
+   "image": "work/vision-pages/india-cdsco-circ-2024-03-risk-based-inspection-p045.png",
+   "text_layer": "                                          Risk Based Joint Inspection Report\n\n\n         WHO\n                  Specify the steps taken in air handling system to\n        TRS-961\n18.3              achieve the Grade A, B, C and D of air as per\n        ANNEXE-\n                  designated classified areas.\n          06\n                  Specify the recovery time of B & C zone from the time\n18.4     Sch-M    of personnel leaving the room after completion of\n                  operations and verify the records in this regard.\n                  Specify whether filling operations are challenged\n18.5     Sch-M    initially and there after periodically by simulation trials\n                  including sterile media fill.\n         WHO\n        TRS-961   Specify the procedure followed for medial fill and the\n18.6\n        ANNEXE-   acceptance criteria.\n          06\n         WHO      Whether the medial fill trial is based on worst case\n        TRS-961   situation taking into consideration all interventions,\n18.7\n        ANNEXE-   activities occurring during normal activity as well as\n          06      worst case.\n         WHO\n                  Whether simulation tests are repeated at defined\n        TRS-961\n18.8              intervals and after any significant modification to HVAC\n        ANNEXE-\n                  system, equipment or process.\n          06\n                  Specify the number of air changes in Grade A/B and\n18.9     Sch-M\n                  Grade C areas.\n                  Specify the air velocity maintained in Grade A Laminar\n18.10    Sch-M\n                  Air Flow stations\n                  Specify the differential pressure between areas of\n18.1     Sch-M\n                  different environmental standards.\n                  Specify type of manometer installed for measurement\n18.1     Sch-M\n                  and verification of Air Pressure Differential.\n         WHO      Specify the air classification in final change room to\n18.13\n        TRS-961   enter A/B area.\n\n\n\n\n                                                        Page 24 of 55\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "State the air classification of the final change room used to enter Grade A/B areas.",
+    "quote": "18.13 | WHO TRS-961 | Specify the air classification in final change room to enter A/B area.",
+    "clause_number": "18.13",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:48#1",
+   "image": "work/vision-pages/india-cdsco-circ-2024-03-risk-based-inspection-p048.png",
+   "text_layer": "                                          Risk Based Joint Inspection Report\n\n\n          WHO\n        TRS-961   Specify how the garments used in clean areas are\n 20.2\n        ANNEXE-   cleaned and sterilized.\n            06\n21 Sanitation:\n                  Specify the SOP followed for sanitation of sterile\n21.1     Sch-M\n                  processing facilities and mention the SOP nos.\n                  Specify whether employees carrying out the sanitation\n21.2     Sch-M\n                  of critical areas are specially trained for this purpose.\n21.3     Sch-M    Verify the training records.\n21.4     Sch-M    Specify the sanitizing agent/s used.\n                  Specify the quality of water used for preparation of\n21.5     Sch-M\n                  sanitising solution.\n21.6     Sch-M    Specify the disinfectant used for hand sprays?\n                  Specify whether disinfectant solutions are filtered\n21.7     Sch-M    through membrane into suitable sterile containers or\n                  sterilized before use?\n                  Specify whether the diluted disinfectants bear ‘use\n21.8     Sch-M    before’ labels based on microbiological establishment\n                  of their germicidal properties & verify the records\n                  Specify whether fumigation is carried out in critical\n21.9     Sch-M    areas. If yes, specify fumigating agent and its conc.\n                  used.\n                  Specify whether any SOP exist for the purpose of\n21.10    Sch-M\n                  fumigation if so mentioned the SOP nos.\n21.1     Sch-M    Specify the cleaning procedure of critical areas.\n         WHO\n                  Specify whether particle monitoring in Grade A zones\n        TRS-961\n21.1              is undertaken for the full duration of critical processing\n        ANNEXE-\n                  including equipment assembly.\n          06\n         WHO      Specify whether particle monitoring in Grade B zones\n21.1\n        TRS-961   is undertaken for the full duration of critical processing.\n\n\n\n\n                                                        Page 27 of 55\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Describe how garments used in clean areas are cleaned and sterilised.",
+    "quote": "20.2 | WHO TRS-961 ANNEXE-06 | Specify how the garments used in clean areas are cleaned and sterilized.",
+    "clause_number": "20.2",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:48#2",
+   "image": "work/vision-pages/india-cdsco-circ-2024-03-risk-based-inspection-p048.png",
+   "text_layer": "                                          Risk Based Joint Inspection Report\n\n\n          WHO\n        TRS-961   Specify how the garments used in clean areas are\n 20.2\n        ANNEXE-   cleaned and sterilized.\n            06\n21 Sanitation:\n                  Specify the SOP followed for sanitation of sterile\n21.1     Sch-M\n                  processing facilities and mention the SOP nos.\n                  Specify whether employees carrying out the sanitation\n21.2     Sch-M\n                  of critical areas are specially trained for this purpose.\n21.3     Sch-M    Verify the training records.\n21.4     Sch-M    Specify the sanitizing agent/s used.\n                  Specify the quality of water used for preparation of\n21.5     Sch-M\n                  sanitising solution.\n21.6     Sch-M    Specify the disinfectant used for hand sprays?\n                  Specify whether disinfectant solutions are filtered\n21.7     Sch-M    through membrane into suitable sterile containers or\n                  sterilized before use?\n                  Specify whether the diluted disinfectants bear ‘use\n21.8     Sch-M    before’ labels based on microbiological establishment\n                  of their germicidal properties & verify the records\n                  Specify whether fumigation is carried out in critical\n21.9     Sch-M    areas. If yes, specify fumigating agent and its conc.\n                  used.\n                  Specify whether any SOP exist for the purpose of\n21.10    Sch-M\n                  fumigation if so mentioned the SOP nos.\n21.1     Sch-M    Specify the cleaning procedure of critical areas.\n         WHO\n                  Specify whether particle monitoring in Grade A zones\n        TRS-961\n21.1              is undertaken for the full duration of critical processing\n        ANNEXE-\n                  including equipment assembly.\n          06\n         WHO      Specify whether particle monitoring in Grade B zones\n21.1\n        TRS-961   is undertaken for the full duration of critical processing.\n\n\n\n\n                                                        Page 27 of 55\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Have an SOP for sanitation of sterile processing facilities and identify the SOP numbers.",
+    "quote": "21.1 | Sch-M | Specify the SOP followed for sanitation of sterile processing facilities and mention the SOP nos.",
+    "clause_number": "21.1",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:48#3",
+   "image": "work/vision-pages/india-cdsco-circ-2024-03-risk-based-inspection-p048.png",
+   "text_layer": "                                          Risk Based Joint Inspection Report\n\n\n          WHO\n        TRS-961   Specify how the garments used in clean areas are\n 20.2\n        ANNEXE-   cleaned and sterilized.\n            06\n21 Sanitation:\n                  Specify the SOP followed for sanitation of sterile\n21.1     Sch-M\n                  processing facilities and mention the SOP nos.\n                  Specify whether employees carrying out the sanitation\n21.2     Sch-M\n                  of critical areas are specially trained for this purpose.\n21.3     Sch-M    Verify the training records.\n21.4     Sch-M    Specify the sanitizing agent/s used.\n                  Specify the quality of water used for preparation of\n21.5     Sch-M\n                  sanitising solution.\n21.6     Sch-M    Specify the disinfectant used for hand sprays?\n                  Specify whether disinfectant solutions are filtered\n21.7     Sch-M    through membrane into suitable sterile containers or\n                  sterilized before use?\n                  Specify whether the diluted disinfectants bear ‘use\n21.8     Sch-M    before’ labels based on microbiological establishment\n                  of their germicidal properties & verify the records\n                  Specify whether fumigation is carried out in critical\n21.9     Sch-M    areas. If yes, specify fumigating agent and its conc.\n                  used.\n                  Specify whether any SOP exist for the purpose of\n21.10    Sch-M\n                  fumigation if so mentioned the SOP nos.\n21.1     Sch-M    Specify the cleaning procedure of critical areas.\n         WHO\n                  Specify whether particle monitoring in Grade A zones\n        TRS-961\n21.1              is undertaken for the full duration of critical processing\n        ANNEXE-\n                  including equipment assembly.\n          06\n         WHO      Specify whether particle monitoring in Grade B zones\n21.1\n        TRS-961   is undertaken for the full duration of critical processing.\n\n\n\n\n                                                        Page 27 of 55\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Confirm that staff who sanitise critical areas are specifically trained for that task.",
+    "quote": "21.2 | Sch-M | Specify whether employees carrying out the sanitation of critical areas are specially trained for this purpose.",
+    "clause_number": "21.2",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:48#4",
+   "image": "work/vision-pages/india-cdsco-circ-2024-03-risk-based-inspection-p048.png",
+   "text_layer": "                                          Risk Based Joint Inspection Report\n\n\n          WHO\n        TRS-961   Specify how the garments used in clean areas are\n 20.2\n        ANNEXE-   cleaned and sterilized.\n            06\n21 Sanitation:\n                  Specify the SOP followed for sanitation of sterile\n21.1     Sch-M\n                  processing facilities and mention the SOP nos.\n                  Specify whether employees carrying out the sanitation\n21.2     Sch-M\n                  of critical areas are specially trained for this purpose.\n21.3     Sch-M    Verify the training records.\n21.4     Sch-M    Specify the sanitizing agent/s used.\n                  Specify the quality of water used for preparation of\n21.5     Sch-M\n                  sanitising solution.\n21.6     Sch-M    Specify the disinfectant used for hand sprays?\n                  Specify whether disinfectant solutions are filtered\n21.7     Sch-M    through membrane into suitable sterile containers or\n                  sterilized before use?\n                  Specify whether the diluted disinfectants bear ‘use\n21.8     Sch-M    before’ labels based on microbiological establishment\n                  of their germicidal properties & verify the records\n                  Specify whether fumigation is carried out in critical\n21.9     Sch-M    areas. If yes, specify fumigating agent and its conc.\n                  used.\n                  Specify whether any SOP exist for the purpose of\n21.10    Sch-M\n                  fumigation if so mentioned the SOP nos.\n21.1     Sch-M    Specify the cleaning procedure of critical areas.\n         WHO\n                  Specify whether particle monitoring in Grade A zones\n        TRS-961\n21.1              is undertaken for the full duration of critical processing\n        ANNEXE-\n                  including equipment assembly.\n          06\n         WHO      Specify whether particle monitoring in Grade B zones\n21.1\n        TRS-961   is undertaken for the full duration of critical processing.\n\n\n\n\n                                                        Page 27 of 55\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Keep training records (for sanitation staff) available for verification.",
+    "quote": "21.3 | Sch-M | Verify the training records.",
+    "clause_number": "21.3",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:48#5",
+   "image": "work/vision-pages/india-cdsco-circ-2024-03-risk-based-inspection-p048.png",
+   "text_layer": "                                          Risk Based Joint Inspection Report\n\n\n          WHO\n        TRS-961   Specify how the garments used in clean areas are\n 20.2\n        ANNEXE-   cleaned and sterilized.\n            06\n21 Sanitation:\n                  Specify the SOP followed for sanitation of sterile\n21.1     Sch-M\n                  processing facilities and mention the SOP nos.\n                  Specify whether employees carrying out the sanitation\n21.2     Sch-M\n                  of critical areas are specially trained for this purpose.\n21.3     Sch-M    Verify the training records.\n21.4     Sch-M    Specify the sanitizing agent/s used.\n                  Specify the quality of water used for preparation of\n21.5     Sch-M\n                  sanitising solution.\n21.6     Sch-M    Specify the disinfectant used for hand sprays?\n                  Specify whether disinfectant solutions are filtered\n21.7     Sch-M    through membrane into suitable sterile containers or\n                  sterilized before use?\n                  Specify whether the diluted disinfectants bear ‘use\n21.8     Sch-M    before’ labels based on microbiological establishment\n                  of their germicidal properties & verify the records\n                  Specify whether fumigation is carried out in critical\n21.9     Sch-M    areas. If yes, specify fumigating agent and its conc.\n                  used.\n                  Specify whether any SOP exist for the purpose of\n21.10    Sch-M\n                  fumigation if so mentioned the SOP nos.\n21.1     Sch-M    Specify the cleaning procedure of critical areas.\n         WHO\n                  Specify whether particle monitoring in Grade A zones\n        TRS-961\n21.1              is undertaken for the full duration of critical processing\n        ANNEXE-\n                  including equipment assembly.\n          06\n         WHO      Specify whether particle monitoring in Grade B zones\n21.1\n        TRS-961   is undertaken for the full duration of critical processing.\n\n\n\n\n                                                        Page 27 of 55\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Identify the sanitising agent(s) in use.",
+    "quote": "21.4 | Sch-M | Specify the sanitizing agent/s used.",
+    "clause_number": "21.4",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:48#6",
+   "image": "work/vision-pages/india-cdsco-circ-2024-03-risk-based-inspection-p048.png",
+   "text_layer": "                                          Risk Based Joint Inspection Report\n\n\n          WHO\n        TRS-961   Specify how the garments used in clean areas are\n 20.2\n        ANNEXE-   cleaned and sterilized.\n            06\n21 Sanitation:\n                  Specify the SOP followed for sanitation of sterile\n21.1     Sch-M\n                  processing facilities and mention the SOP nos.\n                  Specify whether employees carrying out the sanitation\n21.2     Sch-M\n                  of critical areas are specially trained for this purpose.\n21.3     Sch-M    Verify the training records.\n21.4     Sch-M    Specify the sanitizing agent/s used.\n                  Specify the quality of water used for preparation of\n21.5     Sch-M\n                  sanitising solution.\n21.6     Sch-M    Specify the disinfectant used for hand sprays?\n                  Specify whether disinfectant solutions are filtered\n21.7     Sch-M    through membrane into suitable sterile containers or\n                  sterilized before use?\n                  Specify whether the diluted disinfectants bear ‘use\n21.8     Sch-M    before’ labels based on microbiological establishment\n                  of their germicidal properties & verify the records\n                  Specify whether fumigation is carried out in critical\n21.9     Sch-M    areas. If yes, specify fumigating agent and its conc.\n                  used.\n                  Specify whether any SOP exist for the purpose of\n21.10    Sch-M\n                  fumigation if so mentioned the SOP nos.\n21.1     Sch-M    Specify the cleaning procedure of critical areas.\n         WHO\n                  Specify whether particle monitoring in Grade A zones\n        TRS-961\n21.1              is undertaken for the full duration of critical processing\n        ANNEXE-\n                  including equipment assembly.\n          06\n         WHO      Specify whether particle monitoring in Grade B zones\n21.1\n        TRS-961   is undertaken for the full duration of critical processing.\n\n\n\n\n                                                        Page 27 of 55\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Define the water quality used to prepare sanitising solutions.",
+    "quote": "21.5 | Sch-M | Specify the quality of water used for preparation of sanitising solution.",
+    "clause_number": "21.5",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:48#7",
+   "image": "work/vision-pages/india-cdsco-circ-2024-03-risk-based-inspection-p048.png",
+   "text_layer": "                                          Risk Based Joint Inspection Report\n\n\n          WHO\n        TRS-961   Specify how the garments used in clean areas are\n 20.2\n        ANNEXE-   cleaned and sterilized.\n            06\n21 Sanitation:\n                  Specify the SOP followed for sanitation of sterile\n21.1     Sch-M\n                  processing facilities and mention the SOP nos.\n                  Specify whether employees carrying out the sanitation\n21.2     Sch-M\n                  of critical areas are specially trained for this purpose.\n21.3     Sch-M    Verify the training records.\n21.4     Sch-M    Specify the sanitizing agent/s used.\n                  Specify the quality of water used for preparation of\n21.5     Sch-M\n                  sanitising solution.\n21.6     Sch-M    Specify the disinfectant used for hand sprays?\n                  Specify whether disinfectant solutions are filtered\n21.7     Sch-M    through membrane into suitable sterile containers or\n                  sterilized before use?\n                  Specify whether the diluted disinfectants bear ‘use\n21.8     Sch-M    before’ labels based on microbiological establishment\n                  of their germicidal properties & verify the records\n                  Specify whether fumigation is carried out in critical\n21.9     Sch-M    areas. If yes, specify fumigating agent and its conc.\n                  used.\n                  Specify whether any SOP exist for the purpose of\n21.10    Sch-M\n                  fumigation if so mentioned the SOP nos.\n21.1     Sch-M    Specify the cleaning procedure of critical areas.\n         WHO\n                  Specify whether particle monitoring in Grade A zones\n        TRS-961\n21.1              is undertaken for the full duration of critical processing\n        ANNEXE-\n                  including equipment assembly.\n          06\n         WHO      Specify whether particle monitoring in Grade B zones\n21.1\n        TRS-961   is undertaken for the full duration of critical processing.\n\n\n\n\n                                                        Page 27 of 55\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Identify the disinfectant used for hand sprays.",
+    "quote": "21.6 | Sch-M | Specify the disinfectant used for hand sprays?",
+    "clause_number": "21.6",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:48#8",
+   "image": "work/vision-pages/india-cdsco-circ-2024-03-risk-based-inspection-p048.png",
+   "text_layer": "                                          Risk Based Joint Inspection Report\n\n\n          WHO\n        TRS-961   Specify how the garments used in clean areas are\n 20.2\n        ANNEXE-   cleaned and sterilized.\n            06\n21 Sanitation:\n                  Specify the SOP followed for sanitation of sterile\n21.1     Sch-M\n                  processing facilities and mention the SOP nos.\n                  Specify whether employees carrying out the sanitation\n21.2     Sch-M\n                  of critical areas are specially trained for this purpose.\n21.3     Sch-M    Verify the training records.\n21.4     Sch-M    Specify the sanitizing agent/s used.\n                  Specify the quality of water used for preparation of\n21.5     Sch-M\n                  sanitising solution.\n21.6     Sch-M    Specify the disinfectant used for hand sprays?\n                  Specify whether disinfectant solutions are filtered\n21.7     Sch-M    through membrane into suitable sterile containers or\n                  sterilized before use?\n                  Specify whether the diluted disinfectants bear ‘use\n21.8     Sch-M    before’ labels based on microbiological establishment\n                  of their germicidal properties & verify the records\n                  Specify whether fumigation is carried out in critical\n21.9     Sch-M    areas. If yes, specify fumigating agent and its conc.\n                  used.\n                  Specify whether any SOP exist for the purpose of\n21.10    Sch-M\n                  fumigation if so mentioned the SOP nos.\n21.1     Sch-M    Specify the cleaning procedure of critical areas.\n         WHO\n                  Specify whether particle monitoring in Grade A zones\n        TRS-961\n21.1              is undertaken for the full duration of critical processing\n        ANNEXE-\n                  including equipment assembly.\n          06\n         WHO      Specify whether particle monitoring in Grade B zones\n21.1\n        TRS-961   is undertaken for the full duration of critical processing.\n\n\n\n\n                                                        Page 27 of 55\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Filter disinfectant solutions through a membrane into suitable sterile containers, or sterilise them, before use.",
+    "quote": "21.7 | Sch-M | Specify whether disinfectant solutions are filtered through membrane into suitable sterile containers or sterilized before use?",
+    "clause_number": "21.7",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "before use",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:48#9",
+   "image": "work/vision-pages/india-cdsco-circ-2024-03-risk-based-inspection-p048.png",
+   "text_layer": "                                          Risk Based Joint Inspection Report\n\n\n          WHO\n        TRS-961   Specify how the garments used in clean areas are\n 20.2\n        ANNEXE-   cleaned and sterilized.\n            06\n21 Sanitation:\n                  Specify the SOP followed for sanitation of sterile\n21.1     Sch-M\n                  processing facilities and mention the SOP nos.\n                  Specify whether employees carrying out the sanitation\n21.2     Sch-M\n                  of critical areas are specially trained for this purpose.\n21.3     Sch-M    Verify the training records.\n21.4     Sch-M    Specify the sanitizing agent/s used.\n                  Specify the quality of water used for preparation of\n21.5     Sch-M\n                  sanitising solution.\n21.6     Sch-M    Specify the disinfectant used for hand sprays?\n                  Specify whether disinfectant solutions are filtered\n21.7     Sch-M    through membrane into suitable sterile containers or\n                  sterilized before use?\n                  Specify whether the diluted disinfectants bear ‘use\n21.8     Sch-M    before’ labels based on microbiological establishment\n                  of their germicidal properties & verify the records\n                  Specify whether fumigation is carried out in critical\n21.9     Sch-M    areas. If yes, specify fumigating agent and its conc.\n                  used.\n                  Specify whether any SOP exist for the purpose of\n21.10    Sch-M\n                  fumigation if so mentioned the SOP nos.\n21.1     Sch-M    Specify the cleaning procedure of critical areas.\n         WHO\n                  Specify whether particle monitoring in Grade A zones\n        TRS-961\n21.1              is undertaken for the full duration of critical processing\n        ANNEXE-\n                  including equipment assembly.\n          06\n         WHO      Specify whether particle monitoring in Grade B zones\n21.1\n        TRS-961   is undertaken for the full duration of critical processing.\n\n\n\n\n                                                        Page 27 of 55\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Label diluted disinfectants with a 'use before' date based on microbiological establishment of their germicidal properties, with records available for verification.",
+    "quote": "21.8 | Sch-M | Specify whether the diluted disinfectants bear ‘use before’ labels based on microbiological establishment of their germicidal properties & verify the records",
+    "clause_number": "21.8",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:48#10",
+   "image": "work/vision-pages/india-cdsco-circ-2024-03-risk-based-inspection-p048.png",
+   "text_layer": "                                          Risk Based Joint Inspection Report\n\n\n          WHO\n        TRS-961   Specify how the garments used in clean areas are\n 20.2\n        ANNEXE-   cleaned and sterilized.\n            06\n21 Sanitation:\n                  Specify the SOP followed for sanitation of sterile\n21.1     Sch-M\n                  processing facilities and mention the SOP nos.\n                  Specify whether employees carrying out the sanitation\n21.2     Sch-M\n                  of critical areas are specially trained for this purpose.\n21.3     Sch-M    Verify the training records.\n21.4     Sch-M    Specify the sanitizing agent/s used.\n                  Specify the quality of water used for preparation of\n21.5     Sch-M\n                  sanitising solution.\n21.6     Sch-M    Specify the disinfectant used for hand sprays?\n                  Specify whether disinfectant solutions are filtered\n21.7     Sch-M    through membrane into suitable sterile containers or\n                  sterilized before use?\n                  Specify whether the diluted disinfectants bear ‘use\n21.8     Sch-M    before’ labels based on microbiological establishment\n                  of their germicidal properties & verify the records\n                  Specify whether fumigation is carried out in critical\n21.9     Sch-M    areas. If yes, specify fumigating agent and its conc.\n                  used.\n                  Specify whether any SOP exist for the purpose of\n21.10    Sch-M\n                  fumigation if so mentioned the SOP nos.\n21.1     Sch-M    Specify the cleaning procedure of critical areas.\n         WHO\n                  Specify whether particle monitoring in Grade A zones\n        TRS-961\n21.1              is undertaken for the full duration of critical processing\n        ANNEXE-\n                  including equipment assembly.\n          06\n         WHO      Specify whether particle monitoring in Grade B zones\n21.1\n        TRS-961   is undertaken for the full duration of critical processing.\n\n\n\n\n                                                        Page 27 of 55\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "State whether critical areas are fumigated and, if so, identify the fumigating agent and the concentration used.",
+    "quote": "21.9 | Sch-M | Specify whether fumigation is carried out in critical areas. If yes, specify fumigating agent and its conc. used.",
+    "clause_number": "21.9",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "if fumigation is carried out",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:48#11",
+   "image": "work/vision-pages/india-cdsco-circ-2024-03-risk-based-inspection-p048.png",
+   "text_layer": "                                          Risk Based Joint Inspection Report\n\n\n          WHO\n        TRS-961   Specify how the garments used in clean areas are\n 20.2\n        ANNEXE-   cleaned and sterilized.\n            06\n21 Sanitation:\n                  Specify the SOP followed for sanitation of sterile\n21.1     Sch-M\n                  processing facilities and mention the SOP nos.\n                  Specify whether employees carrying out the sanitation\n21.2     Sch-M\n                  of critical areas are specially trained for this purpose.\n21.3     Sch-M    Verify the training records.\n21.4     Sch-M    Specify the sanitizing agent/s used.\n                  Specify the quality of water used for preparation of\n21.5     Sch-M\n                  sanitising solution.\n21.6     Sch-M    Specify the disinfectant used for hand sprays?\n                  Specify whether disinfectant solutions are filtered\n21.7     Sch-M    through membrane into suitable sterile containers or\n                  sterilized before use?\n                  Specify whether the diluted disinfectants bear ‘use\n21.8     Sch-M    before’ labels based on microbiological establishment\n                  of their germicidal properties & verify the records\n                  Specify whether fumigation is carried out in critical\n21.9     Sch-M    areas. If yes, specify fumigating agent and its conc.\n                  used.\n                  Specify whether any SOP exist for the purpose of\n21.10    Sch-M\n                  fumigation if so mentioned the SOP nos.\n21.1     Sch-M    Specify the cleaning procedure of critical areas.\n         WHO\n                  Specify whether particle monitoring in Grade A zones\n        TRS-961\n21.1              is undertaken for the full duration of critical processing\n        ANNEXE-\n                  including equipment assembly.\n          06\n         WHO      Specify whether particle monitoring in Grade B zones\n21.1\n        TRS-961   is undertaken for the full duration of critical processing.\n\n\n\n\n                                                        Page 27 of 55\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Where fumigation is done, have an SOP for it and identify the SOP numbers.",
+    "quote": "21.10 | Sch-M | Specify whether any SOP exist for the purpose of fumigation if so mentioned the SOP nos.",
+    "clause_number": "21.10",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "if an SOP for fumigation exists",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:48#12",
+   "image": "work/vision-pages/india-cdsco-circ-2024-03-risk-based-inspection-p048.png",
+   "text_layer": "                                          Risk Based Joint Inspection Report\n\n\n          WHO\n        TRS-961   Specify how the garments used in clean areas are\n 20.2\n        ANNEXE-   cleaned and sterilized.\n            06\n21 Sanitation:\n                  Specify the SOP followed for sanitation of sterile\n21.1     Sch-M\n                  processing facilities and mention the SOP nos.\n                  Specify whether employees carrying out the sanitation\n21.2     Sch-M\n                  of critical areas are specially trained for this purpose.\n21.3     Sch-M    Verify the training records.\n21.4     Sch-M    Specify the sanitizing agent/s used.\n                  Specify the quality of water used for preparation of\n21.5     Sch-M\n                  sanitising solution.\n21.6     Sch-M    Specify the disinfectant used for hand sprays?\n                  Specify whether disinfectant solutions are filtered\n21.7     Sch-M    through membrane into suitable sterile containers or\n                  sterilized before use?\n                  Specify whether the diluted disinfectants bear ‘use\n21.8     Sch-M    before’ labels based on microbiological establishment\n                  of their germicidal properties & verify the records\n                  Specify whether fumigation is carried out in critical\n21.9     Sch-M    areas. If yes, specify fumigating agent and its conc.\n                  used.\n                  Specify whether any SOP exist for the purpose of\n21.10    Sch-M\n                  fumigation if so mentioned the SOP nos.\n21.1     Sch-M    Specify the cleaning procedure of critical areas.\n         WHO\n                  Specify whether particle monitoring in Grade A zones\n        TRS-961\n21.1              is undertaken for the full duration of critical processing\n        ANNEXE-\n                  including equipment assembly.\n          06\n         WHO      Specify whether particle monitoring in Grade B zones\n21.1\n        TRS-961   is undertaken for the full duration of critical processing.\n\n\n\n\n                                                        Page 27 of 55\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Describe the cleaning procedure for critical areas.",
+    "quote": "21.1 | Sch-M | Specify the cleaning procedure of critical areas.",
+    "clause_number": "21.1",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:48#13",
+   "image": "work/vision-pages/india-cdsco-circ-2024-03-risk-based-inspection-p048.png",
+   "text_layer": "                                          Risk Based Joint Inspection Report\n\n\n          WHO\n        TRS-961   Specify how the garments used in clean areas are\n 20.2\n        ANNEXE-   cleaned and sterilized.\n            06\n21 Sanitation:\n                  Specify the SOP followed for sanitation of sterile\n21.1     Sch-M\n                  processing facilities and mention the SOP nos.\n                  Specify whether employees carrying out the sanitation\n21.2     Sch-M\n                  of critical areas are specially trained for this purpose.\n21.3     Sch-M    Verify the training records.\n21.4     Sch-M    Specify the sanitizing agent/s used.\n                  Specify the quality of water used for preparation of\n21.5     Sch-M\n                  sanitising solution.\n21.6     Sch-M    Specify the disinfectant used for hand sprays?\n                  Specify whether disinfectant solutions are filtered\n21.7     Sch-M    through membrane into suitable sterile containers or\n                  sterilized before use?\n                  Specify whether the diluted disinfectants bear ‘use\n21.8     Sch-M    before’ labels based on microbiological establishment\n                  of their germicidal properties & verify the records\n                  Specify whether fumigation is carried out in critical\n21.9     Sch-M    areas. If yes, specify fumigating agent and its conc.\n                  used.\n                  Specify whether any SOP exist for the purpose of\n21.10    Sch-M\n                  fumigation if so mentioned the SOP nos.\n21.1     Sch-M    Specify the cleaning procedure of critical areas.\n         WHO\n                  Specify whether particle monitoring in Grade A zones\n        TRS-961\n21.1              is undertaken for the full duration of critical processing\n        ANNEXE-\n                  including equipment assembly.\n          06\n         WHO      Specify whether particle monitoring in Grade B zones\n21.1\n        TRS-961   is undertaken for the full duration of critical processing.\n\n\n\n\n                                                        Page 27 of 55\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Monitor particles in Grade A zones for the full duration of critical processing, including equipment assembly.",
+    "quote": "21.1 | WHO TRS-961 ANNEXE-06 | Specify whether particle monitoring in Grade A zones is undertaken for the full duration of critical processing including equipment assembly.",
+    "clause_number": "21.1",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:48#14",
+   "image": "work/vision-pages/india-cdsco-circ-2024-03-risk-based-inspection-p048.png",
+   "text_layer": "                                          Risk Based Joint Inspection Report\n\n\n          WHO\n        TRS-961   Specify how the garments used in clean areas are\n 20.2\n        ANNEXE-   cleaned and sterilized.\n            06\n21 Sanitation:\n                  Specify the SOP followed for sanitation of sterile\n21.1     Sch-M\n                  processing facilities and mention the SOP nos.\n                  Specify whether employees carrying out the sanitation\n21.2     Sch-M\n                  of critical areas are specially trained for this purpose.\n21.3     Sch-M    Verify the training records.\n21.4     Sch-M    Specify the sanitizing agent/s used.\n                  Specify the quality of water used for preparation of\n21.5     Sch-M\n                  sanitising solution.\n21.6     Sch-M    Specify the disinfectant used for hand sprays?\n                  Specify whether disinfectant solutions are filtered\n21.7     Sch-M    through membrane into suitable sterile containers or\n                  sterilized before use?\n                  Specify whether the diluted disinfectants bear ‘use\n21.8     Sch-M    before’ labels based on microbiological establishment\n                  of their germicidal properties & verify the records\n                  Specify whether fumigation is carried out in critical\n21.9     Sch-M    areas. If yes, specify fumigating agent and its conc.\n                  used.\n                  Specify whether any SOP exist for the purpose of\n21.10    Sch-M\n                  fumigation if so mentioned the SOP nos.\n21.1     Sch-M    Specify the cleaning procedure of critical areas.\n         WHO\n                  Specify whether particle monitoring in Grade A zones\n        TRS-961\n21.1              is undertaken for the full duration of critical processing\n        ANNEXE-\n                  including equipment assembly.\n          06\n         WHO      Specify whether particle monitoring in Grade B zones\n21.1\n        TRS-961   is undertaken for the full duration of critical processing.\n\n\n\n\n                                                        Page 27 of 55\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Monitor particles in Grade B zones for the full duration of critical processing.",
+    "quote": "21.1 | WHO TRS-961 | Specify whether particle monitoring in Grade B zones is undertaken for the full duration of critical processing.",
+    "clause_number": "21.1",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:116#1",
+   "image": "work/vision-pages/india-cdsco-circ-2024-03-risk-based-inspection-p116.png",
+   "text_layer": "                                                                                                              Quality Rating\n  S.No     Reference                                                          2                        1                                        0                                 X\n1 BuildingSch-M\n27.2      and premises:Whether\n                       -       the position of temperature probes used             The temperature probe( RTD or               The control probe was found not\n                      for controlling and / or recording determined                thermocouple) was found placed at           at exactly same position of coolest\n                      during validation and (where applicable) been                coolest spot determined during              point. The temperature recording\n                      checked against a second independent                         validation by independent calibrated        was found not continuous. The\n                      temperature probe located in the same position               prob. The temperature of same probe         validation was found not\n                                                                              NA                                                                                                 NA\n                                                                                   was found recorded and the recording        performed by independent probe\n                                                                                   is continuous through the cycle/            at the same position/suitable\n                                                                                                                               position that of control probe\n\n\n27.3     Sch-M        Whether the chart forms a part of the batch                  Temperature Chart/ Thermograph was Temperature Chart/ Thermograph\n                      record.                                                 NA   found part of batch record.        was found not part of batch record.                        NA\n                                                                                                                      Thermograph not preserved.\n27.4     Sch-M        Whether sterilization cycle validated only by                Sterilization cycle validated physically    Physical verification by thermal      The sterilizers are not\n                      biological indicator and chemical indicators or              by thermal mapping along with               mapping for heat distribution and     studied for heat\n                      physical validation is also carried out                      biological and chemical indicators.         heat penetration was found not        distribution / penetration.\n                                                                                   During validation sterilization             carried out.                          Effectiveness of\n                                                                                   parameters are established e.g. 1) For                                            sterilization process not\n                                                                              NA   DHS Temperature, duration, positive                                               established by using\n                                                                                   pressure                                                                          microbial spore\n                                                                                   2) For tunnel ,                                                                   indicators.\n                                                                                   temperature,duration,speed of\n                                                                                   conveyor etc.\n\n27.5     Sch-M        Whether the time allowed reaching the required               Lag time was found determined for all       The sterilization time is measured\n                      temperature before commencing the                            load types. The lag rimes was found         without considered established lag\n                      measurement of sterilizing time, separately             NA   specified in SOP for routine                time.                                             NA\n                      determined for each type of load.                            sterilization\n\n27.6     Sch-M        Are adequate precautions taken to protect the                Adequate precaution was found taken         No adequate precaution was found\n                      load during cooling after it has gone through the            to protect the load during cooling after    taken to protect the load during\n                      high temperature phase of a heat sterilization          NA   it has gone through the high                cooling after it has gone through                 NA\n                      cycle                                                        temperature phase of a heat                 the high temperature phase of a\n                                                                                   sterilization cycle.                        heat sterilization cycle.\n\n27.7     Sch-M        In case the cooling is affected with any fluid or gas        Cooling air was found filtered through      Cooling air was found not filtered\n                      in contact with the product , is it sterilized.              HEPA filters                                through HEPA filters\n                                                                              NA                                                                                                 NA\n\n\n27.8     Sch-M        Whether the equipment air inlet and outlets been             Inlet and outlet was found provided         Inlet and outlet was found not\n                      provided with bacteria retaining filters                NA   with HEPA filters.                          provided with HEPA filters.                       NA\n\n\n\n\n                                                                                                                                                                                                   40\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Place the temperature probes used for control and/or recording at positions determined during validation and, where applicable, check them against a second independent probe in the same position.",
+    "quote": "S.No | Reference || 27.2 | Sch-M | Whether the position of temperature probes used for controlling and / or recording determined during validation and (where applicable) been checked against a second independent temperature probe located in the same position",
+    "clause_number": "27.2",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "second probe check where applicable",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:116#2",
+   "image": "work/vision-pages/india-cdsco-circ-2024-03-risk-based-inspection-p116.png",
+   "text_layer": "                                                                                                              Quality Rating\n  S.No     Reference                                                          2                        1                                        0                                 X\n1 BuildingSch-M\n27.2      and premises:Whether\n                       -       the position of temperature probes used             The temperature probe( RTD or               The control probe was found not\n                      for controlling and / or recording determined                thermocouple) was found placed at           at exactly same position of coolest\n                      during validation and (where applicable) been                coolest spot determined during              point. The temperature recording\n                      checked against a second independent                         validation by independent calibrated        was found not continuous. The\n                      temperature probe located in the same position               prob. The temperature of same probe         validation was found not\n                                                                              NA                                                                                                 NA\n                                                                                   was found recorded and the recording        performed by independent probe\n                                                                                   is continuous through the cycle/            at the same position/suitable\n                                                                                                                               position that of control probe\n\n\n27.3     Sch-M        Whether the chart forms a part of the batch                  Temperature Chart/ Thermograph was Temperature Chart/ Thermograph\n                      record.                                                 NA   found part of batch record.        was found not part of batch record.                        NA\n                                                                                                                      Thermograph not preserved.\n27.4     Sch-M        Whether sterilization cycle validated only by                Sterilization cycle validated physically    Physical verification by thermal      The sterilizers are not\n                      biological indicator and chemical indicators or              by thermal mapping along with               mapping for heat distribution and     studied for heat\n                      physical validation is also carried out                      biological and chemical indicators.         heat penetration was found not        distribution / penetration.\n                                                                                   During validation sterilization             carried out.                          Effectiveness of\n                                                                                   parameters are established e.g. 1) For                                            sterilization process not\n                                                                              NA   DHS Temperature, duration, positive                                               established by using\n                                                                                   pressure                                                                          microbial spore\n                                                                                   2) For tunnel ,                                                                   indicators.\n                                                                                   temperature,duration,speed of\n                                                                                   conveyor etc.\n\n27.5     Sch-M        Whether the time allowed reaching the required               Lag time was found determined for all       The sterilization time is measured\n                      temperature before commencing the                            load types. The lag rimes was found         without considered established lag\n                      measurement of sterilizing time, separately             NA   specified in SOP for routine                time.                                             NA\n                      determined for each type of load.                            sterilization\n\n27.6     Sch-M        Are adequate precautions taken to protect the                Adequate precaution was found taken         No adequate precaution was found\n                      load during cooling after it has gone through the            to protect the load during cooling after    taken to protect the load during\n                      high temperature phase of a heat sterilization          NA   it has gone through the high                cooling after it has gone through                 NA\n                      cycle                                                        temperature phase of a heat                 the high temperature phase of a\n                                                                                   sterilization cycle.                        heat sterilization cycle.\n\n27.7     Sch-M        In case the cooling is affected with any fluid or gas        Cooling air was found filtered through      Cooling air was found not filtered\n                      in contact with the product , is it sterilized.              HEPA filters                                through HEPA filters\n                                                                              NA                                                                                                 NA\n\n\n27.8     Sch-M        Whether the equipment air inlet and outlets been             Inlet and outlet was found provided         Inlet and outlet was found not\n                      provided with bacteria retaining filters                NA   with HEPA filters.                          provided with HEPA filters.                       NA\n\n\n\n\n                                                                                                                                                                                                   40\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Make the sterilisation temperature chart part of the batch record.",
+    "quote": "S.No | Reference || 27.3 | Sch-M | Whether the chart forms a part of the batch record.",
+    "clause_number": "27.3",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:116#3",
+   "image": "work/vision-pages/india-cdsco-circ-2024-03-risk-based-inspection-p116.png",
+   "text_layer": "                                                                                                              Quality Rating\n  S.No     Reference                                                          2                        1                                        0                                 X\n1 BuildingSch-M\n27.2      and premises:Whether\n                       -       the position of temperature probes used             The temperature probe( RTD or               The control probe was found not\n                      for controlling and / or recording determined                thermocouple) was found placed at           at exactly same position of coolest\n                      during validation and (where applicable) been                coolest spot determined during              point. The temperature recording\n                      checked against a second independent                         validation by independent calibrated        was found not continuous. The\n                      temperature probe located in the same position               prob. The temperature of same probe         validation was found not\n                                                                              NA                                                                                                 NA\n                                                                                   was found recorded and the recording        performed by independent probe\n                                                                                   is continuous through the cycle/            at the same position/suitable\n                                                                                                                               position that of control probe\n\n\n27.3     Sch-M        Whether the chart forms a part of the batch                  Temperature Chart/ Thermograph was Temperature Chart/ Thermograph\n                      record.                                                 NA   found part of batch record.        was found not part of batch record.                        NA\n                                                                                                                      Thermograph not preserved.\n27.4     Sch-M        Whether sterilization cycle validated only by                Sterilization cycle validated physically    Physical verification by thermal      The sterilizers are not\n                      biological indicator and chemical indicators or              by thermal mapping along with               mapping for heat distribution and     studied for heat\n                      physical validation is also carried out                      biological and chemical indicators.         heat penetration was found not        distribution / penetration.\n                                                                                   During validation sterilization             carried out.                          Effectiveness of\n                                                                                   parameters are established e.g. 1) For                                            sterilization process not\n                                                                              NA   DHS Temperature, duration, positive                                               established by using\n                                                                                   pressure                                                                          microbial spore\n                                                                                   2) For tunnel ,                                                                   indicators.\n                                                                                   temperature,duration,speed of\n                                                                                   conveyor etc.\n\n27.5     Sch-M        Whether the time allowed reaching the required               Lag time was found determined for all       The sterilization time is measured\n                      temperature before commencing the                            load types. The lag rimes was found         without considered established lag\n                      measurement of sterilizing time, separately             NA   specified in SOP for routine                time.                                             NA\n                      determined for each type of load.                            sterilization\n\n27.6     Sch-M        Are adequate precautions taken to protect the                Adequate precaution was found taken         No adequate precaution was found\n                      load during cooling after it has gone through the            to protect the load during cooling after    taken to protect the load during\n                      high temperature phase of a heat sterilization          NA   it has gone through the high                cooling after it has gone through                 NA\n                      cycle                                                        temperature phase of a heat                 the high temperature phase of a\n                                                                                   sterilization cycle.                        heat sterilization cycle.\n\n27.7     Sch-M        In case the cooling is affected with any fluid or gas        Cooling air was found filtered through      Cooling air was found not filtered\n                      in contact with the product , is it sterilized.              HEPA filters                                through HEPA filters\n                                                                              NA                                                                                                 NA\n\n\n27.8     Sch-M        Whether the equipment air inlet and outlets been             Inlet and outlet was found provided         Inlet and outlet was found not\n                      provided with bacteria retaining filters                NA   with HEPA filters.                          provided with HEPA filters.                       NA\n\n\n\n\n                                                                                                                                                                                                   40\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Validate sterilisation cycles physically (not only with biological and chemical indicators).",
+    "quote": "S.No | Reference || 27.4 | Sch-M | Whether sterilization cycle validated only by biological indicator and chemical indicators or physical validation is also carried out",
+    "clause_number": "27.4",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:116#4",
+   "image": "work/vision-pages/india-cdsco-circ-2024-03-risk-based-inspection-p116.png",
+   "text_layer": "                                                                                                              Quality Rating\n  S.No     Reference                                                          2                        1                                        0                                 X\n1 BuildingSch-M\n27.2      and premises:Whether\n                       -       the position of temperature probes used             The temperature probe( RTD or               The control probe was found not\n                      for controlling and / or recording determined                thermocouple) was found placed at           at exactly same position of coolest\n                      during validation and (where applicable) been                coolest spot determined during              point. The temperature recording\n                      checked against a second independent                         validation by independent calibrated        was found not continuous. The\n                      temperature probe located in the same position               prob. The temperature of same probe         validation was found not\n                                                                              NA                                                                                                 NA\n                                                                                   was found recorded and the recording        performed by independent probe\n                                                                                   is continuous through the cycle/            at the same position/suitable\n                                                                                                                               position that of control probe\n\n\n27.3     Sch-M        Whether the chart forms a part of the batch                  Temperature Chart/ Thermograph was Temperature Chart/ Thermograph\n                      record.                                                 NA   found part of batch record.        was found not part of batch record.                        NA\n                                                                                                                      Thermograph not preserved.\n27.4     Sch-M        Whether sterilization cycle validated only by                Sterilization cycle validated physically    Physical verification by thermal      The sterilizers are not\n                      biological indicator and chemical indicators or              by thermal mapping along with               mapping for heat distribution and     studied for heat\n                      physical validation is also carried out                      biological and chemical indicators.         heat penetration was found not        distribution / penetration.\n                                                                                   During validation sterilization             carried out.                          Effectiveness of\n                                                                                   parameters are established e.g. 1) For                                            sterilization process not\n                                                                              NA   DHS Temperature, duration, positive                                               established by using\n                                                                                   pressure                                                                          microbial spore\n                                                                                   2) For tunnel ,                                                                   indicators.\n                                                                                   temperature,duration,speed of\n                                                                                   conveyor etc.\n\n27.5     Sch-M        Whether the time allowed reaching the required               Lag time was found determined for all       The sterilization time is measured\n                      temperature before commencing the                            load types. The lag rimes was found         without considered established lag\n                      measurement of sterilizing time, separately             NA   specified in SOP for routine                time.                                             NA\n                      determined for each type of load.                            sterilization\n\n27.6     Sch-M        Are adequate precautions taken to protect the                Adequate precaution was found taken         No adequate precaution was found\n                      load during cooling after it has gone through the            to protect the load during cooling after    taken to protect the load during\n                      high temperature phase of a heat sterilization          NA   it has gone through the high                cooling after it has gone through                 NA\n                      cycle                                                        temperature phase of a heat                 the high temperature phase of a\n                                                                                   sterilization cycle.                        heat sterilization cycle.\n\n27.7     Sch-M        In case the cooling is affected with any fluid or gas        Cooling air was found filtered through      Cooling air was found not filtered\n                      in contact with the product , is it sterilized.              HEPA filters                                through HEPA filters\n                                                                              NA                                                                                                 NA\n\n\n27.8     Sch-M        Whether the equipment air inlet and outlets been             Inlet and outlet was found provided         Inlet and outlet was found not\n                      provided with bacteria retaining filters                NA   with HEPA filters.                          provided with HEPA filters.                       NA\n\n\n\n\n                                                                                                                                                                                                   40\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Determine separately for each load type the time allowed to reach the required temperature before sterilising time measurement starts.",
+    "quote": "S.No | Reference || 27.5 | Sch-M | Whether the time allowed reaching the required temperature before commencing the measurement of sterilizing time, separately determined for each type of load.",
+    "clause_number": "27.5",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:116#5",
+   "image": "work/vision-pages/india-cdsco-circ-2024-03-risk-based-inspection-p116.png",
+   "text_layer": "                                                                                                              Quality Rating\n  S.No     Reference                                                          2                        1                                        0                                 X\n1 BuildingSch-M\n27.2      and premises:Whether\n                       -       the position of temperature probes used             The temperature probe( RTD or               The control probe was found not\n                      for controlling and / or recording determined                thermocouple) was found placed at           at exactly same position of coolest\n                      during validation and (where applicable) been                coolest spot determined during              point. The temperature recording\n                      checked against a second independent                         validation by independent calibrated        was found not continuous. The\n                      temperature probe located in the same position               prob. The temperature of same probe         validation was found not\n                                                                              NA                                                                                                 NA\n                                                                                   was found recorded and the recording        performed by independent probe\n                                                                                   is continuous through the cycle/            at the same position/suitable\n                                                                                                                               position that of control probe\n\n\n27.3     Sch-M        Whether the chart forms a part of the batch                  Temperature Chart/ Thermograph was Temperature Chart/ Thermograph\n                      record.                                                 NA   found part of batch record.        was found not part of batch record.                        NA\n                                                                                                                      Thermograph not preserved.\n27.4     Sch-M        Whether sterilization cycle validated only by                Sterilization cycle validated physically    Physical verification by thermal      The sterilizers are not\n                      biological indicator and chemical indicators or              by thermal mapping along with               mapping for heat distribution and     studied for heat\n                      physical validation is also carried out                      biological and chemical indicators.         heat penetration was found not        distribution / penetration.\n                                                                                   During validation sterilization             carried out.                          Effectiveness of\n                                                                                   parameters are established e.g. 1) For                                            sterilization process not\n                                                                              NA   DHS Temperature, duration, positive                                               established by using\n                                                                                   pressure                                                                          microbial spore\n                                                                                   2) For tunnel ,                                                                   indicators.\n                                                                                   temperature,duration,speed of\n                                                                                   conveyor etc.\n\n27.5     Sch-M        Whether the time allowed reaching the required               Lag time was found determined for all       The sterilization time is measured\n                      temperature before commencing the                            load types. The lag rimes was found         without considered established lag\n                      measurement of sterilizing time, separately             NA   specified in SOP for routine                time.                                             NA\n                      determined for each type of load.                            sterilization\n\n27.6     Sch-M        Are adequate precautions taken to protect the                Adequate precaution was found taken         No adequate precaution was found\n                      load during cooling after it has gone through the            to protect the load during cooling after    taken to protect the load during\n                      high temperature phase of a heat sterilization          NA   it has gone through the high                cooling after it has gone through                 NA\n                      cycle                                                        temperature phase of a heat                 the high temperature phase of a\n                                                                                   sterilization cycle.                        heat sterilization cycle.\n\n27.7     Sch-M        In case the cooling is affected with any fluid or gas        Cooling air was found filtered through      Cooling air was found not filtered\n                      in contact with the product , is it sterilized.              HEPA filters                                through HEPA filters\n                                                                              NA                                                                                                 NA\n\n\n27.8     Sch-M        Whether the equipment air inlet and outlets been             Inlet and outlet was found provided         Inlet and outlet was found not\n                      provided with bacteria retaining filters                NA   with HEPA filters.                          provided with HEPA filters.                       NA\n\n\n\n\n                                                                                                                                                                                                   40\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Take adequate precautions to protect the load during cooling after the high-temperature phase of a heat sterilisation cycle.",
+    "quote": "S.No | Reference || 27.6 | Sch-M | Are adequate precautions taken to protect the load during cooling after it has gone through the high temperature phase of a heat sterilization cycle",
+    "clause_number": "27.6",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "after high-temperature phase of heat sterilisation",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:116#6",
+   "image": "work/vision-pages/india-cdsco-circ-2024-03-risk-based-inspection-p116.png",
+   "text_layer": "                                                                                                              Quality Rating\n  S.No     Reference                                                          2                        1                                        0                                 X\n1 BuildingSch-M\n27.2      and premises:Whether\n                       -       the position of temperature probes used             The temperature probe( RTD or               The control probe was found not\n                      for controlling and / or recording determined                thermocouple) was found placed at           at exactly same position of coolest\n                      during validation and (where applicable) been                coolest spot determined during              point. The temperature recording\n                      checked against a second independent                         validation by independent calibrated        was found not continuous. The\n                      temperature probe located in the same position               prob. The temperature of same probe         validation was found not\n                                                                              NA                                                                                                 NA\n                                                                                   was found recorded and the recording        performed by independent probe\n                                                                                   is continuous through the cycle/            at the same position/suitable\n                                                                                                                               position that of control probe\n\n\n27.3     Sch-M        Whether the chart forms a part of the batch                  Temperature Chart/ Thermograph was Temperature Chart/ Thermograph\n                      record.                                                 NA   found part of batch record.        was found not part of batch record.                        NA\n                                                                                                                      Thermograph not preserved.\n27.4     Sch-M        Whether sterilization cycle validated only by                Sterilization cycle validated physically    Physical verification by thermal      The sterilizers are not\n                      biological indicator and chemical indicators or              by thermal mapping along with               mapping for heat distribution and     studied for heat\n                      physical validation is also carried out                      biological and chemical indicators.         heat penetration was found not        distribution / penetration.\n                                                                                   During validation sterilization             carried out.                          Effectiveness of\n                                                                                   parameters are established e.g. 1) For                                            sterilization process not\n                                                                              NA   DHS Temperature, duration, positive                                               established by using\n                                                                                   pressure                                                                          microbial spore\n                                                                                   2) For tunnel ,                                                                   indicators.\n                                                                                   temperature,duration,speed of\n                                                                                   conveyor etc.\n\n27.5     Sch-M        Whether the time allowed reaching the required               Lag time was found determined for all       The sterilization time is measured\n                      temperature before commencing the                            load types. The lag rimes was found         without considered established lag\n                      measurement of sterilizing time, separately             NA   specified in SOP for routine                time.                                             NA\n                      determined for each type of load.                            sterilization\n\n27.6     Sch-M        Are adequate precautions taken to protect the                Adequate precaution was found taken         No adequate precaution was found\n                      load during cooling after it has gone through the            to protect the load during cooling after    taken to protect the load during\n                      high temperature phase of a heat sterilization          NA   it has gone through the high                cooling after it has gone through                 NA\n                      cycle                                                        temperature phase of a heat                 the high temperature phase of a\n                                                                                   sterilization cycle.                        heat sterilization cycle.\n\n27.7     Sch-M        In case the cooling is affected with any fluid or gas        Cooling air was found filtered through      Cooling air was found not filtered\n                      in contact with the product , is it sterilized.              HEPA filters                                through HEPA filters\n                                                                              NA                                                                                                 NA\n\n\n27.8     Sch-M        Whether the equipment air inlet and outlets been             Inlet and outlet was found provided         Inlet and outlet was found not\n                      provided with bacteria retaining filters                NA   with HEPA filters.                          provided with HEPA filters.                       NA\n\n\n\n\n                                                                                                                                                                                                   40\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Sterilise any cooling fluid or gas that contacts the product.",
+    "quote": "S.No | Reference || 27.7 | Sch-M | In case the cooling is affected with any fluid or gas in contact with the product , is it sterilized.",
+    "clause_number": "27.7",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "if cooling fluid or gas contacts the product",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:116#7",
+   "image": "work/vision-pages/india-cdsco-circ-2024-03-risk-based-inspection-p116.png",
+   "text_layer": "                                                                                                              Quality Rating\n  S.No     Reference                                                          2                        1                                        0                                 X\n1 BuildingSch-M\n27.2      and premises:Whether\n                       -       the position of temperature probes used             The temperature probe( RTD or               The control probe was found not\n                      for controlling and / or recording determined                thermocouple) was found placed at           at exactly same position of coolest\n                      during validation and (where applicable) been                coolest spot determined during              point. The temperature recording\n                      checked against a second independent                         validation by independent calibrated        was found not continuous. The\n                      temperature probe located in the same position               prob. The temperature of same probe         validation was found not\n                                                                              NA                                                                                                 NA\n                                                                                   was found recorded and the recording        performed by independent probe\n                                                                                   is continuous through the cycle/            at the same position/suitable\n                                                                                                                               position that of control probe\n\n\n27.3     Sch-M        Whether the chart forms a part of the batch                  Temperature Chart/ Thermograph was Temperature Chart/ Thermograph\n                      record.                                                 NA   found part of batch record.        was found not part of batch record.                        NA\n                                                                                                                      Thermograph not preserved.\n27.4     Sch-M        Whether sterilization cycle validated only by                Sterilization cycle validated physically    Physical verification by thermal      The sterilizers are not\n                      biological indicator and chemical indicators or              by thermal mapping along with               mapping for heat distribution and     studied for heat\n                      physical validation is also carried out                      biological and chemical indicators.         heat penetration was found not        distribution / penetration.\n                                                                                   During validation sterilization             carried out.                          Effectiveness of\n                                                                                   parameters are established e.g. 1) For                                            sterilization process not\n                                                                              NA   DHS Temperature, duration, positive                                               established by using\n                                                                                   pressure                                                                          microbial spore\n                                                                                   2) For tunnel ,                                                                   indicators.\n                                                                                   temperature,duration,speed of\n                                                                                   conveyor etc.\n\n27.5     Sch-M        Whether the time allowed reaching the required               Lag time was found determined for all       The sterilization time is measured\n                      temperature before commencing the                            load types. The lag rimes was found         without considered established lag\n                      measurement of sterilizing time, separately             NA   specified in SOP for routine                time.                                             NA\n                      determined for each type of load.                            sterilization\n\n27.6     Sch-M        Are adequate precautions taken to protect the                Adequate precaution was found taken         No adequate precaution was found\n                      load during cooling after it has gone through the            to protect the load during cooling after    taken to protect the load during\n                      high temperature phase of a heat sterilization          NA   it has gone through the high                cooling after it has gone through                 NA\n                      cycle                                                        temperature phase of a heat                 the high temperature phase of a\n                                                                                   sterilization cycle.                        heat sterilization cycle.\n\n27.7     Sch-M        In case the cooling is affected with any fluid or gas        Cooling air was found filtered through      Cooling air was found not filtered\n                      in contact with the product , is it sterilized.              HEPA filters                                through HEPA filters\n                                                                              NA                                                                                                 NA\n\n\n27.8     Sch-M        Whether the equipment air inlet and outlets been             Inlet and outlet was found provided         Inlet and outlet was found not\n                      provided with bacteria retaining filters                NA   with HEPA filters.                          provided with HEPA filters.                       NA\n\n\n\n\n                                                                                                                                                                                                   40\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Fit the sterilising equipment's air inlets and outlets with bacteria-retaining filters.",
+    "quote": "S.No | Reference || 27.8 | Sch-M | Whether the equipment air inlet and outlets been provided with bacteria retaining filters",
+    "clause_number": "27.8",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  }
+ ]
+}
