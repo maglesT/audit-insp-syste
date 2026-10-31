@@ -1,0 +1,684 @@
+{
+ "answers": [
+  {
+   "unit": "fda-cgmp-qa-production-process-controls.html:Q20",
+   "items": [
+    {
+     "statement": "For drug products not required to be sterile, establish and follow appropriate written procedures that proactively prevent the introduction and growth (proliferation) of objectionable microorganisms.",
+     "quote": "21 CFR 211.113(a) specifies that appropriate written procedures be established and followed to prevent growth of objectionable microorganisms in drug products not required to be sterile. Even though a drug product is not sterile, a firm must follow written procedures that proactively prevent introduction and proliferation of objectionable microorganisms.",
+     "clause_number": "Q20.1",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI"
+     ],
+     "numbers": [],
+     "condition": "drug products not required to be sterile",
+     "topic": "CCS.STRAT"
+    },
+    {
+     "statement": "Perform appropriate laboratory testing, as necessary, of each batch of drug product required to be free of objectionable microorganisms before it is released for distribution.",
+     "quote": "21 CFR 211.165(b) states that “[t]here shall be appropriate laboratory testing, as necessary, of each batch of drug product required to be free of objectionable microorganisms” before it is released for distribution.",
+     "clause_number": "Q20.1",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI"
+     ],
+     "numbers": [],
+     "condition": "products required to be free of objectionable microorganisms",
+     "topic": "QC.MICRO"
+    },
+    {
+     "statement": "Evaluate case by case which microorganisms are objectionable for each product, primarily those contaminants that would adversely affect product safety given the microbial species, numbers of organisms, dosage form, intended use, patient population and route of administration.",
+     "quote": "The meaning of the term objectionable needs to be evaluated on a case-by-case basis by each drug manufacturer. The primary meaning relates to microbial contaminants that, based on microbial species, numbers of organisms, dosage form, intended use, patient population, and route of administration, would adversely affect product safety.",
+     "clause_number": "Q20.1",
+     "strength": "recommended",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "QC.MICRO"
+    },
+    {
+     "statement": "Where appropriate, establish and follow time limits for completing each phase of production.",
+     "quote": "Per 21 CFR 211.111, time limits for the completion of each phase of production, when appropriate, must be established and followed.",
+     "clause_number": "Q20.6",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "when appropriate",
+     "topic": "PROD.GEN"
+    },
+    {
+     "statement": "Where a bulk topical or liquid product must be held for several months before filling, a holding time limit may be established to help prevent objectionable microbial buildup.",
+     "quote": "For example, if a firm finds it necessary to hold a bulk topical or liquid product for several months until it is filled, the firm might establish a holding time limit to help prevent objectionable microbial buildup.",
+     "clause_number": "Q20.6",
+     "strength": "optional",
+     "plant_types": [
+      "LIQ",
+      "SEMI"
+     ],
+     "numbers": [
+      "several months"
+     ],
+     "condition": "bulk held for several months before filling",
+     "topic": "PROD.GEN"
+    },
+    {
+     "statement": "As part of procedures to prevent growth of objectionable microorganisms, validate and control the microbial content of purified water systems used in certain topical products.",
+     "quote": "Validation and control over microbial content of purified water systems used in certain topical products are also examples of such procedures",
+     "clause_number": "Q20.6",
+     "strength": "recommended",
+     "plant_types": [
+      "LIQ",
+      "SEMI"
+     ],
+     "numbers": [],
+     "condition": "purified water used in certain topical products",
+     "topic": "UTIL.WATER"
+    }
+   ],
+   "not_applicable": [
+    {
+     "clause_number": "Q20",
+     "text": "Do pharmaceutical manufacturers need to have written procedures for preventing growth of objectionable microorganisms",
+     "reason": "question"
+    },
+    {
+     "clause_number": "Q20",
+     "text": "What does objectionable mean anyway?",
+     "reason": "question"
+    },
+    {
+     "clause_number": "Q20.1",
+     "text": "Yes, CGMP regulations do require these written procedures.",
+     "reason": "answer lead-in; requirement listed as item"
+    },
+    {
+     "clause_number": "Q20.1",
+     "text": "Microorganisms may be objectionable for several reasons; for example, they:",
+     "reason": "definition"
+    },
+    {
+     "clause_number": "Q20.2",
+     "text": "Are a known human pathogen",
+     "reason": "definition example"
+    },
+    {
+     "clause_number": "Q20.3",
+     "text": "Adversely affect product stability",
+     "reason": "definition example"
+    },
+    {
+     "clause_number": "Q20.4",
+     "text": "React with, or potentially damage the integrity of, the container closure system",
+     "reason": "definition example"
+    },
+    {
+     "clause_number": "Q20.5",
+     "text": "Interfere with analytical methods or active ingredient bioavailability",
+     "reason": "definition example"
+    },
+    {
+     "clause_number": "Q20.6",
+     "text": "Establishing production time limits is an example of a control to prevent growth",
+     "reason": "example; background"
+    }
+   ]
+  },
+  {
+   "unit": "fda-cgmp-qa-production-process-controls.html:Q21",
+   "items": [
+    {
+     "statement": "For drug products formulated with preservatives, perform antimicrobial preservative effectiveness testing to determine the minimally effective level of preservative.",
+     "quote": "Initially, firms perform antimicrobial preservative effectiveness testing to determine a minimally effective level of preservative.",
+     "clause_number": "Q21.1",
+     "strength": "recommended",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "products formulated with preservatives",
+     "topic": "QC.TEST"
+    },
+    {
+     "statement": "Once the minimally effective preservative level is determined, appropriate corresponding analytical test specifications may be established.",
+     "quote": "Once that level has been determined, firms may establish appropriate corresponding analytical test specifications.",
+     "clause_number": "Q21.1",
+     "strength": "optional",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "once the minimally effective level is determined",
+     "topic": "DOC.SPEC"
+    },
+    {
+     "statement": "Test preservative content at batch release and throughout the shelf life of lots on stability.",
+     "quote": "Firms may then apply the analytical tests for preservative content at batch release and throughout the shelf life of lots on stability.",
+     "clause_number": "Q21.1",
+     "strength": "recommended",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "products formulated with preservatives",
+     "topic": "QC.STAB"
+    }
+   ],
+   "not_applicable": [
+    {
+     "clause_number": "Q21",
+     "text": "For drug products formulated with preservatives to inhibit microbial growth, is it necessary to test",
+     "reason": "question"
+    },
+    {
+     "clause_number": "Q21.1",
+     "text": "Yes.",
+     "reason": "answer lead-in"
+    },
+    {
+     "clause_number": "Q21.1",
+     "text": "Two types of tests are generally used.",
+     "reason": "background"
+    }
+   ]
+  },
+  {
+   "unit": "fda-cgmp-qa-production-process-controls.html:Q22",
+   "items": [
+    {
+     "statement": "Use parametric release only for terminally sterilized drug products, not for sterile products that are not terminally sterilized.",
+     "quote": "Parametric release is only appropriate for terminally sterilized drug products.",
+     "clause_number": "Q22.1",
+     "strength": "recommended",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "STER.STERIL"
+    },
+    {
+     "statement": "Ensure both terminally sterilized and aseptically processed drug product batches meet the sterility test requirement before release to the market.",
+     "quote": "both terminally sterilized and aseptically processed drug product batches are required to meet the sterility test requirement (see 21 CFR 211.167(a)) before release to the market",
+     "clause_number": "Q22.1",
+     "strength": "mandatory",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "before release",
+     "topic": "QC.MICRO"
+    },
+    {
+     "statement": "Where parametric release is used, include a sterilization load monitor that confirms the load has been exposed to the prescribed physical conditions.",
+     "quote": "Additionally, parametric release incorporates a sterilization load monitor that is integral to satisfying the requirement for a sterility test (see § 211.167(a)) by confirming that the load has been exposed to the prescribed physical conditions.",
+     "clause_number": "Q22.2",
+     "strength": "recommended",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "parametric release",
+     "topic": "STER.STERIL"
+    },
+    {
+     "statement": "Use beneficial testing innovations together with advanced manufacturing technologies (for example robotic isolators) to enhance process design and improve microbial detection and identification.",
+     "quote": "FDA encourages the use of beneficial testing innovations in conjunction with advanced manufacturing technologies (e.g., robotic isolators) to enhance process design and improve both microbial detection and identification.",
+     "clause_number": "Q22.4",
+     "strength": "recommended",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "QC.MICRO"
+    }
+   ],
+   "not_applicable": [
+    {
+     "clause_number": "Q22",
+     "text": "Is parametric release an appropriate control strategy for sterile drug products that are not terminally sterilized?",
+     "reason": "question"
+    },
+    {
+     "clause_number": "Q22.1",
+     "text": "No.",
+     "reason": "answer lead-in"
+    },
+    {
+     "clause_number": "Q22.2",
+     "text": "Products that are terminally sterilized are rendered sterile in their final, sealed units by sterilizers.",
+     "reason": "background"
+    },
+    {
+     "clause_number": "Q22.2",
+     "text": "Discrete physical parameters (e.g., temperature, pressure, and time) are continuously measured and controlled",
+     "reason": "background"
+    },
+    {
+     "clause_number": "Q22.2",
+     "text": "This allows manufacturers to couple adherence to sterilization cycle parameters with a load monitor",
+     "reason": "background"
+    },
+    {
+     "clause_number": "Q22.3",
+     "text": "In contrast, aseptic processes do not subject the final, sealed drug product to a",
+     "reason": "background"
+    },
+    {
+     "clause_number": "Q22.3",
+     "text": "Sterilization processes (e.g., filtration) for the drug occur before further manipulations that are performed",
+     "reason": "background"
+    },
+    {
+     "clause_number": "Q22.3",
+     "text": "Consequently, indirect measurements used in aseptic processing provide limited information to conclude whether",
+     "reason": "background"
+    },
+    {
+     "clause_number": "Q22.3",
+     "text": "Even contemporary aseptic operations conducted in closed RABS and isolators can experience sterility and",
+     "reason": "background"
+    },
+    {
+     "clause_number": "Q22.3",
+     "text": "The sterility test is therefore an essential element to monitor the state of control",
+     "reason": "rationale"
+    },
+    {
+     "clause_number": "Q22.3",
+     "text": "The sterility test also protects patients by potentially preventing the distribution of an aseptically",
+     "reason": "rationale"
+    },
+    {
+     "clause_number": "Q22.4",
+     "text": "All quality control tests, including the sterility test, have limitations.",
+     "reason": "background"
+    },
+    {
+     "clause_number": "Q22.4",
+     "text": "Although the sterility test may not exhaustively assess batch sterility, the sterility test is,",
+     "reason": "rationale"
+    },
+    {
+     "clause_number": "Q22.4",
+     "text": "Innovations in sterility testing (e.g., rapid microbiological methods, genotyping) and the integration of",
+     "reason": "background"
+    }
+   ]
+  },
+  {
+   "unit": "fda-cgmp-qa-production-process-controls.html:Q23",
+   "items": [
+    {
+     "statement": "Comply with the CGMP requirements for finished pharmaceuticals, including for sterile products offered or intended for ophthalmic use.",
+     "quote": "Manufacturers of drug products, including sterile products offered or intended for ophthalmic use, must comply with CGMP requirements in 21 CFR parts 210 and 211.",
+     "clause_number": "Q23.1",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "QS.PQS"
+    },
+    {
+     "statement": "For sterile drug products, meet the CGMP requirements for personnel, buildings and facilities, materials, production and controls, and testing, as appropriate, to ensure product sterility at the time of manufacture and throughout shelf life.",
+     "quote": "Sterile drug products must meet specific CGMP requirements for personnel, buildings and facilities, materials, production and controls, and testing, as appropriate, to ensure product sterility at the time of manufacture and throughout the product’s shelf life.",
+     "clause_number": "Q23.2",
+     "strength": "mandatory",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "sterile drug products",
+     "topic": "CCS.STRAT"
+    },
+    {
+     "statement": "Establish and follow appropriate written procedures designed to prevent microbiological contamination of sterile products, including validation of aseptic and sterilization processes.",
+     "quote": "Per 21 CFR 211.113(b), there must be appropriate written procedures designed to prevent microbiological contamination that must be established and followed, including the validation of aseptic and sterilization processes.",
+     "clause_number": "Q23.3",
+     "strength": "mandatory",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "CCS.STRAT"
+    },
+    {
+     "statement": "Ensure drug product container closure systems adequately protect against foreseeable external factors in storage and use that can cause deterioration or contamination of the drug product.",
+     "quote": "Per 21 CFR 211.94(b), drug product container closure systems must provide adequate protection against foreseeable external factors in storage and use that can cause deterioration or contamination of the drug product.",
+     "clause_number": "Q23.4",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "MAT.PACK"
+    },
+    {
+     "statement": "Do not use for sterile products a container closure system that fails to maintain adequate container integrity after sealing.",
+     "quote": "a container closure system that does not maintain adequate container integrity after it is sealed is unsuitable for sterile products",
+     "clause_number": "Q23.5",
+     "strength": "recommended",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "STER.CCI"
+    },
+    {
+     "statement": "Implement safeguards that strictly prevent shipment of sterile product that may lack container closure integrity and lead to nonsterility.",
+     "quote": "safeguards should be implemented to strictly preclude shipment of product that may lack container closure integrity and lead to product nonsterility",
+     "clause_number": "Q23.5",
+     "strength": "recommended",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "STER.CCI"
+    },
+    {
+     "statement": "Safeguards against loss of container closure integrity may include ensuring the suitability and incoming quality of container closure systems, including dose delivery mechanisms, and ensuring that manufacturing equipment for container closure systems is fit for purpose.",
+     "quote": "Such safeguards could include ensuring suitability and incoming quality of container closure systems, including dose delivery mechanisms, and ensuring that manufacturing equipment for container closure systems is fit for purpose.",
+     "clause_number": "Q23.5",
+     "strength": "optional",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "STER.CCI"
+    },
+    {
+     "statement": "Validate container closure system integrity to demonstrate no penetration of microbial contaminants or chemical or physical impurities.",
+     "quote": "Validation of container closure system integrity should demonstrate no penetration of microbial contaminants or chemical or physical impurities.",
+     "clause_number": "Q23.5",
+     "strength": "recommended",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "STER.CCI"
+    },
+    {
+     "statement": "Perform appropriate testing to demonstrate conformance to product specifications.",
+     "quote": "Per 21 CFR 211.160, 211.165, and 211.166, there must be appropriate testing to demonstrate conformance to product specifications.",
+     "clause_number": "Q23.6",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "QC.TEST"
+    },
+    {
+     "statement": "When preservatives are used to maintain sterility of ophthalmic products in multidose containers, demonstrate that the preservatives have enough bactericidal and fungistatic activity to inhibit microbial growth over the shelf life and during use.",
+     "quote": "When preservatives are used to maintain sterility of ophthalmic products in multidose containers,6 manufacturers should (1) demonstrate that the preservatives have sufficient bactericidal and fungistatic activity to inhibit growth of microorganisms over the product’s shelf life and during use",
+     "clause_number": "Q23.6",
+     "strength": "recommended",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "multidose ophthalmic products using preservatives to maintain sterility",
+     "topic": "QC.TEST"
+    },
+    {
+     "statement": "When preservatives are used to maintain sterility of ophthalmic products in multidose containers, test the products at release and throughout shelf life to confirm they contain enough preservative to maintain sterility.",
+     "quote": "(2) test drug products at release and throughout the product’s shelf life to confirm they have a sufficient amount of the preservatives to maintain sterility",
+     "clause_number": "Q23.6",
+     "strength": "recommended",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "multidose ophthalmic products using preservatives to maintain sterility",
+     "topic": "QC.STAB"
+    },
+    {
+     "statement": "For products purporting to be sterile and/or pyrogen free, use appropriate laboratory testing to determine conformance to sterility requirements.",
+     "quote": "Per 21 CFR 211.167, there are special testing requirements for products purporting to be sterile and/or pyrogen free, specifically use of appropriate laboratory testing to determine conformance to requirements for sterility.",
+     "clause_number": "Q23.7",
+     "strength": "mandatory",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "products purporting to be sterile and/or pyrogen free",
+     "topic": "QC.MICRO"
+    },
+    {
+     "statement": "For products purporting to be sterile and/or pyrogen free, test for microbial contamination and for pyrogens or bacterial endotoxins (for example release and stability testing of the drug product in the commercially marketed container closure system).",
+     "quote": "This includes testing for microbial contamination and pyrogens or bacterial endotoxins (e.g., release and stability testing of the drug product in the commercially marketed container closure system).",
+     "clause_number": "Q23.7",
+     "strength": "mandatory",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "products purporting to be sterile and/or pyrogen free",
+     "topic": "QC.MICRO"
+    },
+    {
+     "statement": "Formulate liquid ophthalmic products in multidose containers with one or more suitable and harmless substances that inhibit microbial growth.",
+     "quote": "Liquid ophthalmic products in multidose containers should contain one or more suitable and harmless substances that will inhibit the growth of microorganisms",
+     "clause_number": "Q23.14",
+     "strength": "recommended",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "liquid ophthalmic products in multidose containers",
+     "topic": "CCS.STRAT"
+    }
+   ],
+   "not_applicable": [
+    {
+     "clause_number": "Q23",
+     "text": "Does FDA consider ophthalmic drug products1 to be adulterated when they are not manufactured",
+     "reason": "question"
+    },
+    {
+     "clause_number": "Q23.1",
+     "text": "Product sterility is a critical quality attribute (CQA) for ophthalmic drug products.",
+     "reason": "definition"
+    },
+    {
+     "clause_number": "Q23.1",
+     "text": "Recent cases of microbially contaminated ophthalmic drug products leading to serious injury and death,",
+     "reason": "background"
+    },
+    {
+     "clause_number": "Q23.1",
+     "text": "Failure to comply with these requirements will cause affected products to be deemed adulterated",
+     "reason": "enforcement"
+    },
+    {
+     "clause_number": "Q23.2",
+     "text": "FDA has published guidance4 to provide clarity on how manufacturers can meet CGMP requirements",
+     "reason": "reference"
+    },
+    {
+     "clause_number": "Q23.2",
+     "text": "Some of the relevant regulations and guidance applicable to products for ophthalmic use are summarized below.",
+     "reason": "lead-in"
+    },
+    {
+     "clause_number": "Q23.8",
+     "text": "FDA assesses compliance with these and other applicable CGMP requirements through facility inspections",
+     "reason": "FDA's own actions"
+    },
+    {
+     "clause_number": "Q23.8",
+     "text": "Manufacturers can find additional insight in the guidance for industry Submission Documentation for Sterilization",
+     "reason": "reference"
+    },
+    {
+     "clause_number": "Q23.9",
+     "text": "1 As defined in guidance for industry Quality Considerations for Topical Ophthalmic Drug Products (December 2023).",
+     "reason": "footnote; reference"
+    },
+    {
+     "clause_number": "Q23.10",
+     "text": "2 See 21 CFR 200.50(a)(1).",
+     "reason": "footnote; reference"
+    },
+    {
+     "clause_number": "Q23.11",
+     "text": "3 See FDA’s alerts and warnings about eye drops at https://www.fda.gov/drugs/buying-using-medicine-safely/what-you-should-know-about-eye-drops.",
+     "reason": "footnote; reference"
+    },
+    {
+     "clause_number": "Q23.12",
+     "text": "4 See FDA’s 2004 guidance for industry Sterile Drug Products Produced by Aseptic Processing—Current Good Manufacturing Practice.",
+     "reason": "footnote; reference"
+    },
+    {
+     "clause_number": "Q23.13",
+     "text": "5 This is consistent with USP General Chapter <771> Ophthalmic Products–Quality Tests.",
+     "reason": "footnote; reference"
+    },
+    {
+     "clause_number": "Q23.14",
+     "text": "See also USP General Chapter <51> Antimicrobial Effectiveness Testing.",
+     "reason": "reference"
+    },
+    {
+     "clause_number": "Q23.15",
+     "text": "7 USP General Chapter <51> Antimicrobial Effectiveness Testing.",
+     "reason": "footnote; reference"
+    }
+   ]
+  },
+  {
+   "unit": "fda-cgmp-qa-production-process-controls.html:Q24",
+   "items": [
+    {
+     "statement": "Include process performance qualification data in a biologics license application for a cell or gene therapy product; the amount of data may be adjusted to the circumstances when justified.",
+     "quote": "However, biologics license application (BLA) submissions are expected to include PPQ data, but the amount of PPQ data can be adjusted to circumstances when justified.",
+     "clause_number": "Q24.2",
+     "strength": "recommended",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "amount adjustable when justified",
+     "topic": "VAL.PROC"
+    },
+    {
+     "statement": "When process performance qualification production is limited, the number of PPQ batches may be determined from context-specific factors such as the complexity of the manufacturing process, the levels of control in place, and the overall understanding of the product and process.",
+     "quote": "When PPQ production limitations exist, the number of PPQ batches needed can be determined based on context-specific factors, such as the complexity of the manufacturing process, the levels of control in place, and the manufacturer’s overall level of understanding of the product and process.",
+     "clause_number": "Q24.3",
+     "strength": "optional",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "when PPQ production limitations exist",
+     "topic": "VAL.PROC"
+    },
+    {
+     "statement": "Perform characterization studies during the design of the manufacturing process and control strategy, and document these studies in the biologics license application.",
+     "quote": "This understanding comes from characterization studies that should be performed during the design of the manufacturing process and the control strategy, and these studies should be documented in the BLA.",
+     "clause_number": "Q24.3",
+     "strength": "recommended",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "VAL.PROC"
+    },
+    {
+     "statement": "Relevant manufacturing experience from other sufficiently similar products and processes may be documented to support process understanding.",
+     "quote": "In addition, manufacturers can document relevant manufacturing experience from other sufficiently similar products and processes.",
+     "clause_number": "Q24.3",
+     "strength": "optional",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "VAL.PROC"
+    },
+    {
+     "statement": "When preparing to validate the manufacturing process of a cell or gene therapy product under an investigational application, contact CBER to discuss the specific circumstances and which validation flexibilities may apply.",
+     "quote": "Investigational new drug (IND) application sponsors who are preparing to validate the manufacturing process of a CGT product are encouraged to contact CBER to discuss their specific circumstances and what flexibilities may apply to validation of their product’s manufacturing process.",
+     "clause_number": "Q24.4",
+     "strength": "recommended",
+     "plant_types": [
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "when preparing to validate a CGT manufacturing process",
+     "topic": "VAL.PROC"
+    }
+   ],
+   "not_applicable": [
+    {
+     "clause_number": "Q24",
+     "text": "For human cell and gene therapy products, is there a set minimum number of batches",
+     "reason": "question"
+    },
+    {
+     "clause_number": "Q24.1",
+     "text": "No.",
+     "reason": "answer lead-in"
+    },
+    {
+     "clause_number": "Q24.1",
+     "text": "There is no set minimum number of process performance qualification (PPQ) batches required to",
+     "reason": "background; no expectation"
+    },
+    {
+     "clause_number": "Q24.1",
+     "text": "While PPQ is a critical step in validating the performance of a commercial manufacturing process,",
+     "reason": "background; no expectation"
+    },
+    {
+     "clause_number": "Q24.2",
+     "text": "FDA uses a flexible, science- and risk-based approach to help expedite CGT product development",
+     "reason": "FDA's own approach"
+    }
+   ]
+  }
+ ]
+}

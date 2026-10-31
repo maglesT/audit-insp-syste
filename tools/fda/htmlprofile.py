@@ -210,7 +210,8 @@ NOT_POSSIBLE = re.compile(r"\b(?:may|might|can|could)\s+not\s+(?:always\s+|neces
                           r"|\b(?:may|might|can|could)\s+(?:also\s+)?be\s+(?:more|less|very|particularly|difficult|"
                           r"hard|easier|harder)\b"
                           r"|\b(?:can|may|could)\s+be\s+(?:summarized|described|found|seen|viewed|accessed|in|present)\b"
-                          r"|\b(?:may|might|can|could)\s+(?:contaminate|harbor|enter|grow|survive|persist|need|be needed|constitute)\b",
+                          r"|\b(?:may|might|can|could)\s+(?:contaminate|harbor|enter|grow|survive|persist|need|be needed|constitute|have)\b"
+                          r"|\b(?:can|may|could)\s+be\s+(?:at|of|a|an)\b",
                           re.I)
 # "These regulations require ...", "§ 211.84 requires ...": a legal requirement stated in guidance
 REG_REQUIRES = re.compile(r"\b(?:regulations?|CGMPs?|CFR\s+[\d.()a-z]+|§\s*[\d.()a-z]+|section\s+\d[\d.()a-z]*|statute|Act)"
@@ -221,6 +222,9 @@ ASK_IF = re.compile(r"\b(determin(?:e|es|ed|ing)|check(?:s|ed|ing)?|see|verify(?
                     r"evaluat(?:e|ing)|assess(?:ing)?|confirm(?:ing)?|question|ask|know|find out)\s+if\b", re.I)
 
 
+# numbers a statement need not repeat: years ("the 2004 guidance"), USP chapter numbers ("<905>"); footnote marks
+# printed right after a word or comma ("closed systems,1") are skipped by the number pattern itself
+NOT_NUMBERS = re.compile(r"\b(?:19|20)\d{2}\b|<\s*\d+\s*>|\bchapter\s+<?\d+>?", re.I)
 PLUSMINUS = re.compile(r"\+\s*/\s*-\s*")
 # wording that names sterility without limiting the text to sterile or non-sterile products: "a probability of a
 # non-sterile unit", "(other than water intended to be sterile)"
@@ -265,7 +269,7 @@ def check_item(item, source, unit=None):
     for n in re.findall(r"\d+(?:[.,]\d+)?", CFR_REF.sub(" ", item["statement"])):
         if not layer1.number_found(n, [item["quote"], lead]):
             out.append(("numbers", f"{n} in the statement, not in the quote or its lead-in"))
-    for n in re.findall(r"(?<![\w.^§])\d+(?:[.,]\d+)?", X.without_refs(CFR_REF.sub(" ", item["quote"]))):
+    for n in re.findall(r"(?<![\w.^§,)\]”\"])\d+(?:[.,]\d+)?", NOT_NUMBERS.sub(" ", X.without_refs(CFR_REF.sub(" ", item["quote"])))):
         if not layer1.number_found(n, [item["statement"]]):
             out.append(("numbers", f"{n} in the quote, not in the statement"))
     words = strength_of(item["quote"]) or strength_of(lead)
