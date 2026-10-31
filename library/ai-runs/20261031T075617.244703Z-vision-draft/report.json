@@ -1,0 +1,623 @@
+{
+ "pages": 50,
+ "items": 481,
+ "quote_both": 424,
+ "quote_layer_only": 5,
+ "quote_pdfminer_only": 8,
+ "quote_neither": 44,
+ "text_layer_differs": [
+  {
+   "id": "eu-20220825_gmp-an1_en_0.pdf:13#4",
+   "quote": "A | 3 520 | 3 520 | Not specified (a) | Not specified (a)",
+   "drafter_note": "",
+   "in_pdftotext": false,
+   "in_pdfminer": false
+  },
+  {
+   "id": "eu-20220825_gmp-an1_en_0.pdf:13#7",
+   "quote": "D | 3 520 000 | Not predetermined (b) | 29 300 | Not predetermined (b)",
+   "drafter_note": "The text layer splits the grade D row over three lines, placing 'D' and 'predetermined (b)' on separate lines from the other cells.",
+   "in_pdftotext": true,
+   "in_pdfminer": true
+  },
+  {
+   "id": "eu-20220825_gmp-an1_en_0.pdf:45#5",
+   "quote": "D | 3 520 000 | Not predetermined (a) | 29 300 | Not predetermined (a)",
+   "drafter_note": "The text layer splits the grade D row over three lines, placing 'D' and 'predetermined (a)' on separate lines from the other cells.",
+   "in_pdftotext": true,
+   "in_pdfminer": true
+  },
+  {
+   "id": "eu-20220825_gmp-an1_en_0.pdf:45#11",
+   "quote": "The grade A area should be monitored continuously (for particles ≥0.5 and ≥5 µm) and with a suitable sample flow rate (at least 28 litres (1ft³) per minute) so that all interventions, transient events",
+   "drafter_note": "The image prints the cubic-foot unit as ft with superscript 3; the text layer flattens it to 1ft3.",
+   "in_pdftotext": true,
+   "in_pdfminer": true
+  },
+  {
+   "id": "pics-pe009-18-annexes.pdf:20#3",
+   "quote": "A | 3 520 | 3 520 | Not specified (a) | Not specified (a)",
+   "drafter_note": "Footnote marker (a) is a superscript in the image; column units ≥ 0.5 µm/m^3 and ≥ 5 µm/m^3 carry a superscript 3 flattened to m3 in the text layer.",
+   "in_pdftotext": true,
+   "in_pdfminer": true
+  },
+  {
+   "id": "pics-pe009-18-annexes.pdf:20#4",
+   "quote": "B | 3 520 | 352 000 | Not specified (a) | 2 930",
+   "drafter_note": "Footnote marker (a) is a superscript in the image; units are µm/m^3 (superscript 3 flattened to m3).",
+   "in_pdftotext": true,
+   "in_pdfminer": true
+  },
+  {
+   "id": "pics-pe009-18-annexes.pdf:20#5",
+   "quote": "C | 352 000 | 3 520 000 | 2 930 | 29 300",
+   "drafter_note": "Units are µm/m^3 in the image (superscript 3 flattened to m3).",
+   "in_pdftotext": true,
+   "in_pdfminer": true
+  },
+  {
+   "id": "pics-pe009-18-annexes.pdf:20#6",
+   "quote": "D | 3 520 000 | Not predetermined (b) | 29 300 | Not predetermined (b)",
+   "drafter_note": "The text layer splits the grade D row over three lines, putting the values above the 'D' label and 'predetermined (b)' below it; the image shows one row D | 3 520 000 | Not predetermined (b) | 29 300 | Not predetermined (b).",
+   "in_pdftotext": true,
+   "in_pdfminer": true
+  },
+  {
+   "id": "pics-pe009-18-annexes.pdf:21#8",
+   "quote": "A | No growth",
+   "drafter_note": "In the image the 'No growth' cell spans all three method columns (air sample, settle plates, contact plates); the text layer shows it as a single value.",
+   "in_pdftotext": true,
+   "in_pdfminer": true
+  },
+  {
+   "id": "pics-pe009-18-annexes.pdf:21#9",
+   "quote": "B | 10 | 5 | 5",
+   "drafter_note": "the image prints the unit with a superscript cube (m^3); the text layer flattens it to m3.",
+   "in_pdftotext": true,
+   "in_pdfminer": true
+  },
+  {
+   "id": "pics-pe009-18-annexes.pdf:21#10",
+   "quote": "C | 100 | 50 | 25",
+   "drafter_note": "the image prints the unit with a superscript cube (m^3); the text layer flattens it to m3.",
+   "in_pdftotext": true,
+   "in_pdfminer": true
+  },
+  {
+   "id": "pics-pe009-18-annexes.pdf:21#11",
+   "quote": "D | 200 | 100 | 50",
+   "drafter_note": "the image prints the unit with a superscript cube (m^3); the text layer flattens it to m3.",
+   "in_pdftotext": true,
+   "in_pdfminer": true
+  },
+  {
+   "id": "who-trs1044-a2-sterile.pdf:17#2",
+   "quote": "A | 3 520 | 3 520 | Not specified | Not specified",
+   "drafter_note": "The image prints the footnote marker a as a superscript after each 'Not specified'; the text layer flattens it to ' a', so the markers are left out of the quote.",
+   "in_pdftotext": false,
+   "in_pdfminer": false
+  },
+  {
+   "id": "who-trs1044-a2-sterile.pdf:17#3",
+   "quote": "B | 3 520 | 352 000 | Not specified | 2 930",
+   "drafter_note": "The image prints the footnote marker a as a superscript after 'Not specified'; the text layer flattens it to ' a', so the marker is left out of the quote.",
+   "in_pdftotext": false,
+   "in_pdfminer": false
+  },
+  {
+   "id": "who-trs1044-a2-sterile.pdf:17#4",
+   "quote": "C | 352 000 | 3 520 000 | 2 930 | 29 300",
+   "drafter_note": "",
+   "in_pdftotext": false,
+   "in_pdfminer": false
+  },
+  {
+   "id": "who-trs1044-a2-sterile.pdf:17#5",
+   "quote": "D | 3 520 000 | Not predetermined | 29 300 | Not predetermined",
+   "drafter_note": "In the image each 'Not predetermined' cell carries a superscript footnote marker b; the text layer splits these cells across two lines and flattens the marker, so markers are left out of the quote.",
+   "in_pdftotext": false,
+   "in_pdfminer": false
+  },
+  {
+   "id": "who-trs1044-a2-sterile.pdf:18#8",
+   "quote": "The number of sampling locations should be based on a documented risk assessment and the results obtained from room classification, air visualization studies, and knowledge of the process and operatio",
+   "drafter_note": "The text layer interleaves the running side footer (and, across the page break, the page number and header) inside this sentence; the quote omits them as printed in the body text.",
+   "in_pdftotext": false,
+   "in_pdfminer": true
+  },
+  {
+   "id": "who-trs1044-a2-sterile.pdf:19#1",
+   "quote": "A | No growth",
+   "drafter_note": "In the image 'No growth' is a single cell spanning the air sample, settle plate and contact plate columns.",
+   "in_pdftotext": false,
+   "in_pdfminer": false
+  },
+  {
+   "id": "who-trs1044-a2-sterile.pdf:19#2",
+   "quote": "B | 10 | 5 | 5",
+   "drafter_note": "",
+   "in_pdftotext": false,
+   "in_pdfminer": false
+  },
+  {
+   "id": "who-trs1044-a2-sterile.pdf:19#3",
+   "quote": "C | 100 | 50 | 25",
+   "drafter_note": "",
+   "in_pdftotext": false,
+   "in_pdfminer": false
+  },
+  {
+   "id": "who-trs1044-a2-sterile.pdf:19#4",
+   "quote": "D | 200 | 100 | 50",
+   "drafter_note": "",
+   "in_pdftotext": false,
+   "in_pdfminer": false
+  },
+  {
+   "id": "who-trs1044-a2-sterile.pdf:20#9",
+   "quote": "Monitoring should be undertaken regularly in order to assess the effectiveness of the disinfection programme and to detect changes in types of microbial flora (for example, organisms resistant to the ",
+   "drafter_note": "The text layer interleaves the running side footer (and, across the page break, the page number and header) inside this sentence; the quote omits them as printed in the body text.",
+   "in_pdftotext": false,
+   "in_pdfminer": true
+  },
+  {
+   "id": "who-trs1044-a2-sterile.pdf:20#14",
+   "quote": "Where the disinfectants and detergents are diluted or prepared by the sterile product manufacturer, this should be done in a manner to prevent contamination, and they should be monitored for microbial",
+   "drafter_note": "The text layer interleaves the running side footer (and, across the page break, the page number and header) inside this sentence; the quote omits them as printed in the body text.",
+   "in_pdftotext": false,
+   "in_pdfminer": false
+  },
+  {
+   "id": "who-trs1044-a2-sterile.pdf:52#8",
+   "quote": "Therefore the areas where parison extrusion, blow moulding and sealing take place should meet grade A conditions at the critical zones.",
+   "drafter_note": "The text layer interleaves the running side footer (and, across the page break, the page number and header) inside this sentence; the quote omits them as printed in the body text.",
+   "in_pdftotext": false,
+   "in_pdfminer": true
+  },
+  {
+   "id": "who-trs1044-a2-sterile.pdf:52#12",
+   "quote": "The microbiological monitoring of operators wearing grade A/B clothing in a grade C area should be performed in accordance with risk management principles.",
+   "drafter_note": "The text layer interleaves the running side footer (and, across the page break, the page number and header) inside this sentence; the quote omits them as printed in the body text.",
+   "in_pdftotext": false,
+   "in_pdfminer": false
+  },
+  {
+   "id": "who-trs1010-a8-hvac-nonsterile.pdf:17#1",
+   "quote": "Ensure that the classification is current.",
+   "drafter_note": "",
+   "in_pdftotext": true,
+   "in_pdfminer": false
+  },
+  {
+   "id": "ich-q3c-r9.pdf:12#6",
+   "quote": "Cumene | 0.7 | 70",
+   "drafter_note": "Text layer flattens the superscript footnote marker after 'Cumene' into the name; the image shows a superscript footnote reference, left out of the quote.",
+   "in_pdftotext": false,
+   "in_pdfminer": false
+  },
+  {
+   "id": "ich-q3c-r9.pdf:12#8",
+   "quote": "Cyclopentyl methyl ether | 15.0 | 1500",
+   "drafter_note": "Text layer flattens the superscript footnote marker after 'Cyclopentyl methyl ether' into the name; the image shows a superscript footnote reference, left out of the quote.",
+   "in_pdftotext": false,
+   "in_pdfminer": false
+  },
+  {
+   "id": "ich-q3c-r9.pdf:12#23",
+   "quote": "Methylisobutylketone | 45 | 4500",
+   "drafter_note": "Text layer prints the superscript footnote marker 3 on a separate line above the row; the image shows it as a superscript after 'Methylisobutylketone', left out of the quote.",
+   "in_pdftotext": true,
+   "in_pdfminer": false
+  },
+  {
+   "id": "ich-q3c-r9.pdf:12#24",
+   "quote": "N-Methylpyrrolidone | 5.3 | 530",
+   "drafter_note": "Text layer flattens the superscript footnote marker after 'N-Methylpyrrolidone' into the name; the image shows a superscript footnote reference, left out of the quote.",
+   "in_pdftotext": false,
+   "in_pdfminer": false
+  },
+  {
+   "id": "ich-q3c-r9.pdf:13#4",
+   "quote": "Tertiary-butyl alcohol | 35 | 3500",
+   "drafter_note": "Text layer flattens the superscript footnote marker after 'Tertiary-butyl alcohol' into the name; the image shows a superscript footnote reference, left out of the quote.",
+   "in_pdftotext": false,
+   "in_pdfminer": false
+  },
+  {
+   "id": "ich-q3c-r9.pdf:13#5",
+   "quote": "Tetrahydrofuran | 7.2 | 720",
+   "drafter_note": "Text layer flattens the superscript footnote marker after 'Tetrahydrofuran' into the name; the image shows a superscript footnote reference, left out of the quote.",
+   "in_pdftotext": false,
+   "in_pdfminer": false
+  },
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:45#2",
+   "quote": "18.4 | Sch-M | Specify the recovery time of B & C zone from the time of personnel leaving the room after completion of operations and verify the records in this regard.",
+   "drafter_note": "",
+   "in_pdftotext": false,
+   "in_pdfminer": false
+  },
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:45#3",
+   "quote": "18.5 | Sch-M | Specify whether filling operations are challenged initially and there after periodically by simulation trials including sterile media fill.",
+   "drafter_note": "",
+   "in_pdftotext": false,
+   "in_pdfminer": false
+  },
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:45#7",
+   "quote": "18.9 | Sch-M | Specify the number of air changes in Grade A/B and Grade C areas.",
+   "drafter_note": "",
+   "in_pdftotext": false,
+   "in_pdfminer": false
+  },
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:45#8",
+   "quote": "18.10 | Sch-M | Specify the air velocity maintained in Grade A Laminar Air Flow stations",
+   "drafter_note": "",
+   "in_pdftotext": false,
+   "in_pdfminer": false
+  },
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:45#9",
+   "quote": "18.1 | Sch-M | Specify the differential pressure between areas of different environmental standards.",
+   "drafter_note": "",
+   "in_pdftotext": false,
+   "in_pdfminer": false
+  },
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:45#10",
+   "quote": "18.1 | Sch-M | Specify type of manometer installed for measurement and verification of Air Pressure Differential.",
+   "drafter_note": "",
+   "in_pdftotext": false,
+   "in_pdfminer": false
+  },
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:45#11",
+   "quote": "18.13 | WHO TRS-961 | Specify the air classification in final change room to enter A/B area.",
+   "drafter_note": "",
+   "in_pdftotext": false,
+   "in_pdfminer": false
+  },
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:48#2",
+   "quote": "21.1 | Sch-M | Specify the SOP followed for sanitation of sterile processing facilities and mention the SOP nos.",
+   "drafter_note": "",
+   "in_pdftotext": false,
+   "in_pdfminer": false
+  },
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:48#3",
+   "quote": "21.2 | Sch-M | Specify whether employees carrying out the sanitation of critical areas are specially trained for this purpose.",
+   "drafter_note": "",
+   "in_pdftotext": false,
+   "in_pdfminer": false
+  },
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:48#4",
+   "quote": "21.3 | Sch-M | Verify the training records.",
+   "drafter_note": "",
+   "in_pdftotext": false,
+   "in_pdfminer": false
+  },
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:48#5",
+   "quote": "21.4 | Sch-M | Specify the sanitizing agent/s used.",
+   "drafter_note": "",
+   "in_pdftotext": false,
+   "in_pdfminer": false
+  },
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:48#6",
+   "quote": "21.5 | Sch-M | Specify the quality of water used for preparation of sanitising solution.",
+   "drafter_note": "",
+   "in_pdftotext": false,
+   "in_pdfminer": false
+  },
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:48#7",
+   "quote": "21.6 | Sch-M | Specify the disinfectant used for hand sprays?",
+   "drafter_note": "",
+   "in_pdftotext": false,
+   "in_pdfminer": false
+  },
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:48#8",
+   "quote": "21.7 | Sch-M | Specify whether disinfectant solutions are filtered through membrane into suitable sterile containers or sterilized before use?",
+   "drafter_note": "",
+   "in_pdftotext": false,
+   "in_pdfminer": false
+  },
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:48#9",
+   "quote": "21.8 | Sch-M | Specify whether the diluted disinfectants bear ‘use before’ labels based on microbiological establishment of their germicidal properties & verify the records",
+   "drafter_note": "",
+   "in_pdftotext": false,
+   "in_pdfminer": false
+  },
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:48#10",
+   "quote": "21.9 | Sch-M | Specify whether fumigation is carried out in critical areas. If yes, specify fumigating agent and its conc. used.",
+   "drafter_note": "",
+   "in_pdftotext": false,
+   "in_pdfminer": false
+  },
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:48#11",
+   "quote": "21.10 | Sch-M | Specify whether any SOP exist for the purpose of fumigation if so mentioned the SOP nos.",
+   "drafter_note": "",
+   "in_pdftotext": false,
+   "in_pdfminer": false
+  },
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:48#12",
+   "quote": "21.1 | Sch-M | Specify the cleaning procedure of critical areas.",
+   "drafter_note": "",
+   "in_pdftotext": false,
+   "in_pdfminer": false
+  },
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:48#13",
+   "quote": "21.1 | WHO TRS-961 ANNEXE-06 | Specify whether particle monitoring in Grade A zones is undertaken for the full duration of critical processing including equipment assembly.",
+   "drafter_note": "",
+   "in_pdftotext": false,
+   "in_pdfminer": false
+  },
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:48#14",
+   "quote": "21.1 | WHO TRS-961 | Specify whether particle monitoring in Grade B zones is undertaken for the full duration of critical processing.",
+   "drafter_note": "",
+   "in_pdftotext": false,
+   "in_pdfminer": false
+  },
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:116#1",
+   "quote": "27.2 | Sch-M | Whether the position of temperature probes used for controlling and / or recording determined during validation and (where applicable) been checked against a second independent temperat",
+   "drafter_note": "The text layer prefixes the first row with a stray 'Building and premises:' header fragment and interleaves the rating columns line by line; the quote follows the cell order shown in the image.",
+   "in_pdftotext": false,
+   "in_pdfminer": false
+  },
+  {
+   "id": "india-cdsco-circ-2024-03-risk-based-inspection.pdf:116#3",
+   "quote": "27.4 | Sch-M | Whether sterilization cycle validated only by biological indicator and chemical indicators or physical validation is also carried out | NA | Sterilization cycle validated physically by ",
+   "drafter_note": "",
+   "in_pdftotext": false,
+   "in_pdfminer": false
+  },
+  {
+   "id": "fda-cp-7356-002-drug-manufacturing-inspections.pdf:20#2",
+   "quote": "Management oversight of the development, implementation, monitoring, and continual improvement of the quality system: Quality risk management and knowledge management 18 are incorporated (e.g., provid",
+   "drafter_note": "The \"18\" after \"knowledge management\" is a superscript footnote reference in the image.",
+   "in_pdftotext": true,
+   "in_pdfminer": true
+  },
+  {
+   "id": "fda-cp-7356-002-drug-manufacturing-inspections.pdf:20#3",
+   "quote": "Quality risk management program: o Documented and implemented to ensure hazards (e.g., cross-contamination, adulteration, hazardous impurities such as nitrosamines, 19 nitrosating agents, nitrites, ni",
+   "drafter_note": "The \"o\" is a sub-bullet marker and the \"19\" after \"nitrosamines,\" is a superscript footnote reference in the image.",
+   "in_pdftotext": true,
+   "in_pdfminer": false
+  },
+  {
+   "id": "fda-cp-7356-002-drug-manufacturing-inspections.pdf:20#4",
+   "quote": "Hazardous impurity risk is assessed and control strategies are implemented to mitigate the risk (e.g., actions to address sources of variability, release testing, reduction or elimination of impuritie",
+   "drafter_note": "",
+   "in_pdftotext": true,
+   "in_pdfminer": false
+  },
+  {
+   "id": "fda-cp-7356-002-drug-manufacturing-inspections.pdf:20#8",
+   "quote": "Change management for the manufacturing of all products: Documented (with justification); quality risk management 20 is used to evaluate proposed changes for potential risks (e.g., hazardous impuritie",
+   "drafter_note": "The \"20\" after \"quality risk management\" is a superscript footnote reference in the image.",
+   "in_pdftotext": false,
+   "in_pdfminer": false
+  },
+  {
+   "id": "fda-cp-7356-002-drug-manufacturing-inspections.pdf:21#1",
+   "quote": "Reporting of changes for approved application products: Changes to ECs are documented and reported as defined by the PLCM document in the application or as described in the regulations and existing gu",
+   "drafter_note": "The \"21\" at the end is a superscript footnote reference in the image.",
+   "in_pdftotext": true,
+   "in_pdfminer": true
+  },
+  {
+   "id": "india-schedule-m-2023-GSR922E.pdf:156#17",
+   "quote": "These may include questionnaires on good manufacturing practices requirements covering at least the following items, namely:- (a) personnel; (b) premises including personnel facilities; (c) maintenanc",
+   "drafter_note": "",
+   "in_pdftotext": false,
+   "in_pdfminer": false
+  },
+  {
+   "id": "india-schedule-m-2023-GSR922E.pdf:271#7",
+   "quote": "The following equipment is recommended for different above mentioned areas namely- 1. Water management area- (1) RO or Electro-deionisation (EDI) water treatment unit; (2) Distillation unit (multi col",
+   "drafter_note": "",
+   "in_pdftotext": false,
+   "in_pdfminer": false
+  },
+  {
+   "id": "pics-pi011-3-computerised-systems.pdf:9#2",
+   "quote": "In this context the PQ user acceptance test of the system is in its operating environment, and will again be against a User Requirements Specification (URS) that will include protocols and criteria fo",
+   "drafter_note": "The text layer places footnote marker 3 on its own line before 'system' and leaves a space before the comma; the image shows a superscript 3 after 'environment'.",
+   "in_pdftotext": false,
+   "in_pdfminer": false
+  },
+  {
+   "id": "pics-pi011-3-computerised-systems.pdf:10#2",
+   "quote": "In order for customers to have confidence in the reliability of the products, they should evaluate the quality methodology of the supplier for the design, construction, supply and maintenance of the s",
+   "drafter_note": "The text layer puts footnote marker 4 on its own line before 'the design'; the image shows a superscript 4 after 'software'.",
+   "in_pdftotext": false,
+   "in_pdfminer": true
+  },
+  {
+   "id": "pics-pi011-3-computerised-systems.pdf:10#4",
+   "quote": "This should be documented in a Supplier Audit Report",
+   "drafter_note": "The text layer puts footnote marker 5 on its own line between 'a' and 'Supplier'; the image shows a superscript 5 after 'Report'.",
+   "in_pdftotext": false,
+   "in_pdfminer": true
+  },
+  {
+   "id": "pics-pi011-3-computerised-systems.pdf:10#11",
+   "quote": "Market research plus focused quality system and product specific audits of the suppliers by the regulated user (or by an accredited third party auditor) may be beneficial here.",
+   "drafter_note": "The text layer puts footnote marker 7 at the top of the next page between 'Market' and 'research'; the image shows it as a superscript.",
+   "in_pdftotext": false,
+   "in_pdfminer": false
+  },
+  {
+   "id": "pics-pi011-3-computerised-systems.pdf:20#4",
+   "quote": "This schedule of testing should be specifically aimed at demonstrating the validation of the system",
+   "drafter_note": "The text layer puts footnote marker 22 on its own line between 'the' and 'validation'; the image shows a superscript 22 after 'system'.",
+   "in_pdftotext": false,
+   "in_pdfminer": true
+  },
+  {
+   "id": "pics-pi011-3-computerised-systems.pdf:20#10",
+   "quote": "For the validation of computerised systems there should be a system in place that assures the formal assessment and reporting of quality and performance measures for all the life-cycle stages of softw",
+   "drafter_note": "The text layer puts footnote marker 23 on its own line between 're-' and 'qualification'; the image shows a superscript 23 after 'retirement'.",
+   "in_pdftotext": false,
+   "in_pdfminer": true
+  },
+  {
+   "id": "pics-pi011-3-computerised-systems.pdf:20#11",
+   "quote": "This should enable both the regulated user, and competent authority, to have a high level of confidence in the integrity of both the processes executed within the controlling computer system(s) and in",
+   "drafter_note": "The text layer puts footnote marker 24 at the top of the next page before 'system(s),'; the image shows a superscript 24 after 'environment(s).'",
+   "in_pdftotext": false,
+   "in_pdfminer": false
+  },
+  {
+   "id": "pics-pi011-3-computerised-systems.pdf:21#1",
+   "quote": "The regulated user’s range of computerised systems needs to be formally listed in an inventory and the scope/extent of validation for each detailed in a consolidated written Validation programme",
+   "drafter_note": "The text layer puts footnote marker 25 on its own line between 'a' and 'consolidated'; the image shows a superscript 25 after 'programme'.",
+   "in_pdftotext": false,
+   "in_pdfminer": true
+  },
+  {
+   "id": "pics-pi011-3-computerised-systems.pdf:21#6",
+   "quote": "GxP compliance evidence is essential for the following aspects and activities related to computerised systems: data input (capture and integrity), data filing, data-processing, networks, process contr",
+   "drafter_note": "The text layer renders the arrow bullet before 'data input' as a control character, omitted in the quote.",
+   "in_pdftotext": true,
+   "in_pdfminer": false
+  }
+ ],
+ "findings": {
+  "strength": 9,
+  "numbers": 205,
+  "quote": 57,
+  "clause": 52,
+  "conditions": 14
+ },
+ "coverage_gaps": [
+  {
+   "page": "eu-20220825_gmp-an1_en_0.pdf:22",
+   "sentence": "8.5 Processing of the bulk solution should include a filtration step with a microorganism retaining filter, where possible, to reduce bioburden levels and particles prior to filling into the final product containers and there should be a maximum permissible time between preparation and filling."
+  },
+  {
+   "page": "eu-20220825_gmp-an1_en_0.pdf:45",
+   "sentence": "Note 2: The occasional indication of macro particle counts, especially ≥ 5 µm, within grade A may be considered to be false counts due to electronic noise, stray light, coincidence loss etc. However, consecutive or regular counting of low levels may be indicative of a possible contamination event an"
+  },
+  {
+   "page": "pics-pe009-18-annexes.pdf:18",
+   "sentence": "Gloves should be visually examined with each use, and integrity testing should be performed at periodic intervals."
+  },
+  {
+   "page": "pics-pe009-18-annexes.pdf:20",
+   "sentence": "For the aseptic processing area and the background environment (the grade A and grade B areas, respectively), additional sample locations should be considered and all critical processing areas such as the point of fill and container closure feeder bowls should be evaluated."
+  },
+  {
+   "page": "pics-pe009-18-annexes.pdf:22",
+   "sentence": "The requalification should include at a minimum the following: i. cleanroom classification (total particle concentration), ii. integrity test of final filters, iii. airflow volume measurement, iv. verification of air pressure difference between rooms, and v. air velocity test (Note: For grade B, C a"
+  },
+  {
+   "page": "who-trs1044-a2-sterile.pdf:17",
+   "sentence": "For the aseptic processing area and the background environment (the grade A and B areas, respectively) additional sample locations should be considered, and all critical processing areas, such as the point of fill and container closure feeder bowls, should be evaluated."
+  },
+  {
+   "page": "who-trs1044-a2-sterile.pdf:19",
+   "sentence": "Exposure time should be based on recovery studies and should not allow desiccation of the media used."
+  },
+  {
+   "page": "who-trs1044-a2-sterile.pdf:20",
+   "sentence": "4.34 The disinfection process should be validated."
+  },
+  {
+   "page": "who-trs1044-a2-sterile.pdf:52",
+   "sentence": "Therefore the areas where parison extrusion, blow moulding and sealing take place should meet grade WHO Technical Report Series, No. 1044, 2022 A conditions at the critical zones."
+  },
+  {
+   "page": "who-trs1010-a8-hvac-nonsterile.pdf:8",
+   "sentence": "WHO Technical Report Series, No. 1010, 2018 4.5 Areas for the manufacture of products, especially where materials and products are exposed to the environment, should be of an appropriate level of cleanliness."
+  },
+  {
+   "page": "ich-q3c-r9.pdf:11",
+   "sentence": "Class 1 solvents in pharmaceutical products (solvents that should be avoided)."
+  },
+  {
+   "page": "fda-guidance-nitrosamine-control-2024.pdf:11",
+   "sentence": "Under these conditions, nitrite salts may form nitrous acid, which can react with an amine to form a nitrosamine (see Figure 1)."
+  },
+  {
+   "page": "fda-guidance-nitrosamine-control-2024.pdf:11",
+   "sentence": "20 Secondary and tertiary amines may be present as impurities or degradants of quaternary ammonium salts."
+  },
+  {
+   "page": "fda-guidance-nitrosamine-control-2024.pdf:11",
+   "sentence": "Secondary, tertiary, and quaternary amines and nitrite also can be called nitrosamine precursors."
+  },
+  {
+   "page": "fda-guidance-nitrosamine-control-2024.pdf:12",
+   "sentence": "The API (or API degradants), intermediates, or API raw materials 22 may contain secondary or tertiary amine functional groups."
+  },
+  {
+   "page": "fda-guidance-nitrosamine-control-2024.pdf:12",
+   "sentence": "Tertiary and quaternary amines may also be added intentionally as reagents or catalysts."
+  },
+  {
+   "page": "fda-guidance-nitrosamine-control-2024.pdf:12",
+   "sentence": "For example, dimethylamine, which can react with nitrous acid to form NDMA, may exist as an impurity in N,N-dimethylformamide."
+  },
+  {
+   "page": "fda-guidance-nitrosamine-control-2024.pdf:12",
+   "sentence": "Secondary and tertiary amines may be present as impurities or degradants formed by dealkylation of quaternary amines."
+  },
+  {
+   "page": "fda-guidance-nitrosamine-control-2024.pdf:12",
+   "sentence": "For example, a common phase-transfer catalyst, tetrabutylammonium bromide, may contain tributyl- and dibutylamine impurities."
+  },
+  {
+   "page": "fda-guidance-nitrosamine-control-2024.pdf:20",
+   "sentence": "Recommendations for API Manufacturers Although nitrosamines are not expected to form during the manufacture of the majority of APIs, all manufacturers of chemically synthesized APIs should take appropriate actions to mitigate the risk of nitrosamine impurities in APIs where there is a potential for "
+  },
+  {
+   "page": "fda-guidance-nitrosamine-control-2024.pdf:20",
+   "sentence": "The Center for Drug Evaluation and Research’s Drug Shortage Staff can be contacted at drugshortages@fda.hhs.gov."
+  },
+  {
+   "page": "pics-pi011-3-computerised-systems.pdf:8",
+   "sentence": "(Note: What constitutes a ‘critical application’ may vary considerably, depending on the situation – perhaps more so in GLP than in other disciplines)."
+  },
+  {
+   "page": "pics-pi011-3-computerised-systems.pdf:8",
+   "sentence": "The company’s risk assessment records may also be referred to as part of this process."
+  },
+  {
+   "page": "pics-pi011-3-computerised-systems.pdf:8",
+   "sentence": "The inspector’s assessment may also involve a consideration of system life cycle, quality assurance measures, validation and operational control evidence for the controlling system, as well as validation and operational experience with the controlled process."
+  },
+  {
+   "page": "pics-pi011-3-computerised-systems.pdf:9",
+   "sentence": "(Websites: www.gamp.org and www.ispe.org) 4.8 Apart from user acceptance testing (OQ) versus the functional specification, which may include ‘Factory Acceptance Testing’ (FAT), for example, at the supplier, the regulated user also has responsibility for the (PQ) performance qualification of the syst"
+  },
+  {
+   "page": "pics-pi011-3-computerised-systems.pdf:9",
+   "sentence": "There may be links between these three types of system, described as ‘interfaces’."
+  },
+  {
+   "page": "pics-pi011-3-computerised-systems.pdf:9",
+   "sentence": "It can be seen that many of these systems have much in common with requirements for other GxP sectors, (e.g. Electronic transfer of data and/or software systems, (clinical) database management systems, statistical systems, derived data systems, electronic document management systems, electronic reco"
+  },
+  {
+   "page": "pics-pi011-3-computerised-systems.pdf:20",
+   "sentence": "This should enable both the regulated user, and competent authority, to have a high level of confidence in the integrity of both the processes executed within the controlling computer system(s) and in those processes controlled by and/or linked to the computer 22 The supplier/developer should draft "
+  }
+ ],
+ "not_applicable": 236,
+ "failed": []
+}
