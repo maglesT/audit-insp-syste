@@ -1,0 +1,474 @@
+{
+ "instructions": "You read an FDA web page (a Q&A page on CGMP, a Guide to Inspections, an Inspection Technical Guide, a Compliance\nPolicy Guide or an alert to manufacturers) and list what it expects of a drug manufacturer. Each unit is given as\nits paragraphs, each with its reference (\"Q4.2\" on a Q&A page: question 4, answer paragraph 2; \"¶17\" elsewhere) and\nits exact text; \"context\" entries are headings or labels (not citable); \"list_item\" marks a list item, whose\nlead-in is the paragraph ending in \":\" above it. Your output is checked by software against that exact text and by\nindependent reviewers, so precision matters more than wording.\n\nList each separate expectation as its own item, so that together your items cover every expectation in the unit.\nOne expectation is one thing a manufacturer must, should or may do, with all its conditions, numbers and\nqualifiers; do not split one expectation across items. What counts:\n- what FDA says a firm must, should or may do (\"FDA expects firms to have written procedures ...\", \"manufacturers\n  should ...\", \"are required by the CGMP regulations to ...\");\n- in a Guide to Inspections or Inspection Technical Guide, what the investigator is told to check (\"Determine\n  whether the firm has validated ...\", \"Check that ...\", \"Review the ...\"): write the practice the firm is expected\n  to have (\"Validate ...\"), not the investigator's task. When the text only says what to look at (\"Examine the\n  design of equipment\") and states no expectation, write the expectation the text itself gives in the same\n  paragraph; if it gives none, put the sentence in not_applicable (\"inspection step without a stated expectation\").\nFor each item:\n- statement: the expectation in your own plain English words, as one checklist item a site could be audited\n  against. Do not copy more than a few words in a row. Keep every condition (\"where\", \"if\", \"unless\", \"when\",\n  \"except\") and every number. Do not add anything the text does not say. The statement itself must carry every\n  condition or qualifier of the lead-in above a list item. The statement is shown to customers: never cite a\n  regulation, section, question or paragraph number in it (\"21 CFR 211.42(d)\", \"Q4\", \"see above\"); say what is\n  required instead.\n- quote: the exact span of ONE paragraph's text that states the whole expectation, copied character for character\n  (matched against the page text by software; do not fix typos or change punctuation, keep footnote marks as\n  printed). A quote may continue into the paragraphs after it in the same unit, in order (e.g. a lead-in and its\n  list items), but must start in the cited paragraph.\n- clause_number: the reference of the paragraph the quote starts in, exactly as given (\"Q4.2\", \"¶17\").\n- strength: \"mandatory\" where the text states a legal requirement (shall / must / is required / may not, \"the\n  CGMP regulations require\"); \"recommended\" for should, \"FDA expects\", \"FDA recommends\", and for an inspection\n  point; \"optional\" for may / is acceptable. A list item without such a word takes its lead-in's.\n- plant_types: from OSD, LIQ, SEMI, INJ, API (INJ = sterile injectables); the plant scope given unless the text\n  narrows it. Text limited to non-sterile products does not apply to INJ; text limited to sterile products\n  (parenterals, aseptic processing, terminal sterilization) applies only to INJ (and API where in scope).\n- numbers: every number, limit, frequency or period in the quote, as written (not regulation references).\n- condition: the condition or trigger in a few words, \"\" if none. This field only repeats what the statement\n  already says.\n- topic: the sub-topic id from TOPICS the expectation belongs to.\n\nDo not narrow or widen a term. Where the text gives examples (\"such as ...\"), keep them as examples; where it\ngives a closed list, keep it closed.\n\nSentences that state no expectation for the manufacturer go in not_applicable: the question itself, background and\nhistory, definitions, descriptions of what happened at a firm, FDA's own actions or enforcement, statements of\npurpose or scope, references, an inspection step without a stated expectation. One entry per SENTENCE, each with\nthe paragraph reference, the sentence's first 8 or more words copied exactly, and the reason in a few words. A\nsentence with \"should\", \"must\", \"FDA expects\" or an instruction to the investigator needs an item or a\nnot_applicable entry.\n\nWrite the answers file named in your task: {\"answers\": [one object per unit with \"unit\" set to the unit's \"id\"\nexactly, \"items\" and \"not_applicable\"]}.\n",
+ "topics": [
+  "QS.PQS",
+  "QS.MGMT",
+  "QS.QRM",
+  "QS.PQR",
+  "QS.CHANGE",
+  "QS.DEV",
+  "QS.CAPA",
+  "PER.ORG",
+  "PER.KEY",
+  "PER.TRAIN",
+  "PER.HYG",
+  "PER.GOWN",
+  "PREM.DESIGN",
+  "PREM.PROD",
+  "PREM.STORE",
+  "PREM.QC",
+  "PREM.ANC",
+  "EQ.DESIGN",
+  "EQ.MAINT",
+  "EQ.CLEAN",
+  "EQ.CAL",
+  "DOC.SYS",
+  "DOC.SPEC",
+  "DOC.MFR",
+  "DOC.BMR",
+  "DOC.SOP",
+  "DOC.RET",
+  "MAT.SUPP",
+  "MAT.RECV",
+  "MAT.SAMP",
+  "MAT.STATUS",
+  "MAT.PACK",
+  "MAT.REJ",
+  "PROD.GEN",
+  "PROD.XCONT",
+  "PROD.IPC",
+  "PROD.YIELD",
+  "PROD.PACK",
+  "PROD.REWORK",
+  "QC.GEN",
+  "QC.SAMP",
+  "QC.TEST",
+  "QC.OOS",
+  "QC.STAB",
+  "QC.REF",
+  "QC.MICRO",
+  "VAL.PLAN",
+  "VAL.QUAL",
+  "VAL.PROC",
+  "VAL.CLEAN",
+  "VAL.METH",
+  "CSV.VAL",
+  "CSV.ACCESS",
+  "CSV.AUDIT",
+  "CSV.ESIG",
+  "CSV.DI",
+  "UTIL.WATER",
+  "UTIL.HVAC",
+  "UTIL.GAS",
+  "CCS.STRAT",
+  "CCS.EM",
+  "CCS.CLEAN",
+  "CCS.PEST",
+  "STER.GRADE",
+  "STER.ASEPT",
+  "STER.APS",
+  "STER.STERIL",
+  "STER.FILT",
+  "STER.CCI",
+  "STER.LYO",
+  "API.START",
+  "API.PROC",
+  "API.IMP",
+  "API.SOLV",
+  "OUT.CONTRACT",
+  "OUT.AGREE",
+  "CMP.COMPL",
+  "CMP.RECALL",
+  "CMP.REPORT",
+  "SI.PROG",
+  "SI.TEAM",
+  "SI.REPORT",
+  "SI.FOLLOW",
+  "DIST.STORE",
+  "DIST.TRANS",
+  "DIST.RETURN",
+  "REL.QP",
+  "REL.REVIEW"
+ ],
+ "schema": {
+  "type": "object",
+  "required": [
+   "unit",
+   "items",
+   "not_applicable"
+  ],
+  "properties": {
+   "unit": {
+    "type": "string"
+   },
+   "items": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "statement",
+      "quote",
+      "clause_number",
+      "strength",
+      "plant_types",
+      "numbers",
+      "condition",
+      "topic"
+     ],
+     "properties": {
+      "statement": {
+       "type": "string"
+      },
+      "quote": {
+       "type": "string"
+      },
+      "clause_number": {
+       "type": "string"
+      },
+      "strength": {
+       "enum": [
+        "mandatory",
+        "recommended",
+        "optional"
+       ]
+      },
+      "plant_types": {
+       "type": "array",
+       "items": {
+        "enum": [
+         "OSD",
+         "LIQ",
+         "SEMI",
+         "INJ",
+         "API"
+        ]
+       }
+      },
+      "numbers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "condition": {
+       "type": "string"
+      },
+      "topic": {
+       "type": "string"
+      }
+     }
+    }
+   },
+   "not_applicable": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "clause_number",
+      "text",
+      "reason"
+     ],
+     "properties": {
+      "clause_number": {
+       "type": "string"
+      },
+      "text": {
+       "type": "string"
+      },
+      "reason": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  }
+ },
+ "units": [
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q1",
+   "source": "fda-cgmp-qa-components-containers-closures.html",
+   "unit": "Q1",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q1",
+     "text": "Do the CGMP regulations permit the destruction of an internal quality assurance audit report once the corrective action has been completed?"
+    },
+    {
+     "ref": "Q1.1",
+     "text": "The CGMP regulations (21 CFR parts 210 and 211) for finished pharmaceutical manufacturing do not specifically address the requirement to conduct, or to keep records of, internal quality assurance audits. If the report in question was from a routine audit to verify that the firm's quality system is operating as intended, then it would be acceptable if the firm elected to discard the report once all corrections have been verified."
+    },
+    {
+     "ref": "Q1.2",
+     "text": "However, any documentation of corrective action as a result of such an audit would have to be retained (see §§ 211.180 and 211.188). For example, if a routine internal audit finds a problem with a mixing step and the outcome is a change in mixing time, all affected procedures, including the master production record, are to reflect the necessary changes, and such records are subject to FDA inspection as usual. Any investigation into the impact this problem had on related batches is to be retained and also made available for inspection by FDA (see § 211.192)."
+    },
+    {
+     "ref": "Q1.3",
+     "text": "In addition, any reports of investigations or evaluations prepared in response to, for example, a product complaint (§ 211.198), vendor qualification (§ 211.84), periodic review of records and data (§ 211.180(e)), and a failure investigation (§ 211.192) are not internal audits as discussed above. Such records are subject to FDA inspection and must be retained for at least the time specified in the CGMP regulations (see § 211.180)."
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q2",
+   "source": "fda-cgmp-qa-components-containers-closures.html",
+   "unit": "Q2",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q2",
+     "text": "Can containers, closures, and packaging materials be sampled for receipt examination in the warehouse?"
+    },
+    {
+     "ref": "Q2.1",
+     "text": "Yes. Generally, we believe that sampling in a typical drug manufacturing facility warehouse would not represent a risk to the container or closure or affect the integrity of the sample results. But whether the act of collecting a sample in the warehouse violates the CGMP requirement that containers \"be opened, sampled, and sealed in a manner designed to prevent contamination of their contents...\" will depend on the purported quality characteristics of the material under sample and the warehouse environment. For containers or closures purporting to be sterile or depyrogenated, sampling should be under conditions equivalent to the purported quality of the material: a warehouse environment would not suffice (see 21 CFR 211.94 and 211.113(b)). This is to preserve the fitness for use of the remaining containers or closures as well as to ensure sample integrity, if they are to be examined for microbial contamination. At a minimum, any sampling should be performed in a manner to limit exposure to the environment during and after the time samples are removed (i.e., wiping outside surfaces, limiting time that the original package is open, and properly resealing the original package). Well-written and followed procedures are the critical elements."
+    },
+    {
+     "ref": "Q2.2",
+     "text": "Note that the CGMP regulations at 21 CFR 211.84 permit a manufacturer to release for use a shipment of containers or closures based on the supplier's certificate of analysis and a visual identification of the containers or closures. Once a supplier's reliability has been established by validation of their test results, a manufacturer could perform the visual examination entirely in the warehouse."
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q3",
+   "source": "fda-cgmp-qa-components-containers-closures.html",
+   "unit": "Q3",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q3",
+     "text": "A firm has multiple media fill failures. They conducted their media fills using TSB (tryptic soy broth) prepared by filtration through a 0.2 micron sterilizing filter. Investigation did not show any obvious causes. What could be the source of contamination?"
+    },
+    {
+     "ref": "Q3.1",
+     "text": "A firm had multiple media fill failures. The media fill runs, simulating the filling process during production, were conducted inside an isolator. The firm used TSB (nonsterile bulk powder) from a commercial source and prepared the sterile solution by filtering through a 0.2 micron sterilizing filter. An investigation was launched to trace the source of contamination. The investigation was not successful in isolating or recovering the contaminating organism using conventional microbiological techniques, including the use of selective (e.g., blood agar) and nonselective (e.g., TSB and tryptic soy agar) media, and examination under a microscope. The contaminant was eventually identified to be Acholeplasma laidlawii by using 16S rRNA gene sequence. The firm subsequently conducted studies to confirm the presence of Acholeplasma laidlawii in the lot of TSB used. Therefore, it was not a contaminant from the process, but from the media source."
+    },
+    {
+     "ref": "Q3.2",
+     "text": "Acholeplasma laidlawii belongs to an order of Mycoplasma. Mycoplasma contain only a cell membrane and have no cell wall. They are not susceptible to beta-lactams and do not take up Gram stain. Individual organisms are pleomorphic (assume various shapes from cocci to rods to filaments), varying in size from 0.2 to 0.3 microns or smaller. It has been shown that Acholeplasma laidlawii is capable of penetrating a 0.2 micron filter, but is retained by a 0.1 micron filter (see Sundaram, Eisenhuth, et al. 1999). Acholeplasma laidlawii is known to be associated with animal-derived material, and microbiological media is often from animal sources. Environmental monitoring of Mycoplasma requires selective media (PPLO broth or agar)."
+    },
+    {
+     "ref": "Q3.3",
+     "text": "Resolution:"
+    },
+    {
+     "ref": "Q3.4",
+     "text": "For now, this firm has decided to filter prepared TSB, for use in media fills, through a 0.1 micron filter (note: we do not expect or require firms to routinely use 0.1 micron filters for media preparation). In the future, the firm will use sterile, irradiated TSB when it becomes available from a commercial supplier. (Firm's autoclave is too small to permit processing of TSB for media fills, so this was not a viable option.) The firm will continue monitoring for Mycoplasma and has revalidated their cleaning procedure to verify its removal. In this case, a thorough investigation by the firm led to a determination of the cause of the failure and an appropriate corrective action."
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q4",
+   "source": "fda-cgmp-qa-components-containers-closures.html",
+   "unit": "Q4",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q4",
+     "text": "How many containers of each component from each shipment must a firm sample and test to comply with the CGMP regulations for identity testing? Do the CGMP regulations permit the identity test on a pooled, or composite, sample of multiple containers?"
+    },
+    {
+     "ref": "Q4.1",
+     "text": "The CGMP regulations address component sampling and testing primarily at 21 CFR 211.84. These regulations require representative samples of each shipment of each lot of active and inactive component (or raw materials) to be tested to confirm the identity of the component as labeled prior to release for use in drug product manufacturing. The regulations acknowledge that more than one test may be needed to ascertain a component’s identity. For the purpose of this answer, a component’s identity is its chemical structure and its physical form (e.g., polymorph, solvate, and appearance) including, if appropriate, its stereochemistry or immunochemistry. (See also ICH guidances for industry Q6A Specifications: Test Procedures and Acceptance Criteria for New Drug Substances and New Drug Products: Chemical Substances and Q6B Specifications: Test Procedures and Acceptance Criteria for Biotechnological/Biological Products.)"
+    },
+    {
+     "ref": "Q4.2",
+     "text": "The CGMP regulations do not specify the number of containers to be sampled from each received shipment. However, § 211.84(b) establishes the principles to be followed in designing a sampling program for components. The requirements of this section can be summarized as follows:"
+    },
+    {
+     "ref": "Q4.3",
+     "text": "Samples are to be representative of the shipment received.",
+     "list_item": true
+    },
+    {
+     "ref": "Q4.4",
+     "text": "The number of containers sampled as well as the amount of material sampled from each container is to be based on statistical criteria for component variability, confidence levels, and the degree of precision required.",
+     "list_item": true
+    },
+    {
+     "ref": "Q4.5",
+     "text": "The sample program takes into account the past quality history of the supplier.",
+     "list_item": true
+    },
+    {
+     "ref": "Q4.6",
+     "text": "The sample amount is to be sufficient for the necessary analysis and reserve samples.",
+     "list_item": true
+    },
+    {
+     "ref": "Q4.7",
+     "text": "The first three are most relevant to the question of how many containers to sample for identity testing, i.e., representative sampling, tolerance for variability and confidence required, and past history. (The amount needed for analysis and reserve can be readily met by sampling even one container, so the number of containers is not an important issue once the shipment’s identity is verified.)"
+    },
+    {
+     "ref": "Q4.8",
+     "text": "Unlike most component attributes, a component’s identity is generally a discrete variable, i.e., the material in the container either is or is not what the label purports it to be. The component container’s content might differ from what the container label states due to mistakes in filling and labeling by the supplier or repacker, or as a result of the substitution of a container’s contents during distribution and warehousing before receipt by the drug product manufacturer. Using a wrong component in processing could result in a serious public health hazard. For these reasons, manufacturers need to develop an approach that provides a high degree of confidence that each container in each shipment contains the material purported by the label. (See also 21 CFR 211.160(b), which requires all sampling to be representative and scientifically sound.) The approach must account for the fact that the material’s identity must not vary from what is specified. The past quality history of a supplier and the scope of their operations is relevant to the chance for mistakes to occur under a supplier’s control, but does not necessarily bear on what happens to a drug once it is outside the supplier’s control."
+    },
+    {
+     "ref": "Q4.9",
+     "text": "How many containers of each component from each shipment must a firm sample and test to comply with the CGMP requirements for identity testing?"
+    },
+    {
+     "ref": "Q4.10",
+     "text": "The regulation at § 211.84 requires that representative samples of each shipment of each lot shall be collected for testing. Some manufacturers have interpreted the CGMP regulations to require that each container in a shipment be sampled and tested for the attribute of identity. Testing samples from every container to determine identity may be valuable particularly for components purchased from distributors. (Analytical equipment and methods are readily available that permit rapid, nondestructive identification of material directly in containers in a warehouse area.) The CGMP regulations permit each drug product manufacturer to make its own decision as to the number of containers to sample, as long as the sampling plan is scientifically sound, leads to representative samples, and complies with the principles established at § 211.84(b). An important caveat applies with respect to § 211.84: samples are to be taken by the drug product manufacturer from containers after receipt (i.e., pre-shipment samples or so-called piggyback samples are generally not acceptable)."
+    },
+    {
+     "ref": "Q4.11",
+     "text": "Do the CGMP regulations permit the identity test on a pooled, or composite, sample of multiple containers?"
+    },
+    {
+     "ref": "Q4.12",
+     "text": "The CGMP regulations address the issue of sample compositing directly but only in the context of individual container sampling. Section 211.84(c)(4) explicitly prohibits compositing samples taken from the top, middle, and bottom of a single container when such stratified sampling is considered necessary (as might be the case when moisture content needs to be controlled, particularly when only a portion of a container may be used in a drug product batch). The preamble for § 211.84(c)(4) explains further that there \"is no general prohibition... on compositing samples [from single containers] where such compositing would not mask subdivisions of the sample that do not meet specifications\" (see 1978 preamble, paragraph 231)."
+    },
+    {
+     "ref": "Q4.13",
+     "text": "Testing individual samples from multiple containers provides a high level of assurance and is consistent with CGMP. Testing a composite sample for identity could satisfy the CGMP regulations (§§ 211.84 and 211.160) but only if a manufacturer demonstrates either that the detection of a single nonconforming container is not masked by compositing or that an additional test(s) routinely performed on the composite sample ensures that all containers sampled contain the same material. Thus, a purity assay on a composite sample prepared by mixing equal aliquots from each container may be acceptable provided such a test is sufficiently sensitive to reveal the presence of a single nonconforming container."
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q5",
+   "source": "fda-cgmp-qa-components-containers-closures.html",
+   "unit": "Q5",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q5",
+     "text": "What methods of analysis are suitable for testing for melamine contamination in pharmaceutical components?"
+    },
+    {
+     "ref": "Q5.1",
+     "text": "FDA recommends using a method demonstrated to be suitable for detecting melamine adulteration based on the manufacturer’s risk assessment and prevention strategy. The manufacturer’s selection of a sampling approach and test method sensitivity should address the possibility that (1) melamine might not be uniformly distributed in an at-risk component, or (2) that the source of intentional melamine contamination might be the starting material used to produce the at-risk component. The guidance for industry Pharmaceutical Components at Risk for Melamine Contamination provides a link to assay methods capable of detecting melamine at levels as low as 2.5ppm. These methods can detect melamine and cyanuric acid in complex matrices (protein materials) and, therefore, may be useful in developing test methods for other at-risk drug components. FDA also recognizes that a less sensitive method might also be appropriate for screening in certain cases."
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q6",
+   "source": "fda-cgmp-qa-components-containers-closures.html",
+   "unit": "Q6",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q6",
+     "text": "Does FDA require or recommend any special precautions or controls over the manufacturing of animal-derived drug ingredients to prevent contamination?"
+    },
+    {
+     "ref": "Q6.1",
+     "text": "Yes, FDA requires that animal-derived ingredients be controlled in a manner to ensure that contamination does not occur, beginning with initial collection and handling of the animal-derived material through its processing and subsequent use in a finished pharmaceutical. See, for example, the Federal Food, Drug, and Cosmetic Act (FD&C Act) sections 501(a)(2)(A) and 501(a)(2)(B)."
+    },
+    {
+     "ref": "Q6.2",
+     "text": "FDA has special concerns regarding the vulnerability of animal-derived ingredients to contamination by pathogenic agents (i.e., agents that can cause disease or illness in humans or other animals). As background, ingredients are also called components, and there are two categories of components used in finished pharmaceutical production: inactive ingredient (often called excipients) and active ingredient (often called active pharmaceutical ingredient (API)). For the purpose of this guidance, an animal-derived ingredient is a substance of animal origin used to manufacture a drug product. They are primarily derived from byproducts of food production and include extractions from certain animal material and milked animal fluids (e.g., venoms) and may even be human-derived. Products of animal cell cultures, including monoclonal antibodies and therapeutic proteins, are not considered animal-derived APIs for the purpose of this guidance. For additional information concerning biotechnology products, refer to ICH guidance for industry Q5A Viral Safety Evaluation of Biotechnology Products Derived from Cell Lines of Human or Animal Origin. Ingredient manufacturers are responsible for the quality and safety of the material they produce for use in finished pharmaceuticals. Ingredients are drugs and drugs are required to conform with current good manufacturing practice (FD&C Act, section 501(a)(2)(B)). Finished pharmaceutical manufacturers are also responsible for their selection, qualification, and use of ingredients in finished pharmaceuticals (e.g., the CGMP regulations at 21 CFR part 211, subpart E). Ingredient and finished pharmaceutical manufacturers should fully understand the potential for pathogenic agent contamination beginning with the livestock processing establishment (LPE) and continuing through subsequent handling and processing, and establish stringent controls to prevent contamination. It is also essential that appropriate tests or examinations are developed and applied to detect contamination as part of any meaningful control program. References:"
+    },
+    {
+     "ref": "Q6.3",
+     "text": "FD&C Act, sections 501(a)(2)(A) and 501(a)(2)(B)",
+     "list_item": true
+    },
+    {
+     "ref": "Q6.4",
+     "text": "21 CFR part 211, subpart E: Control of Components and Drug Product Containers and Closures",
+     "list_item": true
+    },
+    {
+     "ref": "Q6.5",
+     "text": "FDA Guidance for Industry, 1998, ICH Q5A Viral Safety Evaluation of Biotechnology Products Derived from Cell Lines of Human or Animal Origin",
+     "list_item": true
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q7",
+   "source": "fda-cgmp-qa-components-containers-closures.html",
+   "unit": "Q7",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q7",
+     "text": "What are FDA’s primary concerns about pathogenic agent contamination of animal-derived drug ingredients?"
+    },
+    {
+     "ref": "Q7.1",
+     "text": "FDA is concerned about contamination of animal-derived ingredients by pathogenic agents during processing at the LPE, at a subsequent consolidator of animal material or raw material processing plant, or during the manufacturing process to create the final ingredient. One should assume that animal-derived materials will not only harbor but will often support growth of pathogens and accordingly should ensure appropriate control over the handling and processing of these materials. Current good manufacturing practice is to be followed in handling such material to ensure that contamination does not occur that would affect the material’s quality and purity, or that would be harmful when the product is administered to patients. Pathogenic agent contamination includes bacteria, molds, viruses, protozoa, parasites, and prions. Pathogenic agents can enter the manufacturing facility within the animal material and contaminate excipients, water, processing equipment, personnel, environment, or packaging. Contaminated drug ingredients present potential health risks that may affect various patient populations, including immune-compromised patients, as well as otherwise healthy people of all ages. An agent may be considered pathogenic if its presence represents a significant risk to patient safety. Factors affecting the pathogenic agent’s ability to cause harm include the:"
+    },
+    {
+     "ref": "Q7.2",
+     "text": "Nature of the agent (pathogenicity, virulence)",
+     "list_item": true
+    },
+    {
+     "ref": "Q7.3",
+     "text": "Amount of the pathogenic agent",
+     "list_item": true
+    },
+    {
+     "ref": "Q7.4",
+     "text": "Type of manufacturing process and whether it affects the pathogenic agent’s ability to survive",
+     "list_item": true
+    },
+    {
+     "ref": "Q7.5",
+     "text": "Ability of the pathogenic agent to grow within the ingredient",
+     "list_item": true
+    },
+    {
+     "ref": "Q7.6",
+     "text": "Type of drug product, and its route and length of administration",
+     "list_item": true
+    },
+    {
+     "ref": "Q7.7",
+     "text": "Patient population for the drug product (including the most vulnerable patients who may take the drug).",
+     "list_item": true
+    }
+   ]
+  }
+ ]
+}

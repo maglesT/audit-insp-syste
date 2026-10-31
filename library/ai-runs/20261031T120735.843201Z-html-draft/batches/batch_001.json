@@ -1,0 +1,433 @@
+{
+ "instructions": "You read an FDA web page (a Q&A page on CGMP, a Guide to Inspections, an Inspection Technical Guide, a Compliance\nPolicy Guide or an alert to manufacturers) and list what it expects of a drug manufacturer. Each unit is given as\nits paragraphs, each with its reference (\"Q4.2\" on a Q&A page: question 4, answer paragraph 2; \"¶17\" elsewhere) and\nits exact text; \"context\" entries are headings or labels (not citable); \"list_item\" marks a list item, whose\nlead-in is the paragraph ending in \":\" above it. Your output is checked by software against that exact text and by\nindependent reviewers, so precision matters more than wording.\n\nList each separate expectation as its own item, so that together your items cover every expectation in the unit.\nOne expectation is one thing a manufacturer must, should or may do, with all its conditions, numbers and\nqualifiers; do not split one expectation across items. What counts:\n- what FDA says a firm must, should or may do (\"FDA expects firms to have written procedures ...\", \"manufacturers\n  should ...\", \"are required by the CGMP regulations to ...\");\n- in a Guide to Inspections or Inspection Technical Guide, what the investigator is told to check (\"Determine\n  whether the firm has validated ...\", \"Check that ...\", \"Review the ...\"): write the practice the firm is expected\n  to have (\"Validate ...\"), not the investigator's task. When the text only says what to look at (\"Examine the\n  design of equipment\") and states no expectation, write the expectation the text itself gives in the same\n  paragraph; if it gives none, put the sentence in not_applicable (\"inspection step without a stated expectation\").\nFor each item:\n- statement: the expectation in your own plain English words, as one checklist item a site could be audited\n  against. Do not copy more than a few words in a row. Keep every condition (\"where\", \"if\", \"unless\", \"when\",\n  \"except\") and every number. Do not add anything the text does not say. The statement itself must carry every\n  condition or qualifier of the lead-in above a list item. The statement is shown to customers: never cite a\n  regulation, section, question or paragraph number in it (\"21 CFR 211.42(d)\", \"Q4\", \"see above\"); say what is\n  required instead.\n- quote: the exact span of ONE paragraph's text that states the whole expectation, copied character for character\n  (matched against the page text by software; do not fix typos or change punctuation, keep footnote marks as\n  printed). A quote may continue into the paragraphs after it in the same unit, in order (e.g. a lead-in and its\n  list items), but must start in the cited paragraph.\n- clause_number: the reference of the paragraph the quote starts in, exactly as given (\"Q4.2\", \"¶17\").\n- strength: \"mandatory\" where the text states a legal requirement (shall / must / is required / may not, \"the\n  CGMP regulations require\"); \"recommended\" for should, \"FDA expects\", \"FDA recommends\", and for an inspection\n  point; \"optional\" for may / is acceptable. A list item without such a word takes its lead-in's.\n- plant_types: from OSD, LIQ, SEMI, INJ, API (INJ = sterile injectables); the plant scope given unless the text\n  narrows it. Text limited to non-sterile products does not apply to INJ; text limited to sterile products\n  (parenterals, aseptic processing, terminal sterilization) applies only to INJ (and API where in scope).\n- numbers: every number, limit, frequency or period in the quote, as written (not regulation references).\n- condition: the condition or trigger in a few words, \"\" if none. This field only repeats what the statement\n  already says.\n- topic: the sub-topic id from TOPICS the expectation belongs to.\n\nDo not narrow or widen a term. Where the text gives examples (\"such as ...\"), keep them as examples; where it\ngives a closed list, keep it closed.\n\nSentences that state no expectation for the manufacturer go in not_applicable: the question itself, background and\nhistory, definitions, descriptions of what happened at a firm, FDA's own actions or enforcement, statements of\npurpose or scope, references, an inspection step without a stated expectation. One entry per SENTENCE, each with\nthe paragraph reference, the sentence's first 8 or more words copied exactly, and the reason in a few words. A\nsentence with \"should\", \"must\", \"FDA expects\" or an instruction to the investigator needs an item or a\nnot_applicable entry.\n\nWrite the answers file named in your task: {\"answers\": [one object per unit with \"unit\" set to the unit's \"id\"\nexactly, \"items\" and \"not_applicable\"]}.\n",
+ "topics": [
+  "QS.PQS",
+  "QS.MGMT",
+  "QS.QRM",
+  "QS.PQR",
+  "QS.CHANGE",
+  "QS.DEV",
+  "QS.CAPA",
+  "PER.ORG",
+  "PER.KEY",
+  "PER.TRAIN",
+  "PER.HYG",
+  "PER.GOWN",
+  "PREM.DESIGN",
+  "PREM.PROD",
+  "PREM.STORE",
+  "PREM.QC",
+  "PREM.ANC",
+  "EQ.DESIGN",
+  "EQ.MAINT",
+  "EQ.CLEAN",
+  "EQ.CAL",
+  "DOC.SYS",
+  "DOC.SPEC",
+  "DOC.MFR",
+  "DOC.BMR",
+  "DOC.SOP",
+  "DOC.RET",
+  "MAT.SUPP",
+  "MAT.RECV",
+  "MAT.SAMP",
+  "MAT.STATUS",
+  "MAT.PACK",
+  "MAT.REJ",
+  "PROD.GEN",
+  "PROD.XCONT",
+  "PROD.IPC",
+  "PROD.YIELD",
+  "PROD.PACK",
+  "PROD.REWORK",
+  "QC.GEN",
+  "QC.SAMP",
+  "QC.TEST",
+  "QC.OOS",
+  "QC.STAB",
+  "QC.REF",
+  "QC.MICRO",
+  "VAL.PLAN",
+  "VAL.QUAL",
+  "VAL.PROC",
+  "VAL.CLEAN",
+  "VAL.METH",
+  "CSV.VAL",
+  "CSV.ACCESS",
+  "CSV.AUDIT",
+  "CSV.ESIG",
+  "CSV.DI",
+  "UTIL.WATER",
+  "UTIL.HVAC",
+  "UTIL.GAS",
+  "CCS.STRAT",
+  "CCS.EM",
+  "CCS.CLEAN",
+  "CCS.PEST",
+  "STER.GRADE",
+  "STER.ASEPT",
+  "STER.APS",
+  "STER.STERIL",
+  "STER.FILT",
+  "STER.CCI",
+  "STER.LYO",
+  "API.START",
+  "API.PROC",
+  "API.IMP",
+  "API.SOLV",
+  "OUT.CONTRACT",
+  "OUT.AGREE",
+  "CMP.COMPL",
+  "CMP.RECALL",
+  "CMP.REPORT",
+  "SI.PROG",
+  "SI.TEAM",
+  "SI.REPORT",
+  "SI.FOLLOW",
+  "DIST.STORE",
+  "DIST.TRANS",
+  "DIST.RETURN",
+  "REL.QP",
+  "REL.REVIEW"
+ ],
+ "schema": {
+  "type": "object",
+  "required": [
+   "unit",
+   "items",
+   "not_applicable"
+  ],
+  "properties": {
+   "unit": {
+    "type": "string"
+   },
+   "items": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "statement",
+      "quote",
+      "clause_number",
+      "strength",
+      "plant_types",
+      "numbers",
+      "condition",
+      "topic"
+     ],
+     "properties": {
+      "statement": {
+       "type": "string"
+      },
+      "quote": {
+       "type": "string"
+      },
+      "clause_number": {
+       "type": "string"
+      },
+      "strength": {
+       "enum": [
+        "mandatory",
+        "recommended",
+        "optional"
+       ]
+      },
+      "plant_types": {
+       "type": "array",
+       "items": {
+        "enum": [
+         "OSD",
+         "LIQ",
+         "SEMI",
+         "INJ",
+         "API"
+        ]
+       }
+      },
+      "numbers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "condition": {
+       "type": "string"
+      },
+      "topic": {
+       "type": "string"
+      }
+     }
+    }
+   },
+   "not_applicable": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "clause_number",
+      "text",
+      "reason"
+     ],
+     "properties": {
+      "clause_number": {
+       "type": "string"
+      },
+      "text": {
+       "type": "string"
+      },
+      "reason": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  }
+ },
+ "units": [
+  {
+   "id": "fda-cgmp-qa-records-reports.html:Q1",
+   "source": "fda-cgmp-qa-records-reports.html",
+   "unit": "Q1",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q1",
+     "text": "Some products, such as transdermal patches, are made using manufacturing processes with higher in-process material reject rates than for other products and processes. Is this okay?"
+    },
+    {
+     "ref": "Q1.1",
+     "text": "Maybe. It depends on the cause and consistency of the reject rate. Many transdermal patch manufacturing processes produce more waste (i.e., lower yield from theoretical) than other pharmaceutical processes. This should not of itself be a concern. The waste is usually due to the cumulative effect of roll splicing, line start-ups and stoppages, roll-stock changes, and perhaps higher rates of in-process sampling. This is most pronounced for processes involving lamination of rolls of various component layers. Roll-stock defects detected during adhesive coating of the roll, for example, can often only be rejected from the roll after final fabrication/lamination of the entire patch, which contributes to the final process waste stream."
+    },
+    {
+     "ref": "Q1.2",
+     "text": "We expect that validated and well-controlled processes will achieve fairly consistent waste amounts batch-to-batch. Waste in excess of the normal operating rates may need (see 21 CFR 211.192) to be evaluated to determine cause (e.g., due to increase in sampling or higher than normal component defects ... or both) and the consequences on product quality assessed. We've seen a small number of cases where unusually high intra-batch rejects/losses were due to excessive component quality variability and poorly developed processes."
+    },
+    {
+     "ref": "Q1.3",
+     "text": "21 CFR 211.100: Written procedures; deviations"
+    },
+    {
+     "ref": "Q1.4",
+     "text": "21 CFR 211.103: Calculation of yield"
+    },
+    {
+     "ref": "Q1.5",
+     "text": "21 CFR 211.110: Sampling and testing of in-process materials and drug products"
+    },
+    {
+     "ref": "Q1.6",
+     "text": "21 CFR 211.192: Production record review"
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-records-reports.html:Q2",
+   "source": "fda-cgmp-qa-records-reports.html",
+   "unit": "Q2",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q2",
+     "text": "Do the CGMP regulations permit the destruction of an internal quality assurance audit report once the corrective action has been completed?"
+    },
+    {
+     "ref": "Q2.1",
+     "text": "The CGMP regulations (21 CFR parts 210 and 211) for finished pharmaceutical manufacturing do not specifically address the requirement to conduct, or to keep records of, internal quality assurance audits. If the report in question was from a routine audit to verify that the firm's quality system is operating as intended, then it would be acceptable if the firm elected to discard the report once all corrections have been verified."
+    },
+    {
+     "ref": "Q2.2",
+     "text": "However, any documentation of corrective action as a result of such an audit would have to be retained (see §§ 211.180 and 211.188). For example, if a routine internal audit finds a problem with a mixing step and the outcome is a change in mixing time, all affected procedures, including the master production record, are to reflect the necessary changes, and such records are subject to FDA inspection as usual. Any investigation into the impact this problem had on related batches is to be retained and also made available for inspection by FDA (see § 211.192)."
+    },
+    {
+     "ref": "Q2.3",
+     "text": "In addition, any reports of investigations or evaluations prepared in response to, for example, a product complaint (§ 211.198), vendor qualification (§ 211.84), periodic review of records and data (§ 211.180(e)), and a failure investigation (§ 211.192) are not internal audits as discussed above. Such records are subject to FDA inspection and must be retained for at least the time specified in the CGMP regulations (see § 211.180)."
+    },
+    {
+     "ref": "Q2.4",
+     "text": "21 CFR 211.188: Batch production and control records"
+    },
+    {
+     "ref": "Q2.5",
+     "text": "21 CFR 211.192: Production record review",
+     "list_item": true
+    },
+    {
+     "ref": "Q2.6",
+     "text": "21 CFR 211.198: Complaint files",
+     "list_item": true
+    },
+    {
+     "ref": "Q2.7",
+     "text": "Preamble to the Current Good Manufacturing Practice in Manufacture, Processing, Packing, or Holding regulations (43 FR 45015, paragraph 4, Sept 29, 1978)"
+    },
+    {
+     "ref": "Q2.8",
+     "text": "Compliance Policy Guide Sec. 130.300 FDA Access to Results of Quality Assurance Program Audits and Inspections (CPG 7151.02)",
+     "list_item": true
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-records-reports.html:Q3",
+   "source": "fda-cgmp-qa-records-reports.html",
+   "unit": "Q3",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q3",
+     "text": "Can a firm demonstrate compliance with current good manufacturing practice (CGMP) by relying on records not accessible to FDA?"
+    },
+    {
+     "ref": "Q3.1",
+     "text": "No. Records that are needed to demonstrate compliance with current good manufacturing practice (CGMP records) are subject to FDA inspection under section 704(a) of the Federal Food, Drug, and Cosmetic Act (FD&C Act).1 Consequently, records that are not subject to review and inspection by FDA (which may include certain records maintained solely outside the quality system2) cannot be relied upon to demonstrate compliance with CGMP requirements."
+    },
+    {
+     "ref": "Q3.2",
+     "text": "FDA has observed that some firms maintain certain details relating to product quality complaints and investigations (e.g., records related to the details of a discrepancy and its related investigation) only in a record system that they consider largely out of scope of FDA’s inspectional authority, such as a human resources (HR) filing system containing personnel data. The HR filing system at a firm may include qualification information for technical and professional personnel performing functions subject to FDA regulation. FDA has the authority to inspect such records to the extent that they relate to adherence to the CGMP requirement for qualified personnel. FDA also has the authority to inspect records related to product quality complaints and investigations. Records related to employee qualifications and product quality complaints and investigations may be included in an HR filing system. However, CGMP records, whether related to training, discrepancies, or related follow-up actions, should not be retained solely in a filing system that a firm considers largely out of scope of FDA’s inspectional authority. Records and other information relating to CGMP must be retained (e.g., in an appropriate CGMP records management system) such that records are available for inspection by FDA and subject to FDA’s authority to inspect.3"
+    },
+    {
+     "ref": "Q3.3",
+     "text": "A firm may adopt any appropriate filing system that it chooses and may file information FDA has the authority to inspect with records generally excluded from such authority. However, under section 704(a) of the FD&C Act, FDA investigators may ask a firm to provide CGMP records that may be contained in such files. If the firm denies FDA access to such records that the agency has authority to inspect, this may constitute a limitation of inspection under section 501(j) of the FD&C Act. Examples of limiting an inspection include (1) not providing certain requested CGMP records that FDA has authority to inspect on the grounds that such records are inaccessible because they are in an HR or other filing system that a firm considers largely out of scope of FDA’s inspectional authority; and (2) not providing certain CGMP records that FDA has authority to inspect because such records were generated by legal counsel and therefore the firm considers they are not obligated to provide such information. Instead, the firm could redact any information that FDA would not have authority to access, review, and copy. See the guidance for industry Circumstances That Constitute Delaying, Denying, Limiting, or Refusing a Drug Inspection."
+    },
+    {
+     "ref": "Q3.4",
+     "text": "11/16/2022"
+    },
+    {
+     "ref": "Q3.5",
+     "text": "1It is a prohibited act under section 301(e) of the FD&C Act to refuse to permit access to or to refuse copying of any record as required by section 704(a) of the Act."
+    },
+    {
+     "ref": "Q3.6",
+     "text": "2See 21 CFR 211.180(c). See also guidance for industry Quality Systems Approach to Pharmaceutical CGMP Regulations (September 2006). We update guidances periodically. To make sure you have the most recent version of a guidance, check the FDA guidance web page at https://www.fda.gov/regulatory-information/search-fda-guidance-documents."
+    },
+    {
+     "ref": "Q3.7",
+     "text": "3See 501(a)(2)(B) and 704(a) of the FD&C Act; see also 21 CFR 211.180 for finished drugs."
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-records-reports.html:Q4",
+   "source": "fda-cgmp-qa-records-reports.html",
+   "unit": "Q4",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q4",
+     "text": "How do the part 11 regulations and \"predicate rule requirements\" (in 21 CFR part 211) apply to the electronic records created by computerized laboratory systems and the associated printed chromatograms that are used in drug manufacturing and testing?"
+    },
+    {
+     "ref": "Q4.1",
+     "text": "Some in industry misinterpret the following text from the guidance for industry Part 11, Electronic Records; Electronic Signatures–Scope and Application (Part 11 guidance, lines 164-171) to mean that in all cases paper printouts of electronic records satisfy predicate rule requirements in 21 CFR part 211:"
+    },
+    {
+     "ref": "Q4.2",
+     "text": "Under the narrow interpretation of the scope of part 11, with respect to records required to be maintained under predicate rules or submitted to FDA, when persons choose to use records in electronic format in place of paper format, part 11 would apply. On the other hand, when persons use computers to generate paper printouts of electronic records, and those paper records meet all the requirements of the applicable predicate rules and persons rely on the paper records to perform their regulated activities, FDA would generally not consider persons to be ‘using electronic records in lieu of paper records’ under §§ 11.2(a) and 11.2(b). In these instances, the use of computer systems in the generation of paper records would not trigger part 11."
+    },
+    {
+     "ref": "Q4.3",
+     "text": "The Part 11 guidance also states (in lines 150-152) that:"
+    },
+    {
+     "ref": "Q4.4",
+     "text": "Persons must comply with applicable predicate rules, and records that are required to be maintained or submitted must remain secure and reliable in accordance with the predicate rules."
+    },
+    {
+     "ref": "Q4.5",
+     "text": "For high performance liquid chromatography (HPLC) and gas chromatography (GC) systems (and other computerized systems involving user inputs, outputs, audit trials, etc.), the predicate rules, such as 21 CFR 211.68 and 211.180(d), require the electronic records themselves to be retained and maintained in accordance with those regulations. Section 211.180(d) requires records to be retained “either as original records or true copies such as photocopies, microfilm, microfiche, or other accurate reproductions of the original records.” Section 211.68 further states that: “[H]ard copy or alternative systems, such as duplicates, tapes, or microfilm, designed to assure that backup data are exact and complete and that it is secure from alteration, inadvertent erasures, or loss shall be maintained” (emphasis added). The printed paper copy of the chromatogram would not be considered a true copy of the entire electronic raw data used to create that chromatogram, as required by § 211.180(d). The printed chromatogram would also not be considered an exact and complete copy of the electronic raw data used to create the chromatogram, as required by § 211.68. The chromatogram does not generally include, for example, the injection sequence, instrument method, integration method, or the audit trail, of which all were used to create the chromatogram or are associated with its validity. Therefore, the printed chromatograms used in drug manufacturing and testing do not satisfy the predicate rule requirements in part 211. The electronic records created by the computerized laboratory systems must be maintained under these requirements."
+    },
+    {
+     "ref": "Q4.6",
+     "text": "We recognize that there are cases where it could be appropriate for the printed chromatogram to be used within laboratories for the review of test results. Similarly, it also may be acceptable to provide the printed chromatogram during a regulatory inspection or for application review purposes. However, the electronic record must be maintained and readily available for review by, for example, quality control/quality assurance personnel or the FDA investigator."
+    },
+    {
+     "ref": "Q4.7",
+     "text": "In summary, decisions on how to maintain records for computerized systems should be based on predicate rule requirements. We recommend that these decisions be supported by a sound risk assessment."
+    },
+    {
+     "ref": "Q4.8",
+     "text": "FDA Guidance for Industry, 2003, Part 11, Electronic Records; Electronic Signatures—Scope and Application",
+     "list_item": true
+    },
+    {
+     "ref": "Q4.9",
+     "text": "21 CFR 211.180(d): General requirements",
+     "list_item": true
+    },
+    {
+     "ref": "Q4.10",
+     "text": "21 CFR 211.68: Automatic, mechanical, and electronic equipment",
+     "list_item": true
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-records-reports.html:Q5",
+   "source": "fda-cgmp-qa-records-reports.html",
+   "unit": "Q5",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q5",
+     "text": "How does FDA interpret the regulations (21 CFR part 211) regarding the establishment of expiry dating for chemicals, reagents, solutions, and solvents?"
+    },
+    {
+     "ref": "Q5.1",
+     "text": "Laboratory “reagents, and standard solutions,” as referenced in the CGMP regulations at 21 CFR 211.194, includes laboratory chemicals such as solvents (including mobile phases), dry chemicals (salts, primary standards, etc.), and solutions (buffers, acids/bases, quantitative analytical preparations, etc.), whether purchased or prepared in-house. Laboratory reagents and solutions are used in analytical tests of components, in-process materials, and finished products."
+    },
+    {
+     "ref": "Q5.2",
+     "text": "If the purchased laboratory reagent or solution includes a manufacturer’s suggested use-by or expiry date, that date should be followed. For purchased laboratory reagents and solutions without a \"use by\" or expiry date, FDA would expect that an assessment be conducted (a literature review may be acceptable) of that specific chemical's or chemical family's stability and that an appropriate use-by or expiry date be determined."
+    },
+    {
+     "ref": "Q5.3",
+     "text": "For in-house prepared solutions, such as mobile phases or other nonquantitative solutions, FDA would expect that an assessment be conducted (again, literature review may be acceptable) to determine an appropriate expiry period. However, for in-house prepared solutions used for quantitative analysis, such as sample or standard solutions used in assay or impurity testing or titration solutions, FDA requires that formal stability studies be conducted to determine an appropriate expiry. As mentioned in the ICH guidance for industry Q2B Validation of Analytical Procedures: Methodology, the stability of analytical solutions is a typical method variation that should be evaluated during robustness testing during method validation. Method validation is a CGMP requirement at 21 CFR 211.160(b)."
+    },
+    {
+     "ref": "Q5.4",
+     "text": "The determined use-by or expiry dates should be documented within a procedure and followed. Procedures for any in-house prepared laboratory solution should include the determined stability timeframe and should instruct that these solutions be labeled with the appropriately determined use-by or expiry date upon preparation and discarded upon expiration."
+    },
+    {
+     "ref": "Q5.5",
+     "text": "These principles would also apply to active pharmaceutical ingredient (API) manufacturing and testing sites. The use of “reagents and solutions” and use-by dates are found throughout the ICH guidance for industry Q7 Good Manufacturing Practice Guidance for Active Pharmaceutical Ingredients."
+    }
+   ]
+  }
+ ]
+}

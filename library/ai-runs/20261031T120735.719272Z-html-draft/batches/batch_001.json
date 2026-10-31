@@ -1,0 +1,534 @@
+{
+ "instructions": "You read an FDA web page (a Q&A page on CGMP, a Guide to Inspections, an Inspection Technical Guide, a Compliance\nPolicy Guide or an alert to manufacturers) and list what it expects of a drug manufacturer. Each unit is given as\nits paragraphs, each with its reference (\"Q4.2\" on a Q&A page: question 4, answer paragraph 2; \"¶17\" elsewhere) and\nits exact text; \"context\" entries are headings or labels (not citable); \"list_item\" marks a list item, whose\nlead-in is the paragraph ending in \":\" above it. Your output is checked by software against that exact text and by\nindependent reviewers, so precision matters more than wording.\n\nList each separate expectation as its own item, so that together your items cover every expectation in the unit.\nOne expectation is one thing a manufacturer must, should or may do, with all its conditions, numbers and\nqualifiers; do not split one expectation across items. What counts:\n- what FDA says a firm must, should or may do (\"FDA expects firms to have written procedures ...\", \"manufacturers\n  should ...\", \"are required by the CGMP regulations to ...\");\n- in a Guide to Inspections or Inspection Technical Guide, what the investigator is told to check (\"Determine\n  whether the firm has validated ...\", \"Check that ...\", \"Review the ...\"): write the practice the firm is expected\n  to have (\"Validate ...\"), not the investigator's task. When the text only says what to look at (\"Examine the\n  design of equipment\") and states no expectation, write the expectation the text itself gives in the same\n  paragraph; if it gives none, put the sentence in not_applicable (\"inspection step without a stated expectation\").\nFor each item:\n- statement: the expectation in your own plain English words, as one checklist item a site could be audited\n  against. Do not copy more than a few words in a row. Keep every condition (\"where\", \"if\", \"unless\", \"when\",\n  \"except\") and every number. Do not add anything the text does not say. The statement itself must carry every\n  condition or qualifier of the lead-in above a list item. The statement is shown to customers: never cite a\n  regulation, section, question or paragraph number in it (\"21 CFR 211.42(d)\", \"Q4\", \"see above\"); say what is\n  required instead.\n- quote: the exact span of ONE paragraph's text that states the whole expectation, copied character for character\n  (matched against the page text by software; do not fix typos or change punctuation, keep footnote marks as\n  printed). A quote may continue into the paragraphs after it in the same unit, in order (e.g. a lead-in and its\n  list items), but must start in the cited paragraph.\n- clause_number: the reference of the paragraph the quote starts in, exactly as given (\"Q4.2\", \"¶17\").\n- strength: \"mandatory\" where the text states a legal requirement (shall / must / is required / may not, \"the\n  CGMP regulations require\"); \"recommended\" for should, \"FDA expects\", \"FDA recommends\", and for an inspection\n  point; \"optional\" for may / is acceptable. A list item without such a word takes its lead-in's.\n- plant_types: from OSD, LIQ, SEMI, INJ, API (INJ = sterile injectables); the plant scope given unless the text\n  narrows it. Text limited to non-sterile products does not apply to INJ; text limited to sterile products\n  (parenterals, aseptic processing, terminal sterilization) applies only to INJ (and API where in scope).\n- numbers: every number, limit, frequency or period in the quote, as written (not regulation references).\n- condition: the condition or trigger in a few words, \"\" if none. This field only repeats what the statement\n  already says.\n- topic: the sub-topic id from TOPICS the expectation belongs to.\n\nDo not narrow or widen a term. Where the text gives examples (\"such as ...\"), keep them as examples; where it\ngives a closed list, keep it closed.\n\nSentences that state no expectation for the manufacturer go in not_applicable: the question itself, background and\nhistory, definitions, descriptions of what happened at a firm, FDA's own actions or enforcement, statements of\npurpose or scope, references, an inspection step without a stated expectation. One entry per SENTENCE, each with\nthe paragraph reference, the sentence's first 8 or more words copied exactly, and the reason in a few words. A\nsentence with \"should\", \"must\", \"FDA expects\" or an instruction to the investigator needs an item or a\nnot_applicable entry.\n\nWrite the answers file named in your task: {\"answers\": [one object per unit with \"unit\" set to the unit's \"id\"\nexactly, \"items\" and \"not_applicable\"]}.\n",
+ "topics": [
+  "QS.PQS",
+  "QS.MGMT",
+  "QS.QRM",
+  "QS.PQR",
+  "QS.CHANGE",
+  "QS.DEV",
+  "QS.CAPA",
+  "PER.ORG",
+  "PER.KEY",
+  "PER.TRAIN",
+  "PER.HYG",
+  "PER.GOWN",
+  "PREM.DESIGN",
+  "PREM.PROD",
+  "PREM.STORE",
+  "PREM.QC",
+  "PREM.ANC",
+  "EQ.DESIGN",
+  "EQ.MAINT",
+  "EQ.CLEAN",
+  "EQ.CAL",
+  "DOC.SYS",
+  "DOC.SPEC",
+  "DOC.MFR",
+  "DOC.BMR",
+  "DOC.SOP",
+  "DOC.RET",
+  "MAT.SUPP",
+  "MAT.RECV",
+  "MAT.SAMP",
+  "MAT.STATUS",
+  "MAT.PACK",
+  "MAT.REJ",
+  "PROD.GEN",
+  "PROD.XCONT",
+  "PROD.IPC",
+  "PROD.YIELD",
+  "PROD.PACK",
+  "PROD.REWORK",
+  "QC.GEN",
+  "QC.SAMP",
+  "QC.TEST",
+  "QC.OOS",
+  "QC.STAB",
+  "QC.REF",
+  "QC.MICRO",
+  "VAL.PLAN",
+  "VAL.QUAL",
+  "VAL.PROC",
+  "VAL.CLEAN",
+  "VAL.METH",
+  "CSV.VAL",
+  "CSV.ACCESS",
+  "CSV.AUDIT",
+  "CSV.ESIG",
+  "CSV.DI",
+  "UTIL.WATER",
+  "UTIL.HVAC",
+  "UTIL.GAS",
+  "CCS.STRAT",
+  "CCS.EM",
+  "CCS.CLEAN",
+  "CCS.PEST",
+  "STER.GRADE",
+  "STER.ASEPT",
+  "STER.APS",
+  "STER.STERIL",
+  "STER.FILT",
+  "STER.CCI",
+  "STER.LYO",
+  "API.START",
+  "API.PROC",
+  "API.IMP",
+  "API.SOLV",
+  "OUT.CONTRACT",
+  "OUT.AGREE",
+  "CMP.COMPL",
+  "CMP.RECALL",
+  "CMP.REPORT",
+  "SI.PROG",
+  "SI.TEAM",
+  "SI.REPORT",
+  "SI.FOLLOW",
+  "DIST.STORE",
+  "DIST.TRANS",
+  "DIST.RETURN",
+  "REL.QP",
+  "REL.REVIEW"
+ ],
+ "schema": {
+  "type": "object",
+  "required": [
+   "unit",
+   "items",
+   "not_applicable"
+  ],
+  "properties": {
+   "unit": {
+    "type": "string"
+   },
+   "items": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "statement",
+      "quote",
+      "clause_number",
+      "strength",
+      "plant_types",
+      "numbers",
+      "condition",
+      "topic"
+     ],
+     "properties": {
+      "statement": {
+       "type": "string"
+      },
+      "quote": {
+       "type": "string"
+      },
+      "clause_number": {
+       "type": "string"
+      },
+      "strength": {
+       "enum": [
+        "mandatory",
+        "recommended",
+        "optional"
+       ]
+      },
+      "plant_types": {
+       "type": "array",
+       "items": {
+        "enum": [
+         "OSD",
+         "LIQ",
+         "SEMI",
+         "INJ",
+         "API"
+        ]
+       }
+      },
+      "numbers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "condition": {
+       "type": "string"
+      },
+      "topic": {
+       "type": "string"
+      }
+     }
+    }
+   },
+   "not_applicable": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "clause_number",
+      "text",
+      "reason"
+     ],
+     "properties": {
+      "clause_number": {
+       "type": "string"
+      },
+      "text": {
+       "type": "string"
+      },
+      "reason": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  }
+ },
+ "units": [
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q1",
+   "source": "fda-cgmp-qa-laboratory-controls.html",
+   "unit": "Q1",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q1",
+     "text": "Many leading analytical balance manufacturers provide built-in \"auto calibration\" features in their balances. Are such auto-calibration procedures acceptable instead of external performance checks? If not, then what should the schedule for calibration be?"
+    },
+    {
+     "ref": "Q1.1",
+     "text": "The auto-calibration feature of a balance may not be relied upon to the exclusion of an external performance check (21 CFR 211.68). For a scale with a built-in auto-calibrator, we recommend that external performance checks be performed on a periodic basis, but less frequently as compared to a scale without this feature. The frequency of performance checks depends on the frequency of use of the scale and the criticality and tolerance of the process or analytical step. Note that all batches of a product manufactured between two successive verifications would be affected should the check of the auto-calibrator reveal a problem. Additionally, the calibration of an auto-calibrator should be periodically verified—a common frequency is once a year—using National Institute of Standards and Technology (NIST)-traceable standards or NIST-accredited standards in use in other countries."
+    },
+    {
+     "ref": "Q1.2",
+     "text": "Back to Top"
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q2",
+   "source": "fda-cgmp-qa-laboratory-controls.html",
+   "unit": "Q2",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q2",
+     "text": "Do CGMPs require that forced degradation studies always be conducted of the drug product when determining if a drug product stability test method is stability indicating?"
+    },
+    {
+     "ref": "Q2.1",
+     "text": "No. Drug product stress testing (forced degradation) may not be necessary when the routes of degradation and the suitability of the analytical procedures can be determined through use of the following:"
+    },
+    {
+     "ref": "Q2.2",
+     "text": "Data from stress testing of the drug substance",
+     "list_item": true
+    },
+    {
+     "ref": "Q2.3",
+     "text": "Reference materials for process impurities and degradants",
+     "list_item": true
+    },
+    {
+     "ref": "Q2.4",
+     "text": "Data from accelerated and long-term studies on the drug substance",
+     "list_item": true
+    },
+    {
+     "ref": "Q2.5",
+     "text": "Data from accelerated and long-term studies on the drug product",
+     "list_item": true
+    },
+    {
+     "ref": "Q2.6",
+     "text": "Additional supportive information on the specificity of the analytical methods and on degradation pathways of the drug substance may be available from literature sources. Section 211.165(e) of the CGMP regulations states that the accuracy, sensitivity, specificity, and reproducibility of test methods shall be established and documented (21 CFR 211.165(e)). Further, 21 CFR 211.166(a)(3) requires that stability test methods be reliable, meaningful, and specific, which means that the content of the active ingredient, degradation products, and other components of interest in a drug product can be accurately measured without interference, often called stability indicating. The CGMP regulations do not specify what techniques or tests are to be used to ensure that one’s test methods are stability indicating. However, evaluating the specificity of the test methods during forced degradation studies (i.e., exposing the drug to extremes of pH, temperature, oxygen, etc.) of the drug substance and drug product often is necessary to ensure that stability test methods are stability indicating. But in certain circumstances, conducting a forced degradation study of just the drug substance may be sufficient to evaluate the stability-indicating properties of a test method. Generally, in determining whether it is necessary to conduct forced degradation studies of the drug product, the specificity of the test method should be evaluated for its ability to assay drug substance, degradants, and impurities, in the presence of each other, without interference. The evaluation also should provide assurance that there is not a potential for interaction between the drug substance, degradants, impurities, excipients, and container-closure system during the course of the shelf life of the finished drug product. Last, the rationale for any decision made concerning the extent of the forced degradation studies conducted as well as the rationale for concluding that a test method is stability indicating should be fully documented."
+    },
+    {
+     "ref": "Q2.7",
+     "text": "Back to Top"
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q3",
+   "source": "fda-cgmp-qa-laboratory-controls.html",
+   "unit": "Q3",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q3",
+     "text": "When performing the USP General Chapter <788> Particulate Matter in Injections test for a large volume parenteral (LVP), is it acceptable to take the average among the units tested to determine if the batch meets its specification for this attribute?"
+    },
+    {
+     "ref": "Q3.1",
+     "text": "No. It is not acceptable to take the average among the LVP units tested in each batch/lot when following this method because the purpose of this method is to measure and limit intra-batch variability."
+    },
+    {
+     "ref": "Q3.2",
+     "text": "Particulate matter refers to small, subvisible particles. General Chapter <788> provides two tests for detecting such particulates—light obscuration and microscopic assay. Both are generally accepted for use in testing LVPs and small volume parenterals (SVP) for the determination of subvisible particulate matter. Normally, samples are first tested by the light obscuration method; if the sample fails the specified limits, the microscopic assay method can then be used. However, the microscopic method can be the sole test if there is a documented technical reason or interference from the product under test that would make the light obscuration method unsuitable or the results invalid."
+    },
+    {
+     "ref": "Q3.3",
+     "text": "Confusion about when averaging data is and is not acceptable is probably due to the sample preparation method for the light obscuration test (General Chapter <788>). At least 2, 5-mL aliquots from each sampled unit or the pooled sample (see below) are to be used in the particulate count determination, and the results from these aliquots are to be averaged for comparison with the specification. Note that the average is of the results from examining each aliquot and not between units. (The results of the first aliquot examined by light obscuration are to be discarded, and the subsequent aliquots—2 or more—are retained.) Pooling units prior to analysis is permitted only if the volume in each unit is less than 25 mL, in which case 10 or more units may be pooled. If the volume in the SVP or LVP is 25 mL or more per unit, single units are to be examined by this method (General Chapter <788>)."
+    },
+    {
+     "ref": "Q3.4",
+     "text": "Results among the test units cannot be averaged because particulate matter is assumed to be non-uniformly dispersed throughout the lot. The intent of assessing results from each individual unit is to ensure adequate representation of the lot and to detect potential variation within a lot."
+    },
+    {
+     "ref": "Q3.5",
+     "text": "As to the number of individual units to be tested for LVP and SVP units having a volume of 25mL or more, the USP states that the number of units tested depends on \"statistically sound sampling plans,\" and \"sampling plans should be based on consideration of product volume, numbers of particles historically found to be present in comparison to limits, particle size distribution of particles present, and variability of particle counts between units.\" The USP also suggests that the total number of units tested for any given batch may be less than 10 units (for LVP and pooled SVPs) with proper justification. This is consistent with the CGMP requirement for statistical sampling plans (see 21 CFR 211.165)."
+    },
+    {
+     "ref": "Q3.6",
+     "text": "Back to Top"
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q4",
+   "source": "fda-cgmp-qa-laboratory-controls.html",
+   "unit": "Q4",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q4",
+     "text": "Can Total Organic Carbon (TOC) be an acceptable method for detecting residues of contaminants in evaluating cleaning effectiveness?"
+    },
+    {
+     "ref": "Q4.1",
+     "text": "Yes. Since the publication of the inspection guide on cleaning validation in 1993, a number of studies have been published to demonstrate the adequacy of TOC in measuring contaminant residues."
+    },
+    {
+     "ref": "Q4.2",
+     "text": "We think TOC or TC can be an acceptable method for monitoring residues routinely and for cleaning validation. But in order for TOC to be functionally suitable, it should first be established that a substantial amount of the contaminating material(s) is organic and contains carbon that can be oxidized under TOC test conditions. This is not a trivial exercise because we know that some organic compounds cannot be reliably detected using TOC."
+    },
+    {
+     "ref": "Q4.3",
+     "text": "TOC use may be justified for direct surface sample testing as well as indirect (rinse water) sample testing. In either case, because TOC does not identify or distinguish among different compounds containing oxidizable carbon, any detected carbon is to be attributed to the target compound(s) for comparing with the established limit. Thus, a firm should limit background carbon (i.e., carbon from sources other than the contaminant being removed) as much as possible. The established limit, or the amount of residue detected for comparison to the specification, should correct for the target material's composition of carbon. As for any cleaning method, recovery studies are necessary (21 CFR 211.160(b)). If TOC samples are being held for long periods of time before analysis, a firm should verify the impact of sample holding time on accuracy and limit of quantitation."
+    },
+    {
+     "ref": "Q4.4",
+     "text": "Back to Top"
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q5",
+   "source": "fda-cgmp-qa-laboratory-controls.html",
+   "unit": "Q5",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q5",
+     "text": "Would a paramagnetic or laser oxygen analyzer be able to detect all possible contaminants or impurities in a medical gas?"
+    },
+    {
+     "ref": "Q5.1",
+     "text": "No. Although paramagnetic and laser oxygen analyzers are very accurate and reliable when calibrated correctly, these types of analyzers can only detect the presence and measure the strength of oxygen. They are unable to detect contaminants or impurities that may be present, such as hydrocarbons or arsenic compounds. The USP monograph test for oxygen does not include an impurity screen, and other analyzers may need to be used. For example, assays for hydrocarbon impurities are routinely conducted during the oxygen manufacturing process even though the USP does not list hydrocarbons as an impurity. Also, alternative methods may be needed to test high-pressure cylinders for cleaning solution residues."
+    },
+    {
+     "ref": "Q5.2",
+     "text": "Back to Top"
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q6",
+   "source": "fda-cgmp-qa-laboratory-controls.html",
+   "unit": "Q6",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q6",
+     "text": "Can up to 12-month expiration dating be assigned to oral solid and liquid dosage forms repackaged into unit-dose containers based on guidance in the May 2005 draft revision of Compliance Policy Guide Sec. 480.200 Expiration Dating of Unit Dose Repackaged Drugs (CPG 7132b.11)?"
+    },
+    {
+     "ref": "Q6.1",
+     "text": "No. In May 2005, a Notice of Availability of the draft revision of FDA’s Compliance Policy Guide Sec. 480.200 Expiration Dating of Unit-Dose Repackaged Drugs (CPG 7132b.11) was announced in the Federal Register. The draft CPG specifies certain conditions when it may be possible to assign up to 12-month expiration dating to nonsterile solid and liquid oral drug products repackaged into unit-dose containers without conducting new stability studies to support the length of expiration dating on the repackaged products. The draft CPG was prompted by USP standards for assigning up to a 12-month beyond-use date to nonsterile solid and liquid oral dosage forms dispensed in unit-dose containers. (Beyond-use date is USP’s pharmacy dispensing term for specifying a date on a prescription container beyond which a patient should not use the product.) If finalized, FDA’s draft CPG would replace the current version of CPG Sec. 480.200. The current version of CPG Sec. 480.200 was finalized in March 1995 and provides conditions under which FDA will not initiate action for assigning up to 6-month expiration dating for drug products repackaged into unit-dose containers without conducting new stability studies."
+    },
+    {
+     "ref": "Q6.2",
+     "text": "FDA is conducting a stability study of certain commercially repackaged drugs to determine the suitability of the draft revision of CPG Sec. 480.200. Until the stability study is complete and FDA evaluates all comments submitted to the public docket in response to the May 2005 Federal Register Notice of Availability, the Agency does not intend to make a final decision on the draft revision of CPG Sec. 480.200. Consequently, at this time and until FDA announces a final decision on the draft CPG, the current CPG Sec. 480.200, which was finalized in March 1995, is in effect."
+    },
+    {
+     "ref": "Q6.3",
+     "text": "Back to Top"
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q7",
+   "source": "fda-cgmp-qa-laboratory-controls.html",
+   "unit": "Q7",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q7",
+     "text": "Is it ever appropriate to use an unvalidated method to test a drug component or product?"
+    },
+    {
+     "ref": "Q7.1",
+     "text": "The CGMP regulations require the use of validated methods when performing routine testing of raw material, in-process material, and finished products (21 CFR 211.160, 211.165(e), and 211.194) for manufacturing finished drug products. Method validation studies establish proof that a method is suitable for its intended purpose. The purpose is generally to measure a particular material’s conformance to an established specification (see the ICH guidance for industry Q2 (R1) Validation of Analytical Procedures: Text and Methodology). FDA recognizes, however, that test methods developed based on scientifically sound principles (e.g., sufficient accuracy and precision) but that are not fully validated may be suitable for use in certain instances during an investigation of a potential quality problem or defect. For example, investigation of an atypical impurity or possible contaminant of a drug product or any of its components (e.g., oversulfated chondroitin sulfate in heparin) may indicate the need for additional methods beyond routine quality control tests. Such testing may be critical to promptly and adequately evaluate the problem and protect public health. Full evaluation of a method’s robustness and reproducibility may not initially be feasible or appropriate when conducting tests in certain investigations. When a company, for whatever reason, tests drug components or products using an unvalidated method, it is important to recognize the possibility of greater uncertainty in the test results derived from these unvalidated test methods, as compared to validated test methods. Nevertheless, the resulting data may yield important information indicating the need for prompt corrective action. Accordingly, we expect all such test results on drug components or products to be reviewed to assess the need for follow-up action (21 CFR 211.192 and 211.180(e)). References:"
+    },
+    {
+     "ref": "Q7.2",
+     "text": "21 CFR part 210: Current Good Manufacturing Practice in Manufacturing, Processing, Packing, or Holding of Drugs; General",
+     "list_item": true
+    },
+    {
+     "ref": "Q7.3",
+     "text": "21 CFR part 211: Current Good Manufacturing Practice for Finished Pharmaceuticals",
+     "list_item": true
+    },
+    {
+     "ref": "Q7.4",
+     "text": "FDA Guidance for Industry, 2001, ICH Q7 Good Manufacturing Practice Guidance for Active Pharmaceutical Ingredients",
+     "list_item": true
+    },
+    {
+     "ref": "Q7.5",
+     "text": "FDA Guidance for Industry, 1995–1996, ICH Q2 (R1) Validation of Analytical Procedures: Text and Methodology",
+     "list_item": true
+    },
+    {
+     "ref": "Q7.6",
+     "text": "Back to Top"
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q8",
+   "source": "fda-cgmp-qa-laboratory-controls.html",
+   "unit": "Q8",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q8",
+     "text": "Did FDA withdraw the 1987 Guideline on Validation of the Limulus Amebocyte Lysate Test as an End-Product Endotoxin Test for Human and Animal Parenteral Drugs, Biological Products, and Medical Devices?"
+    },
+    {
+     "ref": "Q8.1",
+     "text": "Yes, FDA withdrew the 1987 Guideline. The 1987 Guideline is considered obsolete and does not reflect the Agency’s current thinking on the topic. Date: 7/12/2011"
+    },
+    {
+     "ref": "Q8.2",
+     "text": "Back to Top"
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q9",
+   "source": "fda-cgmp-qa-laboratory-controls.html",
+   "unit": "Q9",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q9",
+     "text": "Where can drug manufacturers find information regarding endotoxin testing?"
+    },
+    {
+     "ref": "Q9.1",
+     "text": "USP publishes endotoxin testing recommendations and acceptance criteria in USP General Chapter <85> Bacterial Endotoxins Test. General Chapter <85> provides methods and calculation of limits for drugs. FDA may, as needed, provide additional guidance to clarify the Agency’s current thinking on use of Limulus Amebocyte Lysate (LAL), recombinant LAL, and other endotoxin testing methods."
+    },
+    {
+     "ref": "Q9.2",
+     "text": "Date 7/12/2011"
+    },
+    {
+     "ref": "Q9.3",
+     "text": "Back to Top"
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q10",
+   "source": "fda-cgmp-qa-laboratory-controls.html",
+   "unit": "Q10",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q10",
+     "text": "Is it acceptable to release non-penicillin finished drug products to market if the products may have been exposed to penicillin, as long as the non-penicillin products are tested and no penicillin residue is found?"
+    },
+    {
+     "ref": "Q10.1",
+     "text": "21 CFR 211.176, Penicillin Contamination, allows marketing of non-penicillin finished drug products if they are tested using the codified method and found not to be contaminated with penicillin. However, it is not acceptable to release the product unless all other applicable CGMP requirements have been met. In some cases, firms inappropriately apply § 211.176 to market products that have not been produced under CGMP. Notably, 21 CFR 211.42(d) requires that manufacturing operations for penicillin drug products be performed in facilities separate from those used for non-penicillin human drug products. Similarly, 21 CFR 211.46(d) requires that air-handling systems for penicillin and non-penicillin drug products be completely separate. For example, if a non-penicillin product is made in a facility that shares equipment or an air-handling system with a penicillin production area (in violation of § 211.46(d)), the non-penicillin product cannot be made CGMP-compliant through testing alone. However, if a door is accidentally left open between a penicillin-dedicated area and other separate production areas, resulting in possible exposure of the other areas to penicillin, testing those other products for penicillin could justify their release for distribution. However, as per 21 CFR 211.165, all sampling plans and acceptance criteria used for testing and release of the non-penicillin product, including any testing for penicillin contamination, must be adequate to ensure the tested product meets all of its specifications."
+    },
+    {
+     "ref": "Q10.2",
+     "text": "Back to Top"
+    }
+   ]
+  }
+ ]
+}

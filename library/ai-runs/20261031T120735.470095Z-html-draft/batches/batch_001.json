@@ -1,0 +1,510 @@
+{
+ "instructions": "You read an FDA web page (a Q&A page on CGMP, a Guide to Inspections, an Inspection Technical Guide, a Compliance\nPolicy Guide or an alert to manufacturers) and list what it expects of a drug manufacturer. Each unit is given as\nits paragraphs, each with its reference (\"Q4.2\" on a Q&A page: question 4, answer paragraph 2; \"¶17\" elsewhere) and\nits exact text; \"context\" entries are headings or labels (not citable); \"list_item\" marks a list item, whose\nlead-in is the paragraph ending in \":\" above it. Your output is checked by software against that exact text and by\nindependent reviewers, so precision matters more than wording.\n\nList each separate expectation as its own item, so that together your items cover every expectation in the unit.\nOne expectation is one thing a manufacturer must, should or may do, with all its conditions, numbers and\nqualifiers; do not split one expectation across items. What counts:\n- what FDA says a firm must, should or may do (\"FDA expects firms to have written procedures ...\", \"manufacturers\n  should ...\", \"are required by the CGMP regulations to ...\");\n- in a Guide to Inspections or Inspection Technical Guide, what the investigator is told to check (\"Determine\n  whether the firm has validated ...\", \"Check that ...\", \"Review the ...\"): write the practice the firm is expected\n  to have (\"Validate ...\"), not the investigator's task. When the text only says what to look at (\"Examine the\n  design of equipment\") and states no expectation, write the expectation the text itself gives in the same\n  paragraph; if it gives none, put the sentence in not_applicable (\"inspection step without a stated expectation\").\nFor each item:\n- statement: the expectation in your own plain English words, as one checklist item a site could be audited\n  against. Do not copy more than a few words in a row. Keep every condition (\"where\", \"if\", \"unless\", \"when\",\n  \"except\") and every number. Do not add anything the text does not say. The statement itself must carry every\n  condition or qualifier of the lead-in above a list item. The statement is shown to customers: never cite a\n  regulation, section, question or paragraph number in it (\"21 CFR 211.42(d)\", \"Q4\", \"see above\"); say what is\n  required instead.\n- quote: the exact span of ONE paragraph's text that states the whole expectation, copied character for character\n  (matched against the page text by software; do not fix typos or change punctuation, keep footnote marks as\n  printed). A quote may continue into the paragraphs after it in the same unit, in order (e.g. a lead-in and its\n  list items), but must start in the cited paragraph.\n- clause_number: the reference of the paragraph the quote starts in, exactly as given (\"Q4.2\", \"¶17\").\n- strength: \"mandatory\" where the text states a legal requirement (shall / must / is required / may not, \"the\n  CGMP regulations require\"); \"recommended\" for should, \"FDA expects\", \"FDA recommends\", and for an inspection\n  point; \"optional\" for may / is acceptable. A list item without such a word takes its lead-in's.\n- plant_types: from OSD, LIQ, SEMI, INJ, API (INJ = sterile injectables); the plant scope given unless the text\n  narrows it. Text limited to non-sterile products does not apply to INJ; text limited to sterile products\n  (parenterals, aseptic processing, terminal sterilization) applies only to INJ (and API where in scope).\n- numbers: every number, limit, frequency or period in the quote, as written (not regulation references).\n- condition: the condition or trigger in a few words, \"\" if none. This field only repeats what the statement\n  already says.\n- topic: the sub-topic id from TOPICS the expectation belongs to.\n\nDo not narrow or widen a term. Where the text gives examples (\"such as ...\"), keep them as examples; where it\ngives a closed list, keep it closed.\n\nSentences that state no expectation for the manufacturer go in not_applicable: the question itself, background and\nhistory, definitions, descriptions of what happened at a firm, FDA's own actions or enforcement, statements of\npurpose or scope, references, an inspection step without a stated expectation. One entry per SENTENCE, each with\nthe paragraph reference, the sentence's first 8 or more words copied exactly, and the reason in a few words. A\nsentence with \"should\", \"must\", \"FDA expects\" or an instruction to the investigator needs an item or a\nnot_applicable entry.\n\nWrite the answers file named in your task: {\"answers\": [one object per unit with \"unit\" set to the unit's \"id\"\nexactly, \"items\" and \"not_applicable\"]}.\n",
+ "topics": [
+  "QS.PQS",
+  "QS.MGMT",
+  "QS.QRM",
+  "QS.PQR",
+  "QS.CHANGE",
+  "QS.DEV",
+  "QS.CAPA",
+  "PER.ORG",
+  "PER.KEY",
+  "PER.TRAIN",
+  "PER.HYG",
+  "PER.GOWN",
+  "PREM.DESIGN",
+  "PREM.PROD",
+  "PREM.STORE",
+  "PREM.QC",
+  "PREM.ANC",
+  "EQ.DESIGN",
+  "EQ.MAINT",
+  "EQ.CLEAN",
+  "EQ.CAL",
+  "DOC.SYS",
+  "DOC.SPEC",
+  "DOC.MFR",
+  "DOC.BMR",
+  "DOC.SOP",
+  "DOC.RET",
+  "MAT.SUPP",
+  "MAT.RECV",
+  "MAT.SAMP",
+  "MAT.STATUS",
+  "MAT.PACK",
+  "MAT.REJ",
+  "PROD.GEN",
+  "PROD.XCONT",
+  "PROD.IPC",
+  "PROD.YIELD",
+  "PROD.PACK",
+  "PROD.REWORK",
+  "QC.GEN",
+  "QC.SAMP",
+  "QC.TEST",
+  "QC.OOS",
+  "QC.STAB",
+  "QC.REF",
+  "QC.MICRO",
+  "VAL.PLAN",
+  "VAL.QUAL",
+  "VAL.PROC",
+  "VAL.CLEAN",
+  "VAL.METH",
+  "CSV.VAL",
+  "CSV.ACCESS",
+  "CSV.AUDIT",
+  "CSV.ESIG",
+  "CSV.DI",
+  "UTIL.WATER",
+  "UTIL.HVAC",
+  "UTIL.GAS",
+  "CCS.STRAT",
+  "CCS.EM",
+  "CCS.CLEAN",
+  "CCS.PEST",
+  "STER.GRADE",
+  "STER.ASEPT",
+  "STER.APS",
+  "STER.STERIL",
+  "STER.FILT",
+  "STER.CCI",
+  "STER.LYO",
+  "API.START",
+  "API.PROC",
+  "API.IMP",
+  "API.SOLV",
+  "OUT.CONTRACT",
+  "OUT.AGREE",
+  "CMP.COMPL",
+  "CMP.RECALL",
+  "CMP.REPORT",
+  "SI.PROG",
+  "SI.TEAM",
+  "SI.REPORT",
+  "SI.FOLLOW",
+  "DIST.STORE",
+  "DIST.TRANS",
+  "DIST.RETURN",
+  "REL.QP",
+  "REL.REVIEW"
+ ],
+ "schema": {
+  "type": "object",
+  "required": [
+   "unit",
+   "items",
+   "not_applicable"
+  ],
+  "properties": {
+   "unit": {
+    "type": "string"
+   },
+   "items": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "statement",
+      "quote",
+      "clause_number",
+      "strength",
+      "plant_types",
+      "numbers",
+      "condition",
+      "topic"
+     ],
+     "properties": {
+      "statement": {
+       "type": "string"
+      },
+      "quote": {
+       "type": "string"
+      },
+      "clause_number": {
+       "type": "string"
+      },
+      "strength": {
+       "enum": [
+        "mandatory",
+        "recommended",
+        "optional"
+       ]
+      },
+      "plant_types": {
+       "type": "array",
+       "items": {
+        "enum": [
+         "OSD",
+         "LIQ",
+         "SEMI",
+         "INJ",
+         "API"
+        ]
+       }
+      },
+      "numbers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "condition": {
+       "type": "string"
+      },
+      "topic": {
+       "type": "string"
+      }
+     }
+    }
+   },
+   "not_applicable": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "clause_number",
+      "text",
+      "reason"
+     ],
+     "properties": {
+      "clause_number": {
+       "type": "string"
+      },
+      "text": {
+       "type": "string"
+      },
+      "reason": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  }
+ },
+ "units": [
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q1",
+   "source": "fda-cgmp-qa-production-process-controls.html",
+   "unit": "Q1",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q1",
+     "text": "Do the CGMP regulations require a firm to retain the equipment status identification labels with the batch record or other file? Assuming each major piece of equipment has a unique cleaning and use log that is adequately retained, is it acceptable to discard these quick reference equipment labels?"
+    },
+    {
+     "ref": "Q1.1",
+     "text": "The CGMP regulations for finished pharmaceuticals require the retention of cleaning and use logs for non-dedicated equipment, but no similar requirement exists for retaining what are intended to be quick reference or temporary status labels. Examples of these kinds of status labels include mixing lot ###; clean, ready for use as of d/m/y; and not clean. We see no value in the retention of such labels in addition to the required equipment log or batch record documentation. The labels serve a valuable, temporary purpose of positively identifying the current status of equipment and the material under process. Any status label should be correct, legible, readily visible, and associated with the correct piece of equipment. The information on the temporary status label should correspond with the information recorded in the equipment cleaning and use log, or the previous batch record for nondedicated equipment."
+    },
+    {
+     "ref": "Q1.2",
+     "text": "Labels are merely one way to display temporary status information about a piece of equipment. It is considered acceptable practice to display temporary equipment status information on dry-erase boards or chalkboards. And it would be appropriate for an FDA investigator to verify that the information on a temporary status label is consistent with the log."
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q2",
+   "source": "fda-cgmp-qa-production-process-controls.html",
+   "unit": "Q2",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q2",
+     "text": "Can containers, closures, and packaging materials be sampled for receipt examination in the warehouse?"
+    },
+    {
+     "ref": "Q2.1",
+     "text": "Yes. Generally, we believe that sampling in a typical drug manufacturing facility warehouse would not represent a risk to the container or closure or affect the integrity of the sample results. But whether the act of collecting a sample in the warehouse violates the CGMP requirement that containers \"be opened, sampled, and sealed in a manner designed to prevent contamination of their contents...\" will depend on the purported quality characteristics of the material under sample and the warehouse environment. For containers or closures purporting to be sterile or depyrogenated, sampling should be under conditions equivalent to the purported quality of the material: a warehouse environment would not suffice (see 21 CFR 211.94 and 211.113(b)). This is to preserve the fitness for use of the remaining containers or closures as well as to ensure sample integrity, if they are to be examined for microbial contamination. At a minimum, any sampling should be performed in a manner to limit exposure to the environment during and after the time samples are removed (i.e., wiping outside surfaces, limiting time that the original package is open, and properly resealing the original package). Well-written and followed procedures are the critical elements."
+    },
+    {
+     "ref": "Q2.2",
+     "text": "Note that the CGMP regulations at 21 CFR 211.84 permit a manufacturer to release for use a shipment of containers or closures based on the supplier's certificate of analysis and a visual identification of the containers or closures. Once a supplier's reliability has been established by validation of their test results, a manufacturer could perform the visual examination entirely in the warehouse."
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q3",
+   "source": "fda-cgmp-qa-production-process-controls.html",
+   "unit": "Q3",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q3",
+     "text": "A firm has multiple media fill failures. They conducted their media fills using TSB (tryptic soy broth) prepared by filtration through a 0.2 micron sterilizing filter. Investigation did not show any obvious causes. What could be the source of contamination?"
+    },
+    {
+     "ref": "Q3.1",
+     "text": "A firm had multiple media fill failures. The media fill runs, simulating the filling process during production, were conducted inside an isolator. The firm used TSB (nonsterile bulk powder) from a commercial source and prepared the sterile solution by filtering through a 0.2 micron sterilizing filter. An investigation was launched to trace the source of contamination. The investigation was not successful in isolating or recovering the contaminating organism using conventional microbiological techniques, including the use of selective (e.g., blood agar) and nonselective (e.g., TSB and tryptic soy agar) media, and examination under a microscope. The contaminant was eventually identified to be Acholeplasma laidlawii by using 16S rRNA gene sequence. The firm subsequently conducted studies to confirm the presence of Acholeplasma laidlawii in the lot of TSB used. Therefore, it was not a contaminant from the process, but from the media source."
+    },
+    {
+     "ref": "Q3.2",
+     "text": "Acholeplasma laidlawii belongs to an order of Mycoplasma. Mycoplasma contain only a cell membrane and have no cell wall. They are not susceptible to beta-lactams and do not take up Gram stain. Individual organisms are pleomorphic (assume various shapes from cocci to rods to filaments), varying in size from 0.2 to 0.3 microns or smaller. It has been shown that Acholeplasma laidlawii is capable of penetrating a 0.2 micron filter, but is retained by a 0.1 micron filter (see Sundaram, Eisenhuth, et al. 1999). Acholeplasma laidlawii is known to be associated with animal-derived material, and microbiological media is often from animal sources. Environmental monitoring of Mycoplasma requires selective media (PPLO broth or agar)."
+    },
+    {
+     "ref": "Q3.3",
+     "text": "Resolution:"
+    },
+    {
+     "ref": "Q3.4",
+     "text": "For now, this firm has decided to filter prepared TSB, for use in media fills, through a 0.1 micron filter (note: we do not expect or require firms to routinely use 0.1 micron filters for media preparation). In the future, the firm will use sterile, irradiated TSB when it becomes available from a commercial supplier. (Firm's autoclave is too small to permit processing of TSB for media fills, so this was not a viable option.) The firm will continue monitoring for Mycoplasma and has revalidated their cleaning procedure to verify its removal. In this case, a thorough investigation by the firm led to a determination of the cause of the failure and an appropriate corrective action."
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q4",
+   "source": "fda-cgmp-qa-production-process-controls.html",
+   "unit": "Q4",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q4",
+     "text": "Some products, such as transdermal patches, are made using manufacturing processes with higher in-process material reject rates than for other products and processes. Is this okay?"
+    },
+    {
+     "ref": "Q4.1",
+     "text": "Maybe. It depends on the cause and consistency of the reject rate. Many transdermal patch manufacturing processes produce more waste (i.e., lower yield from theoretical) than other pharmaceutical processes. This should not of itself be a concern. The waste is usually due to the cumulative effect of roll splicing, line start-ups and stoppages, roll-stock changes, and perhaps higher rates of in-process sampling. This is most pronounced for processes involving lamination of rolls of various component layers. Roll-stock defects detected during adhesive coating of the roll, for example, can often only be rejected from the roll after final fabrication/lamination of the entire patch, which contributes to the final process waste stream."
+    },
+    {
+     "ref": "Q4.2",
+     "text": "We expect that validated and well-controlled processes will achieve fairly consistent waste amounts batch-to-batch. Waste in excess of the normal operating rates may need (see 21 CFR 21.192) to be evaluated to determine cause (e.g., due to increase in sampling or higher than normal component defects...or both) and the consequences on product quality assessed. We've seen a small number of cases where unusually high intra-batch rejects/losses were due to excessive component quality variability and poorly developed processes."
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q5",
+   "source": "fda-cgmp-qa-production-process-controls.html",
+   "unit": "Q5",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q5",
+     "text": "Does CGMP regulations require three successful process validation batches before a new active pharmaceutical ingredient (API) or a finished drug product is released for distribution?"
+    },
+    {
+     "ref": "Q5.1",
+     "text": "No. Neither the CGMP regulations nor FDA policy specifies a minimum number of batches to validate a manufacturing process. The current FDA guidance on APIs (see guidance for industry ICH Q7 for APIs) also does not specify a specific number of batches for process validation."
+    },
+    {
+     "ref": "Q5.2",
+     "text": "FDA recognizes that validating a manufacturing process, or a change to a process, cannot be reduced to so simplistic a formula as the completion of three successful full-scale batches. The Agency acknowledges that the idea of three validation batches became prevalent in part because of language used in past Agency guidance. FDA's process validation guidance now recommends a product lifecycle approach. The emphasis for demonstrating validated processes is placed on the manufacturer’s process design and development studies in addition to its demonstration of reproducibility at scale, a goal that has always been expected."
+    },
+    {
+     "ref": "Q5.3",
+     "text": "However, a minimum number of conformance (a.k.a. validation) batches necessary to validate the manufacturing processes is not specified. The manufacturer is expected to have a sound rationale for its choices in this regard. The Agency encourages the use of science-based approaches to process validation."
+    },
+    {
+     "ref": "Q5.4",
+     "text": "In March 2004, FDA revised the Compliance Policy Guide (CPG) Sec. 490.100 on Process Validation Requirements for Drug Products and Active Pharmaceutical Ingredients Subject to Pre-Market Approval. The CPG describes the concept that, after having identified and establishing control of all critical sources of variability, conformance batches are prepared to demonstrate that under normal conditions and operating parameters, the process results in the production of an acceptable product. Successful completion of the initial conformance batches would normally be expected before commercial distribution begins, but some possible exceptions are described in the CPG. For example, although the CPG does not specifically mention concurrent validation for an API in short supply, the Agency would consider the use of concurrent validation when it is necessary to address a true short-supply situation, and if the concurrent validation study conforms to the conditions identified in the CPG (see paragraph 4, a-c)."
+    },
+    {
+     "ref": "Q5.5",
+     "text": "The conditions outlined in the CPG include expanded testing for each batch intended to address a short-supply situation. Expanded testing conducted according to an established validation protocol could provide added assurance that the batch meets all established and appropriate criteria before the API is used in the finished drug product. Additionally, confidence in the API manufacturing process may be gained by enhanced sampling (larger sample size representative of the batch) and perhaps the testing of additional attributes. Validated analytical methods are needed for testing every batch, including validation batches. The Agency would also expect the manufacturer to use a validation protocol that includes a review and final report after multiple batches are completed, even though the earlier batches may have been distributed or used in the finished drug product."
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q6",
+   "source": "fda-cgmp-qa-production-process-controls.html",
+   "unit": "Q6",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q6",
+     "text": "Is it generally acceptable from a CGMP perspective for a manufacturer of sterile drug products produced by aseptic processing to rely solely on ISO 14644-1 and ISO 14644-2 when qualifying its facility?"
+    },
+    {
+     "ref": "Q6.1",
+     "text": "No. It is generally not acceptable from a CGMP perspective for a manufacturer of sterile drug products produced by aseptic processing to rely solely on ISO [International Organization for Standardization] 14644-1 Part 1: Classification of Air Cleanliness (14644-1) and ISO 14644-2 Part 2: Specifications for Testing and Monitoring to Prove Compliance with ISO 14644-1 (14644-2) when qualifying its facility. Rather, a manufacturer of sterile drug products produced by aseptic processing should use these ISO standards in combination with applicable FDA regulations, guidance, and other relevant references to ensure a pharmaceutical facility is under an appropriate state of control. Consequently, appropriate measures augmenting ISO’s recommendations (e.g., with microbiological data) would likely be expected for a firm to meet or exceed CGMP in a pharmaceutical facility."
+    },
+    {
+     "ref": "Q6.2",
+     "text": "Please understand that 14644-1 and 14644-2 have superseded Federal Standard 209E, Airborne Particulate Cleanliness Classes in Cleanrooms and Clean Zones (Federal Standard 209E). In November 2001, the U.S. General Services Administration canceled Federal Standard 209E."
+    },
+    {
+     "ref": "Q6.3",
+     "text": "Although 14644-1 and 14644-2 are not FDA regulations or FDA guidance, the Agency believes that they are useful in facilitating the international harmonization of industrial air classification for nonviable particle cleanliness in multiple industries (e.g., computer, aerospace, pharmaceutical). As such, FDA adopted these particle cleanliness ratings in the 2004 guidance for industry Sterile Drug Products Produced by Aseptic Processing–Current Good Manufacturing Practice. However, due to the unique aspects of producing sterile drug products by aseptic processing (e.g., microbiological issues), an aseptic processing manufacturer should not rely solely on 14644-1 and 14644-2 when qualifying its facility."
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q7",
+   "source": "fda-cgmp-qa-production-process-controls.html",
+   "unit": "Q7",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q7",
+     "text": "In 2004, FDA issued a guidance entitled PAT - A Framework for Innovative Pharmaceutical Development, Manufacturing, and Quality Assurance that encouraged industry to modernize manufacturing through enhancements in process control. How can I implement PAT (process analytical technology)?"
+    },
+    {
+     "ref": "Q7.1",
+     "text": "The objective of FDA's PAT program is to facilitate adoption of PAT. In our 2004 guidance, we discuss FDA's collaborative approach to promote industry uptake of new and beneficial technologies that modernize manufacturing operations and enhance process control. FDA recognizes that firms should be encouraged to promptly implement new systems that improve assurance of quality and process efficiency. Accordingly, our approach to PAT implementation is risk based and includes multiple options:"
+    },
+    {
+     "ref": "Q7.2",
+     "text": "(1) PAT can be implemented under the facility's own quality system. CGMP inspections by a PAT-certified investigator can precede or follow PAT implementation."
+    },
+    {
+     "ref": "Q7.3",
+     "text": "(2) As another quality system implementation option, FDA invites manufacturers to request a preoperational review of their PAT manufacturing facility and process (see ORA Field Management Directive No.135)."
+    },
+    {
+     "ref": "Q7.4",
+     "text": "(3) A supplement (Changes Being Effected (CBE), CBE-30, or Prior Approval Supplement (PAS)) can be submitted to the Agency prior to implementation, and, if necessary, an inspection can be performed by a PAT-certified investigator before implementation. This option should be used, for example, when an end product testing specification established in the application will be changed."
+    },
+    {
+     "ref": "Q7.5",
+     "text": "(4) A comparability protocol can be submitted to the Agency outlining PAT research, validation and implementation strategies, and time lines. Following collaborative review of the general strategy outlined in the comparability protocol, the regulatory pathway can include implementation under the facility's own quality system, a preoperational review, CGMP inspections (either before or after PAT implementation), a combination of these, or another flexible approach."
+    },
+    {
+     "ref": "Q7.6",
+     "text": "Manufacturers should evaluate and discuss with the Agency the most appropriate option for PAT implementation (see questions 8 and 9, below)."
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q8",
+   "source": "fda-cgmp-qa-production-process-controls.html",
+   "unit": "Q8",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q8",
+     "text": "How do I contact CDER with questions about PAT?"
+    },
+    {
+     "ref": "Q8.1",
+     "text": "Manufacturers should contact the Office of Pharmaceutical Quality and/or the appropriate review division in CDER to discuss applicability of PAT to CDER-regulated products."
+    },
+    {
+     "ref": "Q8.2",
+     "text": "CDER Key Officials"
+    },
+    {
+     "ref": "Q8.3",
+     "text": "Date Revised: 6/18/2015"
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q9",
+   "source": "fda-cgmp-qa-production-process-controls.html",
+   "unit": "Q9",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q9",
+     "text": "How do I contact CBER with questions about PAT?"
+    },
+    {
+     "ref": "Q9.1",
+     "text": "Manufacturers should contact the appropriate review division in CBER to discuss applicability of PAT to CBER-regulated products."
+    },
+    {
+     "ref": "Q9.2",
+     "text": "CBER Key Staff Directory"
+    },
+    {
+     "ref": "Q9.3",
+     "text": "Date Revised: 9/16/2013"
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q10",
+   "source": "fda-cgmp-qa-production-process-controls.html",
+   "unit": "Q10",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q10",
+     "text": "What is the acceptable media fill frequency in relation to the number of shifts? Normally, media fills should be repeated twice per shift per line per year. Is the same frequency expected of a process conducted in an isolator?"
+    },
+    {
+     "ref": "Q10.1",
+     "text": "A firm's justification for the frequency of media fills in relation to shifts should be risk based, depending on the type of operations and the media fill study design. For closed, highly automated systems run on multiple shifts, a firm with a rigorous media fill design may be justified to conduct a lower number of total media fill runs. Such a program can be appropriate provided that it still ensures performance of media fills for each aseptic processing line at least semiannually. The 2004 guidance for industry on Sterile Drug Products Produced by Aseptic Processing states that \"[A]ctivities and interventions representative of each shift, and shift changeover, should be incorporated into the design of the semi-annual qualification program.\" In addition, the EU Annex 1, Manufacture of Sterile Medicinal Products, states that \"Normally, process simulation tests should be repeated twice a year per shift and process.\""
+    },
+    {
+     "ref": "Q10.2",
+     "text": "Certain modern manufacturing designs (isolators and closed vial filling) afford isolation of the aseptic process from microbiological contamination risks (e.g., operators and surrounding room environment) throughout processing. For such closed systems,1 if the design of the processing equipment is robust and the extent of manual manipulation in the manufacturing process is minimized, a firm can consider this information in determining its media fill validation approach. For example, it is expected that a conventional aseptic processing line that operates on two shifts be evaluated twice per year per shift and culminate in four media fills. However, for aseptic filling conducted in an isolator over two shifts, it may be justified to perform fewer than four media fill runs per year, while still evaluating the line semiannually to ensure a continued state of aseptic process control. This lower total number of media fill runs would be based on sound risk rationale and would be subject to reevaluation if contamination issues (e.g., product nonsterility, media fill failure, any problematic environmental trends) occur."
+    },
+    {
+     "ref": "Q10.3",
+     "text": "l This does not apply to RABS (restricted access barrier systems)."
+    }
+   ]
+  }
+ ]
+}

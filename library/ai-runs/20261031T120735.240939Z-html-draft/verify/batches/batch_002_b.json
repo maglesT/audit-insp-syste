@@ -1,0 +1,564 @@
+{
+ "role": "b",
+ "instructions": "You are a second, independent auditor. Check one checklist item against the FDA web page paragraph it claims to come from. You get\nthe unit's paragraphs (reference and exact text of the page; \"context\" entries are headings) and the item. Start from the TEXT:\nread the cited paragraph, the paragraphs its quote runs into, and its lead-in fully, then compare the item.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the lead-in above a list\nitem (the paragraph ending \":\" above it). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph expects what the statement asks for (an instruction\n  to the investigator, \"Determine whether the firm validated ...\", expects the firm to have that practice), the statement\n  adds nothing and omits nothing of that obligation, the strength (a legal requirement: shall/must/required = mandatory;\n  should, FDA expects/recommends, an inspection point = recommended; may/acceptable = optional; a list item takes\n  its lead-in's) matches, and the text applies to every listed plant\n  type (INJ = sterile injectables: text limited to non-sterile products does not apply to\n  INJ; text limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+ "units": [
+  {
+   "unit": "Q2",
+   "paragraphs": [
+    {
+     "ref": "Q2",
+     "text": "What are the penicillin drugs?"
+    },
+    {
+     "ref": "Q2.1",
+     "text": "The Manual of Clinical Microbiology, 11th edition, identifies penicillin drugs as follows:"
+    },
+    {
+     "ref": "Q2.2",
+     "text": "Natural"
+    },
+    {
+     "ref": "Q2.3",
+     "text": "Benzylpenicillin (penicillin G)*",
+     "list_item": true
+    },
+    {
+     "ref": "Q2.4",
+     "text": "Phenoxymethyl penicillin (penicillin V)*",
+     "list_item": true
+    },
+    {
+     "ref": "Q2.5",
+     "text": "Semisynthetic"
+    },
+    {
+     "ref": "Q2.6",
+     "text": "Penicillinase resistant:"
+    },
+    {
+     "ref": "Q2.7",
+     "text": "Cloxacillin*",
+     "list_item": true
+    },
+    {
+     "ref": "Q2.8",
+     "text": "Dicloxacillin*",
+     "list_item": true
+    },
+    {
+     "ref": "Q2.9",
+     "text": "Nafcillin",
+     "list_item": true
+    },
+    {
+     "ref": "Q2.10",
+     "text": "Oxacillin",
+     "list_item": true
+    },
+    {
+     "ref": "Q2.11",
+     "text": "Temocillin**",
+     "list_item": true
+    },
+    {
+     "ref": "Q2.12",
+     "text": "Extended spectrum:"
+    },
+    {
+     "ref": "Q2.13",
+     "text": "Aminopenicillins",
+     "list_item": true
+    },
+    {
+     "ref": "Q2.14",
+     "text": "Amoxicillin*",
+     "list_item": true
+    },
+    {
+     "ref": "Q2.15",
+     "text": "Ampicillin*",
+     "list_item": true
+    },
+    {
+     "ref": "Q2.16",
+     "text": "Mecillinam**",
+     "list_item": true
+    },
+    {
+     "ref": "Q2.17",
+     "text": "Carboxypenicillin",
+     "list_item": true
+    },
+    {
+     "ref": "Q2.18",
+     "text": "Ticarcillin*",
+     "list_item": true
+    },
+    {
+     "ref": "Q2.19",
+     "text": "Ureidopenicillin",
+     "list_item": true
+    },
+    {
+     "ref": "Q2.20",
+     "text": "Piperacillin",
+     "list_item": true
+    },
+    {
+     "ref": "Q2.21",
+     "text": "*Approved for veterinary use"
+    },
+    {
+     "ref": "Q2.22",
+     "text": "**Not approved in the United States"
+    },
+    {
+     "ref": "Q2.23",
+     "text": "Please be aware that penicillin trade names may vary by region and country. Manufacturers, including repackers, are responsible for knowing whether their drug is penicillin. FDA’s Approved Drug Products with Therapeutic Equivalence Evaluations (Orange Book) or Drugs@FDA, both of which are located on FDA’s Web site, enable searching by trade name (i.e., proprietary name) and by active ingredient name (i.e., generic or non-proprietary name)."
+    }
+   ]
+  },
+  {
+   "unit": "Q4",
+   "paragraphs": [
+    {
+     "ref": "Q4",
+     "text": "Are there special manufacturing requirements for penicillin drugs?"
+    },
+    {
+     "ref": "Q4.1",
+     "text": "Yes, all penicillin finished pharmaceutical manufacturers, including repackers, are required by the CGMP regulations to establish a comprehensive control strategy designed to prevent cross-contamination of other drugs with penicillin. These requirements include:"
+    },
+    {
+     "ref": "Q4.2",
+     "text": "21 CFR 211.42(d): Separation of facility and equipment",
+     "list_item": true
+    },
+    {
+     "ref": "Q4.3",
+     "text": "21 CFR 211.46(d): Separate air handling systems (HVAC)",
+     "list_item": true
+    },
+    {
+     "ref": "Q4.4",
+     "text": "21 CFR 211.176: Test for traces of penicillin where possible exposure exists.",
+     "list_item": true
+    },
+    {
+     "ref": "Q4.5",
+     "text": "Penicillin active pharmaceutical ingredients (APIs) are also required to be manufactured under CGMP in accordance with section 501(a)(2)(B) of the Federal Food, Drug, and Cosmetic Act. FDA has published internationally harmonized guidance on the manufacture of APIs; see ICH guidance for industry, Q7A Good Manufacturing Practice Guidance for Active Pharmaceutical Ingredients. Chapter 4, section 4.4 of this guidance describes actions API manufacturers, including those that manufacture or package APIs or penicillin intermediates, should follow to ensure such material is contained and does not contaminate other drugs."
+    }
+   ]
+  },
+  {
+   "unit": "Q8",
+   "paragraphs": [
+    {
+     "ref": "Q8",
+     "text": "What is FDA’s expectation for preventing contamination of drug products with halogenated anisole compounds?"
+    },
+    {
+     "ref": "Q8.1",
+     "text": "FDA recommends that manufacturers and distributors take precautions to prevent the use of wood products treated with or exposed to a halogenated phenolic preservative anywhere in the supply chain. This includes all facilities that manufacture, hold, or distribute drug products, components, or packaging materials. We recommend that manufacturers not store drug products, components, or packaging materials near wood or wood-derived storage materials unless there is assurance that the wood material has not been treated with a halogenated phenolic preservative."
+    },
+    {
+     "ref": "Q8.2",
+     "text": "FDA further recommends that manufacturers establish agreements and request certification from suppliers to provide assurance that halogenated phenolic preservatives are not present. Manufacturers should also be vigilant to the characteristic odor of the offending compounds so they can intervene before products are contaminated or further distributed."
+    }
+   ]
+  },
+  {
+   "unit": "Q10",
+   "paragraphs": [
+    {
+     "ref": "Q10",
+     "text": "Can contamination of drug products with halogenated anisole compounds be detected?"
+    },
+    {
+     "ref": "Q10.1",
+     "text": "Although methods for detection exist and might be practical for periodic screening, FDA expects that manufacturers prevent such contamination through adherence to CGMP. A CGMP-compliant quality system will ensure that assurances are obtained from suppliers and that measures are taken to prevent exposure to problematic compounds. Manufacturers of finished pharmaceuticals are reminded that the CGMP regulations at 21 CFR 211.56(c) require written procedures for sanitation designed to prevent the contamination of equipment, components, drug product containers, closures, packaging, labeling materials, and drug products. Analogous recommendations for manufacturers of active pharmaceutical ingredients are included in internationally harmonized ICH guidance for industry Q7 Good Manufacturing Guidance for Active Pharmaceutical Ingredients (section 4.7)."
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "fda-cgmp-qa-buildings-facilities.html:Q2#1",
+   "unit": "Q2",
+   "hash": "d37949115a6a1f6b",
+   "item": {
+    "statement": "Know whether each drug the firm makes or repackages is a penicillin drug (trade names can differ by region and country).",
+    "quote": "Manufacturers, including repackers, are responsible for knowing whether their drug is penicillin.",
+    "clause_number": "Q2.23",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-buildings-facilities.html:Q4#1",
+   "unit": "Q4",
+   "hash": "53efa9554a3c07d3",
+   "item": {
+    "statement": "Penicillin finished-drug manufacturers, including repackers, establish a comprehensive control strategy designed to prevent other drugs being cross-contaminated with penicillin.",
+    "quote": "all penicillin finished pharmaceutical manufacturers, including repackers, are required by the CGMP regulations to establish a comprehensive control strategy designed to prevent cross-contamination of other drugs with penicillin",
+    "clause_number": "Q4.1",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "penicillin finished drug manufacture or repacking"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-buildings-facilities.html:Q4#2",
+   "unit": "Q4",
+   "hash": "0b059d1372b790b5",
+   "item": {
+    "statement": "As part of the penicillin cross-contamination control strategy of a finished-drug manufacturer or repacker, keep penicillin facilities and equipment separate.",
+    "quote": "21 CFR 211.42(d): Separation of facility and equipment",
+    "clause_number": "Q4.2",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "penicillin finished drug manufacture or repacking"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-buildings-facilities.html:Q4#3",
+   "unit": "Q4",
+   "hash": "c4ef446d97116af6",
+   "item": {
+    "statement": "As part of the penicillin cross-contamination control strategy of a finished-drug manufacturer or repacker, use separate air handling (HVAC) systems for penicillin.",
+    "quote": "21 CFR 211.46(d): Separate air handling systems (HVAC)",
+    "clause_number": "Q4.3",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "penicillin finished drug manufacture or repacking"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-buildings-facilities.html:Q4#4",
+   "unit": "Q4",
+   "hash": "0ec05b5702554c71",
+   "item": {
+    "statement": "As part of the penicillin cross-contamination control strategy of a finished-drug manufacturer or repacker, test products for traces of penicillin where possible exposure exists.",
+    "quote": "21 CFR 211.176: Test for traces of penicillin where possible exposure exists.",
+    "clause_number": "Q4.4",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "where possible penicillin exposure exists"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-buildings-facilities.html:Q4#5",
+   "unit": "Q4",
+   "hash": "9a6cbcd2ed84bf0f",
+   "item": {
+    "statement": "Manufacture penicillin active pharmaceutical ingredients under CGMP.",
+    "quote": "Penicillin active pharmaceutical ingredients (APIs) are also required to be manufactured under CGMP",
+    "clause_number": "Q4.5",
+    "strength": "mandatory",
+    "plant_types": [
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-buildings-facilities.html:Q4#6",
+   "unit": "Q4",
+   "hash": "1093244afc10f51f",
+   "item": {
+    "statement": "API manufacturers, including those that make or package APIs or penicillin intermediates, take actions to keep penicillin material contained so it does not contaminate other drugs.",
+    "quote": "API manufacturers, including those that manufacture or package APIs or penicillin intermediates, should follow to ensure such material is contained and does not contaminate other drugs",
+    "clause_number": "Q4.5",
+    "strength": "recommended",
+    "plant_types": [
+     "API"
+    ],
+    "condition": "penicillin APIs or intermediates"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-buildings-facilities.html:Q8#1",
+   "unit": "Q8",
+   "hash": "a033bc7320198b5c",
+   "item": {
+    "statement": "Take precautions to prevent the use of wood products treated with or exposed to a halogenated phenolic preservative anywhere in the supply chain, including in every facility that makes, holds or distributes drug products, components or packaging materials.",
+    "quote": "FDA recommends that manufacturers and distributors take precautions to prevent the use of wood products treated with or exposed to a halogenated phenolic preservative anywhere in the supply chain. This includes all facilities that manufacture, hold, or distribute drug products, components, or packaging materials.",
+    "clause_number": "Q8.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-buildings-facilities.html:Q8#2",
+   "unit": "Q8",
+   "hash": "2d45e94aca3ccc31",
+   "item": {
+    "statement": "Do not store drug products, components or packaging materials near wood or wood-derived storage materials unless there is assurance that the wood has not been treated with a halogenated phenolic preservative.",
+    "quote": "We recommend that manufacturers not store drug products, components, or packaging materials near wood or wood-derived storage materials unless there is assurance that the wood material has not been treated with a halogenated phenolic preservative.",
+    "clause_number": "Q8.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "unless assurance the wood is untreated"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-buildings-facilities.html:Q8#3",
+   "unit": "Q8",
+   "hash": "6f0f2751e92400bf",
+   "item": {
+    "statement": "Set up agreements with suppliers and ask them for certification giving assurance that halogenated phenolic preservatives are not present.",
+    "quote": "FDA further recommends that manufacturers establish agreements and request certification from suppliers to provide assurance that halogenated phenolic preservatives are not present.",
+    "clause_number": "Q8.2",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-buildings-facilities.html:Q8#4",
+   "unit": "Q8",
+   "hash": "35aefef453331326",
+   "item": {
+    "statement": "Stay alert to the characteristic odor of halogenated anisole compounds so the firm can intervene before products are contaminated or further distributed.",
+    "quote": "Manufacturers should also be vigilant to the characteristic odor of the offending compounds so they can intervene before products are contaminated or further distributed.",
+    "clause_number": "Q8.2",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-buildings-facilities.html:Q10#1",
+   "unit": "Q10",
+   "hash": "178d863eaaacf9c9",
+   "item": {
+    "statement": "Prevent contamination of drug products with halogenated anisole compounds by following CGMP, rather than relying on detection methods.",
+    "quote": "FDA expects that manufacturers prevent such contamination through adherence to CGMP",
+    "clause_number": "Q10.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-buildings-facilities.html:Q10#2",
+   "unit": "Q10",
+   "hash": "a76bc953decfd6c6",
+   "item": {
+    "statement": "Obtain assurances from suppliers and take measures to prevent exposure to problematic compounds such as halogenated anisoles, as part of a CGMP-compliant quality system.",
+    "quote": "A CGMP-compliant quality system will ensure that assurances are obtained from suppliers and that measures are taken to prevent exposure to problematic compounds.",
+    "clause_number": "Q10.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-buildings-facilities.html:Q10#3",
+   "unit": "Q10",
+   "hash": "9b269e3f94e31018",
+   "item": {
+    "statement": "Finished-drug manufacturers have written sanitation procedures designed to prevent contamination of equipment, components, drug product containers, closures, packaging, labeling materials and drug products.",
+    "quote": "the CGMP regulations at 21 CFR 211.56(c) require written procedures for sanitation designed to prevent the contamination of equipment, components, drug product containers, closures, packaging, labeling materials, and drug products",
+    "clause_number": "Q10.1",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  }
+ ]
+}

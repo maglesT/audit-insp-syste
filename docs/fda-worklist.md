@@ -32,9 +32,9 @@ Columns: items = checklist items drafted; auto = items passing the automatic rou
 | 14 | Guide to Inspections of Pharmaceutical QC Laboratories | `fda-ora-guide-pharma-qc-labs-1993.html` | must | ALL | - | not started | | | |
 | 15 | Guide to Inspections of Sterile Drug Substance Manufacturers | `fda-ora-guide-sterile-drug-substance-1994.html` | must | API, INJ | - | not started | | | |
 | 16 | Guide to Inspections: Validation of Cleaning Processes | `fda-ora-guide-cleaning-validation-1993.html` | must | ALL | - | not started | | | |
-| 17 | Questions and Answers on CGMP for Drugs: Buildings and Facilities | `fda-cgmp-qa-buildings-facilities.html` | must | ALL | - | not started | | | |
+| 17 | Questions and Answers on CGMP for Drugs: Buildings and Facilities | `fda-cgmp-qa-buildings-facilities.html` | must | ALL | - | verified | 16 | 13 | 3 |
 | 18 | Questions and Answers on CGMP for Drugs: Control of Components and Drug Product Containers and Closures | `fda-cgmp-qa-components-containers-closures.html` | must | ALL | - | not started | | | |
-| 19 | Questions and Answers on CGMP for Drugs: Equipment | `fda-cgmp-qa-equipment.html` | must | ALL | - | not started | | | |
+| 19 | Questions and Answers on CGMP for Drugs: Equipment | `fda-cgmp-qa-equipment.html` | must | ALL | - | verified | 57 | 51 | 6 |
 | 20 | Questions and Answers on CGMP for Drugs: General Provisions | `fda-cgmp-qa-general-provisions.html` | must | ALL | - | not started | | | |
 | 21 | Questions and Answers on CGMP for Drugs: Holding and Distribution | `fda-cgmp-qa-holding-distribution.html` | must | ALL | - | not started | | | |
 | 22 | Questions and Answers on CGMP for Drugs: Laboratory Controls | `fda-cgmp-qa-laboratory-controls.html` | must | ALL | - | not started | | | |
