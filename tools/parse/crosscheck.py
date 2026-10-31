@@ -14,7 +14,7 @@ import re
 import subprocess
 from collections import Counter
 
-from common import edge_lines, line_key, repeated_lines
+from common import edge_lines, line_key, repeated_lines, unshift_glyphs
 from obligations import sentences, strength
 
 WORD = re.compile(r"[a-z0-9]+")
@@ -28,6 +28,7 @@ def norm_words(text):
 
 def raw_pages(path):
     out = subprocess.run(["pdftotext", "-raw", str(path), "-"], capture_output=True, text=True, check=True).stdout
+    out = unshift_glyphs(out)
     return out.split("\f")
 
 

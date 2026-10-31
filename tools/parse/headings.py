@@ -21,7 +21,7 @@ from pathlib import Path
 
 if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parent))
-from common import (Clause, edge_lines, english_line, line_key, normalise, pdf_pages,  # noqa: E402
+from common import (BLOCK, BLOCK_SHARE, Clause, edge_block, edge_lines, english_line, line_key, normalise, pdf_pages,  # noqa: E402
                     repeated_lines, resolve_duplicates)
 
 ROMAN = {v: i for i, v in enumerate("I II III IV V VI VII VIII IX X XI XII XIII XIV XV XVI XVII XVIII XIX XX".split(),
@@ -111,18 +111,26 @@ def body_lines(pages, keep=None):
     """(page, line) of the body: English lines without running headers, footers and margin line numbers. Lines
     matching `keep` are never taken for running headers ("Article 3" at the top of several pages is a heading)."""
     noise = repeated_lines(pages)
+    block = repeated_lines(pages, min_share=BLOCK_SHARE, n=BLOCK)
     every = [ln.strip() for pg in pages for ln in pg.splitlines() if ln.strip()]
     margin_numbers = sum(1 for ln in every if LINE_NO.match(ln)) > 0.3 * max(1, len(every))
-    out, dropped = [], 0
+    out, dropped, last_no = [], 0, None
     for pno, page in enumerate(pages, start=1):
-        edges = {ln.strip() for ln in edge_lines(page)}
+        edges = edge_block(page, block)
         for raw in page.splitlines():
             line = raw.strip()
             if margin_numbers:
-                line = LINE_NO.sub("", line)
+                m = LINE_NO.match(line)
+                if m:
+                    last_no = int(m.group(0))
+                    line = line[m.end():]
+                elif re.fullmatch(r"\d{1,4}", line) and last_no is not None and 0 < int(line) - last_no <= 3:
+                    last_no = int(line)                   # the margin number of an empty line ("74" above a
+                    dropped += len(line)                  # paragraph): the next number in the margin's sequence
+                    continue
             if not line or not english_line(line):
                 continue
-            running = line_key(raw) in noise or re.fullmatch(r"[-–—\s\d]+|Page \d+( of \d+)?", line)
+            running = line_key(raw) in noise or line_key(raw) in block or re.fullmatch(r"[-–—\s\d]+|Page \d+( of \d+)?", line)
             kept = line.startswith("[[TABLE ") or (keep is not None and keep.match(line))
             if raw.strip() in edges and not kept and running:
                 dropped += len(line.replace(" ", ""))

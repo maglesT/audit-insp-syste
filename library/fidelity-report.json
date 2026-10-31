@@ -1,10 +1,10 @@
 {
  "engine": "pdfminer.six via pdfplumber",
- "code_sha256": "7ef787903a20daa2ae943e75a0dd7ce63f083c212ddb400cff119aa9cf5cdbb6",
+ "code_sha256": "d224263257858aa2fcfc54e3104bf1ccd3a990e16176ea93e0ef4bae7d730780",
  "sources": {
   "ema-hbel-guideline.pdf": {
    "pdf_sha256": "c1008969e6665af06935b4677e8c046631e3507bbf7ab6b481e45c91db999a0c",
-   "clauses_sha256": "11b06677a57d625500d2428237bafa0919f22c0f9e2e36db70dd3eecb1d75822",
+   "clauses_sha256": "67a83085186cf9fa97871ee6506efcb4169fa50ead183cd0cca4ddadbeae8021",
    "clauses": 26,
    "tokens": 4049,
    "flagged": [
@@ -52,9 +52,9 @@
   },
   "ema-nitrosamines-qa-mah-rev23-2025.pdf": {
    "pdf_sha256": "69f977e501ad9c688dc9f1f916ad7d632023a3e0c5dba4aeaac593ad7b0b6e37",
-   "clauses_sha256": "699e404055a71252482dc484678d4cec297edee7534c34a18b655c2fb38c28ab",
+   "clauses_sha256": "814715589862652856ba850ded5409d1ed899b7f04ad6ad0e2919a3672b54a5c",
    "clauses": 61,
-   "tokens": 13240,
+   "tokens": 12954,
    "flagged": [
     {
      "ref": "_unnumbered:1",
@@ -65,104 +65,20 @@
     {
      "ref": "_unnumbered:2",
      "kind": "unnumbered",
-     "tokens": 365,
-     "discrepancy": "-revision history questions and answers for marketing authorisation holders applicants on the chmp questions and answers for marketing authorisation holders applicants on the chmp | -questions and answers for marketing authorisation holders applicants on the chmp"
-    },
-    {
-     "ref": "Q1",
-     "kind": "clause",
-     "tokens": 351,
-     "discrepancy": "-questions and answers for marketing authorisation holders applicants on the chmp"
-    },
-    {
-     "ref": "Q2",
-     "kind": "clause",
-     "tokens": 349,
-     "discrepancy": "-questions | +3 for the call for review for chemically synthesised | -answers for marketing authorisation holders applicants on the chmp"
-    },
-    {
-     "ref": "Q3",
-     "kind": "clause",
-     "tokens": 1309,
-     "discrepancy": "-questions and answers for marketing authorisation holders applicants on the chmp | -questions and answers for marketing authorisation holders applicants on the chmp"
-    },
-    {
-     "ref": "Q4",
-     "kind": "clause",
-     "tokens": 1266,
-     "discrepancy": "-questions and answers for marketing authorisation holders applicants on the chmp | -questions and answers for marketing authorisation holders applicants on the chmp"
-    },
-    {
-     "ref": "Q5",
-     "kind": "clause",
-     "tokens": 292,
-     "discrepancy": "-questions and answers for marketing authorisation holders applicants on the chmp"
-    },
-    {
-     "ref": "Q7",
-     "kind": "clause",
-     "tokens": 357,
-     "discrepancy": "-questions and answers for marketing authorisation holders applicants on the chmp"
-    },
-    {
-     "ref": "Q8",
-     "kind": "clause",
-     "tokens": 1107,
-     "discrepancy": "-questions and answers for marketing authorisation holders applicants on the chmp | -questions | +9 what are the requirements of the analytical method s the analytical methods need to be sufficiently sensitive in order to adequately detect | -answers for marketing authorisation holders applicants on the chmp"
+     "tokens": 332,
+     "discrepancy": "-revision history"
     },
     {
      "ref": "Q10",
      "kind": "clause",
-     "tokens": 2184,
-     "discrepancy": "-questions and answers for marketing authorisation holders applicants on the chmp | -questions and answers for marketing authorisation holders applicants on the chmp | +xi aii | -xi | +i 2 | -aii i 2 questions and answers for marketing authorisation holders applicants on the chmp | -320 ppb 88 ppb | -questions and answers for marketing authorisation holders applicants on the chmp | +option 1 option 2 fixed example 20 80 ratio option 2 flexible limit results limit results limit results ndma not needed nmt 64 ppb 38 ppb nmt 320 ppb 38 ppb 12 % of ai ndea not needed nmt 70 ppb 44 ppb nmt 88 ppb 44 ppb 50 % of ai total na nmt 88 ppb 82 ppb not needed nmt 100 % 62 % | -questions and answers for marketing authorisation holders applicants on the chmp"
-    },
-    {
-     "ref": "Q12",
-     "kind": "clause",
-     "tokens": 228,
-     "discrepancy": "-questions and answers for marketing authorisation holders applicants on the chmp"
-    },
-    {
-     "ref": "Q14",
-     "kind": "clause",
-     "tokens": 910,
-     "discrepancy": "-questions and answers for marketing authorisation holders applicants on the chmp | -questions and answers for marketing authorisation holders applicants on the chmp"
-    },
-    {
-     "ref": "Q16",
-     "kind": "clause",
-     "tokens": 230,
-     "discrepancy": "-questions and answers for marketing authorisation holders applicants on the chmp"
-    },
-    {
-     "ref": "Q20",
-     "kind": "clause",
-     "tokens": 386,
-     "discrepancy": "-questions and answers for marketing authorisation holders applicants on the chmp"
-    },
-    {
-     "ref": "Q22",
-     "kind": "clause",
-     "tokens": 633,
-     "discrepancy": "-questions and answers for marketing authorisation holders applicants on the chmp | -questions and answers for marketing authorisation holders applicants on the chmp | -questions and answers for marketing authorisation holders applicants on the chmp"
+     "tokens": 2129,
+     "discrepancy": "+xi aii | -xi | +i 2 | -aii i 2 | -320 ppb 88 ppb"
     },
     {
      "ref": "Table 4 row 1",
      "kind": "table_row",
      "tokens": 18,
      "discrepancy": "-limit results limit results limit results"
-    },
-    {
-     "ref": "page 7",
-     "kind": "uncovered",
-     "tokens": 16,
-     "discrepancy": "+in two clauses Q2 and Q3: 3 for the call for review for chemically synthesised and"
-    },
-    {
-     "ref": "page 15",
-     "kind": "uncovered",
-     "tokens": 30,
-     "discrepancy": "+in two clauses Q8 and Q9: 9 what are the requirements of the analytical method s the analytical methods need to be sufficiently sensitive in order to adequately detect and"
     }
    ]
   },
@@ -216,9 +132,9 @@
   },
   "ema-sterilisation-guideline.pdf": {
    "pdf_sha256": "8798295ad23d04648ad7395350d76d2f5ae84f1f98a295aa04e3204ea6523489",
-   "clauses_sha256": "d5641bf9cbd5154ea86ec886cf1848222acea1c0f55ea40a07e27596bed837a6",
+   "clauses_sha256": "567f13da6bd500861af06e6a7934597142d3941bb0a0494f0cc63ff41099af77",
    "clauses": 58,
-   "tokens": 8902,
+   "tokens": 8903,
    "flagged": [
     {
      "ref": "_unnumbered:1",
@@ -259,7 +175,7 @@
     {
      "ref": "Definitions",
      "kind": "section",
-     "tokens": 1468,
+     "tokens": 1469,
      "discrepancy": "+− | +−"
     }
    ]
@@ -492,9 +408,9 @@
   },
   "eu-20220825_gmp-an1_en_0.pdf": {
    "pdf_sha256": "add86ed65ac9dbf007352a11ad102089c2225087d9a79f7cd4a8d75b2946a2ff",
-   "clauses_sha256": "15d6a55dd53d77d998ce1c374cafd599f619976e729b8451ef2e70b16debb037",
+   "clauses_sha256": "24236b84184ff5cd60929e70b6ccb8b831135cda8d5254133ec87e9fc577ab33",
    "clauses": 335,
-   "tokens": 28482,
+   "tokens": 28483,
    "flagged": [
     {
      "ref": "_unnumbered:1",
@@ -511,7 +427,7 @@
     {
      "ref": "Annex 1 Glossary",
      "kind": "section",
-     "tokens": 2754,
+     "tokens": 2755,
      "discrepancy": "+− | +−"
     },
     {
@@ -792,9 +708,9 @@
   },
   "fda-aseptic-2004.pdf": {
    "pdf_sha256": "6971a83145b89dd839d217a9885fbdb7da62b4a6a31587a03e7901a5a8b7a0dd",
-   "clauses_sha256": "7293f63cf9e184f8703f6826804fe231e573923019f7360d4a3769bfa99cd247",
+   "clauses_sha256": "4e50b46e271be98e076698490bd9a3d3ec931b46ad2c38f36bf1872f1e9c58ba",
    "clauses": 80,
-   "tokens": 24366,
+   "tokens": 24367,
    "flagged": [
     {
      "ref": "_unnumbered:2",
@@ -824,9 +740,9 @@
   },
   "fda-cp-7346-832-preapproval-inspections.pdf": {
    "pdf_sha256": "b4ea049fbf061f1e7f772785d500f4be4d7e91a8e7124fd1411453211c33ace4",
-   "clauses_sha256": "b9301fa994bf8f103b98d6fad7efd3e260736f4ac0348102363e947dbe3c6eaa",
-   "clauses": 75,
-   "tokens": 19160,
+   "clauses_sha256": "b4ff50f9982ec96984c04c4484691f0cf46aa98423a19850fc8d4f0699701ebd",
+   "clauses": 73,
+   "tokens": 19163,
    "flagged": [
     {
      "ref": "_unnumbered:1",
@@ -865,37 +781,31 @@
      "discrepancy": "-dmf drug master file | -ec established condition | -eir establishment inspection report | -far field alert report | +action cder center for drug evaluation and research cgmp current good manufacturing practice cmc chemistry manufacturing and controls cms compliance management system conops concept of operations cqa critical quality attribute dmf drug master file ec established condition eir establishment inspection report far field alert report | -action | -cder center for drug evaluation and | -research | -cgmp current good manufacturing | -practice | -cmc chemistry manufacturing and | -controls | -cms compliance management system | -conops concept of operations | -cqa critical quality attribute | -pac program assignment code | +regulatory laboratories oc office of compliance ocs office of the chief scientist ohadi office of human animal drug inspectorate oii office of inspections and investigations omq office of manufacturing quality opma office of pharmaceutical manufacturing assessment opq office of pharmaceutical quality opqr office of pharmaceutical quality research pac program assignment code | -regulatory laboratories | -oc office of compliance | -ocs office of the chief scientist | -ohadi office of human animal drug | -inspectorate | -oii office of inspections and investigations | -omq office of manufacturing quality | -opma office of pharmaceutical manufacturing assessment | -opq office of pharmaceutical quality | -opqr office | +part vii center and oii responsibilities cder and oii redefined their roles and responsibilities regarding application assessments and inspections | -pharmaceutical quality research"
     },
     {
-     "ref": "Attachment A",
-     "kind": "clause",
-     "tokens": 171,
-     "discrepancy": "+in addition to its inspectional authority fda may conduct remote regulatory assessments rras under certain circumstances to support oversight of fda regulated products and establishments 1"
-    },
-    {
      "ref": "Attachment B",
      "kind": "clause",
      "tokens": 856,
      "discrepancy": "-cont next page cont next page cont next page cont next page cont next page cont next page manufacturing and control the iqa team assesses the the inspection team inspection team lead or pam of finished product sterility control and assurance evaluates the facility provides the iqa team with information provided in the regarding sterility assurance its initial facility sterility assurance for application e g suitability of conformance with cgmp recommendation sterile drug products the selected methods of and the objectives of this the iqa team assesses the sterilization adequacy of compliance program and inspection findings and their critical process parameters compliance program impact on sterility assurance test method selection 7356.002 a for example the to make the quality specifications inspection team evaluates the recommendation state of control of the process as well as the manufacturing if the inspection findings are procedures practices and about the aseptic process controls employed to ensure cder on behalf of the iqa product sterility the team may communicate with inspection team also the applicant or inspected evaluates the risks and facility as appropriate concerns identified by the iqa team application approval by cder includes approval of the sterility assurance control strategy for example the iqa team identifies risks the inspection team finds the iqa team uses the and concerns regarding the that the aseptic processing inspection findings to sterilization process and area is deficient regarding request that the facility controls for sterility the environmental update its environmental assurance e g monitoring program and monitoring program to environmental monitoring includes its observations on address the risks to sterility program media fill process form fda 483 assurance of the product validation and communicates them to the inspection team cont next page acronyms used throughout table api active pharmaceutical ingredient cder center for drug evaluation and research cgmp current good manufacturing practice cmc chemistry manufacturing and controls coa certificate of analysis cqa critical quality attribute dmf drug master file ec established condition ich q 7 international council for harmonisation guidance for industry q 7 good manufacturing practice guidance for active pharmaceutical ingredients iqa integrated quality assessment oii office of inspections and investigations pai preapproval inspection pqs pharmaceutical quality system qc quality control for further information see cpg sec 490.200 parametric release of parenteral drug products terminally sterilized by moist heat https www fda gov regulatory information search fda guidance documents cpg sec 490200 parametric release parenteral drug products terminally sterilized moist heat"
     },
     {
-     "ref": "Table 4 Novel excipient manufacturing (e.g.…",
+     "ref": "Table 3 Novel excipient manufacturing (e.g.…",
      "kind": "table_row",
      "tokens": 294,
      "discrepancy": "-recommends a pai better communicates finds released lots do meet manufacturer observations form fda 483 communicates requests assessment before pai pai assessment after pai"
     },
     {
-     "ref": "Table 4 Manufacturing and control of finished… #2",
+     "ref": "Table 3 Manufacturing and control of finished… #2",
      "kind": "table_row",
      "tokens": 214,
      "discrepancy": "-manufacturing control finished product finished product assesses finished drug product in evaluates integrity in reports questionable assesses whether method has been verified operate under specified conditions use lead or pam provides initial facility recommendation assesses make recommendation by cder drug product control strategy including finished product testing"
     },
     {
-     "ref": "Table 4 Manufacturing and control of finished… #4",
+     "ref": "Table 3 Manufacturing and control of finished… #4",
      "kind": "table_row",
      "tokens": 311,
      "discrepancy": "-terminally sterilized overall including included cycle acceptance criteria will allow act surrogates preventative maintenance equipment system investigations batch include issues will"
     },
     {
-     "ref": "Table 5 Manufacturing and control of finished…",
+     "ref": "Table 4 Manufacturing and control of finished…",
      "kind": "table_row",
      "tokens": 280,
      "discrepancy": "-finds deficient includes observations on form 483 works with understand impact on communicates quality with requests they update reflect a higher e g consistent with recommendations guidance communicates quality with inspected example identifies blender revolutions as proposes a lower e g annual report based on recommends look into procedures place associated with assessing impact on quality with blender revolution"
@@ -1528,9 +1438,9 @@
   },
   "fda-cp-7356-002-drug-manufacturing-inspections.pdf": {
    "pdf_sha256": "3d7a85dde385feee720b8d88250190747ef9e66be2b8cdcf38b1cbfc7ee2ebf1",
-   "clauses_sha256": "ec877f4e047b4dbb0c0625e562d3f426db7dee595f52063e1d9604fe7d99dd39",
-   "clauses": 60,
-   "tokens": 13300,
+   "clauses_sha256": "11c4b60542c9a05936b8f220434f5f5a3d3e0167f2edbf23dda67741f82aa201",
+   "clauses": 57,
+   "tokens": 13316,
    "flagged": [
     {
      "ref": "_unnumbered:1",
@@ -1551,28 +1461,10 @@
      "discrepancy": "-cms compliance management | -system | -dqrs drug quality reporting system | -ec established condition | -eir establishment inspection report | +research cgmp current good manufacturing practice cms compliance management system dqrs drug quality reporting system ec established condition eir establishment inspection report | -research | -cgmp current good manufacturing | -practice | -opq office of pharmaceutical | -quality | -oqs office of quality surveillance | -ora office of regulatory affairs | -ors office of regulatory science | -pac product assignment code | -pam preapproval program manager | -pet positron emission tomography | -plcm product lifecycle management | -poai potential official action | -indicated | -pqs pharmaceutical quality system | -rra remote regulatory assessments | -rie remote interactive evaluation | -sop standard operating procedure | -usp united states pharmacopeia | -vai voluntary action indicated"
     },
     {
-     "ref": "Attachment A",
-     "kind": "clause",
-     "tokens": 593,
-     "discrepancy": "-attachment a remote regulatory assessments"
-    },
-    {
      "ref": "page 38",
      "kind": "uncovered",
      "tokens": 65,
      "discrepancy": "+opq office of pharmaceutical quality oqs office of quality surveillance ora office of regulatory affairs ors office of regulatory science pac product assignment code pam preapproval program manager pet positron emission tomography plcm product lifecycle management poai potential official action indicated pqs pharmaceutical quality system rra remote regulatory assessments rie remote interactive evaluation sop standard operating procedure usp united states pharmacopeia vai voluntary action indicated"
-    },
-    {
-     "ref": "page 41",
-     "kind": "uncovered",
-     "tokens": 3,
-     "discrepancy": "+its inspectional authority"
-    },
-    {
-     "ref": "page 41",
-     "kind": "uncovered",
-     "tokens": 13,
-     "discrepancy": "+an rra is an examination of an fda regulated establishment and or its"
     }
    ]
   },
@@ -1714,9 +1606,9 @@
   },
   "fda-guidance-analytical-procedures-validation-2015.pdf": {
    "pdf_sha256": "40df8a1252d09f43da1d1928101bdf3a281217db63158a49e4229b2bfcfae20e",
-   "clauses_sha256": "9aad0d5c538307ca46ba32317da96c4c3aa99635a19aba69177e334725390437",
+   "clauses_sha256": "28c2c88255e6783d9b1ae634de03e94e7096424368656464c015910897db1015",
    "clauses": 32,
-   "tokens": 5929,
+   "tokens": 5789,
    "flagged": [
     {
      "ref": "_unnumbered:1",
@@ -1727,200 +1619,62 @@
     {
      "ref": "_unnumbered:2",
      "kind": "unnumbered",
-     "tokens": 90,
-     "discrepancy": "-1 4 5 | -11 12 13"
-    },
-    {
-     "ref": "I",
-     "kind": "clause",
-     "tokens": 713,
-     "discrepancy": "-27 | -31 | -46 | -52 | -55 | -61 | -65 | -71 72"
+     "tokens": 85,
+     "discrepancy": "-1"
     },
     {
      "ref": "II",
      "kind": "clause",
-     "tokens": 233,
-     "discrepancy": "-74 | -10 82 | -11 86 | -94 95"
+     "tokens": 228,
+     "discrepancy": "-10 | -11"
     },
     {
      "ref": "III",
      "kind": "clause",
-     "tokens": 293,
-     "discrepancy": "-97 | -104 | -112 | -121 122 | +11"
+     "tokens": 288,
+     "discrepancy": "+11"
     },
     {
      "ref": "IV",
      "kind": "clause",
-     "tokens": 107,
-     "discrepancy": "-12 | -133"
-    },
-    {
-     "ref": "IV.A",
-     "kind": "clause",
-     "tokens": 39,
-     "discrepancy": "-135 | -139"
-    },
-    {
-     "ref": "IV.B",
-     "kind": "clause",
-     "tokens": 24,
-     "discrepancy": "-141 | -144"
-    },
-    {
-     "ref": "IV.C",
-     "kind": "clause",
-     "tokens": 54,
-     "discrepancy": "-146 | -151"
-    },
-    {
-     "ref": "IV.D",
-     "kind": "clause",
-     "tokens": 124,
-     "discrepancy": "-153 | -155 | -170"
-    },
-    {
-     "ref": "IV.E",
-     "kind": "clause",
-     "tokens": 65,
-     "discrepancy": "-172 | -178"
-    },
-    {
-     "ref": "IV.F",
-     "kind": "clause",
-     "tokens": 42,
-     "discrepancy": "-180 | -184"
-    },
-    {
-     "ref": "IV.G",
-     "kind": "clause",
-     "tokens": 52,
-     "discrepancy": "-186 | -191"
-    },
-    {
-     "ref": "IV.H",
-     "kind": "clause",
-     "tokens": 89,
-     "discrepancy": "-193 | -201"
-    },
-    {
-     "ref": "IV.I",
-     "kind": "clause",
-     "tokens": 59,
-     "discrepancy": "-203"
-    },
-    {
-     "ref": "IV.J",
-     "kind": "clause",
      "tokens": 106,
-     "discrepancy": "-220 221"
-    },
-    {
-     "ref": "V",
-     "kind": "clause",
-     "tokens": 372,
-     "discrepancy": "-223 | -236 | -248 | -255 256"
-    },
-    {
-     "ref": "VI",
-     "kind": "clause",
-     "tokens": 5,
-     "discrepancy": "-258"
+     "discrepancy": "-12"
     },
     {
      "ref": "VI.A",
      "kind": "clause",
-     "tokens": 123,
-     "discrepancy": "-260 | -14 | -271"
+     "tokens": 121,
+     "discrepancy": "-14"
     },
     {
      "ref": "VI.B",
      "kind": "clause",
-     "tokens": 294,
-     "discrepancy": "-273 | -276 | -284 | -288 | -296 | -15 302 | -16 306"
+     "tokens": 287,
+     "discrepancy": "-15 | -16"
     },
     {
      "ref": "VI.C",
      "kind": "clause",
-     "tokens": 219,
-     "discrepancy": "-308 | -17 | -314 | -327 328"
-    },
-    {
-     "ref": "VII",
-     "kind": "clause",
-     "tokens": 6,
-     "discrepancy": "-330"
+     "tokens": 215,
+     "discrepancy": "-17"
     },
     {
      "ref": "VII.A",
      "kind": "clause",
-     "tokens": 290,
-     "discrepancy": "-332 | +17 | -18 | -349"
-    },
-    {
-     "ref": "VII.B",
-     "kind": "clause",
-     "tokens": 56,
-     "discrepancy": "-351 | -356 357"
-    },
-    {
-     "ref": "VIII",
-     "kind": "clause",
-     "tokens": 380,
-     "discrepancy": "-359 | -368 | -375 | -382 | -389"
-    },
-    {
-     "ref": "VIII.A",
-     "kind": "clause",
-     "tokens": 129,
-     "discrepancy": "-391 | -399 | -403"
+     "tokens": 288,
+     "discrepancy": "+17 | -18"
     },
     {
      "ref": "VIII.B",
      "kind": "clause",
-     "tokens": 70,
-     "discrepancy": "-405 | -19 | -411"
-    },
-    {
-     "ref": "VIII.B.1",
-     "kind": "clause",
-     "tokens": 565,
-     "discrepancy": "-413 | -21 422 | -22 432 | -437 | -440 | -443 | -449 | -451 | -464"
-    },
-    {
-     "ref": "VIII.B.2",
-     "kind": "clause",
-     "tokens": 148,
-     "discrepancy": "-466 | -478"
+     "tokens": 68,
+     "discrepancy": "-19"
     },
     {
      "ref": "VIII.C",
      "kind": "clause",
-     "tokens": 116,
-     "discrepancy": "-480 | -24 | -489 490"
-    },
-    {
-     "ref": "IX",
-     "kind": "clause",
-     "tokens": 218,
-     "discrepancy": "-492 | -500 | -507"
-    },
-    {
-     "ref": "X",
-     "kind": "clause",
-     "tokens": 646,
-     "discrepancy": "-513 | -515 | -517 | -520 | -523 | -527 | -530 | -533 | -536 | -538 | -540 | -543 | -547 | -550 | -552 | -554 | -556 | -558 | -560 | -562 | -565 | -568 | -571 | -574 | -576 | -578 | -580 | -582 | -584 | -586 | -592 | -594 | -598 | -601 | -604 | -607 | -610 | -613 614 615"
-    },
-    {
-     "ref": "page 4",
-     "kind": "uncovered",
-     "tokens": 5,
-     "discrepancy": "+next to _unnumbered:2: i introduction"
-    },
-    {
-     "ref": "page 4",
-     "kind": "uncovered",
-     "tokens": 5,
-     "discrepancy": "+next to I: introduction i"
+     "tokens": 113,
+     "discrepancy": "-24"
     }
    ]
   },
@@ -1960,9 +1714,9 @@
   },
   "fda-guidance-cci-in-lieu-of-sterility-2008.pdf": {
    "pdf_sha256": "dd60babf4ac9ed0d275451ecc60d4bc73e4139f1b8bcd298164ce807dad6d797",
-   "clauses_sha256": "216abfaa7d2ebc86662c0e8e3b604d3ae5639ca85cf105794f98aa72a56456c8",
+   "clauses_sha256": "5452bcd10b9c8461169c31a460a49f3f60053805203f074e3478aec472c4f1d1",
    "clauses": 9,
-   "tokens": 3082,
+   "tokens": 3081,
    "flagged": [
     {
      "ref": "V",
@@ -2254,9 +2008,9 @@
   },
   "fda-guidance-deg-eg-high-risk-components-2023.pdf": {
    "pdf_sha256": "277d9381178b81cf1ba40f3b5f23702ca65ce62a5c3c09a4198ec19458f0b449",
-   "clauses_sha256": "6e969d25c0f78cb666a5004c0bdd581d9a0248aeeb5d67e75972e8ed5dc1b46d",
+   "clauses_sha256": "154f6bb4cb517f75111ce2f4998dff14f12cd20f4e43809408da66f6e61da223",
    "clauses": 6,
-   "tokens": 4408,
+   "tokens": 4407,
    "flagged": [
     {
      "ref": "I",
@@ -2320,21 +2074,15 @@
   },
   "fda-guidance-elemental-impurities-2018.pdf": {
    "pdf_sha256": "b5a7a91e5b8315fa5e21996685358f2c4c86f69fea50b6993f6c4130d60a3415",
-   "clauses_sha256": "11c8384a0495b90cc385595791a715350b3e0f22fd189abadf4d20962939a835",
+   "clauses_sha256": "b0bab15980db30b064c0d6b83672ee2a75c67f8ea93652edf1f57cf504194835",
    "clauses": 15,
-   "tokens": 3699,
+   "tokens": 3698,
    "flagged": [
     {
      "ref": "_unnumbered:1",
      "kind": "unnumbered",
      "tokens": 201,
      "discrepancy": "-9073135 fnl 8 1 2018"
-    },
-    {
-     "ref": "_unnumbered:2",
-     "kind": "unnumbered",
-     "tokens": 82,
-     "discrepancy": "-i"
     },
     {
      "ref": "I",
@@ -2346,16 +2094,10 @@
   },
   "fda-guidance-field-alert-report-qa-2021.pdf": {
    "pdf_sha256": "ccf734930382c9e8d2dbbec12df81328de274a47de6190cfe7e78dfeee76bdbc",
-   "clauses_sha256": "96c9097c6d246605c264f18ace4de40ed01d4dee2b54ec463da7709108199da0",
+   "clauses_sha256": "e2ce845e2091e0d3c6bdc37ae24214b48be0d8d4d52f3cf2a9f303a4edc4ddba",
    "clauses": 16,
-   "tokens": 4379,
+   "tokens": 4378,
    "flagged": [
-    {
-     "ref": "_unnumbered:2",
-     "kind": "unnumbered",
-     "tokens": 81,
-     "discrepancy": "-i"
-    },
     {
      "ref": "III.1.b",
      "kind": "clause",
@@ -2406,16 +2148,10 @@
   },
   "fda-guidance-nitrosamine-control-2024.pdf": {
    "pdf_sha256": "f8afe14c18104405a1c42d374155dcfd6f2202c1e891d6e89d9f3458ac06e2a9",
-   "clauses_sha256": "4cdbbd16fcbeb6304837c2ec686c8f51b10334ea0965914e66492e532cdb209b",
-   "clauses": 58,
-   "tokens": 18659,
+   "clauses_sha256": "c5c7e22c4942487d35145623fd59ed329f2b0cc33d00bf1bc4dd4c003352b59c",
+   "clauses": 53,
+   "tokens": 18664,
    "flagged": [
-    {
-     "ref": "_unnumbered:2",
-     "kind": "unnumbered",
-     "tokens": 84,
-     "discrepancy": "-ii"
-    },
     {
      "ref": "III.A",
      "kind": "clause",
@@ -2449,17 +2185,17 @@
     {
      "ref": "_unnumbered:3",
      "kind": "unnumbered",
-     "tokens": 2444,
-     "discrepancy": "-ity | +voluntarily recall ranitidine and nizatidine products with ndma levels above those fda calculated using the methods in the international council for harmonisation of technical requirements for pharmaceuticals for human use guidance for industry m 7 r 2 assessment and control of dna reactive mutagenic impurities in pharmaceuticals to limit potential carcinogenic risk july 2023 5,6,7 preliminary findings from fda stability | +each individual nitrosamine should be calculated as a percentage of its ai limit such that the sum of all the nitrosamines does not exceed 100 percent the calculation for total nitrosamines is described as below xxxx aaaaxx 100 % ≤ 100 % nn xx 2 where xi is the amount of each single nitrosamine i in parts per million ppm aii is the ai limit of each nitrosamine in ppm and n is not more than 3"
+     "tokens": 2504,
+     "discrepancy": "+each individual nitrosamine should be calculated as a percentage of its ai limit such that the sum of all the nitrosamines does not exceed 100 percent the calculation for total nitrosamines is described as below xxxx aaaaxx 100 % ≤ 100 % nn xx 2 where xi is the amount of each single nitrosamine i in parts per million ppm aii is the ai limit of each nitrosamine in ppm and n is not more than 3"
     },
     {
-     "ref": "Table 2 𝑛𝑛𝑖𝑖=2 𝑋𝑋𝑋𝑋",
+     "ref": "Table 1 𝑛𝑛𝑖𝑖=2 𝑋𝑋𝑋𝑋",
      "kind": "table_row",
      "tokens": 3,
      "discrepancy": "-nnii xxxx"
     },
     {
-     "ref": "Table 2 ∑ 𝐴𝐴𝐴𝐴𝐴𝐴 ∗ 100% ≤ 100%",
+     "ref": "Table 1 ∑ 𝐴𝐴𝐴𝐴𝐴𝐴 ∗ 100% ≤ 100%",
      "kind": "table_row",
      "tokens": 6,
      "discrepancy": "-aaaaaa"
@@ -2500,9 +2236,9 @@
   },
   "fda-guidance-npbl-cross-contamination-2013.pdf": {
    "pdf_sha256": "5f059657b99865a7712ab156465c7fbe3c77672249483cd0e3bbe3b1572b9641",
-   "clauses_sha256": "496a18e9fa66a8350f33670959ea6b9b44b4004c17dd010c7e315771f9be0286",
+   "clauses_sha256": "00cb150df4ceab8f9fc3d290747ba22b20b5e5f6bd6ec3a7c1d825c93b373194",
    "clauses": 9,
-   "tokens": 2980,
+   "tokens": 2979,
    "flagged": [
     {
      "ref": "_unnumbered:1",
@@ -2513,8 +2249,8 @@
     {
      "ref": "_unnumbered:2",
      "kind": "unnumbered",
-     "tokens": 111,
-     "discrepancy": "-guidance for industry | +introduction"
+     "tokens": 110,
+     "discrepancy": "-guidance for industry"
     },
     {
      "ref": "II.A",
@@ -2526,9 +2262,9 @@
   },
   "fda-guidance-part11-scope-application-2003.pdf": {
    "pdf_sha256": "306013031df65004566799023444b3fd66d17dca72eea4c7eb5bacfd4a697ac5",
-   "clauses_sha256": "ddf874a548a1047ad7f0c9f0a44d8bfce9f3bd8f34f4d220d4b8bbcf409b5810",
+   "clauses_sha256": "b1cacb64c71046c9afe5a118ff8b0fe930225cc7d55ce33569e966fa70d9eeef",
    "clauses": 16,
-   "tokens": 3959,
+   "tokens": 3892,
    "flagged": [
     {
      "ref": "_unnumbered:1",
@@ -2539,104 +2275,8 @@
     {
      "ref": "_unnumbered:2",
      "kind": "unnumbered",
-     "tokens": 113,
-     "discrepancy": "-guidance for industry 1 | -4 5 6 | -13 14 15"
-    },
-    {
-     "ref": "I",
-     "kind": "clause",
-     "tokens": 562,
-     "discrepancy": "-21 | -32 | +1 | -43 | -48 | -51 | -57 58"
-    },
-    {
-     "ref": "II",
-     "kind": "clause",
-     "tokens": 601,
-     "discrepancy": "-60 | -67 | -83 | -91 | -104 | -110 111"
-    },
-    {
-     "ref": "III",
-     "kind": "clause",
-     "tokens": 3,
-     "discrepancy": "-113"
-    },
-    {
-     "ref": "III.A",
-     "kind": "clause",
-     "tokens": 415,
-     "discrepancy": "-115 | -118 | -134 | -148 | -153"
-    },
-    {
-     "ref": "III.B",
-     "kind": "clause",
-     "tokens": 9,
-     "discrepancy": "-155"
-    },
-    {
-     "ref": "III.B.1",
-     "kind": "clause",
-     "tokens": 206,
-     "discrepancy": "-157 | -163 | -172"
-    },
-    {
-     "ref": "III.B.2",
-     "kind": "clause",
-     "tokens": 428,
-     "discrepancy": "-174 | -177 | -184 | -211"
-    },
-    {
-     "ref": "III.C",
-     "kind": "clause",
-     "tokens": 8,
-     "discrepancy": "-213"
-    },
-    {
-     "ref": "III.C.1",
-     "kind": "clause",
-     "tokens": 223,
-     "discrepancy": "-215 | -221 | -228 | -233 | -237"
-    },
-    {
-     "ref": "III.C.2",
-     "kind": "clause",
-     "tokens": 208,
-     "discrepancy": "-239 | -246 | -256"
-    },
-    {
-     "ref": "III.C.3",
-     "kind": "clause",
-     "tokens": 176,
-     "discrepancy": "-258 | -262 | -265 | -271 | -275"
-    },
-    {
-     "ref": "III.C.4",
-     "kind": "clause",
-     "tokens": 246,
-     "discrepancy": "-277 | -283 | -285 | -297"
-    },
-    {
-     "ref": "III.C.5",
-     "kind": "clause",
-     "tokens": 277,
-     "discrepancy": "-299 | -305 | -309 | -319 | +8"
-    },
-    {
-     "ref": "IV",
-     "kind": "clause",
-     "tokens": 219,
-     "discrepancy": "-321 | -323 | -327 | -331 | -335 | -339 340 | -342 | -345 | -348"
-    },
-    {
-     "ref": "page 4",
-     "kind": "uncovered",
-     "tokens": 5,
-     "discrepancy": "+next to _unnumbered:2: i introduction"
-    },
-    {
-     "ref": "page 4",
-     "kind": "uncovered",
-     "tokens": 5,
-     "discrepancy": "+next to I: introduction i"
+     "tokens": 107,
+     "discrepancy": "-guidance for industry 1"
     }
    ]
   },
@@ -2656,16 +2296,10 @@
   },
   "fda-guidance-pyrogen-endotoxins-qa-2026.pdf": {
    "pdf_sha256": "6e897c21f81341f49d3fa8c07ac4bdc1a16d217a21a8b1293b4737f4637128e1",
-   "clauses_sha256": "4ca41562108437815444f9c551139076d4937296d05b8f96de9a06b4840f46c8",
+   "clauses_sha256": "5baa93fda3cecf79f5e51c776c9e38ffe2e202083ff923a3e41cd3e3e03b2df8",
    "clauses": 19,
-   "tokens": 4308,
+   "tokens": 4307,
    "flagged": [
-    {
-     "ref": "_unnumbered:2",
-     "kind": "unnumbered",
-     "tokens": 14,
-     "discrepancy": "-i"
-    },
     {
      "ref": "III.6",
      "kind": "clause",
@@ -2676,16 +2310,10 @@
   },
   "fda-guidance-quality-agreements-2016.pdf": {
    "pdf_sha256": "0af8c1222054c0449c524daaf349c6f57a0a3497e978ee4c0cba8ecaf7c16118",
-   "clauses_sha256": "86dda8e342a47a4895f8a47b24715ce01effbee044ee86af5f2ba8118984834b",
+   "clauses_sha256": "71132be3f0cea8645f3d28d7727a8d7d54f22bb56246ec248bf618910b5d086b",
    "clauses": 21,
-   "tokens": 5717,
+   "tokens": 5716,
    "flagged": [
-    {
-     "ref": "_unnumbered:2",
-     "kind": "unnumbered",
-     "tokens": 84,
-     "discrepancy": "-i"
-    },
     {
      "ref": "II",
      "kind": "clause",
@@ -2956,16 +2584,10 @@
   },
   "fda-oos-2022.pdf": {
    "pdf_sha256": "610ddda142912b1dfe084afb5e1b4909af72c9b39175695e76eaf3cdad5d0e1c",
-   "clauses_sha256": "5d18dc54452fc918a649a05e20d6fe7c813264a2c469bf97c26461b88edf36a8",
+   "clauses_sha256": "87dd718f6829d5cb1938db06fc3fe25ef8e235427c5e56f12f5cc887f0becc73",
    "clauses": 24,
-   "tokens": 6599,
+   "tokens": 6598,
    "flagged": [
-    {
-     "ref": "_unnumbered:2",
-     "kind": "unnumbered",
-     "tokens": 87,
-     "discrepancy": "-i"
-    },
     {
      "ref": "V.C",
      "kind": "clause",
@@ -2976,28 +2598,28 @@
   },
   "fda-process-validation-2011.pdf": {
    "pdf_sha256": "821788a1127a9215670e60a7010e35bf2eafb408cf346e74440fb73a01869792",
-   "clauses_sha256": "def1701de421f8240baed294947a6ade2674fea305a089b6f87b16b7bf357409",
+   "clauses_sha256": "68ff6ec85dac8ddd41cdeb5cc2e292372095507d1ef9299049ddcf24724545a2",
    "clauses": 23,
-   "tokens": 8128,
+   "tokens": 8127,
    "flagged": [
     {
      "ref": "_unnumbered:2",
      "kind": "unnumbered",
-     "tokens": 105,
-     "discrepancy": "-i guidance for industry 1"
+     "tokens": 104,
+     "discrepancy": "-1"
     }
    ]
   },
   "ich-m7-r2.pdf": {
    "pdf_sha256": "961f50d6122d16a300d699ec3d7392c31898d14b7d53192438e5d38908049371",
-   "clauses_sha256": "e593a69477b59f7b716c950761317fc79916f35c706d9537284c4bb710daae6d",
+   "clauses_sha256": "747e10d41d8246801685755a557b447c3009d45eb83fcd870932355cd028f386",
    "clauses": 109,
-   "tokens": 12438,
+   "tokens": 12439,
    "flagged": [
     {
      "ref": "3",
      "kind": "clause",
-     "tokens": 706,
+     "tokens": 707,
      "discrepancy": "+−"
     },
     {
@@ -3028,7 +2650,7 @@
   },
   "ich-q10.pdf": {
    "pdf_sha256": "396b99197692a2fd386089b886dc7345e22b726fd6ebd0bbb5d2a0173b0ec292",
-   "clauses_sha256": "3a018a2406b1e3b1c538febb577134915d35ddb353c77f1e394c85ccac378db6",
+   "clauses_sha256": "d16f095969b642b5ac9ed27aba4bcfc6db7a23622f76c37548f7902a52e9efd4",
    "clauses": 58,
    "tokens": 5305,
    "flagged": [
@@ -3048,27 +2670,15 @@
   },
   "ich-q11-qa-pmda.pdf": {
    "pdf_sha256": "e70300ac140f56da19c003e85b09cc630dcc51d0d4e667cedb73525fa47aa254",
-   "clauses_sha256": "4103eb3f74ed90052901148d58b127ce7949fd1222ce4a4177fd99c8e24cb9ee",
+   "clauses_sha256": "5eab915047a867f792f433f8a79c82f6bbf0fbb5dd0acacb5c93e9cd1157a20f",
    "clauses": 68,
-   "tokens": 5401,
+   "tokens": 5399,
    "flagged": [
     {
      "ref": "_unnumbered:1",
      "kind": "unnumbered",
      "tokens": 91,
      "discrepancy": "-implementation working group ich q 11 guideline development and manufacture of drug substances chemical entities and biotechnological biological entities questions and answers version 23 august 2017 | +implementation working group ich q 11 guideline development and manufacture of drug substances chemical entities and biotechnological biological entities questions and answers version 23 august 2017"
-    },
-    {
-     "ref": "_unnumbered:2",
-     "kind": "unnumbered",
-     "tokens": 369,
-     "discrepancy": "-ii"
-    },
-    {
-     "ref": "12",
-     "kind": "clause",
-     "tokens": 374,
-     "discrepancy": "-iii"
     }
    ]
   },
@@ -3154,7 +2764,7 @@
   },
   "ich-q1a-r2.pdf": {
    "pdf_sha256": "eb0533e93451a91073de6e0bf5786548b49ba54005339efd750dbb0ab6d1798b",
-   "clauses_sha256": "5f986e0f199a515dbdbdbef153b7e1aa615aa7cf36d74815a0ec1a3d72426bde",
+   "clauses_sha256": "5e90fac0f4a84bcab160d598dd6c750d7dd0a5fc164d2807cba6a0dc73cfe4ce",
    "clauses": 73,
    "tokens": 8196,
    "flagged": [
@@ -3186,7 +2796,7 @@
   },
   "ich-q1b.pdf": {
    "pdf_sha256": "d19f8367ddd6f73fbed34656d08ac7e3834760eb8c361903c93669a91f71e320",
-   "clauses_sha256": "45e0b93a5f7c8c76b0dff545a19bc85803bc5a4c80afbaa6899f9701ca5db8d4",
+   "clauses_sha256": "ebc0adacc7e3246a3a26d0ade597ed9ee007570cba8dfa7b868a36e64f46dc09",
    "clauses": 11,
    "tokens": 2956,
    "flagged": [
@@ -3238,21 +2848,15 @@
   },
   "ich-q1e.pdf": {
    "pdf_sha256": "d3d383950299fcbfc32e1e0a2371fa16ae939ee67531bfb1bdb2a4b5822658da",
-   "clauses_sha256": "63d704409d65178a9e7238e12277ecb4059360b366f29d3ea8bcee0dfb836cc7",
+   "clauses_sha256": "0d9fdb39081c01fda969728c25d15d591e710aef2c68b3940550016102cd9fef",
    "clauses": 68,
-   "tokens": 7641,
+   "tokens": 7639,
    "flagged": [
     {
      "ref": "_unnumbered:1",
      "kind": "unnumbered",
-     "tokens": 140,
-     "discrepancy": "-ii evaluation | +q 1 e approval by the steering committee under step 4 and recommendation | -stability data | +adoption to the three ich regulatory bodies 6 february 2003 q 1 e e valuation for s tability d ata"
-    },
-    {
-     "ref": "Appendix A",
-     "kind": "section",
-     "tokens": 39,
-     "discrepancy": "-i evaluation of stability data"
+     "tokens": 139,
+     "discrepancy": "-evaluation | +q 1 e approval by the steering committee under step 4 and recommendation | -stability data | +adoption to the three ich regulatory bodies 6 february 2003 q 1 e e valuation for s tability d ata"
     },
     {
      "ref": "Appendix A #2",
@@ -3270,7 +2874,7 @@
   },
   "ich-q2-r2.pdf": {
    "pdf_sha256": "d935618fd3c51d2f063eec7a227d19da50db8b6cfe44f59d09ab43039ad6472c",
-   "clauses_sha256": "c3d36265c7c9cab02e20f3a0c77a47a6d0826b4815e99f0986b32947e3b8e81b",
+   "clauses_sha256": "a6dfd5d38aba977101bb4ccd6c6a4300159df9278793bb22a1cfa661dc9b3f76",
    "clauses": 202,
    "tokens": 9725,
    "flagged": [
@@ -3320,7 +2924,7 @@
   },
   "ich-q3a-r2.pdf": {
    "pdf_sha256": "e40ed73478c8d74773ab9352fc92340fb3f117b9322dd22cb46f6192bf710834",
-   "clauses_sha256": "54d82f43efc386d102b80b300684b3989f43f8250cb94fa4ab24c5a9873a9ba5",
+   "clauses_sha256": "4436fa2fe14dcea7982f973d66753b9bc48e5b16c41141af83e830a3335dc3c6",
    "clauses": 33,
    "tokens": 4027,
    "flagged": [
@@ -3352,7 +2956,7 @@
   },
   "ich-q3b-r2.pdf": {
    "pdf_sha256": "74563e68768442985836900482df4a9150af3a93873d3f012d60409adc1487c8",
-   "clauses_sha256": "481e7ac60397f6c698d50a7aaca985296c859917981bf8ed86874ce3469375ee",
+   "clauses_sha256": "47d31c2bcea37b9ad241e5476ce63e9fc69132ed51324a391b5a657faf8ef881",
    "clauses": 26,
    "tokens": 4083,
    "flagged": [
@@ -3524,9 +3128,9 @@
   },
   "ich-q3d-r2.pdf": {
    "pdf_sha256": "940176418af05c88ed33416a5d5e719a4ab7fe1d31cf1cd56ed331749b649c75",
-   "clauses_sha256": "b49db7a796927fac15ee5ae716b55c1d5fae78ecf8b028158eea6867a5f48e27",
+   "clauses_sha256": "e5a24f839f035abcf7b0907ce2bd53653d55e47562d97d6245e8fc3123ee9500",
    "clauses": 381,
-   "tokens": 36347,
+   "tokens": 36348,
    "flagged": [
     {
      "ref": "_unnumbered:1",
@@ -3868,7 +3472,7 @@
   },
   "ich-q6a.pdf": {
    "pdf_sha256": "02aeb1c7c2eb499044d584438c001be194f0db02d73ad786f30d7a719b629080",
-   "clauses_sha256": "9d9ebd4a95aec03527e5bd48c28e856b5daec39a68c782523763ab97e7875440",
+   "clauses_sha256": "353b057f8c4d874df825d74d78e80b942d5e17ff647d7f2da9fe4ad7ea6de0f2",
    "clauses": 35,
    "tokens": 10001,
    "flagged": [
@@ -3888,21 +3492,15 @@
   },
   "ich-q7-qa.pdf": {
    "pdf_sha256": "0cfa400776b4b63069dbbc9e8b94c8829ee38888e7ed93aa7dd30e7f9fdb19c6",
-   "clauses_sha256": "a6ab69f88a10e0e9c55b6debfe2b0fa7f6ce9e54561af960eb9544b3a3141227",
+   "clauses_sha256": "8485c84a306f797fa058bfde2767961f6ab8f884c5003ad2c21399872ea56a4d",
    "clauses": 206,
-   "tokens": 7870,
+   "tokens": 7868,
    "flagged": [
     {
      "ref": "_unnumbered:1",
      "kind": "unnumbered",
      "tokens": 90,
      "discrepancy": "-q 7 implementation working group ich q 7 guideline good manufacturing practice guide for active pharmaceutical ingredients questions and answers current version dated 10 june 2015 | +q 7 implementation working group ich q 7 guideline good manufacturing practice guide for active pharmaceutical ingredients questions and answers current version dated 10 june 2015"
-    },
-    {
-     "ref": "_unnumbered:2",
-     "kind": "unnumbered",
-     "tokens": 828,
-     "discrepancy": "-i | -ii"
     },
     {
      "ref": "Glossary",
@@ -3950,7 +3548,7 @@
   },
   "ich-q7.pdf": {
    "pdf_sha256": "f28aff02d31b7edf6ed3026971a2283019ad51393165ffbc5efb5ae7208e1f1e",
-   "clauses_sha256": "1a190792bb220719a38c1734e92d89fc8def213ed35869849b6a733fdc536f20",
+   "clauses_sha256": "43921cec9bd91d9b9e1563ef2cb96641ed28efd21f29125244ab55986d235a19",
    "clauses": 446,
    "tokens": 17527,
    "flagged": [
@@ -4050,16 +3648,10 @@
   },
   "ich-q9r1.pdf": {
    "pdf_sha256": "3bbc860385b2630372c81eebb82ba74ae643ef383ce94b5e01d26bbd0b9883fb",
-   "clauses_sha256": "b680c0708666d3a02ce5b63536a4f527267e3f998e3318d3541b32ab20b09709",
+   "clauses_sha256": "5d493fabf76461171a6951cc864f15f936141dbd5aeaa4cdbb032c603eb068a6",
    "clauses": 45,
-   "tokens": 9705,
+   "tokens": 9704,
    "flagged": [
-    {
-     "ref": "6.1",
-     "kind": "clause",
-     "tokens": 216,
-     "discrepancy": "-i"
-    },
     {
      "ref": "4",
      "kind": "clause",
@@ -4076,9 +3668,9 @@
   },
   "india-cdsco-circ-2024-03-risk-based-inspection.pdf": {
    "pdf_sha256": "b1dbb9cac363a265e6fe673bab63752f51e390203b1b5e390675a8b1cffd5ea3",
-   "clauses_sha256": "e2dfe57d0ca2163afd752cfa3bf9f418291723938fea1e92c7dedf616855397d",
-   "clauses": 1314,
-   "tokens": 47271,
+   "clauses_sha256": "31347567eec779eaaed29c90c87bfe19b9899301f0eb283fbd52cb17c8659bf8",
+   "clauses": 1241,
+   "tokens": 46706,
    "flagged": [
     {
      "ref": "12",
@@ -4327,94 +3919,16 @@
      "discrepancy": "-59 pharmaceutical quality management system pqs"
     },
     {
-     "ref": "Table 29 1.4",
-     "kind": "table_row",
-     "tokens": 171,
-     "discrepancy": "-quality rating"
-    },
-    {
-     "ref": "Table 29 3.2",
-     "kind": "table_row",
-     "tokens": 34,
-     "discrepancy": "-quality rating"
-    },
-    {
-     "ref": "Table 29 4.4",
-     "kind": "table_row",
-     "tokens": 64,
-     "discrepancy": "-quality rating"
-    },
-    {
-     "ref": "Table 29 4.10",
-     "kind": "table_row",
-     "tokens": 31,
-     "discrepancy": "-quality rating"
-    },
-    {
      "ref": "Table 29 4.17.1",
      "kind": "table_row",
-     "tokens": 48,
-     "discrepancy": "-loop system quality rating"
+     "tokens": 46,
+     "discrepancy": "-loop system"
     },
     {
      "ref": "Table 29 4.19",
      "kind": "table_row",
      "tokens": 25,
      "discrepancy": "-circulation rate"
-    },
-    {
-     "ref": "Table 29 4.30",
-     "kind": "table_row",
-     "tokens": 49,
-     "discrepancy": "-quality rating"
-    },
-    {
-     "ref": "Table 29 6.6",
-     "kind": "table_row",
-     "tokens": 55,
-     "discrepancy": "-quality rating"
-    },
-    {
-     "ref": "Table 29 8.2",
-     "kind": "table_row",
-     "tokens": 106,
-     "discrepancy": "-quality rating"
-    },
-    {
-     "ref": "Table 29 8.11",
-     "kind": "table_row",
-     "tokens": 42,
-     "discrepancy": "-quality rating"
-    },
-    {
-     "ref": "Table 29 8.21",
-     "kind": "table_row",
-     "tokens": 36,
-     "discrepancy": "-quality rating"
-    },
-    {
-     "ref": "Table 29 8.32",
-     "kind": "table_row",
-     "tokens": 36,
-     "discrepancy": "-quality rating"
-    },
-    {
-     "ref": "Table 29 9.9",
-     "kind": "table_row",
-     "tokens": 43,
-     "discrepancy": "-quality rating"
-    },
-    {
-     "ref": "Table 29 10.6",
-     "kind": "table_row",
-     "tokens": 48,
-     "discrepancy": "-quality rating"
-    },
-    {
-     "ref": "Table 29 11.2",
-     "kind": "table_row",
-     "tokens": 31,
-     "discrepancy": "-quality rating"
     },
     {
      "ref": "Table 29 11.4",
@@ -4429,112 +3943,10 @@
      "discrepancy": "-3 pressure gradients"
     },
     {
-     "ref": "Table 29 11.8",
-     "kind": "table_row",
-     "tokens": 48,
-     "discrepancy": "-quality rating"
-    },
-    {
-     "ref": "Table 29 12.9",
-     "kind": "table_row",
-     "tokens": 33,
-     "discrepancy": "-quality rating"
-    },
-    {
-     "ref": "Table 29 13.7",
-     "kind": "table_row",
-     "tokens": 36,
-     "discrepancy": "-quality rating"
-    },
-    {
-     "ref": "Table 29 14.5",
-     "kind": "table_row",
-     "tokens": 144,
-     "discrepancy": "-quality rating"
-    },
-    {
-     "ref": "Table 29 14.14",
-     "kind": "table_row",
-     "tokens": 41,
-     "discrepancy": "-quality rating"
-    },
-    {
-     "ref": "Table 29 16.12",
-     "kind": "table_row",
-     "tokens": 34,
-     "discrepancy": "-quality rating"
-    },
-    {
-     "ref": "Table 29 17.6",
-     "kind": "table_row",
-     "tokens": 64,
-     "discrepancy": "-quality rating"
-    },
-    {
-     "ref": "Table 29 17.21",
-     "kind": "table_row",
-     "tokens": 63,
-     "discrepancy": "-quality rating"
-    },
-    {
-     "ref": "Table 29 18.2",
-     "kind": "table_row",
-     "tokens": 127,
-     "discrepancy": "-quality rating"
-    },
-    {
-     "ref": "Table 29 18.11",
-     "kind": "table_row",
-     "tokens": 39,
-     "discrepancy": "-quality rating"
-    },
-    {
-     "ref": "Table 29 19.2",
-     "kind": "table_row",
-     "tokens": 152,
-     "discrepancy": "-quality rating"
-    },
-    {
      "ref": "Table 29 20.5",
      "kind": "table_row",
      "tokens": 32,
      "discrepancy": "-condition"
-    },
-    {
-     "ref": "Table 29 20.14",
-     "kind": "table_row",
-     "tokens": 33,
-     "discrepancy": "-quality rating"
-    },
-    {
-     "ref": "Table 29 21.6",
-     "kind": "table_row",
-     "tokens": 50,
-     "discrepancy": "-quality rating"
-    },
-    {
-     "ref": "Table 29 21.13",
-     "kind": "table_row",
-     "tokens": 45,
-     "discrepancy": "-quality rating"
-    },
-    {
-     "ref": "Table 29 22.3",
-     "kind": "table_row",
-     "tokens": 145,
-     "discrepancy": "-quality rating"
-    },
-    {
-     "ref": "Table 29 22.8",
-     "kind": "table_row",
-     "tokens": 100,
-     "discrepancy": "-quality rating"
-    },
-    {
-     "ref": "Table 29 22.15",
-     "kind": "table_row",
-     "tokens": 65,
-     "discrepancy": "-quality rating"
     },
     {
      "ref": "Table 29 23.5",
@@ -4543,64 +3955,10 @@
      "discrepancy": "-by suitable pipes"
     },
     {
-     "ref": "Table 29 23.6",
-     "kind": "table_row",
-     "tokens": 106,
-     "discrepancy": "-quality rating"
-    },
-    {
-     "ref": "Table 29 24.3",
-     "kind": "table_row",
-     "tokens": 74,
-     "discrepancy": "-quality rating"
-    },
-    {
-     "ref": "Table 29 25.4",
-     "kind": "table_row",
-     "tokens": 42,
-     "discrepancy": "-quality rating"
-    },
-    {
-     "ref": "Table 29 26.6",
-     "kind": "table_row",
-     "tokens": 32,
-     "discrepancy": "-quality rating"
-    },
-    {
-     "ref": "Table 29 27.1",
-     "kind": "table_row",
-     "tokens": 57,
-     "discrepancy": "-quality rating"
-    },
-    {
-     "ref": "Table 29 27.8",
-     "kind": "table_row",
-     "tokens": 39,
-     "discrepancy": "-quality rating"
-    },
-    {
-     "ref": "Table 29 28.4",
-     "kind": "table_row",
-     "tokens": 70,
-     "discrepancy": "-quality rating"
-    },
-    {
-     "ref": "Table 29 28.10",
-     "kind": "table_row",
-     "tokens": 36,
-     "discrepancy": "-quality rating"
-    },
-    {
      "ref": "Table 29 29. Others sterilization is tested…",
      "kind": "table_row",
      "tokens": 6,
      "discrepancy": "-29 others"
-    },
-    {
-     "ref": "Table 29 30.5",
-     "kind": "table_row",
-     "tokens": 48,
-     "discrepancy": "-quality rating"
     },
     {
      "ref": "Table 29 30.9",
@@ -4609,118 +3967,22 @@
      "discrepancy": "-30.9 specify retaining documents after respective who is responsible its maintenance 1 year after qa is responsible its maintenance no could be produced this regard"
     },
     {
-     "ref": "Table 29 31.2",
-     "kind": "table_row",
-     "tokens": 36,
-     "discrepancy": "-quality rating"
-    },
-    {
-     "ref": "Table 29 34.1",
-     "kind": "table_row",
-     "tokens": 62,
-     "discrepancy": "-quality rating"
-    },
-    {
-     "ref": "Table 29 34.11",
-     "kind": "table_row",
-     "tokens": 39,
-     "discrepancy": "-quality rating"
-    },
-    {
-     "ref": "Table 29 39.3",
-     "kind": "table_row",
-     "tokens": 38,
-     "discrepancy": "-quality rating"
-    },
-    {
-     "ref": "Table 29 39.14",
-     "kind": "table_row",
-     "tokens": 29,
-     "discrepancy": "-quality rating"
-    },
-    {
-     "ref": "Table 29 39.24",
-     "kind": "table_row",
-     "tokens": 29,
-     "discrepancy": "-quality rating"
-    },
-    {
-     "ref": "Table 29 40.3",
-     "kind": "table_row",
-     "tokens": 28,
-     "discrepancy": "-quality rating"
-    },
-    {
-     "ref": "Table 29 40.12",
-     "kind": "table_row",
-     "tokens": 42,
-     "discrepancy": "-quality rating"
-    },
-    {
-     "ref": "Table 29 40.24",
-     "kind": "table_row",
-     "tokens": 82,
-     "discrepancy": "-quality rating"
-    },
-    {
-     "ref": "Table 29 48.3",
-     "kind": "table_row",
-     "tokens": 51,
-     "discrepancy": "-quality rating"
-    },
-    {
-     "ref": "Table 29 49.4",
-     "kind": "table_row",
-     "tokens": 98,
-     "discrepancy": "-quality rating"
-    },
-    {
-     "ref": "Table 29 49.11",
-     "kind": "table_row",
-     "tokens": 87,
-     "discrepancy": "-quality rating"
-    },
-    {
      "ref": "Table 29 50.3",
      "kind": "table_row",
      "tokens": 60,
      "discrepancy": "-relevant equipment utilities"
     },
     {
-     "ref": "Table 29 51.1",
-     "kind": "table_row",
-     "tokens": 71,
-     "discrepancy": "-quality rating"
-    },
-    {
-     "ref": "Table 29 52.7",
-     "kind": "table_row",
-     "tokens": 46,
-     "discrepancy": "-quality rating"
-    },
-    {
      "ref": "Table 29 54.9",
      "kind": "table_row",
-     "tokens": 23,
-     "discrepancy": "-988 quality rating"
-    },
-    {
-     "ref": "Table 29 55.4",
-     "kind": "table_row",
-     "tokens": 53,
-     "discrepancy": "-rating"
+     "tokens": 21,
+     "discrepancy": "-988"
     },
     {
      "ref": "Table 29 1 and premises: - 56 Building…",
      "kind": "table_row",
      "tokens": 7,
      "discrepancy": "-56 pharmaceutical development"
-    },
-    {
-     "ref": "Table 29 59.2",
-     "kind": "table_row",
-     "tokens": 38,
-     "discrepancy": "-rating"
     },
     {
      "ref": "page 46",
@@ -4777,12 +4039,6 @@
      "discrepancy": "+in table row: established hold time"
     },
     {
-     "ref": "page 116",
-     "kind": "uncovered",
-     "tokens": 20,
-     "discrepancy": "+the sterilizers are not studied for heat distribution penetration effectiveness of sterilization process not established by using microbial spore indicators"
-    },
-    {
      "ref": "page 117",
      "kind": "uncovered",
      "tokens": 4,
@@ -4836,9 +4092,9 @@
   },
   "india-drugs-rules-1945-consolidated-2024-07.pdf": {
    "pdf_sha256": "fb5b7675a9a0e9cb539fa0131875922f1bdd290389a192aa1a67d0b9d871eeb7",
-   "clauses_sha256": "d872fc8c408f90b0fcd8e2bda51afe172e144692a9acf03d853673a428957dff",
-   "clauses": 2981,
-   "tokens": 295631,
+   "clauses_sha256": "b82153b3b6a47f578061762f9420683f55a068200d2d09178011bdc4192be28f",
+   "clauses": 2963,
+   "tokens": 295694,
    "flagged": [
     {
      "ref": "Part II",
@@ -4874,7 +4130,7 @@
      "ref": "Part XV 30",
      "kind": "clause",
      "tokens": 5121,
-     "discrepancy": "+xviii | -xviii | +bhasma | -bhasma | +si no dosage form shelf life or date of expiry with effect from the date of manufacture 1 2 3 i curanam kutinir curanam adai curanam kanchi curanam utkali curanam pittu curanam podithimirthal curanam podi 2 years pattru curanam pottanam or kizhi curanam ottratam curanam vethu curanam pugai curanam kah curanam thuvalai curanam ii mattirai v atakam i containing only moohgai ingredients including kudineer curanam mattirai e g nilavembu kutinir mattirai 2 years ii containing mooligai ingredients along with thathu porutkal jeeva porutkal parpam centuram cunnam including kutinir curanam mattirai 5 years m containing only thathu porutkal parpam centuram cimnam kattu kalanku 10 years iii rasa paadana marunthugal all mercurial preparation i containing mooligai ingredients along with thathu porutkal parpan centuram cunnam kattu kalanku 2 years ii containing only thathu porutkal parpam centuram cunnam kattu kalanku 10 years iv parpam centuram | +parpam | +centuram cunnam kattu kalanku e g aya centuram 10 years hi containing mooligai ingredients with jeeva porutkal e g sangu parpam 10 years v karuppu i containing only mooligai ingredients e g vasambu sutta kari 2 years ii containing mooligai ingredients with thathu porutkal e g sivanar amirtham thalaga karuppu 5 years iii containing mooligai ingredients with jeeva porutkal e g kasthuri karuppu pattu karuppu 5 years vi patankam i mooligai based patankam e g sambirani patankam 5 years ii rasa based patankam eg rasa centuram 10 years vii kulampu based on process i araippu kulampu e g agathiyar kulampu 5 years ii erippu kulampu e g kumatti kulampu 3 years viii meluku based on process i araippu meluku e g linga meluku 5 years based on process ii idippu meluku e g rasa gandhi meluku idi vallthi meluku 3 years based on raw materials iii mooligai meluku e g malaikudara meluku 3 years ix karpam based on raw materials i mooligai karpam e g karisalai karpam thiripala karpam 2 years based on raw materials ii mooligai thathu karpam e g aya bringaraja karpam 5 years based on process iii araippu karpam e g irunelli karpam 3 years x satthu i satthu derived from mooligai e g seenthil satthu 2 years ii satthu derived from thathu porutkal e g aya satthu eya satthu thurusu satthu 10 years 1 2 3 iii satthu derived from jeeva porutkal e g sembu satthu derived from poonagam mayiliragu 5 years xi ilakam legiyam iracayanaam 3 years xii kallikkam mai kalimbu neer venney 1 year xiii karam karanool 2 years xiv kattu medicated bandage cloth see ai varthy thiri 1 year | +si no dosage form shelf life or date of expiry with effect from the date of manufacture 1 2 3 i arq except arq e ajeeb 1 year ii arq e ajeeb 5 years iii ayarij sunoon zuroor ghazah 2 years iv burood 1 year v shiyaf 2 years vi surma kohal 3 years vii habb 3 years viii halwa 3 years ix itrifai 3 years x lauhar jawahir 5 years xi jawarish 4 years xii khamira 3 years 1 2 3 xiii kushta 10 years xiv laboob 3 years xv laooq 3 years xvi majoon dawa 3 years xvii marham zimad qairooti 2 years xviii mufarreh 3 years xix murabba 1 year xx nabeez 10 years xxi qurs 3 years xxii qutoor 1 year xxiii raughaniyat tila 3 years xxiv sharbat sikajabeen 3 years xxv i sufoof without salt 2 years ii sufoof containing salt 1 year xxvi tiryaq 3 years 740 | +s no class of drugs standards to be complied with 1 755 drugs included in ayurvedic pharmacopoeia the standards for identity purity and strength as given in the editions of ayurvedic pharmacopoeia of india for the time being in force 2 asavas and aristas the upper limit of alcohol as self generated alcohol should not exceed 12 % v v excepting those that are otherwise notified by the central government from time to time 756"
+     "discrepancy": "+xviii | -xviii | +bhasma | -bhasma | +parpam | +si no dosage form shelf life or date of expiry with effect from the date of manufacture 1 2 3 i arq except arq e ajeeb 1 year ii arq e ajeeb 5 years iii ayarij sunoon zuroor ghazah 2 years iv burood 1 year v shiyaf 2 years vi surma kohal 3 years vii habb 3 years viii halwa 3 years ix itrifai 3 years x lauhar jawahir 5 years xi jawarish 4 years xii khamira 3 years 1 2 3 xiii kushta 10 years xiv laboob 3 years xv laooq 3 years xvi majoon dawa 3 years xvii marham zimad qairooti 2 years xviii mufarreh 3 years xix murabba 1 year xx nabeez 10 years xxi qurs 3 years xxii qutoor 1 year xxiii raughaniyat tila 3 years xxiv sharbat sikajabeen 3 years xxv i sufoof without salt 2 years ii sufoof containing salt 1 year xxvi tiryaq 3 years 740 | +s no class of drugs standards to be complied with 1 755 drugs included in ayurvedic pharmacopoeia the standards for identity purity and strength as given in the editions of ayurvedic pharmacopoeia of india for the time being in force 2 asavas and aristas the upper limit of alcohol as self generated alcohol should not exceed 12 % v v excepting those that are otherwise notified by the central government from time to time 756"
     },
     {
      "ref": "Part XV 8",
@@ -5053,14 +4309,14 @@
     {
      "ref": "Part I 4 #2",
      "kind": "clause",
-     "tokens": 375,
-     "discrepancy": "+− | +−"
+     "tokens": 374,
+     "discrepancy": "+− | +− | +−"
     },
     {
      "ref": "Part I 3 #18",
      "kind": "clause",
      "tokens": 200,
-     "discrepancy": "+− | +−"
+     "discrepancy": "+− | +− | +−"
     },
     {
      "ref": "Part IV 2",
@@ -5179,8 +4435,8 @@
     {
      "ref": "Part XIII 4 #2",
      "kind": "clause",
-     "tokens": 622,
-     "discrepancy": "-4 general provisions a pharmacy shall be conducted under the continuous personal supervision of a registered pharmacist whose name shall be displayed conspicuously in the premises the pharmacist shall always put on clean white overalls the premises and fittings of the pharmacy shall be properly kept and everything shall be in good order and clean all records and registers shall be maintained in accordance with the laws in force any container taken from the poison cupboard shall be replaced therein immediately after use and the cupboard locked the keys of the poison cupboard shall be kept in the personal custody of the responsible person medicaments when supplied shall have labels conforming to the provisions of laws in force note the above requirements are subject to modifications at the discretion of the licensing authority if he is of opinion that having regard to the nature of drugs dispensed compounded or prepared by the licensee it is necessary to relax the above requirements or to impose additional requirements in the circumstances of a particular case the decision of the licensing authority in that regard shall be final these items are to be provided only by those who intend to dispense pills or suppositories as the case may be 1250 schedule o see rule 126 standard for disinfectant fluids 1251 part i provisions applicable to black fluids and white fluids the standards for disinfectants shall conform to the indian standards specification is 1061 1997 laid down from time to time by the bureau of indian standards 1252 schedule p see rule 96 life period of drugs | +10 | -10 | +vaccine | -vaccine | +11 | -11 | +vaccine | -vaccine | +12 | -12 | +c vaccine | -c vaccine | +13 | -13 | +c and tetanus vaccine | -c and tetanus vaccine | +16 | -16 | +culture | -culture | +anti toxin for serum extracted preparations 20 % excess potency 12 in cold place 30 % excess potency 24 in cold place 40 % excess potency 36 in cold place 50 % excess potency 48 in cold place for enzyme preparations 5 % excess potency 12 in cold place 10 % excess potency 24 in cold place 15 % excess potency 36 in cold place 20 % excess potency 48 in cold place miscellaneous drugs 1260 1 adrenaline for injection 12 as prescribed in indian pharmacopoeia 2 chorionic gonadotrophin for injection lyopholised 36 at temperature not exceeding 20 c 3 corticotrophin 24 in cold place 4 corticotrophin lyophilised 36 in cold place 5 heparin injection 36 in a cold place 6 liquid extract of ergot 12 in cold place 7 liver extract crude injection 24 in a cold place 8 oxytocin injection 24 in cold place 9 paraldehyde injection 6 in cool place protected from light 10 pituitary injection 24 in cold place 11 vasopressin injection 24 in cold place | +1342 | +combinations for oral contraception | -combinations for oral | -contraception"
+     "tokens": 695,
+     "discrepancy": "-4 general provisions a pharmacy shall be conducted under the continuous personal supervision of a registered pharmacist whose name shall be displayed conspicuously in the premises the pharmacist shall always put on clean white overalls the premises and fittings of the pharmacy shall be properly kept and everything shall be in good order and clean all records and registers shall be maintained in accordance with the laws in force any container taken from the poison cupboard shall be replaced therein immediately after use and the cupboard locked the keys of the poison cupboard shall be kept in the personal custody of the responsible person medicaments when supplied shall have labels conforming to the provisions of laws in force note the above requirements are subject to modifications at the discretion of the licensing authority if he is of opinion that having regard to the nature of drugs dispensed compounded or prepared by the licensee it is necessary to relax the above requirements or to impose additional requirements in the circumstances of a particular case the decision of the licensing authority in that regard shall be final these items are to be provided only by those who intend to dispense pills or suppositories as the case may be 1250 schedule o see rule 126 standard for disinfectant fluids 1251 part i provisions applicable to black fluids and white fluids the standards for disinfectants shall conform to the indian standards specification is 1061 1997 laid down from time to time by the bureau of indian standards 1252 schedule p see rule 96 life period of drugs | +10 | -10 | +vaccine | -vaccine | +11 | -11 | +vaccine | -vaccine | +12 | -12 | +c vaccine | -c vaccine | +13 | -13 | +c and tetanus vaccine | -c and tetanus vaccine | +16 | -16 | +culture | -culture | +excess potency | +potency | -potency | +1342 | +combinations for oral contraception | -combinations for oral | -contraception"
     },
     {
      "ref": "Part XIII 15",
@@ -5203,8 +4459,8 @@
     {
      "ref": "Part II 1 #7",
      "kind": "clause",
-     "tokens": 69,
-     "discrepancy": "+common name as in afi api plant s botanical name quantity used per annum in kgs sources of supply part used traders manufacturers forest collectors cultivators imported total whole plants root leaf others | +name of extracts quantity used per annum in kgs sources of supply common name as in afi api botanical name in house export suppliers imported total | -na ply | +name of by product quantity used per annum in kgs sources of supply"
+     "tokens": 147,
+     "discrepancy": "+common name as in afi api plant s botanical name quantity used per annum in kgs | -plant s quantity common name botanical used per | +manufacturers | -whole as in afi api name annum in kgs manufacturers | +whole | -sources of supply | +kgs sources of supply | +afi api | -kgs export | +name | +export suppliers | -afi api name suppliers | -sources of supply | -in kgs manufacturers traders importers total name if any domestic"
     },
     {
      "ref": "Part II 2 #7",
@@ -5239,8 +4495,8 @@
     {
      "ref": "Part II Appendix III 1.9",
      "kind": "clause",
-     "tokens": 730,
-     "discrepancy": "-1.9 number of animals required for repeated dose toxicity studies | -cerebrum cerebellum midbrain | -mesenteric"
+     "tokens": 830,
+     "discrepancy": "+group | -non | +rat | -group | +or monkey | +non | -rat | -or | -monkey m f m f m f m f | -cerebrum cerebellum midbrain | -mesenteric"
     },
     {
      "ref": "_unnumbered:2",
@@ -5275,26 +4531,8 @@
     {
      "ref": "Table 11 (1)",
      "kind": "table_row",
-     "tokens": 4,
-     "discrepancy": "-1 3"
-    },
-    {
-     "ref": "Table 11 (xi)",
-     "kind": "table_row",
-     "tokens": 3,
-     "discrepancy": "-xi"
-    },
-    {
-     "ref": "Table 11 (xiii)",
-     "kind": "table_row",
-     "tokens": 3,
-     "discrepancy": "-xiii"
-    },
-    {
-     "ref": "Table 11 (xiv)",
-     "kind": "table_row",
-     "tokens": 3,
-     "discrepancy": "-xiv"
+     "tokens": 19,
+     "discrepancy": "-1 2 3"
     },
     {
      "ref": "Table 29 D",
@@ -5327,16 +4565,10 @@
      "discrepancy": "-4 hydroxide"
     },
     {
-     "ref": "Table 46 12.",
+     "ref": "Table 45 12.",
      "kind": "table_row",
      "tokens": 9,
      "discrepancy": "-12 office total 1500"
-    },
-    {
-     "ref": "Table 56 Group",
-     "kind": "table_row",
-     "tokens": 22,
-     "discrepancy": "-m f m f m f m f"
     },
     {
      "ref": "page 158",
@@ -5567,12 +4799,6 @@
      "discrepancy": "+s no category of medicine minimum manufacturing space required machinery equipment recommended 1 2 3 4"
     },
     {
-     "ref": "page 897",
-     "kind": "uncovered",
-     "tokens": 5,
-     "discrepancy": "+in table row: rodent rat"
-    },
-    {
      "ref": "page 326",
      "kind": "uncovered",
      "tokens": 8,
@@ -5655,12 +4881,6 @@
      "kind": "uncovered",
      "tokens": 19,
      "discrepancy": "+in two clauses Part II 4 #5 and Part II 7 #4: 4 name of the material and quantity"
-    },
-    {
-     "ref": "page 835",
-     "kind": "uncovered",
-     "tokens": 30,
-     "discrepancy": "+in two clauses Part II 1 #7 and Part II 2 #7: 2 shortage of raw material s inputs during the preceding year yes no if yes please indicate name"
     }
    ]
   },
@@ -5872,39 +5092,15 @@
   },
   "pics-pe009-18-annexes.pdf": {
    "pdf_sha256": "061e785e317287e7658522d071ad188a480496b1eabea2f48b610ab53d49bbb8",
-   "clauses_sha256": "95580e98b1d3fcb900183b29a81e612826c7014dc6fe3617ee76d4578fe6ad76",
-   "clauses": 1303,
-   "tokens": 105112,
+   "clauses_sha256": "5f97b88ef1dc1a8e8657443b7a97d463c0686656fa363045f822dfd593e90efd",
+   "clauses": 1293,
+   "tokens": 105066,
    "flagged": [
     {
      "ref": "_unnumbered:1",
      "kind": "unnumbered",
      "tokens": 247,
-     "discrepancy": "+pe 009 18 annexes 24 september 2026 | +table of contents | +i | -table of contents"
-    },
-    {
-     "ref": "Annex 2A",
-     "kind": "section",
-     "tokens": 103,
-     "discrepancy": "+table of contents | -i | +ii | -table of contents"
-    },
-    {
-     "ref": "Annex 4",
-     "kind": "section",
-     "tokens": 196,
-     "discrepancy": "+table of contents | -ii | +iii | -table of contents"
-    },
-    {
-     "ref": "Annex 10",
-     "kind": "section",
-     "tokens": 200,
-     "discrepancy": "+table of contents | -iii | +iv | -table of contents"
-    },
-    {
-     "ref": "Annex 14",
-     "kind": "section",
-     "tokens": 575,
-     "discrepancy": "+table of contents | -iv | +v | -table of contents | +table of contents | -v | +vi | -table of contents | -pe 009 18 annexes vi 24 september 2026"
+     "discrepancy": "+pe 009 18 annexes 24 september 2026 | -pe 009 18 annexes 24 september 2026"
     },
     {
      "ref": "Annex 1 8.6",
@@ -5921,7 +5117,7 @@
     {
      "ref": "Annex 1 Glossary",
      "kind": "section",
-     "tokens": 2808,
+     "tokens": 2809,
      "discrepancy": "+− | +−"
     },
     {
@@ -5933,8 +5129,8 @@
     {
      "ref": "Annex 2A 3",
      "kind": "clause",
-     "tokens": 534,
-     "discrepancy": "+atmp manufacturing | -atmp manufacturing plasmid atmp manufacturing | -manufacturing transcription establishing mcb or | -plasmid dna construct wcb | -purification preparation thawing transfer of plasmid harvest | -dna to starter colony transfection | -formulation e g e coli induction | -filling expansion | -harvest | -storage dispensing purification storage of linear dna distribution for storage template patient access formulation or sterile filtration plasmid dna filling construct preparation storage polymerase chain reaction pcr distribution for patient access | +or plasmid dna construct preparation polymerase chain reaction pcr storage of linear dna template atmp manufacturing transcription purification harvest formulation filling storage distribution for patient access plasmid manufacturing plasmid dna construct preparation transfer of plasmid dna to starter colony e g e coli expansion dispensing storage atmp manufacturing establishing mcb or wcb thawing transfection induction harvest purification formulation sterile filtration filling storage distribution for patient access | -a marketing gmp requirements a mah may justify | +steps in making the plasmid dna construct to later steps but should align with annex 2 a and pic s gmp guide part ii or principles of these requirements as applicable under national legislation refer to section 5.23 for additional information in determining the appropriate application of gmp a marketing | -can vary from early | +mah may justify | -steps in making the mah may justify steps in making the | -plasmid dna these steps to be a plasmid dna | -construct to later continuous process construct to later | -steps but should align producing both the steps but should align | -and with annex 2 a and atmp active with annex 2 a | -pic s gmp guide substance and pic s gmp guide | -or principles | +along with applicable annexes apply as appropriate to the step | -medicinal product | +manufacture gmp requirements can vary from early steps in making the plasmid dna construct to later steps but should align with annex 2 a and pic s gmp guide | -part ii along with | +applicable under national legislation refer to section 5.23 for additional information in determining the appropriate application of gmp a mah may justify these steps to be a continuous process producing both the atmp active substance and medicinal product | -these requirements as applicable annexes applicable under | -under | +annexes | -national legislation applicable annexes national legislation | -refer to section 5.23 apply as appropriate refer to section 5.23 | -for additional to the step of for additional information in manufacture information in determining the determining the appropriate appropriate application of gmp application of gmp | +figure 3 example of autologous car t therapy atmp manufacturing plasmid manufacturing plasmid dna construct preparation transfer of plasmid dna to starter colony e g e coli expansion dispensing storage viral vector product manufacturing establishing mcb or wcb thawing transfection induction harvest purification sterile filtration dispensing storage atmp manufacturing donation or procurement of patient cells transduction expansion harvest formulation filling storage distribution for patient access | -gmp requirements applied the application of this | +making the plasmid dna construct to later steps but should align with principles of annex 2 a and pic s gmp guide part ii or principles of these requirements as applicable under national legislation refer to section 5.23 for additional information in determining the appropriate application of gmp gmp requirements applied | -guide does not include the making the plasmid dna | -donation or procurement of construct to later steps but | -patient cells should align with principles | +these requirements as applicable under national legislation refer to section 5.23 for additional information in determining the appropriate application of gmp the application of this guide does not include the donation or procurement of patient cells | -of annex 2 a and pic s these requirements as | -gmp guide part ii or applicable under national | -principles of these legislation | -requirements as applicable refer to section 5.23 for | -under national legislation additional information in | -refer to section 5.23 for determining the | -additional information in appropriate application of | -determining the gmp | -appropriate application of of manufacture gmp"
+     "tokens": 551,
+     "discrepancy": "+atmp manufacturing | -atmp manufacturing plasmid atmp manufacturing | -manufacturing transcription establishing mcb or | -plasmid dna construct wcb | -purification preparation thawing transfer of plasmid harvest | -dna to starter colony transfection | -formulation e g e coli induction | -filling expansion | -harvest | -storage dispensing purification storage of linear dna distribution for storage template patient access formulation or sterile filtration plasmid dna filling construct preparation storage polymerase chain reaction pcr distribution for patient access | +or plasmid dna construct preparation polymerase chain reaction pcr storage of linear dna template atmp manufacturing transcription purification harvest formulation filling storage distribution for patient access plasmid manufacturing plasmid dna construct preparation transfer of plasmid dna to starter colony e g e coli expansion dispensing storage atmp manufacturing establishing mcb or wcb thawing transfection induction harvest purification formulation sterile filtration filling storage distribution for patient access | -a marketing gmp requirements a mah may justify | +steps in making the plasmid dna construct to later steps but should align with annex 2 a and pic s gmp guide part ii or principles of these requirements as applicable under national legislation refer to section 5.23 for additional information in determining the appropriate application of gmp a marketing | -can vary from early | +mah may justify | -steps in making the mah may justify steps in making the | -plasmid dna these steps to be a plasmid dna | -construct to later continuous process construct to later | -steps but should align producing both the steps but should align | -and with annex 2 a and atmp active with annex 2 a | -pic s gmp guide substance and pic s gmp guide | -or principles | +along with applicable annexes apply as appropriate to the step | -medicinal product | +manufacture gmp requirements can vary from early steps in making the plasmid dna construct to later steps but should align with annex 2 a and pic s gmp guide | -part ii along with | +applicable under national legislation refer to section 5.23 for additional information in determining the appropriate application of gmp a mah may justify these steps to be a continuous process producing both the atmp active substance and medicinal product | -these requirements as applicable annexes applicable under | -under | +annexes | -national legislation applicable annexes national legislation | -refer to section 5.23 apply as appropriate refer to section 5.23 | -for additional to the step of for additional information in manufacture information in determining the determining the appropriate appropriate application of gmp application of gmp | -gmp requirements applied the application of this | +making the plasmid dna construct to later steps but should align with principles of annex 2 a and pic s gmp guide part ii or principles of these requirements as applicable under national legislation refer to section 5.23 for additional information in determining the appropriate application of gmp gmp requirements applied | -guide does not include the making the plasmid dna | -donation or procurement of construct to later steps but | -patient cells should align with principles | +these requirements as applicable under national legislation refer to section 5.23 for additional information in determining the appropriate application of gmp the application of this guide does not include the donation or procurement of patient cells | -of annex 2 a and pic s these requirements as | -gmp guide part ii or applicable under national | -principles of these legislation | -requirements as applicable refer to section 5.23 for | -under national legislation additional information in | -refer to section 5.23 for determining the | -additional information in appropriate application of | -determining the gmp | -appropriate application of of manufacture gmp"
     },
     {
      "ref": "Annex 14 10",
@@ -6042,131 +5238,35 @@
   },
   "pics-pe009-18-part1.pdf": {
    "pdf_sha256": "bc8f5b3e6fa001a3d290d04312b12545323f3356d6c0f351ddf2a396e1c4ed19",
-   "clauses_sha256": "9a7a423247081b91bc9dc18f2c0ceaf178d2b6591967f4693bc229a782e4fc60",
+   "clauses_sha256": "0b54745b56ab9ec08326cfd036207a78edfaeb7751b44c8b27b368b03f4f39ab",
    "clauses": 286,
-   "tokens": 18326,
+   "tokens": 18218,
    "flagged": [
     {
      "ref": "Part I",
      "kind": "section",
-     "tokens": 386,
-     "discrepancy": "+i | +table of contents | -i | +ii | -table of contents | -pe 009 18 part i ii 24 september 2026"
-    },
-    {
-     "ref": "Part I 1.2",
-     "kind": "clause",
-     "tokens": 122,
-     "discrepancy": "-pe 009 18 part i − 1 24 september 2026"
-    },
-    {
-     "ref": "Part I 1.4",
-     "kind": "clause",
-     "tokens": 535,
-     "discrepancy": "-pe 009 18 part i − 2 24 september 2026"
-    },
-    {
-     "ref": "Part I 1.7",
-     "kind": "clause",
-     "tokens": 53,
-     "discrepancy": "-pe 009 18 part i − 3 24 september 2026"
-    },
-    {
-     "ref": "Part I 1.8",
-     "kind": "clause",
-     "tokens": 348,
-     "discrepancy": "-pe 009 18 part i − 4 24 september 2026"
-    },
-    {
-     "ref": "Part I 1.9",
-     "kind": "clause",
-     "tokens": 324,
-     "discrepancy": "-pe 009 18 part i − 5 24 september 2026"
-    },
-    {
-     "ref": "Part I 1.11",
-     "kind": "clause",
-     "tokens": 163,
-     "discrepancy": "-pe 009 18 part i − 6 24 september 2026"
-    },
-    {
-     "ref": "Part I 1.13",
-     "kind": "clause",
-     "tokens": 93,
-     "discrepancy": "-pe 009 18 part i − 7 24 september 2026"
-    },
-    {
-     "ref": "Part I 2.4",
-     "kind": "clause",
-     "tokens": 91,
-     "discrepancy": "-pe 009 18 part i − 8 24 september 2026"
-    },
-    {
-     "ref": "Part I 2.7",
-     "kind": "clause",
-     "tokens": 118,
-     "discrepancy": "-pe 009 18 part i − 9 24 september 2026"
+     "tokens": 368,
+     "discrepancy": "-pe 009 18 part i 24 september 2026"
     }
    ]
   },
   "pics-pe009-18-part2.pdf": {
    "pdf_sha256": "e05c3d81b0a92cb369ecff95a8f7446e78960524def6c59ff3934e54eb1b2f0a",
-   "clauses_sha256": "2ee7f4b53d617841449b52bf98a22262185ec521c31952ddca13653b5029cd93",
+   "clauses_sha256": "95c73659fd0121b2779392810b97d4174e2d83c1f71facc1ca2591b9f2224037",
    "clauses": 449,
-   "tokens": 17813,
+   "tokens": 17723,
    "flagged": [
     {
      "ref": "Part II",
      "kind": "section",
      "tokens": 70,
-     "discrepancy": "+i"
+     "discrepancy": "-pe 009 18 part ii 24 september 2026"
     },
     {
      "ref": "Part II 1.2",
      "kind": "clause",
-     "tokens": 641,
-     "discrepancy": "-pe 009 18 part ii − 1 24 september 2026 | -pe 009 18 part ii − 2 24 september 2026 | -increasing gmp requirements pe 009 18 part ii − 3 24 september 2026 quality management"
-    },
-    {
-     "ref": "Part II 2.21",
-     "kind": "clause",
-     "tokens": 93,
-     "discrepancy": "-pe 009 18 part ii − 4 24 september 2026"
-    },
-    {
-     "ref": "Part II 2.32",
-     "kind": "clause",
-     "tokens": 233,
-     "discrepancy": "-pe 009 18 part ii − 5 24 september 2026"
-    },
-    {
-     "ref": "Part II 2.60",
-     "kind": "clause",
-     "tokens": 120,
-     "discrepancy": "-pe 009 18 part ii − 6 24 september 2026"
-    },
-    {
-     "ref": "Part II 3.24",
-     "kind": "clause",
-     "tokens": 108,
-     "discrepancy": "-pe 009 18 part ii − 7 24 september 2026"
-    },
-    {
-     "ref": "Part II 4.15",
-     "kind": "clause",
-     "tokens": 75,
-     "discrepancy": "-pe 009 18 part ii − 8 24 september 2026"
-    },
-    {
-     "ref": "Part II 4.33",
-     "kind": "clause",
-     "tokens": 42,
-     "discrepancy": "-pe 009 18 part ii − 9 24 september 2026"
-    },
-    {
-     "ref": "page 6",
-     "kind": "uncovered",
-     "tokens": 7,
-     "discrepancy": "+next to Part II 1.1: introduction 1"
+     "tokens": 611,
+     "discrepancy": "-increasing gmp requirements quality management"
     }
    ]
   },
@@ -6179,9 +5279,9 @@
   },
   "pics-pi007-6-aseptic-validation.pdf": {
    "pdf_sha256": "4e434fa1badf242bb8f2021c8c1a9cb2c012af6edee065f799e76ec87bf6015a",
-   "clauses_sha256": "5bee27cbeac6ba10cff4ae63b8457621a5523fa59ada5fcb508d700b5ba97af5",
+   "clauses_sha256": "150f4cdeb880d93946b74ce1b1e276b3eee5553eceac8e19f554596f9ba5a3c7",
    "clauses": 172,
-   "tokens": 5922,
+   "tokens": 5923,
    "flagged": [
     {
      "ref": "_unnumbered:1",
@@ -6383,7 +5483,7 @@
   },
   "pics-pi012-3-sterility-testing.pdf": {
    "pdf_sha256": "2875ea5c23cbf544143851c3c8e5b76e6d2b3d052d53286f701c60022d7a323a",
-   "clauses_sha256": "b10bc7e989ff3852433ef490040439ab23dd42ad8e96417a762da4f8987cd979",
+   "clauses_sha256": "3d0f2bb8d97f0d60580598e62bdbb842a40b729125c13cab1a9f803401a69a53",
    "clauses": 125,
    "tokens": 4379,
    "flagged": [
@@ -6403,9 +5503,9 @@
   },
   "pics-pi014-3-isolators.pdf": {
    "pdf_sha256": "e0cdcab524c13d12080436adab348b1e05ca255b0c8be20e2c0b3eeff71a82cc",
-   "clauses_sha256": "7222583f6b523a3fa814dca050f8be8cdb122c0cb3fdafec084f321c4801f577",
+   "clauses_sha256": "3d77004bc55ceff641d6b3a651d1b7e457b83f2ca0b086a22ab14b4698f7d1e3",
    "clauses": 113,
-   "tokens": 8271,
+   "tokens": 8272,
    "flagged": [
     {
      "ref": "_unnumbered:1",
@@ -6435,8 +5535,8 @@
   },
   "pics-pi023-2-am-qc-labs.pdf": {
    "pdf_sha256": "109fe5e550a9ad92b677b16c5bb303259b24c0e6d4dc2e03c9b20b9d6dbe0cee",
-   "clauses_sha256": "8b0ed1d72436c7995d32e0fcec8c1fd48c7ec71449d16e5df36a2ff3e61fb928",
-   "clauses": 97,
+   "clauses_sha256": "933f57842dc7a1be91e05c3b61c7e0a994a8962e17dfb4e17df3d9e2dc665ecb",
+   "clauses": 99,
    "tokens": 5007,
    "flagged": [
     {
@@ -6470,28 +5570,10 @@
      "discrepancy": "-pi 023 2 page ii of ii 25 september 2007 | -note some more details and specific items related to testing in chemical physical chemical and microbiological laboratories to be investigated in addition to above described subjects are involved in supplements 1 and 2 supplement no 1 to pi 023 1 aide memoire for inspections of pharmaceutical quality control laboratories gmp inspection in chemical and physical chemical laboratories supplement no 2 to pi 023 1 aide memoire for inspections of pharmaceutical quality control laboratories gmp inspection in microbiological laboratories"
     },
     {
-     "ref": "Table 3 5.2.",
-     "kind": "table_row",
-     "tokens": 115,
-     "discrepancy": "-premises continued area operation items notes crucial questions show me supporting"
-    },
-    {
      "ref": "Table 3 6.1.",
      "kind": "table_row",
      "tokens": 158,
      "discrepancy": "-supplies continued area operation items notes show me crucial questions supporting documents"
-    },
-    {
-     "ref": "page 9",
-     "kind": "uncovered",
-     "tokens": 4,
-     "discrepancy": "+show me supporting documents"
-    },
-    {
-     "ref": "page 10",
-     "kind": "uncovered",
-     "tokens": 4,
-     "discrepancy": "+show me supporting documents"
     },
     {
      "ref": "page 18",
@@ -6883,9 +5965,9 @@
   },
   "pics-pi041-1-data-integrity.pdf": {
    "pdf_sha256": "13952b56d329c3806b79e4903bc1e8b53854f0e330c7ec31237d00f8409302e8",
-   "clauses_sha256": "58af3c274faa055bd3c949eb40bd31b5d6ceb53e26d14644a616b36166679c7a",
-   "clauses": 401,
-   "tokens": 22809,
+   "clauses_sha256": "50cfb6db14fdffea25b755ac1602b29232d292ad66232bceeb7387f6859afbbe",
+   "clauses": 360,
+   "tokens": 22813,
    "flagged": [
     {
      "ref": "8.4",
@@ -7267,123 +6349,105 @@
   },
   "who-trs1010-a8-hvac-nonsterile.pdf": {
    "pdf_sha256": "1fe8543d62cdfabe23a4087532c3ed3769ab57a494272c7111e4f58b76e8f62b",
-   "clauses_sha256": "0f00b43c40e1cc5e611f10d8d3f70c88eb66927d295e494adf41274451937e51",
-   "clauses": 121,
-   "tokens": 6124,
+   "clauses_sha256": "c5aacafde410e048e75e7fa3789cd02f874e7551e9c90bd1246220617a927d3a",
+   "clauses": 125,
+   "tokens": 6209,
    "flagged": [
     {
      "ref": "7.11",
      "kind": "clause",
-     "tokens": 110,
-     "discrepancy": "-1.8 | +annex table | -elbat aseicnelaviuqe etamixorppa sdradnats tset retlfi fo nosirapmoc 0101 on seires troper lacinhcet ohw deunitnoc 1.8 a elbat deunitnoc 1.8 a elbat tnerruc si noitacfiissalc eht taht erusne a ezis elcitrap gnitartenep tsom sppm retlfi ot setaler | +8.1 comparison of filter test standards approximate equivalenciesa eurovent 4 5 ashrae eurovent 4 5 eurovent 4 5 rating 52.2 ashrae 52.1 ashrae 52.1 en 779 en 1822 bs 6540 part 1 bs 6540 part 1 36492 osi superseded merv average arrestance average dust spot mpps integral rating am % efficiency overall efficiency en rating superseded em % % superseded 99.999995 u 17 9002 | -dna | +75 e 99.99995 u 16 65 e eu 14 99.9995 u 15 55 e eu 13 99.995 h 14 45 e eu 12 99.95 h 13 35 e eu 11 99.5 e 12 25 e eu 10 95 e 11 15 e eu | +merv 16 > 95 85 e 10 eu 9 merv 15 95 | -ot 1 g sessalc retlfi ot setaler 977 ne sdradnats tset | +9 | -dna 9002 2281 ne eht ot etaler evoba ot derrefer snoitacfiissalc retlfi eht eton 71 u ot 01 e sessalc"
+     "tokens": 106,
+     "discrepancy": "-7.11 where airlocks are used the pressure differentials selected should be appropriate when selecting room pressure differentials transient variations such as machine extract systems and their impact should be taken into consideration table a 8.1 comparison of filter test standards approximate equivalencies a table a 8.1 continued wh table a 8.1 continued"
     },
     {
-     "ref": "Table 1 ISO 29463",
-     "kind": "table_row",
-     "tokens": 2,
+     "ref": "Table 1 header",
+     "kind": "table_header",
+     "tokens": 30,
      "discrepancy": "-iso 29463"
     },
     {
-     "ref": "Table 1 EN 779 & EN 1822",
+     "ref": "Table 1 EU 14 EU 13 EU 12 EU 11 EU 10 EU 9",
      "kind": "table_row",
-     "tokens": 47,
-     "discrepancy": "-779 1822 1822 2009 u 17 99.999995 u 16 99.99995 u 15 99.9995 h 14 99.995 h 13 99.95 e 99.5 e e 85 779 2012 f 9 f 8 f 7"
+     "tokens": 37,
+     "discrepancy": "-99.999995 99.99995 17 en 1822 2009 75 65 65"
     },
     {
-     "ref": "Table 1 Eurovent 4/5 ASHRAE 52.1 BS6540 Part 1",
+     "ref": "Table 1 EU 9 EU 8 EU 7",
      "kind": "table_row",
-     "tokens": 22,
-     "discrepancy": "-> 95 95 90 85 80"
-    },
-    {
-     "ref": "Table 1 Eurovent 4/5 ASHRAE 52.1 BS6540 Part 1 #2",
-     "kind": "table_row",
-     "tokens": 18,
-     "discrepancy": "-> 98 > 98"
-    },
-    {
-     "ref": "Table 1 ASHRAE 52.2",
-     "kind": "table_row",
-     "tokens": 12,
-     "discrepancy": "-ashrae 52.2 rating"
-    },
-    {
-     "ref": "Table 2 ISO 29463",
-     "kind": "table_row",
-     "tokens": 2,
-     "discrepancy": "-iso 29463"
+     "tokens": 14,
+     "discrepancy": "-8 7 en 779 2012"
     },
     {
      "ref": "Table 2 header",
      "kind": "table_header",
-     "tokens": 9,
-     "discrepancy": "-2012"
-    },
-    {
-     "ref": "Table 2 row 3",
-     "kind": "table_row",
-     "tokens": 13,
-     "discrepancy": "-mpps integral overall efficiency %"
-    },
-    {
-     "ref": "Table 2 Eurovent 4/5 ASHRAE 52.1 BS6540 Part 1",
-     "kind": "table_row",
      "tokens": 30,
-     "discrepancy": "-70 65 60 55 50 40 35 30 25 20 < 20"
-    },
-    {
-     "ref": "Table 2 Eurovent 4/5 ASHRAE 52.1 BS6540 Part 1 #2",
-     "kind": "table_row",
-     "tokens": 37,
-     "discrepancy": "-eurovent ashrae 52.1 bs 6540 part 1 average arrestance am % superseded"
-    },
-    {
-     "ref": "Table 2 ASHRAE 52.2",
-     "kind": "table_row",
-     "tokens": 20,
-     "discrepancy": "-ashrae 52.2 rating"
-    },
-    {
-     "ref": "Table 3 ISO 29463",
-     "kind": "table_row",
-     "tokens": 2,
      "discrepancy": "-iso 29463"
+    },
+    {
+     "ref": "Table 2 EU 6",
+     "kind": "table_row",
+     "tokens": 7,
+     "discrepancy": "-eu 6"
+    },
+    {
+     "ref": "Table 2 EU 6 EU 5 EU 4 EU 3",
+     "kind": "table_row",
+     "tokens": 29,
+     "discrepancy": "-4 3 en 779 2012"
+    },
+    {
+     "ref": "Table 2 EU 3",
+     "kind": "table_row",
+     "tokens": 11,
+     "discrepancy": "-80 <"
     },
     {
      "ref": "Table 3 header",
      "kind": "table_header",
-     "tokens": 9,
-     "discrepancy": "-2012"
+     "tokens": 30,
+     "discrepancy": "-iso 29463"
     },
     {
-     "ref": "Table 3 row 3",
+     "ref": "Table 3 EU 2 EU 1",
      "kind": "table_row",
-     "tokens": 9,
-     "discrepancy": "-g 2 g 1"
+     "tokens": 10,
+     "discrepancy": "-4 75 en 779 2012"
     },
     {
-     "ref": "Table 3 Eurovent 4/5 ASHRAE 52.1 BS6540 Part 1 #2",
-     "kind": "table_row",
-     "tokens": 19,
-     "discrepancy": "-<"
+     "ref": "page 15",
+     "kind": "uncovered",
+     "tokens": 41,
+     "discrepancy": "+annex table a 8.1 comparison of filter test standards approximate equivalenciesa eurovent 4 5 ashrae eurovent 4 5 eurovent 4 5 rating 52.2 ashrae 52.1 ashrae 52.1 en 779 en 1822 bs 6540 part 1 bs 6540 part 1 36492 osi"
     },
     {
-     "ref": "Table 3 ASHRAE 52.2",
-     "kind": "table_row",
-     "tokens": 12,
-     "discrepancy": "-ashrae 52.2 rating"
+     "ref": "page 15",
+     "kind": "uncovered",
+     "tokens": 13,
+     "discrepancy": "+99.999995 u 17 9002 2281 ne 75 e 99.99995 u 16 65 e"
+    },
+    {
+     "ref": "page 15",
+     "kind": "uncovered",
+     "tokens": 4,
+     "discrepancy": "+in table row: 99.9995"
+    },
+    {
+     "ref": "page 15",
+     "kind": "uncovered",
+     "tokens": 4,
+     "discrepancy": "+in table row: 99.5"
+    },
+    {
+     "ref": "page 15",
+     "kind": "uncovered",
+     "tokens": 4,
+     "discrepancy": "+in table row: 12"
     },
     {
      "ref": "page 15",
      "kind": "uncovered",
      "tokens": 3,
-     "discrepancy": "+90 f 8"
-    },
-    {
-     "ref": "page 15",
-     "kind": "uncovered",
-     "tokens": 10,
-     "discrepancy": "+> 98 85 f 7 eu 7 > 98 80"
+     "discrepancy": "+2102 977 ne"
     },
     {
      "ref": "page 16",
@@ -7394,68 +6458,44 @@
     {
      "ref": "page 16",
      "kind": "uncovered",
-     "tokens": 3,
-     "discrepancy": "+36492 osi superseded"
-    },
-    {
-     "ref": "page 16",
-     "kind": "uncovered",
-     "tokens": 3,
-     "discrepancy": "+75 eu 6"
-    },
-    {
-     "ref": "page 16",
-     "kind": "uncovered",
-     "tokens": 6,
-     "discrepancy": "+70 m 6 2102 977 ne"
-    },
-    {
-     "ref": "page 16",
-     "kind": "uncovered",
-     "tokens": 4,
-     "discrepancy": "+65 > 95 60"
+     "tokens": 5,
+     "discrepancy": "+in table row: 36492 osi"
     },
     {
      "ref": "page 16",
      "kind": "uncovered",
      "tokens": 5,
-     "discrepancy": "+> 95 55 eu 5"
+     "discrepancy": "+in table row: > 95"
+    },
+    {
+     "ref": "page 16",
+     "kind": "uncovered",
+     "tokens": 3,
+     "discrepancy": "+2102 977 ne"
     },
     {
      "ref": "page 16",
      "kind": "uncovered",
      "tokens": 5,
-     "discrepancy": "+> 95 50 m 5"
+     "discrepancy": "+in table row: > 95"
     },
     {
      "ref": "page 16",
      "kind": "uncovered",
-     "tokens": 6,
-     "discrepancy": "+> 95 45 > 95 40"
+     "tokens": 5,
+     "discrepancy": "+in table row: > 95"
     },
     {
      "ref": "page 16",
      "kind": "uncovered",
-     "tokens": 4,
-     "discrepancy": "+> 90 35 eu"
+     "tokens": 3,
+     "discrepancy": "+6 90 25"
     },
     {
      "ref": "page 16",
      "kind": "uncovered",
-     "tokens": 4,
-     "discrepancy": "+> 90 30 g"
-    },
-    {
-     "ref": "page 16",
-     "kind": "uncovered",
-     "tokens": 4,
-     "discrepancy": "+90 25 eu 3"
-    },
-    {
-     "ref": "page 16",
-     "kind": "uncovered",
-     "tokens": 7,
-     "discrepancy": "+85 20 g 3 80 < 20"
+     "tokens": 3,
+     "discrepancy": "+80 < 20"
     },
     {
      "ref": "page 17",
@@ -7466,50 +6506,26 @@
     {
      "ref": "page 17",
      "kind": "uncovered",
-     "tokens": 3,
-     "discrepancy": "+36492 osi superseded"
-    },
-    {
-     "ref": "page 17",
-     "kind": "uncovered",
      "tokens": 5,
-     "discrepancy": "+in table row: en rating"
-    },
-    {
-     "ref": "page 17",
-     "kind": "uncovered",
-     "tokens": 5,
-     "discrepancy": "+2102 977 ne eu 2"
-    },
-    {
-     "ref": "page 17",
-     "kind": "uncovered",
-     "tokens": 21,
-     "discrepancy": "+ensure that the classification is current mpps most penetrating particle size note the filter classifications referred to above relate to the"
-    },
-    {
-     "ref": "page 17",
-     "kind": "uncovered",
-     "tokens": 5,
-     "discrepancy": "+in table row: 2009 and"
-    },
-    {
-     "ref": "page 17",
-     "kind": "uncovered",
-     "tokens": 5,
-     "discrepancy": "+in table row: test standards"
+     "discrepancy": "+in table row: 36492 osi"
     },
     {
      "ref": "page 17",
      "kind": "uncovered",
      "tokens": 4,
-     "discrepancy": "+relates to filter classes"
+     "discrepancy": "+in table row: merv"
     },
     {
      "ref": "page 17",
      "kind": "uncovered",
-     "tokens": 10,
-     "discrepancy": "+1822 relates to filter classes e 10 to u 17"
+     "tokens": 4,
+     "discrepancy": "+75 2102 977 ne"
+    },
+    {
+     "ref": "page 17",
+     "kind": "uncovered",
+     "tokens": 4,
+     "discrepancy": "+in table row: 65"
     }
    ]
   },
@@ -7723,15 +6739,15 @@
   },
   "who-trs1033-a2-hbel-cleaning.pdf": {
    "pdf_sha256": "7d49039a330539a9239252dcd190f92eecd7e81dfa7943528b24be354c2db203",
-   "clauses_sha256": "12e93368d9aa23a50038f4f660c93e8e53530e3326ac90b22bdecf5a38ea7351",
+   "clauses_sha256": "e5c3173c39dc8e5704ae3d4752a339b5c1abcdcaf155a19797a88f0ef51c501e",
    "clauses": 51,
-   "tokens": 5276,
+   "tokens": 5273,
    "flagged": [
     {
      "ref": "Appendix 1",
      "kind": "section",
-     "tokens": 481,
-     "discrepancy": "+pde | -pde | +msc a g | -msc a g | -1202 3301 on who technical report serie | +api pde ug day mdd mg day batch size kg shared equipment surface m 2 1 2 3 4 5 | +mssr | -mssr"
+     "tokens": 478,
+     "discrepancy": "+pde | -pde | +msc a g | -msc a g | -who technical report serie | +api pde ug day mdd mg day batch size kg shared equipment surface m 2 1 2 3 4 5 | +mssr | -mssr"
     },
     {
      "ref": "Table 2 Pre- Ce- ding Product a",
@@ -7770,9 +6786,9 @@
   },
   "who-trs1044-a2-sterile.pdf": {
    "pdf_sha256": "44fefcf2cf25b1e50b7816eed3ce0a8fde6b7a70e96cdc6aeeb1e0fb64fd033b",
-   "clauses_sha256": "10feb3828c8aa4ad0fa7afd35329e9ef902ade692ec69e01c6f1b459ba3b2cc8",
-   "clauses": 315,
-   "tokens": 28707,
+   "clauses_sha256": "7e6df66692b98cbb83d1133210aa69eb26eab152f6804d696cefedf19a835b48",
+   "clauses": 323,
+   "tokens": 28726,
    "flagged": [
     {
      "ref": "_unnumbered:1",
@@ -7801,8 +6817,8 @@
     {
      "ref": "8.10",
      "kind": "clause",
-     "tokens": 229,
-     "discrepancy": "-2 02 4 who technical report series no 104 | +grade operation | +grade operation"
+     "tokens": 222,
+     "discrepancy": "-2 104 | +grade operation | +grade operation"
     },
     {
      "ref": "9.15",
@@ -7817,10 +6833,16 @@
      "discrepancy": "+grade air sample cfu m 3 settle plates diam 90 mm cfu 4 hoursa contact plates diam 55 mm cfu plate b glove print incl 5 fingers on both hands cfu glove"
     },
     {
-     "ref": "Table 1 Grade",
+     "ref": "Table 1 A",
      "kind": "table_row",
-     "tokens": 58,
-     "discrepancy": "-predetermined specified specified"
+     "tokens": 11,
+     "discrepancy": "-specified specified"
+    },
+    {
+     "ref": "Table 1 B",
+     "kind": "table_row",
+     "tokens": 10,
+     "discrepancy": "-specified a"
     },
     {
      "ref": "Table 2 Grade",
@@ -7858,15 +6880,15 @@
   },
   "who-trs1052-a4-qc-labs.pdf": {
    "pdf_sha256": "2f851a05e5bf2d67712ce7f7892e764f9ff7c5f6f62386c397df1e2c67e490ef",
-   "clauses_sha256": "5d3725f3a86ff760d201117fbe6b646f1e031ebe7854684ceda93b8501cdd79b",
+   "clauses_sha256": "ffe86d53be1382ac481c07242d80be5dba7c364a766da3606a833974c541b38d",
    "clauses": 382,
-   "tokens": 25530,
+   "tokens": 25516,
    "flagged": [
     {
      "ref": "Appendix 1",
      "kind": "section",
-     "tokens": 918,
-     "discrepancy": "-who technical report series no 1052 2024 | +o t e c h r e p o r t s e s n o 1 0 5 2 2 0 2 4 first stage laboratory continued optional items quantity | +o t e c h r e p o r t s e s n o 1 0 5 2 2 0 2 4 medium sized laboratory continued equipment and major instruments quantity | +1 | +2 | +equipment for microbiology unit | +o t e c h r e p o r t s e s n o 1 0 5 2 2 0 2 4 equipment for pharmacognosy phytochemistry unit continued quantity"
+     "tokens": 911,
+     "discrepancy": "+o t e c h r e p o r t s e s n o 1 0 5 2 2 0 2 4 first stage laboratory continued optional items quantity | +o t e c h r e p o r t s e s n o 1 0 5 2 2 0 2 4 medium sized laboratory continued equipment and major instruments quantity | +1 | +2 | +equipment for microbiology unit | +o t e c h r e p o r t s e s n o 1 0 5 2 2 0 2 4 equipment for pharmacognosy phytochemistry unit continued quantity"
     },
     {
      "ref": "Appendix 2",
@@ -7895,8 +6917,8 @@
     {
      "ref": "Appendix 3 8",
      "kind": "clause",
-     "tokens": 441,
-     "discrepancy": "-4202 2501 on who technical report series | +test solution"
+     "tokens": 434,
+     "discrepancy": "+test solution"
     }
    ]
   },
@@ -7916,15 +6938,15 @@
   },
   "who-trs1060-a3-excipients.pdf": {
    "pdf_sha256": "9b332942d33373bcde9a3fe3a672f1a4f08187fc1a29b4917245d21effc47747",
-   "clauses_sha256": "d91fe42e165dae35c9c1667f0bd22d2e986eefbed11e887c2770bed445d35745",
+   "clauses_sha256": "ea9ed440afc5217f850df8fea0b7db203b83fe629b8d685f1961e4716ac282d1",
    "clauses": 272,
-   "tokens": 14241,
+   "tokens": 14229,
    "flagged": [
     {
      "ref": "Appendix 1 7.2 #2",
      "kind": "clause",
-     "tokens": 39,
-     "discrepancy": "-annex x 3 table continued wh o expert committee on specifications for pharmaceutical preparations fifty eighth report table continued"
+     "tokens": 27,
+     "discrepancy": "-x 3 table continued wh table continued"
     },
     {
      "ref": "Appendix 1 7.3 #2",
@@ -8200,14 +7222,14 @@
   },
   "who-trs953-a2-app1-stability-conditions.pdf": {
    "pdf_sha256": "ab90eb63d749b7576edfdc87a2e8eeefc0ad2d8f6abc4421d7d2fd9159293551",
-   "clauses_sha256": "8bec2363f774cf9012bc9cf843645c9e9b26e555e3b00807a5a6c9ef96164061",
-   "clauses": 208,
+   "clauses_sha256": "da69b712ffeb4fba2db879a8d5bc53a2a87098796e31416d4a3ac6729064c288",
+   "clauses": 205,
    "tokens": 1999,
    "flagged": [
     {
      "ref": "_unnumbered:1",
      "kind": "unnumbered",
-     "tokens": 196,
+     "tokens": 224,
      "discrepancy": "-stability testing of active pharmaceutical ingredients and finished pharmaceutical products stability conditions for who member states by region 1 update march 2021 previously included as table 2 in stability testing of active pharmaceutical ingredients and finished pharmaceutical products annex 2 to who technical report series no 953 regional office for the western pacific wpro"
     }
    ]
@@ -8962,15 +7984,39 @@
   },
   "who-trs981-a2-qrm.pdf": {
    "pdf_sha256": "62f9f541d35095ad97e8c6be53745ca90229372c74f7d3cbf45f1d0db2427e53",
-   "clauses_sha256": "add77a375680a64161cb367a8606aa9ba23d7283902c553cb4c5d74ccf4553a5",
-   "clauses": 46,
-   "tokens": 10016,
+   "clauses_sha256": "51f31ffcbb1e8c390cdb21956923b3ec225da5c0ed9df218d55eced3a7e29d38",
+   "clauses": 55,
+   "tokens": 9973,
    "flagged": [
     {
-     "ref": "6",
+     "ref": "1 #2",
      "kind": "clause",
-     "tokens": 930,
-     "discrepancy": "+4 8 12 16 20 | +3 6 9 12 15 | +2 4 6 8 10 | -t 4 ffo fwfsz 1 negligible t p sfhvmbupsz jttvf | -t p fõfdu po boe opu | +1 negligible | -t 4 ffo fwfsz 2 marginal t bz sfrvjsf 3 | +2 marginal | -t % fdjtjpo up sfmfbtf | -t 4 ffo fwfsz 3 moderate t 3 jotqfdujpo | +3 moderate | -efmdjfodz rvjuf | -t jnjufe qspevdu | -t 4 ffo up 4 critical t 3 jotqfdujpo nbz | -conclude serious | +year 4 critical conclude serious | -year t jlfmz qspevdu sfdbmm | -t 4 ffo tfwfsbm 5 catastrophic t ogpsdfnfou bdujpo | +5 catastrophic | -t mpcbm qspevdu sfdbmm | -64 xfc tjuf iuuq xxx qrsj psh joefy btq 123 ibt ljoemz bhsffe up uif vtf pg jut | -% jbhsbn bobmztjt t 4 jnqmf ufdiojrvft uibu t compilation of t | +risk management tool description attributes potential applications tools | +check sheets process mapping | +gather and organize data structure risk management processes and facilitate decision making compilation of | -t check sheets gather and organize | -t process mapping data structure risk | -t bvtf fõfdu ejbhsbnt management processes | -and facilitate decision | -making | -t | +filtering | -t | +rank risks typically involves evaluation of multiple risk and weighting factors and risk score | -filtering rank risks | -t typically involves | -evaluation of multiple t | -ejwfstf rvboujubujwf boe | -rvbmjubujwf gbdupst gps fbdi dpotfrvfodft bsf ejwfstf risk and weighting factors | -and risk score | -t | -t investigate product | -complaints | -t wbmvbuf efwjbujpot t | -t | +investigate product complaints | -table 3 continued 3102 189 on seires troper lacinhcet ohw continues table 3 continued material"
+     "tokens": 20,
+     "discrepancy": "+10 30 years | -10 30 years"
+    },
+    {
+     "ref": "2",
+     "kind": "clause",
+     "tokens": 19,
+     "discrepancy": "+5 10 years | -5 10 years"
+    },
+    {
+     "ref": "3 #2",
+     "kind": "clause",
+     "tokens": 25,
+     "discrepancy": "+1 5 years | -1 5 years"
+    },
+    {
+     "ref": "4 #2",
+     "kind": "clause",
+     "tokens": 27,
+     "discrepancy": "+occur more than once a year | -occur more | -than once a | -year"
+    },
+    {
+     "ref": "5 #2",
+     "kind": "clause",
+     "tokens": 396,
+     "discrepancy": "+certain | +times a year | -certain times a year | +22201 3042 | +flowcharts check sheets process mapping cause effect diagrams | -t compilation of t flowcharts | +gather and organize data structure risk management processes and facilitate decision making compilation of | -t check sheets gather and organize | -t process mapping data structure risk | -cause effect diagrams management processes | -and facilitate decision | -making | -t | +filtering | -t | +rank risks typically involves evaluation of multiple diverse quantitative and qualitative factors for each risk and weighting factors and risk score | -filtering rank risks | -t typically involves | -evaluation of multiple t | -diverse quantitative and | -qualitative factors for each | -risk and weighting factors | -and risk score | -t | -t investigate product | -complaints | -evaluate deviations t | -t | +investigate product complaints evaluate deviations | -table 3 continued continues table 3 continued material"
     },
     {
      "ref": "_unnumbered:2",
@@ -8979,40 +8025,22 @@
      "discrepancy": "+table 3 continued o t e c h r e p o r t s e s n o 9 8 1 2 0 1 3"
     },
     {
-     "ref": "Table 3 Hazard operability analysis (HAZOP)",
-     "kind": "table_row",
-     "tokens": 52,
-     "discrepancy": "-t tool t uses ufdiojrvf up ifmq jefoujgz t gbdjmjujft boe frvjqnfou t"
-    },
-    {
-     "ref": "Table 3 Hazard analysis and critical control…",
-     "kind": "table_row",
-     "tokens": 84,
-     "discrepancy": "-t identify fõfdujwfmz qsfwfou ib bse t bottom up t nqibtj ft tusfohui pg t t valuable t assessment"
-    },
-    {
-     "ref": "Table 3 'BJMVSF\u0001NPEFT\u0001FõFDUT\u0001 BOBMZTJT\u0001 '.&\"",
-     "kind": "table_row",
-     "tokens": 83,
-     "discrepancy": "-bjmvsf npeft fõfdut bobmztjt assumes assesses uif qspcbcmf fõfdu wbmvbuf frvjqnfou"
-    },
-    {
-     "ref": "Table 4 'BJMVSF\u0001NPEFT\u0001FõFDUT\u0001 BOBMZTJT\u0001 '.&\"",
-     "kind": "table_row",
-     "tokens": 29,
-     "discrepancy": "-bjmvsf npeft fõfdut bobmztjt t highly t"
-    },
-    {
-     "ref": "Table 4 Source: Based on reference 9. This…",
-     "kind": "table_row",
-     "tokens": 50,
-     "discrepancy": "-64 xfc tjuf iuuq xxx qrsj psh joefy btq 123 ibt ljoemz bhsffe up uif vtf pg jut"
-    },
-    {
      "ref": "page 30",
      "kind": "uncovered",
      "tokens": 4,
-     "discrepancy": "+table 3 continued continues"
+     "discrepancy": "+in table row: fmea"
+    },
+    {
+     "ref": "page 31",
+     "kind": "uncovered",
+     "tokens": 4,
+     "discrepancy": "+in table row: fmea"
+    },
+    {
+     "ref": "page 31",
+     "kind": "uncovered",
+     "tokens": 5,
+     "discrepancy": "+in table row: 22201 3042"
     },
     {
      "ref": "page 2",
@@ -9287,9 +8315,9 @@
   },
   "who-trs996-a4-app1-model-inspection-report.pdf": {
    "pdf_sha256": "61f2b233e1064ead38a209d663fb5cf051dba9c8757b5204fe1b6d7893c9a400",
-   "clauses_sha256": "54687bf492a3e30f193ef342da4f3c779ee07ccb5492fd3bf66eccb9ed4f32b5",
-   "clauses": 84,
-   "tokens": 3886,
+   "clauses_sha256": "2a3d2ee2b277b2dd428fa34a3f9d8b005d8cc6d66633916dbdb2ebc996560dd1",
+   "clauses": 85,
+   "tokens": 3891,
    "flagged": [
     {
      "ref": "Appendix 1",
@@ -9356,18 +8384,6 @@
      "kind": "section",
      "tokens": 96,
      "discrepancy": "-annex 3 | +the inspection | -the inspection | +due for planning purposes | -due for planning | -purposes"
-    },
-    {
-     "ref": "page 16",
-     "kind": "uncovered",
-     "tokens": 4,
-     "discrepancy": "+in table row: category"
-    },
-    {
-     "ref": "page 16",
-     "kind": "uncovered",
-     "tokens": 5,
-     "discrepancy": "+in table row: the site"
     },
     {
      "ref": "page 2",
