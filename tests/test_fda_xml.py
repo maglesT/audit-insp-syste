@@ -354,6 +354,23 @@ class LeadInWordForms(unittest.TestCase):
         self.assertEqual(vision.lead_in_missing(change, "Use a new product code when the drug's name changes."), [])
         self.assertTrue(vision.lead_in_missing(change, "Use a new product code for the drug."))
 
+    def test_review_cases_stay_flagged(self):
+        import vision
+        m = vision.lead_in_missing
+        self.assertTrue(m("Unless you are a small business, keep the records:", "As a small business, keep the records."))
+        self.assertTrue(m("If it is a combination product, the following apply:", "Label the drug as a combination product."))
+        self.assertTrue(m("Where the firm is a contract manufacturer:", "The firm keeps records as the contract manufacturer requires."))
+        self.assertTrue(m("If you are a contract manufacturer:", "Keep the records, as a contract manufacturer may be audited."))
+        self.assertTrue(m("If any of the following occur during sterile drug manufacturing:", "If a deviation occurs, investigate it."))
+        self.assertTrue(m("Where the products are manufactured for each of the following markets in the European Union:",
+                          "Where products are manufactured, test them."))
+        self.assertTrue(m("If the product is terminally sterilized:", "If the product is terminally sterile, test it."))
+        self.assertTrue(m("If the method is validated:", "If the method is valid, use it."))
+        self.assertTrue(m("If the drug is not sterile:", "If the drug is sterile, test it."))
+        self.assertTrue(m("Only if the batch fails:", "If the batch fails, investigate."))
+        self.assertEqual(m("If you process the drug:", "When processing the drug, test it."), [])
+        self.assertEqual(m("If the product is sterilized:", "When sterilization is used for the product, ..."), [])
+
     def test_qualifier_by_stem(self):
         lead = ("such other control systems for the firm's operations as are necessary to prevent contamination or "
                 "mixups during the course of the following procedures:")
