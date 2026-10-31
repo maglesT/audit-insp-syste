@@ -36,7 +36,7 @@ Columns: items = checklist items drafted; auto = items passing the automatic rou
 | 18 | Questions and Answers on CGMP for Drugs: Control of Components and Drug Product Containers and Closures | `fda-cgmp-qa-components-containers-closures.html` | must | ALL | - | not started | | | |
 | 19 | Questions and Answers on CGMP for Drugs: Equipment | `fda-cgmp-qa-equipment.html` | must | ALL | - | verified | 57 | 51 | 6 |
 | 20 | Questions and Answers on CGMP for Drugs: General Provisions | `fda-cgmp-qa-general-provisions.html` | must | ALL | - | verified | 0 | 0 | 0 |
-| 21 | Questions and Answers on CGMP for Drugs: Holding and Distribution | `fda-cgmp-qa-holding-distribution.html` | must | ALL | - | not started | | | |
+| 21 | Questions and Answers on CGMP for Drugs: Holding and Distribution | `fda-cgmp-qa-holding-distribution.html` | must | ALL | - | verified | 9 | 7 | 2 |
 | 22 | Questions and Answers on CGMP for Drugs: Laboratory Controls | `fda-cgmp-qa-laboratory-controls.html` | must | ALL | - | not started | | | |
 | 23 | Questions and Answers on CGMP for Drugs: Production and Process Controls | `fda-cgmp-qa-production-process-controls.html` | must | ALL | - | not started | | | |
 | 24 | Questions and Answers on CGMP for Drugs: Records and Reports | `fda-cgmp-qa-records-reports.html` | must | ALL | - | not started | | | |

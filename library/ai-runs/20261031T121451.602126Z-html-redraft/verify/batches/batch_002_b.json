@@ -1,0 +1,104 @@
+{
+ "role": "b",
+ "instructions": "You are a second, independent auditor. Check one checklist item against the FDA web page paragraph it claims to come from. You get\nthe unit's paragraphs (reference and exact text of the page; \"context\" entries are headings) and the item. Start from the TEXT:\nread the cited paragraph, the paragraphs its quote runs into, and its lead-in fully, then compare the item.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the lead-in above a list\nitem (the paragraph ending \":\" above it). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph expects what the statement asks for (an instruction\n  to the investigator, \"Determine whether the firm validated ...\", expects the firm to have that practice), the statement\n  adds nothing and omits nothing of that obligation, the strength (a legal requirement: shall/must/required = mandatory;\n  should, FDA expects/recommends, an inspection point = recommended; may/acceptable = optional; a list item takes\n  its lead-in's) matches, and the text applies to every listed plant\n  type (INJ = sterile injectables: text limited to non-sterile products does not apply to\n  INJ; text limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+ "units": [
+  {
+   "unit": "Q17",
+   "paragraphs": [
+    {
+     "ref": "Q17",
+     "text": "Is it ever appropriate to perform a “trial injection” of samples? No. FDA has observed at some drug manufacturers the practice of a trial injection where a sample of a lot is injected into the chromatographic system with the intention of obtaining an unofficial result (e.g., passing or failing). This is in contrast to the appropriate practice where an injection of a standard is performed with the sole intention of determining if the chromatographic system is fit for purpose. The injection of trial samples is not acceptable, in part, because all data from analysis of product samples must be retained and reviewed (21 CFR 211.22, 211.165, 211.192, and 211.194). Furthermore, uncertainty about system performance may also suggest a potential insufficiency of the method’s design, validation status, analyst training, equipment maintenance, or other fundamental problem(s) in the laboratory that should be promptly corrected."
+    },
+    {
+     "ref": "Q17.1",
+     "text": "Column conditioning does not involve injecting a sample from a lot and is not considered a trial injection. When its use is scientifically justified, column conditioning should be fully described in the method validation package as to the conditions needed to make the measurement (i.e., based on data from the method validation) and should be clearly defined in an approved and appropriate procedure. Only validated test methods that demonstrate accuracy, sensitivity, specificity, and reproducibility may be used to test drugs (21 CFR 211.165(e)). Consistent and unambiguous injection nomenclature should be used, and all data from the column conditioning, including audit trail data, should be maintained and subject to review."
+    },
+    {
+     "ref": "Q17.2",
+     "text": "Therefore, FDA considers it a violative practice to perform a trial injection (including under the guise of column conditioning). FDA also considers it a violative practice to use an actual sample in test, prep, or equilibration runs as a means of disguising testing into compliance."
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q17#1",
+   "unit": "Q17",
+   "hash": "45471e4a562c399f",
+   "item": {
+    "statement": "Keep and review every piece of data generated from analysing product samples.",
+    "quote": "all data from analysis of product samples must be retained and reviewed",
+    "clause_number": "Q17",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-laboratory-controls.html:Q17#2",
+   "unit": "Q17",
+   "hash": "6f4c776a9e6fea64",
+   "item": {
+    "statement": "Do not inject trial samples (samples of a lot run to get an unofficial result) into chromatographic systems.",
+    "quote": "The injection of trial samples is not acceptable",
+    "clause_number": "Q17",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  }
+ ]
+}
