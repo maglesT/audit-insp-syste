@@ -97,7 +97,7 @@ gloves): to inspect before scaling.
 into combined phrases (the prompt now says to quote every header row in order; drafted before that line was
 added), CDSCO rows quoted without their long rating columns, and Q3C Table 2 rows with a header from the page
 before. They go to the "text layer differs" list.
-**Usage:** drafting about 840 k tokens (about 17 k per page, 1.6 k per item); verifiers about 742 k for 246 items
+**Usage:** drafting about 830 k tokens (about 17 k per page, 1.6 k per item); verifiers about 742 k for 246 items
 (3.0 k per item).
 
 **Proposed before scaling:** (1) coverage counts "may" sentences only when they grant a permission to the site

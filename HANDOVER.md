@@ -1,37 +1,32 @@
 # Handover: read this first in every new session
 
-Last updated: 31 October 2026, session 6 (D45: page-based vision drafting, clause store frozen; vision trial in progress).
+Last updated: 31 October 2026, session 6 (D45/D46 page-based vision drafting; trial and re-run done; next: pre-scaling fixes, Layer 1 on pages, 0c, 0d).
 
 ## START HERE (session 7)
-- **D45 (owner, 31 Oct) changes the plan: checklist items are drafted from PDF PAGES with vision; the parsed clause
-  store, parser and fidelity work are FROZEN** (kept for search/graph cross-checks; no more parser fixes unless one
-  breaks obligation coverage). Read D43-D45 in `docs/decisions.md`. CLAUDE.md now lets drafting/verifier agents get
-  page images.
-- **Done this session:** PR #33 merged (D43: Table Transformer trial; adopted on 2 of 34 pages, `tools/parse/tatr.py`,
-  `library/tables-tatr/`). Per-cell fidelity comparison built and **parked** on branch `fidelity-per-cell` (D44, not
-  merged). Quote check `tools/library/quotes.py` (second reading pdfminer/html.parser; 715 of 716 existing quotes
-  pass; the miss, QS-117, has a PE 009 page footer inside its quote).
-- **In progress on branch `quote-check`:** `tools/pages/vision.py` (render pages at 150 dpi with pypdfium2, page text
-  layer, drafting/verifier batches for agents, checks: quote in pdftotext AND pdfminer page text, clause number on
-  page, numbers/strength/conditions, page coverage of obligation sentences; "text layer differs" list) and
-  prompts in `tools/pages/prompts/`. **Trial run:** `library/ai-runs/20261031T075617.244703Z-vision-draft/`
-  (10 documents x 5 pages; images in `work/vision-pages/`, not in git, sha256 in `pages.json`). Steps: drafting
-  agents answer `batches/batch_NNN.json` -> `answers/` (max 3 at a time); `vision.py ingest-draft RUN`;
-  `prepare-verify RUN`; verifier agents A/B answer `verify/batches` -> `verify/answers`; `ingest-verify RUN`;
-  then report to the owner/coordinator (pass share, text-layer-differs count, coverage gaps, verifier agreement,
-  usage per page vs text-only drafting) **before scaling**.
-- **Trial DONE (31 Oct), results in `docs/vision-trial.md`:** 481 items from 50 pages; 88 % of quotes (strict tokens, after review) in both
-  readings; verifiers both-correct 94.5 % of 236 sampled items; one real error class (Q3C Class 1 rows drafted
-  without the lead-in condition); about 17 k tokens per page drafting, 3.1 k per item verifying. Reported to the
-  coordinator; **waiting for the owner's go before scaling.** Proposed fixes before scaling are listed there
-  (table quotes with headers + lead-in conditions, footnote markers as "^1", coverage without running headers,
-  strength rule for "Specify/Whether" checklist rows: owner question).
-- **Then:** Layer 1 on page text for page items (no library/clauses dependency); 0c version currency
-  (`tools/currency.py`); 0d spot-check sheet by page (50 pages with their items). One PR each, independent review,
-  merge on green CI. Reply to session_01PybpFuvG6mX9B3zK3YZjZ1 with the trial results.
-- Paid EU + PIC/S API build: still needs direct owner confirmation.
-- Open owner question: gold set needs a person to verify it (small 50-100 items, or skip and rely on two
-  verifiers + mutation tests); asked 31 Oct, no answer yet.
+- **Plan since 31 Oct (D45, D46): checklist items are drafted from PDF PAGES with vision** (page image + text layer),
+  checked on page text; the parsed clause store, parser and fidelity work are FROZEN (kept for search/cross-checks).
+  Read D43-D46 in `docs/decisions.md` and `docs/vision-trial.md`. CLAUDE.md lets drafting/verifier agents get images.
+- **Merged this session:** PR #33 (D43 Table Transformer trial, 2 of 34 pages adopted), PR #34 (D45: quote check in
+  two readings `tools/library/quotes.py`; page pipeline `tools/pages/vision.py` + `tools/pages/prompts/`; first
+  trial). PR #35 (D46 fixes + re-run) merges on green CI. Per-cell fidelity parked on branch `fidelity-per-cell`.
+- **Trial results** (`docs/vision-trial.md`): re-run 522 items / 50 pages; 84 % of quotes in both readings (strict
+  whole-token matching, table rows as whole rows with their whole header); verifiers both-correct 93.9 % of 246;
+  the Q3C lead-in errors are gone; coverage gaps NOT yet clean (descriptive "may" sentences, table captions, a few
+  real gaps). Usage about 17 k tokens per page drafting, 3 k per item verifying (two verifiers).
+- **Next, in order (one PR each, independent review, merge on green CI):**
+  1. The four "before scaling" proposals at the end of `docs/vision-trial.md` (coverage without descriptive "may"
+     and captions; continued-table headers with their page; whole next page for run-over quotes).
+  2. Layer 1 on page items (no library/clauses dependency; reuse `vision.check_item`, `quotes.findings`).
+  3. 0c version currency (`tools/currency.py`, not started).
+  4. 0d spot-check sheet by page (50 pages with their items, for the owner to check quotes against the PDF).
+  5. A scaling plan for the owner (pages, agents, usage forecast from the trial).
+  Reply to the coordinator (session_01PybpFuvG6mX9B3zK3YZjZ1, send_message) with results.
+- **Run a trial:** `python3 tools/pages/vision.py prepare-draft [SRC:PAGE ...]`; agents answer `batches/` ->
+  `answers/` (max 3 at a time, each sees only its batch); `ingest-draft RUN`; `prepare-verify RUN [SRC ...]`;
+  verifier agents answer `verify/batches` -> `verify/answers`; `ingest-verify RUN`; `record-model RUN ROLE MODEL`.
+  Page images go to `work/vision-pages/` (not in git; sha256 in the run's `pages.json`).
+- Paid EU + PIC/S API build: needs direct owner confirmation before the first paid call.
+- Open owner question: gold set needs a person to verify it (small 50-100 items, or skip); asked 31 Oct.
 
 ## Mutation test results (30 Oct 2026, plan 2.6 / Layer 3, pilot scale)
 `tools/ai/mutate.py` planted errors in the 56 session-pilot mappings and mixed the mutants, shuffled, with the 56
