@@ -16,7 +16,7 @@ Last updated: 31 October 2026, session 6 (D45/D46 page-based vision drafting; tr
   real gaps). Usage about 17 k tokens per page drafting, 3 k per item verifying (two verifiers).
 - **D47 (owner, 31 Oct) sets the build: FDA first, document by document, "nothing ships unless proven"** (automatic
   route = quote confirmed + all Layer 1 checks + both verifiers correct; else the owner's review queue). Work list:
-  `docs/fda-worklist.md` (`tools/fda/worklist.py`, status `library/fda-status.json`). **Start with 21 CFR 211**
+  `docs/fda-worklist.md` (the coordinator's file on main: do not regenerate; update each document's status row). **Start with 21 CFR 211**
   (XML profile: text read directly, exact-text quote check, clause number from the XML structure, no vision).
   Per group report to the coordinator: items, automatic-route pass rate, review-queue size, usage. Steps for the
   XML group: (a) XML profile in the page pipeline (units = eCFR sections/paragraphs from `tools/parse/ecfr.py`'s
@@ -26,8 +26,8 @@ Last updated: 31 October 2026, session 6 (D45/D46 page-based vision drafting; tr
   `tools/fda/review.py` (branch `fda-build`, stacked on PR #36). 97 items from 10 sections, all quotes exact,
   automatic route 77 (79 %), review queue 20; next: the three tuning steps listed there, then the full 211 build
   (107 sections; `xmlprofile.py prepare-draft ecfr-21cfr211-2026-10-27.xml` = all sections, 22 batches of 5;
-  drafting agents max 3 at a time; then prepare-verify / ingest-verify; update `library/fda-status.json` and
-  `python3 tools/fda/worklist.py`). Review queue UI for the owner: CLI now (`review.py next|decide|status`);
+  drafting agents max 3 at a time; then prepare-verify / ingest-verify; update the 211 row of
+  `docs/fda-worklist.md` on main: trial = 97 items, auto 77, review 20). Review queue UI for the owner: CLI now (`review.py next|decide|status`);
   an owner-friendly page is still to build.
 - **Earlier plan, still valid where it does not conflict with D47 (one PR each, independent review, merge on green CI):**
   1. (Done in PR #36: coverage measure, continued-table headers, whole next page; coverage gaps 39 -> 13, about 9
