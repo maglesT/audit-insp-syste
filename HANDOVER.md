@@ -14,6 +14,7 @@ Last updated: 31 October 2026, session 6 (D45/D46 page-based vision drafting; tr
   whole-token matching, table rows as whole rows with their whole header); verifiers both-correct 93.9 % of 246;
   the Q3C lead-in errors are gone; coverage gaps NOT yet clean (descriptive "may" sentences, table captions, a few
   real gaps). Usage about 17 k tokens per page drafting, 3 k per item verifying (two verifiers).
+- **Session 7 (session_01PybpFspEA75VUpLPy2kLTG) owns the FDA build and the work list from 31 Oct 10:00.**
 - **D47 (owner, 31 Oct) sets the build: FDA first, document by document, "nothing ships unless proven"** (automatic
   route = quote confirmed + all Layer 1 checks + both verifiers correct; else the owner's review queue). Work list:
   `docs/fda-worklist.md` (the coordinator's file on main: do not regenerate; update each document's status row). **Start with 21 CFR 211**
