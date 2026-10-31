@@ -345,13 +345,14 @@ def coverage(source, unit, items, na):
     return gaps
 
 
+SEE_PAREN = re.compile(r"\(\s*(?:see|cf\.?|refer to)\b[^()]*(?:\([^()]*\)[^()]*)*\)", re.I)
 SEE = re.compile(r"\(\s*(?:see|cf\.?|refer to)?\s*\)|\bunder\s*,", re.I)
 
 
 def bare(sentence):
     """A sentence without its regulation references ("(see 21 CFR 211.150(b))", "Under 21 CFR 211.180(e), ..."):
     a quote that leaves them out still covers it."""
-    t = SEE.sub(" ", CFR_REF.sub(" ", sentence))
+    t = SEE.sub(" ", CFR_REF.sub(" ", SEE_PAREN.sub(" ", sentence)))
     return re.sub(r"\s+", " ", re.sub(r"^\s*,\s*", "", t)).strip()
 
 
