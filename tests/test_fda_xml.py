@@ -157,6 +157,14 @@ class SecondReview(unittest.TestCase):
                 X.ingest_draft(tmp)
 
 
+class LeadInSentence(unittest.TestCase):
+    def test_only_the_list_introducing_sentence_is_the_lead_in(self):
+        lead = X.lead_in_text("11.10(a)", dict(X.paragraphs("fda-cfr-21-part-11.xml")))
+        self.assertNotIn("when appropriate", lead)
+        self.assertTrue(lead.rstrip().endswith(":"))
+        self.assertIn("prevent contamination or mixups", X.lead_in_text("211.42(c)(1)", dict(X.paragraphs(SRC))))
+
+
 class CrossReferences(unittest.TestCase):
     def test_cross_references_are_not_numbers(self):
         self.assertNotIn("211", X.without_refs("as required in § 211.192 and parts 600 through 680"))

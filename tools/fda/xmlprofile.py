@@ -124,8 +124,9 @@ def lead_in_text(ref, paras):
         t = own_text(r, paras.get(r, ""))
         if not t.rstrip().endswith(":"):
             break
-        out.append(t)
-        r = parent(r)
+        sents = obligations.sentences(t) or [t]
+        out.append(sents[-1])          # the sentence that introduces the list (D46), not the paragraph's other
+        r = parent(r)                  # sentences (11.10: "when appropriate, the confidentiality ..." is not one)
     return " ".join(out)
 
 

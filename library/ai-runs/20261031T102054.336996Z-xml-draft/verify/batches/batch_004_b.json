@@ -1,0 +1,606 @@
+{
+ "role": "b",
+ "instructions": "You are a second, independent auditor. Check one checklist item against the US regulation paragraph it claims to come from. You get\nthe section's paragraphs (reference and exact text, from the official eCFR XML) and the item. Start from the TEXT:\nread the cited paragraph and its lead-in fully, then compare the item.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the parent paragraph's\nlead-in (including a qualifier such as \"as are necessary to prevent contamination or mixups\"). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph requires what the statement asks for, the statement\n  adds nothing and omits nothing of that obligation, the strength (shall/must = mandatory, should = recommended,\n  may = optional; a sub-paragraph takes its lead-in's) matches, and the regulation applies to every listed plant\n  type (INJ = sterile injectables: a paragraph limited to products not required to be sterile does not apply to\n  INJ; one limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "sections": [
+  {
+   "section": "11.70",
+   "paragraphs": [
+    {
+     "ref": "11.70",
+     "text": "§ 11.70 Signature/record linking. Electronic signatures and handwritten signatures executed to electronic records shall be linked to their respective electronic records to ensure that the signatures cannot be excised, copied, or otherwise transferred to falsify an electronic record by ordinary means."
+    }
+   ]
+  },
+  {
+   "section": "11.100",
+   "paragraphs": [
+    {
+     "ref": "11.100",
+     "text": "§ 11.100 General requirements."
+    },
+    {
+     "ref": "11.100(a)",
+     "text": "(a) Each electronic signature shall be unique to one individual and shall not be reused by, or reassigned to, anyone else."
+    },
+    {
+     "ref": "11.100(b)",
+     "text": "(b) Before an organization establishes, assigns, certifies, or otherwise sanctions an individual's electronic signature, or any element of such electronic signature, the organization shall verify the identity of the individual."
+    },
+    {
+     "ref": "11.100(c)",
+     "text": "(c) Persons using electronic signatures shall, prior to or at the time of such use, certify to the agency that the electronic signatures in their system, used on or after August 20, 1997, are intended to be the legally binding equivalent of traditional handwritten signatures."
+    },
+    {
+     "ref": "11.100(c)(1)",
+     "text": "(1) The certification shall be signed with a traditional handwritten signature and submitted in electronic or paper form. Information on where to submit the certification can be found on FDA's web page on Letters of Non-Repudiation Agreement."
+    },
+    {
+     "ref": "11.100(c)(2)",
+     "text": "(2) Persons using electronic signatures shall, upon agency request, provide additional certification or testimony that a specific electronic signature is the legally binding equivalent of the signer's handwritten signature."
+    }
+   ]
+  },
+  {
+   "section": "11.200",
+   "paragraphs": [
+    {
+     "ref": "11.200",
+     "text": "§ 11.200 Electronic signature components and controls."
+    },
+    {
+     "ref": "11.200(a)",
+     "text": "(a) Electronic signatures that are not based upon biometrics shall:"
+    },
+    {
+     "ref": "11.200(a)(1)",
+     "text": "(1) Employ at least two distinct identification components such as an identification code and password."
+    },
+    {
+     "ref": "11.200(a)(1)(i)",
+     "text": "(i) When an individual executes a series of signings during a single, continuous period of controlled system access, the first signing shall be executed using all electronic signature components; subsequent signings shall be executed using at least one electronic signature component that is only executable by, and designed to be used only by, the individual."
+    },
+    {
+     "ref": "11.200(a)(1)(ii)",
+     "text": "(ii) When an individual executes one or more signings not performed during a single, continuous period of controlled system access, each signing shall be executed using all of the electronic signature components."
+    },
+    {
+     "ref": "11.200(a)(2)",
+     "text": "(2) Be used only by their genuine owners; and"
+    },
+    {
+     "ref": "11.200(a)(3)",
+     "text": "(3) Be administered and executed to ensure that attempted use of an individual's electronic signature by anyone other than its genuine owner requires collaboration of two or more individuals."
+    },
+    {
+     "ref": "11.200(b)",
+     "text": "(b) Electronic signatures based upon biometrics shall be designed to ensure that they cannot be used by anyone other than their genuine owners."
+    }
+   ]
+  },
+  {
+   "section": "11.300",
+   "paragraphs": [
+    {
+     "ref": "11.300",
+     "text": "§ 11.300 Controls for identification codes/passwords. Persons who use electronic signatures based upon use of identification codes in combination with passwords shall employ controls to ensure their security and integrity. Such controls shall include:"
+    },
+    {
+     "ref": "11.300(a)",
+     "text": "(a) Maintaining the uniqueness of each combined identification code and password, such that no two individuals have the same combination of identification code and password."
+    },
+    {
+     "ref": "11.300(b)",
+     "text": "(b) Ensuring that identification code and password issuances are periodically checked, recalled, or revised (e.g., to cover such events as password aging)."
+    },
+    {
+     "ref": "11.300(c)",
+     "text": "(c) Following loss management procedures to electronically deauthorize lost, stolen, missing, or otherwise potentially compromised tokens, cards, and other devices that bear or generate identification code or password information, and to issue temporary or permanent replacements using suitable, rigorous controls."
+    },
+    {
+     "ref": "11.300(d)",
+     "text": "(d) Use of transaction safeguards to prevent unauthorized use of passwords and/or identification codes, and to detect and report in an immediate and urgent manner any attempts at their unauthorized use to the system security unit, and, as appropriate, to organizational management."
+    },
+    {
+     "ref": "11.300(e)",
+     "text": "(e) Initial and periodic testing of devices, such as tokens or cards, that bear or generate identification code or password information to ensure that they function properly and have not been altered in an unauthorized manner."
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "fda-cfr-21-part-11.xml:11.70#1",
+   "section": "11.70",
+   "hash": "6cedd59f814e2c51",
+   "item": {
+    "statement": "Link electronic signatures and handwritten signatures executed to electronic records to their respective records so the signatures cannot be excised, copied or otherwise transferred to falsify an electronic record by ordinary means.",
+    "quote": "Electronic signatures and handwritten signatures executed to electronic records shall be linked to their respective electronic records to ensure that the signatures cannot be excised, copied, or otherwise transferred to falsify an electronic record by ordinary means.",
+    "clause_number": "11.70",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-11.xml:11.100#1",
+   "section": "11.100",
+   "hash": "8796d46debd08141",
+   "item": {
+    "statement": "Make each electronic signature unique to one individual, and never reuse it by or reassign it to anyone else.",
+    "quote": "Each electronic signature shall be unique to one individual and shall not be reused by, or reassigned to, anyone else.",
+    "clause_number": "11.100(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-11.xml:11.100#2",
+   "section": "11.100",
+   "hash": "1f328e6d8d937c32",
+   "item": {
+    "statement": "Verify an individual's identity before the organization establishes, assigns, certifies or otherwise sanctions that individual's electronic signature or any element of it.",
+    "quote": "Before an organization establishes, assigns, certifies, or otherwise sanctions an individual's electronic signature, or any element of such electronic signature, the organization shall verify the identity of the individual.",
+    "clause_number": "11.100(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "before sanctioning an electronic signature"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-11.xml:11.100#3",
+   "section": "11.100",
+   "hash": "614b59dfa4870538",
+   "item": {
+    "statement": "Where electronic signatures are used, certify to FDA, before or at the time of use, that the electronic signatures in the system used on or after August 20, 1997 are intended to be the legally binding equivalent of traditional handwritten signatures.",
+    "quote": "Persons using electronic signatures shall, prior to or at the time of such use, certify to the agency that the electronic signatures in their system, used on or after August 20, 1997, are intended to be the legally binding equivalent of traditional handwritten signatures.",
+    "clause_number": "11.100(c)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "electronic signatures in use"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-11.xml:11.100#4",
+   "section": "11.100",
+   "hash": "862bbcd3d756139d",
+   "item": {
+    "statement": "Sign the certification to FDA that electronic signatures are the legally binding equivalent of handwritten signatures with a traditional handwritten signature, and submit it in electronic or paper form.",
+    "quote": "The certification shall be signed with a traditional handwritten signature and submitted in electronic or paper form.",
+    "clause_number": "11.100(c)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "electronic signatures in use"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-11.xml:11.100#5",
+   "section": "11.100",
+   "hash": "afef1ff1a9a0d7eb",
+   "item": {
+    "statement": "Where electronic signatures are used, provide additional certification or testimony on FDA request that a specific electronic signature is the legally binding equivalent of the signer's handwritten signature.",
+    "quote": "Persons using electronic signatures shall, upon agency request, provide additional certification or testimony that a specific electronic signature is the legally binding equivalent of the signer's handwritten signature.",
+    "clause_number": "11.100(c)(2)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "upon agency request"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-11.xml:11.200#1",
+   "section": "11.200",
+   "hash": "7e5a7030ca4e8273",
+   "item": {
+    "statement": "Make electronic signatures that are not based on biometrics employ at least two distinct identification components, such as an identification code and a password.",
+    "quote": "Employ at least two distinct identification components such as an identification code and password.",
+    "clause_number": "11.200(a)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "non-biometric electronic signatures"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-11.xml:11.200#2",
+   "section": "11.200",
+   "hash": "40e0ef01b8fb3724",
+   "item": {
+    "statement": "For non-biometric electronic signatures, when an individual executes a series of signings during a single, continuous period of controlled system access, execute the first signing with all signature components and each subsequent signing with at least one component that only that individual can execute and that is designed for use only by that individual.",
+    "quote": "When an individual executes a series of signings during a single, continuous period of controlled system access, the first signing shall be executed using all electronic signature components; subsequent signings shall be executed using at least one electronic signature component that is only executable by, and designed to be used only by, the individual.",
+    "clause_number": "11.200(a)(1)(i)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "non-biometric; series of signings in one continuous controlled access period"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-11.xml:11.200#3",
+   "section": "11.200",
+   "hash": "5e3e9a79b8287a50",
+   "item": {
+    "statement": "For non-biometric electronic signatures, when an individual executes one or more signings not performed during a single, continuous period of controlled system access, execute each signing with all of the signature components.",
+    "quote": "When an individual executes one or more signings not performed during a single, continuous period of controlled system access, each signing shall be executed using all of the electronic signature components.",
+    "clause_number": "11.200(a)(1)(ii)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "non-biometric; signings not in one continuous controlled access period"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-11.xml:11.200#4",
+   "section": "11.200",
+   "hash": "4817a00b571c7456",
+   "item": {
+    "statement": "Make sure electronic signatures that are not based on biometrics are used only by their genuine owners.",
+    "quote": "Be used only by their genuine owners; and",
+    "clause_number": "11.200(a)(2)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "non-biometric electronic signatures"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-11.xml:11.200#5",
+   "section": "11.200",
+   "hash": "51b837c6022db2c0",
+   "item": {
+    "statement": "Administer and execute electronic signatures that are not based on biometrics so that any attempt by someone other than the genuine owner to use an individual's signature requires two or more individuals to collaborate.",
+    "quote": "Be administered and executed to ensure that attempted use of an individual's electronic signature by anyone other than its genuine owner requires collaboration of two or more individuals.",
+    "clause_number": "11.200(a)(3)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "non-biometric electronic signatures"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-11.xml:11.200#6",
+   "section": "11.200",
+   "hash": "9d07fa928eb99a4e",
+   "item": {
+    "statement": "Design biometric electronic signatures so that nobody other than their genuine owners can use them.",
+    "quote": "Electronic signatures based upon biometrics shall be designed to ensure that they cannot be used by anyone other than their genuine owners.",
+    "clause_number": "11.200(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "biometric electronic signatures"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-11.xml:11.300#1",
+   "section": "11.300",
+   "hash": "c26e23ffba7fabfe",
+   "item": {
+    "statement": "Where electronic signatures are based on identification codes combined with passwords, employ controls to ensure the security and integrity of those codes and passwords.",
+    "quote": "Persons who use electronic signatures based upon use of identification codes in combination with passwords shall employ controls to ensure their security and integrity. Such controls shall include:",
+    "clause_number": "11.300",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "ID code/password based electronic signatures"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-11.xml:11.300#2",
+   "section": "11.300",
+   "hash": "9aa08712b7ab90a1",
+   "item": {
+    "statement": "Where electronic signatures are based on identification codes combined with passwords, as part of the controls ensuring their security and integrity, keep each combined identification code and password unique so that no two individuals have the same combination.",
+    "quote": "Maintaining the uniqueness of each combined identification code and password, such that no two individuals have the same combination of identification code and password.",
+    "clause_number": "11.300(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "ID code/password based electronic signatures"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-11.xml:11.300#3",
+   "section": "11.300",
+   "hash": "d39b5b487ba45050",
+   "item": {
+    "statement": "Where electronic signatures are based on identification codes combined with passwords, as part of the controls ensuring their security and integrity, make sure identification code and password issuances are periodically checked, recalled or revised (for example to cover events such as password aging).",
+    "quote": "Ensuring that identification code and password issuances are periodically checked, recalled, or revised (e.g., to cover such events as password aging).",
+    "clause_number": "11.300(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "ID code/password based electronic signatures"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-11.xml:11.300#4",
+   "section": "11.300",
+   "hash": "beeaab1b6e61d88f",
+   "item": {
+    "statement": "Where electronic signatures are based on identification codes combined with passwords, as part of the controls ensuring their security and integrity, follow loss management procedures to electronically deauthorize lost, stolen, missing or otherwise potentially compromised tokens, cards and other devices that bear or generate identification code or password information, and to issue temporary or permanent replacements under suitable, rigorous controls.",
+    "quote": "Following loss management procedures to electronically deauthorize lost, stolen, missing, or otherwise potentially compromised tokens, cards, and other devices that bear or generate identification code or password information, and to issue temporary or permanent replacements using suitable, rigorous controls.",
+    "clause_number": "11.300(c)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "ID code/password based electronic signatures; lost or compromised devices"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-11.xml:11.300#5",
+   "section": "11.300",
+   "hash": "81ac02f899f26aee",
+   "item": {
+    "statement": "Where electronic signatures are based on identification codes combined with passwords, as part of the controls ensuring their security and integrity, use transaction safeguards to prevent unauthorized use of passwords and/or identification codes, and to detect any attempted unauthorized use and report it immediately and urgently to the system security unit and, as appropriate, to organizational management.",
+    "quote": "Use of transaction safeguards to prevent unauthorized use of passwords and/or identification codes, and to detect and report in an immediate and urgent manner any attempts at their unauthorized use to the system security unit, and, as appropriate, to organizational management.",
+    "clause_number": "11.300(d)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "ID code/password based electronic signatures"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-11.xml:11.300#6",
+   "section": "11.300",
+   "hash": "e2c64480b9965f64",
+   "item": {
+    "statement": "Where electronic signatures are based on identification codes combined with passwords, as part of the controls ensuring their security and integrity, test devices such as tokens or cards that bear or generate identification code or password information initially and periodically to ensure they function properly and have not been altered in an unauthorized manner.",
+    "quote": "Initial and periodic testing of devices, such as tokens or cards, that bear or generate identification code or password information to ensure that they function properly and have not been altered in an unauthorized manner.",
+    "clause_number": "11.300(e)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "ID code/password based electronic signatures"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  }
+ ]
+}
