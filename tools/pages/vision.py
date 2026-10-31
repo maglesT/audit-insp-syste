@@ -2,7 +2,7 @@
 
   python3 tools/pages/vision.py prepare-draft [SOURCE:PAGE ...]   # default: the trial pages (TRIAL)
   python3 tools/pages/vision.py ingest-draft RUN                  # checks + measures -> RUN/items.jsonl, report.json
-  python3 tools/pages/vision.py prepare-verify RUN                # verifier A and B batches (image + text + items)
+  python3 tools/pages/vision.py prepare-verify RUN [SOURCE ...]   # verifier A and B batches, one per document
   python3 tools/pages/vision.py ingest-verify RUN                 # verifier agreement -> RUN/verify-report.json
 
 Each page is rendered to PNG at DPI with pypdfium2 (pinned in requirements.txt; image sha256 recorded) and its text
@@ -12,10 +12,11 @@ tools/ai/sessions.py). Nothing here depends on the parsed clause store (frozen, 
 
 Checks on each item (deterministic, no AI):
   quote      found word for word (quotes.letters / quotes.contains) on its page, or page + next when the item says
-             it runs over, in BOTH readings: pdftotext -layout and pdfminer (pdfplumber). A quote found in one
+             it runs over (with or without the page's running lines, body()), in BOTH readings; a table row
+             (cells joined with " | ") cell by cell, also in pdfminer's ruled-table cell texts (cell_texts): pdftotext -layout and pdfminer (pdfplumber). A quote found in one
              reading only, or in neither, goes to the "text layer differs" list (the image-true reading is kept for
              the verifiers and the spot check; never accepted silently).
-  clause     a clause number given by the item is printed on the page (as a token)
+  clause     every part of a clause number given by the item ("4.22 i") is printed on the page or the page before
   numbers    every number in the item's statement is in its quote (layer1.number_found)
   strength   the item's strength matches its quote's wording where the quote has one (layer1.strength_of)
   conditions condition wording in the quote has a counterpart in the statement (layer1.conditions_missing)
@@ -183,20 +184,57 @@ def _words(text):
     return re.findall(r"\w+", text.lower())
 
 
+def _key(line):
+    return re.sub(r"\d+", "#", re.sub(r"\s+", " ", line).strip().lower())
+
+
+def body(reader, source, pno):
+    """A page's text without its running lines: lines (digits masked) that also stand on the page before or after
+    (headers, footers, side titles, page numbers), which a reader may put inside a sentence."""
+    near = {_key(ln) for p in (pno - 1, pno + 1) if p >= 1 for ln in reader(source, p).splitlines()}
+    return "\n".join(ln for ln in reader(source, pno).splitlines() if not (_key(ln) and _key(ln) in near))
+
+
+def readings(reader, source, span):
+    """The text of the pages in span as one reader gives it: whole, and without running lines."""
+    return [" ".join(reader(source, p) for p in span), " ".join(body(reader, source, p) for p in span)]
+
+
+def cell_texts(source, pno, cache={}):
+    """pdfminer's text of every cell of the ruled tables pdfplumber finds on a page (a cell's lines kept together,
+    which page-order readings interleave with the neighbouring columns)."""
+    key = (source, pno)
+    if key not in cache:
+        import pdfplumber
+        with pdfplumber.open(str(OFFICIAL / source)) as pdf:
+            page = pdf.pages[pno - 1] if pno <= len(pdf.pages) else None
+            cache[key] = [c for t in (page.extract_tables() if page else []) for r in t for c in r if c]
+    return cache[key]
+
+
+def quote_in(quote, texts):
+    """The quote is in one of the texts (letters()); a table-row quote (cells joined with " | ") piece by piece, each
+    cell in one of the texts."""
+    pieces = [quotes.letters(x) for x in quote.split(" | ")] if " | " in quote else [quotes.letters(quote)]
+    return all(any(quotes.contains(q, t) for t in texts) for q in pieces if q)
+
+
 def check_item(item, source, pno):
     """Findings of one item (list of (check, message)) and whether its quote is in each reading."""
     import layer1
     span = [pno, pno + 1] if item["runs_over"] else [pno]
-    q = quotes.letters(item["quote"])
-    in_layer = quotes.contains(q, quotes.letters(" ".join(layer_text(source, p) for p in span)))
-    in_miner = quotes.contains(q, quotes.letters(" ".join(pdfminer_text(source, p) for p in span)))
+    in_layer = quote_in(item["quote"], [quotes.letters(t) for t in readings(layer_text, source, span)])
+    in_miner = quote_in(item["quote"], [quotes.letters(t) for t in readings(pdfminer_text, source, span)]
+                        + [quotes.letters(c) for p in span for c in cell_texts(source, p)])
     out = []
     if not (in_layer and in_miner):
         out.append(("quote", f"quote not found in {'pdftotext' if not in_layer else ''}"
                              f"{' and ' if not in_layer and not in_miner else ''}{'pdfminer' if not in_miner else ''}"))
     num = item["clause_number"].strip()
-    if num and num.rstrip(".") not in re.findall(r"[\w.()]+", layer_text(source, pno).replace(" .", ".")) \
-            and num.rstrip(".") not in [t.rstrip(".") for t in layer_text(source, pno).split()]:
+    printed = {t.strip(".:;,()[]").lower() for p in [pno - 1] + span if p >= 1 for t in layer_text(source, p).split()}
+    parts = [t.strip(".:;,()[]").lower() for t in num.split()]
+    if num and not all(t in printed for t in parts if t):     # "4.22 i", "Table 1", "Part I 10.4": every part, on
+        #                                                       this page or the one before (a clause running over)
         out.append(("clause", f"clause number {num!r} not printed on page {pno}"))
     for n in re.findall(r"\d+(?:[.,]\d+)?", item["statement"]):
         if not layer1.number_found(n, [item["quote"]]):
@@ -282,11 +320,13 @@ def ingest_draft(run):
     return report
 
 
-def prepare_verify(run, per_batch=40):
-    """Verifier A and B batches: each item with its page image path and text layer (blind: no drafter notes,
-    no check results). A and B never share a batch."""
+def prepare_verify(run, sources=None):
+    """Verifier A and B batches, one per document (so a verifier opens at most that document's page images): each
+    item with its page image path and text layer (blind: no drafter notes, no check results). A and B never share
+    a batch. sources: only these documents (a sample)."""
     run = Path(run)
     items = [json.loads(ln) for ln in (run / "items.jsonl").read_text().splitlines() if ln.strip()]
+    items = [i for i in items if not sources or i["source"] in sources]
     pages = {p["id"]: p for p in json.loads((run / "pages.json").read_text())["pages"]}
     vdir = run / "verify"
     (vdir / "batches").mkdir(parents=True, exist_ok=True)
@@ -294,7 +334,8 @@ def prepare_verify(run, per_batch=40):
     n = 0
     for role in ("a", "b"):
         instructions = (PROMPTS / f"verify_{role}.md").read_text()
-        for i in range(0, len(items), per_batch):
+        for source in sorted({i["source"] for i in items}):
+            group = [i for i in items if i["source"] == source]
             n += 1
             chunk = [{"id": it["id"], "image": pages[f"{it['source']}:{it['page']}"]["image"],
                       "text_layer": layer_text(it["source"], it["page"]),
@@ -302,7 +343,7 @@ def prepare_verify(run, per_batch=40):
                       "item": {k: it[k] for k in ("statement", "quote", "clause_number", "strength", "plant_types",
                                                   "condition", "runs_over")},
                       "plant_scope": pages[f"{it['source']}:{it['page']}"]["plant_scope"]}
-                     for it in items[i:i + per_batch]]
+                     for it in group]
             (vdir / "batches" / f"batch_{n:03d}_{role}.json").write_text(json.dumps(
                 {"role": role, "instructions": instructions, "schema": VERIFY_SCHEMA, "items": chunk},
                 indent=1, ensure_ascii=False))
@@ -344,7 +385,7 @@ def main():
     elif cmd == "ingest-draft":
         ingest_draft(args[0])
     elif cmd == "prepare-verify":
-        prepare_verify(args[0])
+        prepare_verify(args[0], args[1:] or None)
     elif cmd == "ingest-verify":
         ingest_verify(args[0])
     else:
