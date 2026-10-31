@@ -1,0 +1,441 @@
+{
+ "instructions": "You read an FDA web page (a Q&A page on CGMP, a Guide to Inspections, an Inspection Technical Guide, a Compliance\nPolicy Guide or an alert to manufacturers) and list what it expects of a drug manufacturer. Each unit is given as\nits paragraphs, each with its reference (\"Q4.2\" on a Q&A page: question 4, answer paragraph 2; \"¶17\" elsewhere) and\nits exact text; \"context\" entries are headings or labels (not citable); \"list_item\" marks a list item, whose\nlead-in is the paragraph ending in \":\" above it. Your output is checked by software against that exact text and by\nindependent reviewers, so precision matters more than wording.\n\nList each separate expectation as its own item, so that together your items cover every expectation in the unit.\nOne expectation is one thing a manufacturer must, should or may do, with all its conditions, numbers and\nqualifiers; do not split one expectation across items. What counts:\n- what FDA says a firm must, should or may do (\"FDA expects firms to have written procedures ...\", \"manufacturers\n  should ...\", \"are required by the CGMP regulations to ...\");\n- in a Guide to Inspections or Inspection Technical Guide, what the investigator is told to check (\"Determine\n  whether the firm has validated ...\", \"Check that ...\", \"Review the ...\"): write the practice the firm is expected\n  to have (\"Validate ...\"), not the investigator's task. When the text only says what to look at (\"Examine the\n  design of equipment\") and states no expectation, write the expectation the text itself gives in the same\n  paragraph; if it gives none, put the sentence in not_applicable (\"inspection step without a stated expectation\").\nFor each item:\n- statement: the expectation in your own plain English words, as one checklist item a site could be audited\n  against. Do not copy more than a few words in a row. Keep every condition (\"where\", \"if\", \"unless\", \"when\",\n  \"except\") and every number. Do not add anything the text does not say. The statement itself must carry every\n  condition or qualifier of the lead-in above a list item. The statement is shown to customers: never cite a\n  regulation, section, question or paragraph number in it (\"21 CFR 211.42(d)\", \"Q4\", \"see above\"); say what is\n  required instead.\n- quote: the exact span of ONE paragraph's text that states the whole expectation, copied character for character\n  (matched against the page text by software; do not fix typos or change punctuation, keep footnote marks as\n  printed). A quote may continue into the paragraphs after it in the same unit, in order (e.g. a lead-in and its\n  list items), but must start in the cited paragraph.\n- clause_number: the reference of the paragraph the quote starts in, exactly as given (\"Q4.2\", \"¶17\").\n- strength: \"mandatory\" where the text states a legal requirement (shall / must / is required / may not, \"the\n  CGMP regulations require\"); \"recommended\" for should, \"FDA expects\", \"FDA recommends\", and for an inspection\n  point; \"optional\" for may / is acceptable. A list item without such a word takes its lead-in's.\n- plant_types: from OSD, LIQ, SEMI, INJ, API (INJ = sterile injectables); the plant scope given unless the text\n  narrows it. Text limited to non-sterile products does not apply to INJ; text limited to sterile products\n  (parenterals, aseptic processing, terminal sterilization) applies only to INJ (and API where in scope). Text\n  that rests on the CGMP regulations for finished pharmaceuticals (21 CFR 210/211, \"drug product manufacturers\",\n  \"finished drug products\") does not apply to API unless it speaks of APIs or bulk drug substances too.\n- numbers: every number, limit, frequency or period in the quote, as written (not regulation references).\n- condition: the condition or trigger in a few words, \"\" if none. This field only repeats what the statement\n  already says.\n- topic: the sub-topic id from TOPICS the expectation belongs to.\n\nDo not narrow or widen a term. Where the text gives examples (\"such as ...\"), keep them as examples; where it\ngives a closed list, keep it closed.\n\nSentences that state no expectation for the manufacturer go in not_applicable: the question itself, background and\nhistory, definitions, descriptions of what happened at a firm, FDA's own actions or enforcement, statements of\npurpose or scope, references, an inspection step without a stated expectation. One entry per SENTENCE, each with\nthe paragraph reference, the sentence's first 8 or more words copied exactly, and the reason in a few words. A\nsentence with \"should\", \"must\", \"FDA expects\" or an instruction to the investigator needs an item or a\nnot_applicable entry.\n\nWrite the answers file named in your task: {\"answers\": [one object per unit with \"unit\" set to the unit's \"id\"\nexactly, \"items\" and \"not_applicable\"]}.\n",
+ "topics": [
+  "QS.PQS",
+  "QS.MGMT",
+  "QS.QRM",
+  "QS.PQR",
+  "QS.CHANGE",
+  "QS.DEV",
+  "QS.CAPA",
+  "PER.ORG",
+  "PER.KEY",
+  "PER.TRAIN",
+  "PER.HYG",
+  "PER.GOWN",
+  "PREM.DESIGN",
+  "PREM.PROD",
+  "PREM.STORE",
+  "PREM.QC",
+  "PREM.ANC",
+  "EQ.DESIGN",
+  "EQ.MAINT",
+  "EQ.CLEAN",
+  "EQ.CAL",
+  "DOC.SYS",
+  "DOC.SPEC",
+  "DOC.MFR",
+  "DOC.BMR",
+  "DOC.SOP",
+  "DOC.RET",
+  "MAT.SUPP",
+  "MAT.RECV",
+  "MAT.SAMP",
+  "MAT.STATUS",
+  "MAT.PACK",
+  "MAT.REJ",
+  "PROD.GEN",
+  "PROD.XCONT",
+  "PROD.IPC",
+  "PROD.YIELD",
+  "PROD.PACK",
+  "PROD.REWORK",
+  "QC.GEN",
+  "QC.SAMP",
+  "QC.TEST",
+  "QC.OOS",
+  "QC.STAB",
+  "QC.REF",
+  "QC.MICRO",
+  "VAL.PLAN",
+  "VAL.QUAL",
+  "VAL.PROC",
+  "VAL.CLEAN",
+  "VAL.METH",
+  "CSV.VAL",
+  "CSV.ACCESS",
+  "CSV.AUDIT",
+  "CSV.ESIG",
+  "CSV.DI",
+  "UTIL.WATER",
+  "UTIL.HVAC",
+  "UTIL.GAS",
+  "CCS.STRAT",
+  "CCS.EM",
+  "CCS.CLEAN",
+  "CCS.PEST",
+  "STER.GRADE",
+  "STER.ASEPT",
+  "STER.APS",
+  "STER.STERIL",
+  "STER.FILT",
+  "STER.CCI",
+  "STER.LYO",
+  "API.START",
+  "API.PROC",
+  "API.IMP",
+  "API.SOLV",
+  "OUT.CONTRACT",
+  "OUT.AGREE",
+  "CMP.COMPL",
+  "CMP.RECALL",
+  "CMP.REPORT",
+  "SI.PROG",
+  "SI.TEAM",
+  "SI.REPORT",
+  "SI.FOLLOW",
+  "DIST.STORE",
+  "DIST.TRANS",
+  "DIST.RETURN",
+  "REL.QP",
+  "REL.REVIEW"
+ ],
+ "schema": {
+  "type": "object",
+  "required": [
+   "unit",
+   "items",
+   "not_applicable"
+  ],
+  "properties": {
+   "unit": {
+    "type": "string"
+   },
+   "items": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "statement",
+      "quote",
+      "clause_number",
+      "strength",
+      "plant_types",
+      "numbers",
+      "condition",
+      "topic"
+     ],
+     "properties": {
+      "statement": {
+       "type": "string"
+      },
+      "quote": {
+       "type": "string"
+      },
+      "clause_number": {
+       "type": "string"
+      },
+      "strength": {
+       "enum": [
+        "mandatory",
+        "recommended",
+        "optional"
+       ]
+      },
+      "plant_types": {
+       "type": "array",
+       "items": {
+        "enum": [
+         "OSD",
+         "LIQ",
+         "SEMI",
+         "INJ",
+         "API"
+        ]
+       }
+      },
+      "numbers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "condition": {
+       "type": "string"
+      },
+      "topic": {
+       "type": "string"
+      }
+     }
+    }
+   },
+   "not_applicable": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "clause_number",
+      "text",
+      "reason"
+     ],
+     "properties": {
+      "clause_number": {
+       "type": "string"
+      },
+      "text": {
+       "type": "string"
+      },
+      "reason": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  }
+ },
+ "units": [
+  {
+   "id": "fda-ora-guide-lyophilization-parenterals-1993.html:¶48-¶57",
+   "source": "fda-ora-guide-lyophilization-parenterals-1993.html",
+   "unit": "¶48-¶57",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "¶48",
+     "text": "Thus, it would be beneficial to perform a leak test at some time after sterilization, possibly at the beginning of the cycle or prior to stoppering. The time and frequency for performing the leak test will vary and will depend on the data developed during the cycle validation. The pressure rise found acceptable at validation should be used to determine the acceptable pressure rise during production. A limit and what action is to be taken if excessive leakage is found should be addressed in some type of operating document.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > LYOPHILIZATION CYCLE AND CONTROLS"
+    },
+    {
+     "ref": "¶49",
+     "text": "In order to minimize oil vapor migration, some lyophilizers are designed with a tortuous path between the vacuum pump and chamber. For example, one fabricator installed an oil trap in the line between the vacuum pump and chamber in a lyophilizer with an internal condenser. Leakage can also be identified by sampling surfaces in the chamber after lyophilization for contaminants. One could conclude that if contamination is found on a chamber surface after lyophilization, then dosage units in the chamber could also be contaminated. It is a good practice as part of the validation of cleaning of the lyophilization chamber to sample the surfaces both before and after cleaning.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > LYOPHILIZATION CYCLE AND CONTROLS"
+    },
+    {
+     "ref": "¶50",
+     "text": "Because of the lengthy cycle runs and strain on machinery, it is not unusual to see equipment malfunction or fail during a lyophilization cycle. There should be provisions in place for the corrective action to be taken when these atypical situations occur. In addition to documentation of the malfunction, there should be an evaluation of the possible effects on the product (e.g., partial or complete meltback. Refer to subsequent discussion). Merely testing samples after the lyophilization cycle is concluded may be insufficient to justify the release of the remaining units. For example, the leakage of chamber shelf fluid into the chamber or a break in sterility would be cause for rejection of the batch.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > LYOPHILIZATION CYCLE AND CONTROLS"
+    },
+    {
+     "ref": "¶51",
+     "text": "The review of Preventive Maintenance Logs, as well as Quality Assurance Alert Notices, Discrepancy Reports, and Investigation Reports will help to identify problem batches when there are equipment malfunctions or power failures. It is recommended that these records be reviewed early in the inspection.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > LYOPHILIZATION CYCLE AND CONTROLS"
+    },
+    {
+     "context": "CYCLE VALIDATION"
+    },
+    {
+     "ref": "¶52",
+     "text": "Many manufacturers file (in applications) their normal lyophilization cycles and validate the lyophilization process based on these cycles. Unfortunately, such data would be of little value to substantiate shorter or abnormal cycles. In some cases, manufacturers are unaware of the eutectic point. It would be difficult for a manufacturer to evaluate partial or abnormal cycles without knowing the eutectic point and the cycle parameters needed to facilitate primary drying.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > CYCLE VALIDATION"
+    },
+    {
+     "ref": "¶53",
+     "text": "Scale-up for the lyophilized product requires a knowledge of the many variables that may have an effect on the product. Some of the variables would include freezing rate and temperature ramping rate. As with the scale-up of other drug products, there should be a development report that discusses the process and logic for the cycle. Probably more so than any other product, scale-up of the lyophilization cycle is very difficult.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > CYCLE VALIDATION"
+    },
+    {
+     "ref": "¶54",
+     "text": "There are some manufacturers that market multiple strengths, vial sizes and have different batch sizes. It is conceivable and probable that each will have its own cycle parameters. A manufacturer that has one cycle for multiple strengths of the same product probably has done a poor job of developing the cycle and probably has not adequately validated their process. Investigators should review the reports and data that support the filed lyophilization cycle.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > CYCLE VALIDATION"
+    },
+    {
+     "context": "LYOPHILIZER STERILIZATION/DESIGN"
+    },
+    {
+     "ref": "¶55",
+     "text": "The sterilization of the lyophilizer is one of the more frequently encountered problems noted during inspections. Some of the older lyophilizers cannot tolerate steam under pressure, and sterilization is marginal at best. These lyophilizers can only have their inside surfaces wiped with a chemical agent that may be a sterilant but usually has been found to be a sanitizing agent. Unfortunately, piping such as that for the administration of inert gas (usually nitrogen) and sterile air for backfill or vacuum break is often inaccessible to such surface \"sterilization\" or treatment. It would seem very difficult for a manufacturer to be able to demonstrate satisfactory validation of sterilization of a lyophilizer by chemical \"treatment\".",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > LYOPHILIZER STERILIZATION/DESIGN"
+    },
+    {
+     "ref": "¶56",
+     "text": "Another method of sterilization that has been practiced is the use of gaseous ethylene oxide. As with any ethylene oxide treatment, humidification is necessary. Providing a method for introducing the sterile moisture with uniformity has been found to be difficult.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > LYOPHILIZER STERILIZATION/DESIGN"
+    },
+    {
+     "ref": "¶57",
+     "text": "A manufacturer has been observed employing Water For Injection as a final wash or rinse of the lyophilizer. While the chamber was wet, it was then ethylene oxide gas sterilized. As discussed above, this may be satisfactory for the chamber but inadequate for associated plumbing.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > LYOPHILIZER STERILIZATION/DESIGN"
+    }
+   ]
+  },
+  {
+   "id": "fda-ora-guide-lyophilization-parenterals-1993.html:¶58-¶66",
+   "source": "fda-ora-guide-lyophilization-parenterals-1993.html",
+   "unit": "¶58-¶66",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "¶58",
+     "text": "Another problem associated with ethylene oxide is the residue. One manufacturer had a common ethylene oxide/nitrogen supply line to a number of lyophilizers connected in parallel to the system. Thus, there could be some ethylene oxide in the nitrogen supply line during the backfilling step. Obviously, this type of system is objectionable.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > LYOPHILIZER STERILIZATION/DESIGN"
+    },
+    {
+     "ref": "¶59",
+     "text": "A generally recognized acceptable method of sterilizing the lyophilizer is through the use of moist steam under pressure. Sterilization procedures should parallel that of an autoclave, and a typical system should include two independent temperature sensing systems. One would be used to control and record temperatures of the cycle as with sterilizers, and the other would be in the cold spot of the chamber. As with autoclaves, lyophilizers should have drains with atmospheric breaks to prevent back siphonage.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > LYOPHILIZER STERILIZATION/DESIGN"
+    },
+    {
+     "ref": "¶60",
+     "text": "As discussed, there should also be provisions for sterilizing the inert gas or air and the supply lines. Some manufacturers have chosen to locate the sterilizing filters in a port of the chamber. The port is steam sterilized when the chamber is sterilized, and then the sterilizing filter, previously sterilized, is aseptically connected to the chamber. Some manufacturers have chosen to sterilize the filter and downstream piping to the chamber in place. Typical sterilization-in-place of filters may require steaming of both to obtain sufficient temperatures. In this type of system, there should be provisions for removing and/or draining condensate. The failure to sterilize nitrogen and air filters and the piping downstream leading into the chamber has been identified as a problem on a number of inspections.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > LYOPHILIZER STERILIZATION/DESIGN"
+    },
+    {
+     "ref": "¶61",
+     "text": "Since these filters are used to sterilize inert gas and/or air, there should be some assurance of their integrity. Some inspections have disclosed a lack of integrity testing of the inert gas and/or air filter. The question is frequently asked how often should the vent filter be tested for integrity? As with many decisions made by manufacturers, there is a level of risk associated with the operation, process or system, which only the manufacturer can decide. If the sterilizing filter is found to pass the integrity test after several uses or batches, then one could claim its integrity for the previous batches. However, if it is only tested after several batches have been processed and if found to fail the integrity test, then one could question the sterility of all of the previous batches processed. In an effort to minimize this risk, some manufacturers have resorted to redundant filtration.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > LYOPHILIZER STERILIZATION/DESIGN"
+    },
+    {
+     "ref": "¶62",
+     "text": "For most cycles, stoppering occurs within the lyophilizer. Typically, the lyophilizer has some type of rod or rods (ram) which enter the immediate chamber at the time of stoppering. Once the rod enters the chamber, there is the potential for contamination of the chamber. However, since the vials are stoppered, there is no avenue for contamination of the vials in the chamber which are now stoppered. Generally, lyophilizers should be sterilized after each cycle because of the potential for contamination of the shelf support rods. Additionally, the physical act of removing vials and cleaning the chamber can increase levels of contamination.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > LYOPHILIZER STERILIZATION/DESIGN"
+    },
+    {
+     "ref": "¶63",
+     "text": "In some of the larger units, the shelves are collapsed after sterilization to facilitate loading. Obviously, the portions of the ram entering the chamber to collapse the shelves enters from a non-sterile area. Attempts to minimize contamination have included wiping the ram with a sanitizing agent prior to loading. Control aspects have included testing the ram for microbiological contamination, testing it for residues of hydraulic fluid, and testing the fluid for its bacteriostatic effectiveness. One lyophilizer fabricator has proposed developing a flexible \"skirt\" to cover the ram.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > LYOPHILIZER STERILIZATION/DESIGN"
+    },
+    {
+     "ref": "¶64",
+     "text": "In addition to microbiological concerns with hydraulic fluid, there is also the concern with product contamination.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > LYOPHILIZER STERILIZATION/DESIGN"
+    },
+    {
+     "ref": "¶65",
+     "text": "During steam sterilization of the chamber, there should be space between shelves that permit passage of free flowing steam. Some manufacturers have placed \"spacers\" between shelves to prevent their total collapse. Others have resorted to a two phase sterilization of the chamber. The initial phase provides for sterilization of the shelves when they are separated. The second phase provides for sterilization of the chamber and piston with the shelves collapsed.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > LYOPHILIZER STERILIZATION/DESIGN"
+    },
+    {
+     "ref": "¶66",
+     "text": "Typically, biological indicators are used in lyophilizers to validate the steam sterilization cycle. One manufacturer of a Biopharmaceutical product was found to have a positive biological indicator after sterilization at 121oC for 45 minutes. During the chamber sterilization, trays used to transport vials from the filling line to the chamber were also sterilized. The trays were sterilized in an inverted position on shelves in the chamber. It is believed that the positive biological indicator is the result of poor steam penetration under these trays.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > LYOPHILIZER STERILIZATION/DESIGN"
+    }
+   ]
+  },
+  {
+   "id": "fda-ora-guide-lyophilization-parenterals-1993.html:¶67-¶74",
+   "source": "fda-ora-guide-lyophilization-parenterals-1993.html",
+   "unit": "¶67-¶74",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "¶67",
+     "text": "The sterilization of condensers is also a major issue that warrants discussion. Most of the newer units provide for the capability of sterilization of the condenser along with the chamber, even if the condenser is external to the chamber. This provides a greater assurance of sterility, particularly in those situations in which there is some equipment malfunction and the vacuum in the chamber is deeper than in the condenser.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > LYOPHILIZER STERILIZATION/DESIGN"
+    },
+    {
+     "ref": "¶68",
+     "text": "Malfunctions that can occur, which would indicate that sterilization of the condenser is warranted, include vacuum pump breakdown, refrigeration system failures and the potential for contamination by the large valve between the condenser and chamber. This is particularly true for those units that have separate vacuum pumps for both the condenser and chamber. When there are problems with the systems in the lyophilizer, contamination could migrate from the condenser back to the chamber. It is recognized that the condenser is not able to be sterilized in many of the older units, and this represents a major problem, particularly in those cycles in which there is some equipment and/or operator failure.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > LYOPHILIZER STERILIZATION/DESIGN"
+    },
+    {
+     "ref": "¶69",
+     "text": "As referenced above, leakage during a lyophilization cycle can occur, and the door seal or gasket presents an avenue of entry for contaminants. For example, in an inspection, it was noted that during steam sterilization of a lyophilizer, steam was leaking from the unit. If steam could leak from a unit during sterilization, air could possibly enter the chamber during lyophilization.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > LYOPHILIZER STERILIZATION/DESIGN"
+    },
+    {
+     "ref": "¶70",
+     "text": "Some of the newer lyophilizers have double doors - one for loading and the other for unloading. The typical single door lyophilizer opens in the clean area only, and contamination between loads would be minimal. This clean area, previously discussed, represents a critical processing area for a product made by aseptic processing. In most units, only the piston raising/lowering shelves is the source of contamination. For a double door system unloading the lyophilizer in a non-sterile environment, other problems may occur. The non-sterile environment presents a direct avenue of contamination of the chamber when unloading, and door controls similar to double door sterilizers should be in place.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > LYOPHILIZER STERILIZATION/DESIGN"
+    },
+    {
+     "ref": "¶71",
+     "text": "Obviously, the lyophilizer chamber is to be sterilized between batches because of the direct means of contamination. A problem which may be significant is that of leakage through the door seal. For the single door unit, leakage prior to stoppering around the door seal is not a major problem from a sterility concern, because single door units only open into sterile areas. However, leakage from a door gasket or seal from a non-sterile area would present a significant microbiological problem. In order to minimize the potential for contamination, it is recommended that the lyophilizers be unloaded in a clean room area to minimize contamination. For example, in an inspection of a new manufacturing facility, it was noted that the unloading area for double door units was a clean room, with the condenser located below the chamber on a lower level.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > LYOPHILIZER STERILIZATION/DESIGN"
+    },
+    {
+     "ref": "¶72",
+     "text": "After steam sterilization, there is often some condensate remaining on the floor of the chamber. Some manufacturers remove this condensate through the drain line while the chamber is still pressurized after sterilization. Unfortunately, some manufacturers have allowed the chamber to come to and remain at atmospheric pressure with the drain line open. Thus, non-sterile air could contaminate the chamber through the drain line. Some manufacturers have attempted to dry the chamber by blowing sterile nitrogen gas through the chamber at a pressure above atmospheric pressure.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > LYOPHILIZER STERILIZATION/DESIGN"
+    },
+    {
+     "ref": "¶73",
+     "text": "In an inspection of a biopharmaceutical drug product, a Pseudomonas problem probably attributed to condensate after sterilization was noted. On a routine surface sample taken from a chamber shelf after sterilization and processing, a high count of Pseudomonas sp. was obtained. After sterilization and cooling when the chamber door was opened, condensate routinely spilled onto the floor from the door. A surface sample taken from the floor below the door also revealed Pseudomonas sp. contamination. Since the company believed the condensate remained in the chamber after sterilization, they repiped the chamber drain and added a line to a water seal vacuum pump.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > LYOPHILIZER STERILIZATION/DESIGN"
+    },
+    {
+     "context": "FINISHED PRODUCT TESTING FOR"
+    },
+    {
+     "context": "LYOPHILIZED PRODUCTS"
+    },
+    {
+     "ref": "¶74",
+     "text": "There are several aspects of finished product testing which are of concern to the lyophilized dosage form. These include dose uniformity testing, moisture and stability testing, and sterility testing.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > FINISHED PRODUCT TESTING FOR"
+    },
+    {
+     "context": "(a) Dose Uniformity"
+    }
+   ]
+  },
+  {
+   "id": "fda-ora-guide-lyophilization-parenterals-1993.html:¶75-¶84",
+   "source": "fda-ora-guide-lyophilization-parenterals-1993.html",
+   "unit": "¶75-¶84",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "¶75",
+     "text": "The USP includes two types of dose uniformity testing: content uniformity and weight variation. It states that weight variation may be applied to solids, with or without added substances, that have been prepared from true solutions and freeze-dried in final containers. However, when other excipients or other additives are present, weight variation may be applied, provided there is correlation with the sample weight and potency results. For example, in the determination of potency, it is sometimes common to reconstitute and assay the entire contents of a vial without knowing the weight of the sample. Performing the assay in this manner will provide information on the label claim of a product, but without knowing the sample weight will provide no information about dose uniformity. One should correlate the potency result obtained form the assay with the weight of the sample tested.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > FINISHED PRODUCT TESTING FOR"
+    },
+    {
+     "context": "(b) Stability Testing"
+    },
+    {
+     "ref": "¶76",
+     "text": "An obvious concern with the lyophilized product is the amount of moisture present in vials. The manufacturer's data for the establishment of moisture specifications for both product release and stability should be reviewed. As with other dosage forms, the expiration date and moisture limit should be established based on worst case data. That is, a manufacturer should have data that demonstrates adequate stability at the moisture specification.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > FINISHED PRODUCT TESTING FOR"
+    },
+    {
+     "ref": "¶77",
+     "text": "As with immediate release potency testing, stability testing should be performed on vials with a known weight of sample. For example, testing a vial (sample) which had a higher fill weight (volume) than the average fill volume of the batch would provide a higher potency results and not represent the potency of the batch. Also, the expiration date and stability should be based on those batches with the higher moisture content. Such data should also be considered in the establishment of a moisture specification.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > FINISHED PRODUCT TESTING FOR"
+    },
+    {
+     "ref": "¶78",
+     "text": "For products showing a loss of potency due to aging, there are generally two potency specifications. There is a higher limit for the dosage form at the time of release. This limit is generally higher than the official USP or filed specification which is official throughout the entire expiration date period of the dosage form. The USP points out that compendial standards apply at any time in the life of the article.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > FINISHED PRODUCT TESTING FOR"
+    },
+    {
+     "ref": "¶79",
+     "text": "Stability testing should also include provisions for the assay of aged samples and subsequent reconstitution of these aged samples for the maximum amount of time specified in the labeling. On some occasions, manufacturers have established expiration dates without performing label claim reconstitution potency assays at the various test intervals and particularly the expiration date test interval. Additionally, this stability testing of reconstituted solutions should include the most concentrated and the least concentrated reconstituted solutions. The most concentrated reconstituted solution will usually exhibit degradation at a faster rate than less concentrated solutions.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > FINISHED PRODUCT TESTING FOR"
+    },
+    {
+     "context": "(c) Sterility Testing"
+    },
+    {
+     "ref": "¶80",
+     "text": "With respect to sterility testing of lyophilized products, there is concern with the solution used to reconstitute the lyophilized product. Although products may be labeled for reconstitution with Bacteriostatic Water For Injection, Sterile Water For Injection (WFI) should be used to reconstitute products. Because of the potential toxicities associated with Bacteriostatic Water For Injection, many hospitals only utilize WFI. Bacteriostatic Water For Injection may kill some of the vegetative cells if present as contaminants, and thus mask the true level of contamination in the dosage form.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > FINISHED PRODUCT TESTING FOR"
+    },
+    {
+     "ref": "¶81",
+     "text": "As with other sterile products, sterility test results which show contamination on the initial test should be identified and reviewed.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > FINISHED PRODUCT TESTING FOR"
+    },
+    {
+     "context": "FINISHED PRODUCT INSPECTION - MELTBACK"
+    },
+    {
+     "ref": "¶82",
+     "text": "The USP points out that it is good pharmaceutical practice to perform 100% inspection of parenteral products. This includes sterile lyophilized powders. Critical aspects would include the presence of correct volume of cake and the cake appearance. With regard to cake appearance, one of the major concerns is meltback.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > FINISHED PRODUCT INSPECTION - MELTBACK"
+    },
+    {
+     "ref": "¶83",
+     "text": "Meltback is a form of cake collapse and is caused by the change from the solid to liquid state. That is, there is incomplete sublimation (change from the solid to vapor state) in the vial. Associated with this problem is a change in the physical form of the drug substance and/or a pocket of moisture. These may result in greater instability and increased product degradation.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > FINISHED PRODUCT INSPECTION - MELTBACK"
+    },
+    {
+     "ref": "¶84",
+     "text": "Another problem may be poor solubility. Increased time for reconstitution at the user stage may result in partial loss of potency if the drug is not completely dissolved, since it is common to use in-line filters during administration to the patient.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > FINISHED PRODUCT INSPECTION - MELTBACK"
+    }
+   ]
+  }
+ ]
+}

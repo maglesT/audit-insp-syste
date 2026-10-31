@@ -1,0 +1,693 @@
+{
+ "instructions": "You read an FDA web page (a Q&A page on CGMP, a Guide to Inspections, an Inspection Technical Guide, a Compliance\nPolicy Guide or an alert to manufacturers) and list what it expects of a drug manufacturer. Each unit is given as\nits paragraphs, each with its reference (\"Q4.2\" on a Q&A page: question 4, answer paragraph 2; \"¶17\" elsewhere) and\nits exact text; \"context\" entries are headings or labels (not citable); \"list_item\" marks a list item, whose\nlead-in is the paragraph ending in \":\" above it. Your output is checked by software against that exact text and by\nindependent reviewers, so precision matters more than wording.\n\nList each separate expectation as its own item, so that together your items cover every expectation in the unit.\nOne expectation is one thing a manufacturer must, should or may do, with all its conditions, numbers and\nqualifiers; do not split one expectation across items. What counts:\n- what FDA says a firm must, should or may do (\"FDA expects firms to have written procedures ...\", \"manufacturers\n  should ...\", \"are required by the CGMP regulations to ...\");\n- in a Guide to Inspections or Inspection Technical Guide, what the investigator is told to check (\"Determine\n  whether the firm has validated ...\", \"Check that ...\", \"Review the ...\"): write the practice the firm is expected\n  to have (\"Validate ...\"), not the investigator's task. When the text only says what to look at (\"Examine the\n  design of equipment\") and states no expectation, write the expectation the text itself gives in the same\n  paragraph; if it gives none, put the sentence in not_applicable (\"inspection step without a stated expectation\").\nFor each item:\n- statement: the expectation in your own plain English words, as one checklist item a site could be audited\n  against. Do not copy more than a few words in a row. Keep every condition (\"where\", \"if\", \"unless\", \"when\",\n  \"except\") and every number. Do not add anything the text does not say. The statement itself must carry every\n  condition or qualifier of the lead-in above a list item. The statement is shown to customers: never cite a\n  regulation, section, question or paragraph number in it (\"21 CFR 211.42(d)\", \"Q4\", \"see above\"); say what is\n  required instead.\n- quote: the exact span of ONE paragraph's text that states the whole expectation, copied character for character\n  (matched against the page text by software; do not fix typos or change punctuation, keep footnote marks as\n  printed). A quote may continue into the paragraphs after it in the same unit, in order (e.g. a lead-in and its\n  list items), but must start in the cited paragraph.\n- clause_number: the reference of the paragraph the quote starts in, exactly as given (\"Q4.2\", \"¶17\").\n- strength: \"mandatory\" where the text states a legal requirement (shall / must / is required / may not, \"the\n  CGMP regulations require\"); \"recommended\" for should, \"FDA expects\", \"FDA recommends\", and for an inspection\n  point; \"optional\" for may / is acceptable. A list item without such a word takes its lead-in's.\n- plant_types: from OSD, LIQ, SEMI, INJ, API (INJ = sterile injectables); the plant scope given unless the text\n  narrows it. Text limited to non-sterile products does not apply to INJ; text limited to sterile products\n  (parenterals, aseptic processing, terminal sterilization) applies only to INJ (and API where in scope). Text\n  that rests on the CGMP regulations for finished pharmaceuticals (21 CFR 210/211, \"drug product manufacturers\",\n  \"finished drug products\") does not apply to API unless it speaks of APIs or bulk drug substances too.\n- numbers: every number, limit, frequency or period in the quote, as written (not regulation references).\n- condition: the condition or trigger in a few words, \"\" if none. This field only repeats what the statement\n  already says.\n- topic: the sub-topic id from TOPICS the expectation belongs to.\n\nDo not narrow or widen a term. Where the text gives examples (\"such as ...\"), keep them as examples; where it\ngives a closed list, keep it closed.\n\nSentences that state no expectation for the manufacturer go in not_applicable: the question itself, background and\nhistory, definitions, descriptions of what happened at a firm, FDA's own actions or enforcement, statements of\npurpose or scope, references, an inspection step without a stated expectation. One entry per SENTENCE, each with\nthe paragraph reference, the sentence's first 8 or more words copied exactly, and the reason in a few words. A\nsentence with \"should\", \"must\", \"FDA expects\" or an instruction to the investigator needs an item or a\nnot_applicable entry.\n\nWrite the answers file named in your task: {\"answers\": [one object per unit with \"unit\" set to the unit's \"id\"\nexactly, \"items\" and \"not_applicable\"]}.\n",
+ "topics": [
+  "QS.PQS",
+  "QS.MGMT",
+  "QS.QRM",
+  "QS.PQR",
+  "QS.CHANGE",
+  "QS.DEV",
+  "QS.CAPA",
+  "PER.ORG",
+  "PER.KEY",
+  "PER.TRAIN",
+  "PER.HYG",
+  "PER.GOWN",
+  "PREM.DESIGN",
+  "PREM.PROD",
+  "PREM.STORE",
+  "PREM.QC",
+  "PREM.ANC",
+  "EQ.DESIGN",
+  "EQ.MAINT",
+  "EQ.CLEAN",
+  "EQ.CAL",
+  "DOC.SYS",
+  "DOC.SPEC",
+  "DOC.MFR",
+  "DOC.BMR",
+  "DOC.SOP",
+  "DOC.RET",
+  "MAT.SUPP",
+  "MAT.RECV",
+  "MAT.SAMP",
+  "MAT.STATUS",
+  "MAT.PACK",
+  "MAT.REJ",
+  "PROD.GEN",
+  "PROD.XCONT",
+  "PROD.IPC",
+  "PROD.YIELD",
+  "PROD.PACK",
+  "PROD.REWORK",
+  "QC.GEN",
+  "QC.SAMP",
+  "QC.TEST",
+  "QC.OOS",
+  "QC.STAB",
+  "QC.REF",
+  "QC.MICRO",
+  "VAL.PLAN",
+  "VAL.QUAL",
+  "VAL.PROC",
+  "VAL.CLEAN",
+  "VAL.METH",
+  "CSV.VAL",
+  "CSV.ACCESS",
+  "CSV.AUDIT",
+  "CSV.ESIG",
+  "CSV.DI",
+  "UTIL.WATER",
+  "UTIL.HVAC",
+  "UTIL.GAS",
+  "CCS.STRAT",
+  "CCS.EM",
+  "CCS.CLEAN",
+  "CCS.PEST",
+  "STER.GRADE",
+  "STER.ASEPT",
+  "STER.APS",
+  "STER.STERIL",
+  "STER.FILT",
+  "STER.CCI",
+  "STER.LYO",
+  "API.START",
+  "API.PROC",
+  "API.IMP",
+  "API.SOLV",
+  "OUT.CONTRACT",
+  "OUT.AGREE",
+  "CMP.COMPL",
+  "CMP.RECALL",
+  "CMP.REPORT",
+  "SI.PROG",
+  "SI.TEAM",
+  "SI.REPORT",
+  "SI.FOLLOW",
+  "DIST.STORE",
+  "DIST.TRANS",
+  "DIST.RETURN",
+  "REL.QP",
+  "REL.REVIEW"
+ ],
+ "schema": {
+  "type": "object",
+  "required": [
+   "unit",
+   "items",
+   "not_applicable"
+  ],
+  "properties": {
+   "unit": {
+    "type": "string"
+   },
+   "items": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "statement",
+      "quote",
+      "clause_number",
+      "strength",
+      "plant_types",
+      "numbers",
+      "condition",
+      "topic"
+     ],
+     "properties": {
+      "statement": {
+       "type": "string"
+      },
+      "quote": {
+       "type": "string"
+      },
+      "clause_number": {
+       "type": "string"
+      },
+      "strength": {
+       "enum": [
+        "mandatory",
+        "recommended",
+        "optional"
+       ]
+      },
+      "plant_types": {
+       "type": "array",
+       "items": {
+        "enum": [
+         "OSD",
+         "LIQ",
+         "SEMI",
+         "INJ",
+         "API"
+        ]
+       }
+      },
+      "numbers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "condition": {
+       "type": "string"
+      },
+      "topic": {
+       "type": "string"
+      }
+     }
+    }
+   },
+   "not_applicable": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "clause_number",
+      "text",
+      "reason"
+     ],
+     "properties": {
+      "clause_number": {
+       "type": "string"
+      },
+      "text": {
+       "type": "string"
+      },
+      "reason": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  }
+ },
+ "units": [
+  {
+   "id": "fda-ora-guide-pharma-qc-labs-1993.html:¶1-¶16",
+   "source": "fda-ora-guide-pharma-qc-labs-1993.html",
+   "unit": "¶1-¶16",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "context": "Pharmaceutical Quality Control Labs (7/93)"
+    },
+    {
+     "context": "GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES"
+    },
+    {
+     "context": "Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s)."
+    },
+    {
+     "context": "1. INTRODUCTION"
+    },
+    {
+     "ref": "¶1",
+     "text": "The pharmaceutical quality control laboratory serves one of the most important functions in pharmaceutical production and control. A significant portion of the CGMP regulations (21 CFR 211) pertain to the quality control laboratory and product testing. Similar concepts apply to bulk drugs.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 1. INTRODUCTION"
+    },
+    {
+     "ref": "¶2",
+     "text": "This inspection guide supplements other inspectional information contained in other agency inspectional guidance documents. For example, Compliance Program 7346.832 requiring pre-approval NDA/ANDA inspections contains general instructions to conduct product specific NDA/ANDA inspection audits to measure compliance with the applications and CGMP requirements. This includes pharmaceutical laboratories used for in-process and finished product testing.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 1. INTRODUCTION"
+    },
+    {
+     "context": "2. OBJECTIVE"
+    },
+    {
+     "ref": "¶3",
+     "text": "The specific objective will be spelled out prior to the inspection. The laboratory inspection may be limited to specific issues, or the inspection may encompass a comprehensive evaluation of the laboratory's compliance with CGMP's. As a minimum, each pharmaceutical quality control laboratory should receive a comprehensive GMP evaluation each two years as part of the statutory inspection obligation.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 2. OBJECTIVE"
+    },
+    {
+     "ref": "¶4",
+     "text": "In general these inspections may include",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 2. OBJECTIVE"
+    },
+    {
+     "ref": "¶5",
+     "text": "- the specific methodology which will be used to test a new product",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 2. OBJECTIVE"
+    },
+    {
+     "ref": "¶6",
+     "text": "- a complete assessment of laboratory's conformance with GMP's",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 2. OBJECTIVE"
+    },
+    {
+     "ref": "¶7",
+     "text": "- a specific aspect of laboratory operations",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 2. OBJECTIVE"
+    },
+    {
+     "context": "3. INSPECTION PREPARATION"
+    },
+    {
+     "ref": "¶8",
+     "text": "FDA Inspection Guides are based on the team inspection approach and our inspection of a laboratory is consistent with this concept. As part of our effort to achieve uniformity and consistency in laboratory inspections, we expect that complex, highly technical and specialized testing equipment, procedures and data manipulations, as well as scientific laboratory operations will be evaluated by an experienced laboratory analyst with specialized knowledge in such matters.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 3. INSPECTION PREPARATION"
+    },
+    {
+     "ref": "¶9",
+     "text": "District management makes the final decision regarding the assignment of personnel to inspections. Nevertheless, we expect investigators, analysts and others to work as teams and to advise management when additional expertise is required to complete a meaningful inspection.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 3. INSPECTION PREPARATION"
+    },
+    {
+     "ref": "¶10",
+     "text": "Team members participating in a pre-approval inspection must read and be familiar with Compliance Program 7346.832, Pre-Approval Inspections/Investigations. Relevant sections of the NDA or ANDA should be reviewed prior to the inspection; but if the application is not available from any other source, this review will have to be conducted using the company's copy of the application.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 3. INSPECTION PREPARATION"
+    },
+    {
+     "ref": "¶11",
+     "text": "Team members should meet, if possible, prior to the inspection to discuss the approach to the inspection, to define the roles of the team members, and to establish goals for completion of the assignment. Responsibilities for development of all reports should also be established prior to the inspection. This includes the preparation of the FDA 483.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 3. INSPECTION PREPARATION"
+    },
+    {
+     "ref": "¶12",
+     "text": "The Center for Drug Evaluation and Research (CDER) may have issued deficiency letters listing problems that the sponsor must correct prior to the approval of NDA/ANDA's and supplements. The inspection team is expected to review such letters on file at the district office, and they are expected to ask the plant for access to such letters. The team should evaluate the replies to these letters to assure that the data are accurate and authentic. Complete the inspection even though there has been no response to these letters or when the response is judged inadequate.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 3. INSPECTION PREPARATION"
+    },
+    {
+     "context": "4. INSPECTION APPROACH"
+    },
+    {
+     "context": "A. General"
+    },
+    {
+     "ref": "¶13",
+     "text": "In addition to the general approach utilized in a drug CGMP inspection, the inspection of a laboratory requires the use of observations of the laboratory in operation and of the raw laboratory data to evaluate compliance with CGMP's and to specifically carry out the commitments in an application or DMF. When conducting a comprehensive inspection of a laboratory, all aspects of the laboratory operations will be evaluated.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 4. INSPECTION APPROACH"
+    },
+    {
+     "ref": "¶14",
+     "text": "Laboratory records and logs represent a vital source of information that allows a complete overview of the technical ability of the staff and of overall quality control procedures. SOPs should be complete and adequate and the operations of the laboratories should conform to the written procedures. Specifications and analytical procedures should be suitable and, as applicable, in conformance with application commitments and compendial requirements.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 4. INSPECTION APPROACH"
+    },
+    {
+     "ref": "¶15",
+     "text": "Evaluate raw laboratory data, laboratory procedures and methods, laboratory equipment,including maintenance and calibration, and methods validation data to determine the overall quality of the laboratory operation and the ability to comply with CGMP regulations.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 4. INSPECTION APPROACH"
+    },
+    {
+     "ref": "¶16",
+     "text": "Examine chromatograms and spectra for evidence of impurities, poor technique, or lack of instrument calibration.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 4. INSPECTION APPROACH"
+    }
+   ]
+  },
+  {
+   "id": "fda-ora-guide-pharma-qc-labs-1993.html:¶17-¶28",
+   "source": "fda-ora-guide-pharma-qc-labs-1993.html",
+   "unit": "¶17-¶28",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "¶17",
+     "text": "Most manufacturers use systems that provide for the investigation of laboratory test failures. These are generally recorded in some type of log. Ask to see results of analyses for lots of product that have failed to meet specifications and review the analysis of lots that have been retested, rejected, or reworked. Evaluate the decision to release lots of product when the laboratory results indicate that the lot failed to meet specifications and determine who released them.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 4. INSPECTION APPROACH"
+    },
+    {
+     "context": "B. Pre-Approval"
+    },
+    {
+     "ref": "¶18",
+     "text": "Documents relating to the formulation of the product, synthesis of the bulk drug substance, product specifications, analysis of the product, and others are examined during the review process in headquarters. However, these reviews and evaluations depend on accurate and authentic data that truly represents the product.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 4. INSPECTION APPROACH"
+    },
+    {
+     "ref": "¶19",
+     "text": "Pre-approval inspections are designed to determine if the data submitted in an application are authentic and accurate and if the procedures listed in the application were actually used to produce the data contained in the application. Additionally, they are designed to confirm that plants (including the quality control laboratory) are in compliance with CGMP regulations.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 4. INSPECTION APPROACH"
+    },
+    {
+     "ref": "¶20",
+     "text": "The analytical sections of drug applications usually contain only test results and the methods used to obtain them. Sponsors are not required to file all the test data because such action would require voluminous submissions and would often result in filing redundant information. Sponsors may deliberately or unintentionally select and report data showing that a drug is safe and effective and deserves to be approved. The inspection team must decide if there is valid and scientific justification for the failure to report data which demonstrates the product failed to meet its predetermined specifications.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 4. INSPECTION APPROACH"
+    },
+    {
+     "ref": "¶21",
+     "text": "Coordination between headquarters and the field is essential for a complete review of the application and the plant. Experienced investigators and analysts may contact the review chemist (with appropriate supervisory concurrence) when questions concerning specifications and standards arise.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 4. INSPECTION APPROACH"
+    },
+    {
+     "ref": "¶22",
+     "text": "Inspections should compare the results of analyses submitted with results of analysis of other batches that may have been produced. Evaluate the methods and note any exceptions to the procedures or equipment actually used from those listed in the application and confirm that it is the same method listed in the application. The analyst is expected to evaluate raw laboratory data for tests performed on the test batches (biobatches and clinical batches) and to compare this raw data to the data filed in the application.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 4. INSPECTION APPROACH"
+    },
+    {
+     "context": "5. FAILURE (OUT-OF-SPECIFICATION) LABORATORY RESULTS"
+    },
+    {
+     "ref": "¶23",
+     "text": "Evaluate the company's system to investigate laboratory test failures. These investigations represent a key issue in deciding whether a product may be released or rejected and form the basis for retesting, and resampling.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 5. FAILURE (OUT-OF-SPECIFICATION) LABORATORY RESULTS"
+    },
+    {
+     "ref": "¶24",
+     "text": "In a recent court decision the judge used the term \"out-of-specification\" (OOS) laboratory result rather than the term \"product failure\" which is more common to FDA investigators and analysts. He ruled that an OOS result identified as a laboratory error by a failure investigation or an outlier test. The court provided explicit limitations on the use of outlier tests and these are discussed in a later segment of this document., or overcome by retesting. The court ruled on the use of retesting which is covered in a later segment of this document. is not a product failure. OOS results fall into three categories:",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 5. FAILURE (OUT-OF-SPECIFICATION) LABORATORY RESULTS"
+    },
+    {
+     "context": "- laboratory error"
+    },
+    {
+     "context": "- non-process related or operator error"
+    },
+    {
+     "ref": "¶25",
+     "text": "- process related or manufacturing process error",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 5. FAILURE (OUT-OF-SPECIFICATION) LABORATORY RESULTS"
+    },
+    {
+     "context": "A. LABORATORY ERRORS"
+    },
+    {
+     "ref": "¶26",
+     "text": "Laboratory errors occur when analysts make mistakes in following the method of analysis, use incorrect standards, and/or simply miscalculate the data. Laboratory errors must be determined through a failure investigation to identify the cause of the OOS. Once the nature of the OOS result has been identified it can be classified into one of the three categories above. The inquiry may vary with the object under investigation.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 5. FAILURE (OUT-OF-SPECIFICATION) LABORATORY RESULTS"
+    },
+    {
+     "context": "B. LABORATORY INVESTIGATIONS"
+    },
+    {
+     "ref": "¶27",
+     "text": "The exact cause of analyst error or mistake can be difficult to determine specifically and it is unrealistic to expect that analyst error will always be determined and documented. Nevertheless, a laboratory investigation consists of more than a retest. The inability to identify an error's cause with confidence affects retesting procedures, not the investigation inquiry required for the initial OOS result.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 5. FAILURE (OUT-OF-SPECIFICATION) LABORATORY RESULTS"
+    },
+    {
+     "ref": "¶28",
+     "text": "The firm's analyst should follow a written procedure, checking off each step as it is completed during the analytical procedure. We expect laboratory test data to be recorded directly in notebooks; use of scrap paper and loose paper must be avoided. These common sense measures enhance the accuracy and integrity of data.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 5. FAILURE (OUT-OF-SPECIFICATION) LABORATORY RESULTS"
+    }
+   ]
+  },
+  {
+   "id": "fda-ora-guide-pharma-qc-labs-1993.html:¶29-¶57",
+   "source": "fda-ora-guide-pharma-qc-labs-1993.html",
+   "unit": "¶29-¶57",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "¶29",
+     "text": "Review and evaluate the laboratory SOP for product failure investigations. Specific procedures must be followed when single and multiple OOS results are investigated. For the single OOS result the investigation should include the following steps and these inquiries must be conducted before there is a retest of the sample:",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 5. FAILURE (OUT-OF-SPECIFICATION) LABORATORY RESULTS"
+    },
+    {
+     "ref": "¶30",
+     "text": "- the analyst conducting the test should report the OOS result to the supervisor",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 5. FAILURE (OUT-OF-SPECIFICATION) LABORATORY RESULTS"
+    },
+    {
+     "ref": "¶31",
+     "text": "- the analyst and the supervisor should conduct an informal laboratory investigation which addresses the following areas:",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 5. FAILURE (OUT-OF-SPECIFICATION) LABORATORY RESULTS"
+    },
+    {
+     "context": "1. discuss the testing procedure"
+    },
+    {
+     "context": "2. discuss the calculation"
+    },
+    {
+     "context": "3. examine the instruments"
+    },
+    {
+     "ref": "¶32",
+     "text": "4. review the notebooks containing the OOS result",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 5. FAILURE (OUT-OF-SPECIFICATION) LABORATORY RESULTS"
+    },
+    {
+     "ref": "¶33",
+     "text": "An alternative means to invalidate an initial OOS result, provided the failure investigation proves inconclusive, is the \"outlier\" test. However, specific restrictions must be placed on the use of this test.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 5. FAILURE (OUT-OF-SPECIFICATION) LABORATORY RESULTS"
+    },
+    {
+     "ref": "¶34",
+     "text": "1. Firms cannot frequently reject results on this basis.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 5. FAILURE (OUT-OF-SPECIFICATION) LABORATORY RESULTS"
+    },
+    {
+     "ref": "¶35",
+     "text": "2. The USP standards govern its use in specific cases only.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 5. FAILURE (OUT-OF-SPECIFICATION) LABORATORY RESULTS"
+    },
+    {
+     "ref": "¶36",
+     "text": "3. The test cannot be used for chemical testing results. An initial content uniformity test was OOS followed by a passing retest. The initial OOS result was claimed the result of analyst error based on a statistical evaluation of the data. The court ruled that the use of an outlier test is inappropriate in this case..",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 5. FAILURE (OUT-OF-SPECIFICATION) LABORATORY RESULTS"
+    },
+    {
+     "ref": "¶37",
+     "text": "4. It is never appropriate to utilize outlier tests for a statistically based test, i.e., content uniformity and dissolution.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 5. FAILURE (OUT-OF-SPECIFICATION) LABORATORY RESULTS"
+    },
+    {
+     "ref": "¶38",
+     "text": "Determine if the firm uses an outlier test and evaluate the SOP.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 5. FAILURE (OUT-OF-SPECIFICATION) LABORATORY RESULTS"
+    },
+    {
+     "ref": "¶39",
+     "text": "Determine that a full scale inquiry has been made for multiple OOS results. This inquiry involves quality control and quality assurance personnel in addition to laboratory workers to identify exact process or non process related errors.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 5. FAILURE (OUT-OF-SPECIFICATION) LABORATORY RESULTS"
+    },
+    {
+     "ref": "¶40",
+     "text": "When the laboratory investigation is inconclusive (reason for the error is not identified) the firm:",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 5. FAILURE (OUT-OF-SPECIFICATION) LABORATORY RESULTS"
+    },
+    {
+     "ref": "¶41",
+     "text": "1. Cannot conduct 2 retests and base release on average of three tests",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 5. FAILURE (OUT-OF-SPECIFICATION) LABORATORY RESULTS"
+    },
+    {
+     "ref": "¶42",
+     "text": "2. Cannot use outlier test in chemical tests",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 5. FAILURE (OUT-OF-SPECIFICATION) LABORATORY RESULTS"
+    },
+    {
+     "ref": "¶43",
+     "text": "3. Cannot use a re-sample to assume a sampling or preparation error",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 5. FAILURE (OUT-OF-SPECIFICATION) LABORATORY RESULTS"
+    },
+    {
+     "ref": "¶44",
+     "text": "4. Can conduct a retest of different tablets from the same sample when a retest is considered appropriate (see criteria elsewhere)",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 5. FAILURE (OUT-OF-SPECIFICATION) LABORATORY RESULTS"
+    },
+    {
+     "context": "C. FORMAL INVESTIGATIONS"
+    },
+    {
+     "ref": "¶45",
+     "text": "Formal investigations extending beyond the laboratory must follow an outline with particular attention to corrective action. The company must:",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 5. FAILURE (OUT-OF-SPECIFICATION) LABORATORY RESULTS"
+    },
+    {
+     "ref": "¶46",
+     "text": "1. State the reason for the investigation",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 5. FAILURE (OUT-OF-SPECIFICATION) LABORATORY RESULTS"
+    },
+    {
+     "ref": "¶47",
+     "text": "2. Provide summation of the process sequences that may have caused the problem",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 5. FAILURE (OUT-OF-SPECIFICATION) LABORATORY RESULTS"
+    },
+    {
+     "ref": "¶48",
+     "text": "3. Outline corrective actions necessary to save the batch and prevent similar recurrence",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 5. FAILURE (OUT-OF-SPECIFICATION) LABORATORY RESULTS"
+    },
+    {
+     "ref": "¶49",
+     "text": "4. List other batches and products possibly affected, the results of investigation of these batches and products, and any corrective action. Specifically:",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 5. FAILURE (OUT-OF-SPECIFICATION) LABORATORY RESULTS"
+    },
+    {
+     "ref": "¶50",
+     "text": "- examine other batches of product made by the errant employee or machine",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 5. FAILURE (OUT-OF-SPECIFICATION) LABORATORY RESULTS"
+    },
+    {
+     "ref": "¶51",
+     "text": "- examine other products produced by the errant process or operation",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 5. FAILURE (OUT-OF-SPECIFICATION) LABORATORY RESULTS"
+    },
+    {
+     "ref": "¶52",
+     "text": "5. Preserve the comments and signatures of all production and quality control personnel who conducted the investigation and approved any reprocessed material after additional testing",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 5. FAILURE (OUT-OF-SPECIFICATION) LABORATORY RESULTS"
+    },
+    {
+     "context": "D. INVESTIGATION DOCUMENTATION"
+    },
+    {
+     "ref": "¶53",
+     "text": "Analyst's mistakes, such as undetected calculation errors, should be specified with particularity and supported by evidence. Investigations along with conclusions reached must be preserved with written documentation that enumerates each step of the investigation. The evaluation, conclusion and corrective action, if any, should be preserved in an investigation or failure report and placed into a central file.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 5. FAILURE (OUT-OF-SPECIFICATION) LABORATORY RESULTS"
+    },
+    {
+     "context": "E. INVESTIGATION TIME FRAMES"
+    },
+    {
+     "ref": "¶54",
+     "text": "All failure investigations should be performed within 20 business days of the problem's occurrence and recorded and written into a failure or investigation report.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 5. FAILURE (OUT-OF-SPECIFICATION) LABORATORY RESULTS"
+    },
+    {
+     "context": "6. PRODUCT FAILURES"
+    },
+    {
+     "ref": "¶55",
+     "text": "An OOS laboratory result can be overcome (invalidated) when laboratory error has been documented. However, non-process and process related errors resulting from operators making mistakes, equipment (other than laboratory equipment) malfunctions, or a manufacturing process that is fundamentally deficient, such as an improper mixing time, represent product failures.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 6. PRODUCT FAILURES"
+    },
+    {
+     "ref": "¶56",
+     "text": "Examine the results of investigations using the guidance in section 5 above and evaluate the decision to release, retest, or rework products.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 6. PRODUCT FAILURES"
+    },
+    {
+     "context": "7. RETESTING"
+    },
+    {
+     "ref": "¶57",
+     "text": "Evaluate the company's retesting SOP for compliance with scientifically sound and appropriate procedures. A very important ruling in one recent court decision sets forth a procedure to govern the retesting program. This district court ruling provides an excellent guide to use in evaluating some aspects of a pharmaceutical laboratory, but should not be considered as law, regulation or binding legal precedent. The court ruled that a firm should have a predetermined testing procedure and it should consider a point at which testing ends and the product is evaluated. If results are not satisfactory, the product is rejected.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 7. RETESTING"
+    }
+   ]
+  },
+  {
+   "id": "fda-ora-guide-pharma-qc-labs-1993.html:¶58-¶74",
+   "source": "fda-ora-guide-pharma-qc-labs-1993.html",
+   "unit": "¶58-¶74",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "¶58",
+     "text": "Additionally, the company should consider all retest results in the context of the overall record of the product. This includes the history of the product. The court ordered a recall of one batch of product on the basis of an initial content uniformity failure and no basis to invalidate the test result and on a history of content uniformity problems with the product., type of test performed, and in-process test results. Failing assay results cannot be disregarded simply on the basis of acceptable content uniformity results.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 7. RETESTING"
+    },
+    {
+     "ref": "¶59",
+     "text": "The number of retests performed before a firm concludes that an unexplained OOS result is invalid or that a product is unacceptable is a matter of scientific judgment. The goal of retesting is to isolate OOS results but retesting cannot continue ad infinitum.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 7. RETESTING"
+    },
+    {
+     "ref": "¶60",
+     "text": "In the case of nonprocess and process-related errors, retesting is suspect. Because the initial tests are genuine, in these circumstances, additional testing alone cannot contribute to product quality. The court acknowledged that some retesting may precede a finding of nonprocess or process-based errors. Once this determination is made, however, additional retesting for purposes of testing a product into compliance is not acceptable.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 7. RETESTING"
+    },
+    {
+     "ref": "¶61",
+     "text": "For example, in the case of content uniformity testing designed to detect variability in the blend or tablets, failing and non-failing results are not inherently inconsistent and passing results on limited retesting do not rule out the possibility that the batch is not uniform. As part of the investigation firms should consider the record of previous batches, since similar or related failures on different batches would be a cause of concern.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 7. RETESTING"
+    },
+    {
+     "ref": "¶62",
+     "text": "Retesting following an OOS result is ruled appropriate only after the failure investigation is underway and the failure investigation determines in part whether retesting is appropriate. It is appropriate when analyst error is documented or the review of analyst's work is \"inconclusive\" , but it is not appropriate for known and undisputed non-process or process related errors.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 7. RETESTING"
+    },
+    {
+     "ref": "¶63",
+     "text": "The court ruled that retesting:",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 7. RETESTING"
+    },
+    {
+     "ref": "¶64",
+     "text": "- must be done on the same, not a different sample",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 7. RETESTING"
+    },
+    {
+     "ref": "¶65",
+     "text": "- may be done on a second aliquot from the same portion of the sample that was the source of the first aliquot",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 7. RETESTING"
+    },
+    {
+     "ref": "¶66",
+     "text": "- may be done on a portion of the same larger sample previously collected for laboratory purposes",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 7. RETESTING"
+    },
+    {
+     "context": "8. RESAMPLING"
+    },
+    {
+     "ref": "¶67",
+     "text": "Firms cannot rely on resampling. The court ordered the recall of one batch of product after having concluded that a successful resample result alone cannot invalidate an initial OOS result. to release a product that has failed testing and retesting unless the failure investigation discloses evidence that the original sample is not representative or was improperly prepared.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 8. RESAMPLING"
+    },
+    {
+     "ref": "¶68",
+     "text": "Evaluate each resampling activity for compliance with this guidance.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 8. RESAMPLING"
+    },
+    {
+     "context": "9. AVERAGING RESULTS OF ANALYSIS"
+    },
+    {
+     "ref": "¶69",
+     "text": "Averaging can be a rational and valid approach when the object under consideration is total product assay, but as a general rule this practice should be avoided. The court ruled that the firm must recall a batch that was released for content uniformity on the basis of averaged test results. because averages hide the variability among individual test results. This phenomenon is particularly troubling if testing generates both OOS and passing individual results which when averaged are within specification. Here, relying on the average figure without examining and explaining the individual OOS results is highly misleading and unacceptable.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 9. AVERAGING RESULTS OF ANALYSIS"
+    },
+    {
+     "ref": "¶70",
+     "text": "Content uniformity and dissolution results never should be averaged to obtain a passing value.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 9. AVERAGING RESULTS OF ANALYSIS"
+    },
+    {
+     "ref": "¶71",
+     "text": "In the case of microbiological turbidimetric and plate assays an average is preferred by the USP. In this case, it is good practice to include OOS results in the average unless an outlier test (microbiological assays) suggests the OOS is an anomaly.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 9. AVERAGING RESULTS OF ANALYSIS"
+    },
+    {
+     "context": "10. BLEND SAMPLING AND TESTING"
+    },
+    {
+     "ref": "¶72",
+     "text": "The laboratory serves a vital function in blend testing which is necessary to increase the likelihood of detecting inferior batches. Blend uniformity testing cannot be waived in favor of total reliance on finished product testing because finished product testing is limited.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 10. BLEND SAMPLING AND TESTING"
+    },
+    {
+     "ref": "¶73",
+     "text": "One court has ruled that sample size influences ultimate blend test results and that the sample size should resemble the dosage size. Any other practice would blur differences in portions of the blend and defeat the object of the test. If a sample larger than the unit must be taken initially, aliquots which resemble the dosage size should be carefully removed for the test, retests, and reserve samples. Obviously, the initial larger sample should not be subjected to any additional mixing or manipulation prior to removing test aliquots as this may obscure non-homogeneity.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 10. BLEND SAMPLING AND TESTING"
+    },
+    {
+     "ref": "¶74",
+     "text": "Multiple individual blend uniformity samples taken from different areas cannot be composited. However when variation testing is not the object of assay testing, compositing is permitted.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 10. BLEND SAMPLING AND TESTING"
+    }
+   ]
+  }
+ ]
+}

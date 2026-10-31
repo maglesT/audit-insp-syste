@@ -1,0 +1,488 @@
+{
+ "instructions": "You read an FDA web page (a Q&A page on CGMP, a Guide to Inspections, an Inspection Technical Guide, a Compliance\nPolicy Guide or an alert to manufacturers) and list what it expects of a drug manufacturer. Each unit is given as\nits paragraphs, each with its reference (\"Q4.2\" on a Q&A page: question 4, answer paragraph 2; \"¶17\" elsewhere) and\nits exact text; \"context\" entries are headings or labels (not citable); \"list_item\" marks a list item, whose\nlead-in is the paragraph ending in \":\" above it. Your output is checked by software against that exact text and by\nindependent reviewers, so precision matters more than wording.\n\nList each separate expectation as its own item, so that together your items cover every expectation in the unit.\nOne expectation is one thing a manufacturer must, should or may do, with all its conditions, numbers and\nqualifiers; do not split one expectation across items. What counts:\n- what FDA says a firm must, should or may do (\"FDA expects firms to have written procedures ...\", \"manufacturers\n  should ...\", \"are required by the CGMP regulations to ...\");\n- in a Guide to Inspections or Inspection Technical Guide, what the investigator is told to check (\"Determine\n  whether the firm has validated ...\", \"Check that ...\", \"Review the ...\"): write the practice the firm is expected\n  to have (\"Validate ...\"), not the investigator's task. When the text only says what to look at (\"Examine the\n  design of equipment\") and states no expectation, write the expectation the text itself gives in the same\n  paragraph; if it gives none, put the sentence in not_applicable (\"inspection step without a stated expectation\").\nFor each item:\n- statement: the expectation in your own plain English words, as one checklist item a site could be audited\n  against. Do not copy more than a few words in a row. Keep every condition (\"where\", \"if\", \"unless\", \"when\",\n  \"except\") and every number. Do not add anything the text does not say. The statement itself must carry every\n  condition or qualifier of the lead-in above a list item. The statement is shown to customers: never cite a\n  regulation, section, question or paragraph number in it (\"21 CFR 211.42(d)\", \"Q4\", \"see above\"); say what is\n  required instead.\n- quote: the exact span of ONE paragraph's text that states the whole expectation, copied character for character\n  (matched against the page text by software; do not fix typos or change punctuation, keep footnote marks as\n  printed). A quote may continue into the paragraphs after it in the same unit, in order (e.g. a lead-in and its\n  list items), but must start in the cited paragraph.\n- clause_number: the reference of the paragraph the quote starts in, exactly as given (\"Q4.2\", \"¶17\").\n- strength: \"mandatory\" where the text states a legal requirement (shall / must / is required / may not, \"the\n  CGMP regulations require\"); \"recommended\" for should, \"FDA expects\", \"FDA recommends\", and for an inspection\n  point; \"optional\" for may / is acceptable. A list item without such a word takes its lead-in's.\n- plant_types: from OSD, LIQ, SEMI, INJ, API (INJ = sterile injectables); the plant scope given unless the text\n  narrows it. Text limited to non-sterile products does not apply to INJ; text limited to sterile products\n  (parenterals, aseptic processing, terminal sterilization) applies only to INJ (and API where in scope). Text\n  that rests on the CGMP regulations for finished pharmaceuticals (21 CFR 210/211, \"drug product manufacturers\",\n  \"finished drug products\") does not apply to API unless it speaks of APIs or bulk drug substances too.\n- numbers: every number, limit, frequency or period in the quote, as written (not regulation references).\n- condition: the condition or trigger in a few words, \"\" if none. This field only repeats what the statement\n  already says.\n- topic: the sub-topic id from TOPICS the expectation belongs to.\n\nDo not narrow or widen a term. Where the text gives examples (\"such as ...\"), keep them as examples; where it\ngives a closed list, keep it closed.\n\nSentences that state no expectation for the manufacturer go in not_applicable: the question itself, background and\nhistory, definitions, descriptions of what happened at a firm, FDA's own actions or enforcement, statements of\npurpose or scope, references, an inspection step without a stated expectation. One entry per SENTENCE, each with\nthe paragraph reference, the sentence's first 8 or more words copied exactly, and the reason in a few words. A\nsentence with \"should\", \"must\", \"FDA expects\" or an instruction to the investigator needs an item or a\nnot_applicable entry.\n\nWrite the answers file named in your task: {\"answers\": [one object per unit with \"unit\" set to the unit's \"id\"\nexactly, \"items\" and \"not_applicable\"]}.\n",
+ "topics": [
+  "QS.PQS",
+  "QS.MGMT",
+  "QS.QRM",
+  "QS.PQR",
+  "QS.CHANGE",
+  "QS.DEV",
+  "QS.CAPA",
+  "PER.ORG",
+  "PER.KEY",
+  "PER.TRAIN",
+  "PER.HYG",
+  "PER.GOWN",
+  "PREM.DESIGN",
+  "PREM.PROD",
+  "PREM.STORE",
+  "PREM.QC",
+  "PREM.ANC",
+  "EQ.DESIGN",
+  "EQ.MAINT",
+  "EQ.CLEAN",
+  "EQ.CAL",
+  "DOC.SYS",
+  "DOC.SPEC",
+  "DOC.MFR",
+  "DOC.BMR",
+  "DOC.SOP",
+  "DOC.RET",
+  "MAT.SUPP",
+  "MAT.RECV",
+  "MAT.SAMP",
+  "MAT.STATUS",
+  "MAT.PACK",
+  "MAT.REJ",
+  "PROD.GEN",
+  "PROD.XCONT",
+  "PROD.IPC",
+  "PROD.YIELD",
+  "PROD.PACK",
+  "PROD.REWORK",
+  "QC.GEN",
+  "QC.SAMP",
+  "QC.TEST",
+  "QC.OOS",
+  "QC.STAB",
+  "QC.REF",
+  "QC.MICRO",
+  "VAL.PLAN",
+  "VAL.QUAL",
+  "VAL.PROC",
+  "VAL.CLEAN",
+  "VAL.METH",
+  "CSV.VAL",
+  "CSV.ACCESS",
+  "CSV.AUDIT",
+  "CSV.ESIG",
+  "CSV.DI",
+  "UTIL.WATER",
+  "UTIL.HVAC",
+  "UTIL.GAS",
+  "CCS.STRAT",
+  "CCS.EM",
+  "CCS.CLEAN",
+  "CCS.PEST",
+  "STER.GRADE",
+  "STER.ASEPT",
+  "STER.APS",
+  "STER.STERIL",
+  "STER.FILT",
+  "STER.CCI",
+  "STER.LYO",
+  "API.START",
+  "API.PROC",
+  "API.IMP",
+  "API.SOLV",
+  "OUT.CONTRACT",
+  "OUT.AGREE",
+  "CMP.COMPL",
+  "CMP.RECALL",
+  "CMP.REPORT",
+  "SI.PROG",
+  "SI.TEAM",
+  "SI.REPORT",
+  "SI.FOLLOW",
+  "DIST.STORE",
+  "DIST.TRANS",
+  "DIST.RETURN",
+  "REL.QP",
+  "REL.REVIEW"
+ ],
+ "schema": {
+  "type": "object",
+  "required": [
+   "unit",
+   "items",
+   "not_applicable"
+  ],
+  "properties": {
+   "unit": {
+    "type": "string"
+   },
+   "items": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "statement",
+      "quote",
+      "clause_number",
+      "strength",
+      "plant_types",
+      "numbers",
+      "condition",
+      "topic"
+     ],
+     "properties": {
+      "statement": {
+       "type": "string"
+      },
+      "quote": {
+       "type": "string"
+      },
+      "clause_number": {
+       "type": "string"
+      },
+      "strength": {
+       "enum": [
+        "mandatory",
+        "recommended",
+        "optional"
+       ]
+      },
+      "plant_types": {
+       "type": "array",
+       "items": {
+        "enum": [
+         "OSD",
+         "LIQ",
+         "SEMI",
+         "INJ",
+         "API"
+        ]
+       }
+      },
+      "numbers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "condition": {
+       "type": "string"
+      },
+      "topic": {
+       "type": "string"
+      }
+     }
+    }
+   },
+   "not_applicable": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "clause_number",
+      "text",
+      "reason"
+     ],
+     "properties": {
+      "clause_number": {
+       "type": "string"
+      },
+      "text": {
+       "type": "string"
+      },
+      "reason": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  }
+ },
+ "units": [
+  {
+   "id": "fda-ora-guide-foreign-pharma-manufacturers-1996.html:¶1-¶9",
+   "source": "fda-ora-guide-foreign-pharma-manufacturers-1996.html",
+   "unit": "¶1-¶9",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "context": "Foreign Pharmaceutical Manufacturers (5/96)"
+    },
+    {
+     "context": "GUIDE(1) TO INSPECTIONS"
+    },
+    {
+     "context": "OF FOREIGN PHARMACEUTICAL MANUFACTURERS"
+    },
+    {
+     "context": "BACKGROUND"
+    },
+    {
+     "ref": "¶1",
+     "text": "There has been a significant increase in the number of foreign inspections of pharmaceutical manufacturing plants in the past few years. This trend is attributable mainly to the increase in the number of pre-approval inspections although the increase has been noted in other areas such as routine GMP inspections and compliance follow-up activities. Considering the resource-intensive nature of the foreign inspection program, it has become clear that effective and efficient inspectional coverage is crucial to the successful management of the program and that can be achieved only through maintenance of consistency and uniformity of inspection and enforcement activities.",
+     "heading_path": "Foreign Pharmaceutical Manufacturers (5/96) > OF FOREIGN PHARMACEUTICAL MANUFACTURERS > BACKGROUND"
+    },
+    {
+     "ref": "¶2",
+     "text": "Whenever possible, the agency tries to utilize only highly qualified Investigators and Analysts for the foreign inspection program who have extensive experience in conducting drug inspections with demonstrated track records of working effectively in a tight time frame and under considerable pressure. However, it has become increasingly evident that a formal guidance is necessary to address the issues specific to the foreign drug inspection operations as the agency needs to broaden the cadre of personnel to meet the objective of the program. Through this guide, the agency strives to ensure that it continues to realize the consistency and the uniformity in the overall inspectional/enforcement activities and, furthermore, informs the prospective inspection staff of the differences in the foreign vs. domestic drug inspection programs.",
+     "heading_path": "Foreign Pharmaceutical Manufacturers (5/96) > OF FOREIGN PHARMACEUTICAL MANUFACTURERS > BACKGROUND"
+    },
+    {
+     "ref": "¶3",
+     "text": "This guide was prepared by FDA's Office of Regulatory Affairs (ORA) with the assistance of the Center for Drug Evaluation and Research (CDER) and the Center for Veterinary Medicine (CVM).",
+     "heading_path": "Foreign Pharmaceutical Manufacturers (5/96) > OF FOREIGN PHARMACEUTICAL MANUFACTURERS > BACKGROUND"
+    },
+    {
+     "context": "PURPOSE"
+    },
+    {
+     "ref": "¶4",
+     "text": "This document is not intended to provide guidance on how to perform an inspection at a foreign drug establishment. Rather, it is intended to address logistical and technical aspects specific to foreign drug inspections. With diminishing resources and increasing responsibilities in this program, efficient utilization of available time and information is a key to affording an adequate inspectional coverage abroad. This means that the investigator or the inspectional team will need to start preparing for the inspections as soon as the inspection itinerary is set.",
+     "heading_path": "Foreign Pharmaceutical Manufacturers (5/96) > OF FOREIGN PHARMACEUTICAL MANUFACTURERS > PURPOSE"
+    },
+    {
+     "ref": "¶5",
+     "text": "The guidance provided in this document is intended to establish greater consistency and uniformity in inspectional activities at both domestic and foreign drug manufacturers. Additionally, this document is intended to strengthen the foreign inspection program at all levels through greater utilization of the resources available in the field and the Centers.",
+     "heading_path": "Foreign Pharmaceutical Manufacturers (5/96) > OF FOREIGN PHARMACEUTICAL MANUFACTURERS > PURPOSE"
+    },
+    {
+     "ref": "¶6",
+     "text": "This document outlines the types of information and documents that the inspection team is expected to review prior to the foreign inspection trip. It sets forth the roles played by members of the inspection team and the staff in the Office of Regional Operations. It explains the communication process and the flow of work among field offices, the Office of Regional Operations, and respective Centers, namely, Center for Drug Evaluation and Research (CDER) and Center for Veterinary Medicine (CVM) bearing in mind that there are changes taking place in how the program is managed administratively. It sets forth guidance for inspection teams regarding communications with officials of the regulated industry.",
+     "heading_path": "Foreign Pharmaceutical Manufacturers (5/96) > OF FOREIGN PHARMACEUTICAL MANUFACTURERS > PURPOSE"
+    },
+    {
+     "ref": "¶7",
+     "text": "For guidance on specific inspectional areas or technical subjects, the investigator should continue to refer to existing inspection guides, appropriate sections of the Compliance Program Guidance Manual, and Compliance Policy Guides.",
+     "heading_path": "Foreign Pharmaceutical Manufacturers (5/96) > OF FOREIGN PHARMACEUTICAL MANUFACTURERS > PURPOSE"
+    },
+    {
+     "context": "OVERALL PROGRAM ADMINISTRATION AND MANAGEMENT"
+    },
+    {
+     "ref": "¶8",
+     "text": "The foreign inspection program is under the management and direction of the International and Technical Operations Branch (ITOB) headquarters staff of the Division of Emergency and Investigational Operations/ORO. This branch schedules all foreign inspection trips and provides all the resources necessary for the program activities. ITOB also performs liaison activities with CDER, CVM, field offices, and the regulated industry. In addition, headquarters staff of the branch is responsible for resolving logistical difficulties that may arise during inspection scheduling, in-transit changes, and pre-inspection document support, and other issues.",
+     "heading_path": "Foreign Pharmaceutical Manufacturers (5/96) > OF FOREIGN PHARMACEUTICAL MANUFACTURERS > OVERALL PROGRAM ADMINISTRATION AND MANAGEMENT"
+    },
+    {
+     "ref": "¶9",
+     "text": "The field offices evaluate and endorse establishment inspection reports (EIRs) and forward them to ITOB. Inspections performed by the ITOB staff or the Center personnel are evaluated and endorsed by the branch headquarters staff. ITOB forwards EIR packages and any recommendations to the appropriate Center and coordinates all follow-up activities. As mentioned earlier, the policy regarding compliance review and follow-up activities is under review and is subject to change.",
+     "heading_path": "Foreign Pharmaceutical Manufacturers (5/96) > OF FOREIGN PHARMACEUTICAL MANUFACTURERS > OVERALL PROGRAM ADMINISTRATION AND MANAGEMENT"
+    }
+   ]
+  },
+  {
+   "id": "fda-ora-guide-foreign-pharma-manufacturers-1996.html:¶10-¶18",
+   "source": "fda-ora-guide-foreign-pharma-manufacturers-1996.html",
+   "unit": "¶10-¶18",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "¶10",
+     "text": "Field offices are expected to ensure that assignments are completed on schedule; and to ensure reports and decisions regarding follow-up activities are submitted to ITOB in a timely manner. Field offices are accountable for the work identified in the ORA field workplan covering foreign inspections assigned to their districts and regions.",
+     "heading_path": "Foreign Pharmaceutical Manufacturers (5/96) > OF FOREIGN PHARMACEUTICAL MANUFACTURERS > OVERALL PROGRAM ADMINISTRATION AND MANAGEMENT"
+    },
+    {
+     "context": "PROCEDURES AND CONCEPTS"
+    },
+    {
+     "ref": "¶11",
+     "text": "Inspections at foreign drug facilities are expected to be approached in the same manner as domestic inspections. One main difference that poses a significant challenge to the inspection team abroad is the logistics borne by the program itself. The majority of foreign inspections are pre-set and relatively tight time-framed. Unless the inspection is prepared in advance and sharply focused, it is difficult to meet the objectives of the program satisfactorily.",
+     "heading_path": "Foreign Pharmaceutical Manufacturers (5/96) > OF FOREIGN PHARMACEUTICAL MANUFACTURERS > PROCEDURES AND CONCEPTS"
+    },
+    {
+     "ref": "¶12",
+     "text": "Another factor to keep in mind is that the authority to inspect foreign drug facilities does not come from Section 704 of the Food, Drug and Cosmetic Act (the Act,) but from the agency's ability to exercise Section 801 of the Act and commitments made by the sponsors of applications, if applicable. For that reason, the agency is not required to provide stringent documentary evidence to establish violations of the Act. However, the inspection team is expected to collect sufficient records to substantiate its findings and to aid in the further review process by the agency.",
+     "heading_path": "Foreign Pharmaceutical Manufacturers (5/96) > OF FOREIGN PHARMACEUTICAL MANUFACTURERS > PROCEDURES AND CONCEPTS"
+    },
+    {
+     "ref": "¶13",
+     "text": "The inspection team should consult appropriate sections of the Compliance Program Guidance Manual (CPGM) to determine the level and the area of coverage. The team should also refer to pertinent sections of the Compliance Policy Guides (CPGs), Regulatory Procedures Manual (RPM), and various inspection guides when preparing for and conducting foreign inspections.",
+     "heading_path": "Foreign Pharmaceutical Manufacturers (5/96) > OF FOREIGN PHARMACEUTICAL MANUFACTURERS > PROCEDURES AND CONCEPTS"
+    },
+    {
+     "ref": "¶14",
+     "text": "As a general rule, sample collection is not required during inspections at foreign facilities. However, some compliance programs, such as the drug pre-approval and post-approval programs, may require sample collection as part of the inspection process. Be guided by the respective compliance program. The inspection team leader is responsible for contacting the assigned Center application reviewers and discussing the need for sample collections. When significantly violative conditions are observed during an inspection, the team leader should alert ITOB with its findings either by phone or FAX for timely evaluation of the situation. At the end of each inspection, the inspection team leader is expected to communicate the result of the inspection to ITOB, if possible, by FAX, (301) 443-6919, transmission of the form FDA 483, a brief summary of findings, and a proposed recommendation.",
+     "heading_path": "Foreign Pharmaceutical Manufacturers (5/96) > OF FOREIGN PHARMACEUTICAL MANUFACTURERS > PROCEDURES AND CONCEPTS"
+    },
+    {
+     "context": "INSPECTION SCHEDULING"
+    },
+    {
+     "ref": "¶15",
+     "text": "ITOB headquarters staff is responsible for scheduling all foreign inspectional activities. When requests for inspection from various components of the agency are received by ITOB, it schedules and assigns inspections to foreign inspection cadre members according to their specialties and availability. Geographical factor also influences the assignment of the inspections; i.e., ITOB tries to assign inspections to the lead investigator of the home district where the sponsor firm is located. This proximity to the sponsor firm will provide the inspection team some advantage in dealing with the US representative at all stages of the inspection.",
+     "heading_path": "Foreign Pharmaceutical Manufacturers (5/96) > OF FOREIGN PHARMACEUTICAL MANUFACTURERS > INSPECTION SCHEDULING"
+    },
+    {
+     "ref": "¶16",
+     "text": "At the initial stage of inspection planning, ITOB headquarters staff contact the domestic sponsor of an application to obtain any pertinent information necessary for preparation of the inspection scheduling. If any documents or data regarding the facility to be inspected need to be obtained, ITOB will arrange with the sponsor to have them forwarded directly to the inspection team leader in sufficient time prior to the trip departure date.",
+     "heading_path": "Foreign Pharmaceutical Manufacturers (5/96) > OF FOREIGN PHARMACEUTICAL MANUFACTURERS > INSPECTION SCHEDULING"
+    },
+    {
+     "ref": "¶17",
+     "text": "ITOB will coordinate the collection and the routing of documents and information from various headquarters offices to the team leaders. When deemed appropriate, a briefing may be held at the headquarters office prior to the trip. For those who are travelling abroad on an inspection trip for the first time, they are required to be briefed at the headquarters office.",
+     "heading_path": "Foreign Pharmaceutical Manufacturers (5/96) > OF FOREIGN PHARMACEUTICAL MANUFACTURERS > INSPECTION SCHEDULING"
+    },
+    {
+     "context": "REVIEWING DOCUMENTS PRIOR TO TRIP AND WHILE AT THE FIRM"
+    },
+    {
+     "ref": "¶18",
+     "text": "Responsibility of the inspection team is to evaluate the foreign facility's compliance with cGMPs and its adherence to application commitments and DMF information, if applicable. The inspection team is expected to review background documents and records whenever possible and prepare for the inspection prior to travelling abroad. This is necessary due to the tight time-frame usually assigned to each inspection; without advance preparation, an adequate inspectional coverage cannot realistically be attained in most cases. At this stage of planning, the inspection team will have to determine tentatively those issues needing attention during the on-site inspection.",
+     "heading_path": "Foreign Pharmaceutical Manufacturers (5/96) > OF FOREIGN PHARMACEUTICAL MANUFACTURERS > REVIEWING DOCUMENTS PRIOR TO TRIP AND WHILE AT THE FIRM"
+    }
+   ]
+  },
+  {
+   "id": "fda-ora-guide-foreign-pharma-manufacturers-1996.html:¶19-¶27",
+   "source": "fda-ora-guide-foreign-pharma-manufacturers-1996.html",
+   "unit": "¶19-¶27",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "¶19",
+     "text": "DMFs, (A)NDAs, (A)ADAs, and (A)NADAs filed with the agency are accessible to the inspection team through ITOB. Copies of the above are sometimes available at district offices with NDA managers. For an application product, the inspection team should, at least, obtain and review the chemistry, manufacturing and controls (CMC) section of the application prior to the inspection. This section contains information regarding bio-batches, process and controls, analytical methods, and supporting analytical data. Also worth reviewing are reviewers' comments and correspondence between the sponsor and the agency (deficiency letters and written responses). They usually contain application-specific issues, but occasionally provide indications of GMP concerns to focus on. For an approved application, annual reports should be reviewed to identify any potential problems. For bulk drug substances, most of which are covered by DMFs, the inspection team should review the section describing the final purification steps of the manufacturing process.",
+     "heading_path": "Foreign Pharmaceutical Manufacturers (5/96) > OF FOREIGN PHARMACEUTICAL MANUFACTURERS > REVIEWING DOCUMENTS PRIOR TO TRIP AND WHILE AT THE FIRM"
+    },
+    {
+     "ref": "¶20",
+     "text": "Sometimes, it becomes necessary to review the documents that are not part of data filed with the agency prior to the scheduled inspection. Either ITOB or the inspection team may request those data from the domestic sponsor or the foreign facility. They are documents that would be routinely inspected, but may be too bulky or lengthy to cover during the limited on-site inspection. Examples of such documents are manufacturing process validations, cleaning validations, and stability data.",
+     "heading_path": "Foreign Pharmaceutical Manufacturers (5/96) > OF FOREIGN PHARMACEUTICAL MANUFACTURERS > REVIEWING DOCUMENTS PRIOR TO TRIP AND WHILE AT THE FIRM"
+    },
+    {
+     "ref": "¶21",
+     "text": "While at the firm the inspection team should evaluate all process failures, product failures, failures in laboratory tests, and process changes. Process failures and process changes are important because they have a significant impact on the adequacy of process validation. Attention should be given to all reports of failure investigations of any batches requiring rework or reprocessing.",
+     "heading_path": "Foreign Pharmaceutical Manufacturers (5/96) > OF FOREIGN PHARMACEUTICAL MANUFACTURERS > REVIEWING DOCUMENTS PRIOR TO TRIP AND WHILE AT THE FIRM"
+    },
+    {
+     "ref": "¶22",
+     "text": "For sterile products, the following should be reviewed: microbial test results for all batches; all initial positive sterility test results and reports of investigation; all organisms isolated and source; environmental monitoring results and investigations; monitoring of Water for Injection (WFI) systems for microbial and endotoxin qualities. For aseptic processes, media fills need to be reviewed. Also, keep in mind that dosage forms other than injectables may have microbiological requirements.",
+     "heading_path": "Foreign Pharmaceutical Manufacturers (5/96) > OF FOREIGN PHARMACEUTICAL MANUFACTURERS > REVIEWING DOCUMENTS PRIOR TO TRIP AND WHILE AT THE FIRM"
+    },
+    {
+     "ref": "¶23",
+     "text": "Complaint files should be reviewed for all products being covered.",
+     "heading_path": "Foreign Pharmaceutical Manufacturers (5/96) > OF FOREIGN PHARMACEUTICAL MANUFACTURERS > REVIEWING DOCUMENTS PRIOR TO TRIP AND WHILE AT THE FIRM"
+    },
+    {
+     "ref": "¶24",
+     "text": "Determine and report all products that the firm manufactures, which products of those are shipped to the United States, and the amounts being shipped to the USA since the last inspection or over the last two years.",
+     "heading_path": "Foreign Pharmaceutical Manufacturers (5/96) > OF FOREIGN PHARMACEUTICAL MANUFACTURERS > REVIEWING DOCUMENTS PRIOR TO TRIP AND WHILE AT THE FIRM"
+    },
+    {
+     "context": "TEAM INSPECTION"
+    },
+    {
+     "ref": "¶25",
+     "text": "A large number of foreign inspections today are performed by teams of Investigators and Analysts. There is no question about the importance of close cooperation between the two groups for the success of the program. The lead Investigator is responsible for making the pre-inspection preparation and identifying the areas of focus for each member. The lead Investigator is also responsible for providing the Analyst with any records or data that need to be reviewed prior to the inspection. During the inspection, he or she leads the direction of the investigation and determines the types of records or operations to be examined by the team. However, keep in mind that the ultimate objective is to maximize the inspectional coverage by working together as a team and the role played by each team member should be flexible. In fact, the team members often need to operate independently at different locations.",
+     "heading_path": "Foreign Pharmaceutical Manufacturers (5/96) > OF FOREIGN PHARMACEUTICAL MANUFACTURERS > TEAM INSPECTION"
+    },
+    {
+     "ref": "¶26",
+     "text": "Investigators and Analysts are expected to communicate inspectional strategies and findings at all times during the inspection. Strategy discussions outside the inspectional hours are encouraged. The team should avoid giving any appearance of discord or disagreement in the presence of the firm's personnel.",
+     "heading_path": "Foreign Pharmaceutical Manufacturers (5/96) > OF FOREIGN PHARMACEUTICAL MANUFACTURERS > TEAM INSPECTION"
+    },
+    {
+     "context": "INSPECTIONAL GUIDANCE"
+    },
+    {
+     "ref": "¶27",
+     "text": "Foreign drug inspections will generally involve bulk pharmaceutical chemicals (BPCs) or dosage forms. The end product may be sterile or non-sterile. Contract processors or contract laboratories may also be assigned. The Investigators/Analysts will inspect these facilities in the same manner as domestic facilities. The inspection team should be guided by the appropriate Compliance Programs and Compliance Policy Guides. Also, there are several inspectional guides that may be useful to review and understand prior to conducting the inspection. The inspection team may wish to carry copies of pertinent programs and guides to be used as inspectional tools and also to have available for copying by the firms being inspected.",
+     "heading_path": "Foreign Pharmaceutical Manufacturers (5/96) > OF FOREIGN PHARMACEUTICAL MANUFACTURERS > INSPECTIONAL GUIDANCE"
+    }
+   ]
+  },
+  {
+   "id": "fda-ora-guide-foreign-pharma-manufacturers-1996.html:¶28-¶39",
+   "source": "fda-ora-guide-foreign-pharma-manufacturers-1996.html",
+   "unit": "¶28-¶39",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "¶28",
+     "text": "There are numerous sources of information regarding inspectional guides, Compliance Programs, policy guides, etc. These include FDA-on-Disk (FDA personnel have access to this on ORA's CD ROM Gold Disk), FDA's Electronic Bulletin Boards, FDA's Internet Home Page, CDER staff, CVM staff, and staff in the Investigations Branch of the Division of Emergency and Investigations Operations. It is recommended that the inspection team be prepared to provide the appropriate telephone number or Internet addresses to firms to assist them in obtaining the various inspectional guides.",
+     "heading_path": "Foreign Pharmaceutical Manufacturers (5/96) > OF FOREIGN PHARMACEUTICAL MANUFACTURERS > INSPECTIONAL GUIDANCE"
+    },
+    {
+     "ref": "¶29",
+     "text": "Refer to Attachment A for a listing of pertinent Compliance Programs, Compliance Policy Guides, and inspectional guides.",
+     "heading_path": "Foreign Pharmaceutical Manufacturers (5/96) > OF FOREIGN PHARMACEUTICAL MANUFACTURERS > INSPECTIONAL GUIDANCE"
+    },
+    {
+     "ref": "¶30",
+     "text": "FDA World Wide Web Home Page address:",
+     "heading_path": "Foreign Pharmaceutical Manufacturers (5/96) > OF FOREIGN PHARMACEUTICAL MANUFACTURERS > INSPECTIONAL GUIDANCE"
+    },
+    {
+     "context": "http://www.fda.gov"
+    },
+    {
+     "context": "PRE-APPROVAL INSPECTIONS"
+    },
+    {
+     "ref": "¶31",
+     "text": "Pre-approval inspections (PAIs) requested by CDER and CVM for approval of specific NDAs/ANDAs/NADAsA constitute a major segment of FDA's foreign pharmaceutical inspection activities. When a PAI inspection is scheduled at a given facility, ITOB may, at its discretion, request the inspection team also cover other product applications needing priority handling. District NDA program managers should keep track of and advise ITOB headquarters staff of any significant issues pending at the facility that must be resolved before an application can be approved even if CDER or CVM has not completed its review of the application.",
+     "heading_path": "Foreign Pharmaceutical Manufacturers (5/96) > OF FOREIGN PHARMACEUTICAL MANUFACTURERS > PRE-APPROVAL INSPECTIONS"
+    },
+    {
+     "ref": "¶32",
+     "text": "Many of the PAI assignments are generated as a result of the Prescription Drug User Fee Act (PDUFA). These assignments are identified as such and bear relatively short deadlines. They must be given the highest priority and handled in a timely manner.",
+     "heading_path": "Foreign Pharmaceutical Manufacturers (5/96) > OF FOREIGN PHARMACEUTICAL MANUFACTURERS > PRE-APPROVAL INSPECTIONS"
+    },
+    {
+     "ref": "¶33",
+     "text": "At the earliest time after completion of an inspection, the team leader should notify ITOB headquarters staff of the outcome of the inspection. He or she should transmit to ITOB via FAX the Inspectional Observations, Form FDA 483 (if one is issued), a brief summary of findings, and proposed recommendations. Subsequently, the EIR is expected to list all of the applications covered during the inspection and the status of each application. Be guided by appropriate Compliance Programs and Compliance Policy Guides for making endorsements and recommendations.",
+     "heading_path": "Foreign Pharmaceutical Manufacturers (5/96) > OF FOREIGN PHARMACEUTICAL MANUFACTURERS > PRE-APPROVAL INSPECTIONS"
+    },
+    {
+     "context": "CULTURAL ASPECTS"
+    },
+    {
+     "ref": "¶34",
+     "text": "More and more inspections are being performed at places outside of our own cultural boundaries. Even in places that share common cultural traits, we often observe big disparities in regulatory climates in the industry being inspected. How we conduct ourselves abroad may well determine how much information we bring back from the firms we inspect on which to base our regulatory decisions.",
+     "heading_path": "Foreign Pharmaceutical Manufacturers (5/96) > OF FOREIGN PHARMACEUTICAL MANUFACTURERS > CULTURAL ASPECTS"
+    },
+    {
+     "ref": "¶35",
+     "text": "The inspection team is there to make an assessment of each foreign facility on FDA's terms. Foreign firms are under no obligation to comply with the U.S. regulations except for their commitments in applications filed with the agency and/or for their desire to market their products in the U.S.A. In dealing with a foreign firm, therefore, it is important not to impose our views on it during the inspection. Observe its manufacturing operations and verify them with the filed processes. Review the production records and document any deficiencies and discrepancies. The mission of the inspection team is, as is true in the domestic inspections, to gather as much information as possible to allow the agency to make an informed decision. Avoid a confrontational approach, if at all possible. Yet, be assertive and clear about what information and/or documentation the firm should provide to the team.",
+     "heading_path": "Foreign Pharmaceutical Manufacturers (5/96) > OF FOREIGN PHARMACEUTICAL MANUFACTURERS > CULTURAL ASPECTS"
+    },
+    {
+     "ref": "¶36",
+     "text": "Views of the inspection team (or of the agency) and inspectional findings should be discussed with the firm during the exit interview in a constructive manner. Regulatory processes of other countries are usually different from ours, and the inspection team may need to explain to the firm the implication of the findings and ways to remedy the problems, including possible corrective actions.",
+     "heading_path": "Foreign Pharmaceutical Manufacturers (5/96) > OF FOREIGN PHARMACEUTICAL MANUFACTURERS > CULTURAL ASPECTS"
+    },
+    {
+     "context": "COMMUNICATIONS"
+    },
+    {
+     "ref": "¶37",
+     "text": "Prior to the inspection trip, the inspection team may contact the domestic sponsor directly by phone or by visit when deemed necessary and expeditious. However, as a rule, contact ITOB first to see if the information may be obtained through the Branch.",
+     "heading_path": "Foreign Pharmaceutical Manufacturers (5/96) > OF FOREIGN PHARMACEUTICAL MANUFACTURERS > COMMUNICATIONS"
+    },
+    {
+     "ref": "¶38",
+     "text": "The inspection team is encouraged to contact the CDER reviewers at any time to discuss issues or concerns regarding the specific application. As mentioned in the previous section, Center reviewers may provide some information valuable for determining the direction of the inspection.",
+     "heading_path": "Foreign Pharmaceutical Manufacturers (5/96) > OF FOREIGN PHARMACEUTICAL MANUFACTURERS > COMMUNICATIONS"
+    },
+    {
+     "ref": "¶39",
+     "text": "During the trip, the inspection team is expected to keep in touch with ITOB at all times for technical, administrative, or any other matters. ITOB sometimes needs to keep the team apprised of any additional information or changes while in transit. With regards to technical support during travel, ITOB will try to tap available resources within the Agency, including the National Experts and appropriate Center personnel to respond to the request in a timely manner.",
+     "heading_path": "Foreign Pharmaceutical Manufacturers (5/96) > OF FOREIGN PHARMACEUTICAL MANUFACTURERS > COMMUNICATIONS"
+    }
+   ]
+  }
+ ]
+}

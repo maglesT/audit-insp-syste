@@ -1,0 +1,715 @@
+{
+ "instructions": "You read an FDA web page (a Q&A page on CGMP, a Guide to Inspections, an Inspection Technical Guide, a Compliance\nPolicy Guide or an alert to manufacturers) and list what it expects of a drug manufacturer. Each unit is given as\nits paragraphs, each with its reference (\"Q4.2\" on a Q&A page: question 4, answer paragraph 2; \"¶17\" elsewhere) and\nits exact text; \"context\" entries are headings or labels (not citable); \"list_item\" marks a list item, whose\nlead-in is the paragraph ending in \":\" above it. Your output is checked by software against that exact text and by\nindependent reviewers, so precision matters more than wording.\n\nList each separate expectation as its own item, so that together your items cover every expectation in the unit.\nOne expectation is one thing a manufacturer must, should or may do, with all its conditions, numbers and\nqualifiers; do not split one expectation across items. What counts:\n- what FDA says a firm must, should or may do (\"FDA expects firms to have written procedures ...\", \"manufacturers\n  should ...\", \"are required by the CGMP regulations to ...\");\n- in a Guide to Inspections or Inspection Technical Guide, what the investigator is told to check (\"Determine\n  whether the firm has validated ...\", \"Check that ...\", \"Review the ...\"): write the practice the firm is expected\n  to have (\"Validate ...\"), not the investigator's task. When the text only says what to look at (\"Examine the\n  design of equipment\") and states no expectation, write the expectation the text itself gives in the same\n  paragraph; if it gives none, put the sentence in not_applicable (\"inspection step without a stated expectation\").\nFor each item:\n- statement: the expectation in your own plain English words, as one checklist item a site could be audited\n  against. Do not copy more than a few words in a row. Keep every condition (\"where\", \"if\", \"unless\", \"when\",\n  \"except\") and every number. Do not add anything the text does not say. The statement itself must carry every\n  condition or qualifier of the lead-in above a list item. The statement is shown to customers: never cite a\n  regulation, section, question or paragraph number in it (\"21 CFR 211.42(d)\", \"Q4\", \"see above\"); say what is\n  required instead.\n- quote: the exact span of ONE paragraph's text that states the whole expectation, copied character for character\n  (matched against the page text by software; do not fix typos or change punctuation, keep footnote marks as\n  printed). A quote may continue into the paragraphs after it in the same unit, in order (e.g. a lead-in and its\n  list items), but must start in the cited paragraph.\n- clause_number: the reference of the paragraph the quote starts in, exactly as given (\"Q4.2\", \"¶17\").\n- strength: \"mandatory\" where the text states a legal requirement (shall / must / is required / may not, \"the\n  CGMP regulations require\"); \"recommended\" for should, \"FDA expects\", \"FDA recommends\", and for an inspection\n  point; \"optional\" for may / is acceptable. A list item without such a word takes its lead-in's.\n- plant_types: from OSD, LIQ, SEMI, INJ, API (INJ = sterile injectables); the plant scope given unless the text\n  narrows it. Text limited to non-sterile products does not apply to INJ; text limited to sterile products\n  (parenterals, aseptic processing, terminal sterilization) applies only to INJ (and API where in scope). Text\n  that rests on the CGMP regulations for finished pharmaceuticals (21 CFR 210/211, \"drug product manufacturers\",\n  \"finished drug products\") does not apply to API unless it speaks of APIs or bulk drug substances too.\n- numbers: every number, limit, frequency or period in the quote, as written (not regulation references).\n- condition: the condition or trigger in a few words, \"\" if none. This field only repeats what the statement\n  already says.\n- topic: the sub-topic id from TOPICS the expectation belongs to.\n\nDo not narrow or widen a term. Where the text gives examples (\"such as ...\"), keep them as examples; where it\ngives a closed list, keep it closed.\n\nSentences that state no expectation for the manufacturer go in not_applicable: the question itself, background and\nhistory, definitions, descriptions of what happened at a firm, FDA's own actions or enforcement, statements of\npurpose or scope, references, an inspection step without a stated expectation. One entry per SENTENCE, each with\nthe paragraph reference, the sentence's first 8 or more words copied exactly, and the reason in a few words. A\nsentence with \"should\", \"must\", \"FDA expects\" or an instruction to the investigator needs an item or a\nnot_applicable entry.\n\nWrite the answers file named in your task: {\"answers\": [one object per unit with \"unit\" set to the unit's \"id\"\nexactly, \"items\" and \"not_applicable\"]}.\n",
+ "topics": [
+  "QS.PQS",
+  "QS.MGMT",
+  "QS.QRM",
+  "QS.PQR",
+  "QS.CHANGE",
+  "QS.DEV",
+  "QS.CAPA",
+  "PER.ORG",
+  "PER.KEY",
+  "PER.TRAIN",
+  "PER.HYG",
+  "PER.GOWN",
+  "PREM.DESIGN",
+  "PREM.PROD",
+  "PREM.STORE",
+  "PREM.QC",
+  "PREM.ANC",
+  "EQ.DESIGN",
+  "EQ.MAINT",
+  "EQ.CLEAN",
+  "EQ.CAL",
+  "DOC.SYS",
+  "DOC.SPEC",
+  "DOC.MFR",
+  "DOC.BMR",
+  "DOC.SOP",
+  "DOC.RET",
+  "MAT.SUPP",
+  "MAT.RECV",
+  "MAT.SAMP",
+  "MAT.STATUS",
+  "MAT.PACK",
+  "MAT.REJ",
+  "PROD.GEN",
+  "PROD.XCONT",
+  "PROD.IPC",
+  "PROD.YIELD",
+  "PROD.PACK",
+  "PROD.REWORK",
+  "QC.GEN",
+  "QC.SAMP",
+  "QC.TEST",
+  "QC.OOS",
+  "QC.STAB",
+  "QC.REF",
+  "QC.MICRO",
+  "VAL.PLAN",
+  "VAL.QUAL",
+  "VAL.PROC",
+  "VAL.CLEAN",
+  "VAL.METH",
+  "CSV.VAL",
+  "CSV.ACCESS",
+  "CSV.AUDIT",
+  "CSV.ESIG",
+  "CSV.DI",
+  "UTIL.WATER",
+  "UTIL.HVAC",
+  "UTIL.GAS",
+  "CCS.STRAT",
+  "CCS.EM",
+  "CCS.CLEAN",
+  "CCS.PEST",
+  "STER.GRADE",
+  "STER.ASEPT",
+  "STER.APS",
+  "STER.STERIL",
+  "STER.FILT",
+  "STER.CCI",
+  "STER.LYO",
+  "API.START",
+  "API.PROC",
+  "API.IMP",
+  "API.SOLV",
+  "OUT.CONTRACT",
+  "OUT.AGREE",
+  "CMP.COMPL",
+  "CMP.RECALL",
+  "CMP.REPORT",
+  "SI.PROG",
+  "SI.TEAM",
+  "SI.REPORT",
+  "SI.FOLLOW",
+  "DIST.STORE",
+  "DIST.TRANS",
+  "DIST.RETURN",
+  "REL.QP",
+  "REL.REVIEW"
+ ],
+ "schema": {
+  "type": "object",
+  "required": [
+   "unit",
+   "items",
+   "not_applicable"
+  ],
+  "properties": {
+   "unit": {
+    "type": "string"
+   },
+   "items": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "statement",
+      "quote",
+      "clause_number",
+      "strength",
+      "plant_types",
+      "numbers",
+      "condition",
+      "topic"
+     ],
+     "properties": {
+      "statement": {
+       "type": "string"
+      },
+      "quote": {
+       "type": "string"
+      },
+      "clause_number": {
+       "type": "string"
+      },
+      "strength": {
+       "enum": [
+        "mandatory",
+        "recommended",
+        "optional"
+       ]
+      },
+      "plant_types": {
+       "type": "array",
+       "items": {
+        "enum": [
+         "OSD",
+         "LIQ",
+         "SEMI",
+         "INJ",
+         "API"
+        ]
+       }
+      },
+      "numbers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "condition": {
+       "type": "string"
+      },
+      "topic": {
+       "type": "string"
+      }
+     }
+    }
+   },
+   "not_applicable": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "clause_number",
+      "text",
+      "reason"
+     ],
+     "properties": {
+      "clause_number": {
+       "type": "string"
+      },
+      "text": {
+       "type": "string"
+      },
+      "reason": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  }
+ },
+ "units": [
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶77-¶96",
+   "source": "fda-ora-guide-dosage-form-cgmps-1993.html",
+   "unit": "¶77-¶96",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "¶77",
+     "text": "Determine how the equipment operates including the cleaning and maintenance practices. Determine how equipment used in the filling room is sterilized, and if the sterilization cycle has been validated. Determine the practice of re-sterilizing equipment if sterility has been compromised.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶78",
+     "text": "Determine the type of filters used. Determine the purpose of the filters, how they are assembled, cleaned, and inspected for damage. Determine if a microbial retentive filter, and integrity testing is required.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "Water for Injection"
+    },
+    {
+     "ref": "¶79",
+     "text": "Water used in the production of sterile drugs must be controlled to assure that it meets U.S.P. specifications. Review the firm's water for injection production, storage, and delivery system. Determine that the stills, filters, storage tanks, and pipes are installed and operated in a manner that will not contaminate the water. Evaluate the firm's procedures and specifications that assure the quality of the water for injection. As reference material, review the \"FDA Guide to Inspecteons of High Purity Water Systems\" before initiating an inspection.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "Containers and Closures"
+    },
+    {
+     "ref": "¶80",
+     "text": "Determine how containers and closures are handled and stored. Decide if the cleaning, sterilization, and depyrogenization are adequate, and have been validated.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "Sterilization"
+    },
+    {
+     "context": "1. Methods"
+    },
+    {
+     "ref": "¶81",
+     "text": "Determine what method of sterilization is used. A good source of reference material on validation of various sterilization processes is the Parenteral Drug Association Technical Reports. For instance, Technical Report #1 covers \"Validation of Steam Sterilization Cycles.\" Review and evaluate the validation data whatever the method employed.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶82",
+     "text": "If steam under pressure is used, an essential control is a mercury thermometer and a recording thermometer installed in the exhaust line. The time required to heat the center of the largest container to the desired temperature must be known. Steam must expel all air from the sterilizer chamber to eliminate cold spots. The drain lines should be connected to the sewer by means of an air break to prevent back siphoning. The use of paper layers or liners and other practices which might block the flow of steam should be avoided. Charts of time, temperature, and pressure should be filed for each sterilizer load.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶83",
+     "text": "If sterile filtration is used, determine the firm's criteria for selecting the filter and the frequency of changing. Review the filter validation data. Determine if the firm knows the bioburden of the drug, and examine their procedures for filter integrity testing. Filters might not be changed after each batch is sterilized. Determine if there is data to justify the integrity of the filters for the time used and that \"grow through\" has not occurred.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶84",
+     "text": "If ethylene oxide sterilization is used, determine what tests are made for residues and degradation. Review the ETO sterilization cycle including preconditioning of the product, ETO concentration, gas exposure time, chamber and product temperature, and chamber humidity.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "2. Indicators"
+    },
+    {
+     "ref": "¶85",
+     "text": "Determine the type of indicator used to assure sterility. Such as, lag thermometers, peak controls, Steam Klox, test cultures, biological indicators, etc.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶86",
+     "text": "Caution: When spore test strips are used to test the effectiveness of ethylene oxide sterilization, be aware that refrigeration may cause condensation on removal to room temperature. Moisture on the strips converts the spore to the more susceptible vegetative forms of the organism which may affect the reliability of the sterilization test. The spore strips should not be stored where they could be exposed to low levels of ethylene oxide.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶87",
+     "text": "If biological indicators are used, review the current U.S.P. on sterilization and biological indicators. In some cases, testing biological indicators may become all or part of the sterility testing.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶88",
+     "text": "Biological indicators are of two forms, each of which incorporates a viable culture of a single species of microorganism. In one form, the culture is added to representative units of the lot to be sterilized or to a simulated product that offers no less resistance to sterilization than the product to be sterilized. The second form is used when the first form is not practical as in the case of solids. In the second form, the culture is added to disks or strips of filter paper, or metal, glass, or plastic beads.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶89",
+     "text": "During the inspection of a firm which relies on biological indicators, review background data complied by the firm to include:",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶90",
+     "text": "Surveys of the types and numbers of organisms in the product before sterilization.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶91",
+     "text": "Data on the resistance of the organism to the specific sterilization process.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶92",
+     "text": "Data used for selecting the most resistant organism and its form (spore or vegetative cell).",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶93",
+     "text": "Studies of the stability and resistance of the selected organism to the specific sterilization process.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶94",
+     "text": "Studies on the recovery of the organism used to inoculate the product.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶95",
+     "text": "If a simulated product or surface similar to the solid product is used, validation of the simulation or similarity. The simulated product or similar surface must not affect the recovery of the numbers of indicator organisms applied.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶96",
+     "text": "Validation of the number of organisms used to inoculate the product, simulated product, or similar surface, to include stability of the inoculum during the sterilization process.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    }
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶97-¶119",
+   "source": "fda-ora-guide-dosage-form-cgmps-1993.html",
+   "unit": "¶97-¶119",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "¶97",
+     "text": "Since qualified personnel are crucial to the selection and application of these indicators, review their qualifications including experience dealing with the process, expected contaminants, testing of resistance of organisms, and technique.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶98",
+     "text": "Review the firm's instructions regarding use, control and testing, of the biological indicator by product including a description of the method used to demonstrate presence or absence of viable indicator in or on the product.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶99",
+     "text": "Review the data used to support the use of the indicator each time it is used. Include the counts of the inoculum used; recovery data to control the method used to demonstrate the sterilization of the indicator organism; counts on unprocessed, inoculated material to",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶100",
+     "text": "indicate the stability of the inoculum for the process time; and",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶101",
+     "text": "results of sterility testing specifically designed to demonstrate the presence or absence of the indicator organism for each batch or filling operation.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶102",
+     "text": "In using indicators, you must assure yourself that the organisms are handled so they don't contaminate the drug manufacturing area and product.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "3. Filled Containers"
+    },
+    {
+     "ref": "¶103",
+     "text": "Evaluate how the filled vials or ampules leave the filling room. Is the capping or sealing done in the sterile fill area? If not, how is sterility maintained until capped?",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶104",
+     "text": "Review the tests done on finished vials, ampules, or other containers, to assure proper fill and seal. For instance, leak and torque tests.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶105",
+     "text": "Review examinations made for particulcte contamination. You can quickly check for suspected particulate matter by using a polariscope. Employees doing visual examinations on line must be properly trained. If particle counts are done by machine, this operation must be validated.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "4. Personnel Practices"
+    },
+    {
+     "ref": "¶106",
+     "text": "Check how the employees sterilize and operate the equipment used in the filling area.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶107",
+     "text": "Observe filling room personnel practices. Are the employees properly dressed in sterile gowns, masks, caps, and shoe coverings? Observe and evaluate the gowning procedures, and determine if good aseptic technique is maintained in the dressing and filling rooms.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶108",
+     "text": "Check on the practices after lunch and other absences. Is fresh sterile garb supplied, or are soiled garments reused?",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶109",
+     "text": "Determine if the dressing room is next to the filling area and how employees and supplies enter the sterile area.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "o Laboratory Controls"
+    },
+    {
+     "ref": "¶110",
+     "text": "For guidance on how to inspect micro and chemistry labs, review the \"FDA Guide to Inspections of Pharmaceutical Quality Control Laboratories\" and \"FDA Guide to Inspections of Microbiological Pharmaceutical Quality Control Laboratories.\"",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "1. Retesting for Sterility"
+    },
+    {
+     "ref": "¶111",
+     "text": "See the USP for guidance on sterility testing. Sterility retesting is acceptable provided the cause of the initial non-sterility is known, and thereby invalidates the original results. It cannot be assumed that the initial sterility test failure is a false positive. This conclusion must be justified by sufficient documented investigation. Additionally, spotty or low level contamination may not be identified by repeated sampling and testing.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶112",
+     "text": "Review sterility test failures and determine the incidence, procedures for handling, and final disposition of the batches involved.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "2. Retesting for Pyrogens"
+    },
+    {
+     "ref": "¶113",
+     "text": "As with sterility, pyrogen retesting can be performed provided it is known that the test system was compromised. It cannot be assumed that the failure is a false positive without documented justification.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶114",
+     "text": "Review any initial pyrogen test failures and determine the firm's justification for retesting.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "3. Particulate Matter Testing"
+    },
+    {
+     "ref": "¶115",
+     "text": "Particulate matter consists of extraneous, mobile, undissolved substances, other than gas bubbles, unintentionally present in parenteral solutions.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶116",
+     "text": "Cleanliness specifications or levels of non-viable particulate contamination must be established. Limits are usually based on the history of the process. The particulate matter test procedure and limits for LVP's in the U.S.P. can be used as a general guideline. However, the levels of particulate contamination in sterile powders are generally greater than in LVP's. LVP solutions are filtered during the filling operation. However, sterile powders, except powders lyophilized in vials, cannot include filtration as a part of the filling operation. Considerable particulate contamination is also present in sterile powders which are spray dried due to charring during the process.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶117",
+     "text": "Review the particulate matter test procedure and release criteria. Review production and control records of any batches for which complaints of particulate matter have been received.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "o Production Records"
+    },
+    {
+     "ref": "¶118",
+     "text": "Production records should be similar to those for other dosage forms. Critical steps, such as integrity testing of filters, should be signed and dated by a second responsible person.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶119",
+     "text": "Review production records to ensure that directions for significant manufacturing steps are included and reflect a complete history of production.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "Ointments, Liquids, and Lotions"
+    }
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶120-¶158",
+   "source": "fda-ora-guide-dosage-form-cgmps-1993.html",
+   "unit": "¶120-¶158",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "¶120",
+     "text": "Major factors in the preparation of these drugs are the selection of raw materials, manufacturing practices, equipment, controls, and laboratory testing.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶121",
+     "text": "Following the basic drug inspection fundamentals, fully evaluate the production procedures. In addition, evaluate specific information regarding:",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶122",
+     "text": "The selection and compatibility of ingredients.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶123",
+     "text": "Whether the drug is a homogeneous preparation free of extraneous matter.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶124",
+     "text": "The possibility of decomposition, separation, or crystallization of ingredients.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶125",
+     "text": "The adequacy of ultimate containers to hold and dispense contents.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶126",
+     "text": "Procedure for cleaning the containers before filling.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶127",
+     "text": "Maintenance of homogeneity during manufacturing and filling",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶128",
+     "text": "operations.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶129",
+     "text": "The most common problem associated with the production of these dosage forms is microbiological contamination caused by faulty design and/or control of purified water systems. During inspections, evaluate the adequacy of the water system. Review and evaluate the micro/chemistry test results on the routine monitoring of the water system including validation of the water system. Review any microbiological tests done on the finished drug including in-process testing.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶130",
+     "text": "Some of these drugs have preservatives added which protect them from microbial contamination. The preservatives are used primarily in multiple-dose containers to inhibit the growth of microorganisms introduced inadvertently during or after manufacturing. Evaluate the adequacy of preservative system. Preservative effectiveness testing for these products should be reviewed. For additional information, review the \"Antimicrobial Preservatives-Effectiveness\" section of the U.S.P..",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶131",
+     "text": "Equipment employed for manufacturing topical drugs is sometimes difficult to clean. This is especially true for those which contain insoluble active ingredients, such as the sulfa drugs. The firm's equipment cleaning procedures including cleaning validation data should be reviewed and evaluated.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶132",
+     "text": "Packaging and Labeling [21 CFR Subpart G]",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶133",
+     "text": "Packaging and labeling operations must be controlled so only those drugs which meet the specifications established in the master formula records are distributed. Review in detail the packaging and labeling operations to decide if the system will prevent drug and label mix-ups. Approximately 25% of all drug recalls originate in this area.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶134",
+     "text": "Evaluate what controls or procedures the firm has to provide positive assurance that all labels are correct. Determine if packaging and labeling operations include:",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶135",
+     "text": "Adequate physical separation of labeling and packaging operations from manufacturing process.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶136",
+     "text": "Review of:",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶137",
+     "text": "Label copy before delivery to the printer.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶138",
+     "text": "Printer's copy.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶139",
+     "text": "Whether firm's representative inspects the printer.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶140",
+     "text": "Whether or not gang printing is prohibited.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶141",
+     "text": "Whether labels are checked against the master label before released to stock. Determine who is responsible for label review prior to release of the labels to production. Also, whether the labels are identical to the labeling specified in the batch production records.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶142",
+     "text": "Separate storage of each label (including package inserts) to avoid mixups.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶143",
+     "text": "Inventory of label stocks. Determine if the printer's count is accepted or if labels are counted upon receipt.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶144",
+     "text": "Designation of one individual to be responsible for storage and issuance of all labels.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶145",
+     "text": "Receipt by the packaging and labeling department of a batch record, or other record, showing the quantity of labels needed for a batch. Determine if the batch record is retained by the packaging supervisor or accompanies the labels to the actual packaging and labeling line.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶146",
+     "text": "Adequate controls of the quantities of labeling issued, used, and returned. Determine if excess labels are accounted for and if excess labels bearing specific control codes, and obsolete or changed labels are destroyed.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶147",
+     "text": "Inspection of the facilities before labeling to ensure that all previously used labeling and drugs have been removed.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶148",
+     "text": "Assurance that batch identification is maintained during packaging.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶149",
+     "text": "Control procedures to follow if a significant unexplained discrepancy occurs between quantity of drug packaged and the quantity of labeling issued",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶150",
+     "text": "Segregated facilities for labeling one batch of the drug at a time. If this is not practiced, determine what steps are taken to prevent mix-ups.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶151",
+     "text": "Methods for checking similar type labels of different drugs or potencies to prevent mixing.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶152",
+     "text": "Quarantine of finished packaged products to permit adequate examination or testing of a representative sample to safeguard against errors. Also, to prevent distribution of any batch until all specified tests have been met.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶153",
+     "text": "An individual who makes the final decision that the drug should go to the warehouse, or the shipping department.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶154",
+     "text": "Utilization of any outside firms, such as contract packers, and what controls are exercised over such operations.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶155",
+     "text": "Special attention should be devoted to firms using \"rolls\" of pressure sensitive labels. Investigators have found instances where:",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶156",
+     "text": "Paper chips cut from label backing to help running the labels through a coder interfered with the code printer causing digits in the lot number to be blocked out.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶157",
+     "text": "Some rolls contained spliced sections resulting in label changes in the roll.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶158",
+     "text": "Some labels shifted on the roll when the labels were printed resulting in omitting required information.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    }
+   ]
+  }
+ ]
+}

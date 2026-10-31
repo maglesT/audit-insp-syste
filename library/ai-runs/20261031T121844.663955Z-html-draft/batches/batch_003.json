@@ -1,0 +1,392 @@
+{
+ "instructions": "You read an FDA web page (a Q&A page on CGMP, a Guide to Inspections, an Inspection Technical Guide, a Compliance\nPolicy Guide or an alert to manufacturers) and list what it expects of a drug manufacturer. Each unit is given as\nits paragraphs, each with its reference (\"Q4.2\" on a Q&A page: question 4, answer paragraph 2; \"¶17\" elsewhere) and\nits exact text; \"context\" entries are headings or labels (not citable); \"list_item\" marks a list item, whose\nlead-in is the paragraph ending in \":\" above it. Your output is checked by software against that exact text and by\nindependent reviewers, so precision matters more than wording.\n\nList each separate expectation as its own item, so that together your items cover every expectation in the unit.\nOne expectation is one thing a manufacturer must, should or may do, with all its conditions, numbers and\nqualifiers; do not split one expectation across items. What counts:\n- what FDA says a firm must, should or may do (\"FDA expects firms to have written procedures ...\", \"manufacturers\n  should ...\", \"are required by the CGMP regulations to ...\");\n- in a Guide to Inspections or Inspection Technical Guide, what the investigator is told to check (\"Determine\n  whether the firm has validated ...\", \"Check that ...\", \"Review the ...\"): write the practice the firm is expected\n  to have (\"Validate ...\"), not the investigator's task. When the text only says what to look at (\"Examine the\n  design of equipment\") and states no expectation, write the expectation the text itself gives in the same\n  paragraph; if it gives none, put the sentence in not_applicable (\"inspection step without a stated expectation\").\nFor each item:\n- statement: the expectation in your own plain English words, as one checklist item a site could be audited\n  against. Do not copy more than a few words in a row. Keep every condition (\"where\", \"if\", \"unless\", \"when\",\n  \"except\") and every number. Do not add anything the text does not say. The statement itself must carry every\n  condition or qualifier of the lead-in above a list item. The statement is shown to customers: never cite a\n  regulation, section, question or paragraph number in it (\"21 CFR 211.42(d)\", \"Q4\", \"see above\"); say what is\n  required instead.\n- quote: the exact span of ONE paragraph's text that states the whole expectation, copied character for character\n  (matched against the page text by software; do not fix typos or change punctuation, keep footnote marks as\n  printed). A quote may continue into the paragraphs after it in the same unit, in order (e.g. a lead-in and its\n  list items), but must start in the cited paragraph.\n- clause_number: the reference of the paragraph the quote starts in, exactly as given (\"Q4.2\", \"¶17\").\n- strength: \"mandatory\" where the text states a legal requirement (shall / must / is required / may not, \"the\n  CGMP regulations require\"); \"recommended\" for should, \"FDA expects\", \"FDA recommends\", and for an inspection\n  point; \"optional\" for may / is acceptable. A list item without such a word takes its lead-in's.\n- plant_types: from OSD, LIQ, SEMI, INJ, API (INJ = sterile injectables); the plant scope given unless the text\n  narrows it. Text limited to non-sterile products does not apply to INJ; text limited to sterile products\n  (parenterals, aseptic processing, terminal sterilization) applies only to INJ (and API where in scope). Text\n  that rests on the CGMP regulations for finished pharmaceuticals (21 CFR 210/211, \"drug product manufacturers\",\n  \"finished drug products\") does not apply to API unless it speaks of APIs or bulk drug substances too.\n- numbers: every number, limit, frequency or period in the quote, as written (not regulation references).\n- condition: the condition or trigger in a few words, \"\" if none. This field only repeats what the statement\n  already says.\n- topic: the sub-topic id from TOPICS the expectation belongs to.\n\nDo not narrow or widen a term. Where the text gives examples (\"such as ...\"), keep them as examples; where it\ngives a closed list, keep it closed.\n\nSentences that state no expectation for the manufacturer go in not_applicable: the question itself, background and\nhistory, definitions, descriptions of what happened at a firm, FDA's own actions or enforcement, statements of\npurpose or scope, references, an inspection step without a stated expectation. One entry per SENTENCE, each with\nthe paragraph reference, the sentence's first 8 or more words copied exactly, and the reason in a few words. A\nsentence with \"should\", \"must\", \"FDA expects\" or an instruction to the investigator needs an item or a\nnot_applicable entry.\n\nWrite the answers file named in your task: {\"answers\": [one object per unit with \"unit\" set to the unit's \"id\"\nexactly, \"items\" and \"not_applicable\"]}.\n",
+ "topics": [
+  "QS.PQS",
+  "QS.MGMT",
+  "QS.QRM",
+  "QS.PQR",
+  "QS.CHANGE",
+  "QS.DEV",
+  "QS.CAPA",
+  "PER.ORG",
+  "PER.KEY",
+  "PER.TRAIN",
+  "PER.HYG",
+  "PER.GOWN",
+  "PREM.DESIGN",
+  "PREM.PROD",
+  "PREM.STORE",
+  "PREM.QC",
+  "PREM.ANC",
+  "EQ.DESIGN",
+  "EQ.MAINT",
+  "EQ.CLEAN",
+  "EQ.CAL",
+  "DOC.SYS",
+  "DOC.SPEC",
+  "DOC.MFR",
+  "DOC.BMR",
+  "DOC.SOP",
+  "DOC.RET",
+  "MAT.SUPP",
+  "MAT.RECV",
+  "MAT.SAMP",
+  "MAT.STATUS",
+  "MAT.PACK",
+  "MAT.REJ",
+  "PROD.GEN",
+  "PROD.XCONT",
+  "PROD.IPC",
+  "PROD.YIELD",
+  "PROD.PACK",
+  "PROD.REWORK",
+  "QC.GEN",
+  "QC.SAMP",
+  "QC.TEST",
+  "QC.OOS",
+  "QC.STAB",
+  "QC.REF",
+  "QC.MICRO",
+  "VAL.PLAN",
+  "VAL.QUAL",
+  "VAL.PROC",
+  "VAL.CLEAN",
+  "VAL.METH",
+  "CSV.VAL",
+  "CSV.ACCESS",
+  "CSV.AUDIT",
+  "CSV.ESIG",
+  "CSV.DI",
+  "UTIL.WATER",
+  "UTIL.HVAC",
+  "UTIL.GAS",
+  "CCS.STRAT",
+  "CCS.EM",
+  "CCS.CLEAN",
+  "CCS.PEST",
+  "STER.GRADE",
+  "STER.ASEPT",
+  "STER.APS",
+  "STER.STERIL",
+  "STER.FILT",
+  "STER.CCI",
+  "STER.LYO",
+  "API.START",
+  "API.PROC",
+  "API.IMP",
+  "API.SOLV",
+  "OUT.CONTRACT",
+  "OUT.AGREE",
+  "CMP.COMPL",
+  "CMP.RECALL",
+  "CMP.REPORT",
+  "SI.PROG",
+  "SI.TEAM",
+  "SI.REPORT",
+  "SI.FOLLOW",
+  "DIST.STORE",
+  "DIST.TRANS",
+  "DIST.RETURN",
+  "REL.QP",
+  "REL.REVIEW"
+ ],
+ "schema": {
+  "type": "object",
+  "required": [
+   "unit",
+   "items",
+   "not_applicable"
+  ],
+  "properties": {
+   "unit": {
+    "type": "string"
+   },
+   "items": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "statement",
+      "quote",
+      "clause_number",
+      "strength",
+      "plant_types",
+      "numbers",
+      "condition",
+      "topic"
+     ],
+     "properties": {
+      "statement": {
+       "type": "string"
+      },
+      "quote": {
+       "type": "string"
+      },
+      "clause_number": {
+       "type": "string"
+      },
+      "strength": {
+       "enum": [
+        "mandatory",
+        "recommended",
+        "optional"
+       ]
+      },
+      "plant_types": {
+       "type": "array",
+       "items": {
+        "enum": [
+         "OSD",
+         "LIQ",
+         "SEMI",
+         "INJ",
+         "API"
+        ]
+       }
+      },
+      "numbers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "condition": {
+       "type": "string"
+      },
+      "topic": {
+       "type": "string"
+      }
+     }
+    }
+   },
+   "not_applicable": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "clause_number",
+      "text",
+      "reason"
+     ],
+     "properties": {
+      "clause_number": {
+       "type": "string"
+      },
+      "text": {
+       "type": "string"
+      },
+      "reason": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  }
+ },
+ "units": [
+  {
+   "id": "fda-ora-guide-osd-pre-post-approval-1994.html:¶100-¶110",
+   "source": "fda-ora-guide-osd-pre-post-approval-1994.html",
+   "unit": "¶100-¶110",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "OSD"
+   ],
+   "paragraphs": [
+    {
+     "ref": "¶100",
+     "text": "With regard to the newer computer controlled tablet compression equipment, buckets of tablets are often rejected because of potential weight variation problems. The disposition of these tablets, as well as the granulation and tablets used to set up the press, should be investigated. Reworking processes must be validated.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "ref": "¶101",
+     "text": "With regard to encapsulation operations, the hygroscopic nature of gelatin capsules and some of the granulations, requires humidity controls for storage of the empty capsules and their subsequent filling. Scale-up of capsule products has also presented some problems because of the different types of encapsulation equipment. Older equipment that operated on gravity fill, such as the Lilly and Parke Davis machines, was commonly used for manufacturing capsules in clinical manufacturing areas. When formulations were scaled-up to high speed encapsulation equipment, flow problems and poor weight variation resulted. Additionally, some of the newer equipment provides for the formation of a slug which could impact on dissolution.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "ref": "¶102",
+     "text": "As previously discussed, set-up and review of operating directions should be covered in inspections. The investigation by firms of weight variation problems should also be covered. Many firms, in order to recondition (rework) batches, pass those particular batches through a sorter, such as the Mocon Vericap. This machine works on the principal of current (dielectric constant), and moisture variation in the filled capsules can cause inaccurate results. Check the data used to qualify equipment and investigate the equipment log for this sorting machines to identify batches with weight problems that were processed in it. The data supporting the accuracy of equipment to reject low or high weight capsules should be reviewed.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "context": "d) Coating Equipment"
+    },
+    {
+     "ref": "¶103",
+     "text": "Many tablets are now coated with an aqueous film coat that is usually very soluble. Current technology provides for fixed sprays of the coating solution. The volume of coating solution, rate and temperature can be controlled by some of the more highly automated operations. However, many sugar coated, enteric coated and delayed release products exist where some portions of the coating process are not highly soluble and are performed manually. Generally, the shellac undercoat used for sugar coated tablets has presented disintegration/dissolution problems, particularly in aged samples.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "ref": "¶104",
+     "text": "With respect to poor disintegration, Ferrous Sulfate tablets probably represents the classical example. Over the years, there have been many recalls from many different manufacturers for poor disintegration of coated Ferrous Sulfate tablets. Likewise, there have been many problems with poor dissolution attributed to the coating process. Again, the shellac undercoat hardens, and even sometimes cracks, resulting in poor dissolution.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "ref": "¶105",
+     "text": "There have been many occasions when the coating process was not validated. The number of applications of coats, volume of coating solution in a specific application, and temperature of the solution during application are all parameters that need to be addressed. For example, the temperature of application and even heat during drying have been found to cause dissolution failures in aged tablets.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "ref": "¶106",
+     "text": "Another problem associated with the coating process concerns the heat applied to products that are sensitive to heat. For example, it has been shown that estrogen tablets are heat sensitive and have exhibited stability problems. Thus, it is important to control this phase of the process.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "ref": "¶107",
+     "text": "There are a few products, such as some of the antihistamine tablets, in which the drug substance is applied during the coating process. Other products require the active drug substance to be applied as a dust on tacky tablets as part of the coating process. For these products, it is particularly important to apply the drug in the coating solution in many controlled applications.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "ref": "¶108",
+     "text": "Examine processing records for specificity in the identification of critical steps in the coating process. Review the firm's data demonstrating that critical steps are consistent and reproducible.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "ref": "¶109",
+     "text": "Again, it is important as part of the validation of these processes to demonstrate dose uniformity and dissolution and to control the parameters of the coating process.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "context": "3. Granulation/Mix Analysis"
+    },
+    {
+     "ref": "¶110",
+     "text": "A critical step in the manufacture of an oral solid dosage form is the blending of the final granulation. If uniformity is not achieved at this stage, then one could assume that some dosage units would not comply with uniformity requirements. The major advantage of blend analysis (from a uniformity perspective) is that specific areas of the blender which have the greatest potential to be non-uniform can be sampled. This is particularly true of the ribbon type blender and planetary or pony type mixers.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    }
+   ]
+  },
+  {
+   "id": "fda-ora-guide-osd-pre-post-approval-1994.html:¶111-¶120",
+   "source": "fda-ora-guide-osd-pre-post-approval-1994.html",
+   "unit": "¶111-¶120",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "OSD"
+   ],
+   "paragraphs": [
+    {
+     "ref": "¶111",
+     "text": "In some cases, such as for large or tumbler type blenders, it is impractical to sample from the blender directly. In such cases, granulations or blends could be sampled at the time of blender discharge or directly from drums. If sampling from drums, samples from the top, middle and bottom of each drum should be collected.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "ref": "¶112",
+     "text": "In most cases sampling thieves are readily available for sampling the small quantities that need to be taken from key areas of the blender or the drums. If samples larger than one dosage unit must be collected, however, adequate provisions must be made to prevent excessive handling manipulation between the time of sampling and the time of analysis. A sampling device for sampling dosage unit weights is also available in Cincinnati District for use by investigators.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "ref": "¶113",
+     "text": "Good science and logic would seem to dictate that sample sizes of the approximate equivalent weight of the dosage unit should be sampled in order to test for uniformity. Many industrial pharmacy and engineering texts confirm this approach. Large granulation sample sizes, such as one ounce will provide little information with respect to uniformity. Generally, further mixing after sampling and prior to analysis occurs which yields misleading results.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "ref": "¶114",
+     "text": "The acceptance criteria for granulation dose uniformity testing needs to be evaluated. Although many firms evaluate dose uniformity using the compendial dose uniformity specifications (85-115% with an RSD of 6 to 7.8), such specifications should be tighter where supported by the firm's historical data on the level of blend uniformity with its equipment for a given product. In many cases compendial assay limits for the finished product (90 to 110% of label claim) are broad enough for this purpose, and most firms should be able to demonstrate blend assay results well within these limits. If larger sample sizes are taken for assay to evaluate total composite assay, then the specific USP or filed criteria for assay should be used. This key issue needs to be examined during the inspection.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "ref": "¶115",
+     "text": "In addition to analysis of blends for dose uniformity and potency, blends are tested for physical characteristics. A major physical parameter used to demonstrate equivalence between batches is the particle size profile. This is particularly important for the comparison of the biobatch with production batches and also, when processes are modified or changed. The particle size profile will provide useful information for demonstrating comparability.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "ref": "¶116",
+     "text": "Particle size profiles are particularly important for the tablet made by a wet granulation process. The size and even the type of granule can affect the pore size in a tablet and have an effect on dissolution. For example, a recent dissolution failure was attributed to a change in the milling screen size, yielding a granulation with larger granules. Since it was a coated tablet, larger pores permitted increased penetration into the tablet by the coating solution, resulting in slower dissolution.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "ref": "¶117",
+     "text": "Another test which is typically performed on the granulation, particularly when the wet granulation process is used, is loss-on-drying (LOD) and/or moisture content. If organic solvents are employed, then residual solvent residues are also tested. In the validation of a drying process, LOD levels are determined prior to, during and after drying in order to demonstrate times and levels. As with processing variables, levels (specifications) are established in the development phase with the validation phase used to confirm the adequacy of the process. As with other specifications and processes, the investigator should review the data used to support the drying process and determine the significance (if any) of variable drying times and levels.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "context": "4. In-Process Testing"
+    },
+    {
+     "ref": "¶118",
+     "text": "For the purpose of this document, in-process testing is the testing performed on dosage forms during their compression/encapsulation stages to assure consistency throughout these operations. For tablets, individual tablet weights, moisture, hardness (compression force) and disintegration are performed. For capsules, individual weights and moisture are performed.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "ref": "¶119",
+     "text": "In many of the validation reports reviewed, manufacturers have neglected to supply individual (not composite) dosage unit weights performed throughout compression/encapsulation. This is particularly important for capsule products which may exhibit weight variation problems. If not part of validation reports, the individual dosage unit weights should be reviewed.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "ref": "¶120",
+     "text": "With regard to individual capsule weights, a major question that arises concerns acceptable levels. Since most USP assay limits are 90 to 110%, it would seem reasonable that each unit manufactured comply with these specifications. It should be pointed out that 85 to 115% limits are established by the USP for variability in both blending and compression or encapsulation operations.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    }
+   ]
+  },
+  {
+   "id": "fda-ora-guide-osd-pre-post-approval-1994.html:¶121-¶129",
+   "source": "fda-ora-guide-osd-pre-post-approval-1994.html",
+   "unit": "¶121-¶129",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "OSD"
+   ],
+   "paragraphs": [
+    {
+     "ref": "¶121",
+     "text": "Since hardness and disintegration specifications are established during development and biobatch production, testing is performed to demonstrate both equivalency (comparability) and consistency.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "ref": "¶122",
+     "text": "With regard to moisture, some tablets have set up upon aging as a result of poor moisture control and inadequate specifications. For example, this has been shown to be a major problem with Carbamazepine tablets.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "context": "5. Test Results"
+    },
+    {
+     "ref": "¶123",
+     "text": "Finished product testing, particularly assay, content uniformity and dissolution, should be reviewed. With regard to dissolution, it is important to review dissolution profiles. Validation batches with dissolution profiles not comparable to biobatches indicate non-equivalency of the manufacturing process. Depending on the discriminating nature of the dissolution test, it may also indicate lack of equivalence of the dosage forms made during validation with the biobatch.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "ref": "¶124",
+     "text": "In the review of dissolution test results, it is important to eventually see results very close to 100% dissolution. In some cases, manufacturers will profile the dissolution results only to the specification. However, if lower, but still acceptable results are obtained (such as 85%), it is important to continue the test. This can be performed by increasing the speed of the apparatus. If a product completely dissolves, yet only results in a value of 85%, it may indicate some problem with the test. Likewise, high dissolution results (115%) also indicate some problem with the test. Obviously, unusual or atypical results should be explained in the validation report.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "context": "6. Investigations/Product Failures"
+    },
+    {
+     "ref": "¶125",
+     "text": "In any process validation exercise, a basic objective is to prove that a process is satisfactory. Unfortunately, some processes are unsatisfactory and may sometimes yield unacceptable results. It is important, therefore, that when the final validation report is reviewed, all results, including failing results, be discussed and evaluated. For example, review of a manufacturing process showed that one of every eight batches manufactured failed content uniformity. Members of the company recognized that the process was unsatisfactory and not validated, but failed to draw this conclusion in the written validation report.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "ref": "¶126",
+     "text": "When reviewing a validation report, the basis for concluding that a process is satisfactory, particularly those with failing results, should be evaluated.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "context": "7. Site Review"
+    },
+    {
+     "ref": "¶127",
+     "text": "A major aspect and possibly the most critical phase of the inspection of process validation is the review of data at the manufacturer. Manufacturers have presented validation reports which appeared to be very complete, however, when data was actually reviewed, failing batches were omitted without justification.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "ref": "¶128",
+     "text": "Additionally, review the raw data, including analytical raw data, for accuracy. Only through on-site audit or review of data could such situations be identified. Thus, even though a pre-approval inspection is performed, a post-approval inspection providing for a review of validation data is warranted, particularly in those cases in which deficiencies in validation data have been identified.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "ref": "¶129",
+     "text": "Note: This document does not bind FDA, and does not confer any rights, privileges, benefits, or immunities for or on any person(s).",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "context": "Return to: Page Top | Inspection Start"
+    }
+   ]
+  }
+ ]
+}

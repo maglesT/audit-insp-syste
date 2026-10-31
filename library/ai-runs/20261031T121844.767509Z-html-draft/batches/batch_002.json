@@ -1,0 +1,552 @@
+{
+ "instructions": "You read an FDA web page (a Q&A page on CGMP, a Guide to Inspections, an Inspection Technical Guide, a Compliance\nPolicy Guide or an alert to manufacturers) and list what it expects of a drug manufacturer. Each unit is given as\nits paragraphs, each with its reference (\"Q4.2\" on a Q&A page: question 4, answer paragraph 2; \"¶17\" elsewhere) and\nits exact text; \"context\" entries are headings or labels (not citable); \"list_item\" marks a list item, whose\nlead-in is the paragraph ending in \":\" above it. Your output is checked by software against that exact text and by\nindependent reviewers, so precision matters more than wording.\n\nList each separate expectation as its own item, so that together your items cover every expectation in the unit.\nOne expectation is one thing a manufacturer must, should or may do, with all its conditions, numbers and\nqualifiers; do not split one expectation across items. What counts:\n- what FDA says a firm must, should or may do (\"FDA expects firms to have written procedures ...\", \"manufacturers\n  should ...\", \"are required by the CGMP regulations to ...\");\n- in a Guide to Inspections or Inspection Technical Guide, what the investigator is told to check (\"Determine\n  whether the firm has validated ...\", \"Check that ...\", \"Review the ...\"): write the practice the firm is expected\n  to have (\"Validate ...\"), not the investigator's task. When the text only says what to look at (\"Examine the\n  design of equipment\") and states no expectation, write the expectation the text itself gives in the same\n  paragraph; if it gives none, put the sentence in not_applicable (\"inspection step without a stated expectation\").\nFor each item:\n- statement: the expectation in your own plain English words, as one checklist item a site could be audited\n  against. Do not copy more than a few words in a row. Keep every condition (\"where\", \"if\", \"unless\", \"when\",\n  \"except\") and every number. Do not add anything the text does not say. The statement itself must carry every\n  condition or qualifier of the lead-in above a list item. The statement is shown to customers: never cite a\n  regulation, section, question or paragraph number in it (\"21 CFR 211.42(d)\", \"Q4\", \"see above\"); say what is\n  required instead.\n- quote: the exact span of ONE paragraph's text that states the whole expectation, copied character for character\n  (matched against the page text by software; do not fix typos or change punctuation, keep footnote marks as\n  printed). A quote may continue into the paragraphs after it in the same unit, in order (e.g. a lead-in and its\n  list items), but must start in the cited paragraph.\n- clause_number: the reference of the paragraph the quote starts in, exactly as given (\"Q4.2\", \"¶17\").\n- strength: \"mandatory\" where the text states a legal requirement (shall / must / is required / may not, \"the\n  CGMP regulations require\"); \"recommended\" for should, \"FDA expects\", \"FDA recommends\", and for an inspection\n  point; \"optional\" for may / is acceptable. A list item without such a word takes its lead-in's.\n- plant_types: from OSD, LIQ, SEMI, INJ, API (INJ = sterile injectables); the plant scope given unless the text\n  narrows it. Text limited to non-sterile products does not apply to INJ; text limited to sterile products\n  (parenterals, aseptic processing, terminal sterilization) applies only to INJ (and API where in scope). Text\n  that rests on the CGMP regulations for finished pharmaceuticals (21 CFR 210/211, \"drug product manufacturers\",\n  \"finished drug products\") does not apply to API unless it speaks of APIs or bulk drug substances too.\n- numbers: every number, limit, frequency or period in the quote, as written (not regulation references).\n- condition: the condition or trigger in a few words, \"\" if none. This field only repeats what the statement\n  already says.\n- topic: the sub-topic id from TOPICS the expectation belongs to.\n\nDo not narrow or widen a term. Where the text gives examples (\"such as ...\"), keep them as examples; where it\ngives a closed list, keep it closed.\n\nSentences that state no expectation for the manufacturer go in not_applicable: the question itself, background and\nhistory, definitions, descriptions of what happened at a firm, FDA's own actions or enforcement, statements of\npurpose or scope, references, an inspection step without a stated expectation. One entry per SENTENCE, each with\nthe paragraph reference, the sentence's first 8 or more words copied exactly, and the reason in a few words. A\nsentence with \"should\", \"must\", \"FDA expects\" or an instruction to the investigator needs an item or a\nnot_applicable entry.\n\nWrite the answers file named in your task: {\"answers\": [one object per unit with \"unit\" set to the unit's \"id\"\nexactly, \"items\" and \"not_applicable\"]}.\n",
+ "topics": [
+  "QS.PQS",
+  "QS.MGMT",
+  "QS.QRM",
+  "QS.PQR",
+  "QS.CHANGE",
+  "QS.DEV",
+  "QS.CAPA",
+  "PER.ORG",
+  "PER.KEY",
+  "PER.TRAIN",
+  "PER.HYG",
+  "PER.GOWN",
+  "PREM.DESIGN",
+  "PREM.PROD",
+  "PREM.STORE",
+  "PREM.QC",
+  "PREM.ANC",
+  "EQ.DESIGN",
+  "EQ.MAINT",
+  "EQ.CLEAN",
+  "EQ.CAL",
+  "DOC.SYS",
+  "DOC.SPEC",
+  "DOC.MFR",
+  "DOC.BMR",
+  "DOC.SOP",
+  "DOC.RET",
+  "MAT.SUPP",
+  "MAT.RECV",
+  "MAT.SAMP",
+  "MAT.STATUS",
+  "MAT.PACK",
+  "MAT.REJ",
+  "PROD.GEN",
+  "PROD.XCONT",
+  "PROD.IPC",
+  "PROD.YIELD",
+  "PROD.PACK",
+  "PROD.REWORK",
+  "QC.GEN",
+  "QC.SAMP",
+  "QC.TEST",
+  "QC.OOS",
+  "QC.STAB",
+  "QC.REF",
+  "QC.MICRO",
+  "VAL.PLAN",
+  "VAL.QUAL",
+  "VAL.PROC",
+  "VAL.CLEAN",
+  "VAL.METH",
+  "CSV.VAL",
+  "CSV.ACCESS",
+  "CSV.AUDIT",
+  "CSV.ESIG",
+  "CSV.DI",
+  "UTIL.WATER",
+  "UTIL.HVAC",
+  "UTIL.GAS",
+  "CCS.STRAT",
+  "CCS.EM",
+  "CCS.CLEAN",
+  "CCS.PEST",
+  "STER.GRADE",
+  "STER.ASEPT",
+  "STER.APS",
+  "STER.STERIL",
+  "STER.FILT",
+  "STER.CCI",
+  "STER.LYO",
+  "API.START",
+  "API.PROC",
+  "API.IMP",
+  "API.SOLV",
+  "OUT.CONTRACT",
+  "OUT.AGREE",
+  "CMP.COMPL",
+  "CMP.RECALL",
+  "CMP.REPORT",
+  "SI.PROG",
+  "SI.TEAM",
+  "SI.REPORT",
+  "SI.FOLLOW",
+  "DIST.STORE",
+  "DIST.TRANS",
+  "DIST.RETURN",
+  "REL.QP",
+  "REL.REVIEW"
+ ],
+ "schema": {
+  "type": "object",
+  "required": [
+   "unit",
+   "items",
+   "not_applicable"
+  ],
+  "properties": {
+   "unit": {
+    "type": "string"
+   },
+   "items": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "statement",
+      "quote",
+      "clause_number",
+      "strength",
+      "plant_types",
+      "numbers",
+      "condition",
+      "topic"
+     ],
+     "properties": {
+      "statement": {
+       "type": "string"
+      },
+      "quote": {
+       "type": "string"
+      },
+      "clause_number": {
+       "type": "string"
+      },
+      "strength": {
+       "enum": [
+        "mandatory",
+        "recommended",
+        "optional"
+       ]
+      },
+      "plant_types": {
+       "type": "array",
+       "items": {
+        "enum": [
+         "OSD",
+         "LIQ",
+         "SEMI",
+         "INJ",
+         "API"
+        ]
+       }
+      },
+      "numbers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "condition": {
+       "type": "string"
+      },
+      "topic": {
+       "type": "string"
+      }
+     }
+    }
+   },
+   "not_applicable": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "clause_number",
+      "text",
+      "reason"
+     ],
+     "properties": {
+      "clause_number": {
+       "type": "string"
+      },
+      "text": {
+       "type": "string"
+      },
+      "reason": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  }
+ },
+ "units": [
+  {
+   "id": "fda-ora-guide-pharma-qc-labs-1993.html:¶75-¶87",
+   "source": "fda-ora-guide-pharma-qc-labs-1993.html",
+   "unit": "¶75-¶87",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "¶75",
+     "text": "If firms sample product from sites other than the blender, they must demonstrate through validation that their sampling technique is representative of all portions and concentrations of the blend. This means that the samples must be representative of those sites that might be problems; e.g. weak or hot spots in the blend.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 10. BLEND SAMPLING AND TESTING"
+    },
+    {
+     "context": "11. MICROBIOLOGICAL"
+    },
+    {
+     "ref": "¶76",
+     "text": "The review of microbiological data on applicable dosage forms is best performed by the microbiologist (analyst). Data that should be reviewed include preservative effectiveness testing, bioburden data, and product specific microbiological testing and methods.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 11. MICROBIOLOGICAL"
+    },
+    {
+     "ref": "¶77",
+     "text": "Review bioburden (before filtration and/or sterilization) from both an endotoxin and sterility perspective. For drug substance labs evaluate methods validation and raw data for sterility, endotoxin testing, environmental monitoring, and filter and filtration validation. Also, evaluate the methods used to test and establish bioburdens.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 11. MICROBIOLOGICAL"
+    },
+    {
+     "ref": "¶78",
+     "text": "Refer to the Microbiological Inspection Guide for additional information concerning the inspection of microbiological laboratories.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 11. MICROBIOLOGICAL"
+    },
+    {
+     "context": "12. SAMPLING"
+    },
+    {
+     "ref": "¶79",
+     "text": "Samples will be collected on pre-approval inspections. Follow the sampling guidelines in CP 7346.832, Part III, pages 5 and 6.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 12. SAMPLING"
+    },
+    {
+     "context": "13. LABORATORY RECORDS AND DOCUMENTATION"
+    },
+    {
+     "ref": "¶80",
+     "text": "Review personal analytical notebooks kept by the analysts in the laboratory and compare them with the worksheets and general lab notebooks and records. Be prepared to examine all records and worksheets for accuracy and authenticity and to verify that raw data are retained to support the conclusions found in laboratory results.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 13. LABORATORY RECORDS AND DOCUMENTATION"
+    },
+    {
+     "ref": "¶81",
+     "text": "Review laboratory logs for the sequence of analysis versus the sequence of manufacturing dates. Test dates should correspond to the dates when the sample should have been in the laboratory. If there is a computer data base, determine the protocols for making changes to the data. There should be an audit trail for changes to data.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 13. LABORATORY RECORDS AND DOCUMENTATION"
+    },
+    {
+     "ref": "¶82",
+     "text": "We expect raw laboratory data to be maintained in bound, (not loose or scrap sheets of paper), books or on analytical sheets for which there is accountability, such as prenumbered sheets. For most of those manufacturers which had duplicate sets of records or \"raw data\", non-numbered loose sheets of paper were employed. Some companies use discs or tapes as raw data and for the storage of data. Such systems have also been accepted provided they have been defined (with raw data identified) and validated.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 13. LABORATORY RECORDS AND DOCUMENTATION"
+    },
+    {
+     "ref": "¶83",
+     "text": "Carefully examine and evaluate laboratory logs, worksheets and other records containing the raw data such as weighings, dilutions, the condition of instruments, and calculations. Note whether raw data are missing, if records have been rewritten, or if correction fluid has been used to conceal errors. Results should not be changed without explanation. Cross reference the data that has been corrected to authenticate it. Products cannot be \"tested into compliance\" by arbitrarily labeling out-of-specification lab results as \"laboratory errors\" without an investigation resulting in scientifically valid criteria.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 13. LABORATORY RECORDS AND DOCUMENTATION"
+    },
+    {
+     "ref": "¶84",
+     "text": "Test results should not have been transcribed without retention of the original records, nor should test results be recorded selectively. For example, investigations have uncovered the use of loose sheets of paper with subsequent selective transcriptions of good data to analyst worksheets and/or workbooks. Absorbance values and calculations have even been found on desk calendars.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 13. LABORATORY RECORDS AND DOCUMENTATION"
+    },
+    {
+     "ref": "¶85",
+     "text": "Cut charts with injections missing, deletion of files in direct data entry systems, indirect data entry without verification, and changes to computerized programs to override program features should be carefully examined. These practices raise questions about the overall quality of data.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 13. LABORATORY RECORDS AND DOCUMENTATION"
+    },
+    {
+     "ref": "¶86",
+     "text": "The firm should have a written explanation when injections, particularly from a series are missing from the official work-sheets or from files and are included among the raw data. Multiple injections recorded should be in consecutive files with consecutive injection times recorded. Expect to see written justification for the deletion of all files.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 13. LABORATORY RECORDS AND DOCUMENTATION"
+    },
+    {
+     "ref": "¶87",
+     "text": "Determine the adequacy of the firm's procedures to ensure that all valid laboratory data are considered by the firm in their determination of acceptability of components, in-process, finished product, and retained stability samples. Laboratory logs and documents when cross referenced may show that data has been discarded by company officials who decided to release the product without a satisfactory explanation of the results showing the product fails to meet the specifications. Evaluate the justification for disregarding test results that show the product failed to meet specifications.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 13. LABORATORY RECORDS AND DOCUMENTATION"
+    },
+    {
+     "context": "14. LABORATORY STANDARD SOLUTIONS"
+    }
+   ]
+  },
+  {
+   "id": "fda-ora-guide-pharma-qc-labs-1993.html:¶88-¶98",
+   "source": "fda-ora-guide-pharma-qc-labs-1993.html",
+   "unit": "¶88-¶98",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "¶88",
+     "text": "Ascertain that suitable standards are being used (i.e. in-date, stored properly). Check for the reuse of stock solutions without assuring their stability. Stock solutions are frequently stored in the laboratory refrigerator. Examine the laboratory refrigerators for these solutions and when found check for appropriate identification. Review records of standard solution preparation to assure complete and accurate documentation. It is highly unlikely that a firm can \"accurately and consistently weigh\" to the same microgram. Therefore data showing this level of standardization or pattern is suspect and should be carefully investigated.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 14. LABORATORY STANDARD SOLUTIONS"
+    },
+    {
+     "context": "15. METHODS VALIDATION"
+    },
+    {
+     "ref": "¶89",
+     "text": "Information regarding the validation of methods should be carefully evaluated for completeness, accuracy and reliability. In particular, if a compendial method exists, but the firm chooses to use an alternate method instead, they must compare the two and demonstrate that the in-house method is equivalent or superior to the official procedure. For compendial methods firms must demonstrate that the method works under the actual conditions of use.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 15. METHODS VALIDATION"
+    },
+    {
+     "ref": "¶90",
+     "text": "Methods can be validated in a number of ways. Methods appearing in the USP are considered validated and they are considered validated if part of an approved ANDA. Also a company can conduct a validation study on their method. System suitability data alone is insufficient for and does not constitute method validation.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 15. METHODS VALIDATION"
+    },
+    {
+     "ref": "¶91",
+     "text": "In the review of method validation data, it is expected that data for repetitive testing be consistent and that the varying concentrations of test solutions provide linear results. Many assay and impurity tests are now HPLC, and it is expected that the precision of these assays be equal or less than the RSD's for system suitability testing. The analytical performance parameters listed in the USP XXII, <1225>, under the heading of Validation of Compendial Methods, can be used as a guide for determining the analytical parameters (e.g., accuracy, precision, linearity, ruggedness, etc.) needed to validate the method.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 15. METHODS VALIDATION"
+    },
+    {
+     "context": "16. EQUIPMENT"
+    },
+    {
+     "ref": "¶92",
+     "text": "Laboratory equipment usage, maintenance, calibration logs, repair records, and maintenance SOPs also should be examined. The existence of the equipment specified in the analytical methods should be confirmed and its condition noted. Verify that the equipment was present and in good working order at the time the batches were analyzed. Determine whether equipment is being used properly.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 16. EQUIPMENT"
+    },
+    {
+     "ref": "¶93",
+     "text": "In addition, verify that the equipment in any application was in good working order when it was listed as used to produce clinical or biobatches. One would have to suspect the data that are generated from a piece of equipment that is known to be defective. Therefore, continuing to use and release product on the basis of such equipment represents a serious violation of CGMP's.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 16. EQUIPMENT"
+    },
+    {
+     "context": "17. RAW MATERIAL TESTING"
+    },
+    {
+     "ref": "¶94",
+     "text": "Some inspections include the coverage of the manufacturer of the drug substance. The safety and efficacy of the finished dosage form is largely dependent on the purity and quality of the bulk active drug substance. Examine the raw data reflecting the analysis of the drug substance including purity tests, charts, etc.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 17. RAW MATERIAL TESTING"
+    },
+    {
+     "ref": "¶95",
+     "text": "Check the impurity profiles of the BPC used in the biobatch and clinical production batches to determine if it is the same as that being used to manufacture full scale production batches. Determine if the manufacturer has a program to audit the certificate of analysis of the BPC, and, if so, check the results of these tests. Report findings where there is substantial difference in impurity profiles and other test results.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 17. RAW MATERIAL TESTING"
+    },
+    {
+     "ref": "¶96",
+     "text": "Some older compendial methods may not be capable of detecting impurities as necessary to enable the control of the manufacturing process, and newer methods have been developed to test these products. Such methods must be validated to ensure that they are adequate for analytical purposes in the control and validation of the BPC manufacturing process. The drug substance manufacturer must have complete knowledge of the manufacturing process and the potential impurities that may appear in the drug substance. These impurities cannot be evaluated without a suitable method and one that has been validated.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 17. RAW MATERIAL TESTING"
+    },
+    {
+     "ref": "¶97",
+     "text": "Physical tests such as particle size for raw materials, adhesion tests for patches, and extrusion tests for syringes are essential tests to assure consistent operation of the production and control system and to assure quality and efficacy. Some of these tests are filed in applications and others may be established by the protocols used to manufacture the product. The validation of methods for such tests are as important as the test for chemical attributes.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 17. RAW MATERIAL TESTING"
+    },
+    {
+     "ref": "¶98",
+     "text": "Physical properties tests often require the use of unique equipment and protocols. These tests may not be reproducible in other laboratories, therefore, on site evaluation is essential.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 17. RAW MATERIAL TESTING"
+    },
+    {
+     "context": "18. IN PROCESS CONTROLS AND SPECIFICATIONS"
+    }
+   ]
+  },
+  {
+   "id": "fda-ora-guide-pharma-qc-labs-1993.html:¶99-¶120",
+   "source": "fda-ora-guide-pharma-qc-labs-1993.html",
+   "unit": "¶99-¶120",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "¶99",
+     "text": "Evaluate the test results from in-process tests performed in the production areas or laboratory for conformance with established sampling and testing protocols, analytical methods, and specifications. For example, evaluate the tests for weight variation, hardness, and friability. These tests may be performed every fifteen or thirty minutes during tableting or encapsulating procedures. All testing must comply with CGMP's.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 18. IN PROCESS CONTROLS AND SPECIFICATIONS"
+    },
+    {
+     "ref": "¶100",
+     "text": "The drug application may contain some of the in-process testing plan, including methods and specifications. The inspection must confirm that the in-process tests were done, as described in the plan, and ascertain that the results were within specifications. The laboratory work for the lengthier tests should also be reviewed.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 18. IN PROCESS CONTROLS AND SPECIFICATIONS"
+    },
+    {
+     "ref": "¶101",
+     "text": "The methods used for in-process testing may differ from those used for release testings. Usually, whether the methods are the same or different, the specifications may be tighter for the in-process tests. A product with a 90.0%-110.0% assay release specification may have a limit of 95.%-105.0% for the in-process blend. Some of the tests done may differ from those done at release. For example, a firm may perform disintegration testing as an in-process test but dissolution testing as a release test.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 18. IN PROCESS CONTROLS AND SPECIFICATIONS"
+    },
+    {
+     "ref": "¶102",
+     "text": "Expect to see consistent in-process test results within batches and between batches of the same formulation/process (including development or exhibit batches). If this is not the case, expect to see scientific data to justify the variation.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 18. IN PROCESS CONTROLS AND SPECIFICATIONS"
+    },
+    {
+     "context": "19. STABILITY"
+    },
+    {
+     "ref": "¶103",
+     "text": "A stability-indicating method must be used to test the samples of the batch. If there is no stability-indicating assay additional assay procedures such as TLC should be used to supplement the general assay method. Evidence that the method is stability indicating must be presented, even for compendial methods.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 19. STABILITY"
+    },
+    {
+     "ref": "¶104",
+     "text": "Manufacturers may be required to accelerate or force degradation of a product to demonstrate that the test is stability indicating. In some cases the sponsor of ANDA's may be able to search the literature and find background data for the specificity of a particular method. This information may also be obtained from the supplier of the drug substance. Validation would then be relatively straightforward, with the typical parameters listed in the USP in chapter <1225> on validation of compendial methods addressed as applicable.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 19. STABILITY"
+    },
+    {
+     "ref": "¶105",
+     "text": "Evaluate the manufacturer's validation report for their stability testing. Again, review the raw laboratory data and the results of testing at the various stations to determine if the data actually reported matches the data found in on site records.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 19. STABILITY"
+    },
+    {
+     "ref": "¶106",
+     "text": "Evaluate the raw data used to generate the data filed documenting that the method is stability indicating and the level of impurities.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 19. STABILITY"
+    },
+    {
+     "context": "20. COMPUTERIZED LABORATORY DATA ACQUISITION SYSTEMS"
+    },
+    {
+     "ref": "¶107",
+     "text": "The use of computerized laboratory data acquisition systems is not new and is addressed in the following CGMP guidance documents:",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 20. COMPUTERIZED LABORATORY DATA ACQUISITION SYSTEMS"
+    },
+    {
+     "ref": "¶108",
+     "text": "- Compliance Policy Guide 7132a.07 Computerized Drug Processing: Input/Output Checking.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 20. COMPUTERIZED LABORATORY DATA ACQUISITION SYSTEMS"
+    },
+    {
+     "ref": "¶109",
+     "text": "- Compliance Policy Guide 7132a.08 Computerized Drug Processing: Identification of \"Persons\" on Batch Production and Control Records.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 20. COMPUTERIZED LABORATORY DATA ACQUISITION SYSTEMS"
+    },
+    {
+     "ref": "¶110",
+     "text": "- Compliance Policy Guide 7132a.11 Computerized Drug Processing: CGMP Applicability to Hardware and Software",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 20. COMPUTERIZED LABORATORY DATA ACQUISITION SYSTEMS"
+    },
+    {
+     "ref": "¶111",
+     "text": "- Compliance Policy Guide 7132a.12 Computerized Drug Processing: Vendor Responsibility",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 20. COMPUTERIZED LABORATORY DATA ACQUISITION SYSTEMS"
+    },
+    {
+     "ref": "¶112",
+     "text": "- Compliance Policy Guide 7132a.15 Computerized Drug Processing: Source Code for Process Control Application Programs",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 20. COMPUTERIZED LABORATORY DATA ACQUISITION SYSTEMS"
+    },
+    {
+     "ref": "¶113",
+     "text": "- Guide to Inspection of Computerized Systems in Drug Processing.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 20. COMPUTERIZED LABORATORY DATA ACQUISITION SYSTEMS"
+    },
+    {
+     "ref": "¶114",
+     "text": "It is important, for computerized and non computerized systems, to define the universe of data that will be collected, the procedures to collect it, and the means to verify its accuracy. Equally important are the procedure to audit data and programs and the process for correcting errors. Several issues must be addressed when evaluating computerized laboratory systems. These include data collection, processing, data integrity, and security.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 20. COMPUTERIZED LABORATORY DATA ACQUISITION SYSTEMS"
+    },
+    {
+     "ref": "¶115",
+     "text": "Procedures should only be judged adequate when data are secure, raw data are not accidentally lost, and data cannot be tampered with. The system must assure that raw data are stored and actually processed.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 20. COMPUTERIZED LABORATORY DATA ACQUISITION SYSTEMS"
+    },
+    {
+     "ref": "¶116",
+     "text": "The agency has provided some basic guidance on security and authenticity issues for computerized systems:",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 20. COMPUTERIZED LABORATORY DATA ACQUISITION SYSTEMS"
+    },
+    {
+     "ref": "¶117",
+     "text": "- Provision must be made so that only authorized individuals can make data entries.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 20. COMPUTERIZED LABORATORY DATA ACQUISITION SYSTEMS"
+    },
+    {
+     "ref": "¶118",
+     "text": "- Data entries may not be deleted. Changes must be made in the form of amendments.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 20. COMPUTERIZED LABORATORY DATA ACQUISITION SYSTEMS"
+    },
+    {
+     "ref": "¶119",
+     "text": "- The data base must be made as tamperproof as possible.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 20. COMPUTERIZED LABORATORY DATA ACQUISITION SYSTEMS"
+    },
+    {
+     "ref": "¶120",
+     "text": "- The Standard Operating Procedures must describe the procedures for ensuring the validity of the data.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 20. COMPUTERIZED LABORATORY DATA ACQUISITION SYSTEMS"
+    }
+   ]
+  },
+  {
+   "id": "fda-ora-guide-pharma-qc-labs-1993.html:¶121-¶127",
+   "source": "fda-ora-guide-pharma-qc-labs-1993.html",
+   "unit": "¶121-¶127",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "¶121",
+     "text": "One basic aspect of validation of laboratory computerized data acquisition requires a comparison of data from the specific instrument with that same data electronically transmitted through the system and emanating on a printer. Periodic data comparisons would be sufficient only when such comparisons have been made over a sufficient period of time to assure that the computerized system produces consistent and valid results.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 20. COMPUTERIZED LABORATORY DATA ACQUISITION SYSTEMS"
+    },
+    {
+     "context": "21. LABORATORY MANAGEMENT"
+    },
+    {
+     "ref": "¶122",
+     "text": "Overall management of the laboratory work, its staff, and the evaluation of the results of analysis are important elements in the evaluation of a control laboratory. Span of supervisory control, personnel qualifications, turnover of analysts, and scope of the laboratory's responsibility are important issues to examine when determining the quality of overall management and supervision of work. Individually or collectively, these factors are the basis for an objection only when they are shown to result in inadequate performance of responsibilities required by the CGMPs.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 21. LABORATORY MANAGEMENT"
+    },
+    {
+     "ref": "¶123",
+     "text": "Review laboratory logs for the sequence of analysis and the sequence of manufacturing dates. Examine laboratory records and logs for vital information about the technical competence of the staff and the quality control procedures used in the laboratory.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 21. LABORATORY MANAGEMENT"
+    },
+    {
+     "ref": "¶124",
+     "text": "Observe analysts performing the operations described in the application. There is no substitute for actually seeing the work performed and noting whether good technique is used. You should not stand over the analysts, but watch from a distance and evaluate their actions.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 21. LABORATORY MANAGEMENT"
+    },
+    {
+     "ref": "¶125",
+     "text": "Sometimes the company's employees have insufficient training or time to recognize situations that require further investigation and explanation. Instead they accept unexplained peaks in chromatograms with no effort to identify them. They may accept stability test results showing an apparent increase in the assay of the drug with the passage of time with no apparent question about the result. Also, diminishing reproducibility in HPLC chromatograms appearing several hours after system suitability is established is accepted without question.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 21. LABORATORY MANAGEMENT"
+    },
+    {
+     "ref": "¶126",
+     "text": "Good manufacturing practice regulations require an active training program and the documented evaluation of the training of analysts.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 21. LABORATORY MANAGEMENT"
+    },
+    {
+     "ref": "¶127",
+     "text": "The authority to delete files and override computer systems should be thoroughly examined. Evaluate the history of changes to programs used for calculations. Certain changes may require management to re-examine the data for products already released.",
+     "heading_path": "Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF PHARMACEUTICAL QUALITY CONTROL LABORATORIES > Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s). > 21. LABORATORY MANAGEMENT"
+    },
+    {
+     "context": "ENDNOTES"
+    },
+    {
+     "context": "Return to: Page Top | Inspection Start"
+    }
+   ]
+  }
+ ]
+}

@@ -194,7 +194,7 @@ def quote_found(q, ref, source):
     return any(whole[s:s + len(q)] == q and len(o) - s >= need for s in range(len(o)))
 
 
-EXPECTS = re.compile(r"\b(?:FDA|the agency|we)\s+(?:also\s+|further\s+|generally\s+)?(?:expects?|recommends?|"
+EXPECTS = re.compile(r"\b(?:FDA|the agency|we)\s+(?:would\s+|will\s+|does\s+|also\s+|further\s+|generally\s+)*(?:expects?|recommends?|"
                      r"encourages?|advises?)\b|\bit is (?:important|essential|critical) (?:to|that)\b", re.I)
 # Inspection points in ORA guides and ITGs: a sentence that starts with an instruction to the investigator.
 IMPERATIVE = re.compile(r"^(?:Also,?\s+|Always\s+|In addition,?\s+|Then\s+)?(?:Determine|Check|Examine|Review|"
@@ -210,7 +210,7 @@ NOT_POSSIBLE = re.compile(r"\b(?:may|might|can|could)\s+not\s+(?:always\s+|neces
                           r"|\b(?:may|might|can|could)\s+(?:also\s+)?be\s+(?:more|less|very|particularly|difficult|"
                           r"hard|easier|harder)\b"
                           r"|\b(?:can|may|could)\s+be\s+(?:summarized|described|found|seen|viewed|accessed|in|present)\b"
-                          r"|\b(?:may|might|can|could)\s+(?:contaminate|harbor|enter|grow|survive|persist|need|be needed)\b",
+                          r"|\b(?:may|might|can|could)\s+(?:contaminate|harbor|enter|grow|survive|persist|need|be needed|constitute)\b",
                           re.I)
 # "These regulations require ...", "§ 211.84 requires ...": a legal requirement stated in guidance
 REG_REQUIRES = re.compile(r"\b(?:regulations?|CGMPs?|CFR\s+[\d.()a-z]+|§\s*[\d.()a-z]+|section\s+\d[\d.()a-z]*|statute|Act)"
