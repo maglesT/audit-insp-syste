@@ -13,12 +13,19 @@ Last updated: 31 October 2026, session 7 (FDA build, D47: 21 CFR 211 built and v
   sterile plant scope, lead-in coverage, cross-references are not numbers). **21 CFR 211 full build: 399 items
   (60 sections; not 107), 399 quotes exact, 0 coverage gaps, automatic route 359 (90.0 %), review queue 40**
   (`docs/fda-211-trial.md`, run `library/ai-runs/20261031T100541.543518Z-xml-draft`).
-- **Next:** (1) merge PR #38 on green CI (if the full suite shows the 2 test errors seen locally, check whether they
-  are pre-existing on main first); (2) 21 CFR 210 (`ecfr-21cfr210-2026-10-27.xml`), Part 11, 314.81, then 314.70,
-  200, 207, 4 with `xmlprofile.py` (prepare-draft SRC -> drafting agents, 3 at a time, one batch each -> ingest-draft
-  -> prepare-verify -> verifier agents -> ingest-verify -> `vision.py record-model` -> `tools/fda/status.py set`);
-  a redraft is a new run (ingest refuses a verified run); (3) group 2 (FDA HTML) needs an HTML profile (D47 D),
-  then group 3 (guidance PDFs, text first) and group 4 (compliance programs, vision on table pages).
+- **Branches:** PR #38 = `fda-build` (head 344a9ba; do not push to it, so its CI can go green; merge on green).
+  All later work is on **`fda-group1`** (stacked on fda-build): open its PR after #38 merges, with an independent
+  review of the xmlprofile.py changes made there (lead-in = list-introducing sentence, numbers from parent
+  paragraphs, descriptive may, nearest lead-in for strength, recheck, prepare-redraft, size-packed batches).
+- **Group 1 status (`library/fda-status.json`, `docs/fda-worklist.md`):** 211 verified 399/365/34; 210 verified
+  1/0/1; Part 11 verified 48/45/3; 314.81 verified 104/90 (89 after the descriptive-may recheck: update its row)/13-14.
+  In flight at handover: 314.70 run `20261031T102852.310999Z-xml-draft` (76 items, verify batches ready, gap
+  redraft `20261031T103227.810350Z-xml-redraft`); Part 200 run `20261031T102852.396410Z-xml-draft` (21 items,
+  verify ready; redraft `20261031T103111.556865Z-xml-redraft`, 3 items, verify ready); Part 207 run
+  `20261031T102852.481194Z-xml-draft` (6 batches; 1-4 answered, 5-6 to draft); Part 4 run
+  `20261031T102852.577194Z-xml-draft` (5 batches, none drafted). For each: answers -> ingest-draft -> (redraft if
+  real gaps) -> prepare-verify -> verifiers -> ingest-verify -> record-model -> status.py set -> report.
+- **Next after group 1:** group 2 (FDA HTML) needs an HTML profile (D47 D), then group 3 and group 4.
 - **Status files:** `library/fda-status.json` + `docs/fda-worklist.md` (the coordinator's file; only the Status /
   Items / Auto / Review cells change, via `tools/fda/status.py`). Owner review queue: CLI `review.py next|decide|
   status RUN`; an owner-friendly page is still to build.
