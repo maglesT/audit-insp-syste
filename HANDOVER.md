@@ -17,21 +17,23 @@ Last updated: 31 October 2026, session 8 (D48 lead-in fix, review-page import, D
   f1a4b335-e5ec-4d90-993a-02abf9913cbe, db collection `decisions`; pull the docs with the artifact db tools
   (db_list), save as JSON, import). Latest decision = latest by `at`; future or zone-less times refused. The
   collection was empty on 31 Oct 12:00 UTC.
-- **Step 2 merged (PR #41).** Step 1 (PR #40) waits for CI; merge it, then PR #42 (it contains #40 and #41).
-- **Step 3 in progress, PR #42 (`fda-html-profile`, D49):** `tools/fda/htmlprofile.py` (prepare-draft SOURCE
-  [UNIT ...] / ingest-draft / prepare-verify / ingest-verify / prepare-redraft / recheck; recheck also recomputes
-  coverage). Trial `docs/fda-html-trial.md` (160 items, 140 automatic). Independent review done, all findings fixed.
-  Per document: draft agent -> ingest-draft -> prepare-redraft (gaps) + prepare-verify -> verifier A and B agents ->
-  ingest-verify (draft and redraft runs) -> `tools/fda/status.py set FILE verified --items --auto --review --usage
-  --run` (once per run) -> report to the coordinator. A redraft whose gaps close on recheck is dropped.
-- **Group 2 status (all in `library/fda-status.json` / work list):** Q&A done: Equipment 57/51/6, Buildings 16/13/3,
-  General Provisions 0, Holding 9/7/2, Components 92/76/16, Laboratory 80/67/13, Records 31/26/5, Returned 15/9/6.
-  Q&A Production: draft run 20261031T121805.662742Z (143 items) verifying, redraft 20261031T122549.729806Z (10)
-  verifying; residual gaps Q7.4, Q19.1, Q22.1, Q23.5 (background lead clauses). Guides: dosage form
-  20261031T121844.199078Z (226 items; redraft 20261031T122644.999092Z prepared, verify batches prepared, not
-  launched); high purity water 20261031T121844.314705Z (72 items, 0 gaps) verifying; the other 7 guide runs
-  20261031T121844.*/121845.* are prepared, not drafted. Then ITGs, CPG 490.200, benzene alert (new whole-document
-  runs; the trial runs of those are trial-only).
+- **Steps 1 and 2 merged (PR #40, #41).** PR #42 (`fda-html-profile`) = HTML profile + all group 2 runs so far;
+  merged with main; merge it on green CI (independent review done, findings fixed), then continue on a new branch
+  from main (e.g. `fda-group2-guides`).
+- **Step 3, HTML profile (D49):** `tools/fda/htmlprofile.py` (prepare-draft SOURCE [UNIT ...] / ingest-draft /
+  prepare-verify / ingest-verify / prepare-redraft / recheck; recheck also recomputes coverage). Trial
+  `docs/fda-html-trial.md`. Per document: draft agent -> ingest-draft -> prepare-redraft (gaps) + prepare-verify ->
+  verifier A and B agents (separate) -> ingest-verify (draft and redraft runs) -> `tools/fda/status.py set FILE
+  verified --items --auto --review --usage --run` (once per run) -> report to the coordinator. A redraft whose
+  gaps close on recheck is dropped. Usage = sum of the agents' subagent_tokens (k).
+- **Group 2 status (`library/fda-status.json` / work list):** all 9 Q&A pages done (453 items, 394 automatic, 59
+  review); Guide High Purity Water done (72/58/14). **Guide Dosage Form CGMPs:** draft 20261031T121844.199078Z (226
+  items) + redraft 20261031T122644.999092Z (6 items, 4 residual gaps) are in verification (agents A and B launched);
+  when the verify answers are in: ingest-verify both runs, status set, report. **Not drafted yet** (batches
+  prepared, prompt current): lyophilization 20261031T121844.429546Z, micro QC labs .556077Z, OSD pre/post approval
+  .663955Z, pharma QC labs .767509Z, sterile drug substance .888503Z, cleaning validation 20261031T121845.016687Z,
+  foreign manufacturers .105247Z. Then ITGs (bacterial endotoxins, expiration dating, water), CPG 490.200, benzene
+  alert: new whole-document runs (`prepare-draft FILE`); the trial runs of those are trial-only.
 - **Agents:** drafting agent per run (reads only its batch files, writes answers/); verifiers A and B as separate
   agents per run group (blind, only their verify batch files). Max 3-4 at a time.
 - **Local test note:** 2 errors in tests/test_ai_runner locally = the `anthropic` package is not installed here
