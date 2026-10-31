@@ -105,6 +105,20 @@ def explanations():
     return {r["source"]: r["explanation"] for r in csv.DictReader(open(path, encoding="utf-8"))}
 
 
+def fidelity_line():
+    """One line on the second-reading fidelity check (D39), from the committed library/fidelity-report.json."""
+    import fidelity
+    if not fidelity.REPORT.exists():
+        return "Source fidelity (D39): not run yet (`python3 tools/parse/fidelity.py run`)."
+    doc = json.loads(fidelity.REPORT.read_text(encoding="utf-8"))
+    srcs = doc["sources"]
+    flags = sum(len(s["flagged"]) for s in srcs.values())
+    open_ = len(fidelity.problems(doc, fidelity.explanations()))
+    return (f"Source fidelity (D39, `library/fidelity-report.md`): {sum(s['clauses'] for s in srcs.values())} "
+            f"clauses of {len(srcs)} PDF sources compared in both directions with a pdfminer.six reading; "
+            f"{flags} flagged, {open_} not yet fixed or explained in `library/fidelity-explanations.csv`.")
+
+
 def write_report(results, pending):
     """library/parse-report.md from the results, with the written explanation of every flagged source."""
     notes = explanations()
@@ -127,6 +141,8 @@ def write_report(results, pending):
              "but the parse does not (possible misses); or text not assigned to any clause. Restarts = clauses whose "
              "numbering starts again (references with \"#2\"; each carries a note naming the heading it follows). "
              "Explanations are kept in `library/parse-explanations.csv`.",
+             "",
+             fidelity_line(),
              "",
              "| Source | Clauses | Table rows | Restarts | Numbered share | Obligations | Outside | Missed | Flags "
              "| Explanation |",
