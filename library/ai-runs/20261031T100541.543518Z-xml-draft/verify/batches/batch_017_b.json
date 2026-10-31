@@ -1,0 +1,415 @@
+{
+ "role": "b",
+ "instructions": "You are a second, independent auditor. Check one checklist item against the US regulation paragraph it claims to come from. You get\nthe section's paragraphs (reference and exact text, from the official eCFR XML) and the item. Start from the TEXT:\nread the cited paragraph and its lead-in fully, then compare the item.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the parent paragraph's\nlead-in (including a qualifier such as \"as are necessary to prevent contamination or mixups\"). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph requires what the statement asks for, the statement\n  adds nothing and omits nothing of that obligation, the strength (shall/must = mandatory, should = recommended,\n  may = optional; a sub-paragraph takes its lead-in's) matches, and the regulation applies to every listed plant\n  type (INJ = sterile injectables: a paragraph limited to products not required to be sterile does not apply to\n  INJ; one limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "sections": [
+  {
+   "section": "211.86",
+   "paragraphs": [
+    {
+     "ref": "211.86",
+     "text": "§ 211.86 Use of approved components, drug product containers, and closures. Components, drug product containers, and closures approved for use shall be rotated so that the oldest approved stock is used first. Deviation from this requirement is permitted if such deviation is temporary and appropriate."
+    }
+   ]
+  },
+  {
+   "section": "211.87",
+   "paragraphs": [
+    {
+     "ref": "211.87",
+     "text": "§ 211.87 Retesting of approved components, drug product containers, and closures. Components, drug product containers, and closures shall be retested or reexamined, as appropriate, for identity, strength, quality, and purity and approved or rejected by the quality control unit in accordance with § 211.84 as necessary, e.g., after storage for long periods or after exposure to air, heat or other conditions that might adversely affect the component, drug product container, or closure."
+    }
+   ]
+  },
+  {
+   "section": "211.89",
+   "paragraphs": [
+    {
+     "ref": "211.89",
+     "text": "§ 211.89 Rejected components, drug product containers, and closures. Rejected components, drug product containers, and closures shall be identified and controlled under a quarantine system designed to prevent their use in manufacturing or processing operations for which they are unsuitable."
+    }
+   ]
+  },
+  {
+   "section": "211.94",
+   "paragraphs": [
+    {
+     "ref": "211.94",
+     "text": "§ 211.94 Drug product containers and closures."
+    },
+    {
+     "ref": "211.94(a)",
+     "text": "(a) Drug product containers and closures shall not be reactive, additive, or absorptive so as to alter the safety, identity, strength, quality, or purity of the drug beyond the official or established requirements."
+    },
+    {
+     "ref": "211.94(b)",
+     "text": "(b) Container closure systems shall provide adequate protection against foreseeable external factors in storage and use that can cause deterioration or contamination of the drug product."
+    },
+    {
+     "ref": "211.94(c)",
+     "text": "(c) Drug product containers and closures shall be clean and, where indicated by the nature of the drug, sterilized and processed to remove pyrogenic properties to assure that they are suitable for their intended use. Such depyrogenation processes shall be validated."
+    },
+    {
+     "ref": "211.94(d)",
+     "text": "(d) Standards or specifications, methods of testing, and, where indicated, methods of cleaning, sterilizing, and processing to remove pyrogenic properties shall be written and followed for drug product containers and closures."
+    }
+   ]
+  },
+  {
+   "section": "211.100",
+   "paragraphs": [
+    {
+     "ref": "211.100",
+     "text": "§ 211.100 Written procedures; deviations."
+    },
+    {
+     "ref": "211.100(a)",
+     "text": "(a) There shall be written procedures for production and process control designed to assure that the drug products have the identity, strength, quality, and purity they purport or are represented to possess. Such procedures shall include all requirements in this subpart. These written procedures, including any changes, shall be drafted, reviewed, and approved by the appropriate organizational units and reviewed and approved by the quality control unit."
+    },
+    {
+     "ref": "211.100(b)",
+     "text": "(b) Written production and process control procedures shall be followed in the execution of the various production and process control functions and shall be documented at the time of performance. Any deviation from the written procedures shall be recorded and justified."
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.86#1",
+   "section": "211.86",
+   "hash": "c79e932737e25f44",
+   "item": {
+    "statement": "Rotate approved components, drug product containers and closures so the oldest approved stock is used first; temporary and appropriate deviation from this rotation is permitted.",
+    "quote": "Components, drug product containers, and closures approved for use shall be rotated so that the oldest approved stock is used first. Deviation from this requirement is permitted if such deviation is temporary and appropriate.",
+    "clause_number": "211.86",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "unless deviation is temporary and appropriate"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.87#1",
+   "section": "211.87",
+   "hash": "c4ee017c6c45b99d",
+   "item": {
+    "statement": "Retest or reexamine approved components, drug product containers and closures, as appropriate, for identity, strength, quality and purity, and have the quality control unit approve or reject them under the same testing and approval requirements as on receipt, when necessary, for example after long storage or after exposure to air, heat or other conditions that might adversely affect them.",
+    "quote": "Components, drug product containers, and closures shall be retested or reexamined, as appropriate, for identity, strength, quality, and purity and approved or rejected by the quality control unit in accordance with § 211.84 as necessary, e.g., after storage for long periods or after exposure to air, heat or other conditions that might adversely affect the component, drug product container, or closure.",
+    "clause_number": "211.87",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "as necessary, e.g. after long storage or adverse exposure"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.89#1",
+   "section": "211.89",
+   "hash": "458d682fde050693",
+   "item": {
+    "statement": "Identify rejected components, drug product containers and closures and control them under a quarantine system designed to prevent their use in manufacturing or processing operations for which they are unsuitable.",
+    "quote": "Rejected components, drug product containers, and closures shall be identified and controlled under a quarantine system designed to prevent their use in manufacturing or processing operations for which they are unsuitable.",
+    "clause_number": "211.89",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.94#1",
+   "section": "211.94",
+   "hash": "d88f83b9e9ae1e00",
+   "item": {
+    "statement": "Ensure drug product containers and closures are not reactive, additive or absorptive in a way that alters the drug's safety, identity, strength, quality or purity beyond official or established requirements.",
+    "quote": "Drug product containers and closures shall not be reactive, additive, or absorptive so as to alter the safety, identity, strength, quality, or purity of the drug beyond the official or established requirements.",
+    "clause_number": "211.94(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.94#2",
+   "section": "211.94",
+   "hash": "08558aa6972aa836",
+   "item": {
+    "statement": "Ensure container closure systems adequately protect the drug product against foreseeable external factors in storage and use that could cause deterioration or contamination.",
+    "quote": "Container closure systems shall provide adequate protection against foreseeable external factors in storage and use that can cause deterioration or contamination of the drug product.",
+    "clause_number": "211.94(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.94#3",
+   "section": "211.94",
+   "hash": "a65e23f172d4ef96",
+   "item": {
+    "statement": "Ensure drug product containers and closures are clean and, where the nature of the drug indicates, sterilized and depyrogenated so they are suitable for their intended use.",
+    "quote": "Drug product containers and closures shall be clean and, where indicated by the nature of the drug, sterilized and processed to remove pyrogenic properties to assure that they are suitable for their intended use.",
+    "clause_number": "211.94(c)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "sterilization/depyrogenation where indicated by the nature of the drug"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.94#4",
+   "section": "211.94",
+   "hash": "f1dbc42e63ecdea8",
+   "item": {
+    "statement": "Validate the depyrogenation processes used for drug product containers and closures.",
+    "quote": "Such depyrogenation processes shall be validated.",
+    "clause_number": "211.94(c)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.94#5",
+   "section": "211.94",
+   "hash": "05f37c4112f6bee3",
+   "item": {
+    "statement": "Write and follow standards or specifications and test methods for drug product containers and closures and, where indicated, methods for cleaning, sterilizing and depyrogenating them.",
+    "quote": "Standards or specifications, methods of testing, and, where indicated, methods of cleaning, sterilizing, and processing to remove pyrogenic properties shall be written and followed for drug product containers and closures.",
+    "clause_number": "211.94(d)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "cleaning/sterilizing/depyrogenation methods where indicated"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.100#1",
+   "section": "211.100",
+   "hash": "23dffaa084cf6c2a",
+   "item": {
+    "statement": "Have written production and process control procedures designed to assure drug products have the identity, strength, quality and purity they purport or are represented to possess.",
+    "quote": "There shall be written procedures for production and process control designed to assure that the drug products have the identity, strength, quality, and purity they purport or are represented to possess.",
+    "clause_number": "211.100(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.100#2",
+   "section": "211.100",
+   "hash": "6af7bf27580fe361",
+   "item": {
+    "statement": "Make the production and process control procedures include all requirements for production and process controls set out in the regulation.",
+    "quote": "Such procedures shall include all requirements in this subpart.",
+    "clause_number": "211.100(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.100#3",
+   "section": "211.100",
+   "hash": "1cb115b3509126ab",
+   "item": {
+    "statement": "Have production and process control procedures, and any changes to them, drafted, reviewed and approved by the appropriate organizational units and reviewed and approved by the quality control unit.",
+    "quote": "These written procedures, including any changes, shall be drafted, reviewed, and approved by the appropriate organizational units and reviewed and approved by the quality control unit.",
+    "clause_number": "211.100(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.100#4",
+   "section": "211.100",
+   "hash": "5167c2f3448e5bfc",
+   "item": {
+    "statement": "Follow the written production and process control procedures when carrying out production and process control functions, and document those functions at the time they are performed.",
+    "quote": "Written production and process control procedures shall be followed in the execution of the various production and process control functions and shall be documented at the time of performance.",
+    "clause_number": "211.100(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.100#5",
+   "section": "211.100",
+   "hash": "61bfa00e1bd89ccf",
+   "item": {
+    "statement": "Record and justify any deviation from the written production and process control procedures.",
+    "quote": "Any deviation from the written procedures shall be recorded and justified.",
+    "clause_number": "211.100(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "any deviation from written procedures"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  }
+ ]
+}

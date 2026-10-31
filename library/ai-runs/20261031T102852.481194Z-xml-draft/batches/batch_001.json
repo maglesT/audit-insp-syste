@@ -1,0 +1,384 @@
+{
+ "instructions": "You read sections of a US regulation (21 CFR, from the official eCFR XML) and list the obligations they state. Each\nsection is given as its paragraphs, each with its reference from the XML structure (\"211.84(c)(1)\") and its exact\ntext. Your output is checked by software against that exact text and by independent reviewers, so precision\nmatters more than wording.\n\nList each separate obligation as its own item, so that together your items cover every obligation in the section.\nOne obligation is one thing a manufacturer must, should or may do, with all its conditions, numbers and\nqualifiers; do not split one obligation across items. For each item:\n- statement: the obligation in your own plain English words, as one checklist item a site could be audited\n  against. Do not copy more than a few words in a row. Keep every condition (\"where\", \"if\", \"unless\", \"when\",\n  \"except\") and every number. Do not add anything the text does not say. The statement itself must carry every\n  condition or qualifier of the lead-ins above its paragraph (a parent paragraph ending in \":\", and its parent if\n  that also ends in \":\"): for 211.42(c)(1) under \"... such other control systems ... as are necessary to prevent\n  contamination or mixups during the course of the following procedures:\", write e.g. \"Provide separate or defined\n  areas, or other control systems as necessary to prevent contamination or mixups, for receipt ...\". Putting the\n  qualifier only in the condition field is not enough. The statement is shown to customers: never cite a\n  paragraph or section reference in it (\"211.166(a)(1)-(5)\", \"this section\"); say what is required instead\n  (\"contains the elements listed below\" is not enough: name them, or let each sub-paragraph's own item carry it).\n- quote: the exact span of ONE paragraph's text that states the whole obligation, copied character for character\n  (matched against the XML text by software; do not fix typos or change punctuation). Leave out the paragraph's\n  designation (\"(c)\"). A quote may continue into that paragraph's sub-paragraphs, in order.\n- clause_number: the reference of the paragraph the quote comes from, exactly as given (\"211.84(c)(1)\").\n- strength: \"mandatory\" for shall / must / is required / may not; \"recommended\" for should; \"optional\" for may.\n  A sub-paragraph without such a word takes its parent's lead-in (\"(c) Samples shall be collected in accordance\n  with the following procedures:\" makes (c)(1)-(c)(6) mandatory).\n- plant_types: from OSD, LIQ, SEMI, INJ, API (INJ = sterile injectables); the plant scope given unless the text\n  narrows it. A paragraph limited to drug products not required to be sterile does not apply to INJ; one limited to\n  sterile drug products (\"purporting to be sterile\") applies only to INJ (and API where in scope).\n- numbers: every number, limit, frequency or period in the quote, as written.\n- condition: the condition or trigger in a few words, \"\" if none. A condition stated in a parent paragraph's\n  lead-in belongs to every sub-paragraph under it. This field only repeats what the statement already says.\n\nA lead-in sentence that also states a duty of its own (\"The written program shall be followed and shall include:\")\nneeds its own item for that duty, quoting the whole sentence including \"shall include:\". That item states only the\nlead-in's own duty (\"follow the written stability program\"); do not summarise the sub-paragraphs in it (their\nitems carry them with their qualifiers). Where the text refers to a closed list of other sections (\"operations\naddressed by §§ 211.101(c) or (d), 211.103 ...\"), keep the list closed: name the operations, never \"such as\".\nDo not narrow or widen a term (\"washing facilities\" is not \"hand-washing facilities\"; \"in and from\" is not \"from\").\n- topic: the sub-topic id from TOPICS the obligation belongs to.\n\nSentences that state no obligation for the manufacturer (a heading, a definition, a scope statement, a statement\nof purpose, an exemption, an enforcement or interpretation statement addressed to FDA) go in not_applicable: one\nentry per SENTENCE (a paragraph of three such sentences needs three entries), each with the paragraph reference,\nthe sentence's first 8 or more words copied exactly (without the paragraph designation), and the reason in a few\nwords.\n\nWrite the answers file named in your task: {\"answers\": [one object per section with \"section\" set to the section's\n\"id\" exactly]}.\n",
+ "topics": [
+  "QS.PQS",
+  "QS.MGMT",
+  "QS.QRM",
+  "QS.PQR",
+  "QS.CHANGE",
+  "QS.DEV",
+  "QS.CAPA",
+  "PER.ORG",
+  "PER.KEY",
+  "PER.TRAIN",
+  "PER.HYG",
+  "PER.GOWN",
+  "PREM.DESIGN",
+  "PREM.PROD",
+  "PREM.STORE",
+  "PREM.QC",
+  "PREM.ANC",
+  "EQ.DESIGN",
+  "EQ.MAINT",
+  "EQ.CLEAN",
+  "EQ.CAL",
+  "DOC.SYS",
+  "DOC.SPEC",
+  "DOC.MFR",
+  "DOC.BMR",
+  "DOC.SOP",
+  "DOC.RET",
+  "MAT.SUPP",
+  "MAT.RECV",
+  "MAT.SAMP",
+  "MAT.STATUS",
+  "MAT.PACK",
+  "MAT.REJ",
+  "PROD.GEN",
+  "PROD.XCONT",
+  "PROD.IPC",
+  "PROD.YIELD",
+  "PROD.PACK",
+  "PROD.REWORK",
+  "QC.GEN",
+  "QC.SAMP",
+  "QC.TEST",
+  "QC.OOS",
+  "QC.STAB",
+  "QC.REF",
+  "QC.MICRO",
+  "VAL.PLAN",
+  "VAL.QUAL",
+  "VAL.PROC",
+  "VAL.CLEAN",
+  "VAL.METH",
+  "CSV.VAL",
+  "CSV.ACCESS",
+  "CSV.AUDIT",
+  "CSV.ESIG",
+  "CSV.DI",
+  "UTIL.WATER",
+  "UTIL.HVAC",
+  "UTIL.GAS",
+  "CCS.STRAT",
+  "CCS.EM",
+  "CCS.CLEAN",
+  "CCS.PEST",
+  "STER.GRADE",
+  "STER.ASEPT",
+  "STER.APS",
+  "STER.STERIL",
+  "STER.FILT",
+  "STER.CCI",
+  "STER.LYO",
+  "API.START",
+  "API.PROC",
+  "API.IMP",
+  "API.SOLV",
+  "OUT.CONTRACT",
+  "OUT.AGREE",
+  "CMP.COMPL",
+  "CMP.RECALL",
+  "CMP.REPORT",
+  "SI.PROG",
+  "SI.TEAM",
+  "SI.REPORT",
+  "SI.FOLLOW",
+  "DIST.STORE",
+  "DIST.TRANS",
+  "DIST.RETURN",
+  "REL.QP",
+  "REL.REVIEW"
+ ],
+ "schema": {
+  "type": "object",
+  "required": [
+   "section",
+   "items",
+   "not_applicable"
+  ],
+  "properties": {
+   "section": {
+    "type": "string"
+   },
+   "items": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "statement",
+      "quote",
+      "clause_number",
+      "strength",
+      "plant_types",
+      "numbers",
+      "condition",
+      "topic"
+     ],
+     "properties": {
+      "statement": {
+       "type": "string"
+      },
+      "quote": {
+       "type": "string"
+      },
+      "clause_number": {
+       "type": "string"
+      },
+      "strength": {
+       "enum": [
+        "mandatory",
+        "recommended",
+        "optional"
+       ]
+      },
+      "plant_types": {
+       "type": "array",
+       "items": {
+        "enum": [
+         "OSD",
+         "LIQ",
+         "SEMI",
+         "INJ",
+         "API"
+        ]
+       }
+      },
+      "numbers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "condition": {
+       "type": "string"
+      },
+      "topic": {
+       "type": "string"
+      }
+     }
+    }
+   },
+   "not_applicable": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "clause_number",
+      "text",
+      "reason"
+     ],
+     "properties": {
+      "clause_number": {
+       "type": "string"
+      },
+      "text": {
+       "type": "string"
+      },
+      "reason": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  }
+ },
+ "sections": [
+  {
+   "id": "fda-cfr-21-part-207.xml:207.1",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.1",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.1",
+     "text": "§ 207.1 What definitions and interpretations of terms apply to this part? The definitions and interpretations of terms in sections 201 and 510 of the Federal Food, Drug, and Cosmetic Act apply to the terms used in this part, if not otherwise defined in this section. The following definitions apply to this part:"
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.1 \"Active pharmaceutical ingredient\"",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.1 \"Active pharmaceutical ingredient\"",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.1 \"Active pharmaceutical ingredient\"",
+     "text": "Active pharmaceutical ingredient means any substance that is intended for incorporation into a finished drug product and is intended to furnish pharmacological activity or other direct effect in the diagnosis, cure, mitigation, treatment, or prevention of disease, or to affect the structure or any function of the body. Active pharmaceutical ingredient does not include intermediates used in the synthesis of the substance."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.1 \"Bulk drug substance\"",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.1 \"Bulk drug substance\"",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.1 \"Bulk drug substance\"",
+     "text": "Bulk drug substance, as referenced in sections 503A(b)(1)(A) and 503B(a)(2) of the Federal Food, Drug, and Cosmetic Act, means the same as “active pharmaceutical ingredient” as defined in this section."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.1 \"Commercial distribution\"",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.1 \"Commercial distribution\"",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.1 \"Commercial distribution\"",
+     "text": "Commercial distribution means any distribution of a human drug, except for investigational use under part 312 of this chapter, and any distribution of an animal drug or an animal feed bearing or containing an animal drug, except for investigational use under part 511 of this chapter. The term does not include internal or interplant transfer between registered establishments under common ownership and control, including a parent, subsidiary, or affiliate company. For foreign establishments that manufacture, repack, relabel, or salvage, or for foreign private label distributors, the term “commercial distribution” has the same meaning except the term does not include distribution of any drug that is neither imported nor offered for import into the United States."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.1 \"Content of labeling\"",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.1 \"Content of labeling\"",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.1 \"Content of labeling\"",
+     "text": "Content of labeling means:"
+    },
+    {
+     "ref": "207.1 \"Content of labeling\"(1)",
+     "text": "(1) For human prescription drugs that are subject to section 505 of the Federal Food, Drug, and Cosmetic Act or section 351 of the Public Health Service Act: The content of the prescription drug labeling (as specified in §§ 201.56, 201.57, and 201.80 of this chapter), including all text, tables, and figures."
+    },
+    {
+     "ref": "207.1 \"Content of labeling\"(2)",
+     "text": "(2) For human prescription drugs that are not subject to section 505 of the Federal Food, Drug, and Cosmetic Act or section 351 of the Public Health Service Act: The labeling equivalent to the content of the prescription drug labeling (as specified in §§ 201.56, 201.57, and 201.80 of this chapter), including all text, tables, and figures."
+    },
+    {
+     "ref": "207.1 \"Content of labeling\"(3)",
+     "text": "(3) For human over-the-counter (OTC) drugs: All text, tables, and figures including the drug facts labeling required by § 201.66 of this chapter."
+    },
+    {
+     "ref": "207.1 \"Content of labeling\"(4)",
+     "text": "(4) For animal drugs (including, but not limited to, drugs that are subject to section 512 of the Federal Food, Drug, and Cosmetic Act): The content of the labeling that accompanies the drug that is necessary to enable safe and proper administration of the drug (e.g., the labeling applicable to veterinary drugs specified in part 201 of this chapter), including all text, tables, and figures."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.1 \"Domestic\"",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.1 \"Domestic\"",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.1 \"Domestic\"",
+     "text": "Domestic for purposes of registration and listing under this part, when used to modify the term “registrant,” “manufacturer,” “repacker,” “relabeler,” “salvager,” “private label distributor,” or “establishment,” refers to a registrant, manufacturer, repacker, relabeler, salvager, private label distributor, or establishment within any State or Territory of the United States, the District of Columbia, or the Commonwealth of Puerto Rico."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.1 \"Drug\"",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.1 \"Drug\"",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.1 \"Drug\"",
+     "text": "Drug, for the purposes of registration and listing under this part, has the meaning given in section 201(g)(1) of the Federal Food, Drug, and Cosmetic Act."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.1 \"Establishment\"",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.1 \"Establishment\"",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.1 \"Establishment\"",
+     "text": "Establishment means a place of business under one management at one general physical location. The term includes, among others, independent laboratories that engage in control activities for a registered drug establishment (e.g., consulting laboratories), manufacturers of medicated feeds and of vitamin products that are drugs in accordance with section 201(g) of the Federal Food, Drug, and Cosmetic Act, human blood donor centers, and animal facilities used for the production or control testing of licensed biologicals, and establishments engaged in salvaging."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.1 \"Establishment registration number\"",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.1 \"Establishment registration number\"",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.1 \"Establishment registration number\"",
+     "text": "Establishment registration number means the number assigned to the establishment, as identified by FDA, after the establishment registration required in this part."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.1 \"Finished drug product\"",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.1 \"Finished drug product\"",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.1 \"Finished drug product\"",
+     "text": "Finished drug product means a finished dosage form (e.g., tablet, capsule, or solution) that contains at least one active pharmaceutical ingredient, generally, but not necessarily, in association with other ingredients in finished package form suitable for distribution to pharmacies, hospitals, or other sellers or dispensers of the drug product to patients or consumers."
+    }
+   ]
+  }
+ ]
+}

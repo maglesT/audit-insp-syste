@@ -1,0 +1,1011 @@
+{
+ "role": "b",
+ "instructions": "You are a second, independent auditor. Check one checklist item against the US regulation paragraph it claims to come from. You get\nthe section's paragraphs (reference and exact text, from the official eCFR XML) and the item. Start from the TEXT:\nread the cited paragraph and its lead-in fully, then compare the item.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the parent paragraph's\nlead-in (including a qualifier such as \"as are necessary to prevent contamination or mixups\"). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph requires what the statement asks for, the statement\n  adds nothing and omits nothing of that obligation, the strength (shall/must = mandatory, should = recommended,\n  may = optional; a sub-paragraph takes its lead-in's) matches, and the regulation applies to every listed plant\n  type (INJ = sterile injectables: a paragraph limited to products not required to be sterile does not apply to\n  INJ; one limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "sections": [
+  {
+   "section": "11.1",
+   "paragraphs": [
+    {
+     "ref": "11.1",
+     "text": "§ 11.1 Scope."
+    },
+    {
+     "ref": "11.1(a)",
+     "text": "(a) The regulations in this part set forth the criteria under which the agency considers electronic records, electronic signatures, and handwritten signatures executed to electronic records to be trustworthy, reliable, and generally equivalent to paper records and handwritten signatures executed on paper."
+    },
+    {
+     "ref": "11.1(b)",
+     "text": "(b) This part applies to records in electronic form that are created, modified, maintained, archived, retrieved, or transmitted, under any records requirements set forth in agency regulations. This part also applies to electronic records submitted to the agency under requirements of the Federal Food, Drug, and Cosmetic Act and the Public Health Service Act, even if such records are not specifically identified in agency regulations. However, this part does not apply to paper records that are, or have been, transmitted by electronic means."
+    },
+    {
+     "ref": "11.1(c)",
+     "text": "(c) Where electronic signatures and their associated electronic records meet the requirements of this part, the agency will consider the electronic signatures to be equivalent to full handwritten signatures, initials, and other general signings as required by agency regulations, unless specifically excepted by regulation(s) effective on or after August 20, 1997."
+    },
+    {
+     "ref": "11.1(d)",
+     "text": "(d) Electronic records that meet the requirements of this part may be used in lieu of paper records, in accordance with § 11.2, unless paper records are specifically required."
+    },
+    {
+     "ref": "11.1(e)",
+     "text": "(e) Computer systems (including hardware and software), controls, and attendant documentation maintained under this part shall be readily available for, and subject to, FDA inspection."
+    },
+    {
+     "ref": "11.1(f)",
+     "text": "(f) This part does not apply to records required to be established or maintained by §§ 1.326 through 1.368 of this chapter. Records that satisfy the requirements of part 1, subpart J of this chapter, but that also are required under other applicable statutory provisions or regulations, remain subject to this part."
+    },
+    {
+     "ref": "11.1(g)",
+     "text": "(g) This part does not apply to electronic signatures obtained under § 101.11(d) of this chapter."
+    },
+    {
+     "ref": "11.1(h)",
+     "text": "(h) This part does not apply to electronic signatures obtained under § 101.8(d) of this chapter."
+    },
+    {
+     "ref": "11.1(i)",
+     "text": "(i) This part does not apply to records required to be established or maintained by part 117 of this chapter. Records that satisfy the requirements of part 117 of this chapter, but that also are required under other applicable statutory provisions or regulations, remain subject to this part."
+    },
+    {
+     "ref": "11.1(j)",
+     "text": "(j) This part does not apply to records required to be established or maintained by part 507 of this chapter. Records that satisfy the requirements of part 507 of this chapter, but that also are required under other applicable statutory provisions or regulations, remain subject to this part."
+    },
+    {
+     "ref": "11.1(k)",
+     "text": "(k) This part does not apply to records required to be established or maintained by part 112 of this chapter. Records that satisfy the requirements of part 112 of this chapter, but that also are required under other applicable statutory provisions or regulations, remain subject to this part."
+    },
+    {
+     "ref": "11.1(l)",
+     "text": "(l) This part does not apply to records required to be established or maintained by subpart L of part 1 of this chapter. Records that satisfy the requirements of subpart L of part 1 of this chapter, but that also are required under other applicable statutory provisions or regulations, remain subject to this part."
+    },
+    {
+     "ref": "11.1(m)",
+     "text": "(m) This part does not apply to records required to be established or maintained by subpart M of part 1 of this chapter. Records that satisfy the requirements of subpart M of part 1 of this chapter, but that also are required under other applicable statutory provisions or regulations, remain subject to this part."
+    },
+    {
+     "ref": "11.1(n)",
+     "text": "(n) This part does not apply to records required to be established or maintained by subpart O of part 1 of this chapter. Records that satisfy the requirements of subpart O of part 1 of this chapter, but that also are required under other applicable statutory provisions or regulations, remain subject to this part."
+    },
+    {
+     "ref": "11.1(o)",
+     "text": "(o) This part does not apply to records required to be established or maintained by part 121 of this chapter. Records that satisfy the requirements of part 121 of this chapter, but that also are required under other applicable statutory provisions or regulations, remain subject to this part."
+    },
+    {
+     "ref": "11.1(p)",
+     "text": "(p) This part does not apply to records required to be established or maintained by subpart R of part 1 of this chapter. Records that satisfy the requirements of subpart R of part 1 of this chapter, but that also are required under other applicable statutory provisions or regulations, remain subject to this part."
+    }
+   ]
+  },
+  {
+   "section": "11.2",
+   "paragraphs": [
+    {
+     "ref": "11.2",
+     "text": "§ 11.2 Implementation."
+    },
+    {
+     "ref": "11.2(a)",
+     "text": "(a) For records required to be maintained but not submitted to the agency, persons may use electronic records in lieu of paper records or electronic signatures in lieu of traditional signatures, in whole or in part, provided that the requirements of this part are met."
+    },
+    {
+     "ref": "11.2(b)",
+     "text": "(b) For records submitted to the agency, persons may use electronic records in lieu of paper records or electronic signatures in lieu of traditional signatures, in whole or in part, provided that:"
+    },
+    {
+     "ref": "11.2(b)(1)",
+     "text": "(1) The requirements of this part are met; and"
+    },
+    {
+     "ref": "11.2(b)(2)",
+     "text": "(2) The document or parts of a document to be submitted have been identified in public docket No. 92S-0251 as being the type of submission the agency accepts in electronic form. This docket will identify specifically what types of documents or parts of documents are acceptable for submission in electronic form without paper records and the agency receiving unit(s) (e.g., specific center, office, division, branch) to which such submissions may be made. Documents to agency receiving unit(s) not specified in the public docket will not be considered as official if they are submitted in electronic form; paper forms of such documents will be considered as official and must accompany any electronic records. Persons are expected to consult with the intended agency receiving unit for details on how (e.g., method of transmission, media, file formats, and technical protocols) and whether to proceed with the electronic submission."
+    }
+   ]
+  },
+  {
+   "section": "11.10",
+   "paragraphs": [
+    {
+     "ref": "11.10",
+     "text": "§ 11.10 Controls for closed systems. Persons who use closed systems to create, modify, maintain, or transmit electronic records shall employ procedures and controls designed to ensure the authenticity, integrity, and, when appropriate, the confidentiality of electronic records, and to ensure that the signer cannot readily repudiate the signed record as not genuine. Such procedures and controls shall include the following:"
+    },
+    {
+     "ref": "11.10(a)",
+     "text": "(a) Validation of systems to ensure accuracy, reliability, consistent intended performance, and the ability to discern invalid or altered records."
+    },
+    {
+     "ref": "11.10(b)",
+     "text": "(b) The ability to generate accurate and complete copies of records in both human readable and electronic form suitable for inspection, review, and copying by the agency. Persons should contact the agency if there are any questions regarding the ability of the agency to perform such review and copying of the electronic records."
+    },
+    {
+     "ref": "11.10(c)",
+     "text": "(c) Protection of records to enable their accurate and ready retrieval throughout the records retention period."
+    },
+    {
+     "ref": "11.10(d)",
+     "text": "(d) Limiting system access to authorized individuals."
+    },
+    {
+     "ref": "11.10(e)",
+     "text": "(e) Use of secure, computer-generated, time-stamped audit trails to independently record the date and time of operator entries and actions that create, modify, or delete electronic records. Record changes shall not obscure previously recorded information. Such audit trail documentation shall be retained for a period at least as long as that required for the subject electronic records and shall be available for agency review and copying."
+    },
+    {
+     "ref": "11.10(f)",
+     "text": "(f) Use of operational system checks to enforce permitted sequencing of steps and events, as appropriate."
+    },
+    {
+     "ref": "11.10(g)",
+     "text": "(g) Use of authority checks to ensure that only authorized individuals can use the system, electronically sign a record, access the operation or computer system input or output device, alter a record, or perform the operation at hand."
+    },
+    {
+     "ref": "11.10(h)",
+     "text": "(h) Use of device (e.g., terminal) checks to determine, as appropriate, the validity of the source of data input or operational instruction."
+    },
+    {
+     "ref": "11.10(i)",
+     "text": "(i) Determination that persons who develop, maintain, or use electronic record/electronic signature systems have the education, training, and experience to perform their assigned tasks."
+    },
+    {
+     "ref": "11.10(j)",
+     "text": "(j) The establishment of, and adherence to, written policies that hold individuals accountable and responsible for actions initiated under their electronic signatures, in order to deter record and signature falsification."
+    },
+    {
+     "ref": "11.10(k)",
+     "text": "(k) Use of appropriate controls over systems documentation including:"
+    },
+    {
+     "ref": "11.10(k)(1)",
+     "text": "(1) Adequate controls over the distribution of, access to, and use of documentation for system operation and maintenance."
+    },
+    {
+     "ref": "11.10(k)(2)",
+     "text": "(2) Revision and change control procedures to maintain an audit trail that documents time-sequenced development and modification of systems documentation."
+    }
+   ]
+  },
+  {
+   "section": "11.30",
+   "paragraphs": [
+    {
+     "ref": "11.30",
+     "text": "§ 11.30 Controls for open systems. Persons who use open systems to create, modify, maintain, or transmit electronic records shall employ procedures and controls designed to ensure the authenticity, integrity, and, as appropriate, the confidentiality of electronic records from the point of their creation to the point of their receipt. Such procedures and controls shall include those identified in § 11.10, as appropriate, and additional measures such as document encryption and use of appropriate digital signature standards to ensure, as necessary under the circumstances, record authenticity, integrity, and confidentiality."
+    }
+   ]
+  },
+  {
+   "section": "11.50",
+   "paragraphs": [
+    {
+     "ref": "11.50",
+     "text": "§ 11.50 Signature manifestations."
+    },
+    {
+     "ref": "11.50(a)",
+     "text": "(a) Signed electronic records shall contain information associated with the signing that clearly indicates all of the following:"
+    },
+    {
+     "ref": "11.50(a)(1)",
+     "text": "(1) The printed name of the signer;"
+    },
+    {
+     "ref": "11.50(a)(2)",
+     "text": "(2) The date and time when the signature was executed; and"
+    },
+    {
+     "ref": "11.50(a)(3)",
+     "text": "(3) The meaning (such as review, approval, responsibility, or authorship) associated with the signature."
+    },
+    {
+     "ref": "11.50(b)",
+     "text": "(b) The items identified in paragraphs (a)(1), (a)(2), and (a)(3) of this section shall be subject to the same controls as for electronic records and shall be included as part of any human readable form of the electronic record (such as electronic display or printout)."
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "fda-cfr-21-part-11.xml:11.1#1",
+   "section": "11.1",
+   "hash": "5277a8008c864ed3",
+   "item": {
+    "statement": "Electronic records that meet the electronic records requirements may be used in place of paper records, following the implementation rules for maintained and submitted records, unless paper records are specifically required.",
+    "quote": "Electronic records that meet the requirements of this part may be used in lieu of paper records, in accordance with § 11.2, unless paper records are specifically required.",
+    "clause_number": "11.1(d)",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "unless paper records are specifically required"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-11.xml:11.1#2",
+   "section": "11.1",
+   "hash": "b92a618deca9eb88",
+   "item": {
+    "statement": "Keep computer systems (hardware and software), their controls and the related documentation maintained for electronic records and signatures readily available for, and open to, FDA inspection.",
+    "quote": "Computer systems (including hardware and software), controls, and attendant documentation maintained under this part shall be readily available for, and subject to, FDA inspection.",
+    "clause_number": "11.1(e)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-11.xml:11.2#1",
+   "section": "11.2",
+   "hash": "477ee0886db7cea8",
+   "item": {
+    "statement": "For records that must be maintained but are not submitted to FDA, electronic records may be used in place of paper records, or electronic signatures in place of traditional signatures, wholly or partly, provided the electronic records and electronic signatures requirements are met.",
+    "quote": "For records required to be maintained but not submitted to the agency, persons may use electronic records in lieu of paper records or electronic signatures in lieu of traditional signatures, in whole or in part, provided that the requirements of this part are met.",
+    "clause_number": "11.2(a)",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "records maintained but not submitted; requirements met"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-11.xml:11.2#2",
+   "section": "11.2",
+   "hash": "b09b4604d9466db8",
+   "item": {
+    "statement": "For records submitted to FDA, electronic records may be used in place of paper records, or electronic signatures in place of traditional signatures, wholly or partly, only if the electronic records and electronic signatures requirements are met and the document or document parts to be submitted are identified in the public docket as a submission type FDA accepts in electronic form.",
+    "quote": "For records submitted to the agency, persons may use electronic records in lieu of paper records or electronic signatures in lieu of traditional signatures, in whole or in part, provided that:",
+    "clause_number": "11.2(b)",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "records submitted to FDA; requirements met and submission type accepted in docket"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-11.xml:11.2#3",
+   "section": "11.2",
+   "hash": "3fdc1d54eb883e12",
+   "item": {
+    "statement": "For records submitted to FDA, when submitting documents electronically to an FDA receiving unit not specified in the public docket, send the paper forms of those documents with the electronic records, since only the paper forms are treated as official.",
+    "quote": "Documents to agency receiving unit(s) not specified in the public docket will not be considered as official if they are submitted in electronic form; paper forms of such documents will be considered as official and must accompany any electronic records.",
+    "clause_number": "11.2(b)(2)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "electronic submission to a receiving unit not specified in the docket"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-11.xml:11.2#4",
+   "section": "11.2",
+   "hash": "9c035d6075e50e64",
+   "item": {
+    "statement": "For records submitted to FDA in electronic form, consult the intended FDA receiving unit on whether to proceed with the electronic submission and on how to do it (for example transmission method, media, file formats and technical protocols).",
+    "quote": "Persons are expected to consult with the intended agency receiving unit for details on how (e.g., method of transmission, media, file formats, and technical protocols) and whether to proceed with the electronic submission.",
+    "clause_number": "11.2(b)(2)",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "electronic submission to FDA"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-11.xml:11.10#1",
+   "section": "11.10",
+   "hash": "01756c0d85b7f445",
+   "item": {
+    "statement": "Where closed systems are used to create, modify, maintain or transmit electronic records, apply procedures and controls designed to ensure the records' authenticity, integrity and, when appropriate, confidentiality, and to ensure a signer cannot readily disown a signed record as not genuine.",
+    "quote": "Persons who use closed systems to create, modify, maintain, or transmit electronic records shall employ procedures and controls designed to ensure the authenticity, integrity, and, when appropriate, the confidentiality of electronic records, and to ensure that the signer cannot readily repudiate the signed record as not genuine. Such procedures and controls shall include the following:",
+    "clause_number": "11.10",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "closed systems used for electronic records"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-11.xml:11.10#2",
+   "section": "11.10",
+   "hash": "fa9ed416d655bbcf",
+   "item": {
+    "statement": "As part of the procedures and controls for closed systems handling electronic records, validate the systems to ensure accuracy, reliability, consistent intended performance and the ability to detect invalid or altered records.",
+    "quote": "Validation of systems to ensure accuracy, reliability, consistent intended performance, and the ability to discern invalid or altered records.",
+    "clause_number": "11.10(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "closed systems used for electronic records"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-11.xml:11.10#3",
+   "section": "11.10",
+   "hash": "e955e27fd6ced192",
+   "item": {
+    "statement": "As part of the procedures and controls for closed systems handling electronic records, be able to produce accurate and complete copies of records in both human readable and electronic form suitable for FDA inspection, review and copying.",
+    "quote": "The ability to generate accurate and complete copies of records in both human readable and electronic form suitable for inspection, review, and copying by the agency.",
+    "clause_number": "11.10(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "closed systems used for electronic records"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-11.xml:11.10#4",
+   "section": "11.10",
+   "hash": "896f91bd1e791ec5",
+   "item": {
+    "statement": "Where closed systems handle electronic records, contact FDA if there are any questions about FDA's ability to review and copy the electronic records.",
+    "quote": "Persons should contact the agency if there are any questions regarding the ability of the agency to perform such review and copying of the electronic records.",
+    "clause_number": "11.10(b)",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "if there are questions about FDA review and copying"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-11.xml:11.10#5",
+   "section": "11.10",
+   "hash": "7e9af0ac8fb5e8d1",
+   "item": {
+    "statement": "As part of the procedures and controls for closed systems handling electronic records, protect records so they can be retrieved accurately and readily throughout the records retention period.",
+    "quote": "Protection of records to enable their accurate and ready retrieval throughout the records retention period.",
+    "clause_number": "11.10(c)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "closed systems used for electronic records"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-11.xml:11.10#6",
+   "section": "11.10",
+   "hash": "ad7323263175a250",
+   "item": {
+    "statement": "As part of the procedures and controls for closed systems handling electronic records, restrict system access to authorized individuals.",
+    "quote": "Limiting system access to authorized individuals.",
+    "clause_number": "11.10(d)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "closed systems used for electronic records"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-11.xml:11.10#7",
+   "section": "11.10",
+   "hash": "d904d775a249493d",
+   "item": {
+    "statement": "As part of the procedures and controls for closed systems handling electronic records, use secure, computer-generated, time-stamped audit trails that independently record the date and time of operator entries and actions that create, modify or delete electronic records.",
+    "quote": "Use of secure, computer-generated, time-stamped audit trails to independently record the date and time of operator entries and actions that create, modify, or delete electronic records.",
+    "clause_number": "11.10(e)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "closed systems used for electronic records"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-11.xml:11.10#8",
+   "section": "11.10",
+   "hash": "5600f113a10912c8",
+   "item": {
+    "statement": "In closed systems handling electronic records, ensure changes to records do not hide previously recorded information.",
+    "quote": "Record changes shall not obscure previously recorded information.",
+    "clause_number": "11.10(e)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "closed systems used for electronic records"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-11.xml:11.10#9",
+   "section": "11.10",
+   "hash": "02ff68ece8c46f79",
+   "item": {
+    "statement": "In closed systems handling electronic records, keep audit trail documentation for at least as long as the related electronic records must be kept, and make it available for FDA review and copying.",
+    "quote": "Such audit trail documentation shall be retained for a period at least as long as that required for the subject electronic records and shall be available for agency review and copying.",
+    "clause_number": "11.10(e)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "closed systems used for electronic records"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-11.xml:11.10#10",
+   "section": "11.10",
+   "hash": "f47ee0c698910f42",
+   "item": {
+    "statement": "As part of the procedures and controls for closed systems handling electronic records, use operational system checks to enforce the permitted order of steps and events, as appropriate.",
+    "quote": "Use of operational system checks to enforce permitted sequencing of steps and events, as appropriate.",
+    "clause_number": "11.10(f)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "closed systems used for electronic records; as appropriate"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-11.xml:11.10#11",
+   "section": "11.10",
+   "hash": "7d1e638d46f0dc14",
+   "item": {
+    "statement": "As part of the procedures and controls for closed systems handling electronic records, use authority checks so that only authorized individuals can use the system, electronically sign a record, access the operation or computer system input or output device, alter a record, or perform the operation at hand.",
+    "quote": "Use of authority checks to ensure that only authorized individuals can use the system, electronically sign a record, access the operation or computer system input or output device, alter a record, or perform the operation at hand.",
+    "clause_number": "11.10(g)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "closed systems used for electronic records"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-11.xml:11.10#12",
+   "section": "11.10",
+   "hash": "c28dba312cdf9eb9",
+   "item": {
+    "statement": "As part of the procedures and controls for closed systems handling electronic records, use device checks (for example terminal checks) to determine, as appropriate, whether the source of data input or operational instruction is valid.",
+    "quote": "Use of device (e.g., terminal) checks to determine, as appropriate, the validity of the source of data input or operational instruction.",
+    "clause_number": "11.10(h)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "closed systems used for electronic records; as appropriate"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-11.xml:11.10#13",
+   "section": "11.10",
+   "hash": "f54567d76ebc0366",
+   "item": {
+    "statement": "As part of the procedures and controls for closed systems handling electronic records, confirm that people who develop, maintain or use electronic record/electronic signature systems have the education, training and experience to do their assigned tasks.",
+    "quote": "Determination that persons who develop, maintain, or use electronic record/electronic signature systems have the education, training, and experience to perform their assigned tasks.",
+    "clause_number": "11.10(i)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "closed systems used for electronic records"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-11.xml:11.10#14",
+   "section": "11.10",
+   "hash": "990e4c6ff54c1618",
+   "item": {
+    "statement": "As part of the procedures and controls for closed systems handling electronic records, establish and follow written policies that hold individuals accountable and responsible for actions initiated under their electronic signatures, to deter falsification of records and signatures.",
+    "quote": "The establishment of, and adherence to, written policies that hold individuals accountable and responsible for actions initiated under their electronic signatures, in order to deter record and signature falsification.",
+    "clause_number": "11.10(j)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "closed systems used for electronic records"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-11.xml:11.10#15",
+   "section": "11.10",
+   "hash": "2f8b322c38b2e708",
+   "item": {
+    "statement": "As part of the procedures and controls for closed systems handling electronic records, apply appropriate controls over systems documentation.",
+    "quote": "Use of appropriate controls over systems documentation including:",
+    "clause_number": "11.10(k)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "closed systems used for electronic records"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-11.xml:11.10#16",
+   "section": "11.10",
+   "hash": "e44f8cacf9901b15",
+   "item": {
+    "statement": "As part of the appropriate controls over systems documentation for closed systems handling electronic records, adequately control the distribution of, access to, and use of documentation for system operation and maintenance.",
+    "quote": "Adequate controls over the distribution of, access to, and use of documentation for system operation and maintenance.",
+    "clause_number": "11.10(k)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "closed systems used for electronic records"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-11.xml:11.10#17",
+   "section": "11.10",
+   "hash": "9796d9c5960b13bb",
+   "item": {
+    "statement": "As part of the appropriate controls over systems documentation for closed systems handling electronic records, have revision and change control procedures that maintain an audit trail documenting the time-sequenced development and modification of systems documentation.",
+    "quote": "Revision and change control procedures to maintain an audit trail that documents time-sequenced development and modification of systems documentation.",
+    "clause_number": "11.10(k)(2)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "closed systems used for electronic records"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-11.xml:11.30#1",
+   "section": "11.30",
+   "hash": "adf02bc2579d501e",
+   "item": {
+    "statement": "Where open systems are used to create, modify, maintain or transmit electronic records, apply procedures and controls designed to ensure the records' authenticity, integrity and, as appropriate, confidentiality from the point of creation to the point of receipt.",
+    "quote": "Persons who use open systems to create, modify, maintain, or transmit electronic records shall employ procedures and controls designed to ensure the authenticity, integrity, and, as appropriate, the confidentiality of electronic records from the point of their creation to the point of their receipt.",
+    "clause_number": "11.30",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "open systems used for electronic records"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-11.xml:11.30#2",
+   "section": "11.30",
+   "hash": "5c382422e8febe35",
+   "item": {
+    "statement": "For open systems handling electronic records, include in the procedures and controls the controls required for closed systems, as appropriate, plus additional measures such as document encryption and appropriate digital signature standards, to ensure record authenticity, integrity and confidentiality as necessary under the circumstances.",
+    "quote": "Such procedures and controls shall include those identified in § 11.10, as appropriate, and additional measures such as document encryption and use of appropriate digital signature standards to ensure, as necessary under the circumstances, record authenticity, integrity, and confidentiality.",
+    "clause_number": "11.30",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "open systems used for electronic records; as appropriate / as necessary"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-11.xml:11.50#1",
+   "section": "11.50",
+   "hash": "c0c4ccb076d83a8b",
+   "item": {
+    "statement": "Make sure signed electronic records contain signing information that clearly shows the printed name of the signer.",
+    "quote": "The printed name of the signer;",
+    "clause_number": "11.50(a)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "signed electronic records"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-11.xml:11.50#2",
+   "section": "11.50",
+   "hash": "00b99b7f6dcfd8dc",
+   "item": {
+    "statement": "Make sure signed electronic records contain signing information that clearly shows the date and time the signature was executed.",
+    "quote": "The date and time when the signature was executed; and",
+    "clause_number": "11.50(a)(2)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "signed electronic records"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-11.xml:11.50#3",
+   "section": "11.50",
+   "hash": "e8156d5ee0e137a1",
+   "item": {
+    "statement": "Make sure signed electronic records contain signing information that clearly shows the meaning tied to the signature (such as review, approval, responsibility or authorship).",
+    "quote": "The meaning (such as review, approval, responsibility, or authorship) associated with the signature.",
+    "clause_number": "11.50(a)(3)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "signed electronic records"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-11.xml:11.50#4",
+   "section": "11.50",
+   "hash": "2fbbcc302665ba45",
+   "item": {
+    "statement": "Apply the same controls used for electronic records to the signer's printed name, the date and time of signing, and the meaning of the signature.",
+    "quote": "The items identified in paragraphs (a)(1), (a)(2), and (a)(3) of this section shall be subject to the same controls as for electronic records",
+    "clause_number": "11.50(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-11.xml:11.50#5",
+   "section": "11.50",
+   "hash": "82d23c5112702af1",
+   "item": {
+    "statement": "Include the signer's printed name, the date and time of signing, and the meaning of the signature in any human readable form of the electronic record (such as an electronic display or printout).",
+    "quote": "shall be included as part of any human readable form of the electronic record (such as electronic display or printout).",
+    "clause_number": "11.50(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  }
+ ]
+}

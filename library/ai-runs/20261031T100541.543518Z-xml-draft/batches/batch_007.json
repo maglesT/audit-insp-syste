@@ -1,0 +1,377 @@
+{
+ "instructions": "You read sections of a US regulation (21 CFR, from the official eCFR XML) and list the obligations they state. Each\nsection is given as its paragraphs, each with its reference from the XML structure (\"211.84(c)(1)\") and its exact\ntext. Your output is checked by software against that exact text and by independent reviewers, so precision\nmatters more than wording.\n\nList each separate obligation as its own item, so that together your items cover every obligation in the section.\nOne obligation is one thing a manufacturer must, should or may do, with all its conditions, numbers and\nqualifiers; do not split one obligation across items. For each item:\n- statement: the obligation in your own plain English words, as one checklist item a site could be audited\n  against. Do not copy more than a few words in a row. Keep every condition (\"where\", \"if\", \"unless\", \"when\",\n  \"except\") and every number. Do not add anything the text does not say. The statement itself must carry every\n  condition or qualifier of the lead-ins above its paragraph (a parent paragraph ending in \":\", and its parent if\n  that also ends in \":\"): for 211.42(c)(1) under \"... such other control systems ... as are necessary to prevent\n  contamination or mixups during the course of the following procedures:\", write e.g. \"Provide separate or defined\n  areas, or other control systems as necessary to prevent contamination or mixups, for receipt ...\". Putting the\n  qualifier only in the condition field is not enough. The statement is shown to customers: never cite a\n  paragraph or section reference in it (\"211.166(a)(1)-(5)\", \"this section\"); say what is required instead\n  (\"contains the elements listed below\" is not enough: name them, or let each sub-paragraph's own item carry it).\n- quote: the exact span of ONE paragraph's text that states the whole obligation, copied character for character\n  (matched against the XML text by software; do not fix typos or change punctuation). Leave out the paragraph's\n  designation (\"(c)\"). A quote may continue into that paragraph's sub-paragraphs, in order.\n- clause_number: the reference of the paragraph the quote comes from, exactly as given (\"211.84(c)(1)\").\n- strength: \"mandatory\" for shall / must / is required / may not; \"recommended\" for should; \"optional\" for may.\n  A sub-paragraph without such a word takes its parent's lead-in (\"(c) Samples shall be collected in accordance\n  with the following procedures:\" makes (c)(1)-(c)(6) mandatory).\n- plant_types: from OSD, LIQ, SEMI, INJ, API (INJ = sterile injectables); the plant scope given unless the text\n  narrows it. A paragraph limited to drug products not required to be sterile does not apply to INJ; one limited to\n  sterile drug products (\"purporting to be sterile\") applies only to INJ (and API where in scope).\n- numbers: every number, limit, frequency or period in the quote, as written.\n- condition: the condition or trigger in a few words, \"\" if none. A condition stated in a parent paragraph's\n  lead-in belongs to every sub-paragraph under it. This field only repeats what the statement already says.\n\nA lead-in sentence that also states a duty of its own (\"The written program shall be followed and shall include:\")\nneeds its own item for that duty, quoting the whole sentence including \"shall include:\".\n- topic: the sub-topic id from TOPICS the obligation belongs to.\n\nSentences that state no obligation for the manufacturer (a heading, a definition, a scope statement, a statement\nof purpose) go in not_applicable: the paragraph reference, the first 8 or more words copied exactly, and the\nreason in a few words.\n\nWrite the answers file named in your task: {\"answers\": [one object per section with \"section\" set to the section's\n\"id\" exactly]}.\n",
+ "topics": [
+  "QS.PQS",
+  "QS.MGMT",
+  "QS.QRM",
+  "QS.PQR",
+  "QS.CHANGE",
+  "QS.DEV",
+  "QS.CAPA",
+  "PER.ORG",
+  "PER.KEY",
+  "PER.TRAIN",
+  "PER.HYG",
+  "PER.GOWN",
+  "PREM.DESIGN",
+  "PREM.PROD",
+  "PREM.STORE",
+  "PREM.QC",
+  "PREM.ANC",
+  "EQ.DESIGN",
+  "EQ.MAINT",
+  "EQ.CLEAN",
+  "EQ.CAL",
+  "DOC.SYS",
+  "DOC.SPEC",
+  "DOC.MFR",
+  "DOC.BMR",
+  "DOC.SOP",
+  "DOC.RET",
+  "MAT.SUPP",
+  "MAT.RECV",
+  "MAT.SAMP",
+  "MAT.STATUS",
+  "MAT.PACK",
+  "MAT.REJ",
+  "PROD.GEN",
+  "PROD.XCONT",
+  "PROD.IPC",
+  "PROD.YIELD",
+  "PROD.PACK",
+  "PROD.REWORK",
+  "QC.GEN",
+  "QC.SAMP",
+  "QC.TEST",
+  "QC.OOS",
+  "QC.STAB",
+  "QC.REF",
+  "QC.MICRO",
+  "VAL.PLAN",
+  "VAL.QUAL",
+  "VAL.PROC",
+  "VAL.CLEAN",
+  "VAL.METH",
+  "CSV.VAL",
+  "CSV.ACCESS",
+  "CSV.AUDIT",
+  "CSV.ESIG",
+  "CSV.DI",
+  "UTIL.WATER",
+  "UTIL.HVAC",
+  "UTIL.GAS",
+  "CCS.STRAT",
+  "CCS.EM",
+  "CCS.CLEAN",
+  "CCS.PEST",
+  "STER.GRADE",
+  "STER.ASEPT",
+  "STER.APS",
+  "STER.STERIL",
+  "STER.FILT",
+  "STER.CCI",
+  "STER.LYO",
+  "API.START",
+  "API.PROC",
+  "API.IMP",
+  "API.SOLV",
+  "OUT.CONTRACT",
+  "OUT.AGREE",
+  "CMP.COMPL",
+  "CMP.RECALL",
+  "CMP.REPORT",
+  "SI.PROG",
+  "SI.TEAM",
+  "SI.REPORT",
+  "SI.FOLLOW",
+  "DIST.STORE",
+  "DIST.TRANS",
+  "DIST.RETURN",
+  "REL.QP",
+  "REL.REVIEW"
+ ],
+ "schema": {
+  "type": "object",
+  "required": [
+   "section",
+   "items",
+   "not_applicable"
+  ],
+  "properties": {
+   "section": {
+    "type": "string"
+   },
+   "items": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "statement",
+      "quote",
+      "clause_number",
+      "strength",
+      "plant_types",
+      "numbers",
+      "condition",
+      "topic"
+     ],
+     "properties": {
+      "statement": {
+       "type": "string"
+      },
+      "quote": {
+       "type": "string"
+      },
+      "clause_number": {
+       "type": "string"
+      },
+      "strength": {
+       "enum": [
+        "mandatory",
+        "recommended",
+        "optional"
+       ]
+      },
+      "plant_types": {
+       "type": "array",
+       "items": {
+        "enum": [
+         "OSD",
+         "LIQ",
+         "SEMI",
+         "INJ",
+         "API"
+        ]
+       }
+      },
+      "numbers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "condition": {
+       "type": "string"
+      },
+      "topic": {
+       "type": "string"
+      }
+     }
+    }
+   },
+   "not_applicable": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "clause_number",
+      "text",
+      "reason"
+     ],
+     "properties": {
+      "clause_number": {
+       "type": "string"
+      },
+      "text": {
+       "type": "string"
+      },
+      "reason": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  }
+ },
+ "sections": [
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.110",
+   "source": "ecfr-21cfr211-2026-10-27.xml",
+   "section": "211.110",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "211.110",
+     "text": "§ 211.110 Sampling and testing of in-process materials and drug products."
+    },
+    {
+     "ref": "211.110(a)",
+     "text": "(a) To assure batch uniformity and integrity of drug products, written procedures shall be established and followed that describe the in-process controls, and tests, or examinations to be conducted on appropriate samples of in-process materials of each batch. Such control procedures shall be established to monitor the output and to validate the performance of those manufacturing processes that may be responsible for causing variability in the characteristics of in-process material and the drug product. Such control procedures shall include, but are not limited to, the following, where appropriate:"
+    },
+    {
+     "ref": "211.110(a)(1)",
+     "text": "(1) Tablet or capsule weight variation;"
+    },
+    {
+     "ref": "211.110(a)(2)",
+     "text": "(2) Disintegration time;"
+    },
+    {
+     "ref": "211.110(a)(3)",
+     "text": "(3) Adequacy of mixing to assure uniformity and homogeneity;"
+    },
+    {
+     "ref": "211.110(a)(4)",
+     "text": "(4) Dissolution time and rate;"
+    },
+    {
+     "ref": "211.110(a)(5)",
+     "text": "(5) Clarity, completeness, or pH of solutions."
+    },
+    {
+     "ref": "211.110(a)(6)",
+     "text": "(6) Bioburden testing."
+    },
+    {
+     "ref": "211.110(b)",
+     "text": "(b) Valid in-process specifications for such characteristics shall be consistent with drug product final specifications and shall be derived from previous acceptable process average and process variability estimates where possible and determined by the application of suitable statistical procedures where appropriate. Examination and testing of samples shall assure that the drug product and in-process material conform to specifications."
+    },
+    {
+     "ref": "211.110(c)",
+     "text": "(c) In-process materials shall be tested for identity, strength, quality, and purity as appropriate, and approved or rejected by the quality control unit, during the production process, e.g., at commencement or completion of significant phases or after storage for long periods."
+    },
+    {
+     "ref": "211.110(d)",
+     "text": "(d) Rejected in-process materials shall be identified and controlled under a quarantine system designed to prevent their use in manufacturing or processing operations for which they are unsuitable."
+    }
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.111",
+   "source": "ecfr-21cfr211-2026-10-27.xml",
+   "section": "211.111",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "211.111",
+     "text": "§ 211.111 Time limitations on production. When appropriate, time limits for the completion of each phase of production shall be established to assure the quality of the drug product. Deviation from established time limits may be acceptable if such deviation does not compromise the quality of the drug product. Such deviation shall be justified and documented."
+    }
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.113",
+   "source": "ecfr-21cfr211-2026-10-27.xml",
+   "section": "211.113",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "211.113",
+     "text": "§ 211.113 Control of microbiological contamination."
+    },
+    {
+     "ref": "211.113(a)",
+     "text": "(a) Appropriate written procedures, designed to prevent objectionable microorganisms in drug products not required to be sterile, shall be established and followed."
+    },
+    {
+     "ref": "211.113(b)",
+     "text": "(b) Appropriate written procedures, designed to prevent microbiological contamination of drug products purporting to be sterile, shall be established and followed. Such procedures shall include validation of all aseptic and sterilization processes."
+    }
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.115",
+   "source": "ecfr-21cfr211-2026-10-27.xml",
+   "section": "211.115",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "211.115",
+     "text": "§ 211.115 Reprocessing."
+    },
+    {
+     "ref": "211.115(a)",
+     "text": "(a) Written procedures shall be established and followed prescribing a system for reprocessing batches that do not conform to standards or specifications and the steps to be taken to insure that the reprocessed batches will conform with all established standards, specifications, and characteristics."
+    },
+    {
+     "ref": "211.115(b)",
+     "text": "(b) Reprocessing shall not be performed without the review and approval of the quality control unit."
+    }
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.122",
+   "source": "ecfr-21cfr211-2026-10-27.xml",
+   "section": "211.122",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "211.122",
+     "text": "§ 211.122 Materials examination and usage criteria."
+    },
+    {
+     "ref": "211.122(a)",
+     "text": "(a) There shall be written procedures describing in sufficient detail the receipt, identification, storage, handling, sampling, examination, and/or testing of labeling and packaging materials; such written procedures shall be followed. Labeling and packaging materials shall be representatively sampled, and examined or tested upon receipt and before use in packaging or labeling of a drug product."
+    },
+    {
+     "ref": "211.122(b)",
+     "text": "(b) Any labeling or packaging materials meeting appropriate written specifications may be approved and released for use. Any labeling or packaging materials that do not meet such specifications shall be rejected to prevent their use in operations for which they are unsuitable."
+    },
+    {
+     "ref": "211.122(c)",
+     "text": "(c) Records shall be maintained for each shipment received of each different labeling and packaging material indicating receipt, examination or testing, and whether accepted or rejected."
+    },
+    {
+     "ref": "211.122(d)",
+     "text": "(d) Labels and other labeling materials for each different drug product, strength, dosage form, or quantity of contents shall be stored separately with suitable identification. Access to the storage area shall be limited to authorized personnel."
+    },
+    {
+     "ref": "211.122(e)",
+     "text": "(e) Obsolete and outdated labels, labeling, and other packaging materials shall be destroyed."
+    },
+    {
+     "ref": "211.122(f)",
+     "text": "(f) Use of gang-printed labeling for different drug products, or different strengths or net contents of the same drug product, is prohibited unless the labeling from gang-printed sheets is adequately differentiated by size, shape, or color."
+    },
+    {
+     "ref": "211.122(g)",
+     "text": "(g) If cut labeling is used for immediate container labels, individual unit cartons, or multiunit cartons containing immediate containers that are not packaged in individual unit cartons, packaging and labeling operations shall include one of the following special control procedures:"
+    },
+    {
+     "ref": "211.122(g)(1)",
+     "text": "(1) Dedication of labeling and packaging lines to each different strength of each different drug product;"
+    },
+    {
+     "ref": "211.122(g)(2)",
+     "text": "(2) Use of appropriate electronic or electromechanical equipment to conduct a 100-percent examination for correct labeling during or after completion of finishing operations; or"
+    },
+    {
+     "ref": "211.122(g)(3)",
+     "text": "(3) Use of visual inspection to conduct a 100-percent examination for correct labeling during or after completion of finishing operations for hand-applied labeling. Such examination shall be performed by one person and independently verified by a second person."
+    },
+    {
+     "ref": "211.122(g)(4)",
+     "text": "(4) Use of any automated technique, including differentiation by labeling size and shape, that physically prevents incorrect labeling from being processed by labeling and packaging equipment."
+    },
+    {
+     "ref": "211.122(h)",
+     "text": "(h) Printing devices on, or associated with, manufacturing lines used to imprint labeling upon the drug product unit label or case shall be monitored to assure that all imprinting conforms to the print specified in the batch production record."
+    }
+   ]
+  }
+ ]
+}

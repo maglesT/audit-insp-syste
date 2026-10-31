@@ -1,0 +1,329 @@
+{
+ "instructions": "You read sections of a US regulation (21 CFR, from the official eCFR XML) and list the obligations they state. Each\nsection is given as its paragraphs, each with its reference from the XML structure (\"211.84(c)(1)\") and its exact\ntext. Your output is checked by software against that exact text and by independent reviewers, so precision\nmatters more than wording.\n\nList each separate obligation as its own item, so that together your items cover every obligation in the section.\nOne obligation is one thing a manufacturer must, should or may do, with all its conditions, numbers and\nqualifiers; do not split one obligation across items. For each item:\n- statement: the obligation in your own plain English words, as one checklist item a site could be audited\n  against. Do not copy more than a few words in a row. Keep every condition (\"where\", \"if\", \"unless\", \"when\",\n  \"except\") and every number. Do not add anything the text does not say. The statement itself must carry every\n  condition or qualifier of the lead-ins above its paragraph (a parent paragraph ending in \":\", and its parent if\n  that also ends in \":\"): for 211.42(c)(1) under \"... such other control systems ... as are necessary to prevent\n  contamination or mixups during the course of the following procedures:\", write e.g. \"Provide separate or defined\n  areas, or other control systems as necessary to prevent contamination or mixups, for receipt ...\". Putting the\n  qualifier only in the condition field is not enough. The statement is shown to customers: never cite a\n  paragraph or section reference in it (\"211.166(a)(1)-(5)\", \"this section\"); say what is required instead\n  (\"contains the elements listed below\" is not enough: name them, or let each sub-paragraph's own item carry it).\n- quote: the exact span of ONE paragraph's text that states the whole obligation, copied character for character\n  (matched against the XML text by software; do not fix typos or change punctuation). Leave out the paragraph's\n  designation (\"(c)\"). A quote may continue into that paragraph's sub-paragraphs, in order.\n- clause_number: the reference of the paragraph the quote comes from, exactly as given (\"211.84(c)(1)\").\n- strength: \"mandatory\" for shall / must / is required / may not; \"recommended\" for should; \"optional\" for may.\n  A sub-paragraph without such a word takes its parent's lead-in (\"(c) Samples shall be collected in accordance\n  with the following procedures:\" makes (c)(1)-(c)(6) mandatory).\n- plant_types: from OSD, LIQ, SEMI, INJ, API (INJ = sterile injectables); the plant scope given unless the text\n  narrows it. A paragraph limited to drug products not required to be sterile does not apply to INJ; one limited to\n  sterile drug products (\"purporting to be sterile\") applies only to INJ (and API where in scope).\n- numbers: every number, limit, frequency or period in the quote, as written.\n- condition: the condition or trigger in a few words, \"\" if none. A condition stated in a parent paragraph's\n  lead-in belongs to every sub-paragraph under it. This field only repeats what the statement already says.\n\nA lead-in sentence that also states a duty of its own (\"The written program shall be followed and shall include:\")\nneeds its own item for that duty, quoting the whole sentence including \"shall include:\".\n- topic: the sub-topic id from TOPICS the obligation belongs to.\n\nSentences that state no obligation for the manufacturer (a heading, a definition, a scope statement, a statement\nof purpose) go in not_applicable: the paragraph reference, the first 8 or more words copied exactly, and the\nreason in a few words.\n\nWrite the answers file named in your task: {\"answers\": [one object per section with \"section\" set to the section's\n\"id\" exactly]}.\n",
+ "topics": [
+  "QS.PQS",
+  "QS.MGMT",
+  "QS.QRM",
+  "QS.PQR",
+  "QS.CHANGE",
+  "QS.DEV",
+  "QS.CAPA",
+  "PER.ORG",
+  "PER.KEY",
+  "PER.TRAIN",
+  "PER.HYG",
+  "PER.GOWN",
+  "PREM.DESIGN",
+  "PREM.PROD",
+  "PREM.STORE",
+  "PREM.QC",
+  "PREM.ANC",
+  "EQ.DESIGN",
+  "EQ.MAINT",
+  "EQ.CLEAN",
+  "EQ.CAL",
+  "DOC.SYS",
+  "DOC.SPEC",
+  "DOC.MFR",
+  "DOC.BMR",
+  "DOC.SOP",
+  "DOC.RET",
+  "MAT.SUPP",
+  "MAT.RECV",
+  "MAT.SAMP",
+  "MAT.STATUS",
+  "MAT.PACK",
+  "MAT.REJ",
+  "PROD.GEN",
+  "PROD.XCONT",
+  "PROD.IPC",
+  "PROD.YIELD",
+  "PROD.PACK",
+  "PROD.REWORK",
+  "QC.GEN",
+  "QC.SAMP",
+  "QC.TEST",
+  "QC.OOS",
+  "QC.STAB",
+  "QC.REF",
+  "QC.MICRO",
+  "VAL.PLAN",
+  "VAL.QUAL",
+  "VAL.PROC",
+  "VAL.CLEAN",
+  "VAL.METH",
+  "CSV.VAL",
+  "CSV.ACCESS",
+  "CSV.AUDIT",
+  "CSV.ESIG",
+  "CSV.DI",
+  "UTIL.WATER",
+  "UTIL.HVAC",
+  "UTIL.GAS",
+  "CCS.STRAT",
+  "CCS.EM",
+  "CCS.CLEAN",
+  "CCS.PEST",
+  "STER.GRADE",
+  "STER.ASEPT",
+  "STER.APS",
+  "STER.STERIL",
+  "STER.FILT",
+  "STER.CCI",
+  "STER.LYO",
+  "API.START",
+  "API.PROC",
+  "API.IMP",
+  "API.SOLV",
+  "OUT.CONTRACT",
+  "OUT.AGREE",
+  "CMP.COMPL",
+  "CMP.RECALL",
+  "CMP.REPORT",
+  "SI.PROG",
+  "SI.TEAM",
+  "SI.REPORT",
+  "SI.FOLLOW",
+  "DIST.STORE",
+  "DIST.TRANS",
+  "DIST.RETURN",
+  "REL.QP",
+  "REL.REVIEW"
+ ],
+ "schema": {
+  "type": "object",
+  "required": [
+   "section",
+   "items",
+   "not_applicable"
+  ],
+  "properties": {
+   "section": {
+    "type": "string"
+   },
+   "items": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "statement",
+      "quote",
+      "clause_number",
+      "strength",
+      "plant_types",
+      "numbers",
+      "condition",
+      "topic"
+     ],
+     "properties": {
+      "statement": {
+       "type": "string"
+      },
+      "quote": {
+       "type": "string"
+      },
+      "clause_number": {
+       "type": "string"
+      },
+      "strength": {
+       "enum": [
+        "mandatory",
+        "recommended",
+        "optional"
+       ]
+      },
+      "plant_types": {
+       "type": "array",
+       "items": {
+        "enum": [
+         "OSD",
+         "LIQ",
+         "SEMI",
+         "INJ",
+         "API"
+        ]
+       }
+      },
+      "numbers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "condition": {
+       "type": "string"
+      },
+      "topic": {
+       "type": "string"
+      }
+     }
+    }
+   },
+   "not_applicable": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "clause_number",
+      "text",
+      "reason"
+     ],
+     "properties": {
+      "clause_number": {
+       "type": "string"
+      },
+      "text": {
+       "type": "string"
+      },
+      "reason": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  }
+ },
+ "sections": [
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.1",
+   "source": "ecfr-21cfr211-2026-10-27.xml",
+   "section": "211.1",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "211.1",
+     "text": "§ 211.1 Scope."
+    },
+    {
+     "ref": "211.1(a)",
+     "text": "(a) The regulations in this part contain the minimum current good manufacturing practice for preparation of drug products (excluding positron emission tomography drugs and medical gases as defined in § 213.3(b)(12) of this chapter) for administration to humans or animals."
+    },
+    {
+     "ref": "211.1(b)",
+     "text": "(b) The current good manufacturing practice regulations in this chapter as they pertain to drug products; in parts 600 through 680 of this chapter, as they pertain to drugs that are also biological products for human use; and in part 1271 of this chapter, as they are applicable to drugs that are also human cells, tissues, and cellular and tissue-based products (HCT/Ps) and that are drugs (subject to review under an application submitted under section 505 of the act or under a biological product license application under section 351 of the Public Health Service Act); supplement and do not supersede the regulations in this part unless the regulations explicitly provide otherwise. In the event of a conflict between applicable regulations in this part and in other parts of this chapter, or in parts 600 through 680 of this chapter, or in part 1271 of this chapter, the regulation specifically applicable to the drug product in question shall supersede the more general."
+    },
+    {
+     "ref": "211.1(c)",
+     "text": "(c) Pending consideration of a proposed exemption, published in the Federal Register of September 29, 1978, the requirements in this part shall not be enforced for OTC drug products if the products and all their ingredients are ordinarily marketed and consumed as human foods, and which products may also fall within the legal definition of drugs by virtue of their intended use. Therefore, until further notice, regulations under parts 110 and 117 of this chapter, and where applicable, parts 113 through 129 of this chapter, shall be applied in determining whether these OTC drug products that are also foods are manufactured, processed, packed, or held under current good manufacturing practice."
+    }
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.3",
+   "source": "ecfr-21cfr211-2026-10-27.xml",
+   "section": "211.3",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "211.3",
+     "text": "§ 211.3 Definitions. The definitions set forth in § 210.3 of this chapter apply in this part."
+    }
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.22",
+   "source": "ecfr-21cfr211-2026-10-27.xml",
+   "section": "211.22",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "211.22",
+     "text": "§ 211.22 Responsibilities of quality control unit."
+    },
+    {
+     "ref": "211.22(a)",
+     "text": "(a) There shall be a quality control unit that shall have the responsibility and authority to approve or reject all components, drug product containers, closures, in-process materials, packaging material, labeling, and drug products, and the authority to review production records to assure that no errors have occurred or, if errors have occurred, that they have been fully investigated. The quality control unit shall be responsible for approving or rejecting drug products manufactured, processed, packed, or held under contract by another company."
+    },
+    {
+     "ref": "211.22(b)",
+     "text": "(b) Adequate laboratory facilities for the testing and approval (or rejection) of components, drug product containers, closures, packaging materials, in-process materials, and drug products shall be available to the quality control unit."
+    },
+    {
+     "ref": "211.22(c)",
+     "text": "(c) The quality control unit shall have the responsibility for approving or rejecting all procedures or specifications impacting on the identity, strength, quality, and purity of the drug product."
+    },
+    {
+     "ref": "211.22(d)",
+     "text": "(d) The responsibilities and procedures applicable to the quality control unit shall be in writing; such written procedures shall be followed."
+    }
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.25",
+   "source": "ecfr-21cfr211-2026-10-27.xml",
+   "section": "211.25",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "211.25",
+     "text": "§ 211.25 Personnel qualifications."
+    },
+    {
+     "ref": "211.25(a)",
+     "text": "(a) Each person engaged in the manufacture, processing, packing, or holding of a drug product shall have education, training, and experience, or any combination thereof, to enable that person to perform the assigned functions. Training shall be in the particular operations that the employee performs and in current good manufacturing practice (including the current good manufacturing practice regulations in this chapter and written procedures required by these regulations) as they relate to the employee's functions. Training in current good manufacturing practice shall be conducted by qualified individuals on a continuing basis and with sufficient frequency to assure that employees remain familiar with CGMP requirements applicable to them."
+    },
+    {
+     "ref": "211.25(b)",
+     "text": "(b) Each person responsible for supervising the manufacture, processing, packing, or holding of a drug product shall have the education, training, and experience, or any combination thereof, to perform assigned functions in such a manner as to provide assurance that the drug product has the safety, identity, strength, quality, and purity that it purports or is represented to possess."
+    },
+    {
+     "ref": "211.25(c)",
+     "text": "(c) There shall be an adequate number of qualified personnel to perform and supervise the manufacture, processing, packing, or holding of each drug product."
+    }
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.28",
+   "source": "ecfr-21cfr211-2026-10-27.xml",
+   "section": "211.28",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "211.28",
+     "text": "§ 211.28 Personnel responsibilities."
+    },
+    {
+     "ref": "211.28(a)",
+     "text": "(a) Personnel engaged in the manufacture, processing, packing, or holding of a drug product shall wear clean clothing appropriate for the duties they perform. Protective apparel, such as head, face, hand, and arm coverings, shall be worn as necessary to protect drug products from contamination."
+    },
+    {
+     "ref": "211.28(b)",
+     "text": "(b) Personnel shall practice good sanitation and health habits."
+    },
+    {
+     "ref": "211.28(c)",
+     "text": "(c) Only personnel authorized by supervisory personnel shall enter those areas of the buildings and facilities designated as limited-access areas."
+    },
+    {
+     "ref": "211.28(d)",
+     "text": "(d) Any person shown at any time (either by medical examination or supervisory observation) to have an apparent illness or open lesions that may adversely affect the safety or quality of drug products shall be excluded from direct contact with components, drug product containers, closures, in-process materials, and drug products until the condition is corrected or determined by competent medical personnel not to jeopardize the safety or quality of drug products. All personnel shall be instructed to report to supervisory personnel any health conditions that may have an adverse effect on drug products."
+    }
+   ]
+  }
+ ]
+}

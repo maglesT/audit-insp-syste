@@ -1,0 +1,44 @@
+{
+ "items": 21,
+ "both_correct": 16,
+ "both_incorrect": 1,
+ "disagree": 4,
+ "unanswered": 0,
+ "cases": [
+  {
+   "id": "fda-cfr-21-part-200.xml:200.5#1",
+   "a": "incorrect",
+   "a_reason": "The quote is exact and the strength (asked = recommended) matches. But the statement's summary of the section's specifications leaves out the type and size, the roughly 3 x 2 1/4 inch centered rectangle and the 3/8 inch border in the indicated color from 200.5(c).",
+   "b": "incorrect",
+   "b_reason": "Quote is exact and 'asked to' is recommended, but the statement only partly summarises the section's specifications: it leaves out the type and size, the rectangle dimensions and the border width and colour from 200.5(c)."
+  },
+  {
+   "id": "fda-cfr-21-part-200.xml:200.11#1",
+   "a": "correct",
+   "a_reason": "The quote is exact. The statement keeps the 2.4 ppm limit and the autoclaving context, and 'will not object' correctly reads as optional.",
+   "b": "incorrect",
+   "b_reason": "The text only says FDA will not object if the level is not more than 2.4 ppm. The statement adds 'only if', a necessity condition that the paragraph does not state."
+  },
+  {
+   "id": "fda-cfr-21-part-200.xml:200.50#8",
+   "a": "incorrect",
+   "a_reason": "In the paragraph, the packaging recommendation covers all such dispensers ('These articles'); 'if packaged with the drugs' sits in a non-restrictive clause about how they are regulated. The statement turns that into a limit ('packaged with the drugs they are used with'), which adds a condition.",
+   "b": "correct",
+   "b_reason": "The recommendation to package dispensers so sterility is kept until the package is opened is stated faithfully, scoped to dispensers regulated as drugs (those packaged with the drugs)."
+  },
+  {
+   "id": "fda-cfr-21-part-200.xml:200.50#9",
+   "a": "incorrect",
+   "a_reason": "The labeling recommendation covers all such dispensers, but the statement limits it to dispensers 'packaged with the drugs they are used with'. That limit comes from a non-restrictive clause about regulatory status, so it adds a condition.",
+   "b": "correct",
+   "b_reason": "The labeling recommendation (on or within the retail package, with adequate directions and warnings) is stated faithfully."
+  },
+  {
+   "id": "fda-cfr-21-part-200.xml:200.51#2",
+   "a": "incorrect",
+   "a_reason": "The cited paragraph only requires compliance with § 211.113(b). The statement adds content that is not in this paragraph's text: written procedures against microbiological contamination and validation of aseptic and sterilization processes.",
+   "b": "correct",
+   "b_reason": "The paragraph requires compliance with the cross-referenced section, and the statement restates its content (written procedures to prevent microbiological contamination, including validation of aseptic and sterilization processes) as mandatory."
+  }
+ ]
+}

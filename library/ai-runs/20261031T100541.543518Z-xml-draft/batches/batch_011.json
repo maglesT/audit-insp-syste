@@ -1,0 +1,397 @@
+{
+ "instructions": "You read sections of a US regulation (21 CFR, from the official eCFR XML) and list the obligations they state. Each\nsection is given as its paragraphs, each with its reference from the XML structure (\"211.84(c)(1)\") and its exact\ntext. Your output is checked by software against that exact text and by independent reviewers, so precision\nmatters more than wording.\n\nList each separate obligation as its own item, so that together your items cover every obligation in the section.\nOne obligation is one thing a manufacturer must, should or may do, with all its conditions, numbers and\nqualifiers; do not split one obligation across items. For each item:\n- statement: the obligation in your own plain English words, as one checklist item a site could be audited\n  against. Do not copy more than a few words in a row. Keep every condition (\"where\", \"if\", \"unless\", \"when\",\n  \"except\") and every number. Do not add anything the text does not say. The statement itself must carry every\n  condition or qualifier of the lead-ins above its paragraph (a parent paragraph ending in \":\", and its parent if\n  that also ends in \":\"): for 211.42(c)(1) under \"... such other control systems ... as are necessary to prevent\n  contamination or mixups during the course of the following procedures:\", write e.g. \"Provide separate or defined\n  areas, or other control systems as necessary to prevent contamination or mixups, for receipt ...\". Putting the\n  qualifier only in the condition field is not enough. The statement is shown to customers: never cite a\n  paragraph or section reference in it (\"211.166(a)(1)-(5)\", \"this section\"); say what is required instead\n  (\"contains the elements listed below\" is not enough: name them, or let each sub-paragraph's own item carry it).\n- quote: the exact span of ONE paragraph's text that states the whole obligation, copied character for character\n  (matched against the XML text by software; do not fix typos or change punctuation). Leave out the paragraph's\n  designation (\"(c)\"). A quote may continue into that paragraph's sub-paragraphs, in order.\n- clause_number: the reference of the paragraph the quote comes from, exactly as given (\"211.84(c)(1)\").\n- strength: \"mandatory\" for shall / must / is required / may not; \"recommended\" for should; \"optional\" for may.\n  A sub-paragraph without such a word takes its parent's lead-in (\"(c) Samples shall be collected in accordance\n  with the following procedures:\" makes (c)(1)-(c)(6) mandatory).\n- plant_types: from OSD, LIQ, SEMI, INJ, API (INJ = sterile injectables); the plant scope given unless the text\n  narrows it. A paragraph limited to drug products not required to be sterile does not apply to INJ; one limited to\n  sterile drug products (\"purporting to be sterile\") applies only to INJ (and API where in scope).\n- numbers: every number, limit, frequency or period in the quote, as written.\n- condition: the condition or trigger in a few words, \"\" if none. A condition stated in a parent paragraph's\n  lead-in belongs to every sub-paragraph under it. This field only repeats what the statement already says.\n\nA lead-in sentence that also states a duty of its own (\"The written program shall be followed and shall include:\")\nneeds its own item for that duty, quoting the whole sentence including \"shall include:\".\n- topic: the sub-topic id from TOPICS the obligation belongs to.\n\nSentences that state no obligation for the manufacturer (a heading, a definition, a scope statement, a statement\nof purpose) go in not_applicable: the paragraph reference, the first 8 or more words copied exactly, and the\nreason in a few words.\n\nWrite the answers file named in your task: {\"answers\": [one object per section with \"section\" set to the section's\n\"id\" exactly]}.\n",
+ "topics": [
+  "QS.PQS",
+  "QS.MGMT",
+  "QS.QRM",
+  "QS.PQR",
+  "QS.CHANGE",
+  "QS.DEV",
+  "QS.CAPA",
+  "PER.ORG",
+  "PER.KEY",
+  "PER.TRAIN",
+  "PER.HYG",
+  "PER.GOWN",
+  "PREM.DESIGN",
+  "PREM.PROD",
+  "PREM.STORE",
+  "PREM.QC",
+  "PREM.ANC",
+  "EQ.DESIGN",
+  "EQ.MAINT",
+  "EQ.CLEAN",
+  "EQ.CAL",
+  "DOC.SYS",
+  "DOC.SPEC",
+  "DOC.MFR",
+  "DOC.BMR",
+  "DOC.SOP",
+  "DOC.RET",
+  "MAT.SUPP",
+  "MAT.RECV",
+  "MAT.SAMP",
+  "MAT.STATUS",
+  "MAT.PACK",
+  "MAT.REJ",
+  "PROD.GEN",
+  "PROD.XCONT",
+  "PROD.IPC",
+  "PROD.YIELD",
+  "PROD.PACK",
+  "PROD.REWORK",
+  "QC.GEN",
+  "QC.SAMP",
+  "QC.TEST",
+  "QC.OOS",
+  "QC.STAB",
+  "QC.REF",
+  "QC.MICRO",
+  "VAL.PLAN",
+  "VAL.QUAL",
+  "VAL.PROC",
+  "VAL.CLEAN",
+  "VAL.METH",
+  "CSV.VAL",
+  "CSV.ACCESS",
+  "CSV.AUDIT",
+  "CSV.ESIG",
+  "CSV.DI",
+  "UTIL.WATER",
+  "UTIL.HVAC",
+  "UTIL.GAS",
+  "CCS.STRAT",
+  "CCS.EM",
+  "CCS.CLEAN",
+  "CCS.PEST",
+  "STER.GRADE",
+  "STER.ASEPT",
+  "STER.APS",
+  "STER.STERIL",
+  "STER.FILT",
+  "STER.CCI",
+  "STER.LYO",
+  "API.START",
+  "API.PROC",
+  "API.IMP",
+  "API.SOLV",
+  "OUT.CONTRACT",
+  "OUT.AGREE",
+  "CMP.COMPL",
+  "CMP.RECALL",
+  "CMP.REPORT",
+  "SI.PROG",
+  "SI.TEAM",
+  "SI.REPORT",
+  "SI.FOLLOW",
+  "DIST.STORE",
+  "DIST.TRANS",
+  "DIST.RETURN",
+  "REL.QP",
+  "REL.REVIEW"
+ ],
+ "schema": {
+  "type": "object",
+  "required": [
+   "section",
+   "items",
+   "not_applicable"
+  ],
+  "properties": {
+   "section": {
+    "type": "string"
+   },
+   "items": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "statement",
+      "quote",
+      "clause_number",
+      "strength",
+      "plant_types",
+      "numbers",
+      "condition",
+      "topic"
+     ],
+     "properties": {
+      "statement": {
+       "type": "string"
+      },
+      "quote": {
+       "type": "string"
+      },
+      "clause_number": {
+       "type": "string"
+      },
+      "strength": {
+       "enum": [
+        "mandatory",
+        "recommended",
+        "optional"
+       ]
+      },
+      "plant_types": {
+       "type": "array",
+       "items": {
+        "enum": [
+         "OSD",
+         "LIQ",
+         "SEMI",
+         "INJ",
+         "API"
+        ]
+       }
+      },
+      "numbers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "condition": {
+       "type": "string"
+      },
+      "topic": {
+       "type": "string"
+      }
+     }
+    }
+   },
+   "not_applicable": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "clause_number",
+      "text",
+      "reason"
+     ],
+     "properties": {
+      "clause_number": {
+       "type": "string"
+      },
+      "text": {
+       "type": "string"
+      },
+      "reason": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  }
+ },
+ "sections": [
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.182",
+   "source": "ecfr-21cfr211-2026-10-27.xml",
+   "section": "211.182",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "211.182",
+     "text": "§ 211.182 Equipment cleaning and use log. A written record of major equipment cleaning, maintenance (except routine maintenance such as lubrication and adjustments), and use shall be included in individual equipment logs that show the date, time, product, and lot number of each batch processed. If equipment is dedicated to manufacture of one product, then individual equipment logs are not required, provided that lots or batches of such product follow in numerical order and are manufactured in numerical sequence. In cases where dedicated equipment is employed, the records of cleaning, maintenance, and use shall be part of the batch record. The persons performing and double-checking the cleaning and maintenance (or, if the cleaning and maintenance is performed using automated equipment under § 211.68, just the person verifying the cleaning and maintenance done by the automated equipment) shall date and sign or initial the log indicating that the work was performed. Entries in the log shall be in chronological order."
+    }
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.184",
+   "source": "ecfr-21cfr211-2026-10-27.xml",
+   "section": "211.184",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "211.184",
+     "text": "§ 211.184 Component, drug product container, closure, and labeling records. These records shall include the following:"
+    },
+    {
+     "ref": "211.184(a)",
+     "text": "(a) The identity and quantity of each shipment of each lot of components, drug product containers, closures, and labeling; the name of the supplier; the supplier's lot number(s) if known; the receiving code as specified in § 211.80; and the date of receipt. The name and location of the prime manufacturer, if different from the supplier, shall be listed if known."
+    },
+    {
+     "ref": "211.184(b)",
+     "text": "(b) The results of any test or examination performed (including those performed as required by § 211.82(a), § 211.84(d), or § 211.122(a)) and the conclusions derived therefrom."
+    },
+    {
+     "ref": "211.184(c)",
+     "text": "(c) An individual inventory record of each component, drug product container, and closure and, for each component, a reconciliation of the use of each lot of such component. The inventory record shall contain sufficient information to allow determination of any batch or lot of drug product associated with the use of each component, drug product container, and closure."
+    },
+    {
+     "ref": "211.184(d)",
+     "text": "(d) Documentation of the examination and review of labels and labeling for conformity with established specifications in accord with §§ 211.122(c) and 211.130(c)."
+    },
+    {
+     "ref": "211.184(e)",
+     "text": "(e) The disposition of rejected components, drug product containers, closure, and labeling."
+    }
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.186",
+   "source": "ecfr-21cfr211-2026-10-27.xml",
+   "section": "211.186",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "211.186",
+     "text": "§ 211.186 Master production and control records."
+    },
+    {
+     "ref": "211.186(a)",
+     "text": "(a) To assure uniformity from batch to batch, master production and control records for each drug product, including each batch size thereof, shall be prepared, dated, and signed (full signature, handwritten) by one person and independently checked, dated, and signed by a second person. The preparation of master production and control records shall be described in a written procedure and such written procedure shall be followed."
+    },
+    {
+     "ref": "211.186(b)",
+     "text": "(b) Master production and control records shall include:"
+    },
+    {
+     "ref": "211.186(b)(1)",
+     "text": "(1) The name and strength of the product and a description of the dosage form;"
+    },
+    {
+     "ref": "211.186(b)(2)",
+     "text": "(2) The name and weight or measure of each active ingredient per dosage unit or per unit of weight or measure of the drug product, and a statement of the total weight or measure of any dosage unit;"
+    },
+    {
+     "ref": "211.186(b)(3)",
+     "text": "(3) A complete list of components designated by names or codes sufficiently specific to indicate any special quality characteristic;"
+    },
+    {
+     "ref": "211.186(b)(4)",
+     "text": "(4) An accurate statement of the weight or measure of each component, using the same weight system (metric, avoirdupois, or apothecary) for each component. Reasonable variations may be permitted, however, in the amount of components necessary for the preparation in the dosage form, provided they are justified in the master production and control records;"
+    },
+    {
+     "ref": "211.186(b)(5)",
+     "text": "(5) A statement concerning any calculated excess of component;"
+    },
+    {
+     "ref": "211.186(b)(6)",
+     "text": "(6) A statement of theoretical weight or measure at appropriate phases of processing;"
+    },
+    {
+     "ref": "211.186(b)(7)",
+     "text": "(7) A statement of theoretical yield, including the maximum and minimum percentages of theoretical yield beyond which investigation according to § 211.192 is required;"
+    },
+    {
+     "ref": "211.186(b)(8)",
+     "text": "(8) A description of the drug product containers, closures, and packaging materials, including a specimen or copy of each label and all other labeling signed and dated by the person or persons responsible for approval of such labeling;"
+    },
+    {
+     "ref": "211.186(b)(9)",
+     "text": "(9) Complete manufacturing and control instructions, sampling and testing procedures, specifications, special notations, and precautions to be followed."
+    }
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.188",
+   "source": "ecfr-21cfr211-2026-10-27.xml",
+   "section": "211.188",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "211.188",
+     "text": "§ 211.188 Batch production and control records. Batch production and control records shall be prepared for each batch of drug product produced and shall include complete information relating to the production and control of each batch. These records shall include:"
+    },
+    {
+     "ref": "211.188(a)",
+     "text": "(a) An accurate reproduction of the appropriate master production or control record, checked for accuracy, dated, and signed;"
+    },
+    {
+     "ref": "211.188(b)",
+     "text": "(b) Documentation that each significant step in the manufacture, processing, packing, or holding of the batch was accomplished, including:"
+    },
+    {
+     "ref": "211.188(b)(1)",
+     "text": "(1) Dates;"
+    },
+    {
+     "ref": "211.188(b)(2)",
+     "text": "(2) Identity of individual major equipment and lines used;"
+    },
+    {
+     "ref": "211.188(b)(3)",
+     "text": "(3) Specific identification of each batch of component or in-process material used;"
+    },
+    {
+     "ref": "211.188(b)(4)",
+     "text": "(4) Weights and measures of components used in the course of processing;"
+    },
+    {
+     "ref": "211.188(b)(5)",
+     "text": "(5) In-process and laboratory control results;"
+    },
+    {
+     "ref": "211.188(b)(6)",
+     "text": "(6) Inspection of the packaging and labeling area before and after use;"
+    },
+    {
+     "ref": "211.188(b)(7)",
+     "text": "(7) A statement of the actual yield and a statement of the percentage of theoretical yield at appropriate phases of processing;"
+    },
+    {
+     "ref": "211.188(b)(8)",
+     "text": "(8) Complete labeling control records, including specimens or copies of all labeling used;"
+    },
+    {
+     "ref": "211.188(b)(9)",
+     "text": "(9) Description of drug product containers and closures;"
+    },
+    {
+     "ref": "211.188(b)(10)",
+     "text": "(10) Any sampling performed;"
+    },
+    {
+     "ref": "211.188(b)(11)",
+     "text": "(11) Identification of the persons performing and directly supervising or checking each significant step in the operation, or if a significant step in the operation is performed by automated equipment under § 211.68, the identification of the person checking the significant step performed by the automated equipment."
+    },
+    {
+     "ref": "211.188(b)(12)",
+     "text": "(12) Any investigation made according to § 211.192."
+    },
+    {
+     "ref": "211.188(b)(13)",
+     "text": "(13) Results of examinations made in accordance with § 211.134."
+    }
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.192",
+   "source": "ecfr-21cfr211-2026-10-27.xml",
+   "section": "211.192",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "211.192",
+     "text": "§ 211.192 Production record review. All drug product production and control records, including those for packaging and labeling, shall be reviewed and approved by the quality control unit to determine compliance with all established, approved written procedures before a batch is released or distributed. Any unexplained discrepancy (including a percentage of theoretical yield exceeding the maximum or minimum percentages established in master production and control records) or the failure of a batch or any of its components to meet any of its specifications shall be thoroughly investigated, whether or not the batch has already been distributed. The investigation shall extend to other batches of the same drug product and other drug products that may have been associated with the specific failure or discrepancy. A written record of the investigation shall be made and shall include the conclusions and followup."
+    }
+   ]
+  }
+ ]
+}

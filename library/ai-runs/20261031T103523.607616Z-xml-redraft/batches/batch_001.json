@@ -1,0 +1,392 @@
+{
+ "instructions": "You read sections of a US regulation (21 CFR, from the official eCFR XML) and list the obligations they state. Each\nsection is given as its paragraphs, each with its reference from the XML structure (\"211.84(c)(1)\") and its exact\ntext. Your output is checked by software against that exact text and by independent reviewers, so precision\nmatters more than wording.\n\nList each separate obligation as its own item, so that together your items cover every obligation in the section.\nOne obligation is one thing a manufacturer must, should or may do, with all its conditions, numbers and\nqualifiers; do not split one obligation across items. For each item:\n- statement: the obligation in your own plain English words, as one checklist item a site could be audited\n  against. Do not copy more than a few words in a row. Keep every condition (\"where\", \"if\", \"unless\", \"when\",\n  \"except\") and every number. Do not add anything the text does not say. The statement itself must carry every\n  condition or qualifier of the lead-ins above its paragraph (a parent paragraph ending in \":\", and its parent if\n  that also ends in \":\"): for 211.42(c)(1) under \"... such other control systems ... as are necessary to prevent\n  contamination or mixups during the course of the following procedures:\", write e.g. \"Provide separate or defined\n  areas, or other control systems as necessary to prevent contamination or mixups, for receipt ...\". Putting the\n  qualifier only in the condition field is not enough. The statement is shown to customers: never cite a\n  paragraph or section reference in it (\"211.166(a)(1)-(5)\", \"this section\"); say what is required instead\n  (\"contains the elements listed below\" is not enough: name them, or let each sub-paragraph's own item carry it).\n- quote: the exact span of ONE paragraph's text that states the whole obligation, copied character for character\n  (matched against the XML text by software; do not fix typos or change punctuation). Leave out the paragraph's\n  designation (\"(c)\"). A quote may continue into that paragraph's sub-paragraphs, in order.\n- clause_number: the reference of the paragraph the quote comes from, exactly as given (\"211.84(c)(1)\").\n- strength: \"mandatory\" for shall / must / is required / may not; \"recommended\" for should; \"optional\" for may.\n  A sub-paragraph without such a word takes its parent's lead-in (\"(c) Samples shall be collected in accordance\n  with the following procedures:\" makes (c)(1)-(c)(6) mandatory).\n- plant_types: from OSD, LIQ, SEMI, INJ, API (INJ = sterile injectables); the plant scope given unless the text\n  narrows it. A paragraph limited to drug products not required to be sterile does not apply to INJ; one limited to\n  sterile drug products (\"purporting to be sterile\") applies only to INJ (and API where in scope).\n- numbers: every number, limit, frequency or period in the quote, as written.\n- condition: the condition or trigger in a few words, \"\" if none. A condition stated in a parent paragraph's\n  lead-in belongs to every sub-paragraph under it. This field only repeats what the statement already says.\n\nA lead-in sentence that also states a duty of its own (\"The written program shall be followed and shall include:\")\nneeds its own item for that duty, quoting the whole sentence including \"shall include:\". That item states only the\nlead-in's own duty (\"follow the written stability program\"); do not summarise the sub-paragraphs in it (their\nitems carry them with their qualifiers). Where the text refers to a closed list of other sections (\"operations\naddressed by §§ 211.101(c) or (d), 211.103 ...\"), keep the list closed: name the operations, never \"such as\".\nDo not narrow or widen a term (\"washing facilities\" is not \"hand-washing facilities\"; \"in and from\" is not \"from\").\n- topic: the sub-topic id from TOPICS the obligation belongs to.\n\nSentences that state no obligation for the manufacturer (a heading, a definition, a scope statement, a statement\nof purpose, an exemption, an enforcement or interpretation statement addressed to FDA) go in not_applicable: one\nentry per SENTENCE (a paragraph of three such sentences needs three entries), each with the paragraph reference,\nthe sentence's first 8 or more words copied exactly (without the paragraph designation), and the reason in a few\nwords.\n\nWrite the answers file named in your task: {\"answers\": [one object per section with \"section\" set to the section's\n\"id\" exactly]}.\n\n\nREDRAFT: earlier items already cover this section except the sentences in \"gaps\". Write items, or not_applicable entries, for those sentences only; do not repeat other obligations.\n",
+ "topics": [
+  "QS.PQS",
+  "QS.MGMT",
+  "QS.QRM",
+  "QS.PQR",
+  "QS.CHANGE",
+  "QS.DEV",
+  "QS.CAPA",
+  "PER.ORG",
+  "PER.KEY",
+  "PER.TRAIN",
+  "PER.HYG",
+  "PER.GOWN",
+  "PREM.DESIGN",
+  "PREM.PROD",
+  "PREM.STORE",
+  "PREM.QC",
+  "PREM.ANC",
+  "EQ.DESIGN",
+  "EQ.MAINT",
+  "EQ.CLEAN",
+  "EQ.CAL",
+  "DOC.SYS",
+  "DOC.SPEC",
+  "DOC.MFR",
+  "DOC.BMR",
+  "DOC.SOP",
+  "DOC.RET",
+  "MAT.SUPP",
+  "MAT.RECV",
+  "MAT.SAMP",
+  "MAT.STATUS",
+  "MAT.PACK",
+  "MAT.REJ",
+  "PROD.GEN",
+  "PROD.XCONT",
+  "PROD.IPC",
+  "PROD.YIELD",
+  "PROD.PACK",
+  "PROD.REWORK",
+  "QC.GEN",
+  "QC.SAMP",
+  "QC.TEST",
+  "QC.OOS",
+  "QC.STAB",
+  "QC.REF",
+  "QC.MICRO",
+  "VAL.PLAN",
+  "VAL.QUAL",
+  "VAL.PROC",
+  "VAL.CLEAN",
+  "VAL.METH",
+  "CSV.VAL",
+  "CSV.ACCESS",
+  "CSV.AUDIT",
+  "CSV.ESIG",
+  "CSV.DI",
+  "UTIL.WATER",
+  "UTIL.HVAC",
+  "UTIL.GAS",
+  "CCS.STRAT",
+  "CCS.EM",
+  "CCS.CLEAN",
+  "CCS.PEST",
+  "STER.GRADE",
+  "STER.ASEPT",
+  "STER.APS",
+  "STER.STERIL",
+  "STER.FILT",
+  "STER.CCI",
+  "STER.LYO",
+  "API.START",
+  "API.PROC",
+  "API.IMP",
+  "API.SOLV",
+  "OUT.CONTRACT",
+  "OUT.AGREE",
+  "CMP.COMPL",
+  "CMP.RECALL",
+  "CMP.REPORT",
+  "SI.PROG",
+  "SI.TEAM",
+  "SI.REPORT",
+  "SI.FOLLOW",
+  "DIST.STORE",
+  "DIST.TRANS",
+  "DIST.RETURN",
+  "REL.QP",
+  "REL.REVIEW"
+ ],
+ "schema": {
+  "type": "object",
+  "required": [
+   "section",
+   "items",
+   "not_applicable"
+  ],
+  "properties": {
+   "section": {
+    "type": "string"
+   },
+   "items": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "statement",
+      "quote",
+      "clause_number",
+      "strength",
+      "plant_types",
+      "numbers",
+      "condition",
+      "topic"
+     ],
+     "properties": {
+      "statement": {
+       "type": "string"
+      },
+      "quote": {
+       "type": "string"
+      },
+      "clause_number": {
+       "type": "string"
+      },
+      "strength": {
+       "enum": [
+        "mandatory",
+        "recommended",
+        "optional"
+       ]
+      },
+      "plant_types": {
+       "type": "array",
+       "items": {
+        "enum": [
+         "OSD",
+         "LIQ",
+         "SEMI",
+         "INJ",
+         "API"
+        ]
+       }
+      },
+      "numbers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "condition": {
+       "type": "string"
+      },
+      "topic": {
+       "type": "string"
+      }
+     }
+    }
+   },
+   "not_applicable": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "clause_number",
+      "text",
+      "reason"
+     ],
+     "properties": {
+      "clause_number": {
+       "type": "string"
+      },
+      "text": {
+       "type": "string"
+      },
+      "reason": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  }
+ },
+ "sections": [
+  {
+   "id": "fda-cfr-21-part-207.xml:207.33",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.33",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.33",
+     "text": "§ 207.33 What is the National Drug Code (NDC), how is it assigned, and what are its requirements?"
+    },
+    {
+     "ref": "207.33(a)",
+     "text": "(a) What is the NDC for a drug and what products must have unique NDCs? The NDC for a drug is a numeric code. Each finished drug product or unfinished drug subject to the listing requirements of this part must have a unique NDC to identify its labeler, product, and package size and type."
+    },
+    {
+     "ref": "207.33(b)",
+     "text": "(b) What is the format of an NDC?"
+    },
+    {
+     "ref": "207.33(b)(1)",
+     "text": "(1) Except as described in paragraph (b)(4) of this section, the NDC must consist of 10 or 11 digits, divided into three segments as follows:"
+    },
+    {
+     "ref": "207.33(b)(1)(i)",
+     "text": "(i) The first segment of the NDC is the labeler code and consists of 4, 5, or 6 digits. The labeler code is assigned by FDA."
+    },
+    {
+     "ref": "207.33(b)(1)(ii)",
+     "text": "(ii) The second segment of the NDC is the product code and consists of 3 or 4 digits, as specified in paragraphs (b)(2) and (3) of this section."
+    },
+    {
+     "ref": "207.33(b)(1)(iii)",
+     "text": "(iii) The third segment of the NDC is the package code and consists of 1 or 2 digits as specified in paragraphs (b)(2) and (3) of this section. The package code identifies the package size and type of the drug and differentiates between different quantitative and qualitative attributes of the product packaging."
+    },
+    {
+     "ref": "207.33(b)(2)",
+     "text": "(2) The following combinations of labeler code, product code and package code character lengths are permissible:"
+    },
+    {
+     "ref": "207.33(b)(2)(i)",
+     "text": "(i) If a labeler code is either 5 or 6 digits in length, it may be combined with:"
+    },
+    {
+     "ref": "207.33(b)(2)(i)(A)",
+     "text": "(A) A product code consisting of 4 digits and a package code consisting of 1 digit for a total NDC length of 10 or 11 digits (5-4-1 or 6-4-1), or"
+    },
+    {
+     "ref": "207.33(b)(2)(i)(B)",
+     "text": "(B) A product code consisting of 3 digits and a package code consisting of 2 digits for a total NDC length of 10 or 11 digits (5-3-2 or 6-3-2)."
+    },
+    {
+     "ref": "207.33(b)(2)(ii)",
+     "text": "(ii) If a labeler code is 4 digits in length, it may be combined only with a product code consisting of 4 digits and a package code consisting of 2 digits for a total NDC length of 10 digits (4-4-2)."
+    },
+    {
+     "ref": "207.33(b)(3)",
+     "text": "(3) A registrant or private label distributor with a given labeler code must use only one Product-Package Code configuration (e.g., a 3-digit product code combined with a 2-digit package code or a 4-digit product code combined with a 1-digit package code). This single configuration must be used in all NDCs that include the given labeler code that are reserved in accordance with § 207.33(d)(3) or listed in accordance with § 207.49 or § 207.53."
+    },
+    {
+     "ref": "207.33(b)(4)",
+     "text": "(4) An alternatively formatted NDC that is approved for use by the relevant Center Director may be used for the following HCT/Ps if they are minimally manipulated: Hematopoietic stem/progenitor cells derived from peripheral and cord blood, and lymphocytes collected from peripheral blood."
+    },
+    {
+     "ref": "207.33(c)",
+     "text": "(c) Who must obtain an NDC labeler code and how is the code assigned and updated?"
+    },
+    {
+     "ref": "207.33(c)(1)",
+     "text": "(1) Each person who engages in manufacturing, repacking, relabeling, or private label distribution of a drug subject to listing under this part must apply for an NDC labeler code, by providing the following information:"
+    },
+    {
+     "ref": "207.33(c)(1)(i)",
+     "text": "(i) The name, physical address, email address, and other contact information FDA may request, of the person for whom the NDC labeler code is requested;"
+    },
+    {
+     "ref": "207.33(c)(1)(ii)",
+     "text": "(ii) The type(s) of activities (e.g., manufacture or repacking) in which the person requesting the NDC labeler code engages with respect to human drugs; and"
+    },
+    {
+     "ref": "207.33(c)(1)(iii)",
+     "text": "(iii) The type(s) of drug(s) (human, animal, or both, and prescription, nonprescription, or both) to which the NDC labeler code will be applied."
+    },
+    {
+     "ref": "207.33(c)(2)",
+     "text": "(2) Each person who is assigned an NDC labeler code must update the information submitted under paragraph (c)(1)of this section within 30 calendar days after any change to that information."
+    },
+    {
+     "ref": "207.33(d)",
+     "text": "(d) How is an NDC proposed for assignment by FDA, when is an NDC assigned by FDA, and how can a proposed NDC be reserved?"
+    },
+    {
+     "ref": "207.33(d)(1)",
+     "text": "(1) An NDC is proposed for assignment by FDA when it is submitted for the first time with listing information in accordance with § 207.49 or § 207.53, as applicable."
+    },
+    {
+     "ref": "207.33(d)(1)(i)",
+     "text": "(i) Each manufacturer, repacker, or relabeler must propose for assignment by FDA an NDC that includes its own labeler code for each package size and type of drug that it manufactures, repacks, or relabels for commercial distribution."
+    },
+    {
+     "ref": "207.33(d)(1)(ii)",
+     "text": "(ii) In addition, if a drug is distributed under the trade name or label of a private label distributor, the manufacturer, repacker, or relabeler must also propose for assignment by FDA an NDC that includes the labeler code of the private label distributor under whose trade name or label the drug is distributed, for each package size and type so distributed."
+    },
+    {
+     "ref": "207.33(d)(2)",
+     "text": "(2) If a proposed NDC conforms to the requirements of this section and is not reserved for a different drug or was not previously assigned to a different drug, FDA will assign the NDC to a drug when it receives listing information required for that drug under § 207.49 or § 207.53."
+    },
+    {
+     "ref": "207.33(d)(3)",
+     "text": "(3) A manufacturer, repacker, relabeler, or private label distributor may voluntarily reserve a proposed NDC for a drug, before the drug is listed, by submitting the following information:"
+    },
+    {
+     "ref": "207.33(d)(3)(i)",
+     "text": "(i) A proposed NDC that conforms to the requirements of this section;"
+    },
+    {
+     "ref": "207.33(d)(3)(ii)",
+     "text": "(ii) The established name of the active ingredient(s) and the strength of each active ingredient in the drug; and"
+    },
+    {
+     "ref": "207.33(d)(3)(iii)",
+     "text": "(iii) In the case of a finished drug product, the dosage form, and route of administration."
+    },
+    {
+     "ref": "207.33(d)(4)",
+     "text": "(4) If the required information is submitted and the proposed NDC is properly formatted and not already assigned or reserved, FDA will reserve the proposed NDC for a period of 2 years from the date of submission. If the drug for which the proposed NDC is reserved is not listed in accordance with § 207.49 or § 207.53 during such 2-year period, the reservation of the proposed NDC will lapse. FDA may also cancel the reservation of a proposed NDC at any time on the request of the person whose labeler code is included in the proposed NDC."
+    },
+    {
+     "ref": "207.33(e)",
+     "text": "(e) How must the information be submitted to us? The information described in paragraphs (c) and (d) of this section must be submitted electronically unless FDA grants a waiver under § 207.65."
+    }
+   ],
+   "gaps": [
+    {
+     "clause": "207.33(b)(2)(i)",
+     "sentence": "If a labeler code is either 5 or 6 digits in length, it may be combined with:"
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.35",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.35",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.35",
+     "text": "§ 207.35 What changes require a new NDC?"
+    },
+    {
+     "ref": "207.35(a)",
+     "text": "(a) Once an NDC has been assigned by FDA, the registrant must propose a new and unique NDC for a drug when there is a change, after the drug is initially marketed, to any of the information identified in paragraphs (b) and (c) of this section. A new NDC must be proposed to FDA for assignment through an updated listing in accordance with § 207.57."
+    },
+    {
+     "ref": "207.35(b)",
+     "text": "(b) The proposed new NDC must include a new product code when there is a change to any of the following information:"
+    },
+    {
+     "ref": "207.35(b)(1)",
+     "text": "(1) The drug's established name or proprietary name, if any;"
+    },
+    {
+     "ref": "207.35(b)(2)",
+     "text": "(2) Any active pharmaceutical ingredient or the strength of any active pharmaceutical ingredient;"
+    },
+    {
+     "ref": "207.35(b)(3)",
+     "text": "(3) The dosage form;"
+    },
+    {
+     "ref": "207.35(b)(4)",
+     "text": "(4) A change in the drug's status, between prescription and nonprescription, or for animal drugs, between prescription, nonprescription, or veterinary feed directive (VFD) status;"
+    },
+    {
+     "ref": "207.35(b)(5)",
+     "text": "(5) A change in the drug's intended use between human and animal; or"
+    },
+    {
+     "ref": "207.35(b)(6)",
+     "text": "(6) The drug's distinguishing characteristics such as size, shape, color, code imprint, flavor, and scoring (if any)."
+    },
+    {
+     "ref": "207.35(c)",
+     "text": "(c) When there is a change only to the package size or type, including the immediate unit-of-use container, if any, the proposed new NDC must include only a new package code and retain the existing product code unless all available package codes have already been combined with the existing product code in NDCs assigned by FDA."
+    }
+   ],
+   "gaps": [
+    {
+     "clause": "207.35(b)",
+     "sentence": "The proposed new NDC must include a new product code when there is a change to any of the following information:"
+    }
+   ]
+  }
+ ]
+}

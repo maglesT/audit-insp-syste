@@ -1,0 +1,455 @@
+{
+ "answers": [
+  {
+   "section": "fda-cfr-21-part-11.xml:11.50",
+   "items": [
+    {
+     "statement": "Make sure signed electronic records contain signing information that clearly shows the printed name of the signer.",
+     "quote": "The printed name of the signer;",
+     "clause_number": "11.50(a)(1)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "numbers": [],
+     "condition": "signed electronic records",
+     "topic": "CSV.ESIG"
+    },
+    {
+     "statement": "Make sure signed electronic records contain signing information that clearly shows the date and time the signature was executed.",
+     "quote": "The date and time when the signature was executed; and",
+     "clause_number": "11.50(a)(2)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "numbers": [],
+     "condition": "signed electronic records",
+     "topic": "CSV.ESIG"
+    },
+    {
+     "statement": "Make sure signed electronic records contain signing information that clearly shows the meaning tied to the signature (such as review, approval, responsibility or authorship).",
+     "quote": "The meaning (such as review, approval, responsibility, or authorship) associated with the signature.",
+     "clause_number": "11.50(a)(3)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "numbers": [],
+     "condition": "signed electronic records",
+     "topic": "CSV.ESIG"
+    },
+    {
+     "statement": "Apply the same controls used for electronic records to the signer's printed name, the date and time of signing, and the meaning of the signature.",
+     "quote": "The items identified in paragraphs (a)(1), (a)(2), and (a)(3) of this section shall be subject to the same controls as for electronic records",
+     "clause_number": "11.50(b)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "CSV.ESIG"
+    },
+    {
+     "statement": "Include the signer's printed name, the date and time of signing, and the meaning of the signature in any human readable form of the electronic record (such as an electronic display or printout).",
+     "quote": "shall be included as part of any human readable form of the electronic record (such as electronic display or printout).",
+     "clause_number": "11.50(b)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "CSV.ESIG"
+    }
+   ],
+   "not_applicable": [
+    {
+     "clause_number": "11.50",
+     "text": "§ 11.50 Signature manifestations.",
+     "reason": "section heading"
+    }
+   ]
+  },
+  {
+   "section": "fda-cfr-21-part-11.xml:11.70",
+   "items": [
+    {
+     "statement": "Link electronic signatures and handwritten signatures executed to electronic records to their respective records so the signatures cannot be excised, copied or otherwise transferred to falsify an electronic record by ordinary means.",
+     "quote": "Electronic signatures and handwritten signatures executed to electronic records shall be linked to their respective electronic records to ensure that the signatures cannot be excised, copied, or otherwise transferred to falsify an electronic record by ordinary means.",
+     "clause_number": "11.70",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "CSV.ESIG"
+    }
+   ],
+   "not_applicable": [
+    {
+     "clause_number": "11.70",
+     "text": "§ 11.70 Signature/record linking.",
+     "reason": "section heading"
+    }
+   ]
+  },
+  {
+   "section": "fda-cfr-21-part-11.xml:11.100",
+   "items": [
+    {
+     "statement": "Make each electronic signature unique to one individual, and never reuse it by or reassign it to anyone else.",
+     "quote": "Each electronic signature shall be unique to one individual and shall not be reused by, or reassigned to, anyone else.",
+     "clause_number": "11.100(a)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "numbers": [
+      "one"
+     ],
+     "condition": "",
+     "topic": "CSV.ESIG"
+    },
+    {
+     "statement": "Verify an individual's identity before the organization establishes, assigns, certifies or otherwise sanctions that individual's electronic signature or any element of it.",
+     "quote": "Before an organization establishes, assigns, certifies, or otherwise sanctions an individual's electronic signature, or any element of such electronic signature, the organization shall verify the identity of the individual.",
+     "clause_number": "11.100(b)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "numbers": [],
+     "condition": "before sanctioning an electronic signature",
+     "topic": "CSV.ESIG"
+    },
+    {
+     "statement": "Where electronic signatures are used, certify to FDA, before or at the time of use, that the electronic signatures in the system used on or after August 20, 1997 are intended to be the legally binding equivalent of traditional handwritten signatures.",
+     "quote": "Persons using electronic signatures shall, prior to or at the time of such use, certify to the agency that the electronic signatures in their system, used on or after August 20, 1997, are intended to be the legally binding equivalent of traditional handwritten signatures.",
+     "clause_number": "11.100(c)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "numbers": [
+      "August 20, 1997"
+     ],
+     "condition": "electronic signatures in use",
+     "topic": "CSV.ESIG"
+    },
+    {
+     "statement": "Sign the certification to FDA that electronic signatures are the legally binding equivalent of handwritten signatures with a traditional handwritten signature, and submit it in electronic or paper form.",
+     "quote": "The certification shall be signed with a traditional handwritten signature and submitted in electronic or paper form.",
+     "clause_number": "11.100(c)(1)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "numbers": [],
+     "condition": "electronic signatures in use",
+     "topic": "CSV.ESIG"
+    },
+    {
+     "statement": "Where electronic signatures are used, provide additional certification or testimony on FDA request that a specific electronic signature is the legally binding equivalent of the signer's handwritten signature.",
+     "quote": "Persons using electronic signatures shall, upon agency request, provide additional certification or testimony that a specific electronic signature is the legally binding equivalent of the signer's handwritten signature.",
+     "clause_number": "11.100(c)(2)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "numbers": [],
+     "condition": "upon agency request",
+     "topic": "CSV.ESIG"
+    }
+   ],
+   "not_applicable": [
+    {
+     "clause_number": "11.100",
+     "text": "§ 11.100 General requirements.",
+     "reason": "section heading"
+    },
+    {
+     "clause_number": "11.100(c)(1)",
+     "text": "Information on where to submit the certification can be found",
+     "reason": "informational, no obligation"
+    }
+   ]
+  },
+  {
+   "section": "fda-cfr-21-part-11.xml:11.200",
+   "items": [
+    {
+     "statement": "Make electronic signatures that are not based on biometrics employ at least two distinct identification components, such as an identification code and a password.",
+     "quote": "Employ at least two distinct identification components such as an identification code and password.",
+     "clause_number": "11.200(a)(1)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "numbers": [
+      "two"
+     ],
+     "condition": "non-biometric electronic signatures",
+     "topic": "CSV.ESIG"
+    },
+    {
+     "statement": "For non-biometric electronic signatures, when an individual executes a series of signings during a single, continuous period of controlled system access, execute the first signing with all signature components and each subsequent signing with at least one component that only that individual can execute and that is designed for use only by that individual.",
+     "quote": "When an individual executes a series of signings during a single, continuous period of controlled system access, the first signing shall be executed using all electronic signature components; subsequent signings shall be executed using at least one electronic signature component that is only executable by, and designed to be used only by, the individual.",
+     "clause_number": "11.200(a)(1)(i)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "numbers": [
+      "one"
+     ],
+     "condition": "non-biometric; series of signings in one continuous controlled access period",
+     "topic": "CSV.ESIG"
+    },
+    {
+     "statement": "For non-biometric electronic signatures, when an individual executes one or more signings not performed during a single, continuous period of controlled system access, execute each signing with all of the signature components.",
+     "quote": "When an individual executes one or more signings not performed during a single, continuous period of controlled system access, each signing shall be executed using all of the electronic signature components.",
+     "clause_number": "11.200(a)(1)(ii)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "numbers": [
+      "one"
+     ],
+     "condition": "non-biometric; signings not in one continuous controlled access period",
+     "topic": "CSV.ESIG"
+    },
+    {
+     "statement": "Make sure electronic signatures that are not based on biometrics are used only by their genuine owners.",
+     "quote": "Be used only by their genuine owners; and",
+     "clause_number": "11.200(a)(2)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "numbers": [],
+     "condition": "non-biometric electronic signatures",
+     "topic": "CSV.ESIG"
+    },
+    {
+     "statement": "Administer and execute electronic signatures that are not based on biometrics so that any attempt by someone other than the genuine owner to use an individual's signature requires two or more individuals to collaborate.",
+     "quote": "Be administered and executed to ensure that attempted use of an individual's electronic signature by anyone other than its genuine owner requires collaboration of two or more individuals.",
+     "clause_number": "11.200(a)(3)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "numbers": [
+      "two"
+     ],
+     "condition": "non-biometric electronic signatures",
+     "topic": "CSV.ESIG"
+    },
+    {
+     "statement": "Design biometric electronic signatures so that nobody other than their genuine owners can use them.",
+     "quote": "Electronic signatures based upon biometrics shall be designed to ensure that they cannot be used by anyone other than their genuine owners.",
+     "clause_number": "11.200(b)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "numbers": [],
+     "condition": "biometric electronic signatures",
+     "topic": "CSV.ESIG"
+    }
+   ],
+   "not_applicable": [
+    {
+     "clause_number": "11.200",
+     "text": "§ 11.200 Electronic signature components and controls.",
+     "reason": "section heading"
+    }
+   ]
+  },
+  {
+   "section": "fda-cfr-21-part-11.xml:11.300",
+   "items": [
+    {
+     "statement": "Where electronic signatures are based on identification codes combined with passwords, employ controls to ensure the security and integrity of those codes and passwords.",
+     "quote": "Persons who use electronic signatures based upon use of identification codes in combination with passwords shall employ controls to ensure their security and integrity. Such controls shall include:",
+     "clause_number": "11.300",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "numbers": [],
+     "condition": "ID code/password based electronic signatures",
+     "topic": "CSV.ESIG"
+    },
+    {
+     "statement": "Where electronic signatures are based on identification codes combined with passwords, as part of the controls ensuring their security and integrity, keep each combined identification code and password unique so that no two individuals have the same combination.",
+     "quote": "Maintaining the uniqueness of each combined identification code and password, such that no two individuals have the same combination of identification code and password.",
+     "clause_number": "11.300(a)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "numbers": [
+      "two"
+     ],
+     "condition": "ID code/password based electronic signatures",
+     "topic": "CSV.ESIG"
+    },
+    {
+     "statement": "Where electronic signatures are based on identification codes combined with passwords, as part of the controls ensuring their security and integrity, make sure identification code and password issuances are periodically checked, recalled or revised (for example to cover events such as password aging).",
+     "quote": "Ensuring that identification code and password issuances are periodically checked, recalled, or revised (e.g., to cover such events as password aging).",
+     "clause_number": "11.300(b)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "numbers": [
+      "periodically"
+     ],
+     "condition": "ID code/password based electronic signatures",
+     "topic": "CSV.ESIG"
+    },
+    {
+     "statement": "Where electronic signatures are based on identification codes combined with passwords, as part of the controls ensuring their security and integrity, follow loss management procedures to electronically deauthorize lost, stolen, missing or otherwise potentially compromised tokens, cards and other devices that bear or generate identification code or password information, and to issue temporary or permanent replacements under suitable, rigorous controls.",
+     "quote": "Following loss management procedures to electronically deauthorize lost, stolen, missing, or otherwise potentially compromised tokens, cards, and other devices that bear or generate identification code or password information, and to issue temporary or permanent replacements using suitable, rigorous controls.",
+     "clause_number": "11.300(c)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "numbers": [],
+     "condition": "ID code/password based electronic signatures; lost or compromised devices",
+     "topic": "CSV.ESIG"
+    },
+    {
+     "statement": "Where electronic signatures are based on identification codes combined with passwords, as part of the controls ensuring their security and integrity, use transaction safeguards to prevent unauthorized use of passwords and/or identification codes, and to detect any attempted unauthorized use and report it immediately and urgently to the system security unit and, as appropriate, to organizational management.",
+     "quote": "Use of transaction safeguards to prevent unauthorized use of passwords and/or identification codes, and to detect and report in an immediate and urgent manner any attempts at their unauthorized use to the system security unit, and, as appropriate, to organizational management.",
+     "clause_number": "11.300(d)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "numbers": [],
+     "condition": "ID code/password based electronic signatures",
+     "topic": "CSV.ESIG"
+    },
+    {
+     "statement": "Where electronic signatures are based on identification codes combined with passwords, as part of the controls ensuring their security and integrity, test devices such as tokens or cards that bear or generate identification code or password information initially and periodically to ensure they function properly and have not been altered in an unauthorized manner.",
+     "quote": "Initial and periodic testing of devices, such as tokens or cards, that bear or generate identification code or password information to ensure that they function properly and have not been altered in an unauthorized manner.",
+     "clause_number": "11.300(e)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ",
+      "API"
+     ],
+     "numbers": [
+      "Initial and periodic"
+     ],
+     "condition": "ID code/password based electronic signatures",
+     "topic": "CSV.ESIG"
+    }
+   ],
+   "not_applicable": [
+    {
+     "clause_number": "11.300",
+     "text": "§ 11.300 Controls for identification codes/passwords.",
+     "reason": "section heading"
+    }
+   ]
+  }
+ ]
+}

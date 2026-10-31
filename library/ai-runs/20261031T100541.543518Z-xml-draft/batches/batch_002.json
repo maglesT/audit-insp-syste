@@ -1,0 +1,377 @@
+{
+ "instructions": "You read sections of a US regulation (21 CFR, from the official eCFR XML) and list the obligations they state. Each\nsection is given as its paragraphs, each with its reference from the XML structure (\"211.84(c)(1)\") and its exact\ntext. Your output is checked by software against that exact text and by independent reviewers, so precision\nmatters more than wording.\n\nList each separate obligation as its own item, so that together your items cover every obligation in the section.\nOne obligation is one thing a manufacturer must, should or may do, with all its conditions, numbers and\nqualifiers; do not split one obligation across items. For each item:\n- statement: the obligation in your own plain English words, as one checklist item a site could be audited\n  against. Do not copy more than a few words in a row. Keep every condition (\"where\", \"if\", \"unless\", \"when\",\n  \"except\") and every number. Do not add anything the text does not say. The statement itself must carry every\n  condition or qualifier of the lead-ins above its paragraph (a parent paragraph ending in \":\", and its parent if\n  that also ends in \":\"): for 211.42(c)(1) under \"... such other control systems ... as are necessary to prevent\n  contamination or mixups during the course of the following procedures:\", write e.g. \"Provide separate or defined\n  areas, or other control systems as necessary to prevent contamination or mixups, for receipt ...\". Putting the\n  qualifier only in the condition field is not enough. The statement is shown to customers: never cite a\n  paragraph or section reference in it (\"211.166(a)(1)-(5)\", \"this section\"); say what is required instead\n  (\"contains the elements listed below\" is not enough: name them, or let each sub-paragraph's own item carry it).\n- quote: the exact span of ONE paragraph's text that states the whole obligation, copied character for character\n  (matched against the XML text by software; do not fix typos or change punctuation). Leave out the paragraph's\n  designation (\"(c)\"). A quote may continue into that paragraph's sub-paragraphs, in order.\n- clause_number: the reference of the paragraph the quote comes from, exactly as given (\"211.84(c)(1)\").\n- strength: \"mandatory\" for shall / must / is required / may not; \"recommended\" for should; \"optional\" for may.\n  A sub-paragraph without such a word takes its parent's lead-in (\"(c) Samples shall be collected in accordance\n  with the following procedures:\" makes (c)(1)-(c)(6) mandatory).\n- plant_types: from OSD, LIQ, SEMI, INJ, API (INJ = sterile injectables); the plant scope given unless the text\n  narrows it. A paragraph limited to drug products not required to be sterile does not apply to INJ; one limited to\n  sterile drug products (\"purporting to be sterile\") applies only to INJ (and API where in scope).\n- numbers: every number, limit, frequency or period in the quote, as written.\n- condition: the condition or trigger in a few words, \"\" if none. A condition stated in a parent paragraph's\n  lead-in belongs to every sub-paragraph under it. This field only repeats what the statement already says.\n\nA lead-in sentence that also states a duty of its own (\"The written program shall be followed and shall include:\")\nneeds its own item for that duty, quoting the whole sentence including \"shall include:\".\n- topic: the sub-topic id from TOPICS the obligation belongs to.\n\nSentences that state no obligation for the manufacturer (a heading, a definition, a scope statement, a statement\nof purpose) go in not_applicable: the paragraph reference, the first 8 or more words copied exactly, and the\nreason in a few words.\n\nWrite the answers file named in your task: {\"answers\": [one object per section with \"section\" set to the section's\n\"id\" exactly]}.\n",
+ "topics": [
+  "QS.PQS",
+  "QS.MGMT",
+  "QS.QRM",
+  "QS.PQR",
+  "QS.CHANGE",
+  "QS.DEV",
+  "QS.CAPA",
+  "PER.ORG",
+  "PER.KEY",
+  "PER.TRAIN",
+  "PER.HYG",
+  "PER.GOWN",
+  "PREM.DESIGN",
+  "PREM.PROD",
+  "PREM.STORE",
+  "PREM.QC",
+  "PREM.ANC",
+  "EQ.DESIGN",
+  "EQ.MAINT",
+  "EQ.CLEAN",
+  "EQ.CAL",
+  "DOC.SYS",
+  "DOC.SPEC",
+  "DOC.MFR",
+  "DOC.BMR",
+  "DOC.SOP",
+  "DOC.RET",
+  "MAT.SUPP",
+  "MAT.RECV",
+  "MAT.SAMP",
+  "MAT.STATUS",
+  "MAT.PACK",
+  "MAT.REJ",
+  "PROD.GEN",
+  "PROD.XCONT",
+  "PROD.IPC",
+  "PROD.YIELD",
+  "PROD.PACK",
+  "PROD.REWORK",
+  "QC.GEN",
+  "QC.SAMP",
+  "QC.TEST",
+  "QC.OOS",
+  "QC.STAB",
+  "QC.REF",
+  "QC.MICRO",
+  "VAL.PLAN",
+  "VAL.QUAL",
+  "VAL.PROC",
+  "VAL.CLEAN",
+  "VAL.METH",
+  "CSV.VAL",
+  "CSV.ACCESS",
+  "CSV.AUDIT",
+  "CSV.ESIG",
+  "CSV.DI",
+  "UTIL.WATER",
+  "UTIL.HVAC",
+  "UTIL.GAS",
+  "CCS.STRAT",
+  "CCS.EM",
+  "CCS.CLEAN",
+  "CCS.PEST",
+  "STER.GRADE",
+  "STER.ASEPT",
+  "STER.APS",
+  "STER.STERIL",
+  "STER.FILT",
+  "STER.CCI",
+  "STER.LYO",
+  "API.START",
+  "API.PROC",
+  "API.IMP",
+  "API.SOLV",
+  "OUT.CONTRACT",
+  "OUT.AGREE",
+  "CMP.COMPL",
+  "CMP.RECALL",
+  "CMP.REPORT",
+  "SI.PROG",
+  "SI.TEAM",
+  "SI.REPORT",
+  "SI.FOLLOW",
+  "DIST.STORE",
+  "DIST.TRANS",
+  "DIST.RETURN",
+  "REL.QP",
+  "REL.REVIEW"
+ ],
+ "schema": {
+  "type": "object",
+  "required": [
+   "section",
+   "items",
+   "not_applicable"
+  ],
+  "properties": {
+   "section": {
+    "type": "string"
+   },
+   "items": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "statement",
+      "quote",
+      "clause_number",
+      "strength",
+      "plant_types",
+      "numbers",
+      "condition",
+      "topic"
+     ],
+     "properties": {
+      "statement": {
+       "type": "string"
+      },
+      "quote": {
+       "type": "string"
+      },
+      "clause_number": {
+       "type": "string"
+      },
+      "strength": {
+       "enum": [
+        "mandatory",
+        "recommended",
+        "optional"
+       ]
+      },
+      "plant_types": {
+       "type": "array",
+       "items": {
+        "enum": [
+         "OSD",
+         "LIQ",
+         "SEMI",
+         "INJ",
+         "API"
+        ]
+       }
+      },
+      "numbers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "condition": {
+       "type": "string"
+      },
+      "topic": {
+       "type": "string"
+      }
+     }
+    }
+   },
+   "not_applicable": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "clause_number",
+      "text",
+      "reason"
+     ],
+     "properties": {
+      "clause_number": {
+       "type": "string"
+      },
+      "text": {
+       "type": "string"
+      },
+      "reason": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  }
+ },
+ "sections": [
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.34",
+   "source": "ecfr-21cfr211-2026-10-27.xml",
+   "section": "211.34",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "211.34",
+     "text": "§ 211.34 Consultants. Consultants advising on the manufacture, processing, packing, or holding of drug products shall have sufficient education, training, and experience, or any combination thereof, to advise on the subject for which they are retained. Records shall be maintained stating the name, address, and qualifications of any consultants and the type of service they provide."
+    }
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42",
+   "source": "ecfr-21cfr211-2026-10-27.xml",
+   "section": "211.42",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "211.42",
+     "text": "§ 211.42 Design and construction features."
+    },
+    {
+     "ref": "211.42(a)",
+     "text": "(a) Any building or buildings used in the manufacture, processing, packing, or holding of a drug product shall be of suitable size, construction and location to facilitate cleaning, maintenance, and proper operations."
+    },
+    {
+     "ref": "211.42(b)",
+     "text": "(b) Any such building shall have adequate space for the orderly placement of equipment and materials to prevent mixups between different components, drug product containers, closures, labeling, in-process materials, or drug products, and to prevent contamination. The flow of components, drug product containers, closures, labeling, in-process materials, and drug products through the building or buildings shall be designed to prevent contamination."
+    },
+    {
+     "ref": "211.42(c)",
+     "text": "(c) Operations shall be performed within specifically defined areas of adequate size. There shall be separate or defined areas or such other control systems for the firm's operations as are necessary to prevent contamination or mixups during the course of the following procedures:"
+    },
+    {
+     "ref": "211.42(c)(1)",
+     "text": "(1) Receipt, identification, storage, and withholding from use of components, drug product containers, closures, and labeling, pending the appropriate sampling, testing, or examination by the quality control unit before release for manufacturing or packaging;"
+    },
+    {
+     "ref": "211.42(c)(2)",
+     "text": "(2) Holding rejected components, drug product containers, closures, and labeling before disposition;"
+    },
+    {
+     "ref": "211.42(c)(3)",
+     "text": "(3) Storage of released components, drug product containers, closures, and labeling;"
+    },
+    {
+     "ref": "211.42(c)(4)",
+     "text": "(4) Storage of in-process materials;"
+    },
+    {
+     "ref": "211.42(c)(5)",
+     "text": "(5) Manufacturing and processing operations;"
+    },
+    {
+     "ref": "211.42(c)(6)",
+     "text": "(6) Packaging and labeling operations;"
+    },
+    {
+     "ref": "211.42(c)(7)",
+     "text": "(7) Quarantine storage before release of drug products;"
+    },
+    {
+     "ref": "211.42(c)(8)",
+     "text": "(8) Storage of drug products after release;"
+    },
+    {
+     "ref": "211.42(c)(9)",
+     "text": "(9) Control and laboratory operations;"
+    },
+    {
+     "ref": "211.42(c)(10)",
+     "text": "(10) Aseptic processing, which includes as appropriate:"
+    },
+    {
+     "ref": "211.42(c)(10)(i)",
+     "text": "(i) Floors, walls, and ceilings of smooth, hard surfaces that are easily cleanable;"
+    },
+    {
+     "ref": "211.42(c)(10)(ii)",
+     "text": "(ii) Temperature and humidity controls;"
+    },
+    {
+     "ref": "211.42(c)(10)(iii)",
+     "text": "(iii) An air supply filtered through high-efficiency particulate air filters under positive pressure, regardless of whether flow is laminar or nonlaminar;"
+    },
+    {
+     "ref": "211.42(c)(10)(iv)",
+     "text": "(iv) A system for monitoring environmental conditions;"
+    },
+    {
+     "ref": "211.42(c)(10)(v)",
+     "text": "(v) A system for cleaning and disinfecting the room and equipment to produce aseptic conditions;"
+    },
+    {
+     "ref": "211.42(c)(10)(vi)",
+     "text": "(vi) A system for maintaining any equipment used to control the aseptic conditions."
+    },
+    {
+     "ref": "211.42(d)",
+     "text": "(d) Operations relating to the manufacture, processing, and packing of penicillin shall be performed in facilities separate from those used for other drug products for human use."
+    }
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.44",
+   "source": "ecfr-21cfr211-2026-10-27.xml",
+   "section": "211.44",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "211.44",
+     "text": "§ 211.44 Lighting. Adequate lighting shall be provided in all areas."
+    }
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.46",
+   "source": "ecfr-21cfr211-2026-10-27.xml",
+   "section": "211.46",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "211.46",
+     "text": "§ 211.46 Ventilation, air filtration, air heating and cooling."
+    },
+    {
+     "ref": "211.46(a)",
+     "text": "(a) Adequate ventilation shall be provided."
+    },
+    {
+     "ref": "211.46(b)",
+     "text": "(b) Equipment for adequate control over air pressure, micro-organisms, dust, humidity, and temperature shall be provided when appropriate for the manufacture, processing, packing, or holding of a drug product."
+    },
+    {
+     "ref": "211.46(c)",
+     "text": "(c) Air filtration systems, including prefilters and particulate matter air filters, shall be used when appropriate on air supplies to production areas. If air is recirculated to production areas, measures shall be taken to control recirculation of dust from production. In areas where air contamination occurs during production, there shall be adequate exhaust systems or other systems adequate to control contaminants."
+    },
+    {
+     "ref": "211.46(d)",
+     "text": "(d) Air-handling systems for the manufacture, processing, and packing of penicillin shall be completely separate from those for other drug products for human use."
+    }
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.48",
+   "source": "ecfr-21cfr211-2026-10-27.xml",
+   "section": "211.48",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "211.48",
+     "text": "§ 211.48 Plumbing."
+    },
+    {
+     "ref": "211.48(a)",
+     "text": "(a) Potable water shall be supplied under continuous positive pressure in a plumbing system free of defects that could contribute contamination to any drug product. Potable water shall meet the standards prescribed in the Environmental Protection Agency's Primary Drinking Water Regulations set forth in 40 CFR part 141. Water not meeting such standards shall not be permitted in the potable water system."
+    },
+    {
+     "ref": "211.48(b)",
+     "text": "(b) Drains shall be of adequate size and, where connected directly to a sewer, shall be provided with an air break or other mechanical device to prevent back-siphonage."
+    }
+   ]
+  }
+ ]
+}

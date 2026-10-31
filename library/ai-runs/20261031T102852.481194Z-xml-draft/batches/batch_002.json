@@ -1,0 +1,376 @@
+{
+ "instructions": "You read sections of a US regulation (21 CFR, from the official eCFR XML) and list the obligations they state. Each\nsection is given as its paragraphs, each with its reference from the XML structure (\"211.84(c)(1)\") and its exact\ntext. Your output is checked by software against that exact text and by independent reviewers, so precision\nmatters more than wording.\n\nList each separate obligation as its own item, so that together your items cover every obligation in the section.\nOne obligation is one thing a manufacturer must, should or may do, with all its conditions, numbers and\nqualifiers; do not split one obligation across items. For each item:\n- statement: the obligation in your own plain English words, as one checklist item a site could be audited\n  against. Do not copy more than a few words in a row. Keep every condition (\"where\", \"if\", \"unless\", \"when\",\n  \"except\") and every number. Do not add anything the text does not say. The statement itself must carry every\n  condition or qualifier of the lead-ins above its paragraph (a parent paragraph ending in \":\", and its parent if\n  that also ends in \":\"): for 211.42(c)(1) under \"... such other control systems ... as are necessary to prevent\n  contamination or mixups during the course of the following procedures:\", write e.g. \"Provide separate or defined\n  areas, or other control systems as necessary to prevent contamination or mixups, for receipt ...\". Putting the\n  qualifier only in the condition field is not enough. The statement is shown to customers: never cite a\n  paragraph or section reference in it (\"211.166(a)(1)-(5)\", \"this section\"); say what is required instead\n  (\"contains the elements listed below\" is not enough: name them, or let each sub-paragraph's own item carry it).\n- quote: the exact span of ONE paragraph's text that states the whole obligation, copied character for character\n  (matched against the XML text by software; do not fix typos or change punctuation). Leave out the paragraph's\n  designation (\"(c)\"). A quote may continue into that paragraph's sub-paragraphs, in order.\n- clause_number: the reference of the paragraph the quote comes from, exactly as given (\"211.84(c)(1)\").\n- strength: \"mandatory\" for shall / must / is required / may not; \"recommended\" for should; \"optional\" for may.\n  A sub-paragraph without such a word takes its parent's lead-in (\"(c) Samples shall be collected in accordance\n  with the following procedures:\" makes (c)(1)-(c)(6) mandatory).\n- plant_types: from OSD, LIQ, SEMI, INJ, API (INJ = sterile injectables); the plant scope given unless the text\n  narrows it. A paragraph limited to drug products not required to be sterile does not apply to INJ; one limited to\n  sterile drug products (\"purporting to be sterile\") applies only to INJ (and API where in scope).\n- numbers: every number, limit, frequency or period in the quote, as written.\n- condition: the condition or trigger in a few words, \"\" if none. A condition stated in a parent paragraph's\n  lead-in belongs to every sub-paragraph under it. This field only repeats what the statement already says.\n\nA lead-in sentence that also states a duty of its own (\"The written program shall be followed and shall include:\")\nneeds its own item for that duty, quoting the whole sentence including \"shall include:\". That item states only the\nlead-in's own duty (\"follow the written stability program\"); do not summarise the sub-paragraphs in it (their\nitems carry them with their qualifiers). Where the text refers to a closed list of other sections (\"operations\naddressed by §§ 211.101(c) or (d), 211.103 ...\"), keep the list closed: name the operations, never \"such as\".\nDo not narrow or widen a term (\"washing facilities\" is not \"hand-washing facilities\"; \"in and from\" is not \"from\").\n- topic: the sub-topic id from TOPICS the obligation belongs to.\n\nSentences that state no obligation for the manufacturer (a heading, a definition, a scope statement, a statement\nof purpose, an exemption, an enforcement or interpretation statement addressed to FDA) go in not_applicable: one\nentry per SENTENCE (a paragraph of three such sentences needs three entries), each with the paragraph reference,\nthe sentence's first 8 or more words copied exactly (without the paragraph designation), and the reason in a few\nwords.\n\nWrite the answers file named in your task: {\"answers\": [one object per section with \"section\" set to the section's\n\"id\" exactly]}.\n",
+ "topics": [
+  "QS.PQS",
+  "QS.MGMT",
+  "QS.QRM",
+  "QS.PQR",
+  "QS.CHANGE",
+  "QS.DEV",
+  "QS.CAPA",
+  "PER.ORG",
+  "PER.KEY",
+  "PER.TRAIN",
+  "PER.HYG",
+  "PER.GOWN",
+  "PREM.DESIGN",
+  "PREM.PROD",
+  "PREM.STORE",
+  "PREM.QC",
+  "PREM.ANC",
+  "EQ.DESIGN",
+  "EQ.MAINT",
+  "EQ.CLEAN",
+  "EQ.CAL",
+  "DOC.SYS",
+  "DOC.SPEC",
+  "DOC.MFR",
+  "DOC.BMR",
+  "DOC.SOP",
+  "DOC.RET",
+  "MAT.SUPP",
+  "MAT.RECV",
+  "MAT.SAMP",
+  "MAT.STATUS",
+  "MAT.PACK",
+  "MAT.REJ",
+  "PROD.GEN",
+  "PROD.XCONT",
+  "PROD.IPC",
+  "PROD.YIELD",
+  "PROD.PACK",
+  "PROD.REWORK",
+  "QC.GEN",
+  "QC.SAMP",
+  "QC.TEST",
+  "QC.OOS",
+  "QC.STAB",
+  "QC.REF",
+  "QC.MICRO",
+  "VAL.PLAN",
+  "VAL.QUAL",
+  "VAL.PROC",
+  "VAL.CLEAN",
+  "VAL.METH",
+  "CSV.VAL",
+  "CSV.ACCESS",
+  "CSV.AUDIT",
+  "CSV.ESIG",
+  "CSV.DI",
+  "UTIL.WATER",
+  "UTIL.HVAC",
+  "UTIL.GAS",
+  "CCS.STRAT",
+  "CCS.EM",
+  "CCS.CLEAN",
+  "CCS.PEST",
+  "STER.GRADE",
+  "STER.ASEPT",
+  "STER.APS",
+  "STER.STERIL",
+  "STER.FILT",
+  "STER.CCI",
+  "STER.LYO",
+  "API.START",
+  "API.PROC",
+  "API.IMP",
+  "API.SOLV",
+  "OUT.CONTRACT",
+  "OUT.AGREE",
+  "CMP.COMPL",
+  "CMP.RECALL",
+  "CMP.REPORT",
+  "SI.PROG",
+  "SI.TEAM",
+  "SI.REPORT",
+  "SI.FOLLOW",
+  "DIST.STORE",
+  "DIST.TRANS",
+  "DIST.RETURN",
+  "REL.QP",
+  "REL.REVIEW"
+ ],
+ "schema": {
+  "type": "object",
+  "required": [
+   "section",
+   "items",
+   "not_applicable"
+  ],
+  "properties": {
+   "section": {
+    "type": "string"
+   },
+   "items": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "statement",
+      "quote",
+      "clause_number",
+      "strength",
+      "plant_types",
+      "numbers",
+      "condition",
+      "topic"
+     ],
+     "properties": {
+      "statement": {
+       "type": "string"
+      },
+      "quote": {
+       "type": "string"
+      },
+      "clause_number": {
+       "type": "string"
+      },
+      "strength": {
+       "enum": [
+        "mandatory",
+        "recommended",
+        "optional"
+       ]
+      },
+      "plant_types": {
+       "type": "array",
+       "items": {
+        "enum": [
+         "OSD",
+         "LIQ",
+         "SEMI",
+         "INJ",
+         "API"
+        ]
+       }
+      },
+      "numbers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "condition": {
+       "type": "string"
+      },
+      "topic": {
+       "type": "string"
+      }
+     }
+    }
+   },
+   "not_applicable": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "clause_number",
+      "text",
+      "reason"
+     ],
+     "properties": {
+      "clause_number": {
+       "type": "string"
+      },
+      "text": {
+       "type": "string"
+      },
+      "reason": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  }
+ },
+ "sections": [
+  {
+   "id": "fda-cfr-21-part-207.xml:207.1 \"Foreign\"",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.1 \"Foreign\"",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.1 \"Foreign\"",
+     "text": "Foreign for the purposes of registration and listing under this part:"
+    },
+    {
+     "ref": "207.1 \"Foreign\"(1)",
+     "text": "(1) When used to modify the term “manufacturer,” “repacker,” “relabeler,” or “salvager,” refers to a manufacturer, repacker, relabeler, or salvager, who is located in a foreign country and who manufactures, repacks, relabels, or salvages a drug, or an animal feed bearing or containing a new animal drug, that is imported or offered for import into the United States."
+    },
+    {
+     "ref": "207.1 \"Foreign\"(2)",
+     "text": "(2) When used to modify the term “establishment” refers to an establishment that is located in a foreign country and is engaged in the manufacture, repackaging, relabeling, or salvaging of any drug, or any animal feed bearing or containing a new animal drug, that is imported or offered for import into the United States."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.1 \"Importer\"",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.1 \"Importer\"",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.1 \"Importer\"",
+     "text": "Importer means, for purposes of this part, a person in the United States that is an owner, consignee, or recipient, at the time of entry, of a foreign establishment's drug, or an animal feed bearing or containing a new animal drug, that is imported into the United States."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.1 \"Manufacture\"",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.1 \"Manufacture\"",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.1 \"Manufacture\"",
+     "text": "Manufacture means each step in the manufacture, preparation, propagation, compounding, or processing of a drug or an animal feed bearing or containing a new animal drug. Manufacture includes the making by chemical, physical, biological, or other procedures or manipulations of a drug, or an animal feed bearing or containing a new animal drug, including control procedures applied to the final product or to any part of the process. Manufacture includes manipulation, sampling, testing, or control procedures applied to the final product or to any part of the process, including, for example, analytical testing of drugs for another registered establishment's drug. For purposes of this part, and in order to clarify the responsibilities of the entities engaged in different operations, the term manufacture is defined and used separately from the terms relabel, repackage, and salvage, although the term “manufacture, preparation, propagation, compounding, or processing,” as used in section 510 of the Federal Food, Drug, and Cosmetic Act, includes relabeling, repackaging, and salvaging activities."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.1 \"Manufacturer\"",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.1 \"Manufacturer\"",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.1 \"Manufacturer\"",
+     "text": "Manufacturer means a person who owns or operates an establishment that manufactures a drug or an animal feed bearing or containing a new animal drug. This term includes, but is not limited to, control laboratories, contract laboratories, contract manufacturers, contract packers, contract labelers, and other entities that manufacture a drug, or an animal feed bearing or containing a new animal drug, as defined in this paragraph. For purposes of this part, and in order to clarify the responsibilities of the entities engaged in different operations, the term manufacturer is defined and used separately from the terms relabeler, repacker, and salvager, although the term “manufacture, preparation, propagation, compounding, or processing,” as used in section 510 of the Federal Food, Drug, and Cosmetic Act, includes the activities of relabelers, repackers, and salvagers. Repackers, relabelers, and salvagers are subject to the provisions of this part that are applicable to repackers, relabelers, and salvagers, but are not subject to the provisions of this part that are applicable to manufacturers. When not modified by “domestic” or “foreign,” the term includes both domestic manufacturers and foreign manufacturers."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.1 \"Material change\"",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.1 \"Material change\"",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.1 \"Material change\"",
+     "text": "Material change means any change in any drug listing information, as required under §§ 207.49, 207.53, 207.54, 207.55, or 207.57 except changes in format of labeling, labeling changes of an editorial nature, or inclusion of a bar code or initial inclusion of an NDC on the label."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.1 \"Outsourcing facility\"",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.1 \"Outsourcing facility\"",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.1 \"Outsourcing facility\"",
+     "text": "Outsourcing facility means a compounder that has elected to register with FDA under section 503B of the Federal Food, Drug, and Cosmetic Act and that meets all of the conditions of section 503B."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.1 \"Person who imports or offers for import\"",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.1 \"Person who imports or offers for import\"",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.1 \"Person who imports or offers for import\"",
+     "text": "Person who imports or offers for import means, for purposes of this part, the owner or exporter of a drug who consigns and ships a drug from a foreign country to the United States. This includes persons who send a drug to the United States by international mail or other private delivery service, but it does not include carriers who merely transport the drug."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.1 \"Private label distribution\"",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.1 \"Private label distribution\"",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.1 \"Private label distribution\"",
+     "text": "Private label distribution means commercial distribution of a drug under the label or trade name of a person who did not manufacture, repack, relabel, or salvage that drug."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.1 \"Private label distributor\"",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.1 \"Private label distributor\"",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.1 \"Private label distributor\"",
+     "text": "Private label distributor means, with respect to a particular drug, a person who did not manufacture, repack, relabel, or salvage the drug but under whose label or trade name the drug is commercially distributed."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.1 \"Registrant\"",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.1 \"Registrant\"",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.1 \"Registrant\"",
+     "text": "Registrant means any person that owns or operates an establishment that manufactures, repacks, relabels, or salvages a drug, and is not otherwise exempt from establishment registration requirements under section 510 of the Federal Food, Drug, and Cosmetic Act or this part."
+    }
+   ]
+  }
+ ]
+}

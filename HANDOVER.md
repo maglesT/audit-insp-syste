@@ -1,8 +1,36 @@
 # Handover: read this first in every new session
 
-Last updated: 31 October 2026, session 6 (D45/D46 page-based vision drafting; trial and re-run done; next: pre-scaling fixes, Layer 1 on pages, 0c, 0d).
+Last updated: 31 October 2026, session 7 (FDA build, D47: 21 CFR 211 built and verified; next: 210, Part 11, 314.81).
 
-## START HERE (session 7)
+## START HERE (session 8)
+- **FDA build (D46/D47), owned by session 7 (session_01PybpFspEA75VUpLPy2kLTG) and its successors.** FDA first,
+  document by document; nothing ships unless proven (automatic route, or the owner's review queue). The paid API
+  build is NOT started and needs direct owner confirmation. Report after each document to the coordinator
+  (session_01PybpFuvG6mX9B3zK3YZjZ1, send_message): items, automatic-route pass rate, review-queue size, usage.
+- **Done in session 7:** PR #36 merged. PR #38 (branch `fda-build`: D47, `tools/fda/xmlprofile.py`, prompts,
+  `tools/fda/review.py`, `tools/fda/status.py`, tests `tests/test_fda_xml.py`, runs) open; two independent review
+  passes, all findings fixed; merge on green CI. XML profile tuned (lead-in qualifiers over all lead-in ancestors,
+  sterile plant scope, lead-in coverage, cross-references are not numbers). **21 CFR 211 full build: 399 items
+  (60 sections; not 107), 399 quotes exact, 0 coverage gaps, automatic route 359 (90.0 %), review queue 40**
+  (`docs/fda-211-trial.md`, run `library/ai-runs/20261031T100541.543518Z-xml-draft`).
+- **Branches:** PR #38 = `fda-build` (head 344a9ba; do not push to it, so its CI can go green; merge on green).
+  All later work is on **`fda-group1`** (stacked on fda-build): open its PR after #38 merges, with an independent
+  review of the xmlprofile.py changes made there (lead-in = list-introducing sentence, numbers from parent
+  paragraphs, descriptive may, nearest lead-in for strength, recheck, prepare-redraft, size-packed batches).
+- **Group 1 status (`library/fda-status.json`, `docs/fda-worklist.md`):** 211 verified 399/365/34; 210 verified
+  1/0/1; Part 11 verified 48/45/3; 314.81 verified 104/90 (89 after the descriptive-may recheck: update its row)/13-14.
+  In flight at handover: 314.70 run `20261031T102852.310999Z-xml-draft` (76 items, verify batches ready, gap
+  redraft `20261031T103227.810350Z-xml-redraft`); Part 200 run `20261031T102852.396410Z-xml-draft` (21 items,
+  verify ready; redraft `20261031T103111.556865Z-xml-redraft`, 3 items, verify ready); Part 207 run
+  `20261031T102852.481194Z-xml-draft` (6 batches; 1-4 answered, 5-6 to draft); Part 4 run
+  `20261031T102852.577194Z-xml-draft` (5 batches, none drafted). For each: answers -> ingest-draft -> (redraft if
+  real gaps) -> prepare-verify -> verifiers -> ingest-verify -> record-model -> status.py set -> report.
+- **Next after group 1:** group 2 (FDA HTML) needs an HTML profile (D47 D), then group 3 and group 4.
+- **Status files:** `library/fda-status.json` + `docs/fda-worklist.md` (the coordinator's file; only the Status /
+  Items / Auto / Review cells change, via `tools/fda/status.py`). Owner review queue: CLI `review.py next|decide|
+  status RUN`; an owner-friendly page is still to build.
+
+## Session 7 start notes (kept for reference)
 - **Plan since 31 Oct (D45, D46): checklist items are drafted from PDF PAGES with vision** (page image + text layer),
   checked on page text; the parsed clause store, parser and fidelity work are FROZEN (kept for search/cross-checks).
   Read D43-D46 in `docs/decisions.md` and `docs/vision-trial.md`. CLAUDE.md lets drafting/verifier agents get images.
@@ -14,7 +42,23 @@ Last updated: 31 October 2026, session 6 (D45/D46 page-based vision drafting; tr
   whole-token matching, table rows as whole rows with their whole header); verifiers both-correct 93.9 % of 246;
   the Q3C lead-in errors are gone; coverage gaps NOT yet clean (descriptive "may" sentences, table captions, a few
   real gaps). Usage about 17 k tokens per page drafting, 3 k per item verifying (two verifiers).
-- **Next, in order (one PR each, independent review, merge on green CI):**
+- **Session 7 (session_01PybpFspEA75VUpLPy2kLTG) owns the FDA build and the work list from 31 Oct 10:00.**
+- **D47 (owner, 31 Oct) sets the build: FDA first, document by document, "nothing ships unless proven"** (automatic
+  route = quote confirmed + all Layer 1 checks + both verifiers correct; else the owner's review queue). Work list:
+  `docs/fda-worklist.md` (the coordinator's file on main: do not regenerate; update each document's status row). **Start with 21 CFR 211**
+  (XML profile: text read directly, exact-text quote check, clause number from the XML structure, no vision).
+  Per group report to the coordinator: items, automatic-route pass rate, review-queue size, usage. Steps for the
+  XML group: (a) XML profile in the page pipeline (units = eCFR sections/paragraphs from `tools/parse/ecfr.py`'s
+  reading of the XML, not PDF pages); (b) review queue tool (one item at a time beside its source text; correct /
+  fix / reject, name + time, attributable); (c) 20-unit trial of 211, tune; (d) full 211, then 210, Part 11, ...
+- **211 trial DONE (`docs/fda-211-trial.md`):** XML profile `tools/fda/xmlprofile.py` + review queue
+  `tools/fda/review.py` (branch `fda-build`, stacked on PR #36). 97 items from 10 sections, all quotes exact,
+  automatic route 77 (79 %), review queue 20; next: the three tuning steps listed there, then the full 211 build
+  (107 sections; `xmlprofile.py prepare-draft ecfr-21cfr211-2026-10-27.xml` = all sections, 22 batches of 5;
+  drafting agents max 3 at a time; then prepare-verify / ingest-verify; update the 211 row of
+  `docs/fda-worklist.md` on main: trial = 97 items, auto 77, review 20). Review queue UI for the owner: CLI now (`review.py next|decide|status`);
+  an owner-friendly page is still to build.
+- **Earlier plan, still valid where it does not conflict with D47 (one PR each, independent review, merge on green CI):**
   1. (Done in PR #36: coverage measure, continued-table headers, whole next page; coverage gaps 39 -> 13, about 9
      to look at by hand, listed in `docs/vision-trial.md`.)
   2. Layer 1 on page items (no library/clauses dependency; reuse `vision.check_item`, `quotes.findings`).

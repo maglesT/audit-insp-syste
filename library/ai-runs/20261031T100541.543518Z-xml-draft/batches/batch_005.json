@@ -1,0 +1,349 @@
+{
+ "instructions": "You read sections of a US regulation (21 CFR, from the official eCFR XML) and list the obligations they state. Each\nsection is given as its paragraphs, each with its reference from the XML structure (\"211.84(c)(1)\") and its exact\ntext. Your output is checked by software against that exact text and by independent reviewers, so precision\nmatters more than wording.\n\nList each separate obligation as its own item, so that together your items cover every obligation in the section.\nOne obligation is one thing a manufacturer must, should or may do, with all its conditions, numbers and\nqualifiers; do not split one obligation across items. For each item:\n- statement: the obligation in your own plain English words, as one checklist item a site could be audited\n  against. Do not copy more than a few words in a row. Keep every condition (\"where\", \"if\", \"unless\", \"when\",\n  \"except\") and every number. Do not add anything the text does not say. The statement itself must carry every\n  condition or qualifier of the lead-ins above its paragraph (a parent paragraph ending in \":\", and its parent if\n  that also ends in \":\"): for 211.42(c)(1) under \"... such other control systems ... as are necessary to prevent\n  contamination or mixups during the course of the following procedures:\", write e.g. \"Provide separate or defined\n  areas, or other control systems as necessary to prevent contamination or mixups, for receipt ...\". Putting the\n  qualifier only in the condition field is not enough. The statement is shown to customers: never cite a\n  paragraph or section reference in it (\"211.166(a)(1)-(5)\", \"this section\"); say what is required instead\n  (\"contains the elements listed below\" is not enough: name them, or let each sub-paragraph's own item carry it).\n- quote: the exact span of ONE paragraph's text that states the whole obligation, copied character for character\n  (matched against the XML text by software; do not fix typos or change punctuation). Leave out the paragraph's\n  designation (\"(c)\"). A quote may continue into that paragraph's sub-paragraphs, in order.\n- clause_number: the reference of the paragraph the quote comes from, exactly as given (\"211.84(c)(1)\").\n- strength: \"mandatory\" for shall / must / is required / may not; \"recommended\" for should; \"optional\" for may.\n  A sub-paragraph without such a word takes its parent's lead-in (\"(c) Samples shall be collected in accordance\n  with the following procedures:\" makes (c)(1)-(c)(6) mandatory).\n- plant_types: from OSD, LIQ, SEMI, INJ, API (INJ = sterile injectables); the plant scope given unless the text\n  narrows it. A paragraph limited to drug products not required to be sterile does not apply to INJ; one limited to\n  sterile drug products (\"purporting to be sterile\") applies only to INJ (and API where in scope).\n- numbers: every number, limit, frequency or period in the quote, as written.\n- condition: the condition or trigger in a few words, \"\" if none. A condition stated in a parent paragraph's\n  lead-in belongs to every sub-paragraph under it. This field only repeats what the statement already says.\n\nA lead-in sentence that also states a duty of its own (\"The written program shall be followed and shall include:\")\nneeds its own item for that duty, quoting the whole sentence including \"shall include:\".\n- topic: the sub-topic id from TOPICS the obligation belongs to.\n\nSentences that state no obligation for the manufacturer (a heading, a definition, a scope statement, a statement\nof purpose) go in not_applicable: the paragraph reference, the first 8 or more words copied exactly, and the\nreason in a few words.\n\nWrite the answers file named in your task: {\"answers\": [one object per section with \"section\" set to the section's\n\"id\" exactly]}.\n",
+ "topics": [
+  "QS.PQS",
+  "QS.MGMT",
+  "QS.QRM",
+  "QS.PQR",
+  "QS.CHANGE",
+  "QS.DEV",
+  "QS.CAPA",
+  "PER.ORG",
+  "PER.KEY",
+  "PER.TRAIN",
+  "PER.HYG",
+  "PER.GOWN",
+  "PREM.DESIGN",
+  "PREM.PROD",
+  "PREM.STORE",
+  "PREM.QC",
+  "PREM.ANC",
+  "EQ.DESIGN",
+  "EQ.MAINT",
+  "EQ.CLEAN",
+  "EQ.CAL",
+  "DOC.SYS",
+  "DOC.SPEC",
+  "DOC.MFR",
+  "DOC.BMR",
+  "DOC.SOP",
+  "DOC.RET",
+  "MAT.SUPP",
+  "MAT.RECV",
+  "MAT.SAMP",
+  "MAT.STATUS",
+  "MAT.PACK",
+  "MAT.REJ",
+  "PROD.GEN",
+  "PROD.XCONT",
+  "PROD.IPC",
+  "PROD.YIELD",
+  "PROD.PACK",
+  "PROD.REWORK",
+  "QC.GEN",
+  "QC.SAMP",
+  "QC.TEST",
+  "QC.OOS",
+  "QC.STAB",
+  "QC.REF",
+  "QC.MICRO",
+  "VAL.PLAN",
+  "VAL.QUAL",
+  "VAL.PROC",
+  "VAL.CLEAN",
+  "VAL.METH",
+  "CSV.VAL",
+  "CSV.ACCESS",
+  "CSV.AUDIT",
+  "CSV.ESIG",
+  "CSV.DI",
+  "UTIL.WATER",
+  "UTIL.HVAC",
+  "UTIL.GAS",
+  "CCS.STRAT",
+  "CCS.EM",
+  "CCS.CLEAN",
+  "CCS.PEST",
+  "STER.GRADE",
+  "STER.ASEPT",
+  "STER.APS",
+  "STER.STERIL",
+  "STER.FILT",
+  "STER.CCI",
+  "STER.LYO",
+  "API.START",
+  "API.PROC",
+  "API.IMP",
+  "API.SOLV",
+  "OUT.CONTRACT",
+  "OUT.AGREE",
+  "CMP.COMPL",
+  "CMP.RECALL",
+  "CMP.REPORT",
+  "SI.PROG",
+  "SI.TEAM",
+  "SI.REPORT",
+  "SI.FOLLOW",
+  "DIST.STORE",
+  "DIST.TRANS",
+  "DIST.RETURN",
+  "REL.QP",
+  "REL.REVIEW"
+ ],
+ "schema": {
+  "type": "object",
+  "required": [
+   "section",
+   "items",
+   "not_applicable"
+  ],
+  "properties": {
+   "section": {
+    "type": "string"
+   },
+   "items": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "statement",
+      "quote",
+      "clause_number",
+      "strength",
+      "plant_types",
+      "numbers",
+      "condition",
+      "topic"
+     ],
+     "properties": {
+      "statement": {
+       "type": "string"
+      },
+      "quote": {
+       "type": "string"
+      },
+      "clause_number": {
+       "type": "string"
+      },
+      "strength": {
+       "enum": [
+        "mandatory",
+        "recommended",
+        "optional"
+       ]
+      },
+      "plant_types": {
+       "type": "array",
+       "items": {
+        "enum": [
+         "OSD",
+         "LIQ",
+         "SEMI",
+         "INJ",
+         "API"
+        ]
+       }
+      },
+      "numbers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "condition": {
+       "type": "string"
+      },
+      "topic": {
+       "type": "string"
+      }
+     }
+    }
+   },
+   "not_applicable": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "clause_number",
+      "text",
+      "reason"
+     ],
+     "properties": {
+      "clause_number": {
+       "type": "string"
+      },
+      "text": {
+       "type": "string"
+      },
+      "reason": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  }
+ },
+ "sections": [
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.82",
+   "source": "ecfr-21cfr211-2026-10-27.xml",
+   "section": "211.82",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "211.82",
+     "text": "§ 211.82 Receipt and storage of untested components, drug product containers, and closures."
+    },
+    {
+     "ref": "211.82(a)",
+     "text": "(a) Upon receipt and before acceptance, each container or grouping of containers of components, drug product containers, and closures shall be examined visually for appropriate labeling as to contents, container damage or broken seals, and contamination."
+    },
+    {
+     "ref": "211.82(b)",
+     "text": "(b) Components, drug product containers, and closures shall be stored under quarantine until they have been tested or examined, whichever is appropriate, and released. Storage within the area shall conform to the requirements of § 211.80."
+    }
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.84",
+   "source": "ecfr-21cfr211-2026-10-27.xml",
+   "section": "211.84",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "211.84",
+     "text": "§ 211.84 Testing and approval or rejection of components, drug product containers, and closures."
+    },
+    {
+     "ref": "211.84(a)",
+     "text": "(a) Each lot of components, drug product containers, and closures shall be withheld from use until the lot has been sampled, tested, or examined, as appropriate, and released for use by the quality control unit."
+    },
+    {
+     "ref": "211.84(b)",
+     "text": "(b) Representative samples of each shipment of each lot shall be collected for testing or examination. The number of containers to be sampled, and the amount of material to be taken from each container, shall be based upon appropriate criteria such as statistical criteria for component variability, confidence levels, and degree of precision desired, the past quality history of the supplier, and the quantity needed for analysis and reserve where required by § 211.170."
+    },
+    {
+     "ref": "211.84(c)",
+     "text": "(c) Samples shall be collected in accordance with the following procedures:"
+    },
+    {
+     "ref": "211.84(c)(1)",
+     "text": "(1) The containers of components selected shall be cleaned when necessary in a manner to prevent introduction of contaminants into the component."
+    },
+    {
+     "ref": "211.84(c)(2)",
+     "text": "(2) The containers shall be opened, sampled, and resealed in a manner designed to prevent contamination of their contents and contamination of other components, drug product containers, or closures."
+    },
+    {
+     "ref": "211.84(c)(3)",
+     "text": "(3) Sterile equipment and aseptic sampling techniques shall be used when necessary."
+    },
+    {
+     "ref": "211.84(c)(4)",
+     "text": "(4) If it is necessary to sample a component from the top, middle, and bottom of its container, such sample subdivisions shall not be composited for testing."
+    },
+    {
+     "ref": "211.84(c)(5)",
+     "text": "(5) Sample containers shall be identified so that the following information can be determined: name of the material sampled, the lot number, the container from which the sample was taken, the date on which the sample was taken, and the name of the person who collected the sample."
+    },
+    {
+     "ref": "211.84(c)(6)",
+     "text": "(6) Containers from which samples have been taken shall be marked to show that samples have been removed from them."
+    },
+    {
+     "ref": "211.84(d)",
+     "text": "(d) Samples shall be examined and tested as follows:"
+    },
+    {
+     "ref": "211.84(d)(1)",
+     "text": "(1) At least one test shall be conducted to verify the identity of each component of a drug product. Specific identity tests, if they exist, shall be used."
+    },
+    {
+     "ref": "211.84(d)(2)",
+     "text": "(2) Each component shall be tested for conformity with all appropriate written specifications for purity, strength, and quality. In lieu of such testing by the manufacturer, a report of analysis may be accepted from the supplier of a component, provided that at least one specific identity test is conducted on such component by the manufacturer, and provided that the manufacturer establishes the reliability of the supplier's analyses through appropriate validation of the supplier's test results at appropriate intervals."
+    },
+    {
+     "ref": "211.84(d)(3)",
+     "text": "(3) Containers and closures shall be tested for conformity with all appropriate written specifications. In lieu of such testing by the manufacturer, a certificate of testing may be accepted from the supplier, provided that at least a visual identification is conducted on such containers/closures by the manufacturer and provided that the manufacturer establishes the reliability of the supplier's test results through appropriate validation of the supplier's test results at appropriate intervals."
+    },
+    {
+     "ref": "211.84(d)(4)",
+     "text": "(4) When appropriate, components shall be microscopically examined."
+    },
+    {
+     "ref": "211.84(d)(5)",
+     "text": "(5) Each lot of a component, drug product container, or closure that is liable to contamination with filth, insect infestation, or other extraneous adulterant shall be examined against established specifications for such contamination."
+    },
+    {
+     "ref": "211.84(d)(6)",
+     "text": "(6) Each lot of a component, drug product container, or closure with potential for microbiological contamination that is objectionable in view of its intended use shall be subjected to microbiological tests before use."
+    },
+    {
+     "ref": "211.84(e)",
+     "text": "(e) Any lot of components, drug product containers, or closures that meets the appropriate written specifications of identity, strength, quality, and purity and related tests under paragraph (d) of this section may be approved and released for use. Any lot of such material that does not meet such specifications shall be rejected."
+    }
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.86",
+   "source": "ecfr-21cfr211-2026-10-27.xml",
+   "section": "211.86",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "211.86",
+     "text": "§ 211.86 Use of approved components, drug product containers, and closures. Components, drug product containers, and closures approved for use shall be rotated so that the oldest approved stock is used first. Deviation from this requirement is permitted if such deviation is temporary and appropriate."
+    }
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.87",
+   "source": "ecfr-21cfr211-2026-10-27.xml",
+   "section": "211.87",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "211.87",
+     "text": "§ 211.87 Retesting of approved components, drug product containers, and closures. Components, drug product containers, and closures shall be retested or reexamined, as appropriate, for identity, strength, quality, and purity and approved or rejected by the quality control unit in accordance with § 211.84 as necessary, e.g., after storage for long periods or after exposure to air, heat or other conditions that might adversely affect the component, drug product container, or closure."
+    }
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.89",
+   "source": "ecfr-21cfr211-2026-10-27.xml",
+   "section": "211.89",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "211.89",
+     "text": "§ 211.89 Rejected components, drug product containers, and closures. Rejected components, drug product containers, and closures shall be identified and controlled under a quarantine system designed to prevent their use in manufacturing or processing operations for which they are unsuitable."
+    }
+   ]
+  }
+ ]
+}
