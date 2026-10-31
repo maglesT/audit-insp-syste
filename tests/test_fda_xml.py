@@ -1,4 +1,5 @@
 """XML profile (tools/fda/xmlprofile.py, D47): exact-text checks on 21 CFR 211."""
+import re
 import sys
 import unittest
 from pathlib import Path
@@ -54,7 +55,8 @@ class ReviewQueue(unittest.TestCase):
             run = Path(tmp)
             items = [dict(item(), id="a", source=SRC), dict(item(), id="b", source=SRC), dict(item(), id="c", source=SRC)]
             (run / "items.jsonl").write_text("\n".join(json.dumps(i) for i in items))
-            (run / "route.json").write_text(json.dumps({"route": {"a": "auto", "b": "review", "c": "review"}}))
+            (run / "route.json").write_text(json.dumps({"route": {"a": "auto", "b": "review", "c": "review"},
+                                                        "hashes": {"a": X.item_hash(items[0])}}))
             dec = run / "decisions.jsonl"
             self.assertEqual(review.shipped(run, dec), ["a"])
             with self.assertRaises(SystemExit):
@@ -130,6 +132,42 @@ class Status(unittest.TestCase):
                 status.set_status("zzz.xml", "drafted", path=st, worklist=wl)
 
 
+class SecondReview(unittest.TestCase):
+    def test_section_heading_is_not_quotable_but_section_text_is(self):
+        self.assertFalse(X.check_item(item(clause_number="211.192", quote="Production record review."), SRC)[1])
+        gaps = [g["sentence"] for g in X.coverage(SRC, "211.142", [], [])]
+        self.assertTrue(any(g.startswith("Written procedures describing") for g in gaps))
+        intro = "Written procedures describing the warehousing of drug products shall be established and followed."
+        it = item(clause_number="211.142", quote=intro, statement="Establish and follow written warehousing procedures.")
+        gaps = [g["sentence"] for g in X.coverage(SRC, "211.142", [it], [])]
+        self.assertFalse(any(g.startswith("Written procedures describing") for g in gaps))
+
+    def test_short_sentence_not_applicable_whole(self):
+        s = "Such depyrogenation processes shall be validated."
+        self.assertIn(s, [g["sentence"] for g in X.coverage(SRC, "211.94", [], [])])
+        na = [{"clause_number": "211.94(c)", "text": s, "reason": "test"}]
+        self.assertNotIn(s, [g["sentence"] for g in X.coverage(SRC, "211.94", [], na)])
+
+    def test_redraft_is_a_new_run(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as tmp:
+            (Path(tmp) / "verify").mkdir()
+            (Path(tmp) / "source.json").write_text('{"source": "%s"}' % SRC)
+            with self.assertRaises(SystemExit):
+                X.ingest_draft(tmp)
+
+
+class CrossReferences(unittest.TestCase):
+    def test_cross_references_are_not_numbers(self):
+        self.assertNotIn("211", X.without_refs("as required in § 211.192 and parts 600 through 680"))
+        self.assertIn("30", X.without_refs("within 30 days, see §§ 211.68 and 211.188(b)(11)"))
+        refs = "addressed by §§ 211.101(c) or (d), 211.103, 211.182, or 211.188(b)(11) can; under §§ 211.198, 211.204, or 211.208 of"
+        self.assertFalse(re.findall(r"\d", X.without_refs(refs)))
+        q = ("Any unexplained discrepancy shall be thoroughly investigated, in accordance with the written procedures "
+             "of § 211.192")
+        self.assertEqual(X.without_refs(q).count("211"), 0)
+
+
 class ReviewFixes(unittest.TestCase):
     """Findings of the independent review of the XML profile and the review queue (31 Oct 2026)."""
 
@@ -137,7 +175,11 @@ class ReviewFixes(unittest.TestCase):
         self.assertFalse(X.check_item(item(quote=""), SRC)[1])
         self.assertFalse(X.check_item(item(quote=".;"), SRC)[1])
         child = "Floors, walls, and ceilings of smooth, hard surfaces that are easily cleanable"
-        self.assertEqual(X.check_item(item(clause_number="211.42", quote=child), SRC)[0][0][0], "clause")
+        self.assertFalse(X.check_item(item(clause_number="211.42", quote=child), SRC)[1])
+        self.assertTrue(X.check_item(item(clause_number="211.110(a)(2)", quote="Disintegration time;"), SRC)[1])
+        self.assertFalse(X.check_item(item(clause_number="211.110(a)(2)", quote="time;"), SRC)[1])
+        intro = "Written procedures describing the warehousing of drug products shall be established and followed."
+        self.assertTrue(X.check_item(item(clause_number="211.142", quote=intro), SRC)[1])   # section text itself
         self.assertFalse(X.check_item(item(clause_number="211.42(c)", quote=child), SRC)[1])
         self.assertTrue(X.check_item(item(clause_number="211.42(c)(10)(i)", quote=child), SRC)[1])
         undivided = "A written record of the investigation shall be made and shall include the conclusions and followup."
@@ -172,7 +214,7 @@ class ReviewFixes(unittest.TestCase):
             its = [dict(item(), id=n, hash=X.item_hash(item())) for n in ("x", "y", "z")]
             for role, n in (("a", 1), ("b", 2)):
                 (run / "verify" / "batches" / f"batch_00{n}_{role}.json").write_text(json.dumps(
-                    {"items": [{"id": i["id"], "hash": i["hash"]} for i in its]}))
+                    {"role": role, "items": [{"id": i["id"], "hash": i["hash"]} for i in its]}))
             a = [{"id": "x", "verdict": "correct"}, {"id": "y", "verdict": "correct"}, {"id": "y", "verdict": "correct"},
                  {"id": "z", "verdict": "correct"}]
             b = [{"id": "x", "verdict": "correct"}, {"id": "y", "verdict": "correct"}]
@@ -182,6 +224,11 @@ class ReviewFixes(unittest.TestCase):
             redrafted = [dict(its[0], statement="something else")]
             redrafted[0]["hash"] = X.item_hash(redrafted[0])
             self.assertEqual(X.proven_by_both(run, redrafted), set())
+            self.assertEqual(X.proven_by_both(run, [dict(its[0], condition="changed")]), set())   # stale stored hash
+            # one verifier's answers saved under both names: the B batch file decides the role, so it counts once
+            (run / "verify" / "batches" / "batch_002_b.json").write_text(json.dumps(
+                {"role": "a", "items": [{"id": i["id"], "hash": i["hash"]} for i in its]}))
+            self.assertEqual(X.proven_by_both(run, its), set())
 
     def test_decisions_belong_to_their_run_and_item_and_reject_beats_auto(self):
         import json
@@ -194,12 +241,16 @@ class ReviewFixes(unittest.TestCase):
                 r.mkdir()
                 (r / "items.jsonl").write_text(json.dumps(dict(item(statement=stmt), id="i", source=SRC)) + "\n" +
                                                json.dumps(dict(item(), id="j", source=SRC)))
-                (r / "route.json").write_text(json.dumps({"route": {"i": "review", "j": "auto"}}))
+                (r / "route.json").write_text(json.dumps({"route": {"i": "review", "j": "auto"},
+                                                          "hashes": {"j": X.item_hash(item())}}))
             review.decide(r1, "i", "correct", by="QA lead", path=dec)
             self.assertEqual(sorted(review.shipped(r1, dec)), ["i", "j"])
             self.assertEqual(review.shipped(r2, dec), ["j"])                 # r1's decision is not r2's item
             review.decide(r1, "j", "reject", by="QA lead", note="spot check", path=dec)
             self.assertEqual(review.shipped(r1, dec), ["i"])
+            # items.jsonl rewritten after routing: the old "auto" does not ship the new item under that id
+            (r2 / "items.jsonl").write_text(json.dumps(dict(item(statement="Redrafted."), id="j", source=SRC)))
+            self.assertEqual(review.shipped(r2, dec), [])
 
 
 if __name__ == "__main__":

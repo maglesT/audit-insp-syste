@@ -25,16 +25,27 @@ DECISIONS = ROOT / "library" / "review" / "decisions.jsonl"
 
 
 def load(run):
+    """(run, items, route); an id whose item is gone or changed since routing (hash in route.json) is "review"
+    and never "auto"."""
     run = Path(run)
     items = {i["id"]: i for i in (json.loads(ln) for ln in (run / "items.jsonl").read_text().splitlines() if ln.strip())}
-    route = json.loads((run / "route.json").read_text())["route"]
+    doc = json.loads((run / "route.json").read_text())
+    hashes = doc.get("hashes", {})
+    route = {}
+    for k, v in doc["route"].items():
+        if k not in items:
+            continue
+        if v == "auto" and hashes.get(k) != fingerprint(items[k]):
+            v = "review"
+        route[k] = v
     return run, items, route
 
 
 def fingerprint(item):
+    """Always recomputed from the item's content (a stored hash could be stale)."""
     sys.path.insert(0, str(HERE))
     import xmlprofile
-    return item.get("hash") or xmlprofile.item_hash(item)
+    return xmlprofile.item_hash(item)
 
 
 def decisions(path=DECISIONS, run=None, items=None):

@@ -1,0 +1,1000 @@
+{
+ "role": "b",
+ "instructions": "You are a second, independent auditor. Check one checklist item against the US regulation paragraph it claims to come from. You get\nthe section's paragraphs (reference and exact text, from the official eCFR XML) and the item. Start from the TEXT:\nread the cited paragraph and its lead-in fully, then compare the item.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the parent paragraph's\nlead-in (including a qualifier such as \"as are necessary to prevent contamination or mixups\"). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph requires what the statement asks for, the statement\n  adds nothing and omits nothing of that obligation, the strength (shall/must = mandatory, should = recommended,\n  may = optional; a sub-paragraph takes its lead-in's) matches, and the regulation applies to every listed plant\n  type (INJ = sterile injectables: a paragraph limited to products not required to be sterile does not apply to\n  INJ; one limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "sections": [
+  {
+   "section": "211.132",
+   "paragraphs": [
+    {
+     "ref": "211.132",
+     "text": "§ 211.132 Tamper-evident packaging requirements for over-the-counter (OTC) human drug products."
+    },
+    {
+     "ref": "211.132(a)",
+     "text": "(a) General. The Food and Drug Administration has the authority under the Federal Food, Drug, and Cosmetic Act (the act) to establish a uniform national requirement for tamper-evident packaging of OTC drug products that will improve the security of OTC drug packaging and help assure the safety and effectiveness of OTC drug products. An OTC drug product (except a dermatological, dentifrice, insulin, or lozenge product) for retail sale that is not packaged in a tamper-resistant package or that is not properly labeled under this section is adulterated under section 501 of the act or misbranded under section 502 of the act, or both."
+    },
+    {
+     "ref": "211.132(b)",
+     "text": "(b) Requirements for tamper-evident package."
+    },
+    {
+     "ref": "211.132(b)(1)",
+     "text": "(1) Each manufacturer and packer who packages an OTC drug product (except a dermatological, dentifrice, insulin, or lozenge product) for retail sale shall package the product in a tamper-evident package, if this product is accessible to the public while held for sale. A tamper-evident package is one having one or more indicators or barriers to entry which, if breached or missing, can reasonably be expected to provide visible evidence to consumers that tampering has occurred. To reduce the likelihood of successful tampering and to increase the likelihood that consumers will discover if a product has been tampered with, the package is required to be distinctive by design or by the use of one or more indicators or barriers to entry that employ an identifying characteristic (e.g., a pattern, name, registered trademark, logo, or picture). For purposes of this section, the term “distinctive by design” means the packaging cannot be duplicated with commonly available materials or through commonly available processes. A tamper-evident package may involve an immediate-container and closure system or secondary-container or carton system or any combination of systems intended to provide a visual indication of package integrity. The tamper-evident feature shall be designed to and shall remain intact when handled in a reasonable manner during manufacture, distribution, and retail display."
+    },
+    {
+     "ref": "211.132(b)(2)",
+     "text": "(2) In addition to the tamper-evident packaging feature described in paragraph (b)(1) of this section, any two-piece, hard gelatin capsule covered by this section must be sealed using an acceptable tamper-evident technology."
+    },
+    {
+     "ref": "211.132(c)",
+     "text": "(c) Labeling."
+    },
+    {
+     "ref": "211.132(c)(1)",
+     "text": "(1) In order to alert consumers to the specific tamper-evident feature(s) used, each retail package of an OTC drug product covered by this section (except ammonia inhalant in crushable glass ampules or aerosol products that depend upon the power of a liquefied or compressed gas to expel the contents from the container) is required to bear a statement that:"
+    },
+    {
+     "ref": "211.132(c)(1)(i)",
+     "text": "(i) Identifies all tamper-evident feature(s) and any capsule sealing technologies used to comply with paragraph (b) of this section;"
+    },
+    {
+     "ref": "211.132(c)(1)(ii)",
+     "text": "(ii) Is prominently placed on the package; and"
+    },
+    {
+     "ref": "211.132(c)(1)(iii)",
+     "text": "(iii) Is so placed that it will be unaffected if the tamper-evident feature of the package is breached or missing."
+    },
+    {
+     "ref": "211.132(c)(2)",
+     "text": "(2) If the tamper-evident feature chosen to meet the requirements in paragraph (b) of this section uses an identifying characteristic, that characteristic is required to be referred to in the labeling statement. For example, the labeling statement on a bottle with a shrink band could say “For your protection, this bottle has an imprinted seal around the neck.”"
+    },
+    {
+     "ref": "211.132(d)",
+     "text": "(d) Request for exemptions from packaging and labeling requirements. A manufacturer or packer may request an exemption from the packaging and labeling requirements of this section. A request for an exemption is required to be submitted in the form of a citizen petition under § 10.30 of this chapter and should be clearly identified on the envelope as a “Request for Exemption from the Tamper-Evident Packaging Rule.” The petition is required to contain the following:"
+    },
+    {
+     "ref": "211.132(d)(1)",
+     "text": "(1) The name of the drug product or, if the petition seeks an exemption for a drug class, the name of the drug class, and a list of products within that class."
+    },
+    {
+     "ref": "211.132(d)(2)",
+     "text": "(2) The reasons that the drug product's compliance with the tamper-evident packaging or labeling requirements of this section is unnecessary or cannot be achieved."
+    },
+    {
+     "ref": "211.132(d)(3)",
+     "text": "(3) A description of alternative steps that are available, or that the petitioner has already taken, to reduce the likelihood that the product or drug class will be the subject of malicious adulteration."
+    },
+    {
+     "ref": "211.132(d)(4)",
+     "text": "(4) Other information justifying an exemption."
+    },
+    {
+     "ref": "211.132(e)",
+     "text": "(e) OTC drug products subject to approved new drug applications. Holders of approved new drug applications for OTC drug products are required under § 314.70 of this chapter to provide the agency with notification of changes in packaging and labeling to comply with the requirements of this section. Changes in packaging and labeling required by this regulation may be made before FDA approval, as provided under § 314.70(c) of this chapter. Manufacturing changes by which capsules are to be sealed require prior FDA approval under § 314.70(b) of this chapter."
+    },
+    {
+     "ref": "211.132(f)",
+     "text": "(f) Poison Prevention Packaging Act of 1970. This section does not affect any requirements for “special packaging” as defined under § 310.3(l) of this chapter and required under the Poison Prevention Packaging Act of 1970."
+    }
+   ]
+  },
+  {
+   "section": "211.134",
+   "paragraphs": [
+    {
+     "ref": "211.134",
+     "text": "§ 211.134 Drug product inspection."
+    },
+    {
+     "ref": "211.134(a)",
+     "text": "(a) Packaged and labeled products shall be examined during finishing operations to provide assurance that containers and packages in the lot have the correct label."
+    },
+    {
+     "ref": "211.134(b)",
+     "text": "(b) A representative sample of units shall be collected at the completion of finishing operations and shall be visually examined for correct labeling."
+    },
+    {
+     "ref": "211.134(c)",
+     "text": "(c) Results of these examinations shall be recorded in the batch production or control records."
+    }
+   ]
+  },
+  {
+   "section": "211.137",
+   "paragraphs": [
+    {
+     "ref": "211.137",
+     "text": "§ 211.137 Expiration dating."
+    },
+    {
+     "ref": "211.137(a)",
+     "text": "(a) To assure that a drug product meets applicable standards of identity, strength, quality, and purity at the time of use, it shall bear an expiration date determined by appropriate stability testing described in § 211.166."
+    },
+    {
+     "ref": "211.137(b)",
+     "text": "(b) Expiration dates shall be related to any storage conditions stated on the labeling, as determined by stability studies described in § 211.166."
+    },
+    {
+     "ref": "211.137(c)",
+     "text": "(c) If the drug product is to be reconstituted at the time of dispensing, its labeling shall bear expiration information for both the reconstituted and unreconstituted drug products."
+    },
+    {
+     "ref": "211.137(d)",
+     "text": "(d) Expiration dates shall appear on labeling in accordance with the requirements of § 201.17 of this chapter."
+    },
+    {
+     "ref": "211.137(e)",
+     "text": "(e) Homeopathic drug products shall be exempt from the requirements of this section."
+    },
+    {
+     "ref": "211.137(f)",
+     "text": "(f) Allergenic extracts that are labeled “No U.S. Standard of Potency” are exempt from the requirements of this section."
+    },
+    {
+     "ref": "211.137(g)",
+     "text": "(g) New drug products for investigational use are exempt from the requirements of this section, provided that they meet appropriate standards or specifications as demonstrated by stability studies during their use in clinical investigations. Where new drug products for investigational use are to be reconstituted at the time of dispensing, their labeling shall bear expiration information for the reconstituted drug product."
+    },
+    {
+     "ref": "211.137(h)",
+     "text": "(h) Pending consideration of a proposed exemption, published in the Federal Register of September 29, 1978, the requirements in this section shall not be enforced for human OTC drug products if their labeling does not bear dosage limitations and they are stable for at least 3 years as supported by appropriate stability data."
+    }
+   ]
+  },
+  {
+   "section": "211.142",
+   "paragraphs": [
+    {
+     "ref": "211.142",
+     "text": "§ 211.142 Warehousing procedures. Written procedures describing the warehousing of drug products shall be established and followed. They shall include:"
+    },
+    {
+     "ref": "211.142(a)",
+     "text": "(a) Quarantine of drug products before release by the quality control unit."
+    },
+    {
+     "ref": "211.142(b)",
+     "text": "(b) Storage of drug products under appropriate conditions of temperature, humidity, and light so that the identity, strength, quality, and purity of the drug products are not affected."
+    }
+   ]
+  },
+  {
+   "section": "211.150",
+   "paragraphs": [
+    {
+     "ref": "211.150",
+     "text": "§ 211.150 Distribution procedures. Written procedures shall be established, and followed, describing the distribution of drug products. They shall include:"
+    },
+    {
+     "ref": "211.150(a)",
+     "text": "(a) A procedure whereby the oldest approved stock of a drug product is distributed first. Deviation from this requirement is permitted if such deviation is temporary and appropriate."
+    },
+    {
+     "ref": "211.150(b)",
+     "text": "(b) A system by which the distribution of each lot of drug product can be readily determined to facilitate its recall if necessary."
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.132#1",
+   "section": "211.132",
+   "hash": "da75748b395176f5",
+   "item": {
+    "statement": "Package each OTC drug product (except dermatological, dentifrice, insulin or lozenge products) for retail sale in a tamper-evident package if the product is accessible to the public while held for sale.",
+    "quote": "Each manufacturer and packer who packages an OTC drug product (except a dermatological, dentifrice, insulin, or lozenge product) for retail sale shall package the product in a tamper-evident package, if this product is accessible to the public while held for sale.",
+    "clause_number": "211.132(b)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": "OTC product for retail sale accessible to public"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.132#2",
+   "section": "211.132",
+   "hash": "31681063929ca616",
+   "item": {
+    "statement": "Make the tamper-evident package for OTC retail drug products (except dermatological, dentifrice, insulin or lozenge products) distinctive by design, or use one or more indicators or barriers to entry with an identifying characteristic such as a pattern, name, registered trademark, logo or picture.",
+    "quote": "To reduce the likelihood of successful tampering and to increase the likelihood that consumers will discover if a product has been tampered with, the package is required to be distinctive by design or by the use of one or more indicators or barriers to entry that employ an identifying characteristic (e.g., a pattern, name, registered trademark, logo, or picture).",
+    "clause_number": "211.132(b)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": "OTC product for retail sale"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.132#3",
+   "section": "211.132",
+   "hash": "9c2d3e5009a40403",
+   "item": {
+    "statement": "Design the tamper-evident feature of OTC retail drug product packages (except dermatological, dentifrice, insulin or lozenge products) so that it remains intact when handled reasonably during manufacture, distribution and retail display, and confirm it does.",
+    "quote": "The tamper-evident feature shall be designed to and shall remain intact when handled in a reasonable manner during manufacture, distribution, and retail display.",
+    "clause_number": "211.132(b)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": "OTC product for retail sale"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.132#4",
+   "section": "211.132",
+   "hash": "dec875a92043e595",
+   "item": {
+    "statement": "In addition to the tamper-evident package, seal any two-piece hard gelatin capsule sold OTC at retail (except dermatological, dentifrice, insulin or lozenge products) using an acceptable tamper-evident technology.",
+    "quote": "In addition to the tamper-evident packaging feature described in paragraph (b)(1) of this section, any two-piece, hard gelatin capsule covered by this section must be sealed using an acceptable tamper-evident technology.",
+    "clause_number": "211.132(b)(2)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD"
+    ],
+    "condition": "two-piece hard gelatin capsule OTC retail"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.132#5",
+   "section": "211.132",
+   "hash": "6ad131ab22de5c5a",
+   "item": {
+    "statement": "Each retail package of an OTC drug product covered by the tamper-evident packaging rule (except ammonia inhalant in crushable glass ampules, or aerosol products that depend on a liquefied or compressed gas to expel the contents) bears a statement alerting consumers to the specific tamper-evident feature(s) used.",
+    "quote": "In order to alert consumers to the specific tamper-evident feature(s) used, each retail package of an OTC drug product covered by this section (except ammonia inhalant in crushable glass ampules or aerosol products that depend upon the power of a liquefied or compressed gas to expel the contents from the container) is required to bear a statement that:",
+    "clause_number": "211.132(c)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": "OTC retail package"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.132#6",
+   "section": "211.132",
+   "hash": "ec4fa3026a10ede3",
+   "item": {
+    "statement": "Each retail package of an OTC drug product covered by the tamper-evident packaging rule (except ammonia inhalant in crushable glass ampules, or aerosol products that depend on a liquefied or compressed gas to expel the contents) bears a statement alerting consumers to the tamper-evident feature(s) used, and that statement identifies all tamper-evident features and any capsule sealing technologies used.",
+    "quote": "Identifies all tamper-evident feature(s) and any capsule sealing technologies used to comply with paragraph (b) of this section;",
+    "clause_number": "211.132(c)(1)(i)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": "OTC retail package"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.132#7",
+   "section": "211.132",
+   "hash": "da20512d1b83a219",
+   "item": {
+    "statement": "Each retail package of an OTC drug product covered by the tamper-evident packaging rule (except ammonia inhalant in crushable glass ampules, or aerosol products that depend on a liquefied or compressed gas to expel the contents) bears a statement alerting consumers to the tamper-evident feature(s) used, and that statement is placed prominently on the package.",
+    "quote": "Is prominently placed on the package; and",
+    "clause_number": "211.132(c)(1)(ii)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": "OTC retail package"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.132#8",
+   "section": "211.132",
+   "hash": "9eec93c0754ff8af",
+   "item": {
+    "statement": "Each retail package of an OTC drug product covered by the tamper-evident packaging rule (except ammonia inhalant in crushable glass ampules, or aerosol products that depend on a liquefied or compressed gas to expel the contents) bears a statement alerting consumers to the tamper-evident feature(s) used, and that statement is placed so that it is unaffected if the tamper-evident feature is breached or missing.",
+    "quote": "Is so placed that it will be unaffected if the tamper-evident feature of the package is breached or missing.",
+    "clause_number": "211.132(c)(1)(iii)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": "OTC retail package"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.132#9",
+   "section": "211.132",
+   "hash": "047382a22e72cba7",
+   "item": {
+    "statement": "If the tamper-evident feature chosen for an OTC retail drug product uses an identifying characteristic, refer to that characteristic in the labeling statement.",
+    "quote": "If the tamper-evident feature chosen to meet the requirements in paragraph (b) of this section uses an identifying characteristic, that characteristic is required to be referred to in the labeling statement.",
+    "clause_number": "211.132(c)(2)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": "feature uses identifying characteristic"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.132#10",
+   "section": "211.132",
+   "hash": "fd1541673641b61e",
+   "item": {
+    "statement": "A manufacturer or packer may request an exemption from the tamper-evident packaging and labeling requirements.",
+    "quote": "A manufacturer or packer may request an exemption from the packaging and labeling requirements of this section.",
+    "clause_number": "211.132(d)",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.132#11",
+   "section": "211.132",
+   "hash": "0c094d03369a3c54",
+   "item": {
+    "statement": "Submit any request for exemption from the tamper-evident packaging and labeling requirements as a citizen petition to FDA.",
+    "quote": "A request for an exemption is required to be submitted in the form of a citizen petition under § 10.30 of this chapter",
+    "clause_number": "211.132(d)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": "if requesting an exemption"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.132#12",
+   "section": "211.132",
+   "hash": "50aae7bddddea0b9",
+   "item": {
+    "statement": "Clearly mark the envelope of a tamper-evident exemption petition as a request for exemption from the tamper-evident packaging rule.",
+    "quote": "should be clearly identified on the envelope as a “Request for Exemption from the Tamper-Evident Packaging Rule.”",
+    "clause_number": "211.132(d)",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": "if requesting an exemption"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.132#13",
+   "section": "211.132",
+   "hash": "d7a9d3ca597d346f",
+   "item": {
+    "statement": "An exemption petition from the tamper-evident packaging and labeling requirements contains the name of the drug product, or for a drug class, the class name and a list of products in that class.",
+    "quote": "The name of the drug product or, if the petition seeks an exemption for a drug class, the name of the drug class, and a list of products within that class.",
+    "clause_number": "211.132(d)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": "if requesting an exemption"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.132#14",
+   "section": "211.132",
+   "hash": "97275326f5ff5dd2",
+   "item": {
+    "statement": "An exemption petition from the tamper-evident packaging and labeling requirements contains the reasons why the product's compliance with those requirements is unnecessary or cannot be achieved.",
+    "quote": "The reasons that the drug product's compliance with the tamper-evident packaging or labeling requirements of this section is unnecessary or cannot be achieved.",
+    "clause_number": "211.132(d)(2)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": "if requesting an exemption"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.132#15",
+   "section": "211.132",
+   "hash": "1c4a32ab824301b8",
+   "item": {
+    "statement": "An exemption petition from the tamper-evident packaging and labeling requirements describes alternative steps available, or already taken by the petitioner, to reduce the likelihood of malicious adulteration of the product or drug class.",
+    "quote": "A description of alternative steps that are available, or that the petitioner has already taken, to reduce the likelihood that the product or drug class will be the subject of malicious adulteration.",
+    "clause_number": "211.132(d)(3)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": "if requesting an exemption"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.132#16",
+   "section": "211.132",
+   "hash": "762668bbdaebb938",
+   "item": {
+    "statement": "An exemption petition from the tamper-evident packaging and labeling requirements contains any other information justifying the exemption.",
+    "quote": "Other information justifying an exemption.",
+    "clause_number": "211.132(d)(4)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": "if requesting an exemption"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.132#17",
+   "section": "211.132",
+   "hash": "2887ee70cf9aed39",
+   "item": {
+    "statement": "Holders of approved new drug applications for OTC drug products notify FDA of packaging and labeling changes made to comply with the tamper-evident requirements, through the supplement and change-reporting process.",
+    "quote": "Holders of approved new drug applications for OTC drug products are required under § 314.70 of this chapter to provide the agency with notification of changes in packaging and labeling to comply with the requirements of this section.",
+    "clause_number": "211.132(e)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": "holder of approved NDA for OTC product"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.132#18",
+   "section": "211.132",
+   "hash": "b2ee22c06b63277a",
+   "item": {
+    "statement": "Packaging and labeling changes required by the tamper-evident rule may be implemented before FDA approval, as allowed by the change-reporting rules for approved applications.",
+    "quote": "Changes in packaging and labeling required by this regulation may be made before FDA approval, as provided under § 314.70(c) of this chapter.",
+    "clause_number": "211.132(e)",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": "holder of approved NDA for OTC product"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.132#19",
+   "section": "211.132",
+   "hash": "07f4290a304d0aa9",
+   "item": {
+    "statement": "Obtain prior FDA approval before making manufacturing changes by which capsules are to be sealed under an approved new drug application for an OTC product.",
+    "quote": "Manufacturing changes by which capsules are to be sealed require prior FDA approval under § 314.70(b) of this chapter.",
+    "clause_number": "211.132(e)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD"
+    ],
+    "condition": "holder of approved NDA; capsule sealing change"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.134#1",
+   "section": "211.134",
+   "hash": "3c0037b3ab5f1629",
+   "item": {
+    "statement": "Examine packaged and labeled products during finishing operations to assure that containers and packages in the lot carry the correct label.",
+    "quote": "Packaged and labeled products shall be examined during finishing operations to provide assurance that containers and packages in the lot have the correct label.",
+    "clause_number": "211.134(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "during finishing operations"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.134#2",
+   "section": "211.134",
+   "hash": "09fcbbb3145339d7",
+   "item": {
+    "statement": "Collect a representative sample of units at the completion of finishing operations and visually examine them for correct labeling.",
+    "quote": "A representative sample of units shall be collected at the completion of finishing operations and shall be visually examined for correct labeling.",
+    "clause_number": "211.134(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "at completion of finishing operations"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.134#3",
+   "section": "211.134",
+   "hash": "6f31063cb103c628",
+   "item": {
+    "statement": "Record the results of the in-process label examinations and the end-of-finishing visual sample examination in the batch production or control records.",
+    "quote": "Results of these examinations shall be recorded in the batch production or control records.",
+    "clause_number": "211.134(c)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.137#1",
+   "section": "211.137",
+   "hash": "a85324aecef0a2a8",
+   "item": {
+    "statement": "Give each drug product an expiration date, determined by appropriate stability testing, to assure it meets applicable standards of identity, strength, quality and purity at the time of use.",
+    "quote": "To assure that a drug product meets applicable standards of identity, strength, quality, and purity at the time of use, it shall bear an expiration date determined by appropriate stability testing described in § 211.166.",
+    "clause_number": "211.137(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.137#2",
+   "section": "211.137",
+   "hash": "5a7cf699ae46ed73",
+   "item": {
+    "statement": "Relate expiration dates to any storage conditions stated on the labeling, as determined by stability studies.",
+    "quote": "Expiration dates shall be related to any storage conditions stated on the labeling, as determined by stability studies described in § 211.166.",
+    "clause_number": "211.137(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "storage conditions stated on labeling"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.137#3",
+   "section": "211.137",
+   "hash": "c6dd2d2192fef658",
+   "item": {
+    "statement": "If a drug product is to be reconstituted at the time of dispensing, include expiration information on its labeling for both the reconstituted and unreconstituted product.",
+    "quote": "If the drug product is to be reconstituted at the time of dispensing, its labeling shall bear expiration information for both the reconstituted and unreconstituted drug products.",
+    "clause_number": "211.137(c)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "product reconstituted at dispensing"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.137#4",
+   "section": "211.137",
+   "hash": "b9606422c4a8bf70",
+   "item": {
+    "statement": "Show expiration dates on labeling in line with FDA's labeling requirements for expiration dates.",
+    "quote": "Expiration dates shall appear on labeling in accordance with the requirements of § 201.17 of this chapter.",
+    "clause_number": "211.137(d)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.137#5",
+   "section": "211.137",
+   "hash": "3f4e1f5c97b4f14a",
+   "item": {
+    "statement": "Investigational new drug products may be exempt from expiration dating only if stability studies during their clinical use demonstrate they meet appropriate standards or specifications.",
+    "quote": "New drug products for investigational use are exempt from the requirements of this section, provided that they meet appropriate standards or specifications as demonstrated by stability studies during their use in clinical investigations.",
+    "clause_number": "211.137(g)",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "investigational new drug product"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.137#6",
+   "section": "211.137",
+   "hash": "eabf4b8d01612944",
+   "item": {
+    "statement": "Where investigational new drug products are to be reconstituted at the time of dispensing, include expiration information for the reconstituted product on their labeling.",
+    "quote": "Where new drug products for investigational use are to be reconstituted at the time of dispensing, their labeling shall bear expiration information for the reconstituted drug product.",
+    "clause_number": "211.137(g)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "investigational product reconstituted at dispensing"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.142#1",
+   "section": "211.142",
+   "hash": "7b5c93ac0eba20e1",
+   "item": {
+    "statement": "Establish and follow written warehousing procedures for drug products that cover quarantine before release and storage under appropriate conditions.",
+    "quote": "Written procedures describing the warehousing of drug products shall be established and followed. They shall include:",
+    "clause_number": "211.142",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.142#2",
+   "section": "211.142",
+   "hash": "d5d735dc39e21698",
+   "item": {
+    "statement": "Written warehousing procedures for drug products cover holding drug products in quarantine until the quality control unit releases them.",
+    "quote": "Quarantine of drug products before release by the quality control unit.",
+    "clause_number": "211.142(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.142#3",
+   "section": "211.142",
+   "hash": "602ff08c89976ba8",
+   "item": {
+    "statement": "Written warehousing procedures for drug products cover storing drug products under suitable temperature, humidity and light conditions so their identity, strength, quality and purity are not affected.",
+    "quote": "Storage of drug products under appropriate conditions of temperature, humidity, and light so that the identity, strength, quality, and purity of the drug products are not affected.",
+    "clause_number": "211.142(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.150#1",
+   "section": "211.150",
+   "hash": "b2123582edd20208",
+   "item": {
+    "statement": "Establish and follow written procedures for the distribution of drug products that cover first-out distribution of the oldest approved stock and lot traceability for recall.",
+    "quote": "Written procedures shall be established, and followed, describing the distribution of drug products. They shall include:",
+    "clause_number": "211.150",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.150#2",
+   "section": "211.150",
+   "hash": "c9d9a1842045b1ce",
+   "item": {
+    "statement": "Written distribution procedures for drug products include a procedure so that the oldest approved stock of a drug product is shipped first; departing from this is allowed only if the departure is temporary and appropriate.",
+    "quote": "A procedure whereby the oldest approved stock of a drug product is distributed first. Deviation from this requirement is permitted if such deviation is temporary and appropriate.",
+    "clause_number": "211.150(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "deviation only if temporary and appropriate"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.150#3",
+   "section": "211.150",
+   "hash": "799fe8e367dd0d66",
+   "item": {
+    "statement": "Written distribution procedures for drug products include a system that allows the distribution of each drug product lot to be readily determined, to facilitate recall if necessary.",
+    "quote": "A system by which the distribution of each lot of drug product can be readily determined to facilitate its recall if necessary.",
+    "clause_number": "211.150(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  }
+ ]
+}

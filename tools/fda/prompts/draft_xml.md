@@ -35,8 +35,10 @@ needs its own item for that duty, quoting the whole sentence including "shall in
 - topic: the sub-topic id from TOPICS the obligation belongs to.
 
 Sentences that state no obligation for the manufacturer (a heading, a definition, a scope statement, a statement
-of purpose) go in not_applicable: the paragraph reference, the first 8 or more words copied exactly, and the
-reason in a few words.
+of purpose, an exemption, an enforcement or interpretation statement addressed to FDA) go in not_applicable: one
+entry per SENTENCE (a paragraph of three such sentences needs three entries), each with the paragraph reference,
+the sentence's first 8 or more words copied exactly (without the paragraph designation), and the reason in a few
+words.
 
 Write the answers file named in your task: {"answers": [one object per section with "section" set to the section's
 "id" exactly]}.
