@@ -67,4 +67,4 @@ verification, about 4.9 k tokens per item in all.
 lead-in condition belongs to every row or list item under it; (2) footnote markers: quote as printed with the
 marker in "^" form ("Cumene^1"), so verifiers and checks agree; (3) coverage measure without running headers;
 (4) a strength rule for checklist rows without a modal verb (owner question: CDSCO "Specify/Whether" rows);
-(5) clause_number only as printed (the drafters composed references such as "Table 2 Note 1": 26 clause findings).
+(5) clause_number only as printed (the drafters composed references such as "Table 2 Note 1"; 52 clause findings with the strict clause check).
