@@ -93,12 +93,12 @@ of the rest are descriptive "may" sentences ("inspection coverage may include", 
 `obligations.py` counts as permissive obligations; a few look real (Schedule M p156 self-inspection procedure,
 p163 balances; "4.34 The disinfection process should be validated." on PE 009 p22 and WHO 1044 p20; PE 009 p18
 gloves): to inspect before scaling.
-**Quote failures (81):** mostly table quotes: 49 header-carrying quotes, where drafters joined two header rows
+**Quote failures (81):** 64 are table quotes, 44 of them header-carrying quotes, where drafters joined two header rows
 into combined phrases (the prompt now says to quote every header row in order; drafted before that line was
 added), CDSCO rows quoted without their long rating columns, and Q3C Table 2 rows with a header from the page
 before. They go to the "text layer differs" list.
-**Usage:** drafting about 840 k tokens (about 17 k per page, 1.6 k per item); verifiers about 715 k for 246 items
-(2.9 k per item).
+**Usage:** drafting about 840 k tokens (about 17 k per page, 1.6 k per item); verifiers about 742 k for 246 items
+(3.0 k per item).
 
 **Proposed before scaling:** (1) coverage counts "may" sentences only when they grant a permission to the site
 (not descriptive "may"), and table captions are excluded; (2) a continued table's header is quoted from the page
