@@ -187,7 +187,7 @@ finished in about 4 minutes in total.
   - **START HERE (session 6): 0b is in progress on branch `parser-fixes-0b`.** First 0b PR (D42) done: the 4
     TEXT LOST cases, WHO TRS 981 glyph text, landscape pages read upright, turned side titles, superscripts
     (10^-6), PE 009 / EMA running footers, FDA margin numbers, CDSCO header band, grade tables one row per grade.
-    Fidelity: 1,210 flags, all explained; 231 "Parser defect (0b)" rows left (`grep "Parser defect"
+    Fidelity: 1,210 flags, all explained; 232 "Parser defect (0b)" rows left (`grep "Parser defect"
     library/fidelity-explanations.csv`). Tests: `tests/test_parse_0b.py`.
     - **Next in 0b (second PR): the D41 trial.** Table Transformer (HF `microsoft/table-transformer-structure-
       recognition-v1.1-all`, reachable through the proxy; needs torch + transformers + timm, or an ONNX export run
