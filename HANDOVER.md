@@ -1,6 +1,31 @@
 # Handover: read this first in every new session
 
-Last updated: 31 October 2026, session 6 (0b second PR: Table Transformer trial, D43; next the per-cell fidelity comparison).
+Last updated: 31 October 2026, session 6 (D45: page-based vision drafting, clause store frozen; vision trial in progress).
+
+## START HERE (session 7)
+- **D45 (owner, 31 Oct) changes the plan: checklist items are drafted from PDF PAGES with vision; the parsed clause
+  store, parser and fidelity work are FROZEN** (kept for search/graph cross-checks; no more parser fixes unless one
+  breaks obligation coverage). Read D43-D45 in `docs/decisions.md`. CLAUDE.md now lets drafting/verifier agents get
+  page images.
+- **Done this session:** PR #33 merged (D43: Table Transformer trial; adopted on 2 of 34 pages, `tools/parse/tatr.py`,
+  `library/tables-tatr/`). Per-cell fidelity comparison built and **parked** on branch `fidelity-per-cell` (D44, not
+  merged). Quote check `tools/library/quotes.py` (second reading pdfminer/html.parser; 715 of 716 existing quotes
+  pass; the miss, QS-117, has a PE 009 page footer inside its quote).
+- **In progress on branch `quote-check`:** `tools/pages/vision.py` (render pages at 150 dpi with pypdfium2, page text
+  layer, drafting/verifier batches for agents, checks: quote in pdftotext AND pdfminer page text, clause number on
+  page, numbers/strength/conditions, page coverage of obligation sentences; "text layer differs" list) and
+  prompts in `tools/pages/prompts/`. **Trial run:** `library/ai-runs/20261031T075617.244703Z-vision-draft/`
+  (10 documents x 5 pages; images in `work/vision-pages/`, not in git, sha256 in `pages.json`). Steps: drafting
+  agents answer `batches/batch_NNN.json` -> `answers/` (max 3 at a time); `vision.py ingest-draft RUN`;
+  `prepare-verify RUN`; verifier agents A/B answer `verify/batches` -> `verify/answers`; `ingest-verify RUN`;
+  then report to the owner/coordinator (pass share, text-layer-differs count, coverage gaps, verifier agreement,
+  usage per page vs text-only drafting) **before scaling**.
+- **Then:** Layer 1 on page text for page items (no library/clauses dependency); 0c version currency
+  (`tools/currency.py`); 0d spot-check sheet by page (50 pages with their items). One PR each, independent review,
+  merge on green CI. Reply to session_01PybpFuvG6mX9B3zK3YZjZ1 with the trial results.
+- Paid EU + PIC/S API build: still needs direct owner confirmation.
+- Open owner question: gold set needs a person to verify it (small 50-100 items, or skip and rely on two
+  verifiers + mutation tests); asked 31 Oct, no answer yet.
 
 ## Mutation test results (30 Oct 2026, plan 2.6 / Layer 3, pilot scale)
 `tools/ai/mutate.py` planted errors in the 56 session-pilot mappings and mixed the mutants, shuffled, with the 56
