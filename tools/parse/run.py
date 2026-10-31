@@ -9,6 +9,7 @@ better, see text_parser); tables in PDFs are read by tables.py. A file no parser
 import csv
 import json
 import sys
+import tempfile
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -76,8 +77,16 @@ def parser_for(row):
     if f.endswith(".html"):
         return {"FDA": fdahtml.parse, "EMA": emahtml.parse}.get(row["regulator"])
     if row["regulator"] == "FDA":
-        return lambda path: tables.parse(path, headings.parse)
-    return lambda path: tables.parse(path, text_parser)
+        return upright(lambda path: tables.parse(path, headings.parse))
+    return upright(lambda path: tables.parse(path, text_parser))
+
+
+def upright(parse):
+    """A PDF parser that reads a copy with turned (landscape) pages set upright (common.upright_copy)."""
+    def run(path):
+        with tempfile.TemporaryDirectory() as folder:
+            return parse(common.upright_copy(path, folder))
+    return run
 
 
 def flags(rep):

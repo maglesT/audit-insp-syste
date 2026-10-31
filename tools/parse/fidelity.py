@@ -116,7 +116,23 @@ def page_lines(page):
             line = []
         line.append(w)
     lines.append(line)
-    return [[(w["text"], w["size"] < 0.8 * body, round((w[start] + w[end]) / 2, 1)) for w in ln] for ln in lines]
+    return [[(cid_text(w["text"]), w["size"] < 0.8 * body, round((w[start] + w[end]) / 2, 1)) for w in ln]
+            for ln in lines]
+
+
+CID = re.compile(r"\(cid:(\d+)\)")
+CID_EXTRA = {1: " ", 109: "fi", 116: "•", 245: "ff"}
+
+
+def cid_text(text):
+    """A word in a font without a Unicode map, which pdfminer reads as "(cid:n)" glyph numbers, read in the
+    standard glyph order of Adobe's Pro fonts (glyph n = character n + 31; 1 is the space, 109 "fi", 116 a
+    bullet, 245 "ff"), only when the word holds the space glyph 1 next to other glyphs (WHO TRS 981 Annex 2's QRM
+    tables). Any other "(cid:n)" is dropped later, as before."""
+    glyphs = [int(n) for n in CID.findall(text)]
+    if 1 not in glyphs or len(set(glyphs)) < 2 or not all(n in CID_EXTRA or 2 <= n <= 95 for n in glyphs):
+        return text
+    return CID.sub(lambda m: CID_EXTRA.get(int(m.group(1))) or chr(int(m.group(1)) + 31), text)
 
 
 def latin_line(line):

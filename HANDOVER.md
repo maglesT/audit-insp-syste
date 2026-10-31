@@ -1,6 +1,6 @@
 # Handover: read this first in every new session
 
-Last updated: 30 October 2026, session 4 (source fidelity check 0a done: D39, D40; next 0b parser fixes).
+Last updated: 31 October 2026, session 5 (0b first PR: deterministic parser fixes, D42; next the D41 table-transformer trial).
 
 ## Mutation test results (30 Oct 2026, plan 2.6 / Layer 3, pilot scale)
 `tools/ai/mutate.py` planted errors in the 56 session-pilot mappings and mixed the mutants, shuffled, with the 56
@@ -184,7 +184,28 @@ finished in about 4 minutes in total.
     items, the main saving); adjudication of disagreements; reverse test (numbers, conditions, frequencies + 20 %);
     mutation test on the items; then the go/no-go and forecast. The drafter now assigns each obligation's
     sub-topic (S3 took it from the dropped consolidation).
-  - **START HERE (session 5): 0a (source fidelity check, D39/D40) is done** (PR from branch `fidelity-check`).
+  - **START HERE (session 6): 0b is in progress on branch `parser-fixes-0b`.** First 0b PR (D42) done: the 4
+    TEXT LOST cases, WHO TRS 981 glyph text, landscape pages read upright, turned side titles, superscripts
+    (10^-6), PE 009 / EMA running footers, FDA margin numbers, CDSCO header band, grade tables one row per grade.
+    Fidelity: 1,210 flags, all explained; 232 "Parser defect (0b)" rows left (`grep "Parser defect"
+    library/fidelity-explanations.csv`). Tests: `tests/test_parse_0b.py`.
+    - **Next in 0b (second PR): the D41 trial.** Table Transformer (HF `microsoft/table-transformer-structure-
+      recognition-v1.1-all`, reachable through the proxy; needs torch + transformers + timm, or an ONNX export run
+      with the pinned onnxruntime) on rendered table pages (pypdfium2 is pinned); cell text from poppler words as
+      now. Trial pages: grade tables (WHO 1044 A2 p17/19, EU Annex 1, PE 009 Annex 1), CDSCO checklist, ICH Q3C,
+      WHO HVAC A8.1 (pages 15-17, use the upright copy), the 4 former TEXT LOST pages (now correct by rule: the
+      model must not regress them). Adopt per page only where its grid beats `tables.py` under the fidelity
+      check; commit the grids (JSON) with the model version and sha256, CI does not run the model. Then the
+      per-cell fidelity comparison (closes the D40 table-row residual).
+    - **Then the rest of the 0b list** (largest groups): CDSCO rows merged with the section-heading row below
+      (18), CP 7346.832 page 53-54 row not found (pdfplumber finds the full grid with snap/join tolerance 6;
+      measure corpus-wide before changing the default), FDA footnote text inside
+      clauses (container closure 24, CP 7346 23), WHO 929 A4 contents as clauses (19), Q3C equations and solvent
+      table (20), Drugs Rules lists/boundaries (18), OJ C 95 header (even/odd pages differ, 4-page document).
+    - Then 0c (version currency, `tools/currency.py`) and 0d (50-clause spot-check sheet), one PR each.
+    - Dev loop: a one-source parse is `run.parser_for(row)(path)` + `common.write_clauses` (about seconds);
+      `fidelity.py run FILE...` rewrites the report with only those files, so always finish with the full run.
+  - **Session 5 start note (kept): 0a (source fidelity check, D39/D40) is done** (PR from branch `fidelity-check`).
     Next: **0b parser fixes**, then 0c version currency (`tools/currency.py`, not started), then 0d a 50-clause
     human spot-check sheet; one PR each, each with an independent review pass, merged on green CI. When 0a-0d are
     done, reply to the coordinating session (session_01PybpFuvG6mX9B3zK3YZjZ1, send_message) with a short summary.
@@ -205,6 +226,9 @@ finished in about 4 minutes in total.
       Residual: table rows are compared as a bag, so a value dropped from or moved within a row is often missed;
       per-cell comparison belongs with the 0b table work. Harness: the reviewer's scripts were in the session
       scratchpad (gone); rebuild from D40's description if needed.
+    - **0b also includes the table-transformer trial (D41, owner-approved, rendering pages is fine):** Table
+      Transformer or TableFormer/Docling for table grids, text from the PDF text layer; trial on the worst tables
+      first, adopt only where better, then per-cell fidelity comparison.
     - **0b work list** = every explanation starting "Parser defect (0b)" (396 rows; `grep "Parser defect" library/fidelity-explanations.csv`), plus the 10 known parser limits below. Most important first:
       1. **TEXT LOST (4):** FDA CP 7346.832 and CP 7356.002 Attachment A (first sentence stored as bogus
          "Table 3" rows, "its inspectional authority" in no clause); FDA nitrosamine guidance 2024 Appendix A

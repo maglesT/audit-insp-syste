@@ -8,6 +8,7 @@ import hashlib
 import json
 import re
 import subprocess
+from collections import Counter
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 
@@ -53,9 +54,79 @@ def twin_key(text):
     return " ".join(re.findall(r"\w+", TWIN_LEADING.sub("", normalise(text)).lower()))
 
 
+GLYPH_SPACE = "\x01"
+GLYPH_EXTRA = {"m": "fi", "t": "•", "õ": "ff"}     # glyphs 109, 116, 245 of the same glyph order
+GLYPH_TOKEN = re.compile(r"[^ \t\n\r\f\v]*\x01[^ \t\n\r\f\v]*")
+
+
+def _unshift_part(part):
+    if not part or not all("\x02" <= c <= "\x5f" or c in GLYPH_EXTRA for c in part):
+        return part
+    return "".join(GLYPH_EXTRA.get(c) or chr(ord(c) + 31) for c in part)
+
+
+def unshift_glyphs(text):
+    """Text of fonts without a Unicode map, which poppler prints as raw glyph numbers (WHO TRS 981 Annex 2's QRM
+    tables: "UFDIOJRVF\\x01UP" for "technique to"). The font's glyphs are in the standard order of Adobe's Pro
+    fonts, glyph n = character n + 31 (glyph 1 is the space, which poppler prints as \\x01; 109 "fi", 116 a bullet,
+    245 "ff"). Only words that hold the \\x01 space glyph are read this way, part by part between the spaces, and
+    a part is converted only when every character is a raw glyph number of that range; a part in ordinary letters
+    ("t\\x01Tool": bullet, then "Tool") stays. A word made of \\x01 alone (a bullet in some PIC/S fonts) stays."""
+    def one(m):
+        token = m.group(0)
+        if not token.strip(GLYPH_SPACE):
+            return token
+        return " ".join(_unshift_part(p) for p in token.split(GLYPH_SPACE)).rstrip()
+    return GLYPH_TOKEN.sub(one, text)
+
+
+def turned_pages(path):
+    """{page number: degrees} for pages whose text is set turned on an unrotated page (a landscape table printed
+    on a portrait page, WHO TRS 1010 Annex 8 Table A8.1): most characters run at 90 or 270 degrees once the
+    page's own rotation is applied. The degrees are the rotation that sets the text upright."""
+    import math
+    import pypdfium2 as pdfium
+    import pypdfium2.raw as raw
+    out = {}
+    pdf = pdfium.PdfDocument(str(path))
+    try:
+        for i in range(len(pdf)):
+            page = pdf[i]
+            textpage = page.get_textpage()
+            angles = [raw.FPDFText_GetCharAngle(textpage.raw, k) for k in range(textpage.count_chars())]
+            degrees = [(round(math.degrees(a)) + page.get_rotation()) % 360 for a in angles if a >= 0]
+            turned = Counter(d for d in degrees if d in (89, 90, 91, 269, 270, 271))
+            if degrees and sum(turned.values()) > len(degrees) / 2:
+                main = turned.most_common(1)[0][0]
+                out[i + 1] = (page.get_rotation() + (90 if main >= 269 else 270)) % 360
+    finally:
+        pdf.close()
+    return out
+
+
+def upright_copy(path, folder):
+    """The PDF itself, or, when it has turned pages (turned_pages), a copy in folder (same file name) with those
+    pages rotated so their text is upright: poppler reads turned text backwards ("elbat" for "table"), so the
+    parsers read the copy. Page numbers and text are unchanged; the fidelity check reads the original."""
+    turned = turned_pages(path)
+    if not turned:
+        return Path(path)
+    import pypdfium2 as pdfium
+    pdf = pdfium.PdfDocument(str(path))
+    try:
+        for pno, degrees in turned.items():
+            pdf[pno - 1].set_rotation(degrees)
+        out = Path(folder) / Path(path).name
+        pdf.save(str(out))
+    finally:
+        pdf.close()
+    return out
+
+
 def pdf_pages(path):
     """Layout-preserving text, one string per page."""
     out = subprocess.run(["pdftotext", "-layout", str(path), "-"], capture_output=True, text=True, check=True).stdout
+    out = unshift_glyphs(out)
     pages = out.split("\f")
     if pages and not pages[-1].strip():
         pages = pages[:-1]
@@ -78,14 +149,38 @@ def english_line(line):
 
 
 def line_key(line):
-    """A line compared across pages: digits masked, spacing collapsed (layout mode varies the gaps)."""
-    return re.sub(r"\s+", " ", re.sub(r"\d+", "#", line.strip()))
+    """A line compared across pages: digits masked, spacing collapsed (layout mode varies the gaps), no spaces
+    around dashes (the PIC/S footer prints "-6-" on one page and "- 10 -" on the next), lower-case roman page
+    numbers masked like digits ("-ii-")."""
+    masked = re.sub(r"(?<![^\W\d_])[ivxl]{1,6}(?![^\W\d_])", "#", re.sub(r"\d+", "#", line.strip()))
+    return re.sub(r"\s*([-–—])\s*", r"\1", re.sub(r"\s+", " ", masked))
 
 
 def edge_lines(page, n=3):
     """The first and last few non-empty lines of a page: the only places running headers and footers sit."""
     lines = [ln for ln in page.splitlines() if ln.strip()]
     return lines[:n] + lines[-n:] if len(lines) > 2 * n else lines
+
+
+BLOCK = 6           # lines from a page edge that may belong to one running header or footer block
+BLOCK_SHARE = 0.6   # share of the pages a line beyond the edge lines must recur on to extend a block
+
+
+def edge_block(page, noise, n=3):
+    """The page's edge lines (edge_lines) plus the lines that continue a run of repeated lines inward from the top
+    or the bottom: a running footer of four lines (the EMA nitrosamine Q&A's title, two lines more and
+    "EMA/409815/2020 Page 5/27") is one block. noise is repeated_lines(pages, min_share=BLOCK_SHARE, n=BLOCK):
+    stricter than the edge rule, so a heading that often sits near a page edge ("References", "Supplement 2" in
+    WHO TRS 992 Annex 5) is not taken for part of a block."""
+    lines = [ln for ln in page.splitlines() if ln.strip()]
+    out = set(ln.strip() for ln in edge_lines(page, n))
+    for seq in (lines[:BLOCK], lines[::-1][:BLOCK]):
+        run = 0
+        while run < len(seq) and line_key(seq[run]) in noise:
+            run += 1
+        if run >= n:
+            out |= {ln.strip() for ln in seq[:run]}
+    return out
 
 
 def repeated_lines(pages, min_share=0.3, min_pages=3, n=3):

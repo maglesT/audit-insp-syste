@@ -8,11 +8,12 @@ A run of numbers that restarts at 1 is treated as a table of contents if the sam
 """
 import re
 import sys
+from collections import Counter
 from pathlib import Path
 
 if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parent))
-from common import (Clause, edge_lines, english_line, english_page, normalise, pdf_pages,  # noqa: E402
+from common import (BLOCK, BLOCK_SHARE, Clause, edge_block, edge_lines, english_line, english_page, normalise, pdf_pages,  # noqa: E402
                     line_key, repeated_lines, resolve_duplicates, running_lines)
 
 NUM = re.compile(r"^([1-9]\d?(?:\.(?:0|[1-9]\d{0,2})){0,4})\.?(?=\s|$)\s*(.*)$")
@@ -81,6 +82,7 @@ def parse(path, pages=None):
     pages = pdf_pages(path) if pages is None else pages
     english = [english_page(p) for p in pages]
     noise = repeated_lines([p for p, e in zip(pages, english) if e])
+    block = repeated_lines([p for p, e in zip(pages, english) if e], min_share=BLOCK_SHARE, n=BLOCK)
     running = running_lines([p for p, e in zip(pages, english) if e])
     clauses, cur, section, prev = [], None, "", None
     seen_in_section, unnumbered, run, jumps, section_prefix, prefix_root = set(), 0, 0, [], False, ""
@@ -97,12 +99,22 @@ def parse(path, pages=None):
     every = [ln.strip() for pg in pages for ln in pg.splitlines() if ln.strip()]
     # Draft-style documents (EU Annex 17) print a line number in the margin of every line: strip it
     margin_numbers = sum(1 for ln in every if MARGIN_NO.match(ln)) > 0.3 * max(1, len(every))
+    # the side header as printed ("WHO Technical Report Series, No. 1052, 2024"); a table band read in layout mode
+    # can put it inside a body line, where it is cut out
+    # (only text printed exactly so on several pages: a wrapped citation alone on its line is not the side header)
+    printed = Counter(t for pg in pages for t in {ln.strip() for ln in pg.splitlines() if line_key(ln) in running})
+    side = {t for t, n in printed.items() if t and n >= 3}
+    side_rx = re.compile(r"\s*(?:" + "|".join(map(re.escape, sorted(side, key=len, reverse=True))) + r")\s*") \
+        if side else None
     for pno, (page, is_en) in enumerate(zip(pages, english), start=1):
         if not is_en:
             continue
-        edges = {ln.strip() for ln in edge_lines(page)}
+        edges = edge_block(page, block)
         for raw in page.splitlines():
             line = raw.strip()
+            if side_rx and line not in side and side_rx.search(line):
+                dropped += sum(len(m.group(0).replace(" ", "")) for m in side_rx.finditer(line))
+                line = side_rx.sub(" ", line).strip()
             if margin_numbers:
                 if re.fullmatch(r"\d{1,4}", line):
                     dropped += len(line)
@@ -112,7 +124,7 @@ def parse(path, pages=None):
                 continue
             masked = line_key(line)
             if masked in running or (line in edges and not line.startswith("[[TABLE ")
-                                     and (masked in noise or re.fullmatch(r"[-–—\s\d]+", line))):
+                                     and (masked in noise or masked in block or re.fullmatch(r"[-–—\s\d]+", line))):
                 dropped += len(line.replace(" ", ""))
                 continue
             lines.append((pno, line))

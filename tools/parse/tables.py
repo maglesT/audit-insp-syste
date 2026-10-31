@@ -12,6 +12,9 @@ sees the same text as before. Deterministic, no AI.
 Rules:
 - A table has at least 2 columns; a single row counts (a long question and answer can fill a page as one row).
   Tables nested inside another table's cell are dropped (pdfplumber also reports the inner grid of a merged cell).
+  A table with words inside its outline that no cell holds is not a table (highlight boxes behind running text):
+  its page part is read as text, so the words are not lost. A cell left out for a missing rule gets its
+  column's box (_row_boxes).
   Tables on pages that are not English are skipped with the page (bilingual gazettes).
 - Where a table sat, the page text gets a marker line; the clause the marker lands in becomes the table's parent
   (field `parent`). When the marker lands in a contents list or an unnumbered segment, the parent is the nearest
@@ -26,13 +29,16 @@ Rules:
   is skipped.
 - Header rows ("Questions | Answers") are rows at the top of a table (only captions and headers above them) made of
   short cells whose text is also one of the top two rows of another table (a one-cell row counts when it directly
-  follows a header row, e.g. "Date of / Approval"); each is kept once per table as kind "table_header". A data row
+  follows a header row, e.g. "Date of / Approval", or has an empty first cell and is followed by a header row
+  of several cells, e.g. the CDSCO "Quality Rating" band above the rating columns, which would otherwise continue
+  the last row of the page before); each is kept once per table as kind "table_header". A data row
   that happens to repeat (grade "C" limits in two Annex 1 tables) is not a header, because data rows come first.
 - Rows that are mostly Devanagari are dropped (counted as dropped text).
 - The row label is the first cell (cut to its first words, about 40 characters, with "…"), or "row <n>" when the
   first cell is empty. The reference is "Table <k> <label>"; a label already used gets "#2", "#3".
 - Text beside a table (in the same vertical band, outside the table) is read with pdfplumber and kept after the
-  marker, so nothing is dropped.
+  marker, so nothing is dropped; its turned text is read along its own line. The WHO side title is put right on
+  table pages (_put_turned).
 """
 import html
 import math
@@ -45,7 +51,8 @@ import pdfplumber
 
 if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parent))
-from common import CITABLE, Clause, devanagari_share, english_page, normalise, pdf_pages  # noqa: E402
+from common import (CITABLE, SIDE_HEADER, Clause, devanagari_share, english_page, line_key, normalise,  # noqa: E402
+                    pdf_pages, unshift_glyphs)
 
 LABEL_MAX = 40
 ROW_LABEL = re.compile(r"\d{1,2}\.\d{1,2}(?:\.\d{1,2})?\.?")
@@ -84,16 +91,48 @@ def _band(path, pno, width, top, bottom):
     if bottom - top < 1:
         return ""
     y = math.floor(top)
-    return subprocess.run(["pdftotext", "-layout", "-f", str(pno), "-l", str(pno), "-x", "0", "-y", str(y),
+    out = subprocess.run(["pdftotext", "-layout", "-f", str(pno), "-l", str(pno), "-x", "0", "-y", str(y),
                            "-W", str(math.ceil(width) + 1), "-H", str(math.ceil(bottom) - y), str(path), "-"],
                           capture_output=True, text=True, check=True).stdout.replace("\f", "")
+    return unshift_glyphs(out)
 
 
 def _words(path, pno):
     """poppler's words of one page with their boxes, in poppler's reading order."""
     out = subprocess.run(["pdftotext", "-bbox", "-f", str(pno), "-l", str(pno), str(path), "-"],
                          capture_output=True, text=True, check=True).stdout
-    return [(float(a), float(b), float(c), float(d), html.unescape(w)) for a, b, c, d, w in WORD.findall(out)]
+    return [(float(a), float(b), float(c), float(d), unshift_glyphs(html.unescape(w)))
+            for a, b, c, d, w in WORD.findall(out)]
+
+
+def _row_boxes(table):
+    """The cell boxes of each row. pdfplumber leaves a cell out (None) when one of its rules is missing; such a
+    gap gets the box of its column within the row, unless another cell of the table overlaps that box (a cell
+    merged across columns or rows). Without this the text of the cell is lost (CDSCO circular, example row 27.4)."""
+    cols = [c.bbox if c else None for c in table.columns]
+    cells = [b for row in table.rows for b in row.cells if b]
+    out = []
+    for row in table.rows:
+        boxes = list(row.cells)
+        for j, box in enumerate(boxes):
+            if box is None and j < len(cols) and cols[j]:
+                gap = (cols[j][0], row.bbox[1], cols[j][2], row.bbox[3])
+                if not any(_overlap(gap, o) for o in cells):
+                    boxes[j] = gap
+        out.append(boxes)
+    return out
+
+
+def _overlap(a, b, tol=1.0):
+    return a[0] < b[2] - tol and b[0] < a[2] - tol and a[1] < b[3] - tol and b[1] < a[3] - tol
+
+
+def stray_words(table, words):
+    """Words inside a table's outline that no cell holds. A real table has none; a "table" that pdfplumber built
+    from highlight boxes behind running text (FDA compliance programs, the 2024 nitrosamine guidance) leaves the
+    unhighlighted words between the boxes in no cell, and storing its "rows" would lose them."""
+    boxes = [b for r in _row_boxes(table) for b in r if b]
+    return [w for w in words if _centre_in(w, table.bbox) and not any(_centre_in(w, b) for b in boxes)]
 
 
 def _cells(table, words):
@@ -103,19 +142,19 @@ def _cells(table, words):
     PI 038) is split at the height of each label, so every item becomes a row of its own.
     """
     rows = []
-    for row in table.rows:
-        first = row.cells[0] if row.cells else None
+    for row, cells in zip(table.rows, _row_boxes(table)):
+        first = cells[0] if cells else None
         if first is None:
-            rows.append([_text(box, words) if box else "" for box in row.cells])
+            rows.append([_text(box, words) if box else "" for box in cells])
             continue
         labels = sorted({round(w[1], 1) for w in words if ROW_LABEL.fullmatch(w[4]) and _centre_in(w, first)
                          and w[0] - first[0] < 25})
         if len(labels) < 2:
-            rows.append([_text(box, words) if box else "" for box in row.cells])
+            rows.append([_text(box, words) if box else "" for box in cells])
             continue
         cuts = [None] + [y - 0.5 for y in labels[1:]] + [None]       # cut just above each further label
         for top, bottom in zip(cuts, cuts[1:]):
-            rows.append([_text(box, words, top, bottom) if box else "" for box in row.cells])
+            rows.append([_text(box, words, top, bottom) if box else "" for box in cells])
     return rows
 
 
@@ -149,10 +188,12 @@ def read(path):
         for pno, page in enumerate(pdf.pages, start=1):
             plain = layout[pno - 1] if pno <= len(layout) else ""
             found = page_tables(page) if english_page(plain) else []
+            words = _words(path, pno) if found else []
+            found = [t for t in found if not stray_words(t, words)]
+            exps = exponents(page)
             if not found:
-                pages.append(plain)
+                pages.append(mark_exponents(plain, exps)[0])
                 continue
-            words = _words(path, pno)
             parts, top, first = [], 0.0, None
             for n, t in enumerate(found):
                 above = _band(path, pno, page.width, top, t.bbox[1]) if t.bbox[1] > top else ""
@@ -173,7 +214,7 @@ def read(path):
                 band = (0, max(top, t.bbox[1]), page.width, t.bbox[3])
                 beside = page.filter(lambda o, band=band: o.get("object_type") == "char" and _in_box(o, band)
                                      and not any(_in_box(o, u.bbox) for u in found))
-                text = beside.extract_text() or ""
+                text = _beside_text(beside)
                 if text.strip():
                     parts.append(text)
                 top = max(top, t.bbox[3])
@@ -181,8 +222,134 @@ def read(path):
             parts.append(below)
             if first is not None:
                 tables[-1]["after"] = _lines(below)
-            pages.append("\n".join(parts))
+            text, exps = mark_exponents(_put_turned(page, "\n".join(parts), found), exps)
+            pages.append(text)
+            for t in tables[first if first is not None else len(tables):]:
+                for r in t["rows"]:
+                    for j, c in enumerate(r):
+                        r[j], exps = mark_exponents(c, exps)
     return pages, tables, dropped
+
+
+EXP_CHARS = "-−–0123456789"
+
+
+def exponents(page):
+    """Powers of ten printed with a raised, smaller exponent ("10" then "-6" set small above the line), in reading
+    order: ["-6", "7", ...]. poppler prints them flat ("10-6", "107"), which reads as another number."""
+    chars = [c for c in page.chars if c.get("upright", True)]
+    out = []
+    for i in range(2, len(chars)):
+        one, zero, c = chars[i - 2], chars[i - 1], chars[i]
+        if (one["text"], zero["text"]) != ("1", "0") or c["text"] not in EXP_CHARS:
+            continue
+        if not (c["size"] < 0.85 * zero["size"] and c["bottom"] < zero["bottom"] - 1 and abs(c["x0"] - zero["x1"]) < 2):
+            continue
+        j, exp = i, ""
+        while j < len(chars) and chars[j]["text"] in EXP_CHARS and chars[j]["size"] < 0.85 * zero["size"]:
+            exp, j = exp + chars[j]["text"], j + 1
+        if re.search(r"\d", exp):
+            out.append(exp)
+    return out
+
+
+def mark_exponents(text, exps):
+    """Writes the exponents found by exponents() as "10^-6" where the flat text has "10-6" (in order, each once),
+    only where the text has no more flat matches than raised exponents of that form ("paragraph 107" and "107
+    CFU" with one raised 7: neither is marked); returns the text and the exponents not marked."""
+    rest = []
+    for exp in exps:
+        rx = re.compile(r"(?<![\d.,^])10 ?" + re.escape(exp) + r"(?![\d^])")
+        hits = list(rx.finditer(text))
+        if hits and len(hits) <= exps.count(exp):     # more flat matches than raised exponents: which one is the
+            m = hits[0]                               # power of ten is not known, so none is marked
+            text = text[:m.start()] + "10^" + exp + text[m.end():]
+        else:
+            rest.append(exp)
+    return text, rest
+
+
+def _beside_text(part):
+    """Text of a page part beside a table: upright text as pdfplumber reads it, then its turned lines read along
+    their own line (read as upright text they come out backwards, "4202 ,2501 .oN WHO Technical Report Series").
+    The WHO side title is left to _put_turned."""
+    text = part.filter(lambda o: o.get("upright", True)).extract_text() or ""
+    for words in _turned_lines(part):
+        if not _side_title(words):
+            text += "\n" + " ".join(words)
+    return text
+
+
+def _side_title(words):
+    return bool(SIDE_HEADER.match(line_key(" ".join(words))))
+
+
+def _prefix(toks, j, words):
+    """How many words of the turned line, from its start, toks[j:] holds in order; the last may be cut short
+    ("Serie" for "Series,"), as a table band cuts the line."""
+    n = 0
+    while j + n < len(toks) and n < len(words) and toks[j + n] == words[n]:
+        n += 1
+    if 0 < n < len(words) and j + n < len(toks) and len(toks[j + n]) >= 3 and words[n].startswith(toks[j + n]):
+        n += 1
+    return n
+
+
+def _suffix(toks, j, words):
+    """The longest m >= 2 such that toks[j:j + m] are the last m words of the turned line, in order (0 if none)."""
+    for m in range(min(len(words), len(toks) - j), 1, -1):
+        if toks[j:j + m] == words[-m:]:
+            return m
+    return 0
+
+
+def _put_turned(page, text, found):
+    """A table page's text with the WHO side title (a turned line matching common.SIDE_HEADER, "WHO Technical
+    Report Series, No. 1052, 2024") put right: the table bands cut it, and poppler prints the pieces inside body
+    lines ("No. 1052, 2024 WHO Technical Report Series,"). Only in-order pieces of the title are taken out: a
+    prefix of at least 2 words and a suffix of at least 2 words that together make the whole title (or the whole
+    title in one run), so body words that merely share its words stay. The title is then added once as a line of
+    its own, where the running-line rules drop it. Other turned text is not touched here."""
+    outside = page.filter(lambda o: o.get("object_type") != "char" or not any(_in_box(o, t.bbox) for t in found))
+    lines = text.split("\n")
+    for words in (w for w in _turned_lines(outside) if _side_title(w)):
+        toks = [ln.split() for ln in lines]
+        whole = pre = suf = None
+        for i, tk in enumerate(toks):
+            for j in range(len(tk)):
+                n = _prefix(tk, j, words)
+                if n == len(words) and whole is None:
+                    whole = (i, j, n)
+                if 2 <= n < len(words) and (pre is None or n > pre[2]):
+                    pre = (i, j, n)
+                m = _suffix(tk, j, words)
+                if m and (suf is None or m > suf[2]):
+                    suf = (i, j, m)
+        if pre and suf and pre[:2] == suf[:2]:
+            suf = None
+        cuts = [whole] if whole else ([pre, suf] if pre and suf and pre[2] + suf[2] >= len(words) else [])
+        if not cuts:
+            continue
+        for i, j, n in sorted(cuts, key=lambda c: (c[0], -c[1])):
+            toks[i][j:j + n] = []
+        lines = [" ".join(tk) for tk in toks] + [" ".join(words)]
+    return "\n".join(lines)
+
+
+def _turned_lines(part):
+    """The turned text of a page part (characters not upright) as lines of words in reading order."""
+    turned = [c for c in part.chars if not c["upright"]]
+    if not turned:
+        return []
+    up = sum(c["matrix"][1] > 0 for c in turned) > len(turned) / 2
+    rest = part.filter(lambda o: not o.get("upright", True))
+    words = rest.extract_words(line_dir_rotated="ltr" if up else "rtl", char_dir_rotated="btt" if up else "ttb")
+    lines = {}
+    for w in words:                                      # a line of turned text is a column of the page
+        key = next((k for k in lines if abs(k - w["x0"]) <= 2), w["x0"])
+        lines.setdefault(key, []).append(w)
+    return [[w["text"] for w in sorted(lines[k], key=lambda w: -w["bottom"] if up else w["top"])]
+            for k in sorted(lines, reverse=not up)]
 
 
 def logical_numbers(tables):
@@ -257,7 +424,7 @@ def rows_to_clauses(source, tables, parent=None):
             caption = filled == [0] and len(row) > 1
             short = all(len(c) <= HEADER_CELL_MAX for c in row if c)
             header = (leading and short and not caption and counts.get(key, 0) > 1
-                      and (len(filled) > 1 or prev_header))
+                      and (len(filled) > 1 or prev_header or (row[0] == "" and _header_next(t["rows"], i, counts))))
             prev_header = header
             if header:
                 if (k, key) not in headers:
@@ -285,6 +452,15 @@ def rows_to_clauses(source, tables, parent=None):
                    heading=(c["cells"][0] or c["ref"])[:160], text=normalise(" | ".join(x for x in c["cells"] if x)),
                    page_start=c["page_start"], page_end=c["page_end"], kind=c["kind"], parent=c["parent"])
             for c in out]
+
+
+def _header_next(rows, i, counts):
+    """The row after row i is a header row of several short cells (one of the top two rows of another table)."""
+    if i + 1 >= len(rows):
+        return False
+    nxt = rows[i + 1]
+    return (sum(1 for c in nxt if c) > 1 and all(len(c) <= HEADER_CELL_MAX for c in nxt if c)
+            and counts.get(_row_key(nxt), 0) > 1)
 
 
 def _label(text):

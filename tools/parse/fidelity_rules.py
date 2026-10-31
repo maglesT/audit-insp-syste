@@ -17,33 +17,10 @@ def rule(src, ref, disc, reason):
 
 
 # ---- defects of the stored text (fix in 0b) ----
-rule(r"pics-pe009-18", r".*", r"(.*\| )?-pe 009 18 (part ii?|annexes) (− \d+|[ivx]+) 24 september 2026( \| .*)?",
-     f"Parser defect ({B}): the PIC/S GMP Guide page footer ('PE 009-18 (Part I) -1- 24 September 2026') of the "
-     "first pages is stored inside the clause; the regulation's words are intact.")
 rule(r"ema-nitrosamines", r"Q\d+|_unnumbered:2", r"(-questions and answers for marketing authorisation holders applicants on the chmp|-questions|-answers for marketing authorisation holders applicants on the chmp|\+[^|]*|-[ivx]+|-aii.*)( \| .*)?",
      f"Parser defect ({B}): the running page header 'Questions and answers for marketing authorisation "
      "holders/applicants on the CHMP Opinion...' is stored inside the answer at each page break (and the footer "
      "'EMA/409815/2020 Page n/27' the second engine keeps); answer text intact.")
-rule(r"fda-guidance-(analytical-procedures|part11-scope)", r"^(I|I[IV]|IV|V|VI|VII|VIII|IX|X)(\.[A-Z0-9.]+)?$",
-     r"(-|\+)?.*",
-     f"Parser defect ({B}): margin line numbers of this line-numbered FDA guidance are left in the stored text where "
-     "a line starts a paragraph or follows a footnote (e.g. 'II. BACKGROUND 74 Each NDA'); the guidance words are "
-     "intact, the numbers are not part of it.")
-rule(r"who-trs981-a2-qrm", r"6|Table [34] .*", r".*",
-     f"Parser defect ({B}): the QRM tool tables use a font whose text poppler extracts shifted by one letter "
-     "('ufdiojrvf' for 'technique'); the stored text of these rows is unreadable, pdfminer reads it correctly. "
-     "Re-extract these pages.")
-rule(r"who-trs1010-a8-hvac", r"7\.11|Table [123] .*", r".*",
-     f"Parser defect ({B}): Table A8.1 (filter classes) is printed on landscape pages; poppler reads the turned "
-     "text backwards ('elbat' for 'table') into clause 7.11 and splits the table's columns, so the stored rows "
-     "lack or misplace values. Re-extract the landscape pages along their lines.")
-rule(r"who-trs1010-a8-hvac", r"page 1[567]", r".*",
-     f"Same as clause 7.11 ({B}): text of the landscape Table A8.1 that no stored clause holds in readable form.")
-rule(r"who-trs1044-a2-sterile|eu-20220825_gmp-an1|pics-pe009-18-annexes", r"Table [127] Grade|4\.27|4\.31|9\.15|9\.30|Annex 1 9\.(15|30)",
-     r".*",
-     f"Parser defect ({B}): the cleanroom grade tables (particle limits, microbial limits) are stored as one "
-     "merged row whose cells lost the grade letters A-D and footnote letters ('Not specified a'); the values are "
-     "all stored but cannot be tied to their grade. Store one row per grade.")
 rule(r"india-schedule-m", r"Part XIII 7 #2", r"-manoj kumar digitally signed.*",
      f"Parser defect ({B}): the digital-signature stamp of the gazette signatory is stored inside the clause; "
      "clause text intact.")
@@ -67,9 +44,6 @@ rule(r"pics-pi011-3", r"6\.2|11|24|page (12|39)", r".*",
 rule(r"pics-pi011-3", r"9\.1|20\.1|21\.\d|14\.2|15 #2", r"\+\d{1,2}",
      f"Parser defect ({B}): a footnote reference number sits inside the clause's last line in the PDF and the "
      "parser drops it; no regulation word changes.")
-rule(r"india-cdsco", r"Table 29 .*", r"-((\d+ )?(quality )?rating|loop system quality rating|988 quality rating)",
-     f"Parser defect ({B}): the rotated header cell 'Quality Rating' of the risk-rating table (Table 29) is glued "
-     "into the row's last cell; row text intact.")
 rule(r"india-cdsco", r"Table \d+ .*", r"-\d{1,2}(\.\d+)? .*",
      f"Parser defect ({B}): the table extractor merges the section-heading row printed below this row (e.g. "
      "'26 Sterilization', no ruled line between them) into this row, or the row continues across a page; the words "
@@ -124,22 +98,18 @@ rule(r"fda-cp-7346-832", r"_unnumbered:6", r".*",
      f"Parser defect ({B}): the two-column acronym list is read across both columns line by line, so wrapped "
      "definitions are split from their acronyms (e.g. 'corrective action and preventive FD&C Act: ... action'); "
      "the clause also starts with a stray contents line ('Attachment D: ...'). All words are stored.")
-rule(r"fda-cp-7346-832", r"Attachment A", r"\+in addition to its inspectional authority fda may conduct remote regulatory assessments rras under certain circumstances to support oversight of fda regulated products and establishments 1",
-     f"Parser defect ({B}): TEXT LOST - the first sentence of Attachment A is not in the clause: it is stored as "
-     "two bogus 'Table 3' rows ('In addition to | FDA may conduct remote regulatory assessments (RRAs),' ...) and "
-     "the words 'its inspectional authority,' are in no clause.")
 rule(r"fda-cp-7346-832", r"Attachment B|page 53", r".*",
-     f"Parser defect ({B}): the page 53-54 row 'Sterility control and assurance' of Table 4 was not recognised as a "
+     f"Parser defect ({B}): the page 53-54 row 'Sterility control and assurance' of Table 3 was not recognised as a "
      "table row; its four columns are stored inside Attachment B interleaved line by line (garbled), followed by "
      "the table's acronym list and a footnote. All words are stored, their order is not usable.")
-rule(r"fda-cp-7346-832", r"Table 4 Novel excipient manufacturing \(e\.g\.…|Table 4 Manufacturing and control of finished… #[24]|Table 5 Manufacturing and control of finished…", r"-.*",
+rule(r"fda-cp-7346-832", r"Table 3 Novel excipient manufacturing \(e\.g\.…|Table 3 Manufacturing and control of finished… #[24]|Table 4 Manufacturing and control of finished…", r"-.*",
      "A long table row of Attachment B whose example cells run below the row's band or onto the next page; every "
      "word the check misses is printed on the row's pages (verified), the engines only band the row differently.")
 rule(r"fda-cp-7346-832", r"page (4[89]|5[0-2])", r"\+((addressing quality )?(related topics via an )?integrated approach )?quality topic integrated approach",
-     "Table 4's title and column header row ('Quality Topic / Integrated Approach') repeated on each continuation "
+     "Table 3's title and column header row ('Quality Topic / Integrated Approach') repeated on each continuation "
      "page; stored once with the table.")
 rule(r"fda-cp-7346-832", r"page 47", r"\+resolve outstanding quality issues for",
-     "Cell text of the first Table 4 row ('...to resolve outstanding quality issues.') stored in that row; pdfminer "
+     "Cell text of the first Table 3 row ('...to resolve outstanding quality issues.') stored in that row; pdfminer "
      "reads it joined to the 'For example' cell below.")
 rule(r"fda-guidance-container-closure-systems-1999", r"I|II\.A|II\.B|II\.C\.2|III\.A|III\.B\.[12]|III\.C\.[234]|III\.E\.[12]|III\.F(\.[13])?|III\.G|VI\.[AB]|Attachment [ABCE]|page 4", r".*",
      f"Parser defect ({B}): footnote texts, table notes (a-d) and the attachment page labels ('A-1', 'C-1') are "
@@ -206,10 +176,6 @@ rule(r"who-trs1060-a3-excipients", r"Table 1 Premises|page 35", r"(-location flo
      "read in another order; all stored in the row.")
 rule(r"who-trs1060-a3-excipients", r"page 36", r"\+who technical report series no 1060 2025",
      "The series footer printed sideways on a landscape table page; not regulation text.")
-rule(r"fda-guidance-(analytical-procedures|part11-scope)", r"III(\.[A-Z0-9.]+)?", r"[-+]\d{1,3}( \d{1,3})?( \| [-+]\d{1,3}( \d{1,3})?)*",
-     f"Parser defect ({B}): margin line numbers of this line-numbered FDA guidance are left in the stored text where "
-     "a line starts a paragraph or follows a footnote (e.g. '5. Record Retention 299 The agency'); a '+' number is "
-     "a footnote mark the stored text drops. Only numbers differ; the guidance words are intact.")
 rule(r"india-schedule-m-2023", r"page (42|60|81|9[4569]|10[23]|11[79]|12[37])", r"\+((\d+(\.\d+)?|[ivx]+) ?)+",
      "Numbers and Roman list numerals left on the Hindi (Devanagari) pages of the bilingual gazette once the "
      "Devanagari words are dropped (checked on pages 42, 60, 119, 127); the English text is stored from its own "
@@ -273,13 +239,7 @@ rule(r"ich-q7-qa", r"Table 3[01] row 1", r"-introduction quality personnel build
 rule(r"fda-guidance-nitrosamine-control-2024", r"III\.A(\.2)?|III\.B\.2", r".*|(-1 hno \| -n n o x n n o n o r 2 r 2|\+api \| -n h api n n o n o)",
      "Atom labels of the reaction-scheme figures (Figures 1 and 3: R1, R2, N, H, NO, HNO2, API) read in another "
      "order; figure text, not prose.")
-rule(r"fda-guidance-nitrosamine-control-2024", r"_unnumbered:3", r".*",
-     f"Parser defect ({B}): TEXT LOST - Appendix A, September 2019 bullet: the PDF lines 'voluntarily recall "
-     "ranitidine and nizatidine products ... (July 2023).' are stored as five bogus 'Table 1' rows, and the words "
-     "'5,6,7 Preliminary findings from FDA stabil-' are in no clause, so the stored sentence reads 'manufacturers "
-     "and applicants ity testing raised concerns'. Elsewhere in this clause: running header kept, Appendix B "
-     "formula and Appendix C table stored as separate rows, 10⁻⁵ stored as '105' (superscript limitation).")
-rule(r"fda-guidance-nitrosamine-control-2024", r"Table 2 𝑛𝑛𝑖𝑖=2 𝑋𝑋𝑋𝑋|Table 2 ∑ 𝐴𝐴𝐴𝐴𝐴𝐴 ∗ 100% ≤ 100%", r"-(nnii xxxx|aaaaaa)",
+rule(r"fda-guidance-nitrosamine-control-2024", r"Table 1 𝑛𝑛𝑖𝑖=2 𝑋𝑋𝑋𝑋|Table 1 ∑ 𝐴𝐴𝐴𝐴𝐴𝐴 ∗ 100% ≤ 100%", r"-(nnii xxxx|aaaaaa)",
      f"Parser defect ({B}): the total-nitrosamine formula (sum of Xi/AIi x 100% ≤ 100%) is stored as two bogus "
      "table rows of doubled math-italic glyphs ('𝑛𝑛𝑖𝑖=2 𝑋𝑋𝑋𝑋'); the formula is unreadable in the stored text, "
      "the definitions of Xi and AIi below it are intact.")
@@ -305,9 +265,6 @@ rule(r"who-trs1052-a4-qc-labs", r"Appendix 2|Appendix 3 1 #2|Appendix 3 5 #2", r
      "Symbols with subscripts and superscripts (U with 'tg' above and 'i' or 'meas' below) are stored with the "
      "letters glued ('Uitg', 'Umeas'), as poppler prints them; pdfminer reads the sub- and superscript apart. Known "
      "notation limitation (0b: keep as U_i^tg); no value changes.")
-rule(r"who-trs1052-a4-qc-labs", r"Appendix 3 8", r"-4202 2501 on who technical report series \| \+test solution",
-     f"Parser defect ({B}): the running footer of a rotated page is stored backwards inside clause 8 ('4202 ,2501 "
-     ".oN WHO Technical Report Series,'); 'Test solution' is a cell of Table 1 stored as its own row.")
 rule(r"who-trs1019-a2-hvac-nonsterile-part2", r"4\.2|7|7\.1", r"(\+(w h o t e c h r e p o r t s e s n o 1 0 1 9 2 0 )?fig a 2\.\d+( \| )?)+",
      f"Parser defect ({B}): the figure numbers of the drawings ('Fig. A2.1' ... 'Fig. A2.13') are dropped while "
      "their captions ('Example of a weighing area') are stored in the clause; the vertical series title beside them "
@@ -334,11 +291,6 @@ rule(r"india-gsr127e-2025-schm-timeline", r"page 1", r"\+(1031 gi 2025 1|extraor
 rule(r"india-gsr127e-2025-schm-timeline", r"page 2", r"\+3 i iii vii viii",
      "Numbers and Roman list numerals left on the Hindi (Devanagari) part of page 2 once the Devanagari words are "
      "dropped; the English text is stored from its own pages.")
-rule(r"fda-cp-7356-002-drug-manufacturing", r"page 41", r"\+(its inspectional authority|an rra is an examination of an fda regulated establishment and or its)",
-     f"Parser defect ({B}): TEXT LOST - Attachment A's opening lines are stored as three bogus 'Table 3' rows ('In "
-     "addition to | FDA may conduct remote regulatory assessments' ...) and the words 'its inspectional authority,' "
-     "and 'An RRA is an examination of an FDA-regulated establishment and/or its' are in no clause; the clause "
-     "starts mid-sentence at 'records, conducted entirely remotely'.")
 rule(r"fda-cp-7356-002-drug-manufacturing", r"Part VI 3\.B|page 38", r".*",
      f"Parser defect ({B}): the two-column acronym list is read across both columns line by line, so wrapped "
      "definitions are split from their acronyms; all acronyms and definitions are stored.")
@@ -385,14 +337,6 @@ rule(r"fda-guidance-sterilization-validation-submission-1994", r"II\.C", r"\+or 
 rule(r"eu-2015-c95-02-excipients", r"Chapter (2 2\.[36]|4 4\.1)", r".*",
      f"Parser defect ({B}): the Official Journal running header ('21.3.2015 EN Official Journal of the European "
      "Union C 95/11') is stored inside the clause at each page break; clause words intact.")
-rule(r"who-trs1044-a2-sterile", r"8\.6|8\.10", r"(\+operation grade|-2 02 4 who technical report series no 104 \| \+grade operation \| \+grade operation)",
-     f"Parser defect ({B}): the column headers of the small grade tables in 8.6/8.10 ('Grade | Operation') are "
-     "not stored, and in 8.10 the running footer (WHO Technical Report Series, No. 1044, 2022, read backwards on a "
-     "rotated page) is stored inside the clause.")
-rule(r"who-trs1033-a2-hbel-cleaning", r"Appendix 1", r".*|-1202 3301 on who technical report serie \| \+api pde ug day mdd mg day batch size kg shared equipment surface m 2 1 2 3 4 5",
-     f"Parser defect ({B}): the rotated page's running footer is stored backwards inside the section ('1202 ,3301 "
-     ".oN WHO Technical Report Series'); the table header row ('API | PDE | MDD | Batch size | Shared equipment "
-     "surface') is stored as its own table row.")
 rule(r"who-trs1033-a2-hbel-cleaning", r"Table 2 Pre- Ce- ding Product a", r"-5 6",
      "Header cells '5' and '6' of the product matrix sit outside the row's band; stored in the row unchanged.")
 rule(r"who-trs1025-a3-wfi", r"3\.2|7\.2", r"-who technical report series no 1025 2020",
@@ -1397,10 +1341,6 @@ rule(r"india-cdsco-circ-2024-03", r"Table 13 22\.6|Table 29 (4\.19|11\.4|20\.5|5
 rule(r"india-cdsco-circ-2024-03", r"page (46|51)", r"\+annexe 06 (19 environmental monitoring|24 aseptic processing and sterilization by filtration)",
      "Section label of the annexure table ('Annexe-06', '19 Environmental Monitoring'), stored as the section name of "
      "the following table rows; heading, not requirement text.")
-rule(r"india-cdsco-circ-2024-03", r"page 116", r"\+the sterilizers are not studied for heat distribution penetration effectiveness of sterilization process not established by using microbial spore indicators",
-     f"Parser defect ({B}): TEXT LOST - in the worked example table (Annexure, row 27.4) the last column 'The "
-     "sterilizers are not studied for heat distribution / penetration. Effectiveness of sterilization process not "
-     "established by using microbial spore indicators' is in no stored row or clause.")
 rule(r"india-cdsco-circ-2024-03", r"page 120", r"\+sch m specify the duration .*",
      f"Parser defect ({B}): row 30.9 of the example table is merged with the following row (its question 'Specify "
      "the duration of retaining the documents...' follows the next row's question), so the answers are no longer "
@@ -1490,6 +1430,68 @@ rule(r".*", r"_unnumbered:[12]", r".*",
 sys.path.insert(0, f'{ROOT}/tools/parse')
 import fidelity as F
 from concurrent.futures import ProcessPoolExecutor
+
+
+# ---- session 5, after the first 0b fixes (each inspected) ----
+rule(r"fda-guidance-analytical-procedures-validation-2015", r"^(II|IV|VI\.[ABC]|VII\.A|VIII\.[BC])$", r"[-+]\d{2}( \| [-+]\d{2})*",
+     "Footnote reference numbers 10-24 ('...intended purpose. 10 Analytical procedures...'), printed as superscripts "
+     "after a sentence; the stored text keeps them as plain numbers next to the sentence end. The margin line "
+     "numbers that were left in these sections are removed (0b); no guidance word changes.")
+rule(r"fda-guidance-nitrosamine-control-2024", r"_unnumbered:3", r"\+each individual nitrosamine should be calculated .*",
+     "The boxed paragraph of Appendix B ('Each individual nitrosamine should be calculated as a percentage of its AI "
+     "limit...') is stored word for word as Table 1 row 1 (it is printed in a ruled box); the formula below it is the "
+     "known math-glyph limitation.")
+rule(r"india-cdsco-circ-2024-03", r"Table 29 (4\.17\.1|54\.9)", r"-(loop system|988)",
+     "Cell text wrapped onto the next printed line or page ('...storage tank and loop system.', the reference "
+     "'WHO TRS- 988') and stored in its row; the check bands the row by height and misses the wrapped line. The "
+     "'Quality Rating' header that was glued into these rows is now stored once as the table header (0b).")
+rule(r"india-drugs-rules-1945-consolidated", r"Part II Appendix III 1\.9", r".*",
+     "Unruled table of animal groups and organs (rat / non-rodent, M/F columns, organ list) inside the clause, read by "
+     "the two engines in different column orders; all words stored in both readings.")
+rule(r"india-drugs-rules-1945-consolidated", r"Table 45 12\.", r"-12 office total 1500",
+     "Last row of the premises table ('12. Office' with the total '1500 Sq. ft.]' printed below the ruled grid); "
+     "stored in the row, the check's row band ends at the grid line.")
+rule(r"who-trs1010-a8-hvac", r"7\.11|Table [123] .*", r"-.*",
+     "Table A8.1 is printed on landscape pages. The parser now reads an upright copy of those pages (0b), so the "
+     "stored rows and clause read forwards; the cells merged across rows (one EU class spans several filter classes) "
+     "group several values in one row. The second engine bands the turned page by its own lines, so row stretches "
+     "differ; every stored value is printed in the table.")
+rule(r"who-trs1010-a8-hvac", r"page 1[567]", r"\+.*",
+     "Text of the landscape Table A8.1 pages as the second engine reads them: the running header and 'Table A8.1 "
+     "continued' (dropped by the parser as running text), cells set vertically within the turned page and read "
+     "backwards by pdfminer ('9002 2281 ne' for 'EN 1822: 2009', '36492 osi' for 'ISO 29463'), and values the "
+     "upright reading groups in a merged row. The upright copy stores them readably.")
+rule(r"who-trs1033-a2-hbel-cleaning", r"Appendix 1", r".*",
+     "The worked example's table header ('API | PDE | MDD | Batch size | Shared equipment surface') is stored as its "
+     "own table row, so the clause lacks it here; a piece of the side title ('WHO Technical Report Serie') cut by a "
+     "table band is left in the clause; the rest of the side title is removed (0b).")
+rule(r"who-trs1044-a2-sterile", r"4\.27|9\.15", r"\+grade maximum limits.*",
+     "The cleanroom grade table inside the clause is stored as table rows, one per grade (Table 1 A ... D, fixed in "
+     "0b); the check sees the table's words inside the clause's stretch because the second engine glues the footnote "
+     "letters ('not specifieda'), so the rows do not hold the run word for word.")
+rule(r"who-trs1044-a2-sterile", r"Table [127] (A|B|Grade)", r"-(specified specified|specified a|hours a)",
+     "Footnote letters of the grade tables ('Not specified a', 'CFU/4 hours a') stored apart; pdfminer glues them to "
+     "the word ('specifieda'), so the check misses the word. Values and grades are stored together (0b).")
+rule(r"who-trs1044-a2-sterile", r"8\.(6|10)", r".*",
+     "The small grade tables in 8.6 and 8.10 ('Grade | Operation' column headers) are stored as table rows without "
+     "the header; in 8.10 a piece of the turned side title ('2 ... 104') cut by a table band is left in the clause.")
+rule(r"who-trs1052-a4-qc-labs", r"Appendix 1", r".*",
+     "Side title set vertically (read character by character, 'o t e c h r e p o r t ...') next to the list "
+     "headings ('First stage laboratory (continued)', 'Optional items', 'Quantity'), which are stored as table rows "
+     "of the equipment lists, not in the section text.")
+rule(r"who-trs1052-a4-qc-labs", r"Appendix 3 8", r"\+test solution",
+     "'Test solution' is a cell of Table 1 stored as its own row; the turned side title that was stored backwards in "
+     "this clause is removed (0b).")
+rule(r"who-trs1060-a3-excipients", r"Appendix 1 7\.2 #2", r"-x 3 table continued wh table continued",
+     "Remnants of the turned running title ('Annex 3', 'WHO ...') and the 'Table continued' captions on the "
+     "risk-statement table pages; the running header itself is now dropped (0b). No requirement word.")
+rule(r"who-trs981-a2-qrm", r"[1-5]( #2)?", r".*",
+     "The likelihood and severity scales on page 28 are an unruled table whose rows start with 1-5; now that its "
+     "text is readable (0b: glyph decoding) each row is stored as a numbered clause, with wrapped cells ('occur more "
+     "/ than once a / year') in layout order. Same words, other order.")
+rule(r"who-trs981-a2-qrm", r"page 3[01]", r"\+in table row: (fmea|22201 3042)",
+     "Words printed in a QRM tool table row's band that belong to the neighbouring row or the source note "
+     "('(FMEA)', the PQRI address '22201-3042'); stored in that row or note. Readable since 0b.")
 
 
 def flat(text):
