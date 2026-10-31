@@ -105,3 +105,24 @@ before. They go to the "text layer differs" list.
 where it is printed, with the page given; (3) the batch passes the whole next page when a quote runs over;
 (4) the residual the checks cannot see (an exception in the following sentence of running text, a bare topic made
 into a requirement) stays with the two verifiers and the spot check.
+
+## Pre-scaling fixes (owner: "yes do the fixes before scaling", 31 October 2026)
+
+1. **Coverage** counts every shall/must/should sentence and every "may" that grants or denies something; it
+   leaves out only a sentence whose every may/can/could clause states a possibility ("coverage may include",
+   "amines may be present"; "may not" always counts). A caption glued to its table and footnotes stays in (a
+   footnote can hold an obligation). A leading clause number and a glued WHO side title are left out before
+   matching. A sentence with several obligations, or a lead-in with its list, may be covered by the quotes printed
+   inside it taken together, with 90 % of its words, every number and its condition words (after an independent
+   review). On the re-run's drafts: **39 -> 13 gaps**: 5 caption blocks whose table footnotes the items do not
+   quote (to look at: e.g. Annex 1 "(a) Settle plates should be exposed ... maximum of 4 hours"), 3 descriptive or
+   inspector sentences, 1 caption fragment, and 4 to look at by hand (EU Annex 1 p22 x2, PE 009 p19 and p22).
+2. **A continued table's header** is quoted from the page where it is printed: the item gives `header_page`; the
+   check takes the whole header of the last table on that page (ruled or unruled) and the whole row on this page,
+   with no other caption in between; an unruled row must have as many layout columns as the header. Drafters get
+   the previous page's text when a table continues; verifiers get that page's image and text.
+3. **Run-over quotes:** the whole next page goes into the drafting and verifier batches (no 3,000-character cut).
+
+Accepted residuals after the review (low): in a sentence covered by several quotes, numbers and condition words are
+compared as one set across the quotes (a number may be found in the "wrong" part); a sub-header row with as many
+cells as the data rows would be taken for the first data row. Both are left to the two verifiers and the spot check.

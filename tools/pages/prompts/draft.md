@@ -34,7 +34,10 @@ For each item:
   restricted as shown in Table 1, unless otherwise justified" applies to each row of Table 1, so each row's
   statement and condition carry it.
 - topic: the sub-topic id from TOPICS the obligation belongs to (an audit area).
-- runs_over: true when the quote continues on the next page.
+- runs_over: true when the quote continues on the next page (the whole next page's text is given).
+- header_page: for a row of a table that continues from an earlier page, the page number where the table's header
+  is printed (quote that header as printed there: its text is given as previous_page_text); 0 when the header
+  is on this page or there is none.
 - text_layer_differs: "" normally. If the image shows something the text layer gets wrong inside your quote
   (a superscript "10^7" printed as "107", a symbol lost, cells of two rows merged, words in another order), quote
   what the image shows and describe the difference here in one sentence.

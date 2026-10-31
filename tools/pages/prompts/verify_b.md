@@ -12,7 +12,8 @@ not in the item is omitted, even if it seems implied. A trigger such as "if", "w
 Answer strictly:
 - quote_as_printed: is the item's quote printed on the page exactly (as the image shows it; for a table row, its
   column headers, " || ", then the row's cells, each part joined with " | "; a footnote mark written "^1" after
-  its word, a power of ten as "10^7") (true/false)?
+  its word, a power of ten as "10^7"; for a table continued from an earlier page the header part is printed on the
+  page given as header_page, the row on this page) (true/false)?
 - verdict: "correct" only if the quote is as printed, the page requires what the statement asks for, the
   statement adds nothing and omits nothing of that obligation, the strength (shall/must = mandatory, should =
   recommended, may = optional; an inspection-checklist row without such a word, "Specify ..." or "Whether ...", is

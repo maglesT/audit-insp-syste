@@ -223,3 +223,63 @@ class D46Review2(unittest.TestCase):
                 "justified.")
         part = "Only if use is unavoidable in order to produce a drug product, limit benzene to 2 ppm, unless otherwise justified."
         self.assertTrue(vision.lead_in_missing(lead, part))
+
+
+class PreScaling(unittest.TestCase):
+    def test_descriptive_may_and_captions_do_not_count(self):
+        self.assertFalse(vision.counts_for_coverage("Depending on the purpose, inspection coverage may include "
+                                                    "different numbers of systems."))
+        self.assertFalse(vision.counts_for_coverage("Secondary amines may be present as impurities."))
+        # a caption glued to an obligation (a footnote) stays in coverage
+        self.assertTrue(vision.counts_for_coverage("Table 2: Maximum permitted microbial contamination A No growth "
+                                                   "(a) Settle plates should be exposed for the duration of operations "
+                                                   "and changed after a maximum of 4 hours."))
+        self.assertTrue(vision.counts_for_coverage("Quality reviews may be grouped by product type where "
+                                                   "scientifically justified."))
+        self.assertTrue(vision.counts_for_coverage("The disinfection process should be validated."))
+
+    def test_continued_table_header_from_its_page(self):
+        q = "Solvent | PDE (mg/day) | Concentration limit (ppm) || Nitromethane | 0.5 | 50"
+        self.assertEqual(vision.table_quote_found(q, "ich-q3c-r9.pdf", 13, header_page=12), (True, True))
+        self.assertEqual(vision.table_quote_found(q, "ich-q3c-r9.pdf", 13), (False, False))     # not on p13
+        wrong = "Solvent | Concentration limit (ppm) | PDE (mg/day) || Nitromethane | 0.5 | 50"
+        self.assertEqual(vision.table_quote_found(wrong, "ich-q3c-r9.pdf", 13, header_page=12), (False, False))
+
+
+class PreScalingReview(unittest.TestCase):
+    def test_prohibitions_and_permissions_count(self):
+        for sentence in ("The Qualified Person may not be the head of production.",
+                         "Batch records may not contain unexplained corrections.",
+                         "The responsible person may be a pharmacist.",
+                         "The competent authority may require additional data.",
+                         "Contamination may occur; alternative methods may be used if validated.",
+                         "Contamination may occur, so alternative methods may be used if validated.",
+                         "Where residues may be present, the firm may omit the test.",
+                         "Secondary amines may be present and the limit may be raised to 10 ppm."):
+            self.assertTrue(vision.counts_for_coverage(sentence), sentence)
+
+    def test_union_needs_every_number(self):
+        src, pg = "india-schedule-m-2023-GSR922E.pdf", 156
+        text = vision.re.sub(r"\s+", " ", vision.body(vision.layer_text, src, pg))
+        sentence = next(x for x in vision.obligations.sentences(text) if "effective follow-up" in x)
+        part = sentence[sentence.index("there shall"):].rstrip(".")
+        first = sentence[:sentence.index(" and there shall")]
+        self.assertFalse(vision.coverage(src, pg, [item(quote=first), item(quote=part)], [], []) and
+                         any("effective follow-up" in g for g in vision.coverage(src, pg, [item(quote=first),
+                                                                                         item(quote=part)], [], [])))
+        self.assertTrue(any("effective follow-up" in g for g in vision.coverage(src, pg, [item(quote=part)], [], [])))
+
+    def test_continued_unruled_cells_must_match_columns(self):
+        h = "Solvent | PDE (mg/day) | Concentration limit (ppm) || "
+        for wrong in ("Nitromethane 0.5 | 50", "Nitromethane | 0.5 50"):
+            self.assertEqual(vision.table_quote_found(h + wrong, "ich-q3c-r9.pdf", 13, header_page=12), (False, False))
+
+    def test_continued_range_and_caption_between(self):
+        q = "Solvent | PDE (mg/day) | Concentration limit (ppm) || Nitromethane | 0.5 | 50"
+        self.assertEqual(vision.table_quote_found(q, "ich-q3c-r9.pdf", 13, header_page=9), (False, False))
+
+    def test_leading_ref_and_side_title(self):
+        self.assertEqual(vision.LEADING_REF.sub("", "4.34 The disinfection process should be validated."),
+                         "The disinfection process should be validated.")
+        self.assertEqual(vision.SIDE_TITLE.sub(" ", "WHO Technical Report Series, No. 1010, 2018 4.5 Areas").strip(),
+                         "4.5 Areas")
