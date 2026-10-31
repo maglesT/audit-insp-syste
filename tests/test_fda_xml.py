@@ -46,3 +46,26 @@ class Checks(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class ReviewQueue(unittest.TestCase):
+    def test_decisions_are_attributable_and_ship_only_when_proven(self):
+        import json
+        import tempfile
+        import review
+        with tempfile.TemporaryDirectory() as tmp:
+            run = Path(tmp)
+            items = [dict(item(), id="a", source=SRC), dict(item(), id="b", source=SRC), dict(item(), id="c", source=SRC)]
+            (run / "items.jsonl").write_text("\n".join(json.dumps(i) for i in items))
+            (run / "route.json").write_text(json.dumps({"route": {"a": "auto", "b": "review", "c": "review"}}))
+            dec = run / "decisions.jsonl"
+            self.assertEqual(review.shipped(run, dec), ["a"])
+            with self.assertRaises(SystemExit):
+                review.decide(run, "b", "correct", by=" ", path=dec)                 # a name is required
+            with self.assertRaises(SystemExit):
+                review.decide(run, "b", "fix", by="QA", quote="not in the regulation", statement="x", path=dec)
+            rec = review.decide(run, "b", "correct", by="QA lead", path=dec)
+            self.assertEqual(rec["by"], "QA lead")
+            self.assertTrue(rec["at"].endswith("+00:00"))
+            review.decide(run, "c", "reject", by="QA lead", path=dec)
+            self.assertEqual(sorted(review.shipped(run, dec)), ["a", "b"])
