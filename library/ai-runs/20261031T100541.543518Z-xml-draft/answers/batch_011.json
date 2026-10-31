@@ -1,0 +1,714 @@
+{
+ "answers": [
+  {
+   "section": "ecfr-21cfr211-2026-10-27.xml:211.182",
+   "items": [
+    {
+     "statement": "Keep individual equipment logs recording major equipment cleaning, maintenance (other than routine maintenance such as lubrication and adjustments) and use, showing the date, time, product and lot number of each batch processed.",
+     "quote": "A written record of major equipment cleaning, maintenance (except routine maintenance such as lubrication and adjustments), and use shall be included in individual equipment logs that show the date, time, product, and lot number of each batch processed.",
+     "clause_number": "211.182",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "EQ.CLEAN"
+    },
+    {
+     "statement": "Where equipment is dedicated to manufacturing one product, individual equipment logs may be omitted, provided the lots or batches of that product follow in numerical order and are manufactured in numerical sequence.",
+     "quote": "If equipment is dedicated to manufacture of one product, then individual equipment logs are not required, provided that lots or batches of such product follow in numerical order and are manufactured in numerical sequence.",
+     "clause_number": "211.182",
+     "strength": "optional",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "equipment dedicated to one product; lots in numerical order and sequence",
+     "topic": "EQ.CLEAN"
+    },
+    {
+     "statement": "Where dedicated equipment is used, make the records of its cleaning, maintenance and use part of the batch record.",
+     "quote": "In cases where dedicated equipment is employed, the records of cleaning, maintenance, and use shall be part of the batch record.",
+     "clause_number": "211.182",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "dedicated equipment is used",
+     "topic": "DOC.BMR"
+    },
+    {
+     "statement": "Have the persons who perform and who double-check equipment cleaning and maintenance date and sign or initial the log to show the work was done; where the cleaning and maintenance is done by automated equipment, only the person verifying the automated work needs to do so.",
+     "quote": "The persons performing and double-checking the cleaning and maintenance (or, if the cleaning and maintenance is performed using automated equipment under § 211.68, just the person verifying the cleaning and maintenance done by the automated equipment) shall date and sign or initial the log indicating that the work was performed.",
+     "clause_number": "211.182",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "if automated equipment is used, only the verifier signs",
+     "topic": "EQ.CLEAN"
+    },
+    {
+     "statement": "Make entries in the equipment log in chronological order.",
+     "quote": "Entries in the log shall be in chronological order.",
+     "clause_number": "211.182",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "EQ.CLEAN"
+    }
+   ],
+   "not_applicable": []
+  },
+  {
+   "section": "ecfr-21cfr211-2026-10-27.xml:211.184",
+   "items": [
+    {
+     "statement": "Keep component, drug product container, closure and labeling records that include the identity and quantity of each shipment of each lot of components, containers, closures and labeling; the supplier's name; the supplier's lot number(s) if known; the receiving code; and the date of receipt.",
+     "quote": "The identity and quantity of each shipment of each lot of components, drug product containers, closures, and labeling; the name of the supplier; the supplier's lot number(s) if known; the receiving code as specified in § 211.80; and the date of receipt.",
+     "clause_number": "211.184(a)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "supplier lot number(s) if known",
+     "topic": "MAT.RECV"
+    },
+    {
+     "statement": "In component, drug product container, closure and labeling records, list the name and location of the prime manufacturer if it differs from the supplier and is known.",
+     "quote": "The name and location of the prime manufacturer, if different from the supplier, shall be listed if known.",
+     "clause_number": "211.184(a)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "prime manufacturer differs from supplier and is known",
+     "topic": "MAT.SUPP"
+    },
+    {
+     "statement": "Keep component, drug product container, closure and labeling records that include the results of every test or examination performed on them (including identity tests, receipt examinations and labeling examinations) and the conclusions drawn from them.",
+     "quote": "The results of any test or examination performed (including those performed as required by § 211.82(a), § 211.84(d), or § 211.122(a)) and the conclusions derived therefrom.",
+     "clause_number": "211.184(b)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "MAT.RECV"
+    },
+    {
+     "statement": "Keep component, drug product container, closure and labeling records that include an individual inventory record of each component, drug product container and closure and, for each component, a reconciliation of the use of each lot.",
+     "quote": "An individual inventory record of each component, drug product container, and closure and, for each component, a reconciliation of the use of each lot of such component.",
+     "clause_number": "211.184(c)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "MAT.STATUS"
+    },
+    {
+     "statement": "Ensure the inventory record of each component, drug product container and closure holds enough information to determine any batch or lot of drug product associated with its use.",
+     "quote": "The inventory record shall contain sufficient information to allow determination of any batch or lot of drug product associated with the use of each component, drug product container, and closure.",
+     "clause_number": "211.184(c)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "MAT.STATUS"
+    },
+    {
+     "statement": "Keep component, drug product container, closure and labeling records that include documentation of the examination and review of labels and labeling for conformity with established specifications.",
+     "quote": "Documentation of the examination and review of labels and labeling for conformity with established specifications in accord with §§ 211.122(c) and 211.130(c).",
+     "clause_number": "211.184(d)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "MAT.PACK"
+    },
+    {
+     "statement": "Keep component, drug product container, closure and labeling records that include the disposition of rejected components, drug product containers, closures and labeling.",
+     "quote": "The disposition of rejected components, drug product containers, closure, and labeling.",
+     "clause_number": "211.184(e)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "MAT.REJ"
+    }
+   ],
+   "not_applicable": [
+    {
+     "clause_number": "211.184",
+     "text": "§ 211.184 Component, drug product container, closure, and labeling records. These records",
+     "reason": "heading and lead-in; content carried by sub-paragraph items"
+    }
+   ]
+  },
+  {
+   "section": "ecfr-21cfr211-2026-10-27.xml:211.186",
+   "items": [
+    {
+     "statement": "To assure batch-to-batch uniformity, prepare master production and control records for each drug product and each batch size, dated and signed (full handwritten signature) by one person and independently checked, dated and signed by a second person.",
+     "quote": "To assure uniformity from batch to batch, master production and control records for each drug product, including each batch size thereof, shall be prepared, dated, and signed (full signature, handwritten) by one person and independently checked, dated, and signed by a second person.",
+     "clause_number": "211.186(a)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [
+      "one",
+      "second"
+     ],
+     "condition": "",
+     "topic": "DOC.MFR"
+    },
+    {
+     "statement": "Describe the preparation of master production and control records in a written procedure and follow it.",
+     "quote": "The preparation of master production and control records shall be described in a written procedure and such written procedure shall be followed.",
+     "clause_number": "211.186(a)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "DOC.MFR"
+    },
+    {
+     "statement": "Include in the master production and control records the product name and strength and a description of the dosage form.",
+     "quote": "The name and strength of the product and a description of the dosage form;",
+     "clause_number": "211.186(b)(1)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "DOC.MFR"
+    },
+    {
+     "statement": "Include in the master production and control records the name and weight or measure of each active ingredient per dosage unit or per unit of weight or measure of the product, and the total weight or measure of any dosage unit.",
+     "quote": "The name and weight or measure of each active ingredient per dosage unit or per unit of weight or measure of the drug product, and a statement of the total weight or measure of any dosage unit;",
+     "clause_number": "211.186(b)(2)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "DOC.MFR"
+    },
+    {
+     "statement": "Include in the master production and control records a complete list of components, named or coded specifically enough to show any special quality characteristic.",
+     "quote": "A complete list of components designated by names or codes sufficiently specific to indicate any special quality characteristic;",
+     "clause_number": "211.186(b)(3)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "DOC.MFR"
+    },
+    {
+     "statement": "Include in the master production and control records an accurate weight or measure of each component, using the same weight system (metric, avoirdupois or apothecary) for every component.",
+     "quote": "An accurate statement of the weight or measure of each component, using the same weight system (metric, avoirdupois, or apothecary) for each component.",
+     "clause_number": "211.186(b)(4)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "DOC.MFR"
+    },
+    {
+     "statement": "Reasonable variations in the amounts of components needed to prepare the dosage form may be allowed, provided they are justified in the master production and control records.",
+     "quote": "Reasonable variations may be permitted, however, in the amount of components necessary for the preparation in the dosage form, provided they are justified in the master production and control records;",
+     "clause_number": "211.186(b)(4)",
+     "strength": "optional",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "variations justified in the master records",
+     "topic": "DOC.MFR"
+    },
+    {
+     "statement": "Include in the master production and control records a statement of any calculated excess of a component.",
+     "quote": "A statement concerning any calculated excess of component;",
+     "clause_number": "211.186(b)(5)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "DOC.MFR"
+    },
+    {
+     "statement": "Include in the master production and control records the theoretical weight or measure at appropriate phases of processing.",
+     "quote": "A statement of theoretical weight or measure at appropriate phases of processing;",
+     "clause_number": "211.186(b)(6)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "DOC.MFR"
+    },
+    {
+     "statement": "Include in the master production and control records the theoretical yield, including the maximum and minimum percentages of theoretical yield beyond which an investigation of the discrepancy is required.",
+     "quote": "A statement of theoretical yield, including the maximum and minimum percentages of theoretical yield beyond which investigation according to § 211.192 is required;",
+     "clause_number": "211.186(b)(7)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "PROD.YIELD"
+    },
+    {
+     "statement": "Include in the master production and control records a description of the drug product containers, closures and packaging materials, including a specimen or copy of each label and all other labeling, signed and dated by the person(s) responsible for approving that labeling.",
+     "quote": "A description of the drug product containers, closures, and packaging materials, including a specimen or copy of each label and all other labeling signed and dated by the person or persons responsible for approval of such labeling;",
+     "clause_number": "211.186(b)(8)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "DOC.MFR"
+    },
+    {
+     "statement": "Include in the master production and control records complete manufacturing and control instructions, sampling and testing procedures, specifications, special notations and precautions to be followed.",
+     "quote": "Complete manufacturing and control instructions, sampling and testing procedures, specifications, special notations, and precautions to be followed.",
+     "clause_number": "211.186(b)(9)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "DOC.MFR"
+    }
+   ],
+   "not_applicable": [
+    {
+     "clause_number": "211.186",
+     "text": "§ 211.186 Master production and control records.",
+     "reason": "section heading"
+    },
+    {
+     "clause_number": "211.186(b)",
+     "text": "(b) Master production and control records",
+     "reason": "lead-in; content carried by sub-paragraph items"
+    }
+   ]
+  },
+  {
+   "section": "ecfr-21cfr211-2026-10-27.xml:211.188",
+   "items": [
+    {
+     "statement": "Prepare batch production and control records for each batch of drug product produced, containing complete information on the production and control of that batch.",
+     "quote": "Batch production and control records shall be prepared for each batch of drug product produced and shall include complete information relating to the production and control of each batch. These records shall include:",
+     "clause_number": "211.188",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "DOC.BMR"
+    },
+    {
+     "statement": "Include in each batch production and control record an accurate reproduction of the appropriate master production or control record, checked for accuracy, dated and signed.",
+     "quote": "An accurate reproduction of the appropriate master production or control record, checked for accuracy, dated, and signed;",
+     "clause_number": "211.188(a)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "DOC.BMR"
+    },
+    {
+     "statement": "Include in each batch production and control record documentation that each significant step in manufacturing, processing, packing or holding the batch was accomplished.",
+     "quote": "Documentation that each significant step in the manufacture, processing, packing, or holding of the batch was accomplished, including:",
+     "clause_number": "211.188(b)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "DOC.BMR"
+    },
+    {
+     "statement": "Document in each batch production and control record, for each significant manufacturing, processing, packing or holding step, the dates.",
+     "quote": "Dates;",
+     "clause_number": "211.188(b)(1)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "DOC.BMR"
+    },
+    {
+     "statement": "Document in each batch production and control record, for each significant manufacturing, processing, packing or holding step, the identity of each individual major equipment item and line used.",
+     "quote": "Identity of individual major equipment and lines used;",
+     "clause_number": "211.188(b)(2)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "DOC.BMR"
+    },
+    {
+     "statement": "Document in each batch production and control record, for each significant manufacturing, processing, packing or holding step, the specific identification of each batch of component or in-process material used.",
+     "quote": "Specific identification of each batch of component or in-process material used;",
+     "clause_number": "211.188(b)(3)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "DOC.BMR"
+    },
+    {
+     "statement": "Document in each batch production and control record, for each significant manufacturing, processing, packing or holding step, the weights and measures of components used during processing.",
+     "quote": "Weights and measures of components used in the course of processing;",
+     "clause_number": "211.188(b)(4)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "DOC.BMR"
+    },
+    {
+     "statement": "Document in each batch production and control record, for each significant manufacturing, processing, packing or holding step, the in-process and laboratory control results.",
+     "quote": "In-process and laboratory control results;",
+     "clause_number": "211.188(b)(5)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "DOC.BMR"
+    },
+    {
+     "statement": "Document in each batch production and control record, for each significant manufacturing, processing, packing or holding step, the inspection of the packaging and labeling area before and after use.",
+     "quote": "Inspection of the packaging and labeling area before and after use;",
+     "clause_number": "211.188(b)(6)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "PROD.PACK"
+    },
+    {
+     "statement": "Document in each batch production and control record, for each significant manufacturing, processing, packing or holding step, the actual yield and the percentage of theoretical yield at appropriate phases of processing.",
+     "quote": "A statement of the actual yield and a statement of the percentage of theoretical yield at appropriate phases of processing;",
+     "clause_number": "211.188(b)(7)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "PROD.YIELD"
+    },
+    {
+     "statement": "Document in each batch production and control record, for each significant manufacturing, processing, packing or holding step, complete labeling control records, including specimens or copies of all labeling used.",
+     "quote": "Complete labeling control records, including specimens or copies of all labeling used;",
+     "clause_number": "211.188(b)(8)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "PROD.PACK"
+    },
+    {
+     "statement": "Document in each batch production and control record, for each significant manufacturing, processing, packing or holding step, a description of the drug product containers and closures.",
+     "quote": "Description of drug product containers and closures;",
+     "clause_number": "211.188(b)(9)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "DOC.BMR"
+    },
+    {
+     "statement": "Document in each batch production and control record, for each significant manufacturing, processing, packing or holding step, any sampling performed.",
+     "quote": "Any sampling performed;",
+     "clause_number": "211.188(b)(10)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "DOC.BMR"
+    },
+    {
+     "statement": "Document in each batch production and control record, for each significant manufacturing, processing, packing or holding step, the identity of the persons performing and directly supervising or checking each significant step or, where a significant step is performed by automated equipment, the identity of the person checking that step.",
+     "quote": "Identification of the persons performing and directly supervising or checking each significant step in the operation, or if a significant step in the operation is performed by automated equipment under § 211.68, the identification of the person checking the significant step performed by the automated equipment.",
+     "clause_number": "211.188(b)(11)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "if step performed by automated equipment, identify the checker",
+     "topic": "DOC.BMR"
+    },
+    {
+     "statement": "Document in each batch production and control record, for each significant manufacturing, processing, packing or holding step, any investigation made into unexplained discrepancies or specification failures.",
+     "quote": "Any investigation made according to § 211.192.",
+     "clause_number": "211.188(b)(12)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "DOC.BMR"
+    },
+    {
+     "statement": "Document in each batch production and control record, for each significant manufacturing, processing, packing or holding step, the results of the examinations of labeled finished product made during finishing operations.",
+     "quote": "Results of examinations made in accordance with § 211.134.",
+     "clause_number": "211.188(b)(13)",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "DOC.BMR"
+    }
+   ],
+   "not_applicable": []
+  },
+  {
+   "section": "ecfr-21cfr211-2026-10-27.xml:211.192",
+   "items": [
+    {
+     "statement": "Have the quality control unit review and approve all drug product production and control records, including packaging and labeling records, to determine compliance with all established, approved written procedures before a batch is released or distributed.",
+     "quote": "All drug product production and control records, including those for packaging and labeling, shall be reviewed and approved by the quality control unit to determine compliance with all established, approved written procedures before a batch is released or distributed.",
+     "clause_number": "211.192",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "before batch release or distribution",
+     "topic": "REL.REVIEW"
+    },
+    {
+     "statement": "Thoroughly investigate any unexplained discrepancy (including a percentage of theoretical yield outside the maximum or minimum set in the master production and control records) or any failure of a batch or its components to meet a specification, whether or not the batch has already been distributed.",
+     "quote": "Any unexplained discrepancy (including a percentage of theoretical yield exceeding the maximum or minimum percentages established in master production and control records) or the failure of a batch or any of its components to meet any of its specifications shall be thoroughly investigated, whether or not the batch has already been distributed.",
+     "clause_number": "211.192",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "unexplained discrepancy or specification failure",
+     "topic": "QS.DEV"
+    },
+    {
+     "statement": "Extend each discrepancy or failure investigation to other batches of the same drug product and to other drug products that may be associated with the specific failure or discrepancy.",
+     "quote": "The investigation shall extend to other batches of the same drug product and other drug products that may have been associated with the specific failure or discrepancy.",
+     "clause_number": "211.192",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "QS.DEV"
+    },
+    {
+     "statement": "Make a written record of each discrepancy or failure investigation, including its conclusions and follow-up.",
+     "quote": "A written record of the investigation shall be made and shall include the conclusions and followup.",
+     "clause_number": "211.192",
+     "strength": "mandatory",
+     "plant_types": [
+      "OSD",
+      "LIQ",
+      "SEMI",
+      "INJ"
+     ],
+     "numbers": [],
+     "condition": "",
+     "topic": "QS.DEV"
+    }
+   ],
+   "not_applicable": []
+  }
+ ]
+}
