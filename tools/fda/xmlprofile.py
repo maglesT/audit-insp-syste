@@ -149,6 +149,11 @@ def lead_in_text(ref, paras):
     """The lead-ins over a paragraph: every ancestor paragraph whose own text ends in ":", nearest first
     (211.42(c)(10)(i) takes (c)(10) "Aseptic processing, which includes as appropriate:" and (c)'s "... as are
     necessary to prevent contamination or mixups during the course of the following procedures:")."""
+    return " ".join(lead_ins(ref, paras))
+
+
+def lead_ins(ref, paras):
+    """The lead-in sentences over a paragraph, nearest first (see lead_in_text)."""
     out, r = [], parent(ref)
     while r:
         t = own_text(r, paras.get(r, ""))
@@ -157,7 +162,14 @@ def lead_in_text(ref, paras):
         sents = obligations.sentences(t) or [t]
         out.append(sents[-1])          # the sentence that introduces the list (D46), not the paragraph's other
         r = parent(r)                  # sentences (11.10: "when appropriate, the confidentiality ..." is not one)
-    return " ".join(out)
+    return out
+
+
+def strength_words(text):
+    """layer1.strength_of without the may/can/could that state a possibility ("changes that may affect sterility
+    assurance", vision.DESCRIPTIVE, the coverage rule of PR #36): those are not permissions."""
+    import layer1
+    return layer1.strength_of(vision.DESCRIPTIVE.sub(" ", text)) if text else None
 
 
 MIN_QUOTE_TOKENS = 3
@@ -247,7 +259,8 @@ def check_item(item, source, section=None):
     for n in re.findall(r"(?<![\w.^§])\d+(?:[.,]\d+)?", without_refs(item["quote"])):
         if not layer1.number_found(n, [item["statement"]]):
             out.append(("numbers", f"{n} in the quote, not in the statement"))
-    words = layer1.strength_of(item["quote"]) or (layer1.strength_of(lead) if lead else None)
+    words = strength_words(item["quote"]) or next(
+        (w for w in map(strength_words, lead_ins(ref, paras)) if w), None)     # the nearest lead-in decides
     if words and words != item["strength"]:
         out.append(("strength", f"quote says {words}, item {item['strength']}"))
     missing = layer1.conditions_missing(item["quote"], layer1.conditions_in(item["statement"]))

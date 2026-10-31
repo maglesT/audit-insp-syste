@@ -185,6 +185,12 @@ class Packing(unittest.TestCase):
         self.assertEqual([len(b) for b in X.pack(list(small), small)], [10, 2])
 
 
+class DescriptiveMay(unittest.TestCase):
+    def test_may_affect_is_not_optional(self):
+        self.assertIsNone(X.strength_words("Changes that may affect drug substance or drug product sterility assurance"))
+        self.assertEqual(X.strength_words("The applicant may commence distribution"), "optional")
+
+
 class CrossReferences(unittest.TestCase):
     def test_cross_references_are_not_numbers(self):
         self.assertNotIn("211", X.without_refs("as required in § 211.192 and parts 600 through 680"))

@@ -1,0 +1,141 @@
+{
+ "role": "a",
+ "instructions": "You are an auditor checking one checklist item against the US regulation paragraph it claims to come from. You get\nthe section's paragraphs (reference and exact text, from the official eCFR XML) and the item. Start from the ITEM:\nread it, then find in the cited paragraph what it covers.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the parent paragraph's\nlead-in (including a qualifier such as \"as are necessary to prevent contamination or mixups\"). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph requires what the statement asks for, the statement\n  adds nothing and omits nothing of that obligation, the strength (shall/must = mandatory, should = recommended,\n  may = optional; a sub-paragraph takes its lead-in's) matches, and the regulation applies to every listed plant\n  type (INJ = sterile injectables: a paragraph limited to products not required to be sterile does not apply to\n  INJ; one limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "sections": [
+  {
+   "section": "200.50",
+   "paragraphs": [
+    {
+     "ref": "200.50",
+     "text": "§ 200.50 Ophthalmic preparations and dispensers."
+    },
+    {
+     "ref": "200.50(a)",
+     "text": "(a)"
+    },
+    {
+     "ref": "200.50(a)(1)",
+     "text": "(1) Informed medical opinion is in agreement that all preparations offered or intended for ophthalmic use, including preparations for cleansing the eyes, should be sterile. It is further evident that such preparations purport to be of such purity and quality as to be suitable for safe use in the eye."
+    },
+    {
+     "ref": "200.50(a)(2)",
+     "text": "(2) The Food and Drug Administration concludes that all such preparations, if they are not sterile, fall below their professed standard of purity or quality and may be unsafe. In a statement of policy issued on September 1, 1964, the Food and Drug Administration ruled that liquid preparations offered or intended for ophthalmic use that are not sterile may be regarded as adulterated within the meaning of section 501(c) of the Federal Food, Drug, and Cosmetic Act (the act), and, further, may be deemed misbranded within the meaning of section 502(j) of the act. This ruling is extended to affect all preparations for ophthalmic use. By this regulation, this ruling is applicable to ophthalmic preparations that are regulated as drugs. By the regulation in § 800.10 of this chapter, this ruling is applicable to ophthalmic preparations that are regulated as medical devices."
+    },
+    {
+     "ref": "200.50(a)(3)",
+     "text": "(3) The containers of ophthalmic preparations shall be sterile at the time of filling and closing, and the container or individual carton shall be so sealed that the contents cannot be used without destroying the seal. The packaging and labeling of ophthalmic preparations that are over-the-counter drugs shall also comply with § 211.132 of this chapter on tamper-resistant packaging requirements."
+    },
+    {
+     "ref": "200.50(b)",
+     "text": "(b) Liquid ophthalmic preparations packed in multiple-dose containers should:"
+    },
+    {
+     "ref": "200.50(b)(1)",
+     "text": "(1) Contain one or more suitable and harmless substances that will inhibit the growth of microorganisms; or"
+    },
+    {
+     "ref": "200.50(b)(2)",
+     "text": "(2) Be so packaged as to volume and type of container and so labeled as to duration of use and with such necessary warnings as to afford adequate protection and minimize the hazard of injury resulting from contamination during use."
+    },
+    {
+     "ref": "200.50(c)",
+     "text": "(c) Eye cups, eye droppers, and other dispensers intended for ophthalmic use should be sterile, and may be regarded as falling below their professed standard of purity or quality if they are not sterile. These articles, which are regulated as drugs if packaged with the drugs with which they are to be used, should be packaged so as to maintain sterility until the package is opened and be labeled, on or within the retail package, so as to afford adequate directions and necessary warnings to minimize the hazard of injury resulting from contamination during use."
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "fda-cfr-21-part-200.xml:200.50#1",
+   "section": "200.50",
+   "hash": "c7f4e4e783ab17b2",
+   "item": {
+    "statement": "Eye cups, eye droppers and other dispensers intended for ophthalmic use should be sterile; non-sterile dispensers may be considered below their professed standard of purity or quality.",
+    "quote": "Eye cups, eye droppers, and other dispensers intended for ophthalmic use should be sterile, and may be regarded as falling below their professed standard of purity or quality if they are not sterile.",
+    "clause_number": "200.50(c)",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "dispensers intended for ophthalmic use"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-200.xml:200.50#2",
+   "section": "200.50",
+   "hash": "c45c38e17772e10e",
+   "item": {
+    "statement": "Package eye cups, eye droppers and other ophthalmic dispensers (regulated as drugs when packaged with the drugs they are used with) so that they stay sterile until the package is opened.",
+    "quote": "These articles, which are regulated as drugs if packaged with the drugs with which they are to be used, should be packaged so as to maintain sterility until the package is opened",
+    "clause_number": "200.50(c)",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "ophthalmic dispensers packaged with the drugs they are used with"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-200.xml:200.50#3",
+   "section": "200.50",
+   "hash": "d15cc35bf6eaabe4",
+   "item": {
+    "statement": "Label eye cups, eye droppers and other ophthalmic dispensers (regulated as drugs when packaged with the drugs they are used with), on or within the retail package, with adequate directions and the warnings needed to minimize the hazard of injury from contamination during use.",
+    "quote": "be labeled, on or within the retail package, so as to afford adequate directions and necessary warnings to minimize the hazard of injury resulting from contamination during use.",
+    "clause_number": "200.50(c)",
+    "strength": "recommended",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "ophthalmic dispensers packaged with the drugs they are used with"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  }
+ ]
+}
