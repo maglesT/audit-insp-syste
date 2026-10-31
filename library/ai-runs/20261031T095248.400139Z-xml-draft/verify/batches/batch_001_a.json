@@ -1,0 +1,1653 @@
+{
+ "role": "a",
+ "instructions": "You are an auditor checking one checklist item against the US regulation paragraph it claims to come from. You get\nthe section's paragraphs (reference and exact text, from the official eCFR XML) and the item. Start from the ITEM:\nread it, then find in the cited paragraph what it covers.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the parent paragraph's\nlead-in. Judge only what the item's own words say: do not read the text back into the item.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph requires what the statement asks for, the statement\n  adds nothing and omits nothing of that obligation, the strength (shall/must = mandatory, should = recommended,\n  may = optional; a sub-paragraph takes its lead-in's) matches, and the regulation applies to every listed plant\n  type; otherwise \"incorrect\".\n- reason: one or two sentences.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "sections": [
+  {
+   "section": "211.22",
+   "paragraphs": [
+    {
+     "ref": "211.22",
+     "text": "§ 211.22 Responsibilities of quality control unit."
+    },
+    {
+     "ref": "211.22(a)",
+     "text": "(a) There shall be a quality control unit that shall have the responsibility and authority to approve or reject all components, drug product containers, closures, in-process materials, packaging material, labeling, and drug products, and the authority to review production records to assure that no errors have occurred or, if errors have occurred, that they have been fully investigated. The quality control unit shall be responsible for approving or rejecting drug products manufactured, processed, packed, or held under contract by another company."
+    },
+    {
+     "ref": "211.22(b)",
+     "text": "(b) Adequate laboratory facilities for the testing and approval (or rejection) of components, drug product containers, closures, packaging materials, in-process materials, and drug products shall be available to the quality control unit."
+    },
+    {
+     "ref": "211.22(c)",
+     "text": "(c) The quality control unit shall have the responsibility for approving or rejecting all procedures or specifications impacting on the identity, strength, quality, and purity of the drug product."
+    },
+    {
+     "ref": "211.22(d)",
+     "text": "(d) The responsibilities and procedures applicable to the quality control unit shall be in writing; such written procedures shall be followed."
+    }
+   ]
+  },
+  {
+   "section": "211.25",
+   "paragraphs": [
+    {
+     "ref": "211.25",
+     "text": "§ 211.25 Personnel qualifications."
+    },
+    {
+     "ref": "211.25(a)",
+     "text": "(a) Each person engaged in the manufacture, processing, packing, or holding of a drug product shall have education, training, and experience, or any combination thereof, to enable that person to perform the assigned functions. Training shall be in the particular operations that the employee performs and in current good manufacturing practice (including the current good manufacturing practice regulations in this chapter and written procedures required by these regulations) as they relate to the employee's functions. Training in current good manufacturing practice shall be conducted by qualified individuals on a continuing basis and with sufficient frequency to assure that employees remain familiar with CGMP requirements applicable to them."
+    },
+    {
+     "ref": "211.25(b)",
+     "text": "(b) Each person responsible for supervising the manufacture, processing, packing, or holding of a drug product shall have the education, training, and experience, or any combination thereof, to perform assigned functions in such a manner as to provide assurance that the drug product has the safety, identity, strength, quality, and purity that it purports or is represented to possess."
+    },
+    {
+     "ref": "211.25(c)",
+     "text": "(c) There shall be an adequate number of qualified personnel to perform and supervise the manufacture, processing, packing, or holding of each drug product."
+    }
+   ]
+  },
+  {
+   "section": "211.42",
+   "paragraphs": [
+    {
+     "ref": "211.42",
+     "text": "§ 211.42 Design and construction features."
+    },
+    {
+     "ref": "211.42(a)",
+     "text": "(a) Any building or buildings used in the manufacture, processing, packing, or holding of a drug product shall be of suitable size, construction and location to facilitate cleaning, maintenance, and proper operations."
+    },
+    {
+     "ref": "211.42(b)",
+     "text": "(b) Any such building shall have adequate space for the orderly placement of equipment and materials to prevent mixups between different components, drug product containers, closures, labeling, in-process materials, or drug products, and to prevent contamination. The flow of components, drug product containers, closures, labeling, in-process materials, and drug products through the building or buildings shall be designed to prevent contamination."
+    },
+    {
+     "ref": "211.42(c)",
+     "text": "(c) Operations shall be performed within specifically defined areas of adequate size. There shall be separate or defined areas or such other control systems for the firm's operations as are necessary to prevent contamination or mixups during the course of the following procedures:"
+    },
+    {
+     "ref": "211.42(c)(1)",
+     "text": "(1) Receipt, identification, storage, and withholding from use of components, drug product containers, closures, and labeling, pending the appropriate sampling, testing, or examination by the quality control unit before release for manufacturing or packaging;"
+    },
+    {
+     "ref": "211.42(c)(2)",
+     "text": "(2) Holding rejected components, drug product containers, closures, and labeling before disposition;"
+    },
+    {
+     "ref": "211.42(c)(3)",
+     "text": "(3) Storage of released components, drug product containers, closures, and labeling;"
+    },
+    {
+     "ref": "211.42(c)(4)",
+     "text": "(4) Storage of in-process materials;"
+    },
+    {
+     "ref": "211.42(c)(5)",
+     "text": "(5) Manufacturing and processing operations;"
+    },
+    {
+     "ref": "211.42(c)(6)",
+     "text": "(6) Packaging and labeling operations;"
+    },
+    {
+     "ref": "211.42(c)(7)",
+     "text": "(7) Quarantine storage before release of drug products;"
+    },
+    {
+     "ref": "211.42(c)(8)",
+     "text": "(8) Storage of drug products after release;"
+    },
+    {
+     "ref": "211.42(c)(9)",
+     "text": "(9) Control and laboratory operations;"
+    },
+    {
+     "ref": "211.42(c)(10)",
+     "text": "(10) Aseptic processing, which includes as appropriate:"
+    },
+    {
+     "ref": "211.42(c)(10)(i)",
+     "text": "(i) Floors, walls, and ceilings of smooth, hard surfaces that are easily cleanable;"
+    },
+    {
+     "ref": "211.42(c)(10)(ii)",
+     "text": "(ii) Temperature and humidity controls;"
+    },
+    {
+     "ref": "211.42(c)(10)(iii)",
+     "text": "(iii) An air supply filtered through high-efficiency particulate air filters under positive pressure, regardless of whether flow is laminar or nonlaminar;"
+    },
+    {
+     "ref": "211.42(c)(10)(iv)",
+     "text": "(iv) A system for monitoring environmental conditions;"
+    },
+    {
+     "ref": "211.42(c)(10)(v)",
+     "text": "(v) A system for cleaning and disinfecting the room and equipment to produce aseptic conditions;"
+    },
+    {
+     "ref": "211.42(c)(10)(vi)",
+     "text": "(vi) A system for maintaining any equipment used to control the aseptic conditions."
+    },
+    {
+     "ref": "211.42(d)",
+     "text": "(d) Operations relating to the manufacture, processing, and packing of penicillin shall be performed in facilities separate from those used for other drug products for human use."
+    }
+   ]
+  },
+  {
+   "section": "211.67",
+   "paragraphs": [
+    {
+     "ref": "211.67",
+     "text": "§ 211.67 Equipment cleaning and maintenance."
+    },
+    {
+     "ref": "211.67(a)",
+     "text": "(a) Equipment and utensils shall be cleaned, maintained, and, as appropriate for the nature of the drug, sanitized and/or sterilized at appropriate intervals to prevent malfunctions or contamination that would alter the safety, identity, strength, quality, or purity of the drug product beyond the official or other established requirements."
+    },
+    {
+     "ref": "211.67(b)",
+     "text": "(b) Written procedures shall be established and followed for cleaning and maintenance of equipment, including utensils, used in the manufacture, processing, packing, or holding of a drug product. These procedures shall include, but are not necessarily limited to, the following:"
+    },
+    {
+     "ref": "211.67(b)(1)",
+     "text": "(1) Assignment of responsibility for cleaning and maintaining equipment;"
+    },
+    {
+     "ref": "211.67(b)(2)",
+     "text": "(2) Maintenance and cleaning schedules, including, where appropriate, sanitizing schedules;"
+    },
+    {
+     "ref": "211.67(b)(3)",
+     "text": "(3) A description in sufficient detail of the methods, equipment, and materials used in cleaning and maintenance operations, and the methods of disassembling and reassembling equipment as necessary to assure proper cleaning and maintenance;"
+    },
+    {
+     "ref": "211.67(b)(4)",
+     "text": "(4) Removal or obliteration of previous batch identification;"
+    },
+    {
+     "ref": "211.67(b)(5)",
+     "text": "(5) Protection of clean equipment from contamination prior to use;"
+    },
+    {
+     "ref": "211.67(b)(6)",
+     "text": "(6) Inspection of equipment for cleanliness immediately before use."
+    },
+    {
+     "ref": "211.67(c)",
+     "text": "(c) Records shall be kept of maintenance, cleaning, sanitizing, and inspection as specified in §§ 211.180 and 211.182."
+    }
+   ]
+  },
+  {
+   "section": "211.84",
+   "paragraphs": [
+    {
+     "ref": "211.84",
+     "text": "§ 211.84 Testing and approval or rejection of components, drug product containers, and closures."
+    },
+    {
+     "ref": "211.84(a)",
+     "text": "(a) Each lot of components, drug product containers, and closures shall be withheld from use until the lot has been sampled, tested, or examined, as appropriate, and released for use by the quality control unit."
+    },
+    {
+     "ref": "211.84(b)",
+     "text": "(b) Representative samples of each shipment of each lot shall be collected for testing or examination. The number of containers to be sampled, and the amount of material to be taken from each container, shall be based upon appropriate criteria such as statistical criteria for component variability, confidence levels, and degree of precision desired, the past quality history of the supplier, and the quantity needed for analysis and reserve where required by § 211.170."
+    },
+    {
+     "ref": "211.84(c)",
+     "text": "(c) Samples shall be collected in accordance with the following procedures:"
+    },
+    {
+     "ref": "211.84(c)(1)",
+     "text": "(1) The containers of components selected shall be cleaned when necessary in a manner to prevent introduction of contaminants into the component."
+    },
+    {
+     "ref": "211.84(c)(2)",
+     "text": "(2) The containers shall be opened, sampled, and resealed in a manner designed to prevent contamination of their contents and contamination of other components, drug product containers, or closures."
+    },
+    {
+     "ref": "211.84(c)(3)",
+     "text": "(3) Sterile equipment and aseptic sampling techniques shall be used when necessary."
+    },
+    {
+     "ref": "211.84(c)(4)",
+     "text": "(4) If it is necessary to sample a component from the top, middle, and bottom of its container, such sample subdivisions shall not be composited for testing."
+    },
+    {
+     "ref": "211.84(c)(5)",
+     "text": "(5) Sample containers shall be identified so that the following information can be determined: name of the material sampled, the lot number, the container from which the sample was taken, the date on which the sample was taken, and the name of the person who collected the sample."
+    },
+    {
+     "ref": "211.84(c)(6)",
+     "text": "(6) Containers from which samples have been taken shall be marked to show that samples have been removed from them."
+    },
+    {
+     "ref": "211.84(d)",
+     "text": "(d) Samples shall be examined and tested as follows:"
+    },
+    {
+     "ref": "211.84(d)(1)",
+     "text": "(1) At least one test shall be conducted to verify the identity of each component of a drug product. Specific identity tests, if they exist, shall be used."
+    },
+    {
+     "ref": "211.84(d)(2)",
+     "text": "(2) Each component shall be tested for conformity with all appropriate written specifications for purity, strength, and quality. In lieu of such testing by the manufacturer, a report of analysis may be accepted from the supplier of a component, provided that at least one specific identity test is conducted on such component by the manufacturer, and provided that the manufacturer establishes the reliability of the supplier's analyses through appropriate validation of the supplier's test results at appropriate intervals."
+    },
+    {
+     "ref": "211.84(d)(3)",
+     "text": "(3) Containers and closures shall be tested for conformity with all appropriate written specifications. In lieu of such testing by the manufacturer, a certificate of testing may be accepted from the supplier, provided that at least a visual identification is conducted on such containers/closures by the manufacturer and provided that the manufacturer establishes the reliability of the supplier's test results through appropriate validation of the supplier's test results at appropriate intervals."
+    },
+    {
+     "ref": "211.84(d)(4)",
+     "text": "(4) When appropriate, components shall be microscopically examined."
+    },
+    {
+     "ref": "211.84(d)(5)",
+     "text": "(5) Each lot of a component, drug product container, or closure that is liable to contamination with filth, insect infestation, or other extraneous adulterant shall be examined against established specifications for such contamination."
+    },
+    {
+     "ref": "211.84(d)(6)",
+     "text": "(6) Each lot of a component, drug product container, or closure with potential for microbiological contamination that is objectionable in view of its intended use shall be subjected to microbiological tests before use."
+    },
+    {
+     "ref": "211.84(e)",
+     "text": "(e) Any lot of components, drug product containers, or closures that meets the appropriate written specifications of identity, strength, quality, and purity and related tests under paragraph (d) of this section may be approved and released for use. Any lot of such material that does not meet such specifications shall be rejected."
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.22#1",
+   "section": "211.22",
+   "item": {
+    "statement": "A quality control unit exists with responsibility and authority to approve or reject all components, containers, closures, in-process materials, packaging material, labeling and drug products.",
+    "quote": "There shall be a quality control unit that shall have the responsibility and authority to approve or reject all components, drug product containers, closures, in-process materials, packaging material, labeling, and drug products",
+    "clause_number": "211.22(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.22#2",
+   "section": "211.22",
+   "item": {
+    "statement": "The quality control unit has authority to review production records to confirm no errors occurred, or that any errors that occurred were fully investigated.",
+    "quote": "the authority to review production records to assure that no errors have occurred or, if errors have occurred, that they have been fully investigated",
+    "clause_number": "211.22(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "if errors have occurred"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.22#3",
+   "section": "211.22",
+   "item": {
+    "statement": "The quality control unit approves or rejects drug products made, processed, packed or held under contract by another company.",
+    "quote": "The quality control unit shall be responsible for approving or rejecting drug products manufactured, processed, packed, or held under contract by another company.",
+    "clause_number": "211.22(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "under contract by another company"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.22#4",
+   "section": "211.22",
+   "item": {
+    "statement": "Adequate lab facilities are available to the quality control unit for testing and approving or rejecting components, containers, closures, packaging materials, in-process materials and drug products.",
+    "quote": "Adequate laboratory facilities for the testing and approval (or rejection) of components, drug product containers, closures, packaging materials, in-process materials, and drug products shall be available to the quality control unit.",
+    "clause_number": "211.22(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.22#5",
+   "section": "211.22",
+   "item": {
+    "statement": "The quality control unit approves or rejects every procedure or specification affecting the identity, strength, quality and purity of the drug product.",
+    "quote": "The quality control unit shall have the responsibility for approving or rejecting all procedures or specifications impacting on the identity, strength, quality, and purity of the drug product.",
+    "clause_number": "211.22(c)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.22#6",
+   "section": "211.22",
+   "item": {
+    "statement": "The quality control unit's responsibilities and procedures are written down, and those written procedures are followed.",
+    "quote": "The responsibilities and procedures applicable to the quality control unit shall be in writing; such written procedures shall be followed.",
+    "clause_number": "211.22(d)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.25#1",
+   "section": "211.25",
+   "item": {
+    "statement": "Everyone who manufactures, processes, packs or holds a drug product has the education, training and/or experience needed for their assigned functions.",
+    "quote": "Each person engaged in the manufacture, processing, packing, or holding of a drug product shall have education, training, and experience, or any combination thereof, to enable that person to perform the assigned functions.",
+    "clause_number": "211.25(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.25#2",
+   "section": "211.25",
+   "item": {
+    "statement": "Employees are trained in the specific operations they perform and in CGMP (including these regulations and the required written procedures) as relevant to their functions.",
+    "quote": "Training shall be in the particular operations that the employee performs and in current good manufacturing practice (including the current good manufacturing practice regulations in this chapter and written procedures required by these regulations) as they relate to the employee's functions.",
+    "clause_number": "211.25(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.25#3",
+   "section": "211.25",
+   "item": {
+    "statement": "CGMP training is given by qualified trainers, on a continuing basis, often enough that staff stay familiar with the CGMP requirements that apply to them.",
+    "quote": "Training in current good manufacturing practice shall be conducted by qualified individuals on a continuing basis and with sufficient frequency to assure that employees remain familiar with CGMP requirements applicable to them.",
+    "clause_number": "211.25(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.25#4",
+   "section": "211.25",
+   "item": {
+    "statement": "Supervisors of manufacture, processing, packing or holding have the education, training and/or experience to perform their functions so that the product's safety, identity, strength, quality and purity are assured.",
+    "quote": "Each person responsible for supervising the manufacture, processing, packing, or holding of a drug product shall have the education, training, and experience, or any combination thereof, to perform assigned functions in such a manner as to provide assurance that the drug product has the safety, identity, strength, quality, and purity that it purports or is represented to possess.",
+    "clause_number": "211.25(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.25#5",
+   "section": "211.25",
+   "item": {
+    "statement": "Enough qualified staff are available to perform and supervise manufacture, processing, packing or holding of each drug product.",
+    "quote": "There shall be an adequate number of qualified personnel to perform and supervise the manufacture, processing, packing, or holding of each drug product.",
+    "clause_number": "211.25(c)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#1",
+   "section": "211.42",
+   "item": {
+    "statement": "Buildings used to make, process, pack or hold drug products are of suitable size, construction and location to ease cleaning, maintenance and proper operation.",
+    "quote": "Any building or buildings used in the manufacture, processing, packing, or holding of a drug product shall be of suitable size, construction and location to facilitate cleaning, maintenance, and proper operations.",
+    "clause_number": "211.42(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#2",
+   "section": "211.42",
+   "item": {
+    "statement": "Buildings have adequate space for orderly placement of equipment and materials to prevent mixups between components, containers, closures, labeling, in-process materials or drug products, and to prevent contamination.",
+    "quote": "Any such building shall have adequate space for the orderly placement of equipment and materials to prevent mixups between different components, drug product containers, closures, labeling, in-process materials, or drug products, and to prevent contamination.",
+    "clause_number": "211.42(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#3",
+   "section": "211.42",
+   "item": {
+    "statement": "The flow of components, containers, closures, labeling, in-process materials and drug products through the buildings is designed to prevent contamination.",
+    "quote": "The flow of components, drug product containers, closures, labeling, in-process materials, and drug products through the building or buildings shall be designed to prevent contamination.",
+    "clause_number": "211.42(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#4",
+   "section": "211.42",
+   "item": {
+    "statement": "Operations take place in specifically defined areas of adequate size.",
+    "quote": "Operations shall be performed within specifically defined areas of adequate size.",
+    "clause_number": "211.42(c)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#5",
+   "section": "211.42",
+   "item": {
+    "statement": "Separate or defined areas or other controls are provided for receipt, identification, storage and withholding of components, containers, closures and labeling pending QC sampling, testing or examination before release.",
+    "quote": "Receipt, identification, storage, and withholding from use of components, drug product containers, closures, and labeling, pending the appropriate sampling, testing, or examination by the quality control unit before release for manufacturing or packaging",
+    "clause_number": "211.42(c)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "necessary to prevent contamination or mixups"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#6",
+   "section": "211.42",
+   "item": {
+    "statement": "Separate or defined areas or other controls are provided for holding rejected components, containers, closures and labeling until disposition.",
+    "quote": "Holding rejected components, drug product containers, closures, and labeling before disposition",
+    "clause_number": "211.42(c)(2)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "necessary to prevent contamination or mixups"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#7",
+   "section": "211.42",
+   "item": {
+    "statement": "Separate or defined areas or other controls are provided for storing released components, containers, closures and labeling.",
+    "quote": "Storage of released components, drug product containers, closures, and labeling",
+    "clause_number": "211.42(c)(3)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "necessary to prevent contamination or mixups"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#8",
+   "section": "211.42",
+   "item": {
+    "statement": "Separate or defined areas or other controls are provided for storing in-process materials.",
+    "quote": "Storage of in-process materials",
+    "clause_number": "211.42(c)(4)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "necessary to prevent contamination or mixups"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#9",
+   "section": "211.42",
+   "item": {
+    "statement": "Separate or defined areas or other controls are provided for manufacturing and processing operations.",
+    "quote": "Manufacturing and processing operations",
+    "clause_number": "211.42(c)(5)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "necessary to prevent contamination or mixups"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#10",
+   "section": "211.42",
+   "item": {
+    "statement": "Separate or defined areas or other controls are provided for packaging and labeling operations.",
+    "quote": "Packaging and labeling operations",
+    "clause_number": "211.42(c)(6)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "necessary to prevent contamination or mixups"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#11",
+   "section": "211.42",
+   "item": {
+    "statement": "Separate or defined areas or other controls are provided for quarantine storage of drug products before release.",
+    "quote": "Quarantine storage before release of drug products",
+    "clause_number": "211.42(c)(7)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "necessary to prevent contamination or mixups"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#12",
+   "section": "211.42",
+   "item": {
+    "statement": "Separate or defined areas or other controls are provided for storing released drug products.",
+    "quote": "Storage of drug products after release",
+    "clause_number": "211.42(c)(8)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "necessary to prevent contamination or mixups"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#13",
+   "section": "211.42",
+   "item": {
+    "statement": "Separate or defined areas or other controls are provided for control and laboratory operations.",
+    "quote": "Control and laboratory operations",
+    "clause_number": "211.42(c)(9)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "necessary to prevent contamination or mixups"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#14",
+   "section": "211.42",
+   "item": {
+    "statement": "Aseptic processing areas have, as appropriate, smooth, hard, easily cleanable floors, walls and ceilings.",
+    "quote": "Floors, walls, and ceilings of smooth, hard surfaces that are easily cleanable",
+    "clause_number": "211.42(c)(10)(i)",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "aseptic processing, as appropriate; necessary to prevent contamination or mixups"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#15",
+   "section": "211.42",
+   "item": {
+    "statement": "Aseptic processing areas have, as appropriate, temperature and humidity controls.",
+    "quote": "Temperature and humidity controls",
+    "clause_number": "211.42(c)(10)(ii)",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "aseptic processing, as appropriate; necessary to prevent contamination or mixups"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#16",
+   "section": "211.42",
+   "item": {
+    "statement": "Aseptic processing areas have, as appropriate, HEPA-filtered air supply under positive pressure, whether flow is laminar or not.",
+    "quote": "An air supply filtered through high-efficiency particulate air filters under positive pressure, regardless of whether flow is laminar or nonlaminar",
+    "clause_number": "211.42(c)(10)(iii)",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "aseptic processing, as appropriate; necessary to prevent contamination or mixups"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#17",
+   "section": "211.42",
+   "item": {
+    "statement": "Aseptic processing areas have, as appropriate, a system for monitoring environmental conditions.",
+    "quote": "A system for monitoring environmental conditions",
+    "clause_number": "211.42(c)(10)(iv)",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "aseptic processing, as appropriate; necessary to prevent contamination or mixups"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#18",
+   "section": "211.42",
+   "item": {
+    "statement": "Aseptic processing areas have, as appropriate, a system for cleaning and disinfecting the room and equipment to achieve aseptic conditions.",
+    "quote": "A system for cleaning and disinfecting the room and equipment to produce aseptic conditions",
+    "clause_number": "211.42(c)(10)(v)",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "aseptic processing, as appropriate; necessary to prevent contamination or mixups"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#19",
+   "section": "211.42",
+   "item": {
+    "statement": "Aseptic processing areas have, as appropriate, a system for maintaining any equipment used to control aseptic conditions.",
+    "quote": "A system for maintaining any equipment used to control the aseptic conditions",
+    "clause_number": "211.42(c)(10)(vi)",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "aseptic processing, as appropriate; necessary to prevent contamination or mixups"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.42#20",
+   "section": "211.42",
+   "item": {
+    "statement": "Penicillin manufacture, processing and packing are done in facilities separate from those used for other human drug products.",
+    "quote": "Operations relating to the manufacture, processing, and packing of penicillin shall be performed in facilities separate from those used for other drug products for human use.",
+    "clause_number": "211.42(d)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "penicillin operations"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.67#1",
+   "section": "211.67",
+   "item": {
+    "statement": "Equipment and utensils are cleaned, maintained and, as appropriate to the drug, sanitized and/or sterilized at appropriate intervals to prevent malfunction or contamination affecting product safety, identity, strength, quality or purity beyond established requirements.",
+    "quote": "Equipment and utensils shall be cleaned, maintained, and, as appropriate for the nature of the drug, sanitized and/or sterilized at appropriate intervals to prevent malfunctions or contamination that would alter the safety, identity, strength, quality, or purity of the drug product beyond the official or other established requirements.",
+    "clause_number": "211.67(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "sanitize/sterilize as appropriate for the drug"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.67#2",
+   "section": "211.67",
+   "item": {
+    "statement": "Written procedures for cleaning and maintaining equipment and utensils used for drug products are established and followed.",
+    "quote": "Written procedures shall be established and followed for cleaning and maintenance of equipment, including utensils, used in the manufacture, processing, packing, or holding of a drug product.",
+    "clause_number": "211.67(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.67#3",
+   "section": "211.67",
+   "item": {
+    "statement": "Equipment cleaning and maintenance procedures assign responsibility for cleaning and maintaining equipment.",
+    "quote": "Assignment of responsibility for cleaning and maintaining equipment",
+    "clause_number": "211.67(b)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.67#4",
+   "section": "211.67",
+   "item": {
+    "statement": "Equipment cleaning and maintenance procedures set maintenance and cleaning schedules, including sanitizing schedules where appropriate.",
+    "quote": "Maintenance and cleaning schedules, including, where appropriate, sanitizing schedules",
+    "clause_number": "211.67(b)(2)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "where appropriate (sanitizing)"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.67#5",
+   "section": "211.67",
+   "item": {
+    "statement": "Equipment cleaning and maintenance procedures describe in enough detail the methods, equipment and materials for cleaning and maintenance, and how to disassemble and reassemble equipment as needed for proper cleaning and maintenance.",
+    "quote": "A description in sufficient detail of the methods, equipment, and materials used in cleaning and maintenance operations, and the methods of disassembling and reassembling equipment as necessary to assure proper cleaning and maintenance",
+    "clause_number": "211.67(b)(3)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "as necessary"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.67#6",
+   "section": "211.67",
+   "item": {
+    "statement": "Equipment cleaning and maintenance procedures require removal or obliteration of previous batch identification.",
+    "quote": "Removal or obliteration of previous batch identification",
+    "clause_number": "211.67(b)(4)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.67#7",
+   "section": "211.67",
+   "item": {
+    "statement": "Equipment cleaning and maintenance procedures require protection of clean equipment from contamination before use.",
+    "quote": "Protection of clean equipment from contamination prior to use",
+    "clause_number": "211.67(b)(5)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.67#8",
+   "section": "211.67",
+   "item": {
+    "statement": "Equipment cleaning and maintenance procedures require inspection of equipment for cleanliness immediately before use.",
+    "quote": "Inspection of equipment for cleanliness immediately before use",
+    "clause_number": "211.67(b)(6)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.67#9",
+   "section": "211.67",
+   "item": {
+    "statement": "Records of equipment maintenance, cleaning, sanitizing and inspection are kept as specified in 211.180 and 211.182.",
+    "quote": "Records shall be kept of maintenance, cleaning, sanitizing, and inspection as specified in §§ 211.180 and 211.182.",
+    "clause_number": "211.67(c)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.84#1",
+   "section": "211.84",
+   "item": {
+    "statement": "Each lot of components, containers and closures is held from use until sampled, tested or examined as appropriate and released by the quality control unit.",
+    "quote": "Each lot of components, drug product containers, and closures shall be withheld from use until the lot has been sampled, tested, or examined, as appropriate, and released for use by the quality control unit.",
+    "clause_number": "211.84(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.84#2",
+   "section": "211.84",
+   "item": {
+    "statement": "Representative samples are taken from each shipment of each lot for testing or examination.",
+    "quote": "Representative samples of each shipment of each lot shall be collected for testing or examination.",
+    "clause_number": "211.84(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.84#3",
+   "section": "211.84",
+   "item": {
+    "statement": "The number of containers sampled and the amount taken per container are based on appropriate criteria such as statistical criteria for variability, confidence and precision, the supplier's quality history, and quantity needed for analysis and for reserve where 211.170 requires it.",
+    "quote": "The number of containers to be sampled, and the amount of material to be taken from each container, shall be based upon appropriate criteria such as statistical criteria for component variability, confidence levels, and degree of precision desired, the past quality history of the supplier, and the quantity needed for analysis and reserve where required by § 211.170.",
+    "clause_number": "211.84(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "reserve where required by 211.170"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.84#4",
+   "section": "211.84",
+   "item": {
+    "statement": "When sampling, selected component containers are cleaned when needed so no contaminants get into the component.",
+    "quote": "The containers of components selected shall be cleaned when necessary in a manner to prevent introduction of contaminants into the component.",
+    "clause_number": "211.84(c)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "when necessary"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.84#5",
+   "section": "211.84",
+   "item": {
+    "statement": "When sampling, containers are opened, sampled and resealed so as to prevent contaminating their contents and other components, containers or closures.",
+    "quote": "The containers shall be opened, sampled, and resealed in a manner designed to prevent contamination of their contents and contamination of other components, drug product containers, or closures.",
+    "clause_number": "211.84(c)(2)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.84#6",
+   "section": "211.84",
+   "item": {
+    "statement": "When sampling, sterile equipment and aseptic sampling techniques are used when necessary.",
+    "quote": "Sterile equipment and aseptic sampling techniques shall be used when necessary.",
+    "clause_number": "211.84(c)(3)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "when necessary"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.84#7",
+   "section": "211.84",
+   "item": {
+    "statement": "When a component must be sampled from top, middle and bottom of its container, those subdivisions are not composited for testing.",
+    "quote": "If it is necessary to sample a component from the top, middle, and bottom of its container, such sample subdivisions shall not be composited for testing.",
+    "clause_number": "211.84(c)(4)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "if top, middle and bottom sampling is necessary"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.84#8",
+   "section": "211.84",
+   "item": {
+    "statement": "Sample containers are identified so that material name, lot number, source container, sampling date and sampler's name can be determined.",
+    "quote": "Sample containers shall be identified so that the following information can be determined: name of the material sampled, the lot number, the container from which the sample was taken, the date on which the sample was taken, and the name of the person who collected the sample.",
+    "clause_number": "211.84(c)(5)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.84#9",
+   "section": "211.84",
+   "item": {
+    "statement": "Containers that have been sampled are marked to show samples were removed.",
+    "quote": "Containers from which samples have been taken shall be marked to show that samples have been removed from them.",
+    "clause_number": "211.84(c)(6)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.84#10",
+   "section": "211.84",
+   "item": {
+    "statement": "At least one test verifies the identity of each drug product component.",
+    "quote": "At least one test shall be conducted to verify the identity of each component of a drug product.",
+    "clause_number": "211.84(d)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.84#11",
+   "section": "211.84",
+   "item": {
+    "statement": "Specific identity tests are used for components where they exist.",
+    "quote": "Specific identity tests, if they exist, shall be used.",
+    "clause_number": "211.84(d)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "if specific tests exist"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.84#12",
+   "section": "211.84",
+   "item": {
+    "statement": "Each component is tested against all appropriate written specifications for purity, strength and quality.",
+    "quote": "Each component shall be tested for conformity with all appropriate written specifications for purity, strength, and quality.",
+    "clause_number": "211.84(d)(2)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.84#13",
+   "section": "211.84",
+   "item": {
+    "statement": "Instead of full testing, a supplier's report of analysis for a component may be accepted, provided the manufacturer does at least one specific identity test and establishes the reliability of the supplier's analyses by validating the supplier's results at appropriate intervals.",
+    "quote": "In lieu of such testing by the manufacturer, a report of analysis may be accepted from the supplier of a component, provided that at least one specific identity test is conducted on such component by the manufacturer, and provided that the manufacturer establishes the reliability of the supplier's analyses through appropriate validation of the supplier's test results at appropriate intervals.",
+    "clause_number": "211.84(d)(2)",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "in lieu of own testing"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.84#14",
+   "section": "211.84",
+   "item": {
+    "statement": "Containers and closures are tested against all appropriate written specifications.",
+    "quote": "Containers and closures shall be tested for conformity with all appropriate written specifications.",
+    "clause_number": "211.84(d)(3)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.84#15",
+   "section": "211.84",
+   "item": {
+    "statement": "Instead of testing, a supplier's certificate of testing for containers/closures may be accepted, provided the manufacturer does at least a visual identification and establishes the reliability of the supplier's results by validating them at appropriate intervals.",
+    "quote": "In lieu of such testing by the manufacturer, a certificate of testing may be accepted from the supplier, provided that at least a visual identification is conducted on such containers/closures by the manufacturer and provided that the manufacturer establishes the reliability of the supplier's test results through appropriate validation of the supplier's test results at appropriate intervals.",
+    "clause_number": "211.84(d)(3)",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "in lieu of own testing"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.84#16",
+   "section": "211.84",
+   "item": {
+    "statement": "Components are examined microscopically when appropriate.",
+    "quote": "When appropriate, components shall be microscopically examined.",
+    "clause_number": "211.84(d)(4)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "when appropriate"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.84#17",
+   "section": "211.84",
+   "item": {
+    "statement": "Each lot of component, container or closure liable to filth, insect infestation or other extraneous adulterants is examined against established specifications for that contamination.",
+    "quote": "Each lot of a component, drug product container, or closure that is liable to contamination with filth, insect infestation, or other extraneous adulterant shall be examined against established specifications for such contamination.",
+    "clause_number": "211.84(d)(5)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "liable to filth or extraneous adulterant"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.84#18",
+   "section": "211.84",
+   "item": {
+    "statement": "Each lot of component, container or closure with potential for microbial contamination objectionable for its intended use undergoes microbiological testing before use.",
+    "quote": "Each lot of a component, drug product container, or closure with potential for microbiological contamination that is objectionable in view of its intended use shall be subjected to microbiological tests before use.",
+    "clause_number": "211.84(d)(6)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "potential objectionable microbial contamination"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.84#19",
+   "section": "211.84",
+   "item": {
+    "statement": "A lot of components, containers or closures meeting the written specifications for identity, strength, quality and purity and related (d) tests may be approved and released for use.",
+    "quote": "Any lot of components, drug product containers, or closures that meets the appropriate written specifications of identity, strength, quality, and purity and related tests under paragraph (d) of this section may be approved and released for use.",
+    "clause_number": "211.84(e)",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "lot meets specifications"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.84#20",
+   "section": "211.84",
+   "item": {
+    "statement": "Any lot of components, containers or closures not meeting specifications is rejected.",
+    "quote": "Any lot of such material that does not meet such specifications shall be rejected.",
+    "clause_number": "211.84(e)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "lot fails specifications"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  }
+ ]
+}

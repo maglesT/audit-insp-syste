@@ -1,0 +1,1016 @@
+{
+ "role": "a",
+ "instructions": "You are an auditor checking one checklist item against the US regulation paragraph it claims to come from. You get\nthe section's paragraphs (reference and exact text, from the official eCFR XML) and the item. Start from the ITEM:\nread it, then find in the cited paragraph what it covers.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the parent paragraph's\nlead-in. Judge only what the item's own words say: do not read the text back into the item.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph requires what the statement asks for, the statement\n  adds nothing and omits nothing of that obligation, the strength (shall/must = mandatory, should = recommended,\n  may = optional; a sub-paragraph takes its lead-in's) matches, and the regulation applies to every listed plant\n  type; otherwise \"incorrect\".\n- reason: one or two sentences.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "sections": [
+  {
+   "section": "211.100",
+   "paragraphs": [
+    {
+     "ref": "211.100",
+     "text": "§ 211.100 Written procedures; deviations."
+    },
+    {
+     "ref": "211.100(a)",
+     "text": "(a) There shall be written procedures for production and process control designed to assure that the drug products have the identity, strength, quality, and purity they purport or are represented to possess. Such procedures shall include all requirements in this subpart. These written procedures, including any changes, shall be drafted, reviewed, and approved by the appropriate organizational units and reviewed and approved by the quality control unit."
+    },
+    {
+     "ref": "211.100(b)",
+     "text": "(b) Written production and process control procedures shall be followed in the execution of the various production and process control functions and shall be documented at the time of performance. Any deviation from the written procedures shall be recorded and justified."
+    }
+   ]
+  },
+  {
+   "section": "211.113",
+   "paragraphs": [
+    {
+     "ref": "211.113",
+     "text": "§ 211.113 Control of microbiological contamination."
+    },
+    {
+     "ref": "211.113(a)",
+     "text": "(a) Appropriate written procedures, designed to prevent objectionable microorganisms in drug products not required to be sterile, shall be established and followed."
+    },
+    {
+     "ref": "211.113(b)",
+     "text": "(b) Appropriate written procedures, designed to prevent microbiological contamination of drug products purporting to be sterile, shall be established and followed. Such procedures shall include validation of all aseptic and sterilization processes."
+    }
+   ]
+  },
+  {
+   "section": "211.166",
+   "paragraphs": [
+    {
+     "ref": "211.166",
+     "text": "§ 211.166 Stability testing."
+    },
+    {
+     "ref": "211.166(a)",
+     "text": "(a) There shall be a written testing program designed to assess the stability characteristics of drug products. The results of such stability testing shall be used in determining appropriate storage conditions and expiration dates. The written program shall be followed and shall include:"
+    },
+    {
+     "ref": "211.166(a)(1)",
+     "text": "(1) Sample size and test intervals based on statistical criteria for each attribute examined to assure valid estimates of stability;"
+    },
+    {
+     "ref": "211.166(a)(2)",
+     "text": "(2) Storage conditions for samples retained for testing;"
+    },
+    {
+     "ref": "211.166(a)(3)",
+     "text": "(3) Reliable, meaningful, and specific test methods;"
+    },
+    {
+     "ref": "211.166(a)(4)",
+     "text": "(4) Testing of the drug product in the same container-closure system as that in which the drug product is marketed;"
+    },
+    {
+     "ref": "211.166(a)(5)",
+     "text": "(5) Testing of drug products for reconstitution at the time of dispensing (as directed in the labeling) as well as after they are reconstituted."
+    },
+    {
+     "ref": "211.166(b)",
+     "text": "(b) An adequate number of batches of each drug product shall be tested to determine an appropriate expiration date and a record of such data shall be maintained. Accelerated studies, combined with basic stability information on the components, drug products, and container-closure system, may be used to support tentative expiration dates provided full shelf life studies are not available and are being conducted. Where data from accelerated studies are used to project a tentative expiration date that is beyond a date supported by actual shelf life studies, there must be stability studies conducted, including drug product testing at appropriate intervals, until the tentative expiration date is verified or the appropriate expiration date determined."
+    },
+    {
+     "ref": "211.166(c)",
+     "text": "(c) For homeopathic drug products, the requirements of this section are as follows:"
+    },
+    {
+     "ref": "211.166(c)(1)",
+     "text": "(1) There shall be a written assessment of stability based at least on testing or examination of the drug product for compatibility of the ingredients, and based on marketing experience with the drug product to indicate that there is no degradation of the product for the normal or expected period of use."
+    },
+    {
+     "ref": "211.166(c)(2)",
+     "text": "(2) Evaluation of stability shall be based on the same container-closure system in which the drug product is being marketed."
+    },
+    {
+     "ref": "211.166(d)",
+     "text": "(d) Allergenic extracts that are labeled “No U.S. Standard of Potency” are exempt from the requirements of this section."
+    }
+   ]
+  },
+  {
+   "section": "211.180",
+   "paragraphs": [
+    {
+     "ref": "211.180",
+     "text": "§ 211.180 General requirements."
+    },
+    {
+     "ref": "211.180(a)",
+     "text": "(a) Any production, control, or distribution record that is required to be maintained in compliance with this part and is specifically associated with a batch of a drug product shall be retained for at least 1 year after the expiration date of the batch or, in the case of certain OTC drug products lacking expiration dating because they meet the criteria for exemption under § 211.137, 3 years after distribution of the batch."
+    },
+    {
+     "ref": "211.180(b)",
+     "text": "(b) Records shall be maintained for all components, drug product containers, closures, and labeling for at least 1 year after the expiration date or, in the case of certain OTC drug products lacking expiration dating because they meet the criteria for exemption under § 211.137, 3 years after distribution of the last lot of drug product incorporating the component or using the container, closure, or labeling."
+    },
+    {
+     "ref": "211.180(c)",
+     "text": "(c) All records required under this part, or copies of such records, shall be readily available for authorized inspection during the retention period at the establishment where the activities described in such records occurred. These records or copies thereof shall be subject to photocopying or other means of reproduction as part of such inspection. Records that can be immediately retrieved from another location by computer or other electronic means shall be considered as meeting the requirements of this paragraph."
+    },
+    {
+     "ref": "211.180(d)",
+     "text": "(d) Records required under this part may be retained either as original records or as true copies such as photocopies, microfilm, microfiche, or other accurate reproductions of the original records. Where reduction techniques, such as microfilming, are used, suitable reader and photocopying equipment shall be readily available."
+    },
+    {
+     "ref": "211.180(e)",
+     "text": "(e) Written records required by this part shall be maintained so that data therein can be used for evaluating, at least annually, the quality standards of each drug product to determine the need for changes in drug product specifications or manufacturing or control procedures. Written procedures shall be established and followed for such evaluations and shall include provisions for:"
+    },
+    {
+     "ref": "211.180(e)(1)",
+     "text": "(1) A review of a representative number of batches, whether approved or rejected, and, where applicable, records associated with the batch."
+    },
+    {
+     "ref": "211.180(e)(2)",
+     "text": "(2) A review of complaints, recalls, returned or salvaged drug products, and investigations conducted under § 211.192 for each drug product."
+    },
+    {
+     "ref": "211.180(f)",
+     "text": "(f) Procedures shall be established to assure that the responsible officials of the firm, if they are not personally involved in or immediately aware of such actions, are notified in writing of any investigations conducted under §§ 211.198, 211.204, or 211.208 of these regulations, any recalls, reports of inspectional observations issued by the Food and Drug Administration, or any regulatory actions relating to good manufacturing practices brought by the Food and Drug Administration."
+    }
+   ]
+  },
+  {
+   "section": "211.192",
+   "paragraphs": [
+    {
+     "ref": "211.192",
+     "text": "§ 211.192 Production record review. All drug product production and control records, including those for packaging and labeling, shall be reviewed and approved by the quality control unit to determine compliance with all established, approved written procedures before a batch is released or distributed. Any unexplained discrepancy (including a percentage of theoretical yield exceeding the maximum or minimum percentages established in master production and control records) or the failure of a batch or any of its components to meet any of its specifications shall be thoroughly investigated, whether or not the batch has already been distributed. The investigation shall extend to other batches of the same drug product and other drug products that may have been associated with the specific failure or discrepancy. A written record of the investigation shall be made and shall include the conclusions and followup."
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.100#1",
+   "section": "211.100",
+   "item": {
+    "statement": "Maintain written production and process control procedures designed to ensure drug products have their claimed identity, strength, quality and purity.",
+    "quote": "There shall be written procedures for production and process control designed to assure that the drug products have the identity, strength, quality, and purity they purport or are represented to possess.",
+    "clause_number": "211.100(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.100#2",
+   "section": "211.100",
+   "item": {
+    "statement": "Ensure the production and process control procedures cover every requirement of this subpart.",
+    "quote": "Such procedures shall include all requirements in this subpart.",
+    "clause_number": "211.100(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.100#3",
+   "section": "211.100",
+   "item": {
+    "statement": "Have production and process control procedures, and any changes to them, drafted, reviewed and approved by the appropriate organizational units and then reviewed and approved by the quality control unit.",
+    "quote": "These written procedures, including any changes, shall be drafted, reviewed, and approved by the appropriate organizational units and reviewed and approved by the quality control unit.",
+    "clause_number": "211.100(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.100#4",
+   "section": "211.100",
+   "item": {
+    "statement": "Follow the written production and process control procedures when carrying out these functions and document each activity when it is performed.",
+    "quote": "Written production and process control procedures shall be followed in the execution of the various production and process control functions and shall be documented at the time of performance.",
+    "clause_number": "211.100(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.100#5",
+   "section": "211.100",
+   "item": {
+    "statement": "Record and justify every deviation from the written production and process control procedures.",
+    "quote": "Any deviation from the written procedures shall be recorded and justified.",
+    "clause_number": "211.100(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "deviation from written procedures"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.113#1",
+   "section": "211.113",
+   "item": {
+    "statement": "Establish and follow appropriate written procedures to prevent objectionable microorganisms in non-sterile drug products.",
+    "quote": "Appropriate written procedures, designed to prevent objectionable microorganisms in drug products not required to be sterile, shall be established and followed.",
+    "clause_number": "211.113(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "drug products not required to be sterile"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.113#2",
+   "section": "211.113",
+   "item": {
+    "statement": "Establish and follow appropriate written procedures to prevent microbiological contamination of drug products claimed to be sterile.",
+    "quote": "Appropriate written procedures, designed to prevent microbiological contamination of drug products purporting to be sterile, shall be established and followed.",
+    "clause_number": "211.113(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "drug products purporting to be sterile"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.113#3",
+   "section": "211.113",
+   "item": {
+    "statement": "Include validation of all aseptic and sterilization processes in the procedures for sterile drug products.",
+    "quote": "Such procedures shall include validation of all aseptic and sterilization processes.",
+    "clause_number": "211.113(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "drug products purporting to be sterile"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#1",
+   "section": "211.166",
+   "item": {
+    "statement": "Maintain a written stability testing program designed to assess the stability characteristics of drug products.",
+    "quote": "There shall be a written testing program designed to assess the stability characteristics of drug products.",
+    "clause_number": "211.166(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#2",
+   "section": "211.166",
+   "item": {
+    "statement": "Use stability testing results to set appropriate storage conditions and expiration dates.",
+    "quote": "The results of such stability testing shall be used in determining appropriate storage conditions and expiration dates.",
+    "clause_number": "211.166(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#3",
+   "section": "211.166",
+   "item": {
+    "statement": "Follow the written stability testing program.",
+    "quote": "The written program shall be followed",
+    "clause_number": "211.166(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#4",
+   "section": "211.166",
+   "item": {
+    "statement": "Include in the stability program sample sizes and test intervals set on statistical criteria for each examined attribute so that stability estimates are valid.",
+    "quote": "Sample size and test intervals based on statistical criteria for each attribute examined to assure valid estimates of stability",
+    "clause_number": "211.166(a)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#5",
+   "section": "211.166",
+   "item": {
+    "statement": "Include in the stability program the storage conditions for samples kept for testing.",
+    "quote": "Storage conditions for samples retained for testing",
+    "clause_number": "211.166(a)(2)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#6",
+   "section": "211.166",
+   "item": {
+    "statement": "Include in the stability program test methods that are reliable, meaningful and specific.",
+    "quote": "Reliable, meaningful, and specific test methods",
+    "clause_number": "211.166(a)(3)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#7",
+   "section": "211.166",
+   "item": {
+    "statement": "Include in the stability program testing of the product in the same container-closure system used for the marketed product.",
+    "quote": "Testing of the drug product in the same container-closure system as that in which the drug product is marketed",
+    "clause_number": "211.166(a)(4)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#8",
+   "section": "211.166",
+   "item": {
+    "statement": "For products reconstituted at dispensing, include in the stability program testing at the time of dispensing (as the labeling directs) and after reconstitution.",
+    "quote": "Testing of drug products for reconstitution at the time of dispensing (as directed in the labeling) as well as after they are reconstituted.",
+    "clause_number": "211.166(a)(5)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "drug products for reconstitution"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#9",
+   "section": "211.166",
+   "item": {
+    "statement": "Test an adequate number of batches of each drug product to determine an appropriate expiration date.",
+    "quote": "An adequate number of batches of each drug product shall be tested to determine an appropriate expiration date",
+    "clause_number": "211.166(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#10",
+   "section": "211.166",
+   "item": {
+    "statement": "Keep a record of the stability data used to determine expiration dates.",
+    "quote": "a record of such data shall be maintained",
+    "clause_number": "211.166(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#11",
+   "section": "211.166",
+   "item": {
+    "statement": "Accelerated studies plus basic stability information on components, drug products and container-closure system may support tentative expiration dates, provided full shelf life studies are not available and are under way.",
+    "quote": "Accelerated studies, combined with basic stability information on the components, drug products, and container-closure system, may be used to support tentative expiration dates provided full shelf life studies are not available and are being conducted.",
+    "clause_number": "211.166(b)",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "full shelf life studies not available and being conducted"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#12",
+   "section": "211.166",
+   "item": {
+    "statement": "Where accelerated data project a tentative expiration date beyond what actual shelf life studies support, continue stability studies, including product testing at appropriate intervals, until the tentative date is verified or the appropriate date is determined.",
+    "quote": "Where data from accelerated studies are used to project a tentative expiration date that is beyond a date supported by actual shelf life studies, there must be stability studies conducted, including drug product testing at appropriate intervals, until the tentative expiration date is verified or the appropriate expiration date determined.",
+    "clause_number": "211.166(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "accelerated data project date beyond shelf life data"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#13",
+   "section": "211.166",
+   "item": {
+    "statement": "For homeopathic products, maintain a written stability assessment based at least on testing or examination for ingredient compatibility and on marketing experience showing no degradation over the normal or expected period of use.",
+    "quote": "There shall be a written assessment of stability based at least on testing or examination of the drug product for compatibility of the ingredients, and based on marketing experience with the drug product to indicate that there is no degradation of the product for the normal or expected period of use.",
+    "clause_number": "211.166(c)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "homeopathic drug products"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.166#14",
+   "section": "211.166",
+   "item": {
+    "statement": "For homeopathic products, base the stability evaluation on the same container-closure system used for the marketed product.",
+    "quote": "Evaluation of stability shall be based on the same container-closure system in which the drug product is being marketed.",
+    "clause_number": "211.166(c)(2)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "homeopathic drug products"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.180#1",
+   "section": "211.180",
+   "item": {
+    "statement": "Retain batch-associated production, control and distribution records for at least 1 year after batch expiry, or 3 years after distribution for OTC products exempt from expiration dating under 211.137.",
+    "quote": "Any production, control, or distribution record that is required to be maintained in compliance with this part and is specifically associated with a batch of a drug product shall be retained for at least 1 year after the expiration date of the batch or, in the case of certain OTC drug products lacking expiration dating because they meet the criteria for exemption under § 211.137, 3 years after distribution of the batch.",
+    "clause_number": "211.180(a)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "records associated with a batch"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.180#2",
+   "section": "211.180",
+   "item": {
+    "statement": "Keep records for all components, containers, closures and labeling for at least 1 year after expiry, or 3 years after distribution of the last lot using them for OTC products exempt from expiration dating under 211.137.",
+    "quote": "Records shall be maintained for all components, drug product containers, closures, and labeling for at least 1 year after the expiration date or, in the case of certain OTC drug products lacking expiration dating because they meet the criteria for exemption under § 211.137, 3 years after distribution of the last lot of drug product incorporating the component or using the container, closure, or labeling.",
+    "clause_number": "211.180(b)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.180#3",
+   "section": "211.180",
+   "item": {
+    "statement": "Keep all required records, or copies, readily available for authorized inspection throughout the retention period at the site where the recorded activities took place.",
+    "quote": "All records required under this part, or copies of such records, shall be readily available for authorized inspection during the retention period at the establishment where the activities described in such records occurred.",
+    "clause_number": "211.180(c)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "during the retention period"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.180#4",
+   "section": "211.180",
+   "item": {
+    "statement": "Allow required records or their copies to be photocopied or otherwise reproduced during inspection.",
+    "quote": "These records or copies thereof shall be subject to photocopying or other means of reproduction as part of such inspection.",
+    "clause_number": "211.180(c)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "during inspection"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.180#5",
+   "section": "211.180",
+   "item": {
+    "statement": "Required records may be kept as originals or as true copies such as photocopies, microfilm, microfiche or other accurate reproductions.",
+    "quote": "Records required under this part may be retained either as original records or as true copies such as photocopies, microfilm, microfiche, or other accurate reproductions of the original records.",
+    "clause_number": "211.180(d)",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.180#6",
+   "section": "211.180",
+   "item": {
+    "statement": "Where reduction techniques such as microfilming are used, keep suitable reader and photocopying equipment readily available.",
+    "quote": "Where reduction techniques, such as microfilming, are used, suitable reader and photocopying equipment shall be readily available.",
+    "clause_number": "211.180(d)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "reduction techniques used"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.180#7",
+   "section": "211.180",
+   "item": {
+    "statement": "Maintain written records so their data can support an evaluation, at least once a year, of each product's quality standards to decide whether specifications or manufacturing or control procedures need to change.",
+    "quote": "Written records required by this part shall be maintained so that data therein can be used for evaluating, at least annually, the quality standards of each drug product to determine the need for changes in drug product specifications or manufacturing or control procedures.",
+    "clause_number": "211.180(e)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.180#8",
+   "section": "211.180",
+   "item": {
+    "statement": "Establish and follow written procedures for the annual product quality evaluations.",
+    "quote": "Written procedures shall be established and followed for such evaluations",
+    "clause_number": "211.180(e)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.180#9",
+   "section": "211.180",
+   "item": {
+    "statement": "Ensure the evaluation procedure provides for reviewing a representative number of batches, approved or rejected, and where applicable their associated records.",
+    "quote": "A review of a representative number of batches, whether approved or rejected, and, where applicable, records associated with the batch.",
+    "clause_number": "211.180(e)(1)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.180#10",
+   "section": "211.180",
+   "item": {
+    "statement": "Ensure the evaluation procedure provides for reviewing complaints, recalls, returned or salvaged products and investigations under 211.192 for each product.",
+    "quote": "A review of complaints, recalls, returned or salvaged drug products, and investigations conducted under § 211.192 for each drug product.",
+    "clause_number": "211.180(e)(2)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.180#11",
+   "section": "211.180",
+   "item": {
+    "statement": "Establish procedures so that responsible officials, if not personally involved or immediately aware, are notified in writing of investigations under 211.198, 211.204 or 211.208, recalls, FDA inspectional observation reports, and FDA GMP regulatory actions.",
+    "quote": "Procedures shall be established to assure that the responsible officials of the firm, if they are not personally involved in or immediately aware of such actions, are notified in writing of any investigations conducted under §§ 211.198, 211.204, or 211.208 of these regulations, any recalls, reports of inspectional observations issued by the Food and Drug Administration, or any regulatory actions relating to good manufacturing practices brought by the Food and Drug Administration.",
+    "clause_number": "211.180(f)",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "officials not personally involved or immediately aware"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.192#1",
+   "section": "211.192",
+   "item": {
+    "statement": "Have the quality control unit review and approve all production and control records, including packaging and labeling records, for compliance with approved written procedures before a batch is released or distributed.",
+    "quote": "All drug product production and control records, including those for packaging and labeling, shall be reviewed and approved by the quality control unit to determine compliance with all established, approved written procedures before a batch is released or distributed.",
+    "clause_number": "211.192",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "before batch release or distribution"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.192#2",
+   "section": "211.192",
+   "item": {
+    "statement": "Thoroughly investigate any unexplained discrepancy (including a yield outside the maximum or minimum percentage of theoretical set in master records) or any failure of a batch or its components to meet specifications, even if the batch has been distributed.",
+    "quote": "Any unexplained discrepancy (including a percentage of theoretical yield exceeding the maximum or minimum percentages established in master production and control records) or the failure of a batch or any of its components to meet any of its specifications shall be thoroughly investigated, whether or not the batch has already been distributed.",
+    "clause_number": "211.192",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "unexplained discrepancy or specification failure"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.192#3",
+   "section": "211.192",
+   "item": {
+    "statement": "Extend the investigation to other batches of the same product and to other products that may be associated with the failure or discrepancy.",
+    "quote": "The investigation shall extend to other batches of the same drug product and other drug products that may have been associated with the specific failure or discrepancy.",
+    "clause_number": "211.192",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": "unexplained discrepancy or specification failure"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  },
+  {
+   "id": "ecfr-21cfr211-2026-10-27.xml:211.192#4",
+   "section": "211.192",
+   "item": {
+    "statement": "Make a written record of each investigation including its conclusions and follow-up.",
+    "quote": "A written record of the investigation shall be made and shall include the conclusions and followup.",
+    "clause_number": "211.192",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ]
+  }
+ ]
+}

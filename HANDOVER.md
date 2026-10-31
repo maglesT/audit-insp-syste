@@ -22,6 +22,13 @@ Last updated: 31 October 2026, session 6 (D45/D46 page-based vision drafting; tr
   XML group: (a) XML profile in the page pipeline (units = eCFR sections/paragraphs from `tools/parse/ecfr.py`'s
   reading of the XML, not PDF pages); (b) review queue tool (one item at a time beside its source text; correct /
   fix / reject, name + time, attributable); (c) 20-unit trial of 211, tune; (d) full 211, then 210, Part 11, ...
+- **211 trial DONE (`docs/fda-211-trial.md`):** XML profile `tools/fda/xmlprofile.py` + review queue
+  `tools/fda/review.py` (branch `fda-build`, stacked on PR #36). 97 items from 10 sections, all quotes exact,
+  automatic route 77 (79 %), review queue 20; next: the three tuning steps listed there, then the full 211 build
+  (107 sections; `xmlprofile.py prepare-draft ecfr-21cfr211-2026-10-27.xml` = all sections, 22 batches of 5;
+  drafting agents max 3 at a time; then prepare-verify / ingest-verify; update `library/fda-status.json` and
+  `python3 tools/fda/worklist.py`). Review queue UI for the owner: CLI now (`review.py next|decide|status`);
+  an owner-friendly page is still to build.
 - **Earlier plan, still valid where it does not conflict with D47 (one PR each, independent review, merge on green CI):**
   1. (Done in PR #36: coverage measure, continued-table headers, whole next page; coverage gaps 39 -> 13, about 9
      to look at by hand, listed in `docs/vision-trial.md`.)

@@ -8,7 +8,7 @@ Profile: eCFR XML: text read directly, exact-text quote check, clause number fro
 
 | # | Document | Priority | Plants | Status | Items | Auto-route | Review queue | Usage (k tokens) |
 |---|---|---|---|---|---|---|---|---|
-| 1 | ecfr-21cfr211-2026-10-27.xml | must | OSD;LIQ;SEMI;INJ | not started |  |  |  |  |
+| 1 | ecfr-21cfr211-2026-10-27.xml | must | OSD;LIQ;SEMI;INJ | drafted (trial: 10 of 107 sections) | 97 | 77 | 20 | 385 |
 | 2 | ecfr-21cfr210-2026-10-27.xml | must | ALL | not started |  |  |  |  |
 | 3 | fda-cfr-21-part-11.xml | must | ALL | not started |  |  |  |  |
 | 4 | fda-cfr-21-314.81.xml | must | OSD;LIQ;SEMI;INJ | not started |  |  |  |  |
