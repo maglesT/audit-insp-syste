@@ -37,7 +37,7 @@ Columns: items = checklist items drafted; auto = items passing the automatic rou
 | 19 | Questions and Answers on CGMP for Drugs: Equipment | `fda-cgmp-qa-equipment.html` | must | ALL | - | verified | 57 | 51 | 6 |
 | 20 | Questions and Answers on CGMP for Drugs: General Provisions | `fda-cgmp-qa-general-provisions.html` | must | ALL | - | verified | 0 | 0 | 0 |
 | 21 | Questions and Answers on CGMP for Drugs: Holding and Distribution | `fda-cgmp-qa-holding-distribution.html` | must | ALL | - | verified | 9 | 7 | 2 |
-| 22 | Questions and Answers on CGMP for Drugs: Laboratory Controls | `fda-cgmp-qa-laboratory-controls.html` | must | ALL | - | not started | | | |
+| 22 | Questions and Answers on CGMP for Drugs: Laboratory Controls | `fda-cgmp-qa-laboratory-controls.html` | must | ALL | - | verified | 80 | 67 | 13 |
 | 23 | Questions and Answers on CGMP for Drugs: Production and Process Controls | `fda-cgmp-qa-production-process-controls.html` | must | ALL | - | not started | | | |
 | 24 | Questions and Answers on CGMP for Drugs: Records and Reports | `fda-cgmp-qa-records-reports.html` | must | ALL | - | not started | | | |
 | 25 | Questions and Answers on CGMP for Drugs: Returned and Salvaged Drug Products | `fda-cgmp-qa-returned-salvaged.html` | must | ALL | - | not started | | | |
