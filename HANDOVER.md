@@ -20,7 +20,7 @@ Last updated: 31 October 2026, session 6 (D45: page-based vision drafting, claus
   `prepare-verify RUN`; verifier agents A/B answer `verify/batches` -> `verify/answers`; `ingest-verify RUN`;
   then report to the owner/coordinator (pass share, text-layer-differs count, coverage gaps, verifier agreement,
   usage per page vs text-only drafting) **before scaling**.
-- **Trial DONE (31 Oct), results in `docs/vision-trial.md`:** 481 items from 50 pages; 92 % of quotes in both
+- **Trial DONE (31 Oct), results in `docs/vision-trial.md`:** 481 items from 50 pages; 88 % of quotes (strict tokens, after review) in both
   readings; verifiers both-correct 94.5 % of 236 sampled items; one real error class (Q3C Class 1 rows drafted
   without the lead-in condition); about 17 k tokens per page drafting, 3.1 k per item verifying. Reported to the
   coordinator; **waiting for the owner's go before scaling.** Proposed fixes before scaling are listed there

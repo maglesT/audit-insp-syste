@@ -7,11 +7,11 @@ The first reading is the stored clause (poppler, `pdftotext`), which Layer 1 che
 The second is a separate code base: for a PDF, pdfminer.six's words (through pdfplumber) of the clause's pages and
 one page either side; for an HTML or XML page, the file's text taken with Python's own html.parser (tags dropped,
 entities resolved), not the parser's reader. The quote is found when its letters and digits, in order (case
-folded, Unicode NFKC, word breaks and hyphenation ignored; contains() for ligature letters), are a stretch of the second
+folded, Unicode NFKC, whole tokens in order; see toks() and contains()), are a stretch of the second
 reading; running headers and footers and small-font footnote marks between them are skipped (a quote may run
-over a page break or past a footnote mark). A quote from a table row is checked piece by piece (its " | "
-cells), each piece in the text of the pdfminer words inside one of the row's cell boxes (Clause.cells, D44) or in
-the page text.
+over a page break or past a footnote mark). A quote from a table row is checked cell by cell (its " | " pieces),
+each piece in the pdfminer words inside one of the row's cell boxes (Clause.cells, D44), cells in order; without
+cell boxes a table quote is not found.
 
 Each entry records the sha256 of the quote, of the source file and of this code; `check` (and Layer 1) treat an
 entry as missing when any of them changed. This file never runs in CI: CI reads the result.
@@ -31,7 +31,6 @@ import model  # noqa: E402
 from common import OFFICIAL  # noqa: E402
 
 RESULT = model.ROOT / "library" / "quote-check.json"
-LOOSE = re.compile(r"[fil]")
 
 
 def sha256(data):
@@ -42,19 +41,51 @@ def code_sha256():
     return sha256(Path(__file__).read_bytes())
 
 
+TOKEN = re.compile(r"\d+(?:[.,]\d+)*|[^\W\d_]+|[<>≤≥±%^−]|(?<=\^)-")
+LIGATURE = re.compile(r"ff[il]?|f[il]")
+
+
+def toks(text):
+    """Comparable tokens: words, numbers with their decimal point or comma ("1.5", "3,520"), and the signs
+    < > ≤ ≥ ± % ^ and a minus after ^ ("10^-6"); case folded, NFKC, soft hyphens dropped. Punctuation and
+    spacing do not count, but every token must match whole: "15" is not "1.5", "inappropriate" is not
+    "appropriate"."""
+    text = unicodedata.normalize("NFKC", text).replace("\u00ad", "").casefold().replace("-", "-")
+    return [("−" if t == "-" else t) for t in TOKEN.findall(text)]
+
+
 def letters(text):
-    """Letters and digits only, case folded and NFKC-normalised, so word breaks, hyphenation and punctuation do not
-    matter."""
-    text = unicodedata.normalize("NFKC", text).replace("\u00ad", "").casefold()
-    return "".join(ch for ch in text if ch.isalnum())
+    """The tokens of a text (kept under its old name for callers): see toks()."""
+    return toks(text)
 
 
-def contains(quote, text):
-    """quote (letters()) is a stretch of text (letters()); or, as pdfminer drops some ligature letters
-    ("qualication"), both are equal without the letters f, i and l (every other letter still in order). A stripped
-    ligature cannot be told apart from a word boundary ("staff implement"), hence the letters, not the ligatures,
-    are left out."""
-    return quote in text or LOOSE.sub("", quote) in LOOSE.sub("", text)
+def _same(q, p, loose):
+    return q == p or (loose and q.isalpha() and LIGATURE.sub("", q) == p and q != p)
+
+
+def contains(quote, text, loose=False):
+    """The quote's tokens are a run of the text's tokens, whole tokens, in order. Allowed between them: a word
+    split in two by a line-end hyphen ("speci", "fied" for "specified") or two words read as one, with exactly
+    the same letters. loose (pdfminer only): a word may lack its ligature letters ("qualication"), as pdfminer
+    sometimes drops them; nothing else is loosened."""
+    if not quote:
+        return True
+    n = len(text)
+    for start in range(n):
+        i, j = 0, start
+        while i < len(quote) and j < n:
+            q, p = quote[i], text[j]
+            if _same(q, p, loose):
+                i, j = i + 1, j + 1
+            elif j + 1 < n and q.isalpha() and p.isalpha() and text[j + 1].isalpha() and q == p + text[j + 1]:
+                i, j = i + 1, j + 2                                  # split by a line-end hyphen
+            elif i + 1 < len(quote) and p.isalpha() and q + quote[i + 1] == p:
+                i, j = i + 2, j + 1                                  # two words read as one
+            else:
+                break
+        if i == len(quote):
+            return True
+    return False
 
 
 def mapping_key(req_id, n):
@@ -105,7 +136,7 @@ class PdfReading:
 
     def text(self, first, last, full=False):
         src = self.full if full else self.pages
-        return "".join(src[max(first - 2, 0):min(last + 1, len(src))])
+        return [t for page in src[max(first - 2, 0):min(last + 1, len(src))] for t in page]
 
     def cell_text(self, boxes):
         out = []
@@ -118,15 +149,21 @@ class PdfReading:
 
 def found(quote, clause, reading):
     """Whether the quote is in the second reading (see the module docstring)."""
-    if isinstance(reading, str):                              # an HTML or XML page: its whole text
-        return contains(letters(quote), reading)
+    if not isinstance(reading, PdfReading):                   # an HTML or XML page: its whole text
+        return contains(toks(quote), reading)
     first, last = clause["page_start"], clause["page_end"]
     texts = (reading.text(first, last), reading.text(first, last, full=True))
-    if clause.get("kind") in ("table_row", "table_header"):
+    if " | " in quote:                                        # a table row: each cell in its own cell box, in order
         cells = [reading.cell_text(bs) for bs in clause.get("cells") or []]
-        return all(any(contains(letters(piece), t) for t in cells + list(texts))
-                   for piece in quote.split(" | ") if letters(piece))
-    return any(contains(letters(quote), t) for t in texts)
+        k = 0
+        for piece in (toks(x) for x in quote.split(" | ")):
+            while k < len(cells) and not contains(piece, cells[k], loose=True):
+                k += 1
+            if k == len(cells):
+                return False
+            k += 1
+        return True
+    return any(contains(toks(quote), t, loose=True) for t in texts)
 
 
 def run(root=model.LIBRARY):
@@ -138,7 +175,7 @@ def run(root=model.LIBRARY):
             source = m["source"]
             path = OFFICIAL / source
             if source not in readings:
-                readings[source] = PdfReading(path) if source.endswith(".pdf") else letters(html_text(path))
+                readings[source] = PdfReading(path) if source.endswith(".pdf") else toks(html_text(path))
                 print(source, flush=True)
             clause = layer1.segments_of(source)
             clause = next((c for c in clause if c["ref"] == m["clause_ref"]), None)

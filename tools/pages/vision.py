@@ -11,18 +11,22 @@ page's text when a sentence runs over the break; it writes the items it sees (ba
 tools/ai/sessions.py). Nothing here depends on the parsed clause store (frozen, D45).
 
 Checks on each item (deterministic, no AI):
-  quote      found word for word (quotes.letters / quotes.contains) on its page, or page + next when the item says
-             it runs over (with or without the page's running lines, body()), in BOTH readings; a table row
-             (cells joined with " | ") cell by cell, also in pdfminer's ruled-table cell texts (cell_texts): pdftotext -layout and pdfminer (pdfplumber). A quote found in one
-             reading only, or in neither, goes to the "text layer differs" list (the image-true reading is kept for
-             the verifiers and the spot check; never accepted silently).
-  clause     every part of a clause number given by the item ("4.22 i") is printed on the page or the page before
-  numbers    every number in the item's statement is in its quote (layer1.number_found)
+  quote      found token for token (quotes.toks / quotes.contains: whole tokens in order, so "15" is not "1.5")
+             on its page, or page + next when the item says it runs over, in BOTH readings, pdftotext -layout and
+             pdfminer, each also without the page's running lines (body(): edge lines repeated on a neighbouring
+             page). A table row (cells joined with " | ") must be consecutive cells of ONE row of a ruled table,
+             each cell whole, read by pdfminer and by poppler inside the same cell boxes; an unruled row must stand
+             on one line. A quote found in one reading only, or in neither, goes to the "text layer differs" list
+             (the image-true reading is kept for the verifiers and the spot check; never accepted silently).
+  clause     the clause's own number (the last part with a digit: "4.22" of "4.22 i") starts a line on the page or
+             the page before (a cross-reference inside a sentence does not count)
+  numbers    every number of the statement is in its quote, and every number of the quote in its statement
+             (layer1.number_found, word forms count)
   strength   the item's strength matches its quote's wording where the quote has one (layer1.strength_of)
   conditions condition wording in the quote has a counterpart in the statement (layer1.conditions_missing)
-Coverage per page: every obligation sentence of the page's text layer (tools/parse/obligations.py) has at least
-COVERED_SHARE of its words inside one item quote of that page or the page before (carry-over), or is listed by the
-drafter as not applicable with a reason.
+Coverage per page: every obligation sentence of the page's text layer (without running lines; obligations.py) has
+at least COVERED_SHARE of its words, and all its condition wording, in one item quote of that page or a carry-over
+quote of the page before, or is listed by the drafter as not applicable with a reason.
 """
 import hashlib
 import json
@@ -184,61 +188,118 @@ def _words(text):
     return re.findall(r"\w+", text.lower())
 
 
+EDGE = 3       # lines at the top and the bottom of a page where running headers and footers stand
+
+
 def _key(line):
-    return re.sub(r"\d+", "#", re.sub(r"\s+", " ", line).strip().lower())
+    return re.sub(r"\s+", " ", line).strip().lower()
 
 
 def body(reader, source, pno):
-    """A page's text without its running lines: lines (digits masked) that also stand on the page before or after
-    (headers, footers, side titles, page numbers), which a reader may put inside a sentence."""
-    near = {_key(ln) for p in (pno - 1, pno + 1) if p >= 1 for ln in reader(source, p).splitlines()}
-    return "\n".join(ln for ln in reader(source, pno).splitlines() if not (_key(ln) and _key(ln) in near))
+    """A page's text without its running lines: among its first and last EDGE non-empty lines, those that stand
+    on the page before or after too (digits masked, so "- 6 -" and "- 7 -" or "Page 6" count; a line of a list
+    in the body is never dropped)."""
+    lines = [ln for ln in reader(source, pno).splitlines() if ln.strip()]
+    near = {re.sub(r"\d+", "#", _key(ln)) for p in (pno - 1, pno + 1) if p >= 1
+            for ln in reader(source, p).splitlines() if ln.strip()}
+    edge = set(range(min(EDGE, len(lines)))) | set(range(max(len(lines) - EDGE, 0), len(lines)))
+    return "\n".join(ln for k, ln in enumerate(lines) if not (k in edge and re.sub(r"\d+", "#", _key(ln)) in near))
 
 
 def readings(reader, source, span):
-    """The text of the pages in span as one reader gives it: whole, and without running lines."""
-    return [" ".join(reader(source, p) for p in span), " ".join(body(reader, source, p) for p in span)]
+    """The tokens of the pages in span as one reader gives them: whole, and without running lines."""
+    return [quotes.toks(" ".join(reader(source, p) for p in span)),
+            quotes.toks(" ".join(body(reader, source, p) for p in span))]
 
 
-def cell_texts(source, pno, cache={}):
-    """pdfminer's text of every cell of the ruled tables pdfplumber finds on a page (a cell's lines kept together,
-    which page-order readings interleave with the neighbouring columns)."""
+def table_rows(source, pno, cache={}):
+    """The rows of the ruled tables pdfplumber finds on a page: per row a list of (pdfminer cell text, cell box)
+    for its non-empty cells, in order."""
     key = (source, pno)
     if key not in cache:
         import pdfplumber
+        rows = []
         with pdfplumber.open(str(OFFICIAL / source)) as pdf:
-            page = pdf.pages[pno - 1] if pno <= len(pdf.pages) else None
-            cache[key] = [c for t in (page.extract_tables() if page else []) for r in t for c in r if c]
+            if pno <= len(pdf.pages):
+                page = pdf.pages[pno - 1]
+                for t in page.find_tables():
+                    for r in t.rows:
+                        cells = [(page.crop(b).extract_text() or "", b) for b in r.cells if b]
+                        rows.append([(x, b) for x, b in cells if x.strip()])
+        cache[key] = rows
     return cache[key]
 
 
-def quote_in(quote, texts):
-    """The quote is in one of the texts (letters()); a table-row quote (cells joined with " | ") piece by piece, each
-    cell in one of the texts."""
-    pieces = [quotes.letters(x) for x in quote.split(" | ")] if " | " in quote else [quotes.letters(quote)]
-    return all(any(quotes.contains(q, t) for t in texts) for q in pieces if q)
+def poppler_words(source, pno, cache={}):
+    """poppler's words of a page with their boxes (pdftotext -bbox), the first reading inside table cells."""
+    import html
+    key = (source, pno)
+    if key not in cache:
+        out = subprocess.run(["pdftotext", "-bbox", "-f", str(pno), "-l", str(pno), str(OFFICIAL / source), "-"],
+                             capture_output=True, text=True).stdout
+        cache[key] = [(float(a), float(b), float(c), float(d), html.unescape(w)) for a, b, c, d, w in re.findall(
+            r'<word xMin="([\d.]+)" yMin="([\d.]+)" xMax="([\d.]+)" yMax="([\d.]+)">(.*?)</word>', out)]
+    return cache[key]
+
+
+def _in_box(w, b):
+    return b[0] <= (w[0] + w[2]) / 2 <= b[2] and b[1] <= (w[1] + w[3]) / 2 <= b[3]
+
+
+def row_found(pieces, source, pno):
+    """(in pdftotext, in pdfminer) for a table-row quote: its cells, in order and each whole (token for token),
+    are consecutive non-empty cells of ONE row of a ruled table on the page, read by pdfminer (cell text) and by
+    poppler (its words inside the same cell boxes). An unruled row (no such table) must stand on one line of the
+    reading, cells in order."""
+    in_layer = in_miner = False
+    for row in table_rows(source, pno):
+        for k in range(len(row) - len(pieces) + 1):
+            cells = row[k:k + len(pieces)]
+            if all(quotes.toks(x) == p for (x, _), p in zip(cells, pieces)):
+                in_miner = True
+                words = poppler_words(source, pno)
+                if all(quotes.toks(" ".join(w[4] for w in words if _in_box(w, b))) == p
+                       for (_, b), p in zip(cells, pieces)):
+                    in_layer = True
+    if not table_rows(source, pno):
+        flat = [t for p in pieces for t in p]
+        in_layer = any(quotes.contains(flat, quotes.toks(ln)) for ln in layer_text(source, pno).splitlines())
+        in_miner = any(quotes.contains(flat, quotes.toks(ln), loose=True)
+                       for ln in pdfminer_text(source, pno).splitlines())
+    return in_layer, in_miner
 
 
 def check_item(item, source, pno):
     """Findings of one item (list of (check, message)) and whether its quote is in each reading."""
     import layer1
     span = [pno, pno + 1] if item["runs_over"] else [pno]
-    in_layer = quote_in(item["quote"], [quotes.letters(t) for t in readings(layer_text, source, span)])
-    in_miner = quote_in(item["quote"], [quotes.letters(t) for t in readings(pdfminer_text, source, span)]
-                        + [quotes.letters(c) for p in span for c in cell_texts(source, p)])
+    if " | " in item["quote"]:
+        in_layer, in_miner = row_found([quotes.toks(x) for x in item["quote"].split(" | ")], source, pno)
+    else:
+        q = quotes.toks(item["quote"])
+        in_layer = any(quotes.contains(q, t) for t in readings(layer_text, source, span))
+        in_miner = any(quotes.contains(q, t, loose=True) for t in readings(pdfminer_text, source, span))
     out = []
     if not (in_layer and in_miner):
         out.append(("quote", f"quote not found in {'pdftotext' if not in_layer else ''}"
                              f"{' and ' if not in_layer and not in_miner else ''}{'pdfminer' if not in_miner else ''}"))
-    num = item["clause_number"].strip()
-    printed = {t.strip(".:;,()[]").lower() for p in [pno - 1] + span if p >= 1 for t in layer_text(source, p).split()}
-    parts = [t.strip(".:;,()[]").lower() for t in num.split()]
-    if num and not all(t in printed for t in parts if t):     # "4.22 i", "Table 1", "Part I 10.4": every part, on
-        #                                                       this page or the one before (a clause running over)
-        out.append(("clause", f"clause number {num!r} not printed on page {pno}"))
+    num = next((t for t in reversed(item["clause_number"].split()) if re.search(r"\d", t)), "")
+    if num:                                                   # the clause's own number starts a line, or its
+        lines = [ln.strip().lower() for p in (pno - 1, pno) if p >= 1   # whole reference does ("Table 1:")
+                 for ln in layer_text(source, p).splitlines() if ln.strip()]
+        ref = item["clause_number"].strip().lower()
+        ref = ref[:ref.index(num.lower()) + len(num)]         # "table 1 (a)" -> "table 1"
+        starts = {ln.split()[0].strip("()").rstrip(".") for ln in lines}
+        if num.strip("()").rstrip(".") not in starts and not any(re.match(re.escape(ref) + r"\b", ln)
+                                                                 for ln in lines):
+            out.append(("clause", f"clause number {item['clause_number']!r} does not start a line on page {pno} "
+                                  f"or the page before"))
     for n in re.findall(r"\d+(?:[.,]\d+)?", item["statement"]):
         if not layer1.number_found(n, [item["quote"]]):
-            out.append(("numbers", f"{n} not in the quote"))
+            out.append(("numbers", f"{n} in the statement, not in the quote"))
+    for n in re.findall(r"(?<![\w.])\d+(?:[.,]\d+)?", item["quote"]):
+        if not layer1.number_found(n, [item["statement"]]):
+            out.append(("numbers", f"{n} in the quote, not in the statement"))
     words = layer1.strength_of(item["quote"])
     if words and words != item["strength"]:
         out.append(("strength", f"quote says {words}, item {item['strength']}"))
@@ -251,9 +312,11 @@ def check_item(item, source, pno):
 
 def coverage(source, pno, items_here, items_before, na):
     """Obligation sentences of the page's text layer not covered (see the module docstring)."""
-    text = re.sub(r"\s+", " ", layer_text(source, pno))
-    bags = [set(_words(i["quote"])) for i in items_here + items_before]
-    na_keys = [quotes.letters(x["text"])[:40] for x in na]
+    text = re.sub(r"\s+", " ", body(layer_text, source, pno))     # without running lines
+    import layer1
+    quotes_here = [i["quote"] for i in items_here + items_before]
+    bags = [set(_words(q)) for q in quotes_here]
+    na_keys = [" ".join(quotes.toks(x["text"])[:8]) for x in na]
     gaps = []
     for s in obligations.sentences(text):
         if not obligations.strength(s):
@@ -261,9 +324,11 @@ def coverage(source, pno, items_here, items_before, na):
         ws = _words(s)
         if not ws:
             continue
-        if any(sum(w in b for w in ws) / len(ws) >= COVERED_SHARE for b in bags):
-            continue
-        if any(k and k in quotes.letters(s) for k in na_keys):
+        conds = layer1.conditions_in(s)
+        if any(sum(w in b for w in ws) / len(ws) >= COVERED_SHARE and not (conds - layer1.conditions_in(q))
+               for b, q in zip(bags, quotes_here)):
+            continue                                          # covered, with the sentence's conditions
+        if any(k and k in " ".join(quotes.toks(s)) for k in na_keys):
             continue
         gaps.append(s[:300])
     return gaps

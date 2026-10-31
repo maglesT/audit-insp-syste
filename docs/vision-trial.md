@@ -17,17 +17,21 @@ text, no drafter notes or check results.
 | Measure | Result |
 |---|---|
 | Items drafted | 481 from 50 pages (9.6 per page); 236 not-applicable sentences with reasons |
-| Quote in BOTH readings (pdftotext and pdfminer) | **443 of 481 (92 %)**; 5 pdftotext only, 17 pdfminer only, 16 neither |
-| "Text layer differs" list | 63 items: 38 failing one or both readings, 25 more noted by the drafter although both readings match |
-| Coverage gaps (obligation sentences not in a quote nor marked n/a) | 30 sentences on 50 pages; most are measurement artefacts (running headers glued to the sentence push it under the 80 % rule); a few real (FDA nitrosamine guidance 10, PI 011 7: to inspect) |
+| Quote in BOTH readings (pdftotext and pdfminer), whole tokens in order | **424 of 481 (88 %)**; 5 pdftotext only, 8 pdfminer only, 44 neither (37 of the 57 are table rows) |
+| "Text layer differs" list | 70 items: 57 failing one or both readings, 13 more noted by the drafter although both readings match |
+| Coverage gaps (obligation sentences not in a quote with their condition words, nor marked n/a) | 29 sentences on 50 pages, to inspect (FDA nitrosamine guidance and PI 011 hold most) |
 | Verifier agreement (236 items) | **both correct 223 (94.5 %)**, both incorrect 5, disagree 8 |
 | Usage, drafting | about 840 k agent tokens: **about 17 k per page, 1.75 k per item** (text-only drafting in S3: 0.5 k per item) |
 | Usage, two verifiers | about 740 k tokens for 236 items: **about 3.1 k per item** (text-only S3: 4.5 k per item) |
 | All passes per item | about 4.9 k tokens (text-only S3: about 6-7 k with the reverse test) |
 
-**Per document, quotes in both readings:** EU Annex 1 74/76, PE 009 Annex 1 74/75, WHO 1044 A2 59/64, WHO 1010 A8
-(landscape) 21/22, ICH Q3C 46/46, CDSCO 12/32, CP 7356.002 15/18, nitrosamine 2024 11/11, Schedule M 91/93,
-PI 011 40/44.
+**Per document, quotes failing a reading:** CDSCO 22, WHO 1044 A2 13, PI 011 9, ICH Q3C 6, CP 7356.002 3, Schedule M 2,
+EU Annex 1 1, WHO 1010 A8 1, PE 009 Annex 1 0, nitrosamine 2024 0.
+
+**Correction (independent review, 31 Oct):** the first version of the checks matched concatenated letters and table
+cells anywhere on the page; the review showed wrong text passing ("15" for "1.5", "≤" for "≥", row C's values
+under grade B). The checks now match whole tokens in order and table rows cell by cell within one ruled-table row;
+the first report said 92 % (443) pass, the corrected figure is 88 % (424). The drafts and verdicts are unchanged.
 
 ## What the misses are
 - **Both verifiers incorrect (5): a real drafting error.** ICH Q3C Table 1 rows (Class 1 solvents) drafted as
@@ -39,26 +43,29 @@ PI 011 40/44.
   marker ("Cumene¹"): a strictness question on footnote marks, not a content error. 2 are EU Annex 1 wording
   points ("all glove surfaces" added; "continuous" added for grade B), each caught by one verifier: genuine
   small over-statements.
-- **Quotes failing a reading (38):** table rows whose cells a reading interleaves with the neighbouring column
-  (CDSCO landscape checklist: 20 of 32; the cell texts of ruled tables fix part of it), superscript footnote
-  markers flattened into the word ("Cumene1"), and grade D rows split over three lines. In each case the image
-  shows the true text; these are exactly the "text layer differs" cases D45 routes to both verifiers and the spot
-  check. 30 of the 38 are in the verified sample, and for all 30 both verifiers answered that the quote is
-  printed on the page as quoted (verifier B's 6 footnote-mark rejections are verdicts, with quote_as_printed true).
-- **Deterministic findings worth fixing before scaling:** the number check flags table-row items whose statement
-  names a column-header value (0.5 µm) that the row quote lacks (124): table quotes should carry their header
+- **Quotes failing a reading (57):** table rows whose cells a reading does not keep together (CDSCO landscape
+  checklist; grade D rows split over three lines; unruled Q3C rows with a superscript footnote mark), the WHO turned
+  side title that pdftotext prints inside body lines (WHO 1044 A2), and footnote marks moved by the text layer
+  (PI 011, CP 7356.002). 45 of the 57 are in the verified sample: for 39 both verifiers answered that the quote is
+  printed as quoted; for 6 (Q3C rows without their footnote mark) verifier B said not as printed. These are the
+  "text layer differs" cases D45 routes to both verifiers and the spot check; the 12 outside the sample are
+  unverified.
+- **Deterministic findings worth fixing before scaling:** the number check (now both ways) gives 205 findings: table-row
+  statements that name a column-header value (0.5 µm) the row quote lacks, and quote numbers the statement drops or
+  words differently; table quotes should carry their header
   ("header cells || row cells") or the check should read the table header; the coverage measure should drop
   running headers before the 80 % rule; strength for checklist rows without a modal verb ("Specify ...",
   "Whether ...") needs a rule (the CDSCO agent chose mandatory for Sch-M rows, recommended for WHO rows).
 
 ## Assessment
 Vision drafting reads the hard pages correctly where the text layer fails (landscape HVAC table, grade tables,
-superscripts, CDSCO checklist), 92 % of quotes pass the two-reader check as they are, the rest are explained
-image-true readings, and the verifiers agree on 94.5 % with one real error class found (a lead-in condition
+superscripts, CDSCO checklist); 88 % of quotes pass the strict two-reader check as they are; of the rest, the 45
+in the verified sample were confirmed as printed by both verifiers for 39; and the verifiers agree on 94.5 % with one real error class found (a lead-in condition
 dropped from table rows). It costs about 3.5 x the drafting tokens of text-only drafting but less per item in
 verification, about 4.9 k tokens per item in all.
 
 **Before scaling (proposed):** (1) table-row quotes include the column headers, and the drafter prompt states that a
 lead-in condition belongs to every row or list item under it; (2) footnote markers: quote as printed with the
 marker in "^" form ("Cumene^1"), so verifiers and checks agree; (3) coverage measure without running headers;
-(4) a strength rule for checklist rows without a modal verb (owner question: CDSCO "Specify/Whether" rows).
+(4) a strength rule for checklist rows without a modal verb (owner question: CDSCO "Specify/Whether" rows);
+(5) clause_number only as printed (the drafters composed references such as "Table 2 Note 1": 26 clause findings).
