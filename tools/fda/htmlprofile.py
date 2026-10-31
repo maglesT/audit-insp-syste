@@ -3,6 +3,7 @@
   python3 tools/fda/htmlprofile.py prepare-draft SOURCE [UNIT ...]   # default: every unit of SOURCE
   python3 tools/fda/htmlprofile.py ingest-draft RUN                  # checks, coverage -> RUN/items.jsonl, report.json
   python3 tools/fda/htmlprofile.py prepare-verify RUN                # verifier A and B batches (unit text + items)
+  python3 tools/fda/htmlprofile.py reverify RUN                      # old verify/ kept as verify-superseded-N; new batches
   python3 tools/fda/htmlprofile.py ingest-verify RUN                 # agreement + automatic route -> RUN/route.json
   python3 tools/fda/htmlprofile.py prepare-redraft RUN               # new run drafting only RUN's coverage gaps
   python3 tools/fda/htmlprofile.py recheck RUN                       # deterministic checks again, re-route
@@ -551,11 +552,11 @@ def prepare_verify(run):
     groups = {}
     for it in items:
         groups.setdefault(it["section"], []).append(it)
-    chunks = pack(list(groups), source)
+    parts = X.cap(pack(list(groups), source), groups)
     n = 0
     for role in ("a", "b"):
         instructions = (PROMPTS / f"verify_html_{role}.md").read_text()
-        for chunk in chunks:
+        for chunk, part in parts:
             n += 1
             payload = {"role": role, "instructions": instructions, "schema": vision.VERIFY_SCHEMA,
                        "page_kind": page_kind(source),
@@ -563,7 +564,7 @@ def prepare_verify(run):
                        "items": [{"id": it["id"], "unit": it["section"], "hash": it["hash"],
                                   "item": {k: it[k] for k in ("statement", "quote", "clause_number", "strength",
                                                               "plant_types", "condition")},
-                                  "plant_scope": vision.scope(source)} for u in chunk for it in groups[u]]}
+                                  "plant_scope": vision.scope(source)} for it in part]}
             (vdir / "batches" / f"batch_{n:03d}_{role}.json").write_text(json.dumps(payload, indent=1,
                                                                                     ensure_ascii=False))
     print(vdir, n, "batches")
@@ -625,7 +626,9 @@ def main():
     cmd, args = sys.argv[1], sys.argv[2:]
     fn = {"prepare-draft": lambda: prepare_draft(args[0], set(args[1:]) or None),
           "ingest-draft": lambda: ingest_draft(args[0]), "prepare-verify": lambda: prepare_verify(args[0]),
-          "ingest-verify": lambda: ingest_verify(args[0]), "prepare-redraft": lambda: prepare_redraft(args[0]),
+          "ingest-verify": lambda: ingest_verify(args[0]),
+          "reverify": lambda: (X.supersede_verify(args[0]), prepare_verify(args[0])),
+          "prepare-redraft": lambda: prepare_redraft(args[0]),
           "recheck": lambda: recheck(args[0])}.get(cmd)
     if not fn:
         raise SystemExit(__doc__)

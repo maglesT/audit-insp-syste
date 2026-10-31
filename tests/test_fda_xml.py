@@ -449,5 +449,50 @@ class VerifyPromptsD50(unittest.TestCase):
                 self.assertIn(phrase, text, p.name)
 
 
+class VerifyCapD50(unittest.TestCase):
+    """D50: verify batches hold at most 20 items; re-verification keeps the old answers as superseded."""
+
+    def test_cap_splits_in_item_order_and_lists_the_sections_used(self):
+        groups = {"s1": [{"id": f"a{i}", "section": "s1"} for i in range(25)],
+                  "s2": [{"id": "b0", "section": "s2"}], "s3": [{"id": "c0", "section": "s3"}]}
+        parts = X.cap([["s1", "s2"], ["s3"]], groups)
+        self.assertEqual([len(p) for _, p in parts], [20, 6, 1])
+        self.assertEqual([c for c, _ in parts], [["s1"], ["s1", "s2"], ["s3"]])
+        self.assertEqual([i["id"] for _, p in parts for i in p], [i["id"] for g in groups.values() for i in g])
+
+    def test_reverify_real_runs(self):
+        import json
+        import shutil
+        import tempfile
+        import htmlprofile as H
+        runs = Path(X.__file__).resolve().parents[2] / "library" / "ai-runs"
+        for name, prof in (("20261031T121844.199078Z-html-draft", H), ("20261031T100541.543518Z-xml-draft", X)):
+            with tempfile.TemporaryDirectory() as tmp:
+                run = Path(tmp) / name
+                run.mkdir()
+                for f in ("items.jsonl", "source.json", "route.json"):
+                    shutil.copy(runs / name / f, run / f)
+                shutil.copytree(runs / name / "verify", run / "verify")
+                old = sorted(p.name for p in (run / "verify" / "answers").glob("*.json"))
+                with self.assertRaises(SystemExit):
+                    prof.prepare_verify(run)                       # answers present: refuses to overwrite
+                X.supersede_verify(run)
+                prof.prepare_verify(run)
+                self.assertEqual(sorted(p.name for p in (run / "verify-superseded-1" / "answers").glob("*.json")),
+                                 old)
+                items = [json.loads(ln) for ln in (run / "items.jsonl").read_text().splitlines() if ln.strip()]
+                for role in ("a", "b"):
+                    seen = []
+                    for bf in sorted((run / "verify" / "batches").glob(f"batch_*_{role}.json")):
+                        b = json.loads(bf.read_text())
+                        self.assertLessEqual(len(b["items"]), X.MAX_VERIFY_ITEMS)
+                        units = {u.get("section") or u.get("unit") for u in b.get("sections") or b.get("units")}
+                        self.assertTrue({e.get("section") or e.get("unit") for e in b["items"]} <= units)
+                        seen += [e["id"] for e in b["items"]]
+                    self.assertEqual(sorted(seen), sorted(i["id"] for i in items))   # every item once per role
+                X.supersede_verify(run)
+                self.assertTrue((run / "verify-superseded-2").exists())
+
+
 if __name__ == "__main__":
     unittest.main()

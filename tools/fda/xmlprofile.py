@@ -5,6 +5,7 @@
   python3 tools/fda/xmlprofile.py prepare-verify RUN                   # verifier A and B batches (section text + items)
   python3 tools/fda/xmlprofile.py ingest-verify RUN                    # agreement + automatic route -> RUN/route.json
   python3 tools/fda/xmlprofile.py prepare-redraft RUN                  # new run drafting only RUN's coverage gaps
+  python3 tools/fda/xmlprofile.py reverify RUN                         # old verify/ kept as verify-superseded-N; new batches
   python3 tools/fda/xmlprofile.py recheck RUN                          # deterministic checks again (items unchanged), re-route
 
 The XML is read as text (no rendering, no vision): tools/parse/ecfr.py gives every paragraph with its reference
@@ -115,6 +116,43 @@ def pack(keys, secs):
         cur.append(k)
         size += n
     return out + ([cur] if cur else [])
+
+
+MAX_VERIFY_ITEMS = 20
+
+
+def cap(chunks, groups, limit=MAX_VERIFY_ITEMS):
+    """D50: verify batches of at most `limit` items. Each chunk (sections or units packed by text size) is split
+    in item order; a part lists the sections its items come from (a section with more items than the limit
+    appears in several parts, each with the section's whole text)."""
+    out = []
+    for chunk in chunks:
+        part = []
+        for s in chunk:
+            for it in groups[s]:
+                if len(part) >= limit:
+                    out.append(part)
+                    part = []
+                part.append(it)
+        if part:
+            out.append(part)
+    return [(list(dict.fromkeys(it["section"] for it in part)), part) for part in out]
+
+
+def supersede_verify(run):
+    """Moves RUN/verify to RUN/verify-superseded-N (the old batches and answers stay, unused), so prepare-verify can
+    write new batches (D50 re-verification). route.json stays until the new answers are ingested."""
+    run = Path(run)
+    vdir = run / "verify"
+    if not vdir.exists():
+        raise SystemExit(f"{vdir} does not exist")
+    n = 1
+    while (run / f"verify-superseded-{n}").exists():
+        n += 1
+    vdir.rename(run / f"verify-superseded-{n}")
+    if (run / "verify-report.json").exists():
+        (run / "verify-report.json").rename(run / f"verify-report-superseded-{n}.json")
+    return run / f"verify-superseded-{n}"
 
 
 def prepare_draft(source, wanted=None):
@@ -448,11 +486,11 @@ def prepare_verify(run):
     for it in items:
         groups.setdefault(it["section"], []).append(it)
     keys = list(groups)
-    chunks = pack(keys, secs)
+    parts = cap(pack(keys, secs), groups)
     n = 0
     for role in ("a", "b"):
         instructions = (PROMPTS / f"verify_xml_{role}.md").read_text()
-        for chunk in chunks:
+        for chunk, part in parts:
             n += 1
             payload = {"role": role, "instructions": instructions, "schema": vision.VERIFY_SCHEMA,
                        "sections": [{"section": s, "paragraphs": [{"ref": r, "text": t} for r, t in secs[s]]}
@@ -460,7 +498,7 @@ def prepare_verify(run):
                        "items": [{"id": it["id"], "section": it["section"], "hash": it["hash"],
                                   "item": {k: it[k] for k in ("statement", "quote", "clause_number", "strength",
                                                               "plant_types", "condition")},
-                                  "plant_scope": vision.scope(source)} for s in chunk for it in groups[s]]}
+                                  "plant_scope": vision.scope(source)} for it in part]}
             (vdir / "batches" / f"batch_{n:03d}_{role}.json").write_text(json.dumps(payload, indent=1,
                                                                                     ensure_ascii=False))
     print(vdir, n, "batches")
@@ -620,6 +658,9 @@ def main():
         prepare_redraft(args[0])
     elif cmd == "recheck":
         recheck(args[0])
+    elif cmd == "reverify":
+        supersede_verify(args[0])
+        prepare_verify(args[0])
     else:
         raise SystemExit(__doc__)
 

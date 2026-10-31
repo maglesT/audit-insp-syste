@@ -10,6 +10,8 @@ Last updated: 31 October 2026, session 9 (D50 implemented; re-verification under
   continue group 2 (7 guides with batches prepared, ITGs, CPG 490.200, benzene alert). One PR per step, independent
   review, merge on green CI. Report to the coordinator (session_01PybpFuvG6mX9B3zK3YZjZ1) after D50 (before/after
   per document) and after each new document. Max plan only.
+- **Step 3 (branch `fda-verify-cap-reverify`):** verify batches capped at 20 items (`xmlprofile.cap`, both
+  profiles); `reverify RUN` (both profiles) moves verify/ to verify-superseded-N and writes new batches.
 - **Step 2 (branch `fda-verify-prompts-d50`):** all four verify prompts ask for a reason naming what was checked
   for that item (condition, number, list or scope), written fresh per item; test `VerifyPromptsD50`.
 - **Step 1 (D50, branch `fda-d50-specific-reasons`, D51):** rule in `xmlprofile.proven_by_both` + tests; all
