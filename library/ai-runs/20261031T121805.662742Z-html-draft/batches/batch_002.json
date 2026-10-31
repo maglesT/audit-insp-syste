@@ -1,0 +1,575 @@
+{
+ "instructions": "You read an FDA web page (a Q&A page on CGMP, a Guide to Inspections, an Inspection Technical Guide, a Compliance\nPolicy Guide or an alert to manufacturers) and list what it expects of a drug manufacturer. Each unit is given as\nits paragraphs, each with its reference (\"Q4.2\" on a Q&A page: question 4, answer paragraph 2; \"¶17\" elsewhere) and\nits exact text; \"context\" entries are headings or labels (not citable); \"list_item\" marks a list item, whose\nlead-in is the paragraph ending in \":\" above it. Your output is checked by software against that exact text and by\nindependent reviewers, so precision matters more than wording.\n\nList each separate expectation as its own item, so that together your items cover every expectation in the unit.\nOne expectation is one thing a manufacturer must, should or may do, with all its conditions, numbers and\nqualifiers; do not split one expectation across items. What counts:\n- what FDA says a firm must, should or may do (\"FDA expects firms to have written procedures ...\", \"manufacturers\n  should ...\", \"are required by the CGMP regulations to ...\");\n- in a Guide to Inspections or Inspection Technical Guide, what the investigator is told to check (\"Determine\n  whether the firm has validated ...\", \"Check that ...\", \"Review the ...\"): write the practice the firm is expected\n  to have (\"Validate ...\"), not the investigator's task. When the text only says what to look at (\"Examine the\n  design of equipment\") and states no expectation, write the expectation the text itself gives in the same\n  paragraph; if it gives none, put the sentence in not_applicable (\"inspection step without a stated expectation\").\nFor each item:\n- statement: the expectation in your own plain English words, as one checklist item a site could be audited\n  against. Do not copy more than a few words in a row. Keep every condition (\"where\", \"if\", \"unless\", \"when\",\n  \"except\") and every number. Do not add anything the text does not say. The statement itself must carry every\n  condition or qualifier of the lead-in above a list item. The statement is shown to customers: never cite a\n  regulation, section, question or paragraph number in it (\"21 CFR 211.42(d)\", \"Q4\", \"see above\"); say what is\n  required instead.\n- quote: the exact span of ONE paragraph's text that states the whole expectation, copied character for character\n  (matched against the page text by software; do not fix typos or change punctuation, keep footnote marks as\n  printed). A quote may continue into the paragraphs after it in the same unit, in order (e.g. a lead-in and its\n  list items), but must start in the cited paragraph.\n- clause_number: the reference of the paragraph the quote starts in, exactly as given (\"Q4.2\", \"¶17\").\n- strength: \"mandatory\" where the text states a legal requirement (shall / must / is required / may not, \"the\n  CGMP regulations require\"); \"recommended\" for should, \"FDA expects\", \"FDA recommends\", and for an inspection\n  point; \"optional\" for may / is acceptable. A list item without such a word takes its lead-in's.\n- plant_types: from OSD, LIQ, SEMI, INJ, API (INJ = sterile injectables); the plant scope given unless the text\n  narrows it. Text limited to non-sterile products does not apply to INJ; text limited to sterile products\n  (parenterals, aseptic processing, terminal sterilization) applies only to INJ (and API where in scope). Text\n  that rests on the CGMP regulations for finished pharmaceuticals (21 CFR 210/211, \"drug product manufacturers\",\n  \"finished drug products\") does not apply to API unless it speaks of APIs or bulk drug substances too.\n- numbers: every number, limit, frequency or period in the quote, as written (not regulation references).\n- condition: the condition or trigger in a few words, \"\" if none. This field only repeats what the statement\n  already says.\n- topic: the sub-topic id from TOPICS the expectation belongs to.\n\nDo not narrow or widen a term. Where the text gives examples (\"such as ...\"), keep them as examples; where it\ngives a closed list, keep it closed.\n\nSentences that state no expectation for the manufacturer go in not_applicable: the question itself, background and\nhistory, definitions, descriptions of what happened at a firm, FDA's own actions or enforcement, statements of\npurpose or scope, references, an inspection step without a stated expectation. One entry per SENTENCE, each with\nthe paragraph reference, the sentence's first 8 or more words copied exactly, and the reason in a few words. A\nsentence with \"should\", \"must\", \"FDA expects\" or an instruction to the investigator needs an item or a\nnot_applicable entry.\n\nWrite the answers file named in your task: {\"answers\": [one object per unit with \"unit\" set to the unit's \"id\"\nexactly, \"items\" and \"not_applicable\"]}.\n",
+ "topics": [
+  "QS.PQS",
+  "QS.MGMT",
+  "QS.QRM",
+  "QS.PQR",
+  "QS.CHANGE",
+  "QS.DEV",
+  "QS.CAPA",
+  "PER.ORG",
+  "PER.KEY",
+  "PER.TRAIN",
+  "PER.HYG",
+  "PER.GOWN",
+  "PREM.DESIGN",
+  "PREM.PROD",
+  "PREM.STORE",
+  "PREM.QC",
+  "PREM.ANC",
+  "EQ.DESIGN",
+  "EQ.MAINT",
+  "EQ.CLEAN",
+  "EQ.CAL",
+  "DOC.SYS",
+  "DOC.SPEC",
+  "DOC.MFR",
+  "DOC.BMR",
+  "DOC.SOP",
+  "DOC.RET",
+  "MAT.SUPP",
+  "MAT.RECV",
+  "MAT.SAMP",
+  "MAT.STATUS",
+  "MAT.PACK",
+  "MAT.REJ",
+  "PROD.GEN",
+  "PROD.XCONT",
+  "PROD.IPC",
+  "PROD.YIELD",
+  "PROD.PACK",
+  "PROD.REWORK",
+  "QC.GEN",
+  "QC.SAMP",
+  "QC.TEST",
+  "QC.OOS",
+  "QC.STAB",
+  "QC.REF",
+  "QC.MICRO",
+  "VAL.PLAN",
+  "VAL.QUAL",
+  "VAL.PROC",
+  "VAL.CLEAN",
+  "VAL.METH",
+  "CSV.VAL",
+  "CSV.ACCESS",
+  "CSV.AUDIT",
+  "CSV.ESIG",
+  "CSV.DI",
+  "UTIL.WATER",
+  "UTIL.HVAC",
+  "UTIL.GAS",
+  "CCS.STRAT",
+  "CCS.EM",
+  "CCS.CLEAN",
+  "CCS.PEST",
+  "STER.GRADE",
+  "STER.ASEPT",
+  "STER.APS",
+  "STER.STERIL",
+  "STER.FILT",
+  "STER.CCI",
+  "STER.LYO",
+  "API.START",
+  "API.PROC",
+  "API.IMP",
+  "API.SOLV",
+  "OUT.CONTRACT",
+  "OUT.AGREE",
+  "CMP.COMPL",
+  "CMP.RECALL",
+  "CMP.REPORT",
+  "SI.PROG",
+  "SI.TEAM",
+  "SI.REPORT",
+  "SI.FOLLOW",
+  "DIST.STORE",
+  "DIST.TRANS",
+  "DIST.RETURN",
+  "REL.QP",
+  "REL.REVIEW"
+ ],
+ "schema": {
+  "type": "object",
+  "required": [
+   "unit",
+   "items",
+   "not_applicable"
+  ],
+  "properties": {
+   "unit": {
+    "type": "string"
+   },
+   "items": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "statement",
+      "quote",
+      "clause_number",
+      "strength",
+      "plant_types",
+      "numbers",
+      "condition",
+      "topic"
+     ],
+     "properties": {
+      "statement": {
+       "type": "string"
+      },
+      "quote": {
+       "type": "string"
+      },
+      "clause_number": {
+       "type": "string"
+      },
+      "strength": {
+       "enum": [
+        "mandatory",
+        "recommended",
+        "optional"
+       ]
+      },
+      "plant_types": {
+       "type": "array",
+       "items": {
+        "enum": [
+         "OSD",
+         "LIQ",
+         "SEMI",
+         "INJ",
+         "API"
+        ]
+       }
+      },
+      "numbers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "condition": {
+       "type": "string"
+      },
+      "topic": {
+       "type": "string"
+      }
+     }
+    }
+   },
+   "not_applicable": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "clause_number",
+      "text",
+      "reason"
+     ],
+     "properties": {
+      "clause_number": {
+       "type": "string"
+      },
+      "text": {
+       "type": "string"
+      },
+      "reason": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  }
+ },
+ "units": [
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q11",
+   "source": "fda-cgmp-qa-production-process-controls.html",
+   "unit": "Q11",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q11",
+     "text": "Why is FDA concerned about human topical antiseptic drug products?"
+    },
+    {
+     "ref": "Q11.1",
+     "text": "FDA has identified several incidents of objectionable microbial contamination of topical antiseptic drug products(e.g., alcohol pads or swabs used to prepare the skin prior to an injection) Microbial contamination may be caused by substandard manufacturing practices, and the Agency is concerned about safety risks, such as from infection, associated with this contamination."
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q12",
+   "source": "fda-cgmp-qa-production-process-controls.html",
+   "unit": "Q12",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q12",
+     "text": "What specific CGMP regulations might be useful to manufacturers of topical antiseptic drug products?"
+    },
+    {
+     "ref": "Q12.1",
+     "text": "Section 501(a)(2)(B) of the Federal Food, Drug, and Cosmetic Act requires all drugs to be manufactured in conformance with CGMP. The CGMP regulations in 21 CFR parts 210 and 211 for finished pharmaceuticals apply equally to over-the-counter (OTC) and prescription (Rx) drug products (see Compliance Policy Guide Sec. 450.100)."
+    },
+    {
+     "ref": "Q12.2",
+     "text": "The CGMP regulations provide the minimum legal requirements for conducting reliable operations (see 21 CFR part 211). Some relevant CGMP regulations, with a brief description, are given below:"
+    },
+    {
+     "ref": "Q12.3",
+     "text": "Manufacturing Design and Control: CGMP Requirements and Recommended Guidance for Manufacturers"
+    },
+    {
+     "ref": "Q12.4",
+     "text": "Design manufacturing facilities(§ 211.42) and processes (see below) to prevent microbial contamination:",
+     "list_item": true
+    },
+    {
+     "ref": "Q12.5",
+     "text": "For nonsterile drug products, establish control procedures to monitor output and validate processes to include bioburden testing (§§ 211.110(a)(6)), 211.111) and establish and follow written procedures designed to prevent the introduction of objectionable microorganisms (§ 211.113(a)).",
+     "list_item": true
+    },
+    {
+     "ref": "Q12.6",
+     "text": "For sterile drug products, establish and follow written procedures designed to prevent microbial contamination (§ 211.113(b)). See the guidance for industry Sterile Drug Products Produced by Aseptic Processing—Current Good Manufacturing Practice.",
+     "list_item": true
+    },
+    {
+     "ref": "Q12.7",
+     "text": "Conduct process validation studies to ensure acceptable output (e.g., with topical antiseptics, particularly product microbiological quality) (§ 211.110(a). Implement and validate needed changes when deficient manufacturing steps, equipment, or raw materials may be adversely affecting process control. See the guidance for industry Process Validation: General Principles and Practices.",
+     "list_item": true
+    },
+    {
+     "ref": "Q12.8",
+     "text": "Ensure that operating procedures will consistently produce a quality product (§ 211.100). Review and evaluate any deviations or discrepancies documented during manufacturing and testing to determine if a product lacks assurance of sterility (for sterile antiseptics) or may be contaminated with objectionable microorganisms (for nonsterile antiseptics). Document and implement any corrective actions deriving from the evaluation (§ 211.192).",
+     "list_item": true
+    },
+    {
+     "ref": "Q12.9",
+     "text": "Ensure that all equipment, including water systems, operates consistently and is clean, sanitary, and suitable for its intended use (§§ 211.63, 211.65, 211.67, and 211.68).",
+     "list_item": true
+    },
+    {
+     "ref": "Q12.10",
+     "text": "Establish and follow in-process bioburden testing procedures to help monitor in-process control, including understanding the bioburden challenge to a final sterilization process (§ 211.110(a)(6)).",
+     "list_item": true
+    },
+    {
+     "ref": "Q12.11",
+     "text": "Components, In-Process Materials, Containers or Closures, and Finished Product Testing: CGMP Requirements for Manufacturers"
+    },
+    {
+     "ref": "Q12.12",
+     "text": "Establish appropriate written testing standards/specifications and sampling plans for components, in-process materials, containers or closures, and finished products (§ 211.160).",
+     "list_item": true
+    },
+    {
+     "ref": "Q12.13",
+     "text": "Establish procedures for testing and approval or rejection of components, drug product containers, and closures (§ 211.80). Test each lot of a drug product component and container or closure, including those that may be vulnerable to microbiological contamination (§211.84)(d)(4-5), including applicator material (e.g., cotton pads) and water used as an ingredient in the product.",
+     "list_item": true
+    },
+    {
+     "ref": "Q12.14",
+     "text": "Conduct appropriate microbiological tests before a batch disposition decision is made.Test each batch of a sterile product for sterility (§211.167). Test each batch of a non-sterile product to ensure absence of objectionable microorganisms (§211.165(b)).",
+     "list_item": true
+    },
+    {
+     "ref": "Q12.15",
+     "text": "Management"
+    },
+    {
+     "ref": "Q12.16",
+     "text": "The CGMP regulations require that the management of a manufacturing facility maintains a well-functioning quality system, which includes an effective quality unit vested with the responsibilities and authorities required under CGMP (§ 211.22). See ICH guidances for industry Q9 Quality Risk Management and Q10 Pharmaceutical Quality System."
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q13",
+   "source": "fda-cgmp-qa-production-process-controls.html",
+   "unit": "Q13",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q13",
+     "text": "How can manufacturers assess and address the risk of microbiological contamination of topical antiseptics?"
+    },
+    {
+     "ref": "Q13.1",
+     "text": "Because there are potentially many different root causes of product contamination by microorganisms, it is imperative that manufacturers perform a manufacturing risk assessment to understand manufacturing failure modes and implement prevention measures."
+    },
+    {
+     "ref": "Q13.2",
+     "text": "In addition, any risk assessment approach should be informed by an understanding of the microbial contamination vulnerabilities of the concerned product.>For example, some product considerations for manufacturers include, but are not limited to:"
+    },
+    {
+     "ref": "Q13.3",
+     "text": "Determine the types of microbes that might survive or thrive in your products. Provide additional controls and testing based on the output of the risk assessment to ensure product quality.",
+     "list_item": true
+    },
+    {
+     "ref": "Q13.4",
+     "text": "Ensure that your microbial recovery methods are capable of detecting the types of microbes that may affect product quality.",
+     "list_item": true
+    },
+    {
+     "ref": "Q13.5",
+     "text": "Evaluate risk of contamination from components, including during component production, storage, or due to the intrinsic risk from source materials. Consider all possible sources of microbial contamination, including the following:",
+     "list_item": true
+    },
+    {
+     "ref": "Q13.6",
+     "text": "Components or products stored in open bins can be at risk for contamination by spore-forming microbes, such as Bacillus cereus, as well as by Serratia species and other worrisome airborne microbes (see the FDA news release and Morbidity and Mortality Weekly Report, referenced below). Manufacturing areas exposed to windy or poor HVAC conditions may increase the potential for this environmental contamination risk.",
+     "list_item": true
+    },
+    {
+     "ref": "Q13.7",
+     "text": "Some materials, especially from natural sources, may have high or objectionable intrinsic bioburden.",
+     "list_item": true
+    },
+    {
+     "ref": "Q13.8",
+     "text": "Water quality can pose a significant risk, as most antiseptics include water as a key ingredient. Contaminated purified water has been the root cause of multiple recalls of antiseptics, including instances of antiseptics contaminated with Burkholderia (previously Pseudomonas) cepacia, an opportunistic pathogen.",
+     "list_item": true
+    },
+    {
+     "ref": "Q13.9",
+     "text": "Unsanitary practices or sources.",
+     "list_item": true
+    },
+    {
+     "ref": "Q13.10",
+     "text": "When manufacturing in areas with high humidity, molds can be of special concern.",
+     "list_item": true
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q14",
+   "source": "fda-cgmp-qa-production-process-controls.html",
+   "unit": "Q14",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q14",
+     "text": "Can Leptospira species penetrate sterilizing-grade filters? If so, what should manufacturers keep in mind in their ongoing lifecycle risk management efforts to ensure microbial control?"
+    },
+    {
+     "ref": "Q14.1",
+     "text": "FDA is aware of a report of Leptospira licerasiae contamination in cell cultures (see Chen, Bergenvin, et al. 2012). There is no indication that this bacterium ultimately contaminated either the finished drug substance or drug product. This bacterium has been found to pass through 0.1 µm pore size rated sterilizing-grade membrane filters. While this specific species was the identified contaminant in this case, other Leptospira species also are capable of passing through 0.1 µm pore size rated filters (see Faine 1982). Compendial microbiological test methods typically used in association with upstream biotechnology and pharmaceutical production are not capable of detecting this type of bacteria. Whether this apparently rare contamination risk may be more widespread is unknown, and we are sharing this information so that manufacturers can consider whether this hazard may be relevant to their operations."
+    },
+    {
+     "ref": "Q14.2",
+     "text": "Leptospira are Gram-negative aerobic spirochetes that are flexible, highly motile, and spiral-shaped with internal flagella. The bacteria measure 1μm in diameter and 10-20 μm in length. Leptospira are obligate aerobes that use oxygen as the electron receptor and long-chain fatty acids as a major source of energy. While some of the Leptospira are harmless fresh-water saprophytes, other species are pathogenic and can cause leptosporosis, a significant disease in humans and animals (Ricaldi, Fouts, et al. 2012; Matthias, Ricaldi, et al. 2008; Bharti, Nally, et al. 2003). Based on current information, Leptospira contamination does not appear to occur frequently, and purification steps that follow cell culture in a typical biotechnology operation would be expected to prevent carryover to the finished drug substance.Testing of bulk drug substances produced in the reported cases did not detect the Leptospira species, and no evidence of deleterious effects on in-process product were observed in the known case study. However, we are providing this communication to alert manufacturers that these types of bacteria can potentially:"
+    },
+    {
+     "ref": "Q14.3",
+     "text": "Penetrate sterilizing-grade membrane filters",
+     "list_item": true
+    },
+    {
+     "ref": "Q14.4",
+     "text": "Be present in the manufacturing site environment",
+     "list_item": true
+    },
+    {
+     "ref": "Q14.5",
+     "text": "Impact in-process production (e.g., production yields, impurity levels, process performance)",
+     "list_item": true
+    },
+    {
+     "ref": "Q14.6",
+     "text": "Go undetected due to the limitations of current compendial bioburden tests in detecting this microbial genus",
+     "list_item": true
+    },
+    {
+     "ref": "Q14.7",
+     "text": "As a general principle, manufacturers should use sound risk management and be aware of unusual microbiota reported in the literature that may impact their manufacturing processes (e.g., cell culture biotechnology, conventional sterile drug manufacturing). Manufacturers should assess their operations, be aware of potential risks, and apply appropriate risk management based on an understanding of possible or emerging contamination risks (see section 18.3 in ICH guidance for industry Q7 Good Manufacturing Practice Guidance for Active Pharmaceutical Ingredients). As appropriate, preventive measures should be implemented during the product and process lifecycle. To illustrate, if leptospiral contamination is considered possible, or has occurred, risk mitigation procedures and practices for this microorganism should include at least the following:"
+    },
+    {
+     "ref": "Q14.8",
+     "text": "Review of available published articles from the scientific literature and technical reports by related industry organizations that may provide further understanding on how to mitigate this contamination hazard.",
+     "list_item": true
+    },
+    {
+     "ref": "Q14.9",
+     "text": "Use of molecular or nonconventional microbial monitoring methods at appropriate intervals to detect microbial flora that may exist in processing steps or in the immediate environment, but are not readily detected by current routine methods. Such expanded testing should be used to modify the strategy (e.g., timing, frequency, types of tests) of detection and control in the event of newly identified risk posed by the viable, but not easily cultured, microorganism."
+    },
+    {
+     "ref": "Q14.10",
+     "text": "Examples include:"
+    },
+    {
+     "ref": "Q14.11",
+     "text": "Use of specialized media such as Ellinghausen McCullough Johnson Harris (EMJH) medium (Ellinghausen and McCullough 1965) or other suitable media (Rule and Alexander 1986). It should be noted that these bacteria typically grow very slowly.",
+     "list_item": true
+    },
+    {
+     "ref": "Q14.12",
+     "text": "Use of validated polymerase chain reaction (PCR) methods (e.g., as an investigative tool) for rapid screening and detection of spirochete bacteria.",
+     "list_item": true
+    },
+    {
+     "ref": "Q14.13",
+     "text": "Consideration of special stain techniques or other means to identify the presence of Leptospira (Frank and Kohn 1973).",
+     "list_item": true
+    },
+    {
+     "ref": "Q14.14",
+     "text": "Use of conventional approaches. Firms should continue to properly employ basic, standard microbiology laboratory practices to detect contamination. For example, the laboratory should ensure that microscopic examination is part of its routine cell culture process control program, as it provides an important means of detecting microbial contaminants that may not readily grow on conventional media.",
+     "list_item": true
+    },
+    {
+     "ref": "Q14.15",
+     "text": "Implementing such quality risk-management measures into the initial design (i.e., preventive actions) and promptly implementing an appropriate corrective action plan in response to newly identified contamination sources, throughout the life cycle of the product.",
+     "list_item": true
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q15",
+   "source": "fda-cgmp-qa-production-process-controls.html",
+   "unit": "Q15",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q15",
+     "text": "FDA withdrew its draft guidance for industry on Powder Blends and Finished Dosage Units—Stratified In-Process Dosage Unit Sampling and Assessment. What were the Agency’s major concerns with this guidance?"
+    },
+    {
+     "ref": "Q15.1",
+     "text": "FDA’s major concern was that sections V and VII of the withdrawn draft guidance no longer represented the Agency’s current thinking, as explained below. Section V (Exhibit/Validation Batch Powder Mix Homogeneity) recommended that at least 3 replicate samples be taken from at least 10 locations in the powder blender, but that only 1 of the 3 replicates be evaluated to assess powder blend uniformity. The Agency currently recommends that all replicate samples taken from various locations in the blender be evaluated to perform a statistically valid analysis. This analysis can demonstrate that variability attributable to sample location is not significant and that the powder blend is homogenous. Statistical tools are available to ascertain both the number of replicates and the number of sampling locations across the blender that should be analyzed to conduct a valid analysis. Section VII (Routine Manufacturing Batch Testing Methods) acceptance criteria designated to the Standard Criteria Method and the Marginal Criteria Method were based upon the limits published in the United States Pharmacopeia (USP) General Chapter <905> Uniformity of Dosage Units. However, the procedures and acceptance criteria in General Chapter <905> are not a statistical sampling plan and so the results of the procedures should not be extrapolated to larger populations. Therefore, because the procedure and acceptance criteria prescribed in section VII provided only limited statistical assurance that batches of drug products met appropriate specifications and statistical quality control criteria, FDA no longer supports their use for batch release. Currently, there are several standard statistical practices that, if used correctly, can help to ensure compliance with CGMP regulations, including 21 CFR 211.110, 21 CFR 211.160, and 21 CFR 211.165."
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q16",
+   "source": "fda-cgmp-qa-production-process-controls.html",
+   "unit": "Q16",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q16",
+     "text": "Why is FDA concerned about proper sampling of powder blends?"
+    },
+    {
+     "ref": "Q16.1",
+     "text": "The CGMPs require that all sampling plans be scientifically sound and representative of the batch under test (see 21 CFR 211.160(b)). Further, in-process testing of powder blends to demonstrate adequacy of mixing is a CGMP requirement (21 CFR 211.110). Between- and within-location variability in the powder blend is a critical component of finished product quality and therefore should be evaluated. Drug product manufacturers need to use a science- and risk-based sampling approach to ensure (a) adequacy of blend mixing and (b) that sampling of the blend is done at a suitable juncture in the manufacturing process. The sampling and analysis needs to ensure that no differences exist between locations in a blend that could adversely affect finished product quality. Traditional sampling using a powder-thief may have drawbacks and limitations, such as causing disturbance to the powder bed, powder segregation, or other sampling errors. However, powder-thief sampling remains widely used and provides reliable results in many cases. The Agency encourages firms to adopt more innovative approaches to ensuring adequacy of mixing (see, e.g., the guidance for industry PAT—A Framework for Innovative Pharmaceutical Development, Manufacturing, and Quality Assurance). If a manufacturer proposes to use a thief sampling method, the reliability of the method should be evaluated as part of analytical methods development."
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q17",
+   "source": "fda-cgmp-qa-production-process-controls.html",
+   "unit": "Q17",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q17",
+     "text": "What are some recommended innovative approaches to ensuring adequacy of mixing of powder blends?"
+    },
+    {
+     "ref": "Q17.1",
+     "text": "Innovative approaches to consider include, but are not limited to: (a) PAT real-time monitoring and feed-forward controlling of the powder blending process (see the guidance for industry PAT—A Framework for Innovative Pharmaceutical Development, Manufacturing, and Quality Assurance) and (b) use of statistical process control tools to monitor the powder blending process and to maintain a state of control. When a manufacturer decides to implement PAT or other process-monitoring and control techniques for powder blend homogeneity assessment, its decision should be supported with appropriate data and rationale using a science- and risk-based approach. For example, the effective sample size of powder examined by PAT probes has to be estimated such that the scale of scrutiny of the PAT powder blending monitoring can be justified (Wu, Tawakkul, et al. 2009). The number of PAT probes and their locations also have to be justified. If a scientifically sound PAT monitoring and control strategy is established, it can facilitate the assessment of (a) variability across locations within the powder bed (El-Hagrasy, Morris, et al. 2001), (b) variability over time of one location, and (c) potential correlation between the powder sample and the unit dosage form."
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q18",
+   "source": "fda-cgmp-qa-production-process-controls.html",
+   "unit": "Q18",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q18",
+     "text": "What are the Agency’s recommendations regarding in-process stratified sampling of finished dosage units?"
+    },
+    {
+     "ref": "Q18.1",
+     "text": "Stratified sampling is recommended to be used when the population is known to have several subdivisions (i.e., locations), which may give different results for the quality characteristics measured. The Agency expects that no significant differences should exist between in-process locations that could affect finished product quality. Between- and within-location variability is a critical component of finished product quality and therefore should be evaluated. Please refer to ASTM E2709 and ASTM E2810 for further guidance on establishing acceptance criteria for a stratified sampling plan."
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q19",
+   "source": "fda-cgmp-qa-production-process-controls.html",
+   "unit": "Q19",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q19",
+     "text": "For a nonsterile compendial drug product that includes an antimicrobial preservative in its formulation, may I release and market lots of this drug product with initial out-of-specification total aerobic plate counts if these lots test within specification 2 weeks later?"
+    },
+    {
+     "ref": "Q19.1",
+     "text": "No. 21 CFR 211.113(a) requires appropriate written procedures to be established and followed during manufacturing to prevent objectionable microorganisms in drug products not required to be sterile. Additionally, the second paragraph of USP General Chapter <51> Antimicrobial Effectiveness Testing reads: Antimicrobial preservatives should not be used as a substitute for good manufacturing practices, solely to reduce the viable microbial population of a nonsterile product, or control the presterilization bioburden of a multidose formulation during manufacturing. Drug manufacturers should not rely on antimicrobial preservatives to reduce initial out-of-specification plate counts to within-specification levels and then market the product. Section 211.165(f) mandates that drug products failing to meet established standards or specifications be rejected. The initial test results exhibiting out-of specification levels of microbes are not disqualified even if subsequent test results are within specifications. In such cases, FDA still expects the manufacturer to reject the drug product based on the initial results. It is also not acceptable for manufacturers to allow an inappropriately long time (e.g., weeks) to pass before testing the product, which might permit the preservative to reduce levels of microbes possibly introduced during manufacture and thus avoid out-of-specification test results. Finally, drug manufacturers should review their manufacturing process to determine procedures or equipment that might introduce contaminating microorganisms into the process or product."
+    }
+   ]
+  }
+ ]
+}

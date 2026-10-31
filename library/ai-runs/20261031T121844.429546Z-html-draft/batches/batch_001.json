@@ -1,0 +1,501 @@
+{
+ "instructions": "You read an FDA web page (a Q&A page on CGMP, a Guide to Inspections, an Inspection Technical Guide, a Compliance\nPolicy Guide or an alert to manufacturers) and list what it expects of a drug manufacturer. Each unit is given as\nits paragraphs, each with its reference (\"Q4.2\" on a Q&A page: question 4, answer paragraph 2; \"¶17\" elsewhere) and\nits exact text; \"context\" entries are headings or labels (not citable); \"list_item\" marks a list item, whose\nlead-in is the paragraph ending in \":\" above it. Your output is checked by software against that exact text and by\nindependent reviewers, so precision matters more than wording.\n\nList each separate expectation as its own item, so that together your items cover every expectation in the unit.\nOne expectation is one thing a manufacturer must, should or may do, with all its conditions, numbers and\nqualifiers; do not split one expectation across items. What counts:\n- what FDA says a firm must, should or may do (\"FDA expects firms to have written procedures ...\", \"manufacturers\n  should ...\", \"are required by the CGMP regulations to ...\");\n- in a Guide to Inspections or Inspection Technical Guide, what the investigator is told to check (\"Determine\n  whether the firm has validated ...\", \"Check that ...\", \"Review the ...\"): write the practice the firm is expected\n  to have (\"Validate ...\"), not the investigator's task. When the text only says what to look at (\"Examine the\n  design of equipment\") and states no expectation, write the expectation the text itself gives in the same\n  paragraph; if it gives none, put the sentence in not_applicable (\"inspection step without a stated expectation\").\nFor each item:\n- statement: the expectation in your own plain English words, as one checklist item a site could be audited\n  against. Do not copy more than a few words in a row. Keep every condition (\"where\", \"if\", \"unless\", \"when\",\n  \"except\") and every number. Do not add anything the text does not say. The statement itself must carry every\n  condition or qualifier of the lead-in above a list item. The statement is shown to customers: never cite a\n  regulation, section, question or paragraph number in it (\"21 CFR 211.42(d)\", \"Q4\", \"see above\"); say what is\n  required instead.\n- quote: the exact span of ONE paragraph's text that states the whole expectation, copied character for character\n  (matched against the page text by software; do not fix typos or change punctuation, keep footnote marks as\n  printed). A quote may continue into the paragraphs after it in the same unit, in order (e.g. a lead-in and its\n  list items), but must start in the cited paragraph.\n- clause_number: the reference of the paragraph the quote starts in, exactly as given (\"Q4.2\", \"¶17\").\n- strength: \"mandatory\" where the text states a legal requirement (shall / must / is required / may not, \"the\n  CGMP regulations require\"); \"recommended\" for should, \"FDA expects\", \"FDA recommends\", and for an inspection\n  point; \"optional\" for may / is acceptable. A list item without such a word takes its lead-in's.\n- plant_types: from OSD, LIQ, SEMI, INJ, API (INJ = sterile injectables); the plant scope given unless the text\n  narrows it. Text limited to non-sterile products does not apply to INJ; text limited to sterile products\n  (parenterals, aseptic processing, terminal sterilization) applies only to INJ (and API where in scope). Text\n  that rests on the CGMP regulations for finished pharmaceuticals (21 CFR 210/211, \"drug product manufacturers\",\n  \"finished drug products\") does not apply to API unless it speaks of APIs or bulk drug substances too.\n- numbers: every number, limit, frequency or period in the quote, as written (not regulation references).\n- condition: the condition or trigger in a few words, \"\" if none. This field only repeats what the statement\n  already says.\n- topic: the sub-topic id from TOPICS the expectation belongs to.\n\nDo not narrow or widen a term. Where the text gives examples (\"such as ...\"), keep them as examples; where it\ngives a closed list, keep it closed.\n\nSentences that state no expectation for the manufacturer go in not_applicable: the question itself, background and\nhistory, definitions, descriptions of what happened at a firm, FDA's own actions or enforcement, statements of\npurpose or scope, references, an inspection step without a stated expectation. One entry per SENTENCE, each with\nthe paragraph reference, the sentence's first 8 or more words copied exactly, and the reason in a few words. A\nsentence with \"should\", \"must\", \"FDA expects\" or an instruction to the investigator needs an item or a\nnot_applicable entry.\n\nWrite the answers file named in your task: {\"answers\": [one object per unit with \"unit\" set to the unit's \"id\"\nexactly, \"items\" and \"not_applicable\"]}.\n",
+ "topics": [
+  "QS.PQS",
+  "QS.MGMT",
+  "QS.QRM",
+  "QS.PQR",
+  "QS.CHANGE",
+  "QS.DEV",
+  "QS.CAPA",
+  "PER.ORG",
+  "PER.KEY",
+  "PER.TRAIN",
+  "PER.HYG",
+  "PER.GOWN",
+  "PREM.DESIGN",
+  "PREM.PROD",
+  "PREM.STORE",
+  "PREM.QC",
+  "PREM.ANC",
+  "EQ.DESIGN",
+  "EQ.MAINT",
+  "EQ.CLEAN",
+  "EQ.CAL",
+  "DOC.SYS",
+  "DOC.SPEC",
+  "DOC.MFR",
+  "DOC.BMR",
+  "DOC.SOP",
+  "DOC.RET",
+  "MAT.SUPP",
+  "MAT.RECV",
+  "MAT.SAMP",
+  "MAT.STATUS",
+  "MAT.PACK",
+  "MAT.REJ",
+  "PROD.GEN",
+  "PROD.XCONT",
+  "PROD.IPC",
+  "PROD.YIELD",
+  "PROD.PACK",
+  "PROD.REWORK",
+  "QC.GEN",
+  "QC.SAMP",
+  "QC.TEST",
+  "QC.OOS",
+  "QC.STAB",
+  "QC.REF",
+  "QC.MICRO",
+  "VAL.PLAN",
+  "VAL.QUAL",
+  "VAL.PROC",
+  "VAL.CLEAN",
+  "VAL.METH",
+  "CSV.VAL",
+  "CSV.ACCESS",
+  "CSV.AUDIT",
+  "CSV.ESIG",
+  "CSV.DI",
+  "UTIL.WATER",
+  "UTIL.HVAC",
+  "UTIL.GAS",
+  "CCS.STRAT",
+  "CCS.EM",
+  "CCS.CLEAN",
+  "CCS.PEST",
+  "STER.GRADE",
+  "STER.ASEPT",
+  "STER.APS",
+  "STER.STERIL",
+  "STER.FILT",
+  "STER.CCI",
+  "STER.LYO",
+  "API.START",
+  "API.PROC",
+  "API.IMP",
+  "API.SOLV",
+  "OUT.CONTRACT",
+  "OUT.AGREE",
+  "CMP.COMPL",
+  "CMP.RECALL",
+  "CMP.REPORT",
+  "SI.PROG",
+  "SI.TEAM",
+  "SI.REPORT",
+  "SI.FOLLOW",
+  "DIST.STORE",
+  "DIST.TRANS",
+  "DIST.RETURN",
+  "REL.QP",
+  "REL.REVIEW"
+ ],
+ "schema": {
+  "type": "object",
+  "required": [
+   "unit",
+   "items",
+   "not_applicable"
+  ],
+  "properties": {
+   "unit": {
+    "type": "string"
+   },
+   "items": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "statement",
+      "quote",
+      "clause_number",
+      "strength",
+      "plant_types",
+      "numbers",
+      "condition",
+      "topic"
+     ],
+     "properties": {
+      "statement": {
+       "type": "string"
+      },
+      "quote": {
+       "type": "string"
+      },
+      "clause_number": {
+       "type": "string"
+      },
+      "strength": {
+       "enum": [
+        "mandatory",
+        "recommended",
+        "optional"
+       ]
+      },
+      "plant_types": {
+       "type": "array",
+       "items": {
+        "enum": [
+         "OSD",
+         "LIQ",
+         "SEMI",
+         "INJ",
+         "API"
+        ]
+       }
+      },
+      "numbers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "condition": {
+       "type": "string"
+      },
+      "topic": {
+       "type": "string"
+      }
+     }
+    }
+   },
+   "not_applicable": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "clause_number",
+      "text",
+      "reason"
+     ],
+     "properties": {
+      "clause_number": {
+       "type": "string"
+      },
+      "text": {
+       "type": "string"
+      },
+      "reason": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  }
+ },
+ "units": [
+  {
+   "id": "fda-ora-guide-lyophilization-parenterals-1993.html:¶1-¶21",
+   "source": "fda-ora-guide-lyophilization-parenterals-1993.html",
+   "unit": "¶1-¶21",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "context": "Lyophilization of Parenteral (7/93)"
+    },
+    {
+     "context": "GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS"
+    },
+    {
+     "ref": "¶1",
+     "text": "Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s).",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS"
+    },
+    {
+     "context": "INTRODUCTION"
+    },
+    {
+     "ref": "¶2",
+     "text": "Lyophilization or freeze drying is a process in which water is removed from a product after it is frozen and placed under a vacuum, allowing the ice to change directly from solid to vapor without passing through a liquid phase. The process consists of three separate, unique, and interdependent processes; freezing, primary drying (sublimation), and secondary drying (desorption).",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > INTRODUCTION"
+    },
+    {
+     "ref": "¶3",
+     "text": "The advantages of lyophilization include:",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > INTRODUCTION"
+    },
+    {
+     "ref": "¶4",
+     "text": "Ease of processing a liquid, which simplifies aseptic handling",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > INTRODUCTION"
+    },
+    {
+     "context": "Enhanced stability of a dry powder"
+    },
+    {
+     "ref": "¶5",
+     "text": "Removal of water without excessive heating of the product",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > INTRODUCTION"
+    },
+    {
+     "ref": "¶6",
+     "text": "Enhanced product stability in a dry state",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > INTRODUCTION"
+    },
+    {
+     "ref": "¶7",
+     "text": "Rapid and easy dissolution of reconstituted product",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > INTRODUCTION"
+    },
+    {
+     "ref": "¶8",
+     "text": "Disadvantages of lyophilization include:",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > INTRODUCTION"
+    },
+    {
+     "context": "Increased handling and processing time"
+    },
+    {
+     "ref": "¶9",
+     "text": "Need for sterile diluent upon reconstitution",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > INTRODUCTION"
+    },
+    {
+     "context": "Cost and complexity of equipment"
+    },
+    {
+     "ref": "¶10",
+     "text": "The lyophilization process generally includes the following steps:",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > INTRODUCTION"
+    },
+    {
+     "ref": "¶11",
+     "text": "Dissolving the drug and excipients in a suitable solvent, generally water for injection (WFI).",
+     "list_item": true,
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > INTRODUCTION"
+    },
+    {
+     "ref": "¶12",
+     "text": "Sterilizing the bulk solution by passing it through a 0.22 micron bacteria-retentive filter.",
+     "list_item": true,
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > INTRODUCTION"
+    },
+    {
+     "ref": "¶13",
+     "text": "Filling into individual sterile containers and partially stoppering the containers under aseptic conditions.",
+     "list_item": true,
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > INTRODUCTION"
+    },
+    {
+     "ref": "¶14",
+     "text": "Transporting the partially stoppered containers to the lyophilizer and loading into the chamber under aseptic conditions.",
+     "list_item": true,
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > INTRODUCTION"
+    },
+    {
+     "ref": "¶15",
+     "text": "Freezing the solution by placing the partially stoppered containers on cooled shelves in a freeze-drying chamber or pre-freezing in another chamber.",
+     "list_item": true,
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > INTRODUCTION"
+    },
+    {
+     "ref": "¶16",
+     "text": "Applying a vacuum to the chamber and heating the shelves in order to evaporate the water from the frozen state.",
+     "list_item": true,
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > INTRODUCTION"
+    },
+    {
+     "ref": "¶17",
+     "text": "Complete stoppering of the vials usually by hydraulic or screw rod stoppering mechanisms installed in the lyophilizers.",
+     "list_item": true,
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > INTRODUCTION"
+    },
+    {
+     "ref": "¶18",
+     "text": "There are many new parenteral products, including anti-infectives, biotechnology derived products, and in-vitro diagnostics which are manufactured as lyophilized products. Additionally, inspections have disclosed potency, sterility and stability problems associated with the manufacture and control of lyophilized products. In order to provide guidance and information to investigators, some industry procedures and deficiencies associated with lyophilized products are identified in this Inspection Guide.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > INTRODUCTION"
+    },
+    {
+     "ref": "¶19",
+     "text": "It is recognized that there is complex technology associated with the manufacture and control of a lyophilized pharmaceutical dosage form. Some of the important aspects of these operations include: the formulation of solutions; filling of vials and validation of the filling operation; sterilization and engineering aspects of the lyophilizer; scale-up and validation of the lyophilization cycle; and testing of the end product. This discussion will address some of the problems associated with the manufacture and control of a lyophilized dosage form.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > INTRODUCTION"
+    },
+    {
+     "context": "PRODUCT TYPE/FORMULATION"
+    },
+    {
+     "ref": "¶20",
+     "text": "Products are manufactured in the lyophilized form due to their instability when in solution. Many of the antibiotics, such as some of the semi-synthetic penicillins, cephalosporins, and also some of the salts of erythromycin, doxycycline and chloramphenicol are made by the lyophilization process. Because they are antibiotics, low bioburden of these formulations would be expected at the time of batching. However, some of the other dosage forms that are lyophilized, such as hydrocortisone sodium succinate, methylprednisolone sodium succinate and many of the biotechnology derived products, have no antibacterial effect when in solution.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > PRODUCT TYPE/FORMULATION"
+    },
+    {
+     "ref": "¶21",
+     "text": "For these types of products, bioburden should be minimal and the bioburden should be determined prior to sterilization of these bulk solutions prior to filling. Obviously, the batching or compounding of these bulk solutions should be controlled in order to prevent any potential increase in microbiological levels that may occur up to the time that the bulk solutions are filtered (sterilized). The concern with any microbiological level is the possible increase in endotoxins that may develop. Good practice for the compounding of lyophilized products would also include batching in a controlled environment and in sealed tanks, particularly if the solution is to be held for any length of time prior to sterilization.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > PRODUCT TYPE/FORMULATION"
+    }
+   ]
+  },
+  {
+   "id": "fda-ora-guide-lyophilization-parenterals-1993.html:¶22-¶29",
+   "source": "fda-ora-guide-lyophilization-parenterals-1993.html",
+   "unit": "¶22-¶29",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "¶22",
+     "text": "In some cases, manufacturers have performed bioburden testing on bulk solutions after prefiltration and prior to final filtration. While the testing of such solutions may be meaningful in determining the bioburden for sterilization, it does not provide any information regarding the potential formation or presence of endotoxins. While the testing of 0.1 ml samples by LAL methods of bulk solution for endotoxins is of value, testing of at least 100 ml size samples prior to prefiltration, particularly for the presence of gram negative organisms, would be of greater value in evaluating the process. For example, the presence of Pseudomonas sp. in the bioburden of a bulk solution has been identified as an objectionable condition.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > PRODUCT TYPE/FORMULATION"
+    },
+    {
+     "context": "FILLING"
+    },
+    {
+     "ref": "¶23",
+     "text": "The filling of vials that are to be lyophilized has some problems that are somewhat unique. The stopper is placed on top of the vial and is ultimately seated in the lyophilizer. As a result the contents of the vial are subject to contamination until they are actually sealed.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > FILLING"
+    },
+    {
+     "ref": "¶24",
+     "text": "Validation of filling operations should include media fills and the sampling of critical surfaces and air during active filling (dynamic conditions).",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > FILLING"
+    },
+    {
+     "ref": "¶25",
+     "text": "Because of the active involvement of people in filling and aseptic manipulations, an environmental program should also include an evaluation of microbiological levels on people working in aseptic processing areas. One method of evaluation of the training of operators working in aseptic processing facilities includes the surface monitoring of gloves and/or gowns on a daily basis. Manufacturers are actively sampling the surfaces of personnel working in aseptic processing areas. A reference which provides for this type of monitoring is the USP XXII discussion of the Interpretation of Sterility Test Results. It states under the heading of \"Interpretation of Quality Control Tests\" that review consideration should be paid to environmental control data, including...microbial monitoring, records of operators, gowns, gloves, and garbing practices. In those situations in which manufacturers have failed to perform some type of personnel monitoring, or monitoring has shown unacceptable levels of contamination, regulatory situations have resulted.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > FILLING"
+    },
+    {
+     "ref": "¶26",
+     "text": "Typically, vials to be lyophilized are partially stoppered by machine. However, some filling lines have been noted which utilize an operator to place each stopper on top of the vial by hand. At this time, it would seem that it would be difficult for a manufacturer to justify a hand-stoppering operation, even if sterile forceps are employed, in any type of operation other than filling a clinical batch or very small number of units. Significant regulatory situations have resulted when some manufacturers have hand-stoppered vials. Again, the concern is the immediate avenue of contamination offered by the operator. It is well recognized that people are the major source of contamination in an aseptic processing filling operation. The longer a person works in an aseptic operation, the more microorganisms will be shed and the greater the probability of contamination.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > FILLING"
+    },
+    {
+     "ref": "¶27",
+     "text": "Once filled and partially stoppered, vials are transported and loaded into the lyophilizer. The transfer and handling, such as loading of the lyophilizer, should take place under primary barriers, such as the laminar flow hoods under which the vials were filled. Validation of this handling should also include the use media fills.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > FILLING"
+    },
+    {
+     "ref": "¶28",
+     "text": "Regarding the filling of sterile media, there are some manufacturers who carry out a partial lyophilization cycle and freeze the media. While this could seem to greater mimic the process, the freezing of media could reduce microbial levels of some contaminants. Since the purpose of the media fill is to evaluate and justify the aseptic capabilities of the process, the people and the system, the possible reduction of microbiological levels after aseptic manipulation by freezing would not be warranted. The purpose of a media fill is not to determine the lethality of freezing and its effect on any microbial contaminants that might be present.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > FILLING"
+    },
+    {
+     "ref": "¶29",
+     "text": "In an effort to identify the particular sections of filling and aseptic manipulation that might introduce contamination, several manufacturers have resorted to expanded media fills. That is, they have filled approximately 9000 vials during a media fill and segmented the fill into three stages. One stage has included filling of 3000 vials and stoppering on line; another stage included filling 3000 vials, transportation to the lyophilizer and then stoppering; a third stage included the filling of 3000 vials, loading in the lyophilizer, and exposure to a portion of the nitrogen flush and then stoppering. Since lyophilizer sterilization and sterilization of the nitrogen system used to backfill require separate validation, media fills should primarily validate the filling, transportation and loading aseptic operations.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > FILLING"
+    }
+   ]
+  },
+  {
+   "id": "fda-ora-guide-lyophilization-parenterals-1993.html:¶30-¶38",
+   "source": "fda-ora-guide-lyophilization-parenterals-1993.html",
+   "unit": "¶30-¶38",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "¶30",
+     "text": "The question of the number of units needed for media fills when the capacity of the process is less than 3000 units is frequently asked, particularly for clinical products. Again, the purpose of the media fill is to assure that product can be aseptically processed without contamination under operating conditions. It would seem, therefore, that the maximum number of units of media filled be equivalent to the maximum batch size if it is less than 3000 units.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > FILLING"
+    },
+    {
+     "ref": "¶31",
+     "text": "After filling, dosage units are transported to the lyophilizer by metal trays. Usually, the bottom of the trays are removed after the dosage units are loaded into the lyophilizer. Thus, the dosage units lie directly on the lyophilizer shelf. There have been some situations in which manufacturers have loaded the dosage units on metal trays which were not removed. Unfortunately, at one manufacturer, the trays warped which caused a moisture problem in some dosage units in a batch.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > FILLING"
+    },
+    {
+     "ref": "¶32",
+     "text": "In the transport of vials to the lyophilizer, since they are not sealed, there is concern for the potential for contamination. During inspections and in the review of new facilities, the failure to provide laminar flow coverage or a primary barrier for the transport and loading areas of a lyophilizer has been regarded as an objectionable condition. One manufacturer as a means of correction developed a laminar flow cart to transport the vials from the filling line to the lyophilizer. Other manufacturers building new facilities have located the filling line close to the lyophilizer and have provided a primary barrier extending from the filling line to the lyophilizer.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > FILLING"
+    },
+    {
+     "ref": "¶33",
+     "text": "In order to correct this type of problem, another manufacturer installed a vertical laminar flow hood between the filling line and lyophilizer. Initially, high velocities with inadequate return caused a contamination problem in a media fill. It was speculated that new air currents resulted in rebound contamination off the floor. Fortunately, media fills and smoke studies provided enough meaningful information that the problem could be corrected prior to the manufacture of product. Typically, the lyophilization process includes the stoppering of vials in the chamber.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > FILLING"
+    },
+    {
+     "ref": "¶34",
+     "text": "Another major concern with the filling operation is assurance of fill volumes. Obviously, a low fill would represent a subpotency in the vial. Unlike a powder or liquid fill, a low fill would not be readily apparent after lyophilization particularly for a biopharmaceutical drug product where the active ingredient may be only a milligram. Because of the clinical significance, sub-potency in a vial potentially can be a very serious situation.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > FILLING"
+    },
+    {
+     "ref": "¶35",
+     "text": "For example, in the inspection of a lyophilization filling operation, it was noted that the firm was having a filling problem. The gate on the filling line was not coordinated with the filling syringes, and splashing and partial filling was occurring. It was also observed that some of the partially filled vials were loaded into the lyophilizer. This resulted in rejection of the batch.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > FILLING"
+    },
+    {
+     "ref": "¶36",
+     "text": "On occasion, it has been seen that production operators monitoring fill volumes record these fill volumes only after adjustments are made. Therefore, good practice and a good quality assurance program would include the frequent monitoring of the volume of fill, such as every 15 minutes. Good practice would also include provisions for the isolation of particular sections of filling operations when low or high fills are encountered.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > FILLING"
+    },
+    {
+     "ref": "¶37",
+     "text": "There are some atypical filling operations which have not been discussed. For example, there have also been some situations in which lyophilization is performed on trays of solution rather than in vials. Based on the current technology available, it would seem that for a sterile product, it would be difficult to justify this procedure.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > FILLING"
+    },
+    {
+     "ref": "¶38",
+     "text": "The dual chamber vial also presents additional requirements for aseptic manipulations. Media fills should include the filling of media in both chambers. Also, the diluent in these vials should contain a preservative. (Without a preservative, the filling of diluent would be analogous to the filling of media. In such cases, a 0% level of contamination would be expected.)",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > FILLING"
+    },
+    {
+     "context": "LYOPHILIZATION CYCLE AND CONTROLS"
+    }
+   ]
+  },
+  {
+   "id": "fda-ora-guide-lyophilization-parenterals-1993.html:¶39-¶47",
+   "source": "fda-ora-guide-lyophilization-parenterals-1993.html",
+   "unit": "¶39-¶47",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "¶39",
+     "text": "After sterilization of the lyophilizer and aseptic loading, the initial step is freezing the solution. In some cycles, the shelves are at the temperature needed for freezing, while for other cycles, the product is loaded and then the shelves are taken to the freezing temperature necessary for product freeze. In those cycles in which the shelves are precooled prior to loading, there is concern for any ice formation on shelves prior to loading. Ice on shelves prior to loading can cause partial or complete stoppering of vials prior to lyophilization of the product. A recent field complaint of a product in solution and not lyophilized was attributed to preliminary stoppering of a few vials prior to exposure to the lyophilization cycle. Unfortunately, the firm's 100% vial inspection failed to identify the defective vial.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > LYOPHILIZATION CYCLE AND CONTROLS"
+    },
+    {
+     "ref": "¶40",
+     "text": "Typically, the product is frozen at a temperature well below the eutectic point.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > LYOPHILIZATION CYCLE AND CONTROLS"
+    },
+    {
+     "ref": "¶41",
+     "text": "The scale-up and change of lyophilization cycles, including the freezing procedures, have presented some problems. Studies have shown the rate and manner of freezing may affect the quality of the lyophilized product. For example, slow freezing leads to the formation of larger ice crystals. This results in relatively large voids, which aid in the escape of water vapor during sublimation. On the other hand, slow freezing can increase concentration shifts of components. Also, the rate and manner of freezing has been shown to have an affect on the physical form (polymorph) of the drug substance.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > LYOPHILIZATION CYCLE AND CONTROLS"
+    },
+    {
+     "ref": "¶42",
+     "text": "It is desirable after freezing and during primary drying to hold the drying temperature (in the product) at least 4-5o below the eutectic point. Obviously, the manufacturer should know the eutectic point and have the necessary instrumentation to assure the uniformity of product temperatures. The lyophilizer should also have the necessary instrumentation to control and record the key process parameters. These include: shelf temperature, product temperature, condenser temperature, chamber pressure and condenser pressure. The manufacturing directions should provide for time, temperature and pressure limits necessary for a lyophilization cycle for a product. The monitoring of product temperature is particularly important for those cycles for which there are atypical operating procedures, such as power failures or equipment breakdown.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > LYOPHILIZATION CYCLE AND CONTROLS"
+    },
+    {
+     "ref": "¶43",
+     "text": "Electromechanical control of a lyophilization cycle has utilized cam-type recorder-controllers. However, newer units provide for microcomputer control of the freeze drying process. A very basic requirement for a computer controlled process is a flow chart or logic. Typically, operator involvement in a computer controlled lyophilization cycle primarily occurs at the beginning. It consists of loading the chamber, inserting temperature probes in product vials, and entering cycle parameters such as shelf temperature for freezing, product freeze temperature, freezing soak time, primary drying shelf temperature and cabinet pressure, product temperature for establishment of fill vacuum, secondary drying shelf temperature, and secondary drying time.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > LYOPHILIZATION CYCLE AND CONTROLS"
+    },
+    {
+     "ref": "¶44",
+     "text": "In some cases, manufacturers have had to continuously make adjustments in cycles as they were being run. In these situations, the lyophilization process was found to be non-validated.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > LYOPHILIZATION CYCLE AND CONTROLS"
+    },
+    {
+     "ref": "¶45",
+     "text": "Validation of the software program of a lyophilizer follows the same criteria as that for other processes. Basic concerns include software development, modifications and security. The Guide to Inspection of Computerized Systems in Drug Processing contains a discussion on potential problem areas relating to computer systems. A Guide to the Inspection of Software Development Activities is a reference that provides a more detailed review of software requirements.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > LYOPHILIZATION CYCLE AND CONTROLS"
+    },
+    {
+     "ref": "¶46",
+     "text": "Leakage into a lyophilizer may originate from various sources. As in any vacuum chamber, leakage can occur from the atmosphere into the vessel itself. Other sources are media employed within the system to perform the lyophilizing task. These would be the thermal fluid circulated through the shelves for product heating and cooling, the refrigerant employed inside the vapor condenser cooling surface and oil vapors that may migrate back from the vacuum pumping system.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > LYOPHILIZATION CYCLE AND CONTROLS"
+    },
+    {
+     "ref": "¶47",
+     "text": "Any one, or a combination of all, can contribute to the leakage of gases and vapors into the system. It is necessary to monitor the leak rate periodically to maintain the integrity of the system. It is also necessary, should the leak rate exceed specified limits, to determine the actual leak site for purposes of repair.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > LYOPHILIZATION CYCLE AND CONTROLS"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,586 @@
+{
+ "instructions": "You read an FDA web page (a Q&A page on CGMP, a Guide to Inspections, an Inspection Technical Guide, a Compliance\nPolicy Guide or an alert to manufacturers) and list what it expects of a drug manufacturer. Each unit is given as\nits paragraphs, each with its reference (\"Q4.2\" on a Q&A page: question 4, answer paragraph 2; \"¶17\" elsewhere) and\nits exact text; \"context\" entries are headings or labels (not citable); \"list_item\" marks a list item, whose\nlead-in is the paragraph ending in \":\" above it. Your output is checked by software against that exact text and by\nindependent reviewers, so precision matters more than wording.\n\nList each separate expectation as its own item, so that together your items cover every expectation in the unit.\nOne expectation is one thing a manufacturer must, should or may do, with all its conditions, numbers and\nqualifiers; do not split one expectation across items. What counts:\n- what FDA says a firm must, should or may do (\"FDA expects firms to have written procedures ...\", \"manufacturers\n  should ...\", \"are required by the CGMP regulations to ...\");\n- in a Guide to Inspections or Inspection Technical Guide, what the investigator is told to check (\"Determine\n  whether the firm has validated ...\", \"Check that ...\", \"Review the ...\"): write the practice the firm is expected\n  to have (\"Validate ...\"), not the investigator's task. When the text only says what to look at (\"Examine the\n  design of equipment\") and states no expectation, write the expectation the text itself gives in the same\n  paragraph; if it gives none, put the sentence in not_applicable (\"inspection step without a stated expectation\").\nFor each item:\n- statement: the expectation in your own plain English words, as one checklist item a site could be audited\n  against. Do not copy more than a few words in a row. Keep every condition (\"where\", \"if\", \"unless\", \"when\",\n  \"except\") and every number. Do not add anything the text does not say. The statement itself must carry every\n  condition or qualifier of the lead-in above a list item. The statement is shown to customers: never cite a\n  regulation, section, question or paragraph number in it (\"21 CFR 211.42(d)\", \"Q4\", \"see above\"); say what is\n  required instead.\n- quote: the exact span of ONE paragraph's text that states the whole expectation, copied character for character\n  (matched against the page text by software; do not fix typos or change punctuation, keep footnote marks as\n  printed). A quote may continue into the paragraphs after it in the same unit, in order (e.g. a lead-in and its\n  list items), but must start in the cited paragraph.\n- clause_number: the reference of the paragraph the quote starts in, exactly as given (\"Q4.2\", \"¶17\").\n- strength: \"mandatory\" where the text states a legal requirement (shall / must / is required / may not, \"the\n  CGMP regulations require\"); \"recommended\" for should, \"FDA expects\", \"FDA recommends\", and for an inspection\n  point; \"optional\" for may / is acceptable. A list item without such a word takes its lead-in's.\n- plant_types: from OSD, LIQ, SEMI, INJ, API (INJ = sterile injectables); the plant scope given unless the text\n  narrows it. Text limited to non-sterile products does not apply to INJ; text limited to sterile products\n  (parenterals, aseptic processing, terminal sterilization) applies only to INJ (and API where in scope). Text\n  that rests on the CGMP regulations for finished pharmaceuticals (21 CFR 210/211, \"drug product manufacturers\",\n  \"finished drug products\") does not apply to API unless it speaks of APIs or bulk drug substances too.\n- numbers: every number, limit, frequency or period in the quote, as written (not regulation references).\n- condition: the condition or trigger in a few words, \"\" if none. This field only repeats what the statement\n  already says.\n- topic: the sub-topic id from TOPICS the expectation belongs to.\n\nDo not narrow or widen a term. Where the text gives examples (\"such as ...\"), keep them as examples; where it\ngives a closed list, keep it closed.\n\nSentences that state no expectation for the manufacturer go in not_applicable: the question itself, background and\nhistory, definitions, descriptions of what happened at a firm, FDA's own actions or enforcement, statements of\npurpose or scope, references, an inspection step without a stated expectation. One entry per SENTENCE, each with\nthe paragraph reference, the sentence's first 8 or more words copied exactly, and the reason in a few words. A\nsentence with \"should\", \"must\", \"FDA expects\" or an instruction to the investigator needs an item or a\nnot_applicable entry.\n\nWrite the answers file named in your task: {\"answers\": [one object per unit with \"unit\" set to the unit's \"id\"\nexactly, \"items\" and \"not_applicable\"]}.\n",
+ "topics": [
+  "QS.PQS",
+  "QS.MGMT",
+  "QS.QRM",
+  "QS.PQR",
+  "QS.CHANGE",
+  "QS.DEV",
+  "QS.CAPA",
+  "PER.ORG",
+  "PER.KEY",
+  "PER.TRAIN",
+  "PER.HYG",
+  "PER.GOWN",
+  "PREM.DESIGN",
+  "PREM.PROD",
+  "PREM.STORE",
+  "PREM.QC",
+  "PREM.ANC",
+  "EQ.DESIGN",
+  "EQ.MAINT",
+  "EQ.CLEAN",
+  "EQ.CAL",
+  "DOC.SYS",
+  "DOC.SPEC",
+  "DOC.MFR",
+  "DOC.BMR",
+  "DOC.SOP",
+  "DOC.RET",
+  "MAT.SUPP",
+  "MAT.RECV",
+  "MAT.SAMP",
+  "MAT.STATUS",
+  "MAT.PACK",
+  "MAT.REJ",
+  "PROD.GEN",
+  "PROD.XCONT",
+  "PROD.IPC",
+  "PROD.YIELD",
+  "PROD.PACK",
+  "PROD.REWORK",
+  "QC.GEN",
+  "QC.SAMP",
+  "QC.TEST",
+  "QC.OOS",
+  "QC.STAB",
+  "QC.REF",
+  "QC.MICRO",
+  "VAL.PLAN",
+  "VAL.QUAL",
+  "VAL.PROC",
+  "VAL.CLEAN",
+  "VAL.METH",
+  "CSV.VAL",
+  "CSV.ACCESS",
+  "CSV.AUDIT",
+  "CSV.ESIG",
+  "CSV.DI",
+  "UTIL.WATER",
+  "UTIL.HVAC",
+  "UTIL.GAS",
+  "CCS.STRAT",
+  "CCS.EM",
+  "CCS.CLEAN",
+  "CCS.PEST",
+  "STER.GRADE",
+  "STER.ASEPT",
+  "STER.APS",
+  "STER.STERIL",
+  "STER.FILT",
+  "STER.CCI",
+  "STER.LYO",
+  "API.START",
+  "API.PROC",
+  "API.IMP",
+  "API.SOLV",
+  "OUT.CONTRACT",
+  "OUT.AGREE",
+  "CMP.COMPL",
+  "CMP.RECALL",
+  "CMP.REPORT",
+  "SI.PROG",
+  "SI.TEAM",
+  "SI.REPORT",
+  "SI.FOLLOW",
+  "DIST.STORE",
+  "DIST.TRANS",
+  "DIST.RETURN",
+  "REL.QP",
+  "REL.REVIEW"
+ ],
+ "schema": {
+  "type": "object",
+  "required": [
+   "unit",
+   "items",
+   "not_applicable"
+  ],
+  "properties": {
+   "unit": {
+    "type": "string"
+   },
+   "items": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "statement",
+      "quote",
+      "clause_number",
+      "strength",
+      "plant_types",
+      "numbers",
+      "condition",
+      "topic"
+     ],
+     "properties": {
+      "statement": {
+       "type": "string"
+      },
+      "quote": {
+       "type": "string"
+      },
+      "clause_number": {
+       "type": "string"
+      },
+      "strength": {
+       "enum": [
+        "mandatory",
+        "recommended",
+        "optional"
+       ]
+      },
+      "plant_types": {
+       "type": "array",
+       "items": {
+        "enum": [
+         "OSD",
+         "LIQ",
+         "SEMI",
+         "INJ",
+         "API"
+        ]
+       }
+      },
+      "numbers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "condition": {
+       "type": "string"
+      },
+      "topic": {
+       "type": "string"
+      }
+     }
+    }
+   },
+   "not_applicable": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "clause_number",
+      "text",
+      "reason"
+     ],
+     "properties": {
+      "clause_number": {
+       "type": "string"
+      },
+      "text": {
+       "type": "string"
+      },
+      "reason": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  }
+ },
+ "units": [
+  {
+   "id": "fda-ora-guide-osd-pre-post-approval-1994.html:¶45-¶57",
+   "source": "fda-ora-guide-osd-pre-post-approval-1994.html",
+   "unit": "¶45-¶57",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "OSD"
+   ],
+   "paragraphs": [
+    {
+     "ref": "¶45",
+     "text": "This section of the application is used to identify the biobatch or batches used for pivotal clinical studies. It is also useful for review of the correspondence between the firm and CDER/CVM. One of the basic objectives of our review is to identify the biobatch. Also, any batches in which in-vivo studies were carried out, and particularly those which in-vivo studies showed inequivalency should be reviewed.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > III PRODUCT DEVELOPMENT"
+    },
+    {
+     "ref": "¶46",
+     "text": "Development Data (Product Development Report)",
+     "list_item": true,
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > III PRODUCT DEVELOPMENT"
+    },
+    {
+     "ref": "¶47",
+     "text": "The firm cannot logically proceed to the validation step without some prior evaluation of the process. During the development phase the critical process parameters must be identified and specifications established. These predetermined specifications must be established during the development of the process, with the biobatch or pivotal clinical batch serving as the reference batch.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > III PRODUCT DEVELOPMENT"
+    },
+    {
+     "ref": "¶48",
+     "text": "Development of a solid dosage form will vary from firm to firm and will be dependent upon the specific product and process. However, the formula ranges, physical and chemical specifications of the drug substance and excipients, in-process variables, interaction effects of the dosage form ingredients under normal and stress aging conditions, should be confirmed by limited challenge in pilot-scale and production-size batches.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > III PRODUCT DEVELOPMENT"
+    },
+    {
+     "ref": "¶49",
+     "text": "This development data serves as the foundation for the manufacturing procedures, specifications and validation of the commercial process. In some cases, manufacturers have attempted to establish specifications such as hardness and particle size during validation. However, as the validation definition states, specifications must be determined prior to validation of the process.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > III PRODUCT DEVELOPMENT"
+    },
+    {
+     "ref": "¶50",
+     "text": "When a manufacturer files a manufacturing process in an application, we expect that the process will yield a product which is equivalent to the product on which the biostudy or pivotal clinical study was conducted. Therefore, it is important that the development and scale-up of the process be well documented so that a link between the bio/clinical batches and the commercial process can be established. The firm should have data such as granulation studies, finished product test results, and dissolution profiles which may be used to document that the two processes are equivalent.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > III PRODUCT DEVELOPMENT"
+    },
+    {
+     "ref": "¶51",
+     "text": "In most cases in vitro data alone will not be sufficient to document equivalency. Determine if an equivalency evaluation has been made. This bioequivalency evaluation must be made by qualified individuals, and the firm should have a signed statement documenting that the processes are equivalent. Therefore, in many cases you may see an in-vivo bioequivalency study performed. Obviously, the firm cannot provide this type of data if the have not manufactured pilot or test batches using the types of equipment an controls specified in the proposed master formula.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > III PRODUCT DEVELOPMENT"
+    },
+    {
+     "context": "Inspection of the Facilities"
+    },
+    {
+     "ref": "¶52",
+     "text": "It is important that you physically inspect the facility to assure that the area and the ancillary equipment such as air handling and water systems are suitable for the proposed manufacturing process. Construction of new walls, installation of new equipment, and other significant changes must be evaluated for their impact on the overall compliance with GMP requirements. This includes facilities used for development batches and to be used for full-scale production batches.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > III PRODUCT DEVELOPMENT"
+    },
+    {
+     "context": "Raw Materials"
+    },
+    {
+     "ref": "¶53",
+     "text": "Review the information contained in the Raw Material section under Product Development Report above. Inventory records are a good source for the identification of batches used for product development and biostudies.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > III PRODUCT DEVELOPMENT"
+    },
+    {
+     "context": "Laboratory"
+    },
+    {
+     "ref": "¶54",
+     "text": "The inspection of a laboratory requires the use of observations of the laboratory in operation and of the raw laboratory data to evaluate compliance with GMP's and to specifically carry out the commitments in an application or DMF.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > III PRODUCT DEVELOPMENT"
+    },
+    {
+     "ref": "¶55",
+     "text": "Evaluate raw laboratory data, laboratory procedures and methods, laboratory equipment, and methods validation data to determine the overall quality of the laboratory operation and the ability to comply with GMP regulations. (Refer to the Laboratory Inspection Guide for additional discussion).",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > III PRODUCT DEVELOPMENT"
+    },
+    {
+     "ref": "¶56",
+     "text": "Many of our inspection have identified foreign peaks and impurities not filed or discussed in applications. Also, many of our inspections have shown laboratory test methods not to be validated. The transfer of laboratory methods and technology from the Research and Development Department to the Quality Control Department should be reviewed.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > III PRODUCT DEVELOPMENT"
+    },
+    {
+     "context": "Equipment"
+    },
+    {
+     "ref": "¶57",
+     "text": "At the time of the pre-approval inspection we expect that the equipment is in place and qualified. New products, particularly potent drug products, can present cleaning problems in existing equipment. Manufacturers must validate their cleaning processes for the new drug/dosage form. (Refer to the Cleaning Validation Inspection Guide for additional discussion).",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > III PRODUCT DEVELOPMENT"
+    },
+    {
+     "context": "IV VALIDATION PROTOCOLS"
+    }
+   ]
+  },
+  {
+   "id": "fda-ora-guide-osd-pre-post-approval-1994.html:¶58-¶76",
+   "source": "fda-ora-guide-osd-pre-post-approval-1994.html",
+   "unit": "¶58-¶76",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "OSD"
+   ],
+   "paragraphs": [
+    {
+     "ref": "¶58",
+     "text": "Validation protocols are developed from the information obtained during product development research. These protocols list the specific manufacturing process and specifications that will be tested during the demonstration runs. Validation protocols are not required for the Pre-Approval Inspection but are required for Post-Approval Inspections.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "ref": "¶59",
+     "text": "Key processes and control specifications should have been established during product development research and should be carefully listed in the validation protocol.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "ref": "¶60",
+     "text": "V DEMONSTRATION RUNS (VALIDATION OF THE PROCESS)",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "context": "TEST BATCH RELATIONSHIPS"
+    },
+    {
+     "ref": "¶61",
+     "text": "A \"validated\" process should produce a dosage form that is directly related to the dosage form on which equivalency and/or efficacy an safety were determined. This is usually the test batch. Therefore, compare the process used to make the test batch with the process that is used for routine full scale production batches. These processes and specifications must be equivalent. Therefore, the importance and the need for good control of the manufacturing process used to produce the test and clinical batches cannot be overemphasized. Typically the control of test batches includes, among others, drug substance characterization, granulation analyses, and dose uniformity and dissolution profiles.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "ref": "¶62",
+     "text": "The validation report should compare the manufacturing processes and specifications for the test batches to the full scale batches. However, such a finding may be contained in other documents. Request any evaluation that has been conducted on the equivalency of these batches and processes and review any tabulated data that shows the processing equivalency between the biobatch and validation batches.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "ref": "¶63",
+     "text": "Post-Approval Prospective Validation Inspections",
+     "list_item": true,
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "ref": "¶64",
+     "text": "Inspection team members must reread the sections under Part I Product Development which will not be restated under this section. Those sections contain information that is key to the evaluation of the validation process.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "ref": "¶65",
+     "text": "In the post-approval, pre-marketing phase, we review the Validation Protocol and the Validation Report. Obviously, a Validation Protocol that lists all of the variables and parameters that should be controlled when the process is validated cannot be written until the variables are identified in the development phase.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "ref": "¶66",
+     "text": "In many of our post-approval, pre-marketing inspections, validation (and consistency) could not be established. Failures of production size batches included dissolution, content uniformity and potency. Validation reports on batch scale-ups may also reflect selective reporting of data. Only through inspection and review of the facilities and raw data were the problems identified.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "ref": "¶67",
+     "text": "Several parameters must be considered when evaluating the validation of an oral solid dosage form manufacturing process. For example there are at least eight major areas that must be included:",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "context": "Biobatch Relationship"
+    },
+    {
+     "context": "Raw Materials"
+    },
+    {
+     "context": "Manufacturing Procedures and Equipment"
+    },
+    {
+     "context": "Granulation/Mix Analysis"
+    },
+    {
+     "context": "In-Process Controls"
+    },
+    {
+     "context": "Test Results with Validated Methods"
+    },
+    {
+     "context": "Investigations/Product Failures"
+    },
+    {
+     "context": "Site Review"
+    },
+    {
+     "context": "1. Raw Materials"
+    },
+    {
+     "ref": "¶68",
+     "text": "Physical characteristics of raw materials can vary among manufacturers of drug substances and, on occasion, have varied from lot to lot from the same manufacturer. Upon examination of retain samples of the lots of raw material, obvious physical differences between the two lots may be observed.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "ref": "¶69",
+     "text": "Review the raw material inventory records to evaluate the use of the drug substance in biobatch, clinical, and/or test batches. Pay attention to the quantities and source of materials used and the testing performed.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "ref": "¶70",
+     "text": "Inspections should cover the firm's data for the establishment of their physical specifications for drug substances. If the firm has no specification, or a very vague specification, they should be able to provide data to demonstrate that dissolution profiles and content uniformity will be satisfactory over a wide range of particle sizes. For example, a manufacturer may establish a specification of 90% of the particles must be less than 300 microns. For validation of this process, one would expect the use of micronized as well as material with particles close to 300 microns in size.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "ref": "¶71",
+     "text": "2. Manufacturing Procedures and Equipment",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "ref": "¶72",
+     "text": "Regardless of the nature of the specificity of the manufacturing directions contained in the application, a detailed master formula with specific manufacturing directions and specifications must have been developed before any validation protocol is prepared and before the validation process begins. The basic premise of validation of a process is that a detailed process already exists which hopefully will be shown to perform consistently and produces products in compliance with predetermined specifications. Therefore, detailed manufacturing directions, specifying equipment and operating parameters must be specified in the master formula.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "ref": "¶73",
+     "text": "The importance of specific written directions and specifications cannot be overemphasized. For example, problem areas may include:",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "ref": "¶74",
+     "text": "the failure to specify the amount of granulating solution, resulting in overwetting and dissolution failures of aged batches",
+     "list_item": true,
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "ref": "¶75",
+     "text": "the failure to specify the encapsulation machine and operating parameters, such as dosing discs, resulting in weight variation failures",
+     "list_item": true,
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "ref": "¶76",
+     "text": "the failure to specify the compression machine(s) and operating parameters, resulting in content uniformity failures",
+     "list_item": true,
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    }
+   ]
+  },
+  {
+   "id": "fda-ora-guide-osd-pre-post-approval-1994.html:¶77-¶88",
+   "source": "fda-ora-guide-osd-pre-post-approval-1994.html",
+   "unit": "¶77-¶88",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "OSD"
+   ],
+   "paragraphs": [
+    {
+     "ref": "¶77",
+     "text": "In addition to the concern about specific manufacturing directions, equipment presents its own set of unique problems which have to be considered in the control of the manufacturing and the validation processes. The following is a brief description of some issues associated with equipment:",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "context": "a. Blenders"
+    },
+    {
+     "ref": "¶78",
+     "text": "Many solid oral dosage forms are made by direct compression. There are generally two types of mixers - low energy and high energy. The low energy mixers represent the classical type of slow mixers, such as ribbon blenders, tumblers, and planetary pony pan. The high energy mixers include some basic features of the low energy mixer but also contain some type of high speed blade, commonly termed an intensifier bar or chopper.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "context": "Pony Pan Type"
+    },
+    {
+     "ref": "¶79",
+     "text": "This mixer has historically been used for the manufacture of wet granulations. Because of its open pan or pot, granulating agents, such as starch paste, could be added while mixing. Since it is usually open at the top to allow the mixing blades to penetrate the powder, mixing operations are usually dusty and can lead to potential cross-contamination problems.",
+     "list_item": true,
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "ref": "¶80",
+     "text": "The usefulness of these mixers is limited to wet granulating. With this type of mixer, there is good horizontal (side to side) blending. However, vertical (top to bottom) mixing does not occur. Powder placed in the mixer first will be poorly mixed. Segregation or unmixing is also a recognized problem. To minimize this problem, some manufacturers have emptied the pan contents half-way through the mixing cycle in an attempt to turn the powder over at the bottom of the mixer. To alleviate the problem of the lack of mixing along the sides or walls of the pan, manufacturers have utilized a hand-held steel paddle at various times during mixing. This type of mixing is difficult to control and reproduce. Thus, it would be difficult to validate.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "ref": "¶81",
+     "text": "The potential for segregation and poor mixing along the sides and particularly the bottom of the pony blender makes this type of blender less desirable for the dry blending of granulations of drug products. Consequently, whenever such dry blending is encountered, the investigator should be alert to potential problems with blending validation and content uniformity. Whenever in-process samples of the granulation are collected as part of an investigation or inspection, the formula card along with the weight of the dosage unit to be manufactured is needed for calculations.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "context": "Ribbon Blender"
+    },
+    {
+     "ref": "¶82",
+     "text": "In the ribbon blender, powder is mixed both horizontally and vertically. Loading operations can be dusty. However, during the actual blending, it is enclosed, thereby limiting the amount of dust generated to the environment.",
+     "list_item": true,
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "ref": "¶83",
+     "text": "The major and potentially the most serious problem with the ribbon blender is that there is a \"dead-spot\" or zone at the discharge valve in some of these blenders. To compensate for this \"dead-spot\", manufacturers have to recycle the powder from this area at some point during the mixing process. Obviously, there should be adequate and very specific directions and procedures for assuring this critical step is performed. Verify that this step is included in the directions.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "ref": "¶84",
+     "text": "Another concern with this mixer is the poor mixing at the ends of the center horizontal mixing bar and at the shell wall because of blade clearance. The level of powder placed in this mixer is normally at the top of the outer ribbon blade, and as with other mixers, care must be taken not to overfill the mixer.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "ref": "¶85",
+     "text": "Cleaning problems, particularly at the ends of the ribbon blender where the horizontal bar enters the blender, have been identified. If manufacturers do not disassemble and clean the seals/packing between batches, they should have data to demonstrate the absence of foreign contaminants between batches of different products processed in the blender.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "context": "Tumbler Blender"
+    },
+    {
+     "ref": "¶86",
+     "text": "Common mixers of this type include the twin-shell and double cone. These mixers exert a gentle mixing action. Because of this mild action, lumps of powder will not be broken up and mixed. Powders may also clump due to static charges and segregation can occur. Low humidity can contribute to this problem. Blending under very dry conditions has been found to lead to charge build-up and segregation, while blending of some products under humid conditions has led to lumping. More so than with other mixers, powder charge levels should not exceed 60 to 65% of the total volume of the mixer.",
+     "list_item": true,
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "ref": "¶87",
+     "text": "Fabricators of tumbler type blenders identify the volume as the actual working capacity and not the actual volume of the blender. It is important to correlate the bulk density of the granulation with the working capacity of the blender.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "context": "High Shear (high energy) Mixers"
+    },
+    {
+     "ref": "¶88",
+     "text": "There are several fabricators of these mixers that include GRAL, Diosna and Lodige or Littleford. These mixers are highly efficient and ideally suited for wet granulations. End point of wet granulations can be determined by a measurement on a gauge of the work needed to agitate the blend. The mixing vessel is enclosed, and dust only enters the environment when loading.",
+     "list_item": true,
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    }
+   ]
+  },
+  {
+   "id": "fda-ora-guide-osd-pre-post-approval-1994.html:¶89-¶99",
+   "source": "fda-ora-guide-osd-pre-post-approval-1994.html",
+   "unit": "¶89-¶99",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "OSD"
+   ],
+   "paragraphs": [
+    {
+     "ref": "¶89",
+     "text": "One of the problems associated with these mixers is the transfer or conversion of products blended in the older types of mixers to these blenders. Mixing times are going to be different, and the physical characteristics of the blend may also be different.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "ref": "¶90",
+     "text": "These mixers are very efficient. For wet granulations, it is important to control the rate and amount of addition of the solvent. Because of their efficiency, drug substance may partially dissolve and recrystallize upon drying as a different physical form.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "ref": "¶91",
+     "text": "The presence of an intensifier bar in the center of the blender which rotates at very high speeds breaks down smaller, harder agglomerates. A major disadvantage of this type of blender is that the extremely high speed of the intensifier bar generates considerable heat that can sometimes result in charring of some sugar base granulations. It should be pointed out that these same comments are applicable to other high energy mixers which also rely on high speed choppers to disperse powders. Also, cleaning of the blender requires disassembly of the intensifier bar between products.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "context": "Plastic Bag"
+    },
+    {
+     "ref": "¶92",
+     "text": "Any discussion of mixers would not be complete without addressing the plastic bag. Firms have resorted to the blending or manufacture of a trituration in a plastic bag. Obviously, it is very difficult to reproduce such a process, and there is the potential for loss of powder as a result of breakage or handling. The use of a plastic bag cannot be justified in the manufacture of a pharmaceutical product.",
+     "list_item": true,
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "ref": "¶93",
+     "text": "When the plastic bag has been used, directions are usually not specific, and one would not know by reading the directions that a plastic bag was employed. In a recent inspection, a firm was noted to manufacture a small 5 kg. size batch of a tranquilizer. Because all of the firm's blenders were of much larger capacity, an inquiry was made as to the mixer employed. Although the processing records indicated a large blender was employed, it was later determined that the batch was actually blended in a plastic bag.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "context": "b) Dryers"
+    },
+    {
+     "ref": "¶94",
+     "text": "There are two basic types of dryers. One is the oven dryer where the wet granulation is spread on trays and dried in an oven. The second dryer is the fluid bed dryer in which the wet granulation is \"fluidized\" or suspended in air. Generally, the fluid bed dryer yields a more uniform granulation with spherical particles. However, this may result in compression problems that may require additional compression force. It is not unusual to see manufacturers change from an oven dryer to the fluid bed dryer. However, such a change should be examined for equivalency with in-vitro testing such as hardness, disintegration and comparative dissolution and stability testing conducted.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "ref": "¶95",
+     "text": "Other issues of concern with drying include moisture uniformity and cross contamination. Tray dryers present more moisture uniformity problems than fluid bed dryers. Obviously, a dryer should be qualified for heat uniformity and a program developed to assure moisture uniformity in granulations at the end point of drying. With respect to fluid bed dryers, moisture problems can occur if the granulation is not completely fluidized.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "ref": "¶96",
+     "text": "Regarding cross contamination, oven dryers, particularly those in which air is recirculated, present cross contamination problems because air recirculates through a common filter and duct. For fluid bed dryers, the bag filters present cross contamination problems. In order to minimize problems, manufacturers use product dedicated bags.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "context": "c) Tablet and Capsule Equipment"
+    },
+    {
+     "ref": "¶97",
+     "text": "Another important variable in the manufacturing process is the tablet press or encapsulating machine. The newer dosage form equipment requires granulations with good flow characteristics and good uniformity. The newer tablet presses control weight variation by compression force and require a uniform granulation to function correctly. Setup of the microprocessor controlled tablet press usually includes some type of challenge to the system. For example, a short punch is sometimes placed among the other punches. If the press is operating correctly, it will alarm when the lower or high weight tablet is compressed.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "ref": "¶98",
+     "text": "Different tablet compression equipment can cause dose uniformity, weight uniformity and hardness problems. For example, vibrations during tablet compression can cause segregation of the granulation in the feed hopper. Speed of the machine can affect fill of the die and tablet weight. Therefore, as previously discussed, it is important to have specific operating directions.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    },
+    {
+     "ref": "¶99",
+     "text": "Many unit operations now provide for blending in totes with discharge of the tote directly into tablet compression equipment. Because of segregation problems at the end of discharge, tablets from the end of compression should be tested for content uniformity. The use of inserts in totes has been shown to minimize segregation.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > IV VALIDATION PROTOCOLS"
+    }
+   ]
+  }
+ ]
+}

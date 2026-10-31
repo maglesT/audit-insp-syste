@@ -1,0 +1,361 @@
+{
+ "instructions": "You read an FDA web page (a Q&A page on CGMP, a Guide to Inspections, an Inspection Technical Guide, a Compliance\nPolicy Guide or an alert to manufacturers) and list what it expects of a drug manufacturer. Each unit is given as\nits paragraphs, each with its reference (\"Q4.2\" on a Q&A page: question 4, answer paragraph 2; \"¶17\" elsewhere) and\nits exact text; \"context\" entries are headings or labels (not citable); \"list_item\" marks a list item, whose\nlead-in is the paragraph ending in \":\" above it. Your output is checked by software against that exact text and by\nindependent reviewers, so precision matters more than wording.\n\nList each separate expectation as its own item, so that together your items cover every expectation in the unit.\nOne expectation is one thing a manufacturer must, should or may do, with all its conditions, numbers and\nqualifiers; do not split one expectation across items. What counts:\n- what FDA says a firm must, should or may do (\"FDA expects firms to have written procedures ...\", \"manufacturers\n  should ...\", \"are required by the CGMP regulations to ...\");\n- in a Guide to Inspections or Inspection Technical Guide, what the investigator is told to check (\"Determine\n  whether the firm has validated ...\", \"Check that ...\", \"Review the ...\"): write the practice the firm is expected\n  to have (\"Validate ...\"), not the investigator's task. When the text only says what to look at (\"Examine the\n  design of equipment\") and states no expectation, write the expectation the text itself gives in the same\n  paragraph; if it gives none, put the sentence in not_applicable (\"inspection step without a stated expectation\").\nFor each item:\n- statement: the expectation in your own plain English words, as one checklist item a site could be audited\n  against. Do not copy more than a few words in a row. Keep every condition (\"where\", \"if\", \"unless\", \"when\",\n  \"except\") and every number. Do not add anything the text does not say. The statement itself must carry every\n  condition or qualifier of the lead-in above a list item. The statement is shown to customers: never cite a\n  regulation, section, question or paragraph number in it (\"21 CFR 211.42(d)\", \"Q4\", \"see above\"); say what is\n  required instead.\n- quote: the exact span of ONE paragraph's text that states the whole expectation, copied character for character\n  (matched against the page text by software; do not fix typos or change punctuation, keep footnote marks as\n  printed). A quote may continue into the paragraphs after it in the same unit, in order (e.g. a lead-in and its\n  list items), but must start in the cited paragraph.\n- clause_number: the reference of the paragraph the quote starts in, exactly as given (\"Q4.2\", \"¶17\").\n- strength: \"mandatory\" where the text states a legal requirement (shall / must / is required / may not, \"the\n  CGMP regulations require\"); \"recommended\" for should, \"FDA expects\", \"FDA recommends\", and for an inspection\n  point; \"optional\" for may / is acceptable. A list item without such a word takes its lead-in's.\n- plant_types: from OSD, LIQ, SEMI, INJ, API (INJ = sterile injectables); the plant scope given unless the text\n  narrows it. Text limited to non-sterile products does not apply to INJ; text limited to sterile products\n  (parenterals, aseptic processing, terminal sterilization) applies only to INJ (and API where in scope).\n- numbers: every number, limit, frequency or period in the quote, as written (not regulation references).\n- condition: the condition or trigger in a few words, \"\" if none. This field only repeats what the statement\n  already says.\n- topic: the sub-topic id from TOPICS the expectation belongs to.\n\nDo not narrow or widen a term. Where the text gives examples (\"such as ...\"), keep them as examples; where it\ngives a closed list, keep it closed.\n\nSentences that state no expectation for the manufacturer go in not_applicable: the question itself, background and\nhistory, definitions, descriptions of what happened at a firm, FDA's own actions or enforcement, statements of\npurpose or scope, references, an inspection step without a stated expectation. One entry per SENTENCE, each with\nthe paragraph reference, the sentence's first 8 or more words copied exactly, and the reason in a few words. A\nsentence with \"should\", \"must\", \"FDA expects\" or an instruction to the investigator needs an item or a\nnot_applicable entry.\n\nWrite the answers file named in your task: {\"answers\": [one object per unit with \"unit\" set to the unit's \"id\"\nexactly, \"items\" and \"not_applicable\"]}.\n",
+ "topics": [
+  "QS.PQS",
+  "QS.MGMT",
+  "QS.QRM",
+  "QS.PQR",
+  "QS.CHANGE",
+  "QS.DEV",
+  "QS.CAPA",
+  "PER.ORG",
+  "PER.KEY",
+  "PER.TRAIN",
+  "PER.HYG",
+  "PER.GOWN",
+  "PREM.DESIGN",
+  "PREM.PROD",
+  "PREM.STORE",
+  "PREM.QC",
+  "PREM.ANC",
+  "EQ.DESIGN",
+  "EQ.MAINT",
+  "EQ.CLEAN",
+  "EQ.CAL",
+  "DOC.SYS",
+  "DOC.SPEC",
+  "DOC.MFR",
+  "DOC.BMR",
+  "DOC.SOP",
+  "DOC.RET",
+  "MAT.SUPP",
+  "MAT.RECV",
+  "MAT.SAMP",
+  "MAT.STATUS",
+  "MAT.PACK",
+  "MAT.REJ",
+  "PROD.GEN",
+  "PROD.XCONT",
+  "PROD.IPC",
+  "PROD.YIELD",
+  "PROD.PACK",
+  "PROD.REWORK",
+  "QC.GEN",
+  "QC.SAMP",
+  "QC.TEST",
+  "QC.OOS",
+  "QC.STAB",
+  "QC.REF",
+  "QC.MICRO",
+  "VAL.PLAN",
+  "VAL.QUAL",
+  "VAL.PROC",
+  "VAL.CLEAN",
+  "VAL.METH",
+  "CSV.VAL",
+  "CSV.ACCESS",
+  "CSV.AUDIT",
+  "CSV.ESIG",
+  "CSV.DI",
+  "UTIL.WATER",
+  "UTIL.HVAC",
+  "UTIL.GAS",
+  "CCS.STRAT",
+  "CCS.EM",
+  "CCS.CLEAN",
+  "CCS.PEST",
+  "STER.GRADE",
+  "STER.ASEPT",
+  "STER.APS",
+  "STER.STERIL",
+  "STER.FILT",
+  "STER.CCI",
+  "STER.LYO",
+  "API.START",
+  "API.PROC",
+  "API.IMP",
+  "API.SOLV",
+  "OUT.CONTRACT",
+  "OUT.AGREE",
+  "CMP.COMPL",
+  "CMP.RECALL",
+  "CMP.REPORT",
+  "SI.PROG",
+  "SI.TEAM",
+  "SI.REPORT",
+  "SI.FOLLOW",
+  "DIST.STORE",
+  "DIST.TRANS",
+  "DIST.RETURN",
+  "REL.QP",
+  "REL.REVIEW"
+ ],
+ "schema": {
+  "type": "object",
+  "required": [
+   "unit",
+   "items",
+   "not_applicable"
+  ],
+  "properties": {
+   "unit": {
+    "type": "string"
+   },
+   "items": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "statement",
+      "quote",
+      "clause_number",
+      "strength",
+      "plant_types",
+      "numbers",
+      "condition",
+      "topic"
+     ],
+     "properties": {
+      "statement": {
+       "type": "string"
+      },
+      "quote": {
+       "type": "string"
+      },
+      "clause_number": {
+       "type": "string"
+      },
+      "strength": {
+       "enum": [
+        "mandatory",
+        "recommended",
+        "optional"
+       ]
+      },
+      "plant_types": {
+       "type": "array",
+       "items": {
+        "enum": [
+         "OSD",
+         "LIQ",
+         "SEMI",
+         "INJ",
+         "API"
+        ]
+       }
+      },
+      "numbers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "condition": {
+       "type": "string"
+      },
+      "topic": {
+       "type": "string"
+      }
+     }
+    }
+   },
+   "not_applicable": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "clause_number",
+      "text",
+      "reason"
+     ],
+     "properties": {
+      "clause_number": {
+       "type": "string"
+      },
+      "text": {
+       "type": "string"
+      },
+      "reason": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  }
+ },
+ "units": [
+  {
+   "id": "fda-cpg-490-200-parametric-release.html:¶12-¶21",
+   "source": "fda-cpg-490-200-parametric-release.html",
+   "unit": "¶12-¶21",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "¶12",
+     "text": "Sterilization validation should demonstrate microbial bioburden reduction consistent with existing Agency guidance to achieve a probability of non-sterile unit of 1 in 106 units or better.3 Validation of any operation depends upon the use of qualified equipment designed to achieve consistent performance to expected outcomes. When bioburden is identified as a critical parameter, bioburden testing (covering total aerobic and anaerobic microorganisms along with determining their spore forming capacity) should be conducted on presterilized drug product. Bioburden testing is a routine requirement under 21 CFR 211.110(a)(6).",
+     "heading_path": "CPG Sec. 490.200 Parametric Release of Parenteral Drug Products Terminally Sterilized by Moist Heat July 2012 > Guidance for FDA Staff1 > Sterility Assurance Program"
+    },
+    {
+     "ref": "¶13",
+     "text": "Robust sterilization cycles are effective at virtually eliminating the bioburden present in the load, and include substantial safety margin. If a recovered bioburden organism possesses a D-value4 greater than the biological indicator (BI) organism used to validate the sterilization cycle and quantitative data are inadequate to calculate lethality for the higher resistance organism, then the load fails.",
+     "heading_path": "CPG Sec. 490.200 Parametric Release of Parenteral Drug Products Terminally Sterilized by Moist Heat July 2012 > Guidance for FDA Staff1 > Sterility Assurance Program"
+    },
+    {
+     "ref": "¶14",
+     "text": "Cycle process parameters should be identified by the manufacturer as critical (e.g., time, temperature, pressure) or key (e.g., cooling time, heat-up time) (21 CFR 211.113(b)).",
+     "heading_path": "CPG Sec. 490.200 Parametric Release of Parenteral Drug Products Terminally Sterilized by Moist Heat July 2012 > Guidance for FDA Staff1 > Sterility Assurance Program"
+    },
+    {
+     "ref": "¶15",
+     "text": "At a minimum, any firm employing parametric release must know, document, and control critical parameters to demonstrate sterilization cycle efficacy (21 CFR 211.113(b)) 5. Strict control of the critical parameters will serve as an alternate to the finished product sterility release test. Under a parametric release program, failure to meet any of the identified critical parameters would require the rejection of the load and a thorough investigation (21 CFR 211.192). Depending on the results of the investigation and the nature of the product, the rejected load could possibly be reprocessed with a second full sterilization cycle if a provision for re-sterilization is approved by the Quality Unit (21 CFR 211.115), and, for application products, if such a reprocessing step is described in the product's approved application.",
+     "heading_path": "CPG Sec. 490.200 Parametric Release of Parenteral Drug Products Terminally Sterilized by Moist Heat July 2012 > Guidance for FDA Staff1 > Sterility Assurance Program"
+    },
+    {
+     "ref": "¶16",
+     "text": "In addition to the defined critical parameters which address cycle efficacy, key process parameters demonstrate a continued state of control of the sterilization operation. These parameters must be documented and defined by the firm in its manufacturing records (21 CFR 211.186 and 211.188). Investigators should not expect to see these key process parameters specified in an application. Key process parameters may include some or all of the following:",
+     "heading_path": "CPG Sec. 490.200 Parametric Release of Parenteral Drug Products Terminally Sterilized by Moist Heat July 2012 > Guidance for FDA Staff1 > Sterility Assurance Program"
+    },
+    {
+     "context": "Chamber come-up time"
+    },
+    {
+     "context": "Product hold times before sterilization"
+    },
+    {
+     "context": "Loading patterns"
+    },
+    {
+     "context": "Total steam flow into chamber"
+    },
+    {
+     "context": "Chamber integrity (leak) testing"
+    },
+    {
+     "ref": "¶17",
+     "text": "Final disposition of the load where these key parameters have not been achieved should be supported by a suitably justified and documented rationale, as required by 21 CFR 211.192.",
+     "heading_path": "CPG Sec. 490.200 Parametric Release of Parenteral Drug Products Terminally Sterilized by Moist Heat July 2012 > Guidance for FDA Staff1 > Sterility Assurance Program"
+    },
+    {
+     "ref": "¶18",
+     "text": "It is important for a firm to determine and understand the critical and key parameters for each product subject to parametric release. Critical parameters have a direct bearing on cycle efficacy, and key parameters provide important information about the control of a cycle. For example, the cycle dwell time at sterilization temperature is typically identified as a critical process parameter (i.e., release specification defined in a submission) because it has direct bearing on the cycle efficacy. The come-up time for the chamber temperature could be defined as a key process parameter because it provides important information about the control of the cycle (when compared to the come-up time for the cycle reproducibly achieved in validation studies), and it may also be indicative of the efficacy of the cycle (excessive come-up times may indicate inability to deliver sufficient heat lethality to the product to achieve sterility).",
+     "heading_path": "CPG Sec. 490.200 Parametric Release of Parenteral Drug Products Terminally Sterilized by Moist Heat July 2012 > Guidance for FDA Staff1 > Sterility Assurance Program"
+    },
+    {
+     "context": "Verification by load monitor"
+    },
+    {
+     "ref": "¶19",
+     "text": "If a firm's sterility assurance program is in a demonstrated state of control, as defined above, an appropriate load monitor, considered a critical process parameter under a parametric release program, would satisfy the requirements for a laboratory test (21 CFR 211.167(a)). The load monitor, in the form of a physical temperature probe, biological indicator, or chemical indicator, can be either a direct measurement of lethality delivered to the load, or if appropriate, an indirect lethality measurement system. The load monitor(s) is placed in an appropriate position in the load based on the evaluation of development and qualification data.",
+     "heading_path": "CPG Sec. 490.200 Parametric Release of Parenteral Drug Products Terminally Sterilized by Moist Heat July 2012 > Guidance for FDA Staff1 > Sterility Assurance Program"
+    },
+    {
+     "ref": "¶20",
+     "text": "There are three typical types of load monitors that are utilized by industry in a parametric release program:",
+     "heading_path": "CPG Sec. 490.200 Parametric Release of Parenteral Drug Products Terminally Sterilized by Moist Heat July 2012 > Guidance for FDA Staff1 > Sterility Assurance Program"
+    },
+    {
+     "ref": "¶21",
+     "text": "A direct load monitor that uses temperature measurements in the load (actual product or surrogate containers) to directly measure temperature in order to calculate delivered lethality to the product. Temperature measurements for this purpose should be with instruments that are accurate to within +/-0.5°C or better. (Note that a 0.5°C error results in an approximate 10% error in calculated lethality near 121°C.)6",
+     "list_item": true,
+     "heading_path": "CPG Sec. 490.200 Parametric Release of Parenteral Drug Products Terminally Sterilized by Moist Heat July 2012 > Guidance for FDA Staff1 > Sterility Assurance Program"
+    }
+   ]
+  },
+  {
+   "id": "fda-cpg-490-200-parametric-release.html:¶22-¶34",
+   "source": "fda-cpg-490-200-parametric-release.html",
+   "unit": "¶22-¶34",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "¶22",
+     "text": "A biological load monitor utilizes an actual bacterial spore population titrated to determine a minimum lethality exposure.7 It is possible to use a biological load monitor as a direct load monitor (in the product) or an indirect load monitor (in the chamber).",
+     "list_item": true,
+     "heading_path": "CPG Sec. 490.200 Parametric Release of Parenteral Drug Products Terminally Sterilized by Moist Heat July 2012 > Guidance for FDA Staff1 > Sterility Assurance Program"
+    },
+    {
+     "ref": "¶23",
+     "text": "In certain instances, a chemical load monitor might also be justified. A chemical load monitor is an indirect indicator that is calibrated such that it will identify inadequate cycles and will be able to integrate over time the major factors that are indicative of process lethality.8 Since a chemical load monitor does not provide a direct measurement of critical product attributes, extensive qualification and characterization of the proposed load monitor should be conducted to determine its capability and suitability for the parametric release program.",
+     "list_item": true,
+     "heading_path": "CPG Sec. 490.200 Parametric Release of Parenteral Drug Products Terminally Sterilized by Moist Heat July 2012 > Guidance for FDA Staff1 > Sterility Assurance Program"
+    },
+    {
+     "ref": "¶24",
+     "text": "When results of the use of a load monitor do not meet the established limits for lot release (including loss of the indicator), this should be considered a critical process parameter failure. When equipment malfunction prevents measurement of one or more critical cycle parameters, the load monitor cannot be used to evaluate cycle lethality (21 CFR 211.165(d) and (e) and 211.167).",
+     "heading_path": "CPG Sec. 490.200 Parametric Release of Parenteral Drug Products Terminally Sterilized by Moist Heat July 2012 > Guidance for FDA Staff1 > Sterility Assurance Program"
+    },
+    {
+     "context": "A validated container/closure system"
+    },
+    {
+     "ref": "¶25",
+     "text": "The integrity of each container/closure system should be validated to demonstrate that sterility can be maintained by the container closure system (21 CFR 211.94). The ability of the container closure system to maintain sterility throughout the product's intended shelf-life or dating period should be assessed by performing either a sterility test or a container closure integrity test.9",
+     "heading_path": "CPG Sec. 490.200 Parametric Release of Parenteral Drug Products Terminally Sterilized by Moist Heat July 2012 > Guidance for FDA Staff1 > Sterility Assurance Program"
+    },
+    {
+     "context": "An effective Quality System"
+    },
+    {
+     "ref": "¶26",
+     "text": "It is essential for a firm to establish a successful record of sterilization process control as part of its Quality System (21 CFR 211.113(b)). Production data for such an operation show that critical process parameters continue to be tightly controlled. Key parameters should also be monitored and appropriately controlled.",
+     "heading_path": "CPG Sec. 490.200 Parametric Release of Parenteral Drug Products Terminally Sterilized by Moist Heat July 2012 > Guidance for FDA Staff1 > Sterility Assurance Program"
+    },
+    {
+     "ref": "¶27",
+     "text": "As part of FDA's evaluation of the firm's Quality System, inspections should assess the firm's Quality Unit's review and approval duties, including the firm’s batch disposition procedures (21 CFR 211.22). In addition, inspections should determine if the CGMP controls implemented by a firm are adequate to ensure a robust program for parametric release of a terminally moist-heat sterilized parenteral drug product, including periodic data review to monitor for process drift (21 CFR 211.180(e) and ICH Q10).10",
+     "heading_path": "CPG Sec. 490.200 Parametric Release of Parenteral Drug Products Terminally Sterilized by Moist Heat July 2012 > Guidance for FDA Staff1 > Sterility Assurance Program"
+    },
+    {
+     "ref": "¶28",
+     "text": "In addition, the inspection should verify that the firm's Quality Unit ensures that deviations or discrepancies, whether related to critical or key parameters, load monitors, or container/closure system, are appropriately investigated, with effective corrective and preventive measures implemented (21 CFR 211.192). The firm's Quality Unit should ensure that any significant change in equipment or process requires reevaluation (qualification or verification) of the equipment or process under a change control program (21 CFR 211.68 and 211.100). In many cases, this reevaluation includes use of biological indicator challenges.",
+     "heading_path": "CPG Sec. 490.200 Parametric Release of Parenteral Drug Products Terminally Sterilized by Moist Heat July 2012 > Guidance for FDA Staff1 > Sterility Assurance Program"
+    },
+    {
+     "context": "Documentation of Compliance with Requirements and Specifications"
+    },
+    {
+     "ref": "¶29",
+     "text": "For drugs requiring application approval, the application is required to contain a description of the principles of the terminal sterilization process and related summary data.3 When FDA reviews this information in the application, it will assess the critical sterilization cycle parameters proposed by the applicant to ensure they are scientifically sound for achieving their goal. The application should identify the use of parametric release, in lieu of the sterility test, as the release method for a terminally moist-heat sterilized parenteral drug product.3 The inspection should verify conformance with the approved application.",
+     "heading_path": "CPG Sec. 490.200 Parametric Release of Parenteral Drug Products Terminally Sterilized by Moist Heat July 2012 > Guidance for FDA Staff1 > Documentation of Compliance with Requirements and Specifications"
+    },
+    {
+     "ref": "¶30",
+     "text": "When an investigator encounters a parametric release product that is not required to be the subject of an approved application, the investigator should conduct the inspection using the criteria listed in this CPG and the technical information provided in relevant FDA Guidance for Industry documents.3, 11",
+     "heading_path": "CPG Sec. 490.200 Parametric Release of Parenteral Drug Products Terminally Sterilized by Moist Heat July 2012 > Guidance for FDA Staff1 > Documentation of Compliance with Requirements and Specifications"
+    },
+    {
+     "ref": "¶31",
+     "text": "If a firm chooses to use parametric release, the firm should include the following information in appropriate manufacturing records (e.g., SOPs, batch record, or release specification sheet).",
+     "heading_path": "CPG Sec. 490.200 Parametric Release of Parenteral Drug Products Terminally Sterilized by Moist Heat July 2012 > Guidance for FDA Staff1 > Documentation of Compliance with Requirements and Specifications"
+    },
+    {
+     "ref": "¶32",
+     "text": "The statement, \"Meets the requirements for parametric release,\" should be used in lieu of a statement indicating that the product meets conventional sterility test requirements (e.g., USP) for batch release purposes.",
+     "list_item": true,
+     "heading_path": "CPG Sec. 490.200 Parametric Release of Parenteral Drug Products Terminally Sterilized by Moist Heat July 2012 > Guidance for FDA Staff1 > Documentation of Compliance with Requirements and Specifications"
+    },
+    {
+     "ref": "¶33",
+     "text": "A statement verifying that in the event that any critical process parameter fails to meet the established acceptance criteria, a sterility test cannot be used as an alternate test for lot release.",
+     "list_item": true,
+     "heading_path": "CPG Sec. 490.200 Parametric Release of Parenteral Drug Products Terminally Sterilized by Moist Heat July 2012 > Guidance for FDA Staff1 > Documentation of Compliance with Requirements and Specifications"
+    },
+    {
+     "ref": "¶34",
+     "text": "A statement committing to reject product lots that fail to meet any of the performance acceptance criteria (i.e., the established critical process parameters).",
+     "list_item": true,
+     "heading_path": "CPG Sec. 490.200 Parametric Release of Parenteral Drug Products Terminally Sterilized by Moist Heat July 2012 > Guidance for FDA Staff1 > Documentation of Compliance with Requirements and Specifications"
+    },
+    {
+     "context": "REGULATORY ACTION GUIDANCE"
+    }
+   ]
+  }
+ ]
+}

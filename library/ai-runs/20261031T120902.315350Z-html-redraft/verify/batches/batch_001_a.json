@@ -1,0 +1,128 @@
+{
+ "role": "a",
+ "instructions": "You are an auditor checking one checklist item against the FDA web page paragraph it claims to come from. You get\nthe unit's paragraphs (reference and exact text of the page; \"context\" entries are headings) and the item. Start from the ITEM:\nread it, then find in the cited paragraph what it covers.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the lead-in above a list\nitem (the paragraph ending \":\" above it). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph expects what the statement asks for (an instruction\n  to the investigator, \"Determine whether the firm validated ...\", expects the firm to have that practice), the statement\n  adds nothing and omits nothing of that obligation, the strength (a legal requirement: shall/must/required = mandatory;\n  should, FDA expects/recommends, an inspection point = recommended; may/acceptable = optional; a list item takes\n  its lead-in's) matches, and the text applies to every listed plant\n  type (INJ = sterile injectables: text limited to non-sterile products does not apply to\n  INJ; text limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+ "units": [
+  {
+   "unit": "Q4",
+   "paragraphs": [
+    {
+     "ref": "Q4",
+     "text": "Are there special manufacturing requirements for penicillin drugs?"
+    },
+    {
+     "ref": "Q4.1",
+     "text": "Yes, all penicillin finished pharmaceutical manufacturers, including repackers, are required by the CGMP regulations to establish a comprehensive control strategy designed to prevent cross-contamination of other drugs with penicillin. These requirements include:"
+    },
+    {
+     "ref": "Q4.2",
+     "text": "21 CFR 211.42(d): Separation of facility and equipment",
+     "list_item": true
+    },
+    {
+     "ref": "Q4.3",
+     "text": "21 CFR 211.46(d): Separate air handling systems (HVAC)",
+     "list_item": true
+    },
+    {
+     "ref": "Q4.4",
+     "text": "21 CFR 211.176: Test for traces of penicillin where possible exposure exists.",
+     "list_item": true
+    },
+    {
+     "ref": "Q4.5",
+     "text": "Penicillin active pharmaceutical ingredients (APIs) are also required to be manufactured under CGMP in accordance with section 501(a)(2)(B) of the Federal Food, Drug, and Cosmetic Act. FDA has published internationally harmonized guidance on the manufacture of APIs; see ICH guidance for industry, Q7A Good Manufacturing Practice Guidance for Active Pharmaceutical Ingredients. Chapter 4, section 4.4 of this guidance describes actions API manufacturers, including those that manufacture or package APIs or penicillin intermediates, should follow to ensure such material is contained and does not contaminate other drugs."
+    }
+   ]
+  },
+  {
+   "unit": "Q10",
+   "paragraphs": [
+    {
+     "ref": "Q10",
+     "text": "Can contamination of drug products with halogenated anisole compounds be detected?"
+    },
+    {
+     "ref": "Q10.1",
+     "text": "Although methods for detection exist and might be practical for periodic screening, FDA expects that manufacturers prevent such contamination through adherence to CGMP. A CGMP-compliant quality system will ensure that assurances are obtained from suppliers and that measures are taken to prevent exposure to problematic compounds. Manufacturers of finished pharmaceuticals are reminded that the CGMP regulations at 21 CFR 211.56(c) require written procedures for sanitation designed to prevent the contamination of equipment, components, drug product containers, closures, packaging, labeling materials, and drug products. Analogous recommendations for manufacturers of active pharmaceutical ingredients are included in internationally harmonized ICH guidance for industry Q7 Good Manufacturing Guidance for Active Pharmaceutical Ingredients (section 4.7)."
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "fda-cgmp-qa-buildings-facilities.html:Q4#1",
+   "unit": "Q4",
+   "hash": "2399db939129f4b8",
+   "item": {
+    "statement": "API manufacturers, including firms that manufacture or package APIs or penicillin intermediates, should take actions to keep penicillin material contained so that it does not contaminate other drugs.",
+    "quote": "Chapter 4, section 4.4 of this guidance describes actions API manufacturers, including those that manufacture or package APIs or penicillin intermediates, should follow to ensure such material is contained and does not contaminate other drugs.",
+    "clause_number": "Q4.5",
+    "strength": "recommended",
+    "plant_types": [
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-buildings-facilities.html:Q10#1",
+   "unit": "Q10",
+   "hash": "6c6b710582ed06fe",
+   "item": {
+    "statement": "Prevent contamination of drug products with halogenated anisole compounds by following CGMP, even though detection methods exist and might be practical for periodic screening.",
+    "quote": "Although methods for detection exist and might be practical for periodic screening, FDA expects that manufacturers prevent such contamination through adherence to CGMP.",
+    "clause_number": "Q10.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  }
+ ]
+}

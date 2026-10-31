@@ -1,0 +1,573 @@
+{
+ "instructions": "You read an FDA web page (a Q&A page on CGMP, a Guide to Inspections, an Inspection Technical Guide, a Compliance\nPolicy Guide or an alert to manufacturers) and list what it expects of a drug manufacturer. Each unit is given as\nits paragraphs, each with its reference (\"Q4.2\" on a Q&A page: question 4, answer paragraph 2; \"¶17\" elsewhere) and\nits exact text; \"context\" entries are headings or labels (not citable); \"list_item\" marks a list item, whose\nlead-in is the paragraph ending in \":\" above it. Your output is checked by software against that exact text and by\nindependent reviewers, so precision matters more than wording.\n\nList each separate expectation as its own item, so that together your items cover every expectation in the unit.\nOne expectation is one thing a manufacturer must, should or may do, with all its conditions, numbers and\nqualifiers; do not split one expectation across items. What counts:\n- what FDA says a firm must, should or may do (\"FDA expects firms to have written procedures ...\", \"manufacturers\n  should ...\", \"are required by the CGMP regulations to ...\");\n- in a Guide to Inspections or Inspection Technical Guide, what the investigator is told to check (\"Determine\n  whether the firm has validated ...\", \"Check that ...\", \"Review the ...\"): write the practice the firm is expected\n  to have (\"Validate ...\"), not the investigator's task. When the text only says what to look at (\"Examine the\n  design of equipment\") and states no expectation, write the expectation the text itself gives in the same\n  paragraph; if it gives none, put the sentence in not_applicable (\"inspection step without a stated expectation\").\nFor each item:\n- statement: the expectation in your own plain English words, as one checklist item a site could be audited\n  against. Do not copy more than a few words in a row. Keep every condition (\"where\", \"if\", \"unless\", \"when\",\n  \"except\") and every number. Do not add anything the text does not say. The statement itself must carry every\n  condition or qualifier of the lead-in above a list item. The statement is shown to customers: never cite a\n  regulation, section, question or paragraph number in it (\"21 CFR 211.42(d)\", \"Q4\", \"see above\"); say what is\n  required instead.\n- quote: the exact span of ONE paragraph's text that states the whole expectation, copied character for character\n  (matched against the page text by software; do not fix typos or change punctuation, keep footnote marks as\n  printed). A quote may continue into the paragraphs after it in the same unit, in order (e.g. a lead-in and its\n  list items), but must start in the cited paragraph.\n- clause_number: the reference of the paragraph the quote starts in, exactly as given (\"Q4.2\", \"¶17\").\n- strength: \"mandatory\" where the text states a legal requirement (shall / must / is required / may not, \"the\n  CGMP regulations require\"); \"recommended\" for should, \"FDA expects\", \"FDA recommends\", and for an inspection\n  point; \"optional\" for may / is acceptable. A list item without such a word takes its lead-in's.\n- plant_types: from OSD, LIQ, SEMI, INJ, API (INJ = sterile injectables); the plant scope given unless the text\n  narrows it. Text limited to non-sterile products does not apply to INJ; text limited to sterile products\n  (parenterals, aseptic processing, terminal sterilization) applies only to INJ (and API where in scope).\n- numbers: every number, limit, frequency or period in the quote, as written (not regulation references).\n- condition: the condition or trigger in a few words, \"\" if none. This field only repeats what the statement\n  already says.\n- topic: the sub-topic id from TOPICS the expectation belongs to.\n\nDo not narrow or widen a term. Where the text gives examples (\"such as ...\"), keep them as examples; where it\ngives a closed list, keep it closed.\n\nSentences that state no expectation for the manufacturer go in not_applicable: the question itself, background and\nhistory, definitions, descriptions of what happened at a firm, FDA's own actions or enforcement, statements of\npurpose or scope, references, an inspection step without a stated expectation. One entry per SENTENCE, each with\nthe paragraph reference, the sentence's first 8 or more words copied exactly, and the reason in a few words. A\nsentence with \"should\", \"must\", \"FDA expects\" or an instruction to the investigator needs an item or a\nnot_applicable entry.\n\nWrite the answers file named in your task: {\"answers\": [one object per unit with \"unit\" set to the unit's \"id\"\nexactly, \"items\" and \"not_applicable\"]}.\n",
+ "topics": [
+  "QS.PQS",
+  "QS.MGMT",
+  "QS.QRM",
+  "QS.PQR",
+  "QS.CHANGE",
+  "QS.DEV",
+  "QS.CAPA",
+  "PER.ORG",
+  "PER.KEY",
+  "PER.TRAIN",
+  "PER.HYG",
+  "PER.GOWN",
+  "PREM.DESIGN",
+  "PREM.PROD",
+  "PREM.STORE",
+  "PREM.QC",
+  "PREM.ANC",
+  "EQ.DESIGN",
+  "EQ.MAINT",
+  "EQ.CLEAN",
+  "EQ.CAL",
+  "DOC.SYS",
+  "DOC.SPEC",
+  "DOC.MFR",
+  "DOC.BMR",
+  "DOC.SOP",
+  "DOC.RET",
+  "MAT.SUPP",
+  "MAT.RECV",
+  "MAT.SAMP",
+  "MAT.STATUS",
+  "MAT.PACK",
+  "MAT.REJ",
+  "PROD.GEN",
+  "PROD.XCONT",
+  "PROD.IPC",
+  "PROD.YIELD",
+  "PROD.PACK",
+  "PROD.REWORK",
+  "QC.GEN",
+  "QC.SAMP",
+  "QC.TEST",
+  "QC.OOS",
+  "QC.STAB",
+  "QC.REF",
+  "QC.MICRO",
+  "VAL.PLAN",
+  "VAL.QUAL",
+  "VAL.PROC",
+  "VAL.CLEAN",
+  "VAL.METH",
+  "CSV.VAL",
+  "CSV.ACCESS",
+  "CSV.AUDIT",
+  "CSV.ESIG",
+  "CSV.DI",
+  "UTIL.WATER",
+  "UTIL.HVAC",
+  "UTIL.GAS",
+  "CCS.STRAT",
+  "CCS.EM",
+  "CCS.CLEAN",
+  "CCS.PEST",
+  "STER.GRADE",
+  "STER.ASEPT",
+  "STER.APS",
+  "STER.STERIL",
+  "STER.FILT",
+  "STER.CCI",
+  "STER.LYO",
+  "API.START",
+  "API.PROC",
+  "API.IMP",
+  "API.SOLV",
+  "OUT.CONTRACT",
+  "OUT.AGREE",
+  "CMP.COMPL",
+  "CMP.RECALL",
+  "CMP.REPORT",
+  "SI.PROG",
+  "SI.TEAM",
+  "SI.REPORT",
+  "SI.FOLLOW",
+  "DIST.STORE",
+  "DIST.TRANS",
+  "DIST.RETURN",
+  "REL.QP",
+  "REL.REVIEW"
+ ],
+ "schema": {
+  "type": "object",
+  "required": [
+   "unit",
+   "items",
+   "not_applicable"
+  ],
+  "properties": {
+   "unit": {
+    "type": "string"
+   },
+   "items": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "statement",
+      "quote",
+      "clause_number",
+      "strength",
+      "plant_types",
+      "numbers",
+      "condition",
+      "topic"
+     ],
+     "properties": {
+      "statement": {
+       "type": "string"
+      },
+      "quote": {
+       "type": "string"
+      },
+      "clause_number": {
+       "type": "string"
+      },
+      "strength": {
+       "enum": [
+        "mandatory",
+        "recommended",
+        "optional"
+       ]
+      },
+      "plant_types": {
+       "type": "array",
+       "items": {
+        "enum": [
+         "OSD",
+         "LIQ",
+         "SEMI",
+         "INJ",
+         "API"
+        ]
+       }
+      },
+      "numbers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "condition": {
+       "type": "string"
+      },
+      "topic": {
+       "type": "string"
+      }
+     }
+    }
+   },
+   "not_applicable": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "clause_number",
+      "text",
+      "reason"
+     ],
+     "properties": {
+      "clause_number": {
+       "type": "string"
+      },
+      "text": {
+       "type": "string"
+      },
+      "reason": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  }
+ },
+ "units": [
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q8",
+   "source": "fda-cgmp-qa-components-containers-closures.html",
+   "unit": "Q8",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q8",
+     "text": "What manufacturing contamination risks are presented by the different pathogenic agents?"
+    },
+    {
+     "ref": "Q8.1",
+     "text": "Manufacturing contamination risks presented by the different pathogenic agents can include the following: Vegetative Bacteria Vegetative bacteria are actively growing and reproducing bacteria. If there are no steps in the manufacturing process to kill vegetative bacteria, they can proliferate and accumulate during drug ingredient processing. Toxin-Producing Microorganisms Several genera and species of microorganisms are capable of producing toxins. Microbial toxins can be divided into two general groups: exotoxins and endotoxins. An exotoxin is a soluble protein excreted by a microorganism, including bacteria, fungi, algae, and protozoa. Exotoxins can include heat-stable toxins that remain active at temperatures as high as 100°C or heat-labile toxins that are readily inactivated by heat treatment. Exotoxins, especially heat-stable exotoxins, can remain in the ingredient throughout the manufacturing process and adversely affect patient health. An endotoxin is a component of the outer membrane of a Gram-negative bacterium. Unlike exotoxins, endotoxins are only released when the organisms are disrupted or destroyed. Endotoxins are heat- and chemical-resistant and, if injected, may induce reactions including febrile effect, hypotension, and shock. Spore-Forming Bacteria Spore-forming bacteria can be difficult to eliminate from the manufacturing environment because the spores may be extremely resistant to heat, freezing, extreme pH, desiccation, and chemicals. Spore-forming bacteria can produce exotoxins and can remain dormant without nutrients for extended periods. Spores can be resistant to harsh manufacturing processes that will kill vegetative bacteria. When dormant spores are reintroduced into an acceptable germination environment they can become active reproductive vegetative cells. Once spores germinate and begin reproducing as vegetative cells, production of exotoxins can occur in a short period of time. Fungi/Molds Molds are a subset of fungi that reproduce by releasing spores into the air which, if they land on a moist nutrient source or animal tissue, can germinate. Some species of molds produce toxic byproducts called mycotoxins. Mycotoxins can accumulate in animal tissues, rendering the affected organs/tissues unfit for use as a source of starting material for the production of animal-derived drug ingredients. It is important to prevent molds from growing in drug ingredients and when feasible and valuable remove all molds that may contaminate such ingredients. Yeasts, another type of fungi, can also be pathogenic or cause spoilage of an ingredient. Viruses Although a virus can only multiply within its host, the inadvertent use of material from virus-infected animals or contact of the drug ingredient with virus-contaminated surfaces can transmit viral particles to patients. Virus survival rates differ based on virus type and variables associated with surface materials that become contaminated. On hard, nonporous surfaces, some virus species can survive and remain transmissible for days or weeks. The probability of an animal virus contaminating an animal-derived ingredient will depend on the viral load of the raw material (e.g., tissue, glands, blood) and the viral clearance capability of the drug ingredient manufacturing process. Both of these factors should be considered when assessing the risk of viral contamination of the ingredient. Internal Animal Parasites Transmission of internal parasites occurs from host to host through consumption of contaminated food or water. Parasites live and reproduce within the tissues and organs of infected hosts and are often excreted in feces. Government inspectors are trained to look for internal parasites and prevent unhealthy animals from entering the food supply. Animals deemed fit for food consumption are inspected and certified as healthy. Prions Protection from prion contamination includes obtaining bovine meat and meat byproducts from animals not infected with bovine spongiform encephalopathy and protecting against contamination of product with high-risk tissues, especially brain and spinal cord tissue. Drug manufacturers importing bovine material into the United States should be familiar with and adhere to all import eligibility requirements and government regulations pertaining to food and drugs. It is important that farms, slaughterhouses, and renderers observe government regulations prohibiting the use of unhealthy animals in the food supply. Animals deemed fit for food consumption are normally inspected and certified as healthy in many countries."
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q9",
+   "source": "fda-cgmp-qa-components-containers-closures.html",
+   "unit": "Q9",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q9",
+     "text": "What are some ways to minimize pathogenic agent contamination in incoming animal-derived raw material?"
+    },
+    {
+     "ref": "Q9.1",
+     "text": "The drug component and finished product CGMP guidances and regulations emphasize prevention of problems and avoidance of contamination rather than final testing or examination alone. In other words, control strategies that prevent contamination are central to CGMP, while control strategies based on testing alone do not comply with CGMP regulations. Raw materials from animals can have microbial pathogen health risks based on country of origin, LPE processing, transportation, and manufacturing processing. Under the right circumstances, raw material from animals can provide a suitable (e.g., nutrient-rich) environment for bacteria and mold to proliferate, or for viruses and other pathogenic agents to remain infective. If undetected contaminated raw material enters the manufacturing process, it can remain pathogenic in the product and a hazard to the consumer. The manufacturing conditions used in most ingredient manufacturing processes are often insufficient to eliminate all pathogenic agents from the ingredient. Methods of minimizing contamination of raw material with pathogenic agents may include the following:"
+    },
+    {
+     "ref": "Q9.2",
+     "text": "Animal source",
+     "list_item": true
+    },
+    {
+     "ref": "Q9.3",
+     "text": "When animal-derived material is used, it is important that it be derived from healthy, disease-free animals. The occurrence of pathogens can vary greatly among different animal species. Ingredient manufacturers should understand the pathogenic risks associated with different animal species and with different organs, glands, or tissues within species. Drug ingredient manufacturers should be aware that even healthy animals can be reservoirs for pathogenic agents and improper handling can spread contamination. If improperly handled, microbial contamination can transfer to uncontaminated tissues and cause contamination."
+    },
+    {
+     "ref": "Q9.4",
+     "text": "Ensuring the health of U.S. livestock is the responsibility of many Federal agencies, most of which are part of the U.S. Department of Agriculture (USDA). Animal-health and food-safety regulations are detailed in titles 9 and 21 of the Code of Federal Regulations. Animal health authorities in each State develop regulations that are consistent with the Federal agencies and are responsible for monitoring and controlling diseases in the State's domestic livestock and poultry. State inspectors ensure compliance by companies with individual State standards as well as with Federal meat and poultry inspection statutes. States assist in controlling diseases through inspections, testing, vaccinations, treatments, quarantines, and other activities."
+    },
+    {
+     "ref": "Q9.5",
+     "text": "Awareness of the conditions of control and monitoring of source animals will aid in determining which animals and animal parts are appropriate for drug product manufacturing."
+    },
+    {
+     "ref": "Q9.6",
+     "text": "LPE",
+     "list_item": true
+    },
+    {
+     "ref": "Q9.7",
+     "text": "Ingredient manufacturers should consider auditing the LPEs supplying raw materials to them and ensure their compliance with all Federal and State government regulations. It is recommended that manufacturers develop standard operating procedures and define sanitation requirements of raw materials immediately after butchering, including, for example, the following:"
+    },
+    {
+     "ref": "Q9.8",
+     "text": "Chilling requirements, if indicated, including temperature ranges and how soon after butchering chilling should begin",
+     "list_item": true
+    },
+    {
+     "ref": "Q9.9",
+     "text": "Chemical preservation methods, if indicated, including types and concentrations of chemical preservatives used",
+     "list_item": true
+    },
+    {
+     "ref": "Q9.10",
+     "text": "Storage processes, including sanitization of containers and container type/material (e.g., stainless steel vs. food grade plastics)",
+     "list_item": true
+    },
+    {
+     "ref": "Q9.11",
+     "text": "Transportation criteria, including sanitization of containers, if different from storage and temperature ranges",
+     "list_item": true
+    },
+    {
+     "ref": "Q9.12",
+     "text": "The overall contamination of carcasses with pathogens depends on not only the prevalence and numbers of the pathogens on the hair, skin, and in the intestinal tract of the animal, but is significantly affected by the degree of cross-contamination occurring from these sources during slaughter and processing (see USDA references, below, for additional information). FDA expects that manufacturers will establish appropriate specifications for bioburden in their in-coming raw materials. References:"
+    },
+    {
+     "ref": "Q9.13",
+     "text": "USDA Animal and Plant Health Inspection Service",
+     "list_item": true
+    },
+    {
+     "ref": "Q9.14",
+     "text": "USDA Animal and Plant Health Inspection Service, Import and Export",
+     "list_item": true
+    },
+    {
+     "ref": "Q9.15",
+     "text": "USDA Food Safety and Inspection Service, Parasites and Foodborne Illness Fact Sheet",
+     "list_item": true
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q10",
+   "source": "fda-cgmp-qa-components-containers-closures.html",
+   "unit": "Q10",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q10",
+     "text": "Are there control measures for minimizing pathogenic agent contamination in animal-derived drug ingredient manufacturing facilities? Yes, control measures may include the following:"
+    },
+    {
+     "ref": "Q10.1",
+     "text": "Process control",
+     "list_item": true
+    },
+    {
+     "ref": "Q10.2",
+     "text": "Holding and processing times for animal-derived material should be minimized to reduce the likelihood of microbial proliferation. The process qualification studies should include microbial sampling at multiple time points to evaluate the effects of time, temperature, and processing conditions on microbial growth. Routine microbial identification will provide valuable information regarding the types of organisms present in incoming material and throughout the manufacturing process. Processing conditions can then be adjusted to help control the number and types of organisms present during the manufacturing process. Spores and many bacteria can be removed by filtration when filtration or filtration cascade systems are possible. Usually filters with a pore size rating of 0.45 micron or smaller will remove spores and many bacteria from a preparation. Viruses and many toxins are heat labile so a heat treatment should be considered early in process development. Many purification and concentration systems may have antimicrobial effects. The timing and sequence location in the process along with appropriate holding and processing times may serve to optimize the antimicrobial effects of the processes."
+    },
+    {
+     "ref": "Q10.3",
+     "text": "Development of process monitoring tests and acceptance criteria should be established during the process development stage."
+    },
+    {
+     "ref": "Q10.4",
+     "text": "Facility and equipment controls",
+     "list_item": true
+    },
+    {
+     "ref": "Q10.5",
+     "text": "Facilities can also be reservoirs for pathogenic agents. Maintaining a facility within CGMP should include but not be limited to:"
+    },
+    {
+     "ref": "Q10.6",
+     "text": "Having adequately trained staff",
+     "list_item": true
+    },
+    {
+     "ref": "Q10.7",
+     "text": "Using suitable quality water during manufacturing",
+     "list_item": true
+    },
+    {
+     "ref": "Q10.8",
+     "text": "Having a facility design that minimizes the risk of cross-contamination",
+     "list_item": true
+    },
+    {
+     "ref": "Q10.9",
+     "text": "Providing for proper storage of the ingredient",
+     "list_item": true
+    },
+    {
+     "ref": "Q10.10",
+     "text": "Cleaning procedures should include cleaning of facilities and equipment that ensures the removal of all raw materials between batches. Designing an effective cleaning program involves setting specific standards, understanding the facility’s microbial environmental isolates, and selecting the right disinfecting agents to inactivate isolates that may be in the product or in the environment. Ingredient manufacturers should use sporicidal agents at appropriate intervals in the cleaning schedule to destroy bacterial and fungal spores. References:"
+    },
+    {
+     "ref": "Q10.11",
+     "text": "FDA Guidance for Industry, 2001, ICH Q7 Good Manufacturing Practice Guidance for Active Pharmaceutical Ingredients",
+     "list_item": true
+    },
+    {
+     "ref": "Q10.12",
+     "text": "United States Pharmacopeia (USP) General Information Chapter <1072> Disinfectants and Antiseptics (USP33–NF 28 Reissue, 2010)",
+     "list_item": true
+    },
+    {
+     "ref": "Q10.13",
+     "text": "Wiley, JM, L Sherwood, and CJ Woolverton, 2008, Prescott, Harley and Klein's Microbiology, Boston: McGraw-Hill Higher Education.",
+     "list_item": true
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q11",
+   "source": "fda-cgmp-qa-components-containers-closures.html",
+   "unit": "Q11",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q11",
+     "text": "What should drug manufacturers do to prevent formation of glass lamellae (glass fragments) in injectable drugs filled in small-volume glass vials?"
+    },
+    {
+     "ref": "Q11.1",
+     "text": "Under certain conditions, glass vials can shed thin, flexible fragments called glass lamellae (Lachman, Lieberman, et al. 1986; Iacocca, Toltl, et al. 2010). These lamellae are shed from the interior surface of the glass container directly into the drug and are difficult to detect by visual inspection. Several drugs have been recalled due to this problem: epoetin alfa, methotrexate, hyaluronidase recombinant, and fluorouracil (see Enforcement Reports on FDA's Web Site). No adverse events to date have been reported nor can be directly attributed to this phenomenon. However, there is the potential for drugs administered intravenously that contain these fragments to cause embolic, thrombotic, and other vascular events (e.g., phlebitis); and, when administered subcutaneously, to lead to development of foreign body granuloma, local injection site reactions, and increased immunogenicity (Singh, Afonina, et al. 2010). The following conditions have been associated with a higher incidence of the formation of glass lamellae:"
+    },
+    {
+     "ref": "Q11.2",
+     "text": "Glass vials manufactured by a tubing process (and thus manufactured under higher heat). These vials are less resistant than molded glass vials and may shed lamellae more easily (Ennis, Pritchard, et al. 2001). The processing conditions used to manufacture glass vials can be designed to mitigate the potential for later delamination.",
+     "list_item": true
+    },
+    {
+     "ref": "Q11.3",
+     "text": "Drug solutions formulated at high pH (alkaline) and with certain buffers. Common buffers associated with lamellae formation include citrate and tartrate (Sacha, et al. 2010).",
+     "list_item": true
+    },
+    {
+     "ref": "Q11.4",
+     "text": "Length of time the drug product is exposed to the inner surface of the container. The time duration has a direct correlation to the potential for glass lamellae formation to occur during the product shelf life (Lachman, Lieberman, et al. 1986).",
+     "list_item": true
+    },
+    {
+     "ref": "Q11.5",
+     "text": "Drug products with room temperature storage requirements. Drugs stored at room temperature have a greater chance of glass lamellae formation than do products stored at colder temperatures (Iacocca and Allgeier 2007).",
+     "list_item": true
+    },
+    {
+     "ref": "Q11.6",
+     "text": "Terminal sterilization has a significant effect on glass stability (Iacocca, Toltl, et al. 2010).",
+     "list_item": true
+    },
+    {
+     "ref": "Q11.7",
+     "text": "The referenced literature, below, includes recommended actions to help prevent the formation of glass lamellae. For example, for products “at risk,” the vial surface alkalinity can be minimized by proper selection of glass composition (e.g., highly resistant, nonalkaline earth borosilicate glass), appropriate selection and qualification of vendors, and proper quality control of the incoming vials. Accordingly, FDA advises drug manufacturers of products to reexamine their supplier quality management program with the glass vial manufacturers to ensure that this phenomenon is not occurring. Further, the Agency reminds finished drug product manufacturers that CGMP regulations require that drug containers not be reactive or additive so as to alter the safety or quality of the drug. See 21 CFR 211.94; Rx-360’s Web site, which has commented on the issue of delamination; and deviation reporting regulations for field alert reports (21 CFR 314.81) and biological product deviation reports (21 CFR 600.14). References:"
+    },
+    {
+     "ref": "Q11.8",
+     "text": "Lachman, L, H Lieberman, and J Kanig, 1986, The Theory and Practice of Industrial Pharmacy, 3rd ed., Philadelphia: Lippincott Williams & Wilkins, 645–649, 796–798",
+     "list_item": true
+    },
+    {
+     "ref": "Q11.9",
+     "text": "Iacocca, RG, N Toltl, et al., 2010, Factors Affecting the Chemical Durability of Glass Used in the Pharmaceutical Industry, AAPS Pharm Sci Tech, DOI:10.1208/s12249-010-9506-9",
+     "list_item": true
+    },
+    {
+     "ref": "Q11.10",
+     "text": "Singh SK, N Afonina, et al., 2010, An Industry Perspective on the Monitoring of Subvisible Particles as a Quality Attribute for Protein Therapeutics, J Pharm Sci, 99(8):3302–3321",
+     "list_item": true
+    },
+    {
+     "ref": "Q11.11",
+     "text": "Ennis RD, R Pritchard, et al., 2001, Glass Vials for Small Volume Parenterals: Influence of Drug and Manufacturing Process on Glass Delamination, Pharm Dev and Tech, 6(3):393–405",
+     "list_item": true
+    },
+    {
+     "ref": "Q11.12",
+     "text": "Sacha, G., et al., 2010, Practical Fundamentals of Glass, Rubber, and Plastic Sterile Packaging Systems, Pharm Dev and Tech, 15(1):6–34",
+     "list_item": true
+    },
+    {
+     "ref": "Q11.13",
+     "text": "Iacocca, RG, and M Allgeier, 2007, Corrosive Attack of Glass by a Pharmaceutical Compound, J Mater Sci, 42:801–811",
+     "list_item": true
+    },
+    {
+     "ref": "Q11.14",
+     "text": "21 CFR 211.94: Drug product containers and closures",
+     "list_item": true
+    },
+    {
+     "ref": "Q11.15",
+     "text": "21 CFR 314.81: Other postmarketing reports",
+     "list_item": true
+    },
+    {
+     "ref": "Q11.16",
+     "text": "21 CFR 600.14: Reporting of biological product deviations by licensed manufacturers",
+     "list_item": true
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q12",
+   "source": "fda-cgmp-qa-components-containers-closures.html",
+   "unit": "Q12",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q12",
+     "text": "Are there any special processing or handling concerns for flexible intravenous (IV) solution bags?"
+    },
+    {
+     "ref": "Q12.1",
+     "text": "Yes, due to their soft and flexible design, IV solution bags can be easily damaged if not handled properly during processing and labeling. A damaged IV solution bag may not protect the contents from exposure to microbiological contamination as intended. Detection of a damaged IV solution bag by leaks or by examination of the bag may not be possible. In fact, a microscopic defect may not be evident until microbiological contamination becomes visible, which is too late. Prevention of this potentially serious problem is important. FDA is aware of product recalls where IV products in flexible plastic bags were exposed to rough surfaces or sharp objects during labeling, creating microscopic punctures or weakening the bag surfaces. When a compromised IV solution bag is filled with liquid and expands as intended, holes may form at the weak points, leading to a loss of sterility or assurance of sterility."
+    },
+    {
+     "ref": "Q12.2",
+     "text": "Manufacturers are reminded that drug product containers and closures must be handled and stored in a manner to prevent contamination (see 21 CFR 211.80(b) and also 211.94)."
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q13",
+   "source": "fda-cgmp-qa-components-containers-closures.html",
+   "unit": "Q13",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q13",
+     "text": "What can IV drug manufacturers do to help prevent the loss of sterility due to compromised IV solution bag integrity during labeling?"
+    },
+    {
+     "ref": "Q13.1",
+     "text": "The risk of loss of sterility during labeling can be reduced through the use of nonimpression printing devices for labeling. If a manufacturer uses labeling equipment to apply a label on an IV solution bag and that labeling equipment makes an impression on the IV bag, procedures should be in place to inspect the labeling equipment regularly, particularly after any maintenance is performed. Manufacturing equipment must not have any rough or sharp surfaces that will create punctures or areas of weakness in the IV solution bags. Prevention is important: damaged IV bags may elude detection by standard examinations and tests, including checks for leaks. Manufacturers are reminded that equipment maintenance and cleaning must be appropriate to prevent malfunctions or contamination that would alter the quality or purity of a drug product (see 21 CFR 211.67). Additional information: FDA Guidances"
+    },
+    {
+     "ref": "Q13.2",
+     "text": "Sterile Drug Products Produced by Aseptic Processing—Current Good Manufacturing Practice",
+     "list_item": true
+    },
+    {
+     "ref": "Q13.3",
+     "text": "Container Closure Systems for Packaging Human Drugs and Biologics",
+     "list_item": true
+    },
+    {
+     "ref": "Q13.4",
+     "text": "Recall announcements FDA Warning Letters Date: 7/5/2011"
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q14",
+   "source": "fda-cgmp-qa-components-containers-closures.html",
+   "unit": "Q14",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q14",
+     "text": "Must each batch of a United States Pharmacopeia (USP)-grade API be tested using the analytical procedures specified in the USP monograph?"
+    },
+    {
+     "ref": "Q14.1",
+     "text": "No; however, in the event of a dispute, the compendial method is considered conclusive (see USP reference, below). Section 201(g) of the FD&C Act includes “articles intended for use as a component” of a finished drug product, including APIs (or drug substances), under its definition of a drug, and section 501(b) requires a drug recognized in USP to meet the standards of strength, quality, and purity in the official monograph or to be clearly labeled to designate how it differs from USP standards. Although each batch of a compendial article must conform to the monograph specifications/acceptance criteria, the analytical procedures used to show conformance may differ from official USP methods if the alternative methods are fully validated, suitable for use, and give equivalent or better results than the official USP method. All APIs must also be manufactured in compliance with CGMP as stated in section 501(a)(2)(B) of the FD&C Act. References:"
+    },
+    {
+     "ref": "Q14.2",
+     "text": "FD&C Act Chapter V: Drugs and Devices",
+     "list_item": true
+    },
+    {
+     "ref": "Q14.3",
+     "text": "USP 38–National Formulary (NF) 33 (2015) General Notices, Section 6.30",
+     "list_item": true
+    }
+   ]
+  }
+ ]
+}

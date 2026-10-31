@@ -1,0 +1,448 @@
+{
+ "role": "b",
+ "instructions": "You are a second, independent auditor. Check one checklist item against the FDA web page paragraph it claims to come from. You get\nthe unit's paragraphs (reference and exact text of the page; \"context\" entries are headings) and the item. Start from the TEXT:\nread the cited paragraph, the paragraphs its quote runs into, and its lead-in fully, then compare the item.\n\nThe item must state one whole obligation of the cited paragraph. A condition, number, frequency or qualifier of\nthe same obligation left out of the item counts as omitted, including a condition in the lead-in above a list\nitem (the paragraph ending \":\" above it). Judge only what\nthe statement's own words say: do not read the text back into the item. The condition field is a label, not part\nof the statement: a condition or qualifier that appears only there is omitted from the statement.\n\nAnswer strictly:\n- quote_as_printed: is the quote in the cited paragraph's text exactly (true/false)?\n- verdict: \"correct\" only if the quote is exact, the paragraph expects what the statement asks for (an instruction\n  to the investigator, \"Determine whether the firm validated ...\", expects the firm to have that practice), the statement\n  adds nothing and omits nothing of that obligation, the strength (a legal requirement: shall/must/required = mandatory;\n  should, FDA expects/recommends, an inspection point = recommended; may/acceptable = optional; a list item takes\n  its lead-in's) matches, and the text applies to every listed plant\n  type (INJ = sterile injectables: text limited to non-sterile products does not apply to\n  INJ; text limited to sterile products applies only to INJ and API); otherwise \"incorrect\".\n- reason: one or two sentences.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+ "units": [
+  {
+   "unit": "Q7",
+   "paragraphs": [
+    {
+     "ref": "Q7",
+     "text": "In 2004, FDA issued a guidance entitled PAT - A Framework for Innovative Pharmaceutical Development, Manufacturing, and Quality Assurance that encouraged industry to modernize manufacturing through enhancements in process control. How can I implement PAT (process analytical technology)?"
+    },
+    {
+     "ref": "Q7.1",
+     "text": "The objective of FDA's PAT program is to facilitate adoption of PAT. In our 2004 guidance, we discuss FDA's collaborative approach to promote industry uptake of new and beneficial technologies that modernize manufacturing operations and enhance process control. FDA recognizes that firms should be encouraged to promptly implement new systems that improve assurance of quality and process efficiency. Accordingly, our approach to PAT implementation is risk based and includes multiple options:"
+    },
+    {
+     "ref": "Q7.2",
+     "text": "(1) PAT can be implemented under the facility's own quality system. CGMP inspections by a PAT-certified investigator can precede or follow PAT implementation."
+    },
+    {
+     "ref": "Q7.3",
+     "text": "(2) As another quality system implementation option, FDA invites manufacturers to request a preoperational review of their PAT manufacturing facility and process (see ORA Field Management Directive No.135)."
+    },
+    {
+     "ref": "Q7.4",
+     "text": "(3) A supplement (Changes Being Effected (CBE), CBE-30, or Prior Approval Supplement (PAS)) can be submitted to the Agency prior to implementation, and, if necessary, an inspection can be performed by a PAT-certified investigator before implementation. This option should be used, for example, when an end product testing specification established in the application will be changed."
+    },
+    {
+     "ref": "Q7.5",
+     "text": "(4) A comparability protocol can be submitted to the Agency outlining PAT research, validation and implementation strategies, and time lines. Following collaborative review of the general strategy outlined in the comparability protocol, the regulatory pathway can include implementation under the facility's own quality system, a preoperational review, CGMP inspections (either before or after PAT implementation), a combination of these, or another flexible approach."
+    },
+    {
+     "ref": "Q7.6",
+     "text": "Manufacturers should evaluate and discuss with the Agency the most appropriate option for PAT implementation (see questions 8 and 9, below)."
+    }
+   ]
+  },
+  {
+   "unit": "Q13",
+   "paragraphs": [
+    {
+     "ref": "Q13",
+     "text": "How can manufacturers assess and address the risk of microbiological contamination of topical antiseptics?"
+    },
+    {
+     "ref": "Q13.1",
+     "text": "Because there are potentially many different root causes of product contamination by microorganisms, it is imperative that manufacturers perform a manufacturing risk assessment to understand manufacturing failure modes and implement prevention measures."
+    },
+    {
+     "ref": "Q13.2",
+     "text": "In addition, any risk assessment approach should be informed by an understanding of the microbial contamination vulnerabilities of the concerned product.>For example, some product considerations for manufacturers include, but are not limited to:"
+    },
+    {
+     "ref": "Q13.3",
+     "text": "Determine the types of microbes that might survive or thrive in your products. Provide additional controls and testing based on the output of the risk assessment to ensure product quality.",
+     "list_item": true
+    },
+    {
+     "ref": "Q13.4",
+     "text": "Ensure that your microbial recovery methods are capable of detecting the types of microbes that may affect product quality.",
+     "list_item": true
+    },
+    {
+     "ref": "Q13.5",
+     "text": "Evaluate risk of contamination from components, including during component production, storage, or due to the intrinsic risk from source materials. Consider all possible sources of microbial contamination, including the following:",
+     "list_item": true
+    },
+    {
+     "ref": "Q13.6",
+     "text": "Components or products stored in open bins can be at risk for contamination by spore-forming microbes, such as Bacillus cereus, as well as by Serratia species and other worrisome airborne microbes (see the FDA news release and Morbidity and Mortality Weekly Report, referenced below). Manufacturing areas exposed to windy or poor HVAC conditions may increase the potential for this environmental contamination risk.",
+     "list_item": true
+    },
+    {
+     "ref": "Q13.7",
+     "text": "Some materials, especially from natural sources, may have high or objectionable intrinsic bioburden.",
+     "list_item": true
+    },
+    {
+     "ref": "Q13.8",
+     "text": "Water quality can pose a significant risk, as most antiseptics include water as a key ingredient. Contaminated purified water has been the root cause of multiple recalls of antiseptics, including instances of antiseptics contaminated with Burkholderia (previously Pseudomonas) cepacia, an opportunistic pathogen.",
+     "list_item": true
+    },
+    {
+     "ref": "Q13.9",
+     "text": "Unsanitary practices or sources.",
+     "list_item": true
+    },
+    {
+     "ref": "Q13.10",
+     "text": "When manufacturing in areas with high humidity, molds can be of special concern.",
+     "list_item": true
+    }
+   ]
+  },
+  {
+   "unit": "Q14",
+   "paragraphs": [
+    {
+     "ref": "Q14",
+     "text": "Can Leptospira species penetrate sterilizing-grade filters? If so, what should manufacturers keep in mind in their ongoing lifecycle risk management efforts to ensure microbial control?"
+    },
+    {
+     "ref": "Q14.1",
+     "text": "FDA is aware of a report of Leptospira licerasiae contamination in cell cultures (see Chen, Bergenvin, et al. 2012). There is no indication that this bacterium ultimately contaminated either the finished drug substance or drug product. This bacterium has been found to pass through 0.1 µm pore size rated sterilizing-grade membrane filters. While this specific species was the identified contaminant in this case, other Leptospira species also are capable of passing through 0.1 µm pore size rated filters (see Faine 1982). Compendial microbiological test methods typically used in association with upstream biotechnology and pharmaceutical production are not capable of detecting this type of bacteria. Whether this apparently rare contamination risk may be more widespread is unknown, and we are sharing this information so that manufacturers can consider whether this hazard may be relevant to their operations."
+    },
+    {
+     "ref": "Q14.2",
+     "text": "Leptospira are Gram-negative aerobic spirochetes that are flexible, highly motile, and spiral-shaped with internal flagella. The bacteria measure 1μm in diameter and 10-20 μm in length. Leptospira are obligate aerobes that use oxygen as the electron receptor and long-chain fatty acids as a major source of energy. While some of the Leptospira are harmless fresh-water saprophytes, other species are pathogenic and can cause leptosporosis, a significant disease in humans and animals (Ricaldi, Fouts, et al. 2012; Matthias, Ricaldi, et al. 2008; Bharti, Nally, et al. 2003). Based on current information, Leptospira contamination does not appear to occur frequently, and purification steps that follow cell culture in a typical biotechnology operation would be expected to prevent carryover to the finished drug substance.Testing of bulk drug substances produced in the reported cases did not detect the Leptospira species, and no evidence of deleterious effects on in-process product were observed in the known case study. However, we are providing this communication to alert manufacturers that these types of bacteria can potentially:"
+    },
+    {
+     "ref": "Q14.3",
+     "text": "Penetrate sterilizing-grade membrane filters",
+     "list_item": true
+    },
+    {
+     "ref": "Q14.4",
+     "text": "Be present in the manufacturing site environment",
+     "list_item": true
+    },
+    {
+     "ref": "Q14.5",
+     "text": "Impact in-process production (e.g., production yields, impurity levels, process performance)",
+     "list_item": true
+    },
+    {
+     "ref": "Q14.6",
+     "text": "Go undetected due to the limitations of current compendial bioburden tests in detecting this microbial genus",
+     "list_item": true
+    },
+    {
+     "ref": "Q14.7",
+     "text": "As a general principle, manufacturers should use sound risk management and be aware of unusual microbiota reported in the literature that may impact their manufacturing processes (e.g., cell culture biotechnology, conventional sterile drug manufacturing). Manufacturers should assess their operations, be aware of potential risks, and apply appropriate risk management based on an understanding of possible or emerging contamination risks (see section 18.3 in ICH guidance for industry Q7 Good Manufacturing Practice Guidance for Active Pharmaceutical Ingredients). As appropriate, preventive measures should be implemented during the product and process lifecycle. To illustrate, if leptospiral contamination is considered possible, or has occurred, risk mitigation procedures and practices for this microorganism should include at least the following:"
+    },
+    {
+     "ref": "Q14.8",
+     "text": "Review of available published articles from the scientific literature and technical reports by related industry organizations that may provide further understanding on how to mitigate this contamination hazard.",
+     "list_item": true
+    },
+    {
+     "ref": "Q14.9",
+     "text": "Use of molecular or nonconventional microbial monitoring methods at appropriate intervals to detect microbial flora that may exist in processing steps or in the immediate environment, but are not readily detected by current routine methods. Such expanded testing should be used to modify the strategy (e.g., timing, frequency, types of tests) of detection and control in the event of newly identified risk posed by the viable, but not easily cultured, microorganism."
+    },
+    {
+     "ref": "Q14.10",
+     "text": "Examples include:"
+    },
+    {
+     "ref": "Q14.11",
+     "text": "Use of specialized media such as Ellinghausen McCullough Johnson Harris (EMJH) medium (Ellinghausen and McCullough 1965) or other suitable media (Rule and Alexander 1986). It should be noted that these bacteria typically grow very slowly.",
+     "list_item": true
+    },
+    {
+     "ref": "Q14.12",
+     "text": "Use of validated polymerase chain reaction (PCR) methods (e.g., as an investigative tool) for rapid screening and detection of spirochete bacteria.",
+     "list_item": true
+    },
+    {
+     "ref": "Q14.13",
+     "text": "Consideration of special stain techniques or other means to identify the presence of Leptospira (Frank and Kohn 1973).",
+     "list_item": true
+    },
+    {
+     "ref": "Q14.14",
+     "text": "Use of conventional approaches. Firms should continue to properly employ basic, standard microbiology laboratory practices to detect contamination. For example, the laboratory should ensure that microscopic examination is part of its routine cell culture process control program, as it provides an important means of detecting microbial contaminants that may not readily grow on conventional media.",
+     "list_item": true
+    },
+    {
+     "ref": "Q14.15",
+     "text": "Implementing such quality risk-management measures into the initial design (i.e., preventive actions) and promptly implementing an appropriate corrective action plan in response to newly identified contamination sources, throughout the life cycle of the product.",
+     "list_item": true
+    }
+   ]
+  },
+  {
+   "unit": "Q16",
+   "paragraphs": [
+    {
+     "ref": "Q16",
+     "text": "Why is FDA concerned about proper sampling of powder blends?"
+    },
+    {
+     "ref": "Q16.1",
+     "text": "The CGMPs require that all sampling plans be scientifically sound and representative of the batch under test (see 21 CFR 211.160(b)). Further, in-process testing of powder blends to demonstrate adequacy of mixing is a CGMP requirement (21 CFR 211.110). Between- and within-location variability in the powder blend is a critical component of finished product quality and therefore should be evaluated. Drug product manufacturers need to use a science- and risk-based sampling approach to ensure (a) adequacy of blend mixing and (b) that sampling of the blend is done at a suitable juncture in the manufacturing process. The sampling and analysis needs to ensure that no differences exist between locations in a blend that could adversely affect finished product quality. Traditional sampling using a powder-thief may have drawbacks and limitations, such as causing disturbance to the powder bed, powder segregation, or other sampling errors. However, powder-thief sampling remains widely used and provides reliable results in many cases. The Agency encourages firms to adopt more innovative approaches to ensuring adequacy of mixing (see, e.g., the guidance for industry PAT—A Framework for Innovative Pharmaceutical Development, Manufacturing, and Quality Assurance). If a manufacturer proposes to use a thief sampling method, the reliability of the method should be evaluated as part of analytical methods development."
+    }
+   ]
+  },
+  {
+   "unit": "Q19",
+   "paragraphs": [
+    {
+     "ref": "Q19",
+     "text": "For a nonsterile compendial drug product that includes an antimicrobial preservative in its formulation, may I release and market lots of this drug product with initial out-of-specification total aerobic plate counts if these lots test within specification 2 weeks later?"
+    },
+    {
+     "ref": "Q19.1",
+     "text": "No. 21 CFR 211.113(a) requires appropriate written procedures to be established and followed during manufacturing to prevent objectionable microorganisms in drug products not required to be sterile. Additionally, the second paragraph of USP General Chapter <51> Antimicrobial Effectiveness Testing reads: Antimicrobial preservatives should not be used as a substitute for good manufacturing practices, solely to reduce the viable microbial population of a nonsterile product, or control the presterilization bioburden of a multidose formulation during manufacturing. Drug manufacturers should not rely on antimicrobial preservatives to reduce initial out-of-specification plate counts to within-specification levels and then market the product. Section 211.165(f) mandates that drug products failing to meet established standards or specifications be rejected. The initial test results exhibiting out-of specification levels of microbes are not disqualified even if subsequent test results are within specifications. In such cases, FDA still expects the manufacturer to reject the drug product based on the initial results. It is also not acceptable for manufacturers to allow an inappropriately long time (e.g., weeks) to pass before testing the product, which might permit the preservative to reduce levels of microbes possibly introduced during manufacture and thus avoid out-of-specification test results. Finally, drug manufacturers should review their manufacturing process to determine procedures or equipment that might introduce contaminating microorganisms into the process or product."
+    }
+   ]
+  },
+  {
+   "unit": "Q22",
+   "paragraphs": [
+    {
+     "ref": "Q22",
+     "text": "Is parametric release an appropriate control strategy for sterile drug products that are not terminally sterilized?"
+    },
+    {
+     "ref": "Q22.1",
+     "text": "No. Parametric release is only appropriate for terminally sterilized drug products. Although both terminally sterilized and aseptically processed drug product batches are required to meet the sterility test requirement (see 21 CFR 211.167(a)) before release to the market, there are inherent differences between the production of sterile drug products using terminal sterilization and aseptic processing."
+    },
+    {
+     "ref": "Q22.2",
+     "text": "Products that are terminally sterilized are rendered sterile in their final, sealed units by sterilizers. Discrete physical parameters (e.g., temperature, pressure, and time) are continuously measured and controlled with robust precision and accuracy during processing. Additionally, parametric release incorporates a sterilization load monitor that is integral to satisfying the requirement for a sterility test (see § 211.167(a)) by confirming that the load has been exposed to the prescribed physical conditions. This allows manufacturers to couple adherence to sterilization cycle parameters with a load monitor to determine thermal lethality, thereby directly confirming sterility and substituting for the sterility test."
+    },
+    {
+     "ref": "Q22.3",
+     "text": "In contrast, aseptic processes do not subject the final, sealed drug product to a sterilization cycle, and monitoring the sterility hazards to drugs manufactured throughout aseptic manufacturing operations relies on indirect measurements. Sterilization processes (e.g., filtration) for the drug occur before further manipulations that are performed in Class 100 (ISO 5) environments where transient events can present microbial contamination risks during the manufacturing process. Consequently, indirect measurements used in aseptic processing provide limited information to conclude whether a batch is sterile. Even contemporary aseptic operations conducted in closed RABS and isolators can experience sterility and media fill failures, despite the substantial robustness of these technologies over traditional cleanroom and open RABS operations. The sterility test is therefore an essential element to monitor the state of control of an aseptic operation, and it is the last step in a series of fundamental, required controls that collectively contribute to the minimum assurance that a given manufacturing operation produced a drug that meets its sterility claim. The sterility test also protects patients by potentially preventing the distribution of an aseptically processed drug product batch posing serious safety concerns that would not otherwise be readily detected."
+    },
+    {
+     "ref": "Q22.4",
+     "text": "All quality control tests, including the sterility test, have limitations. Although the sterility test may not exhaustively assess batch sterility, the sterility test is, nonetheless, a critical component of a comprehensive control strategy that is designed to prevent microbiological contamination of drug products purporting to be sterile (21 CFR 211.113(b)). Innovations in sterility testing (e.g., rapid microbiological methods, genotyping) and the integration of these innovations into manufacturing operations may further improve prompt operational feedback, which can result in significant batch release efficiencies while ensuring equivalent or better ability to detect nonsterility compared with the compendial method. FDA encourages the use of beneficial testing innovations in conjunction with advanced manufacturing technologies (e.g., robotic isolators) to enhance process design and improve both microbial detection and identification."
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q7#1",
+   "unit": "Q7",
+   "hash": "af7e22b5c493347f",
+   "item": {
+    "statement": "Before implementing process analytical technology, the firm may submit a supplement (Changes Being Effected, CBE-30 or Prior Approval Supplement) to FDA.",
+    "quote": "A supplement (Changes Being Effected (CBE), CBE-30, or Prior Approval Supplement (PAS)) can be submitted to the Agency prior to implementation",
+    "clause_number": "Q7.4",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "before PAT implementation"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q7#2",
+   "unit": "Q7",
+   "hash": "ee7f1634e8491f33",
+   "item": {
+    "statement": "Evaluate, and discuss with FDA, which option is most appropriate for implementing process analytical technology.",
+    "quote": "Manufacturers should evaluate and discuss with the Agency the most appropriate option for PAT implementation",
+    "clause_number": "Q7.6",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "when implementing PAT"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q13#1",
+   "unit": "Q13",
+   "hash": "fda1ead13f651e85",
+   "item": {
+    "statement": "When assessing the risk of microbial contamination of topical antiseptics, consider that components or products stored in open bins may be contaminated by spore-forming microbes (for example Bacillus cereus), by Serratia species and by other airborne microbes.",
+    "quote": "Components or products stored in open bins can be at risk for contamination by spore-forming microbes, such as Bacillus cereus, as well as by Serratia species and other worrisome airborne microbes",
+    "clause_number": "Q13.6",
+    "strength": "recommended",
+    "plant_types": [
+     "LIQ",
+     "SEMI"
+    ],
+    "condition": "components or products stored in open bins"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q14#1",
+   "unit": "Q14",
+   "hash": "6389bef356277e20",
+   "item": {
+    "statement": "Assess operations, stay aware of potential risks, and apply appropriate risk management based on an understanding of possible or emerging contamination risks.",
+    "quote": "Manufacturers should assess their operations, be aware of potential risks, and apply appropriate risk management based on an understanding of possible or emerging contamination risks",
+    "clause_number": "Q14.7",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q14#2",
+   "unit": "Q14",
+   "hash": "bf64088e246386cb",
+   "item": {
+    "statement": "Where leptospiral contamination is considered possible or has occurred, the laboratory should make microscopic examination part of its routine cell culture process control program, as a means of detecting microbial contaminants that may not grow readily on conventional media.",
+    "quote": "the laboratory should ensure that microscopic examination is part of its routine cell culture process control program, as it provides an important means of detecting microbial contaminants that may not readily grow on conventional media.",
+    "clause_number": "Q14.14",
+    "strength": "recommended",
+    "plant_types": [
+     "API",
+     "INJ"
+    ],
+    "condition": "leptospiral contamination considered possible or has occurred"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q16#1",
+   "unit": "Q16",
+   "hash": "f577f31439c63b34",
+   "item": {
+    "statement": "Consider adopting more innovative approaches to ensuring that powder blends are adequately mixed.",
+    "quote": "The Agency encourages firms to adopt more innovative approaches to ensuring adequacy of mixing",
+    "clause_number": "Q16.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q19#1",
+   "unit": "Q19",
+   "hash": "e7519ea8d01b136b",
+   "item": {
+    "statement": "Do not use antimicrobial preservatives as a substitute for good manufacturing practices, solely to reduce the viable microbial population of a nonsterile product, or to control the presterilization bioburden of a multidose formulation during manufacturing.",
+    "quote": "Antimicrobial preservatives should not be used as a substitute for good manufacturing practices, solely to reduce the viable microbial population of a nonsterile product, or control the presterilization bioburden of a multidose formulation during manufacturing.",
+    "clause_number": "Q19.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ"
+    ],
+    "condition": ""
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q22#1",
+   "unit": "Q22",
+   "hash": "d8e569f249c9e1ca",
+   "item": {
+    "statement": "Ensure every sterile drug product batch, whether terminally sterilized or aseptically processed, meets the sterility test requirement before it is released to the market.",
+    "quote": "both terminally sterilized and aseptically processed drug product batches are required to meet the sterility test requirement (see 21 CFR 211.167(a)) before release to the market",
+    "clause_number": "Q22.1",
+    "strength": "mandatory",
+    "plant_types": [
+     "INJ"
+    ],
+    "condition": "before release to the market"
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  }
+ ]
+}

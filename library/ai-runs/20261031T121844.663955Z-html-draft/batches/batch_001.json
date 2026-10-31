@@ -1,0 +1,500 @@
+{
+ "instructions": "You read an FDA web page (a Q&A page on CGMP, a Guide to Inspections, an Inspection Technical Guide, a Compliance\nPolicy Guide or an alert to manufacturers) and list what it expects of a drug manufacturer. Each unit is given as\nits paragraphs, each with its reference (\"Q4.2\" on a Q&A page: question 4, answer paragraph 2; \"¶17\" elsewhere) and\nits exact text; \"context\" entries are headings or labels (not citable); \"list_item\" marks a list item, whose\nlead-in is the paragraph ending in \":\" above it. Your output is checked by software against that exact text and by\nindependent reviewers, so precision matters more than wording.\n\nList each separate expectation as its own item, so that together your items cover every expectation in the unit.\nOne expectation is one thing a manufacturer must, should or may do, with all its conditions, numbers and\nqualifiers; do not split one expectation across items. What counts:\n- what FDA says a firm must, should or may do (\"FDA expects firms to have written procedures ...\", \"manufacturers\n  should ...\", \"are required by the CGMP regulations to ...\");\n- in a Guide to Inspections or Inspection Technical Guide, what the investigator is told to check (\"Determine\n  whether the firm has validated ...\", \"Check that ...\", \"Review the ...\"): write the practice the firm is expected\n  to have (\"Validate ...\"), not the investigator's task. When the text only says what to look at (\"Examine the\n  design of equipment\") and states no expectation, write the expectation the text itself gives in the same\n  paragraph; if it gives none, put the sentence in not_applicable (\"inspection step without a stated expectation\").\nFor each item:\n- statement: the expectation in your own plain English words, as one checklist item a site could be audited\n  against. Do not copy more than a few words in a row. Keep every condition (\"where\", \"if\", \"unless\", \"when\",\n  \"except\") and every number. Do not add anything the text does not say. The statement itself must carry every\n  condition or qualifier of the lead-in above a list item. The statement is shown to customers: never cite a\n  regulation, section, question or paragraph number in it (\"21 CFR 211.42(d)\", \"Q4\", \"see above\"); say what is\n  required instead.\n- quote: the exact span of ONE paragraph's text that states the whole expectation, copied character for character\n  (matched against the page text by software; do not fix typos or change punctuation, keep footnote marks as\n  printed). A quote may continue into the paragraphs after it in the same unit, in order (e.g. a lead-in and its\n  list items), but must start in the cited paragraph.\n- clause_number: the reference of the paragraph the quote starts in, exactly as given (\"Q4.2\", \"¶17\").\n- strength: \"mandatory\" where the text states a legal requirement (shall / must / is required / may not, \"the\n  CGMP regulations require\"); \"recommended\" for should, \"FDA expects\", \"FDA recommends\", and for an inspection\n  point; \"optional\" for may / is acceptable. A list item without such a word takes its lead-in's.\n- plant_types: from OSD, LIQ, SEMI, INJ, API (INJ = sterile injectables); the plant scope given unless the text\n  narrows it. Text limited to non-sterile products does not apply to INJ; text limited to sterile products\n  (parenterals, aseptic processing, terminal sterilization) applies only to INJ (and API where in scope). Text\n  that rests on the CGMP regulations for finished pharmaceuticals (21 CFR 210/211, \"drug product manufacturers\",\n  \"finished drug products\") does not apply to API unless it speaks of APIs or bulk drug substances too.\n- numbers: every number, limit, frequency or period in the quote, as written (not regulation references).\n- condition: the condition or trigger in a few words, \"\" if none. This field only repeats what the statement\n  already says.\n- topic: the sub-topic id from TOPICS the expectation belongs to.\n\nDo not narrow or widen a term. Where the text gives examples (\"such as ...\"), keep them as examples; where it\ngives a closed list, keep it closed.\n\nSentences that state no expectation for the manufacturer go in not_applicable: the question itself, background and\nhistory, definitions, descriptions of what happened at a firm, FDA's own actions or enforcement, statements of\npurpose or scope, references, an inspection step without a stated expectation. One entry per SENTENCE, each with\nthe paragraph reference, the sentence's first 8 or more words copied exactly, and the reason in a few words. A\nsentence with \"should\", \"must\", \"FDA expects\" or an instruction to the investigator needs an item or a\nnot_applicable entry.\n\nWrite the answers file named in your task: {\"answers\": [one object per unit with \"unit\" set to the unit's \"id\"\nexactly, \"items\" and \"not_applicable\"]}.\n",
+ "topics": [
+  "QS.PQS",
+  "QS.MGMT",
+  "QS.QRM",
+  "QS.PQR",
+  "QS.CHANGE",
+  "QS.DEV",
+  "QS.CAPA",
+  "PER.ORG",
+  "PER.KEY",
+  "PER.TRAIN",
+  "PER.HYG",
+  "PER.GOWN",
+  "PREM.DESIGN",
+  "PREM.PROD",
+  "PREM.STORE",
+  "PREM.QC",
+  "PREM.ANC",
+  "EQ.DESIGN",
+  "EQ.MAINT",
+  "EQ.CLEAN",
+  "EQ.CAL",
+  "DOC.SYS",
+  "DOC.SPEC",
+  "DOC.MFR",
+  "DOC.BMR",
+  "DOC.SOP",
+  "DOC.RET",
+  "MAT.SUPP",
+  "MAT.RECV",
+  "MAT.SAMP",
+  "MAT.STATUS",
+  "MAT.PACK",
+  "MAT.REJ",
+  "PROD.GEN",
+  "PROD.XCONT",
+  "PROD.IPC",
+  "PROD.YIELD",
+  "PROD.PACK",
+  "PROD.REWORK",
+  "QC.GEN",
+  "QC.SAMP",
+  "QC.TEST",
+  "QC.OOS",
+  "QC.STAB",
+  "QC.REF",
+  "QC.MICRO",
+  "VAL.PLAN",
+  "VAL.QUAL",
+  "VAL.PROC",
+  "VAL.CLEAN",
+  "VAL.METH",
+  "CSV.VAL",
+  "CSV.ACCESS",
+  "CSV.AUDIT",
+  "CSV.ESIG",
+  "CSV.DI",
+  "UTIL.WATER",
+  "UTIL.HVAC",
+  "UTIL.GAS",
+  "CCS.STRAT",
+  "CCS.EM",
+  "CCS.CLEAN",
+  "CCS.PEST",
+  "STER.GRADE",
+  "STER.ASEPT",
+  "STER.APS",
+  "STER.STERIL",
+  "STER.FILT",
+  "STER.CCI",
+  "STER.LYO",
+  "API.START",
+  "API.PROC",
+  "API.IMP",
+  "API.SOLV",
+  "OUT.CONTRACT",
+  "OUT.AGREE",
+  "CMP.COMPL",
+  "CMP.RECALL",
+  "CMP.REPORT",
+  "SI.PROG",
+  "SI.TEAM",
+  "SI.REPORT",
+  "SI.FOLLOW",
+  "DIST.STORE",
+  "DIST.TRANS",
+  "DIST.RETURN",
+  "REL.QP",
+  "REL.REVIEW"
+ ],
+ "schema": {
+  "type": "object",
+  "required": [
+   "unit",
+   "items",
+   "not_applicable"
+  ],
+  "properties": {
+   "unit": {
+    "type": "string"
+   },
+   "items": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "statement",
+      "quote",
+      "clause_number",
+      "strength",
+      "plant_types",
+      "numbers",
+      "condition",
+      "topic"
+     ],
+     "properties": {
+      "statement": {
+       "type": "string"
+      },
+      "quote": {
+       "type": "string"
+      },
+      "clause_number": {
+       "type": "string"
+      },
+      "strength": {
+       "enum": [
+        "mandatory",
+        "recommended",
+        "optional"
+       ]
+      },
+      "plant_types": {
+       "type": "array",
+       "items": {
+        "enum": [
+         "OSD",
+         "LIQ",
+         "SEMI",
+         "INJ",
+         "API"
+        ]
+       }
+      },
+      "numbers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "condition": {
+       "type": "string"
+      },
+      "topic": {
+       "type": "string"
+      }
+     }
+    }
+   },
+   "not_applicable": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "clause_number",
+      "text",
+      "reason"
+     ],
+     "properties": {
+      "clause_number": {
+       "type": "string"
+      },
+      "text": {
+       "type": "string"
+      },
+      "reason": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  }
+ },
+ "units": [
+  {
+   "id": "fda-ora-guide-osd-pre-post-approval-1994.html:¶1-¶12",
+   "source": "fda-ora-guide-osd-pre-post-approval-1994.html",
+   "unit": "¶1-¶12",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "OSD"
+   ],
+   "paragraphs": [
+    {
+     "context": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94)"
+    },
+    {
+     "context": "GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION"
+    },
+    {
+     "context": "January, 1994"
+    },
+    {
+     "ref": "¶1",
+     "text": "Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s).",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION"
+    },
+    {
+     "context": "I INTRODUCTION"
+    },
+    {
+     "ref": "¶2",
+     "text": "This inspection guide provides information regarding the inspection and evaluation of the manufacturing and control processes used to manufacture solid oral dosage form pharmaceutical products. This document provides guidance for the FDA investigator and promotes uniformity and consistency during the inspection and evaluation of the validation of the solid oral dosage form manufacturing and control processes. It covers three phases of the validation process; product development, design of the validation protocol, and demonstration runs (validation) of the equipment and process in the manufacture of full scale commercial production batches.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > I INTRODUCTION"
+    },
+    {
+     "ref": "¶3",
+     "text": "Although this document it is not all inclusive, it addresses many of the issues and examples of validation problems of oral solid dosage forms which investigators and analysts may encounter. The inspection team is expected to review other agency documents in preparation for these inspections.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > I INTRODUCTION"
+    },
+    {
+     "ref": "¶4",
+     "text": "The Validation Guideline issued by the agency in 1987 defines process validation as establishing documented evidence which provides a high degree of assurance that a specific process will consistently produce a product meeting its predetermined specifications and quality attributes.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > I INTRODUCTION"
+    },
+    {
+     "ref": "¶5",
+     "text": "The three components of this definition include documented evidence, consistency, and predetermined specifications. Documented evidence includes the experiments, data and analytical results that support the master formula, the in-process and finished product specifications, and the filed manufacturing process.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > I INTRODUCTION"
+    },
+    {
+     "ref": "¶6",
+     "text": "With regard to consistency, several batches would have to be manufactured, using the full scale batch size, to demonstrate that a process meets the consistency test. At least three batches are needed to demonstrate consistency.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > I INTRODUCTION"
+    },
+    {
+     "ref": "¶7",
+     "text": "The development of a product and its manufacturing process and specifications, the design of the validation protocol, and the demonstration (validation) runs of the full scale manufacturing process requires scientific judgement based on good scientific data. We expect that in-process control and product specifications will be established during the product development process, with the test batch serving as the critical batch used for the establishment of specifications.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > I INTRODUCTION"
+    },
+    {
+     "ref": "¶8",
+     "text": "Specifications, such as hardness and particle size, should be established prior to validation of the process; these specifications should be included in the validation protocol. The use of product development runs of the process to establish both specifications and demonstrate that the system is validated often causes problems. In these cases, more in-depth inspection and evaluation will be required; some of these process runs often produce failing product because the product specifications have not been fully established and tested.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > I INTRODUCTION"
+    },
+    {
+     "ref": "¶9",
+     "text": "The inspection team should observe facilities, equipment and processes to put data review in proper context. It is also important that raw data, including validation and laboratory logbooks be audited or reviewed to verify accuracy and authenticity.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > I INTRODUCTION"
+    },
+    {
+     "context": "II BACKGROUND"
+    },
+    {
+     "ref": "¶10",
+     "text": "Two common complaints regarding validation issues frequently have been raised. The first concerns the misconception that the 1987 validation guide represents a new requirement. The second concerns the lack of specificity in the agency's guides. In 1978, the Current Good Manufacturing Practice Regulations were revised and provided for process validation. Therefore this guideline does not represent a new requirement. The regulation is nearly 15 years old.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > II BACKGROUND"
+    },
+    {
+     "ref": "¶11",
+     "text": "Both the agency and the industry have recognized the need to establish general guidance for the validation of manufacturing processes, and the agency published a draft guideline in March, 1983. However this draft guideline was a very general document addressing general principles and was applicable to sterile and non-sterile drugs and devices. In March, 1984, it was reissued as a draft guideline, and was finalized in May, 1987.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > II BACKGROUND"
+    },
+    {
+     "ref": "¶12",
+     "text": "The 1987 validation guideline merely points out the need to adequately develop and control manufacturing processes. It discusses microbiological issues and provides few specific an practical applications for the validation of manufacturing processes for a marketed solid oral dosage form.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > II BACKGROUND"
+    }
+   ]
+  },
+  {
+   "id": "fda-ora-guide-osd-pre-post-approval-1994.html:¶13-¶22",
+   "source": "fda-ora-guide-osd-pre-post-approval-1994.html",
+   "unit": "¶13-¶22",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "OSD"
+   ],
+   "paragraphs": [
+    {
+     "ref": "¶13",
+     "text": "The issue of retrospective validation, and its application to marketed products, is frequently encountered. This concept of using historical data (test results), along with process control and process specificity was of value until more scientific methods for demonstrating process validation evolved. It should be pointed out that retrospective validation is not merely the review of test results. It also requires that the manufacturing process be specific and the same each time a batch is manufactured. Thus, specific raw material specifications (including particle size when necessary), in-process specifications (tablet hardness, etc.), and specific manufacturing directions are required. Obviously, any failing batches attributed to the process would necessitate the conclusion that the process is not validated and is inadequate.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > II BACKGROUND"
+    },
+    {
+     "ref": "¶14",
+     "text": "Prospective process validation is required, particularly for those products introduced in the last 7 to 8 years, or those for which manufacturing changes have been made. However, in some cases where older products have been on the market without sufficient pre-market process validation, it may be possible to validate, in some measure, the adequacy of the process by examination of accumulated test data on the product and records of the manufacturing procedures used.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > II BACKGROUND"
+    },
+    {
+     "context": "III PRODUCT DEVELOPMENT"
+    },
+    {
+     "context": "A. PRODUCT DEVELOPMENT REPORTS"
+    },
+    {
+     "ref": "¶15",
+     "text": "There is no statute or regulation that specifically requires a product development report, although companies are required to produce scientific data which justifies the formulation and the manufacturing and control processes. Most companies have used product development reports, technology transfer reports, and others to summarize the scientific data that justifies the product and process. The product development report should satisfy the needs of the company. Therefore, there is no specific format for the contents of the report.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > III PRODUCT DEVELOPMENT"
+    },
+    {
+     "ref": "¶16",
+     "text": "It is suggested that the company develop a product development SOP which describes the development process, the documentation requirements, and the individuals responsible for approving the filed process. This SOP can be brief and again there is no legal requirement that companies produce such an SOP.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > III PRODUCT DEVELOPMENT"
+    },
+    {
+     "ref": "¶17",
+     "text": "Investigators must not list the absence and or the poor quality of a product development report on the FDA 483. The investigators should list or include the inadequacy of data to support the filed process and specific Master Formula filed. It is not a GMP deficiency nor is it a filing requirement to have a formal Development Report. Investigators should review product development reports since they will reduce the time required to inspect the process.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > III PRODUCT DEVELOPMENT"
+    },
+    {
+     "ref": "¶18",
+     "text": "The development data found in these reports should include the following:",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > III PRODUCT DEVELOPMENT"
+    },
+    {
+     "context": "Drug Substance Characterization"
+    },
+    {
+     "ref": "¶19",
+     "text": "Characterization of the chemical and physical properties of the drug substance is one of the most important steps in the development of a solid dosage form. Chemical properties especially the identification of impurities are very important. In addition, the physical properties of the BPC such as solubility, polymorphism, hygroscopicity, particle size, density, etc. must be addressed.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > III PRODUCT DEVELOPMENT"
+    },
+    {
+     "ref": "¶20",
+     "text": "The literature, and actual experience demonstrates, that the physical quality, e.g., particle size of raw materials, can sometimes produce a significant impact on the availability and clinical effect of a dosage form drug. Therefore, it is appropriate that the physical characteristics of a drug substance be characterized, that the impact of the physical characteristics be determined and that a specification for the bulk drug product be established if necessary.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > III PRODUCT DEVELOPMENT"
+    },
+    {
+     "ref": "¶21",
+     "text": "Development data will vary between new drugs and generics. Characterization and establishment of specifications for the drug substance is one example. In most cases the manufacturing process for a new drug substance (new chemical entity) is developed and scaled-up before the dosage form. In early development stages very little information is available regarding polymorphic forms, solubility, etc. Consequently, changes to the manufacturing process for the drug substance may change the purity profile or physical characteristics and thus cause problems with the finished dosage form. Although these types of problems are expected, the firm must investigate and document batch failures for the BPC and dosage form product.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > III PRODUCT DEVELOPMENT"
+    },
+    {
+     "ref": "¶22",
+     "text": "On the other hand the generic manufacturer usually purchases the drug substance from a BPC manufacturer who may not be willing to supply information regarding the synthesis or analysis of the drug substance. Therefore, the finished dosage form manufacturer must perform the appropriate test to characterize the drug substance chemically and physically and establish appropriate specifications. This may require developing analytical methods to identify impurities. In some cases this information can be obtained from literature searches.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > III PRODUCT DEVELOPMENT"
+    }
+   ]
+  },
+  {
+   "id": "fda-ora-guide-osd-pre-post-approval-1994.html:¶23-¶31",
+   "source": "fda-ora-guide-osd-pre-post-approval-1994.html",
+   "unit": "¶23-¶31",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "OSD"
+   ],
+   "paragraphs": [
+    {
+     "ref": "¶23",
+     "text": "In either case it is important that the firm compare the drug substance used to manufacturer the bio-batch or clinical batch(es) and the drug substance used for the commercial batches. Therefore, review the specifications, analytical methods, and test results for the lots of the drug substance used to manufacture these batches. Remember that the safety of the drug may be based upon the type and level of impurities and different physical characteristics may affect dissolution or content uniformity.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > III PRODUCT DEVELOPMENT"
+    },
+    {
+     "ref": "¶24",
+     "text": "Inspectional coverage should be given to the physical characteristics of raw materials, especially bulk drug substances, since they frequently affect the performance of the dosage form in which they are incorporated. This is particularly important for those drug substances that are poorly soluble in water.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > III PRODUCT DEVELOPMENT"
+    },
+    {
+     "ref": "¶25",
+     "text": "For those products on which biostudies were conducted, the physical characteristics of the drug substance used for the study should serve as the basis for the physical specifications.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > III PRODUCT DEVELOPMENT"
+    },
+    {
+     "ref": "¶26",
+     "text": "It is widely recognized that when discussing in-vivo release rates and drug absorption rates, fast, immediate release is not always best. For some \"immediate\" release drug products, such as carbamazepine tablets, a slower release is desired. Therefore, it is frequently desirable to have minimum and maximum particle size specifications to control the release rate. For example, micronizing or milling a drug substance and providing greater surface area of the substance may also result in faster dissolution and possibly faster absorption and higher blood levels. Such changes to \"improve\" the dissolution may not always be desired.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > III PRODUCT DEVELOPMENT"
+    },
+    {
+     "ref": "¶27",
+     "text": "In addition to release or dissolution, variation in particle size, particle shape, and/or bulk density can also have an effect on the uniformity of dosage forms, particularly those manufactured by direct compression or direct encapsulation.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > III PRODUCT DEVELOPMENT"
+    },
+    {
+     "ref": "¶28",
+     "text": "Particulate solids, once mixed, have a tendency to segregate by virtue of differences in the shape, size and density (other variables are also important) of the particles of which they are composed. This process of separation occurs during mixing, as well as during subsequent handling of the completed mix. Generally, large differences in particle size, density or shape within the mixture result in instability in the mixture. The segregation process normally requires energy input and can be reduced following mixing by careful handling.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > III PRODUCT DEVELOPMENT"
+    },
+    {
+     "ref": "¶29",
+     "text": "Some manufacturers have established wide ranges for specifications. Investigators should review these specifications from a GMP and validation perspective. Even though a wide range for a physical specification, such as particle size or surface area may be established in a filing, it is expected that such ranges be verified in the validation of the process. In a recent court decision the judge ruled that companies cannot hide behind the approval of processes listed in an application when these processes do not work. In other words the approval of the filing has no impact on processes that do not perform consistently.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > III PRODUCT DEVELOPMENT"
+    },
+    {
+     "ref": "¶30",
+     "text": "For example, in a filed process it was determined that particle size would have no effect on drug absorption and dissolution and a wide range particle size specification was established. However, in the GMP review, it was found that variation in particle size had a major effect on content uniformity. Therefore, a tighter particle size specification had to be established.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > III PRODUCT DEVELOPMENT"
+    },
+    {
+     "ref": "¶31",
+     "text": "Control of the physical characteristics of the excipient is also important because variations in such characteristics may also affect the performance of the dosage form. Changes in particle size of some excipients, for example, may affect content uniformity. In other cases, a change in the supplier of an excipient or lubricant may affect dissolution or bioavailability. In fact, the release of the active ingredients in some products is \"timed\" by varying lubricant blending time and concentration. The literature contains many examples of lubricant processing causing major changes. Such changes in excipients illustrate the deficiencies with the utilization of retrospective validation because, for such validation to be satisfactory, control of all parameters and key steps in the process are necessary.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > III PRODUCT DEVELOPMENT"
+    }
+   ]
+  },
+  {
+   "id": "fda-ora-guide-osd-pre-post-approval-1994.html:¶32-¶44",
+   "source": "fda-ora-guide-osd-pre-post-approval-1994.html",
+   "unit": "¶32-¶44",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "OSD"
+   ],
+   "paragraphs": [
+    {
+     "ref": "¶32",
+     "text": "The control of mixing times and physical characteristics of all ingredients is critical to successful validation of all formulations and processes. A major question that must be addressed is the need for testing physical characteristics (particle size) for each batch of excipient. For many single source excipients, particle size is a supplier specification and is usually tightly controlled. Having established a specification and not testing each lot of excipient upon receipt may be satisfactory in such cases. However, for some multi-source excipients and where the dosage formulator expects to shift sources of supply, there may be differences in physical characteristics (particle size) that may have an effect on dose uniformity and dissolution. Examine the practices with respect to the source of supply of the key excipients and determine if there is justification for the lack of testing lots of excipient for physical characteristics.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > III PRODUCT DEVELOPMENT"
+    },
+    {
+     "context": "Manufacturing Procedures"
+    },
+    {
+     "ref": "¶33",
+     "text": "Procedures used to manufacture development batches must be specific and well documented. This is necessary for scale-up and subsequent comparison to the commercial process.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > III PRODUCT DEVELOPMENT"
+    },
+    {
+     "ref": "¶34",
+     "text": "This is another area where you will see differences between NDA/NADA and ANDA/ANADA products. In the case of the NDA/NADA you will see several clinical and/or test batches manufactured over a period of time and you would expect to see changes in the process as more is learned about the drug and the process. The level of documentation should increase as the process becomes more defined and the firm begins phase II and III studies.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > III PRODUCT DEVELOPMENT"
+    },
+    {
+     "ref": "¶35",
+     "text": "The generic product focus is on the biobatch. Again the process used to manufacturer the biobatch must be well defined and well documented. Also the firm should have worked with the process by means of test batches so they can reproduce the biobatch. Therefore you would expect to see more than one batch made at this stage of the development process.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > III PRODUCT DEVELOPMENT"
+    },
+    {
+     "context": "In-process Testing"
+    },
+    {
+     "ref": "¶36",
+     "text": "Specific specifications required to control the manufacturing process must be established and justified. This will require granulation studies which would include blend uniformity, sieve analysis, and moisture. Read the section under, \"Demonstration Runs of the Process (Validation of Process)\" for more information.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > III PRODUCT DEVELOPMENT"
+    },
+    {
+     "context": "Finished Product Testing"
+    },
+    {
+     "ref": "¶37",
+     "text": "Testing for the monograph standards such as content uniformity (when a specification applies), assay, hardness, friability, dissolution, and others are essential.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > III PRODUCT DEVELOPMENT"
+    },
+    {
+     "context": "Dissolution Profile"
+    },
+    {
+     "ref": "¶38",
+     "text": "The dissolution profiles for the biobatch or pivotal clinical batches should be evaluated in the product development report. There should be good correlation to the dissolution specifications and test results for the biobatch/clinical test batches and the full scale commercial process.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > III PRODUCT DEVELOPMENT"
+    },
+    {
+     "context": "Stability"
+    },
+    {
+     "ref": "¶39",
+     "text": "The Center for Drugs conducts an evaluation of the stability data and approves the expiration date. The product development report should contain an evaluation of the stability data that has been obtained.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > III PRODUCT DEVELOPMENT"
+    },
+    {
+     "ref": "¶40",
+     "text": "During post-approval inspections stability data is reviewed by the field. Therefore, the investigator must audit underlying raw data and analytical worksheets to assure the accuracy and authenticity of stability data contained in summary reports.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > III PRODUCT DEVELOPMENT"
+    },
+    {
+     "context": "B. PRE-APPROVAL INSPECTIONS"
+    },
+    {
+     "ref": "¶41",
+     "text": "Validation of three full size commercial lots is not required for approval of the application, however the firm must have data that justifies the full scale commercial process filed in the NDA/ANDA or NADA/ANADA application. In other words, the firm should have sufficient research on the test batches to establish specifications for the manufacturing and control procedures listed in the application. These data and specifications form the basis for the validation protocol which may be developed following approval of the application. The final step in the process is the demonstration (validation) runs proving that the process will perform consistently. Firms should validate the process using the specifications listed in the filing.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > III PRODUCT DEVELOPMENT"
+    },
+    {
+     "ref": "¶42",
+     "text": "To evaluate the proposed manufacturing process the following areas must be covered during the pre-approval inspection:",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > III PRODUCT DEVELOPMENT"
+    },
+    {
+     "context": "Master Formula"
+    },
+    {
+     "ref": "¶43",
+     "text": "This document must include specific manufacturing directions for the full scale commercial process including in-process and finished product specifications.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > III PRODUCT DEVELOPMENT"
+    },
+    {
+     "ref": "¶44",
+     "text": "Compare the process filed in the application to the process used to manufacturer the bio/clinical batch. In some cases the process may be different after scale-up. This is acceptable if the firm has data showing the product produced by this process will be equivalent. Data such as granulation studies, finished product test results, and dissolution profiles are used to document that the two processes are equivalent.",
+     "heading_path": "Oral Solid Dosage Forms Pre/Post Approval Issues (1/94) > GUIDE TO INSPECTIONS OF ORAL SOLID DOSAGE FORMS PRE/POST APPROVAL ISSUES FOR DEVELOPMENT AND VALIDATION > III PRODUCT DEVELOPMENT"
+    },
+    {
+     "context": "History Section of the Application"
+    }
+   ]
+  }
+ ]
+}

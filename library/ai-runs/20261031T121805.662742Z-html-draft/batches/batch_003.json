@@ -1,0 +1,412 @@
+{
+ "instructions": "You read an FDA web page (a Q&A page on CGMP, a Guide to Inspections, an Inspection Technical Guide, a Compliance\nPolicy Guide or an alert to manufacturers) and list what it expects of a drug manufacturer. Each unit is given as\nits paragraphs, each with its reference (\"Q4.2\" on a Q&A page: question 4, answer paragraph 2; \"¶17\" elsewhere) and\nits exact text; \"context\" entries are headings or labels (not citable); \"list_item\" marks a list item, whose\nlead-in is the paragraph ending in \":\" above it. Your output is checked by software against that exact text and by\nindependent reviewers, so precision matters more than wording.\n\nList each separate expectation as its own item, so that together your items cover every expectation in the unit.\nOne expectation is one thing a manufacturer must, should or may do, with all its conditions, numbers and\nqualifiers; do not split one expectation across items. What counts:\n- what FDA says a firm must, should or may do (\"FDA expects firms to have written procedures ...\", \"manufacturers\n  should ...\", \"are required by the CGMP regulations to ...\");\n- in a Guide to Inspections or Inspection Technical Guide, what the investigator is told to check (\"Determine\n  whether the firm has validated ...\", \"Check that ...\", \"Review the ...\"): write the practice the firm is expected\n  to have (\"Validate ...\"), not the investigator's task. When the text only says what to look at (\"Examine the\n  design of equipment\") and states no expectation, write the expectation the text itself gives in the same\n  paragraph; if it gives none, put the sentence in not_applicable (\"inspection step without a stated expectation\").\nFor each item:\n- statement: the expectation in your own plain English words, as one checklist item a site could be audited\n  against. Do not copy more than a few words in a row. Keep every condition (\"where\", \"if\", \"unless\", \"when\",\n  \"except\") and every number. Do not add anything the text does not say. The statement itself must carry every\n  condition or qualifier of the lead-in above a list item. The statement is shown to customers: never cite a\n  regulation, section, question or paragraph number in it (\"21 CFR 211.42(d)\", \"Q4\", \"see above\"); say what is\n  required instead.\n- quote: the exact span of ONE paragraph's text that states the whole expectation, copied character for character\n  (matched against the page text by software; do not fix typos or change punctuation, keep footnote marks as\n  printed). A quote may continue into the paragraphs after it in the same unit, in order (e.g. a lead-in and its\n  list items), but must start in the cited paragraph.\n- clause_number: the reference of the paragraph the quote starts in, exactly as given (\"Q4.2\", \"¶17\").\n- strength: \"mandatory\" where the text states a legal requirement (shall / must / is required / may not, \"the\n  CGMP regulations require\"); \"recommended\" for should, \"FDA expects\", \"FDA recommends\", and for an inspection\n  point; \"optional\" for may / is acceptable. A list item without such a word takes its lead-in's.\n- plant_types: from OSD, LIQ, SEMI, INJ, API (INJ = sterile injectables); the plant scope given unless the text\n  narrows it. Text limited to non-sterile products does not apply to INJ; text limited to sterile products\n  (parenterals, aseptic processing, terminal sterilization) applies only to INJ (and API where in scope). Text\n  that rests on the CGMP regulations for finished pharmaceuticals (21 CFR 210/211, \"drug product manufacturers\",\n  \"finished drug products\") does not apply to API unless it speaks of APIs or bulk drug substances too.\n- numbers: every number, limit, frequency or period in the quote, as written (not regulation references).\n- condition: the condition or trigger in a few words, \"\" if none. This field only repeats what the statement\n  already says.\n- topic: the sub-topic id from TOPICS the expectation belongs to.\n\nDo not narrow or widen a term. Where the text gives examples (\"such as ...\"), keep them as examples; where it\ngives a closed list, keep it closed.\n\nSentences that state no expectation for the manufacturer go in not_applicable: the question itself, background and\nhistory, definitions, descriptions of what happened at a firm, FDA's own actions or enforcement, statements of\npurpose or scope, references, an inspection step without a stated expectation. One entry per SENTENCE, each with\nthe paragraph reference, the sentence's first 8 or more words copied exactly, and the reason in a few words. A\nsentence with \"should\", \"must\", \"FDA expects\" or an instruction to the investigator needs an item or a\nnot_applicable entry.\n\nWrite the answers file named in your task: {\"answers\": [one object per unit with \"unit\" set to the unit's \"id\"\nexactly, \"items\" and \"not_applicable\"]}.\n",
+ "topics": [
+  "QS.PQS",
+  "QS.MGMT",
+  "QS.QRM",
+  "QS.PQR",
+  "QS.CHANGE",
+  "QS.DEV",
+  "QS.CAPA",
+  "PER.ORG",
+  "PER.KEY",
+  "PER.TRAIN",
+  "PER.HYG",
+  "PER.GOWN",
+  "PREM.DESIGN",
+  "PREM.PROD",
+  "PREM.STORE",
+  "PREM.QC",
+  "PREM.ANC",
+  "EQ.DESIGN",
+  "EQ.MAINT",
+  "EQ.CLEAN",
+  "EQ.CAL",
+  "DOC.SYS",
+  "DOC.SPEC",
+  "DOC.MFR",
+  "DOC.BMR",
+  "DOC.SOP",
+  "DOC.RET",
+  "MAT.SUPP",
+  "MAT.RECV",
+  "MAT.SAMP",
+  "MAT.STATUS",
+  "MAT.PACK",
+  "MAT.REJ",
+  "PROD.GEN",
+  "PROD.XCONT",
+  "PROD.IPC",
+  "PROD.YIELD",
+  "PROD.PACK",
+  "PROD.REWORK",
+  "QC.GEN",
+  "QC.SAMP",
+  "QC.TEST",
+  "QC.OOS",
+  "QC.STAB",
+  "QC.REF",
+  "QC.MICRO",
+  "VAL.PLAN",
+  "VAL.QUAL",
+  "VAL.PROC",
+  "VAL.CLEAN",
+  "VAL.METH",
+  "CSV.VAL",
+  "CSV.ACCESS",
+  "CSV.AUDIT",
+  "CSV.ESIG",
+  "CSV.DI",
+  "UTIL.WATER",
+  "UTIL.HVAC",
+  "UTIL.GAS",
+  "CCS.STRAT",
+  "CCS.EM",
+  "CCS.CLEAN",
+  "CCS.PEST",
+  "STER.GRADE",
+  "STER.ASEPT",
+  "STER.APS",
+  "STER.STERIL",
+  "STER.FILT",
+  "STER.CCI",
+  "STER.LYO",
+  "API.START",
+  "API.PROC",
+  "API.IMP",
+  "API.SOLV",
+  "OUT.CONTRACT",
+  "OUT.AGREE",
+  "CMP.COMPL",
+  "CMP.RECALL",
+  "CMP.REPORT",
+  "SI.PROG",
+  "SI.TEAM",
+  "SI.REPORT",
+  "SI.FOLLOW",
+  "DIST.STORE",
+  "DIST.TRANS",
+  "DIST.RETURN",
+  "REL.QP",
+  "REL.REVIEW"
+ ],
+ "schema": {
+  "type": "object",
+  "required": [
+   "unit",
+   "items",
+   "not_applicable"
+  ],
+  "properties": {
+   "unit": {
+    "type": "string"
+   },
+   "items": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "statement",
+      "quote",
+      "clause_number",
+      "strength",
+      "plant_types",
+      "numbers",
+      "condition",
+      "topic"
+     ],
+     "properties": {
+      "statement": {
+       "type": "string"
+      },
+      "quote": {
+       "type": "string"
+      },
+      "clause_number": {
+       "type": "string"
+      },
+      "strength": {
+       "enum": [
+        "mandatory",
+        "recommended",
+        "optional"
+       ]
+      },
+      "plant_types": {
+       "type": "array",
+       "items": {
+        "enum": [
+         "OSD",
+         "LIQ",
+         "SEMI",
+         "INJ",
+         "API"
+        ]
+       }
+      },
+      "numbers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "condition": {
+       "type": "string"
+      },
+      "topic": {
+       "type": "string"
+      }
+     }
+    }
+   },
+   "not_applicable": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "clause_number",
+      "text",
+      "reason"
+     ],
+     "properties": {
+      "clause_number": {
+       "type": "string"
+      },
+      "text": {
+       "type": "string"
+      },
+      "reason": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  }
+ },
+ "units": [
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q20",
+   "source": "fda-cgmp-qa-production-process-controls.html",
+   "unit": "Q20",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q20",
+     "text": "Do pharmaceutical manufacturers need to have written procedures for preventing growth of objectionable microorganisms in drug products not required to be sterile? What does objectionable mean anyway?"
+    },
+    {
+     "ref": "Q20.1",
+     "text": "Yes, CGMP regulations do require these written procedures. 21 CFR 211.113(a) specifies that appropriate written procedures be established and followed to prevent growth of objectionable microorganisms in drug products not required to be sterile. Even though a drug product is not sterile, a firm must follow written procedures that proactively prevent introduction and proliferation of objectionable microorganisms. 21 CFR 211.165(b) states that “[t]here shall be appropriate laboratory testing, as necessary, of each batch of drug product required to be free of objectionable microorganisms” before it is released for distribution. The meaning of the term objectionable needs to be evaluated on a case-by-case basis by each drug manufacturer. The primary meaning relates to microbial contaminants that, based on microbial species, numbers of organisms, dosage form, intended use, patient population, and route of administration, would adversely affect product safety. Microorganisms may be objectionable for several reasons; for example, they:"
+    },
+    {
+     "ref": "Q20.2",
+     "text": "Are a known human pathogen",
+     "list_item": true
+    },
+    {
+     "ref": "Q20.3",
+     "text": "Adversely affect product stability",
+     "list_item": true
+    },
+    {
+     "ref": "Q20.4",
+     "text": "React with, or potentially damage the integrity of, the container closure system (for example, fermentation that creates gaseous pressures sufficient to rupture a product container/closure)",
+     "list_item": true
+    },
+    {
+     "ref": "Q20.5",
+     "text": "Interfere with analytical methods or active ingredient bioavailability",
+     "list_item": true
+    },
+    {
+     "ref": "Q20.6",
+     "text": "Establishing production time limits is an example of a control to prevent growth of objectionable microorganisms. Per 21 CFR 211.111, time limits for the completion of each phase of production, when appropriate, must be established and followed. For example, if a firm finds it necessary to hold a bulk topical or liquid product for several months until it is filled, the firm might establish a holding time limit to help prevent objectionable microbial buildup. Validation and control over microbial content of purified water systems used in certain topical products are also examples of such procedures (see FDA guidance, referenced below)."
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q21",
+   "source": "fda-cgmp-qa-production-process-controls.html",
+   "unit": "Q21",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q21",
+     "text": "For drug products formulated with preservatives to inhibit microbial growth, is it necessary to test for preservatives as part of batch release and stability testing?"
+    },
+    {
+     "ref": "Q21.1",
+     "text": "Yes. Two types of tests are generally used. Initially, firms perform antimicrobial preservative effectiveness testing to determine a minimally effective level of preservative. Once that level has been determined, firms may establish appropriate corresponding analytical test specifications. Firms may then apply the analytical tests for preservative content at batch release and throughout the shelf life of lots on stability."
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q22",
+   "source": "fda-cgmp-qa-production-process-controls.html",
+   "unit": "Q22",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q22",
+     "text": "Is parametric release an appropriate control strategy for sterile drug products that are not terminally sterilized?"
+    },
+    {
+     "ref": "Q22.1",
+     "text": "No. Parametric release is only appropriate for terminally sterilized drug products. Although both terminally sterilized and aseptically processed drug product batches are required to meet the sterility test requirement (see 21 CFR 211.167(a)) before release to the market, there are inherent differences between the production of sterile drug products using terminal sterilization and aseptic processing."
+    },
+    {
+     "ref": "Q22.2",
+     "text": "Products that are terminally sterilized are rendered sterile in their final, sealed units by sterilizers. Discrete physical parameters (e.g., temperature, pressure, and time) are continuously measured and controlled with robust precision and accuracy during processing. Additionally, parametric release incorporates a sterilization load monitor that is integral to satisfying the requirement for a sterility test (see § 211.167(a)) by confirming that the load has been exposed to the prescribed physical conditions. This allows manufacturers to couple adherence to sterilization cycle parameters with a load monitor to determine thermal lethality, thereby directly confirming sterility and substituting for the sterility test."
+    },
+    {
+     "ref": "Q22.3",
+     "text": "In contrast, aseptic processes do not subject the final, sealed drug product to a sterilization cycle, and monitoring the sterility hazards to drugs manufactured throughout aseptic manufacturing operations relies on indirect measurements. Sterilization processes (e.g., filtration) for the drug occur before further manipulations that are performed in Class 100 (ISO 5) environments where transient events can present microbial contamination risks during the manufacturing process. Consequently, indirect measurements used in aseptic processing provide limited information to conclude whether a batch is sterile. Even contemporary aseptic operations conducted in closed RABS and isolators can experience sterility and media fill failures, despite the substantial robustness of these technologies over traditional cleanroom and open RABS operations. The sterility test is therefore an essential element to monitor the state of control of an aseptic operation, and it is the last step in a series of fundamental, required controls that collectively contribute to the minimum assurance that a given manufacturing operation produced a drug that meets its sterility claim. The sterility test also protects patients by potentially preventing the distribution of an aseptically processed drug product batch posing serious safety concerns that would not otherwise be readily detected."
+    },
+    {
+     "ref": "Q22.4",
+     "text": "All quality control tests, including the sterility test, have limitations. Although the sterility test may not exhaustively assess batch sterility, the sterility test is, nonetheless, a critical component of a comprehensive control strategy that is designed to prevent microbiological contamination of drug products purporting to be sterile (21 CFR 211.113(b)). Innovations in sterility testing (e.g., rapid microbiological methods, genotyping) and the integration of these innovations into manufacturing operations may further improve prompt operational feedback, which can result in significant batch release efficiencies while ensuring equivalent or better ability to detect nonsterility compared with the compendial method. FDA encourages the use of beneficial testing innovations in conjunction with advanced manufacturing technologies (e.g., robotic isolators) to enhance process design and improve both microbial detection and identification."
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q23",
+   "source": "fda-cgmp-qa-production-process-controls.html",
+   "unit": "Q23",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q23",
+     "text": "Does FDA consider ophthalmic drug products1 to be adulterated when they are not manufactured under conditions that ensure sterility throughout their shelf life and, in the case of multidose products, that prevent harmful microbial contamination throughout their in-use period?"
+    },
+    {
+     "ref": "Q23.1",
+     "text": "Product sterility is a critical quality attribute (CQA) for ophthalmic drug products.2Recent cases of microbially contaminated ophthalmic drug products leading to serious injury and death, as well as recent recalls, highlight the importance of product sterility.3 Manufacturers of drug products, including sterile products offered or intended for ophthalmic use, must comply with CGMP requirements in 21 CFR parts 210 and 211. Failure to comply with these requirements will cause affected products to be deemed adulterated under section 501(a)(2)(B) of the FD&C Act."
+    },
+    {
+     "ref": "Q23.2",
+     "text": "Sterile drug products must meet specific CGMP requirements for personnel, buildings and facilities, materials, production and controls, and testing, as appropriate, to ensure product sterility at the time of manufacture and throughout the product’s shelf life. FDA has published guidance4 to provide clarity on how manufacturers can meet CGMP requirements in 21 CFR parts 210 and 211 when manufacturing sterile drug and biological ophthalmic products using aseptic processing. Some of the relevant regulations and guidance applicable to products for ophthalmic use are summarized below."
+    },
+    {
+     "ref": "Q23.3",
+     "text": "Per 21 CFR 211.113(b), there must be appropriate written procedures designed to prevent microbiological contamination that must be established and followed, including the validation of aseptic and sterilization processes.",
+     "list_item": true
+    },
+    {
+     "ref": "Q23.4",
+     "text": "Per 21 CFR 211.94(b), drug product container closure systems must provide adequate protection against foreseeable external factors in storage and use that can cause deterioration or contamination of the drug product.",
+     "list_item": true
+    },
+    {
+     "ref": "Q23.5",
+     "text": "As explained in guidance for industry Sterile Drug Products Produced by Aseptic Processing—Current Good Manufacturing Practice, a container closure system that does not maintain adequate container integrity after it is sealed is unsuitable for sterile products, and safeguards should be implemented to strictly preclude shipment of product that may lack container closure integrity and lead to product nonsterility. Such safeguards could include ensuring suitability and incoming quality of container closure systems, including dose delivery mechanisms, and ensuring that manufacturing equipment for container closure systems is fit for purpose. Validation of container closure system integrity should demonstrate no penetration of microbial contaminants or chemical or physical impurities.5",
+     "list_item": true
+    },
+    {
+     "ref": "Q23.6",
+     "text": "Per 21 CFR 211.160, 211.165, and 211.166, there must be appropriate testing to demonstrate conformance to product specifications. When preservatives are used to maintain sterility of ophthalmic products in multidose containers,6 manufacturers should (1) demonstrate that the preservatives have sufficient bactericidal and fungistatic activity to inhibit growth of microorganisms over the product’s shelf life and during use; and (2) test drug products at release and throughout the product’s shelf life to confirm they have a sufficient amount of the preservatives to maintain sterility.7",
+     "list_item": true
+    },
+    {
+     "ref": "Q23.7",
+     "text": "Per 21 CFR 211.167, there are special testing requirements for products purporting to be sterile and/or pyrogen free, specifically use of appropriate laboratory testing to determine conformance to requirements for sterility. This includes testing for microbial contamination and pyrogens or bacterial endotoxins (e.g., release and stability testing of the drug product in the commercially marketed container closure system).",
+     "list_item": true
+    },
+    {
+     "ref": "Q23.8",
+     "text": "FDA assesses compliance with these and other applicable CGMP requirements through facility inspections under section 704(a)(1) of the FD&C Act, records requests under section 704(a)(4) of the FD&C Act, and other oversight tools. Manufacturers can find additional insight in the guidance for industry Submission Documentation for Sterilization Process Validation in Applications for Human and Veterinary Drug Products, which, although focused on application submission, includes information about the efficacy of sterilization processes."
+    },
+    {
+     "ref": "Q23.9",
+     "text": "1 As defined in guidance for industry Quality Considerations for Topical Ophthalmic Drug Products (December 2023)."
+    },
+    {
+     "ref": "Q23.10",
+     "text": "2 See 21 CFR 200.50(a)(1)."
+    },
+    {
+     "ref": "Q23.11",
+     "text": "3 See FDA’s alerts and warnings about eye drops at https://www.fda.gov/drugs/buying-using-medicine-safely/what-you-should-know-about-eye-drops."
+    },
+    {
+     "ref": "Q23.12",
+     "text": "4 See FDA’s 2004 guidance for industry Sterile Drug Products Produced by Aseptic Processing—Current Good Manufacturing Practice."
+    },
+    {
+     "ref": "Q23.13",
+     "text": "5 This is consistent with USP General Chapter <771> Ophthalmic Products–Quality Tests."
+    },
+    {
+     "ref": "Q23.14",
+     "text": "6 Liquid ophthalmic products in multidose containers should contain one or more suitable and harmless substances that will inhibit the growth of microorganisms; see 21 CFR 200.50(b). See also USP General Chapter <51> Antimicrobial Effectiveness Testing."
+    },
+    {
+     "ref": "Q23.15",
+     "text": "7 USP General Chapter <51> Antimicrobial Effectiveness Testing."
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-production-process-controls.html:Q24",
+   "source": "fda-cgmp-qa-production-process-controls.html",
+   "unit": "Q24",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q24",
+     "text": "For human cell and gene therapy products, is there a set minimum number of batches that is required for process performance qualification?"
+    },
+    {
+     "ref": "Q24.1",
+     "text": "No. There is no set minimum number of process performance qualification (PPQ) batches required to support process validation for human cell and gene therapy (CGT) products. While PPQ is a critical step in validating the performance of a commercial manufacturing process, a minimum number of batches is not specified in biologics licensing requirements (21 CFR 601.20) or CGMP regulations (for example, 21 CFR 211.100 and 21 CFR 211.110)."
+    },
+    {
+     "ref": "Q24.2",
+     "text": "However, biologics license application (BLA) submissions are expected to include PPQ data, but the amount of PPQ data can be adjusted to circumstances when justified. FDA uses a flexible, science- and risk-based approach to help expedite CGT product development when PPQ production limitations arise."
+    },
+    {
+     "ref": "Q24.3",
+     "text": "When PPQ production limitations exist, the number of PPQ batches needed can be determined based on context-specific factors, such as the complexity of the manufacturing process, the levels of control in place, and the manufacturer’s overall level of understanding of the product and process. This understanding comes from characterization studies that should be performed during the design of the manufacturing process and the control strategy, and these studies should be documented in the BLA. In addition, manufacturers can document relevant manufacturing experience from other sufficiently similar products and processes."
+    },
+    {
+     "ref": "Q24.4",
+     "text": "Investigational new drug (IND) application sponsors who are preparing to validate the manufacturing process of a CGT product are encouraged to contact CBER to discuss their specific circumstances and what flexibilities may apply to validation of their product’s manufacturing process."
+    }
+   ]
+  }
+ ]
+}

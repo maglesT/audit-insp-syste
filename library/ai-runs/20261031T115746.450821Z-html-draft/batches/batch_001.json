@@ -1,0 +1,276 @@
+{
+ "instructions": "You read an FDA web page (a Q&A page on CGMP, a Guide to Inspections, an Inspection Technical Guide, a Compliance\nPolicy Guide or an alert to manufacturers) and list what it expects of a drug manufacturer. Each unit is given as\nits paragraphs, each with its reference (\"Q4.2\" on a Q&A page: question 4, answer paragraph 2; \"¶17\" elsewhere) and\nits exact text; \"context\" entries are headings or labels (not citable); \"list_item\" marks a list item, whose\nlead-in is the paragraph ending in \":\" above it. Your output is checked by software against that exact text and by\nindependent reviewers, so precision matters more than wording.\n\nList each separate expectation as its own item, so that together your items cover every expectation in the unit.\nOne expectation is one thing a manufacturer must, should or may do, with all its conditions, numbers and\nqualifiers; do not split one expectation across items. What counts:\n- what FDA says a firm must, should or may do (\"FDA expects firms to have written procedures ...\", \"manufacturers\n  should ...\", \"are required by the CGMP regulations to ...\");\n- in a Guide to Inspections or Inspection Technical Guide, what the investigator is told to check (\"Determine\n  whether the firm has validated ...\", \"Check that ...\", \"Review the ...\"): write the practice the firm is expected\n  to have (\"Validate ...\"), not the investigator's task. When the text only says what to look at (\"Examine the\n  design of equipment\") and states no expectation, write the expectation the text itself gives in the same\n  paragraph; if it gives none, put the sentence in not_applicable (\"inspection step without a stated expectation\").\nFor each item:\n- statement: the expectation in your own plain English words, as one checklist item a site could be audited\n  against. Do not copy more than a few words in a row. Keep every condition (\"where\", \"if\", \"unless\", \"when\",\n  \"except\") and every number. Do not add anything the text does not say. The statement itself must carry every\n  condition or qualifier of the lead-in above a list item. The statement is shown to customers: never cite a\n  regulation, section, question or paragraph number in it (\"21 CFR 211.42(d)\", \"Q4\", \"see above\"); say what is\n  required instead.\n- quote: the exact span of ONE paragraph's text that states the whole expectation, copied character for character\n  (matched against the page text by software; do not fix typos or change punctuation, keep footnote marks as\n  printed). A quote may continue into the paragraphs after it in the same unit, in order (e.g. a lead-in and its\n  list items), but must start in the cited paragraph.\n- clause_number: the reference of the paragraph the quote starts in, exactly as given (\"Q4.2\", \"¶17\").\n- strength: \"mandatory\" where the text states a legal requirement (shall / must / is required / may not, \"the\n  CGMP regulations require\"); \"recommended\" for should, \"FDA expects\", \"FDA recommends\", and for an inspection\n  point; \"optional\" for may / is acceptable. A list item without such a word takes its lead-in's.\n- plant_types: from OSD, LIQ, SEMI, INJ, API (INJ = sterile injectables); the plant scope given unless the text\n  narrows it. Text limited to non-sterile products does not apply to INJ; text limited to sterile products\n  (parenterals, aseptic processing, terminal sterilization) applies only to INJ (and API where in scope).\n- numbers: every number, limit, frequency or period in the quote, as written (not regulation references).\n- condition: the condition or trigger in a few words, \"\" if none. This field only repeats what the statement\n  already says.\n- topic: the sub-topic id from TOPICS the expectation belongs to.\n\nDo not narrow or widen a term. Where the text gives examples (\"such as ...\"), keep them as examples; where it\ngives a closed list, keep it closed.\n\nSentences that state no expectation for the manufacturer go in not_applicable: the question itself, background and\nhistory, definitions, descriptions of what happened at a firm, FDA's own actions or enforcement, statements of\npurpose or scope, references, an inspection step without a stated expectation. One entry per SENTENCE, each with\nthe paragraph reference, the sentence's first 8 or more words copied exactly, and the reason in a few words. A\nsentence with \"should\", \"must\", \"FDA expects\" or an instruction to the investigator needs an item or a\nnot_applicable entry.\n\nWrite the answers file named in your task: {\"answers\": [one object per unit with \"unit\" set to the unit's \"id\"\nexactly, \"items\" and \"not_applicable\"]}.\n",
+ "topics": [
+  "QS.PQS",
+  "QS.MGMT",
+  "QS.QRM",
+  "QS.PQR",
+  "QS.CHANGE",
+  "QS.DEV",
+  "QS.CAPA",
+  "PER.ORG",
+  "PER.KEY",
+  "PER.TRAIN",
+  "PER.HYG",
+  "PER.GOWN",
+  "PREM.DESIGN",
+  "PREM.PROD",
+  "PREM.STORE",
+  "PREM.QC",
+  "PREM.ANC",
+  "EQ.DESIGN",
+  "EQ.MAINT",
+  "EQ.CLEAN",
+  "EQ.CAL",
+  "DOC.SYS",
+  "DOC.SPEC",
+  "DOC.MFR",
+  "DOC.BMR",
+  "DOC.SOP",
+  "DOC.RET",
+  "MAT.SUPP",
+  "MAT.RECV",
+  "MAT.SAMP",
+  "MAT.STATUS",
+  "MAT.PACK",
+  "MAT.REJ",
+  "PROD.GEN",
+  "PROD.XCONT",
+  "PROD.IPC",
+  "PROD.YIELD",
+  "PROD.PACK",
+  "PROD.REWORK",
+  "QC.GEN",
+  "QC.SAMP",
+  "QC.TEST",
+  "QC.OOS",
+  "QC.STAB",
+  "QC.REF",
+  "QC.MICRO",
+  "VAL.PLAN",
+  "VAL.QUAL",
+  "VAL.PROC",
+  "VAL.CLEAN",
+  "VAL.METH",
+  "CSV.VAL",
+  "CSV.ACCESS",
+  "CSV.AUDIT",
+  "CSV.ESIG",
+  "CSV.DI",
+  "UTIL.WATER",
+  "UTIL.HVAC",
+  "UTIL.GAS",
+  "CCS.STRAT",
+  "CCS.EM",
+  "CCS.CLEAN",
+  "CCS.PEST",
+  "STER.GRADE",
+  "STER.ASEPT",
+  "STER.APS",
+  "STER.STERIL",
+  "STER.FILT",
+  "STER.CCI",
+  "STER.LYO",
+  "API.START",
+  "API.PROC",
+  "API.IMP",
+  "API.SOLV",
+  "OUT.CONTRACT",
+  "OUT.AGREE",
+  "CMP.COMPL",
+  "CMP.RECALL",
+  "CMP.REPORT",
+  "SI.PROG",
+  "SI.TEAM",
+  "SI.REPORT",
+  "SI.FOLLOW",
+  "DIST.STORE",
+  "DIST.TRANS",
+  "DIST.RETURN",
+  "REL.QP",
+  "REL.REVIEW"
+ ],
+ "schema": {
+  "type": "object",
+  "required": [
+   "unit",
+   "items",
+   "not_applicable"
+  ],
+  "properties": {
+   "unit": {
+    "type": "string"
+   },
+   "items": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "statement",
+      "quote",
+      "clause_number",
+      "strength",
+      "plant_types",
+      "numbers",
+      "condition",
+      "topic"
+     ],
+     "properties": {
+      "statement": {
+       "type": "string"
+      },
+      "quote": {
+       "type": "string"
+      },
+      "clause_number": {
+       "type": "string"
+      },
+      "strength": {
+       "enum": [
+        "mandatory",
+        "recommended",
+        "optional"
+       ]
+      },
+      "plant_types": {
+       "type": "array",
+       "items": {
+        "enum": [
+         "OSD",
+         "LIQ",
+         "SEMI",
+         "INJ",
+         "API"
+        ]
+       }
+      },
+      "numbers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "condition": {
+       "type": "string"
+      },
+      "topic": {
+       "type": "string"
+      }
+     }
+    }
+   },
+   "not_applicable": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "clause_number",
+      "text",
+      "reason"
+     ],
+     "properties": {
+      "clause_number": {
+       "type": "string"
+      },
+      "text": {
+       "type": "string"
+      },
+      "reason": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  }
+ },
+ "units": [
+  {
+   "id": "fda-alert-benzene-contamination.html:¶8-¶18",
+   "source": "fda-alert-benzene-contamination.html",
+   "unit": "¶8-¶18",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI"
+   ],
+   "paragraphs": [
+    {
+     "ref": "¶8",
+     "text": "Drug manufacturers are required to ensure the safety and quality of their drugs. FDA reminds manufacturers of drugs marketed under approved applications and manufacturers of other drugs, including over-the-counter monograph drug products, of their obligation to ensure their products conform to appropriate quality specifications. As noted above, benzene contamination may be related to inactive ingredients, such as carbomers and isobutane, or to degradation of certain active ingredients. Drug components that are hydrocarbons (or are manufactured with benzene or other hydrocarbons) may indicate a higher likelihood of benzene contamination.",
+     "heading_path": "FDA alerts drug manufacturers to the risk of benzene contamination in certain drugs > What drug manufacturers should do"
+    },
+    {
+     "ref": "¶9",
+     "text": "Benzoyl peroxide, a commonly used active ingredient in acne treatment drug products, may degrade into benzene under certain conditions (such as extreme temperatures). FDA is also aware of ingredients, such as the antifungal preservative sodium benzoate, that in combination with chemicals, such as antioxidants in a drug formulation, may yield benzene under certain conditions. The formation of benzene from benzoate can lead to an increase in benzene content over a drug’s shelf-life and should be considered when determining the appropriate timing for benzene testing, e.g., testing at release and on stability (21 CFR 211.165, 211.166), and establishment of an appropriate expiration date (21 CFR 211.137). FDA reminds manufacturers that changes in raw materials throughout the lifecycle of the drug, including changes in raw material suppliers, warrant additional scrutiny for the potential risk of benzene contamination.",
+     "heading_path": "FDA alerts drug manufacturers to the risk of benzene contamination in certain drugs > What drug manufacturers should do"
+    },
+    {
+     "ref": "¶10",
+     "text": "Manufacturers of drug products at risk for benzene contamination should test their drugs accordingly and should not release any drug product batch that would expose consumers to more than 20 mcg per day of benzene from the product. For products that have a 10 g daily dose, this means that benzene levels should be limited to no more than 2 ppm. For products that have a daily dose above 10 g, manufacturers should determine the appropriate concentration limit for their product that ensures consumers are not exposed to more than 20 mcg per day of benzene from the product. If any drug product batches containing benzene above this level are already in distribution, the manufacturer should contact the appropriate Division of Pharmaceutical Quality Operations in the Office of Inspections and Investigations (OII) at FDA to discuss the voluntary initiation of a recall.",
+     "heading_path": "FDA alerts drug manufacturers to the risk of benzene contamination in certain drugs > What drug manufacturers should do"
+    },
+    {
+     "context": "Assessing Supply Disruptions"
+    },
+    {
+     "ref": "¶11",
+     "text": "If decisions to not release a drug product or to initiate a recall are likely to disrupt the drug supply, manufacturers should contact CDER’s Drug Shortages Staff immediately at drugshortages@fda.hhs.gov. Contacting the Drug Shortages Staff in writing allows manufacturers of certain covered drug products to meet applicable obligations to report discontinuances or interruptions in drug manufacture under 21 U.S.C. 356C(b) and FDA’s associated regulations. This also allows FDA to evaluate the market and determine if additional steps are needed to avoid a supply disruption that may impact public health.",
+     "heading_path": "FDA alerts drug manufacturers to the risk of benzene contamination in certain drugs > Assessing Supply Disruptions"
+    },
+    {
+     "context": "Submitting Field Alert Reports"
+    },
+    {
+     "ref": "¶12",
+     "text": "NDA and ANDA holders are required to submit a Field Alert Report (FAR) if testing reveals that one or more distributed batches of a drug product fails to meet the specification established for it in the application (21 CFR 314.81(b)(1)(ii)). For products at risk of benzene contamination, this would encompass products for which testing reveals benzene above 2 ppm, or, for drug products that have daily doses of more than 10 g, if testing reveals benzene above the level that would expose consumers to more than 20 mcg per day from the product. FDA’s guidance Field Alert Report Submission: Questions and Answers Guidance for Industry addresses how to submit a FAR.",
+     "heading_path": "FDA alerts drug manufacturers to the risk of benzene contamination in certain drugs > Submitting Field Alert Reports"
+    },
+    {
+     "context": "Contacting FDA"
+    },
+    {
+     "ref": "¶13",
+     "text": "Manufacturers of nonapplication products, including over-the-counter monograph drug products, should contact FDA using the information in the table below when testing reveals benzene in a product.",
+     "list_item": true,
+     "heading_path": "FDA alerts drug manufacturers to the risk of benzene contamination in certain drugs > Contacting FDA"
+    },
+    {
+     "ref": "¶14",
+     "text": "Manufacturers should also be prepared to provide FDA with test results and any information available on the potential source of the benzene to assist in FDA’s analysis.",
+     "list_item": true,
+     "heading_path": "FDA alerts drug manufacturers to the risk of benzene contamination in certain drugs > Contacting FDA"
+    },
+    {
+     "ref": "¶15",
+     "text": "The following chart explains when and how manufacturers should contact FDA if testing reveals the presence of benzene and the information FDA may request from drug manufacturers when following up:",
+     "heading_path": "FDA alerts drug manufacturers to the risk of benzene contamination in certain drugs > Contacting FDA"
+    },
+    {
+     "context": "Finding"
+    },
+    {
+     "context": "Contact Method"
+    },
+    {
+     "context": "Notes"
+    },
+    {
+     "ref": "¶16",
+     "text": "Drug product batches already in distribution with benzene levels above 2 ppm (or, if the product has a daily dose of more than 10 g/day, with benzene above a level that would expose consumers to more than 20 mcg/day of benzene)",
+     "heading_path": "FDA alerts drug manufacturers to the risk of benzene contamination in certain drugs > Contacting FDA"
+    },
+    {
+     "ref": "¶17",
+     "text": "Contact appropriate OII Division Recall Coordinators",
+     "heading_path": "FDA alerts drug manufacturers to the risk of benzene contamination in certain drugs > Contacting FDA"
+    },
+    {
+     "ref": "¶18",
+     "text": "Field Alert Reports are required for ANDAs and NDAs with such findings for distributed drug products (21 CFR 314.81(b)(1)). Application holders notified of benzene results from the manufacturer of an API used in their product are required to submit FARs.",
+     "heading_path": "FDA alerts drug manufacturers to the risk of benzene contamination in certain drugs > Contacting FDA"
+    }
+   ]
+  }
+ ]
+}

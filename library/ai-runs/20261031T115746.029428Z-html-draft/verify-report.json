@@ -1,0 +1,44 @@
+{
+ "items": 54,
+ "both_correct": 49,
+ "both_incorrect": 1,
+ "disagree": 4,
+ "unanswered": 0,
+ "cases": [
+  {
+   "id": "fda-cgmp-qa-equipment.html:Q1#4",
+   "a": "correct",
+   "a_reason": "Exact quote; periodic verification with the once-a-year common frequency and NIST-traceable or foreign accredited standards all included; 'should' matches recommended.",
+   "b": "incorrect",
+   "b_reason": "Quote is exact, but the statement changes \"NIST-accredited standards in use in other countries\" into \"nationally accredited equivalents\", which is a different requirement from the text."
+  },
+  {
+   "id": "fda-cgmp-qa-equipment.html:Q4#1",
+   "a": "incorrect",
+   "a_reason": "The text says Mycoplasma environmental monitoring 'requires' selective media, which maps to mandatory, but the item is graded recommended; strength mismatch.",
+   "b": "correct",
+   "b_reason": "Quote is exact; the statement gives the whole obligation with its conditions, adds nothing, and the recommended strength matches the text, which applies to all listed plant types."
+  },
+  {
+   "id": "fda-cgmp-qa-equipment.html:Q11#1",
+   "a": "incorrect",
+   "a_reason": "Exact quote, but the statement adds a second obligation (do not apply a material-validated procedure to other equipment/compounds) beyond the quoted 'must consider' obligation, so it does not state exactly one obligation.",
+   "b": "incorrect",
+   "b_reason": "Quote is exact and the consider-factors obligation is stated in full, but the statement adds a second instruction (do not apply a material-specific procedure elsewhere) that goes beyond the quoted obligation."
+  },
+  {
+   "id": "fda-cgmp-qa-equipment.html:Q13#1",
+   "a": "incorrect",
+   "a_reason": "Exact quote and strength match, but the text concerns water for injection systems used for sterile injectable manufacture, so it does not apply to OSD, LIQ and SEMI plants listed.",
+   "b": "correct",
+   "b_reason": "Quote is exact; the statement gives the whole obligation with its conditions, adds nothing, and the mandatory strength matches the text, which applies to all listed plant types."
+  },
+  {
+   "id": "fda-cgmp-qa-equipment.html:Q13#3",
+   "a": "incorrect",
+   "a_reason": "Exact quote and all three evaluation factors included, but WFI piping text applies to sterile injectable manufacture, not to the OSD, LIQ and SEMI plants listed.",
+   "b": "correct",
+   "b_reason": "Quote is exact; the statement gives the whole obligation with its conditions, adds nothing, and the recommended strength matches the text, which applies to all listed plant types."
+  }
+ ]
+}

@@ -1,0 +1,315 @@
+{
+ "instructions": "You read an FDA web page (a Q&A page on CGMP, a Guide to Inspections, an Inspection Technical Guide, a Compliance\nPolicy Guide or an alert to manufacturers) and list what it expects of a drug manufacturer. Each unit is given as\nits paragraphs, each with its reference (\"Q4.2\" on a Q&A page: question 4, answer paragraph 2; \"¶17\" elsewhere) and\nits exact text; \"context\" entries are headings or labels (not citable); \"list_item\" marks a list item, whose\nlead-in is the paragraph ending in \":\" above it. Your output is checked by software against that exact text and by\nindependent reviewers, so precision matters more than wording.\n\nList each separate expectation as its own item, so that together your items cover every expectation in the unit.\nOne expectation is one thing a manufacturer must, should or may do, with all its conditions, numbers and\nqualifiers; do not split one expectation across items. What counts:\n- what FDA says a firm must, should or may do (\"FDA expects firms to have written procedures ...\", \"manufacturers\n  should ...\", \"are required by the CGMP regulations to ...\");\n- in a Guide to Inspections or Inspection Technical Guide, what the investigator is told to check (\"Determine\n  whether the firm has validated ...\", \"Check that ...\", \"Review the ...\"): write the practice the firm is expected\n  to have (\"Validate ...\"), not the investigator's task. When the text only says what to look at (\"Examine the\n  design of equipment\") and states no expectation, write the expectation the text itself gives in the same\n  paragraph; if it gives none, put the sentence in not_applicable (\"inspection step without a stated expectation\").\nFor each item:\n- statement: the expectation in your own plain English words, as one checklist item a site could be audited\n  against. Do not copy more than a few words in a row. Keep every condition (\"where\", \"if\", \"unless\", \"when\",\n  \"except\") and every number. Do not add anything the text does not say. The statement itself must carry every\n  condition or qualifier of the lead-in above a list item. The statement is shown to customers: never cite a\n  regulation, section, question or paragraph number in it (\"21 CFR 211.42(d)\", \"Q4\", \"see above\"); say what is\n  required instead.\n- quote: the exact span of ONE paragraph's text that states the whole expectation, copied character for character\n  (matched against the page text by software; do not fix typos or change punctuation, keep footnote marks as\n  printed). A quote may continue into the paragraphs after it in the same unit, in order (e.g. a lead-in and its\n  list items), but must start in the cited paragraph.\n- clause_number: the reference of the paragraph the quote starts in, exactly as given (\"Q4.2\", \"¶17\").\n- strength: \"mandatory\" where the text states a legal requirement (shall / must / is required / may not, \"the\n  CGMP regulations require\"); \"recommended\" for should, \"FDA expects\", \"FDA recommends\", and for an inspection\n  point; \"optional\" for may / is acceptable. A list item without such a word takes its lead-in's.\n- plant_types: from OSD, LIQ, SEMI, INJ, API (INJ = sterile injectables); the plant scope given unless the text\n  narrows it. Text limited to non-sterile products does not apply to INJ; text limited to sterile products\n  (parenterals, aseptic processing, terminal sterilization) applies only to INJ (and API where in scope). Text\n  that rests on the CGMP regulations for finished pharmaceuticals (21 CFR 210/211, \"drug product manufacturers\",\n  \"finished drug products\") does not apply to API unless it speaks of APIs or bulk drug substances too.\n- numbers: every number, limit, frequency or period in the quote, as written (not regulation references).\n- condition: the condition or trigger in a few words, \"\" if none. This field only repeats what the statement\n  already says.\n- topic: the sub-topic id from TOPICS the expectation belongs to.\n\nDo not narrow or widen a term. Where the text gives examples (\"such as ...\"), keep them as examples; where it\ngives a closed list, keep it closed.\n\nSentences that state no expectation for the manufacturer go in not_applicable: the question itself, background and\nhistory, definitions, descriptions of what happened at a firm, FDA's own actions or enforcement, statements of\npurpose or scope, references, an inspection step without a stated expectation. One entry per SENTENCE, each with\nthe paragraph reference, the sentence's first 8 or more words copied exactly, and the reason in a few words. A\nsentence with \"should\", \"must\", \"FDA expects\" or an instruction to the investigator needs an item or a\nnot_applicable entry.\n\nWrite the answers file named in your task: {\"answers\": [one object per unit with \"unit\" set to the unit's \"id\"\nexactly, \"items\" and \"not_applicable\"]}.\n",
+ "topics": [
+  "QS.PQS",
+  "QS.MGMT",
+  "QS.QRM",
+  "QS.PQR",
+  "QS.CHANGE",
+  "QS.DEV",
+  "QS.CAPA",
+  "PER.ORG",
+  "PER.KEY",
+  "PER.TRAIN",
+  "PER.HYG",
+  "PER.GOWN",
+  "PREM.DESIGN",
+  "PREM.PROD",
+  "PREM.STORE",
+  "PREM.QC",
+  "PREM.ANC",
+  "EQ.DESIGN",
+  "EQ.MAINT",
+  "EQ.CLEAN",
+  "EQ.CAL",
+  "DOC.SYS",
+  "DOC.SPEC",
+  "DOC.MFR",
+  "DOC.BMR",
+  "DOC.SOP",
+  "DOC.RET",
+  "MAT.SUPP",
+  "MAT.RECV",
+  "MAT.SAMP",
+  "MAT.STATUS",
+  "MAT.PACK",
+  "MAT.REJ",
+  "PROD.GEN",
+  "PROD.XCONT",
+  "PROD.IPC",
+  "PROD.YIELD",
+  "PROD.PACK",
+  "PROD.REWORK",
+  "QC.GEN",
+  "QC.SAMP",
+  "QC.TEST",
+  "QC.OOS",
+  "QC.STAB",
+  "QC.REF",
+  "QC.MICRO",
+  "VAL.PLAN",
+  "VAL.QUAL",
+  "VAL.PROC",
+  "VAL.CLEAN",
+  "VAL.METH",
+  "CSV.VAL",
+  "CSV.ACCESS",
+  "CSV.AUDIT",
+  "CSV.ESIG",
+  "CSV.DI",
+  "UTIL.WATER",
+  "UTIL.HVAC",
+  "UTIL.GAS",
+  "CCS.STRAT",
+  "CCS.EM",
+  "CCS.CLEAN",
+  "CCS.PEST",
+  "STER.GRADE",
+  "STER.ASEPT",
+  "STER.APS",
+  "STER.STERIL",
+  "STER.FILT",
+  "STER.CCI",
+  "STER.LYO",
+  "API.START",
+  "API.PROC",
+  "API.IMP",
+  "API.SOLV",
+  "OUT.CONTRACT",
+  "OUT.AGREE",
+  "CMP.COMPL",
+  "CMP.RECALL",
+  "CMP.REPORT",
+  "SI.PROG",
+  "SI.TEAM",
+  "SI.REPORT",
+  "SI.FOLLOW",
+  "DIST.STORE",
+  "DIST.TRANS",
+  "DIST.RETURN",
+  "REL.QP",
+  "REL.REVIEW"
+ ],
+ "schema": {
+  "type": "object",
+  "required": [
+   "unit",
+   "items",
+   "not_applicable"
+  ],
+  "properties": {
+   "unit": {
+    "type": "string"
+   },
+   "items": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "statement",
+      "quote",
+      "clause_number",
+      "strength",
+      "plant_types",
+      "numbers",
+      "condition",
+      "topic"
+     ],
+     "properties": {
+      "statement": {
+       "type": "string"
+      },
+      "quote": {
+       "type": "string"
+      },
+      "clause_number": {
+       "type": "string"
+      },
+      "strength": {
+       "enum": [
+        "mandatory",
+        "recommended",
+        "optional"
+       ]
+      },
+      "plant_types": {
+       "type": "array",
+       "items": {
+        "enum": [
+         "OSD",
+         "LIQ",
+         "SEMI",
+         "INJ",
+         "API"
+        ]
+       }
+      },
+      "numbers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "condition": {
+       "type": "string"
+      },
+      "topic": {
+       "type": "string"
+      }
+     }
+    }
+   },
+   "not_applicable": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "clause_number",
+      "text",
+      "reason"
+     ],
+     "properties": {
+      "clause_number": {
+       "type": "string"
+      },
+      "text": {
+       "type": "string"
+      },
+      "reason": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  }
+ },
+ "units": [
+  {
+   "id": "fda-ora-guide-sterile-drug-substance-1994.html:¶47-¶58",
+   "source": "fda-ora-guide-sterile-drug-substance-1994.html",
+   "unit": "¶47-¶58",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "API",
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "¶47",
+     "text": "Alternative proposals for the validation of the aseptic processing of bulk pharmaceuticals will be considered by FDA on a case-by-case basis. For example, it may be acceptable to exclude from the aseptic processing validation procedure certain stages of the post-sterilization bulk process that take place in a totally closed system. Such closed systems should be sterilized in place by a validated procedure, integrity tested for each lot, and should not be subject to any intrusions whereby there may be the likelihood of microbial ingress. Suitable continuous system pressurization would be considered an appropriate means for ensuring system integrity.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > VII. VALIDATION"
+    },
+    {
+     "context": "VIII. WATER FOR INJECTION"
+    },
+    {
+     "ref": "¶48",
+     "text": "Although water may not be a component of the sterile drug substance, water that comes in contact with the equipment or that enters into the reaction can be a source of impurities (e.g., endotoxins). Therefore, only water for injection should be utilized.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > VIII. WATER FOR INJECTION"
+    },
+    {
+     "ref": "¶49",
+     "text": "Some manufacturers have attempted to utilize marginal systems, such as single pass Reverse Osmosis (RO) systems. For example, a foreign drug substance manufacturer was using a single pass RO system with post RO sterilizing filters to minimize microbiological contamination. This system was found to be unacceptable. RO filters are not absolute and should therefore be in series. Also, the use of sterilizing filters in a Water for Injection system to mask a microbiological (endotoxin) problem has also been unacceptable. As with environmental monitoring, periodic reports should be reviewed.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > VIII. WATER FOR INJECTION"
+    },
+    {
+     "ref": "¶50",
+     "text": "If any questionable conditions are found, refer to the Inspection Guide for High Purity Water Systems.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > VIII. WATER FOR INJECTION"
+    },
+    {
+     "context": "IX. TERMINAL STERILIZATION"
+    },
+    {
+     "ref": "¶51",
+     "text": "There are some manufacturers who sterilize bulk powders after processing, by the use of ethylene oxide or dry heat. Some sterile bulk powders can withstand the lengthy times and high temperatures necessary for dry heat sterilization. In the process validation for a dry heat cycle for a sterile powder, important aspects that should be reviewed include: heat penetration and heat distribution, times, temperatures, stability (in relation to the amount of heat received), and particulates.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > IX. TERMINAL STERILIZATION"
+    },
+    {
+     "ref": "¶52",
+     "text": "With regard to ethylene oxide, a substantial part of the sterile bulk drug industry has discontinued the use of ethylene oxide as a \"sterilizing\" agent. Because of employee safety considerations, ethylene oxide residues in product and the inability to validate ethylene oxide sterilization, its use is on the decline. As a primary means of sterilization, its utilization is questionable because of lack of assurance of penetration into the crystal core of a sterile powder.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > IX. TERMINAL STERILIZATION"
+    },
+    {
+     "ref": "¶53",
+     "text": "Ethylene oxide has also been utilized in the treatment of sterile powders. Its principal use has been for surface sterilization of powders as a precaution against potential microbiological contamination of the sterile powder during aseptic handling.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > IX. TERMINAL STERILIZATION"
+    },
+    {
+     "ref": "¶54",
+     "text": "There are some manufacturers of ophthalmics that continue to use it as a sterilant for the drug used in the formulation of sterile ophthalmic ointments and suspensions. If used as a primary sterilant, validation data should be reviewed. Refer to the Inspection Guide for Topical Products for further discussion.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > IX. TERMINAL STERILIZATION"
+    },
+    {
+     "context": "X. REWORK/REPROCESSING/RECLAMATION"
+    },
+    {
+     "ref": "¶55",
+     "text": "As with the principal manufacturing process, reprocessing procedures should also be validated. Additionally, these procedures must be approved in filings.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > X. REWORK/REPROCESSING/RECLAMATION"
+    },
+    {
+     "ref": "¶56",
+     "text": "Review reprocessed batches and data that were used to validate the process. Detailed investigation reports, including the description, cause, and corrective action should be available for the batch to be reprocessed.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > X. REWORK/REPROCESSING/RECLAMATION"
+    },
+    {
+     "context": "XI. LABORATORY TESTING AND SPECIFICATIONS"
+    },
+    {
+     "ref": "¶57",
+     "text": "The sterility testing of sterile bulk substances should be observed. Additionally, any examples of initial sterility test failures should be investigated. The release of a batch, particularly of a sterile bulk drug substance, which fails an initial sterility test and passes a retest is very difficult to justify. Refer to the Microbiological Guide and Laboratory Guide for additional direction.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > XI. LABORATORY TESTING AND SPECIFICATIONS"
+    },
+    {
+     "ref": "¶58",
+     "text": "Particulate matter is another major concern with sterile powders. Specifications for particulate matter should be tighter than the compendial limits established for sterile dosage forms. The subsequent handling, transfer and filling of sterile powders increases the level of particulates. It is also important to identify particulates so that their source can be determined. Review the firm's program for performing particulate matter testing. If there are no official limits established, review their release criteria for particulates, and the basis of their limit.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > XI. LABORATORY TESTING AND SPECIFICATIONS"
+    }
+   ]
+  },
+  {
+   "id": "fda-ora-guide-sterile-drug-substance-1994.html:¶59-¶63",
+   "source": "fda-ora-guide-sterile-drug-substance-1994.html",
+   "unit": "¶59-¶63",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "API",
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "¶59",
+     "text": "With regard to residues, since some sterile powders are crystallized out of organic solvents, low levels of these solvents may be unavoidable. In addition to evaluation of the process to assure that minimal levels are established, data used by the firm to establish a residue level should be reviewed. Obviously, each batch should be tested for conformance with the residue specification. Refer to the Inspection Guide for Bulk Drug Substances for additional direction regarding limits for impurities.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > XI. LABORATORY TESTING AND SPECIFICATIONS"
+    },
+    {
+     "context": "XII. PACKAGING"
+    },
+    {
+     "ref": "¶60",
+     "text": "Sterile bulk drug substances are filled into different type containers which include sterile plastic bags and sterile cans. With regard to sterile bags, sterilization by irradiation is the method of choice because of the absence of residues. There are some manufacturers, particularly foreign, which utilize formaldehyde. A major disadvantage is that formaldehyde residues may and frequently do appear in the sterile drug substance. Consequently, we have reservations about the acceptability of the use of formaldehyde for, container sterilization because of the possibility of product contamination with formaldehyde residues.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > XII. PACKAGING"
+    },
+    {
+     "ref": "¶61",
+     "text": "If multiple sterile bags are used, operations should be performed in aseptic processing areas. Since the dosage form manufacturer expects all inner bags to be sterile, outer bags should be applied over the primary bag containing the sterile drug in an aseptic processing area. One large manufacturer of a sterile powder only applied the immediate or primary bag in an aseptic processing area. Thus, the outer portion of this primary bag was contaminated when the other bags were applied over this bag in non-sterile processing areas.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > XII. PACKAGING"
+    },
+    {
+     "ref": "¶62",
+     "text": "With regard to sterile cans, a concern is particulates, which can be generated due to banging and movement. Because of some with trace quantities of aluminum, companies have moved to stainless steel cans.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > XII. PACKAGING"
+    },
+    {
+     "ref": "¶63",
+     "text": "The firm's validation data for the packaging system should be reviewed. Important aspects of the sterile bag system include residues, pinholes, foreign matter (particulates), sterility and endotoxins. Important aspects of the rigid container systems include moisture, particulates and sterility.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > XII. PACKAGING"
+    },
+    {
+     "context": "Return to: Page Top | Inspection Start"
+    }
+   ]
+  }
+ ]
+}

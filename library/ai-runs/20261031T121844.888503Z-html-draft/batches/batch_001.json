@@ -1,0 +1,498 @@
+{
+ "instructions": "You read an FDA web page (a Q&A page on CGMP, a Guide to Inspections, an Inspection Technical Guide, a Compliance\nPolicy Guide or an alert to manufacturers) and list what it expects of a drug manufacturer. Each unit is given as\nits paragraphs, each with its reference (\"Q4.2\" on a Q&A page: question 4, answer paragraph 2; \"¶17\" elsewhere) and\nits exact text; \"context\" entries are headings or labels (not citable); \"list_item\" marks a list item, whose\nlead-in is the paragraph ending in \":\" above it. Your output is checked by software against that exact text and by\nindependent reviewers, so precision matters more than wording.\n\nList each separate expectation as its own item, so that together your items cover every expectation in the unit.\nOne expectation is one thing a manufacturer must, should or may do, with all its conditions, numbers and\nqualifiers; do not split one expectation across items. What counts:\n- what FDA says a firm must, should or may do (\"FDA expects firms to have written procedures ...\", \"manufacturers\n  should ...\", \"are required by the CGMP regulations to ...\");\n- in a Guide to Inspections or Inspection Technical Guide, what the investigator is told to check (\"Determine\n  whether the firm has validated ...\", \"Check that ...\", \"Review the ...\"): write the practice the firm is expected\n  to have (\"Validate ...\"), not the investigator's task. When the text only says what to look at (\"Examine the\n  design of equipment\") and states no expectation, write the expectation the text itself gives in the same\n  paragraph; if it gives none, put the sentence in not_applicable (\"inspection step without a stated expectation\").\nFor each item:\n- statement: the expectation in your own plain English words, as one checklist item a site could be audited\n  against. Do not copy more than a few words in a row. Keep every condition (\"where\", \"if\", \"unless\", \"when\",\n  \"except\") and every number. Do not add anything the text does not say. The statement itself must carry every\n  condition or qualifier of the lead-in above a list item. The statement is shown to customers: never cite a\n  regulation, section, question or paragraph number in it (\"21 CFR 211.42(d)\", \"Q4\", \"see above\"); say what is\n  required instead.\n- quote: the exact span of ONE paragraph's text that states the whole expectation, copied character for character\n  (matched against the page text by software; do not fix typos or change punctuation, keep footnote marks as\n  printed). A quote may continue into the paragraphs after it in the same unit, in order (e.g. a lead-in and its\n  list items), but must start in the cited paragraph.\n- clause_number: the reference of the paragraph the quote starts in, exactly as given (\"Q4.2\", \"¶17\").\n- strength: \"mandatory\" where the text states a legal requirement (shall / must / is required / may not, \"the\n  CGMP regulations require\"); \"recommended\" for should, \"FDA expects\", \"FDA recommends\", and for an inspection\n  point; \"optional\" for may / is acceptable. A list item without such a word takes its lead-in's.\n- plant_types: from OSD, LIQ, SEMI, INJ, API (INJ = sterile injectables); the plant scope given unless the text\n  narrows it. Text limited to non-sterile products does not apply to INJ; text limited to sterile products\n  (parenterals, aseptic processing, terminal sterilization) applies only to INJ (and API where in scope). Text\n  that rests on the CGMP regulations for finished pharmaceuticals (21 CFR 210/211, \"drug product manufacturers\",\n  \"finished drug products\") does not apply to API unless it speaks of APIs or bulk drug substances too.\n- numbers: every number, limit, frequency or period in the quote, as written (not regulation references).\n- condition: the condition or trigger in a few words, \"\" if none. This field only repeats what the statement\n  already says.\n- topic: the sub-topic id from TOPICS the expectation belongs to.\n\nDo not narrow or widen a term. Where the text gives examples (\"such as ...\"), keep them as examples; where it\ngives a closed list, keep it closed.\n\nSentences that state no expectation for the manufacturer go in not_applicable: the question itself, background and\nhistory, definitions, descriptions of what happened at a firm, FDA's own actions or enforcement, statements of\npurpose or scope, references, an inspection step without a stated expectation. One entry per SENTENCE, each with\nthe paragraph reference, the sentence's first 8 or more words copied exactly, and the reason in a few words. A\nsentence with \"should\", \"must\", \"FDA expects\" or an instruction to the investigator needs an item or a\nnot_applicable entry.\n\nWrite the answers file named in your task: {\"answers\": [one object per unit with \"unit\" set to the unit's \"id\"\nexactly, \"items\" and \"not_applicable\"]}.\n",
+ "topics": [
+  "QS.PQS",
+  "QS.MGMT",
+  "QS.QRM",
+  "QS.PQR",
+  "QS.CHANGE",
+  "QS.DEV",
+  "QS.CAPA",
+  "PER.ORG",
+  "PER.KEY",
+  "PER.TRAIN",
+  "PER.HYG",
+  "PER.GOWN",
+  "PREM.DESIGN",
+  "PREM.PROD",
+  "PREM.STORE",
+  "PREM.QC",
+  "PREM.ANC",
+  "EQ.DESIGN",
+  "EQ.MAINT",
+  "EQ.CLEAN",
+  "EQ.CAL",
+  "DOC.SYS",
+  "DOC.SPEC",
+  "DOC.MFR",
+  "DOC.BMR",
+  "DOC.SOP",
+  "DOC.RET",
+  "MAT.SUPP",
+  "MAT.RECV",
+  "MAT.SAMP",
+  "MAT.STATUS",
+  "MAT.PACK",
+  "MAT.REJ",
+  "PROD.GEN",
+  "PROD.XCONT",
+  "PROD.IPC",
+  "PROD.YIELD",
+  "PROD.PACK",
+  "PROD.REWORK",
+  "QC.GEN",
+  "QC.SAMP",
+  "QC.TEST",
+  "QC.OOS",
+  "QC.STAB",
+  "QC.REF",
+  "QC.MICRO",
+  "VAL.PLAN",
+  "VAL.QUAL",
+  "VAL.PROC",
+  "VAL.CLEAN",
+  "VAL.METH",
+  "CSV.VAL",
+  "CSV.ACCESS",
+  "CSV.AUDIT",
+  "CSV.ESIG",
+  "CSV.DI",
+  "UTIL.WATER",
+  "UTIL.HVAC",
+  "UTIL.GAS",
+  "CCS.STRAT",
+  "CCS.EM",
+  "CCS.CLEAN",
+  "CCS.PEST",
+  "STER.GRADE",
+  "STER.ASEPT",
+  "STER.APS",
+  "STER.STERIL",
+  "STER.FILT",
+  "STER.CCI",
+  "STER.LYO",
+  "API.START",
+  "API.PROC",
+  "API.IMP",
+  "API.SOLV",
+  "OUT.CONTRACT",
+  "OUT.AGREE",
+  "CMP.COMPL",
+  "CMP.RECALL",
+  "CMP.REPORT",
+  "SI.PROG",
+  "SI.TEAM",
+  "SI.REPORT",
+  "SI.FOLLOW",
+  "DIST.STORE",
+  "DIST.TRANS",
+  "DIST.RETURN",
+  "REL.QP",
+  "REL.REVIEW"
+ ],
+ "schema": {
+  "type": "object",
+  "required": [
+   "unit",
+   "items",
+   "not_applicable"
+  ],
+  "properties": {
+   "unit": {
+    "type": "string"
+   },
+   "items": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "statement",
+      "quote",
+      "clause_number",
+      "strength",
+      "plant_types",
+      "numbers",
+      "condition",
+      "topic"
+     ],
+     "properties": {
+      "statement": {
+       "type": "string"
+      },
+      "quote": {
+       "type": "string"
+      },
+      "clause_number": {
+       "type": "string"
+      },
+      "strength": {
+       "enum": [
+        "mandatory",
+        "recommended",
+        "optional"
+       ]
+      },
+      "plant_types": {
+       "type": "array",
+       "items": {
+        "enum": [
+         "OSD",
+         "LIQ",
+         "SEMI",
+         "INJ",
+         "API"
+        ]
+       }
+      },
+      "numbers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "condition": {
+       "type": "string"
+      },
+      "topic": {
+       "type": "string"
+      }
+     }
+    }
+   },
+   "not_applicable": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "clause_number",
+      "text",
+      "reason"
+     ],
+     "properties": {
+      "clause_number": {
+       "type": "string"
+      },
+      "text": {
+       "type": "string"
+      },
+      "reason": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  }
+ },
+ "units": [
+  {
+   "id": "fda-ora-guide-sterile-drug-substance-1994.html:¶1-¶13",
+   "source": "fda-ora-guide-sterile-drug-substance-1994.html",
+   "unit": "¶1-¶13",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "API",
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "context": "Sterile Drug Substance Manufacturers (7/94)"
+    },
+    {
+     "context": "GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS"
+    },
+    {
+     "ref": "¶1",
+     "text": "Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does no confer any rights, privileges, benefits, or immunities for or on any person(s).",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS"
+    },
+    {
+     "ref": "¶2",
+     "text": "One of the more difficult processes to inspect and one which has presented considerable problems over the years is that of the manufacture of sterile bulk drug substances. Within the past several years, there have been a number of batches of sterile bulk drug substances from different manufacturers which exhibited microbiological contamination. One manufacturer had approximately 100 batches contaminated in a 6 month time period. Another had approximately 25 batches contaminated in a similar period. Other manufacturers have had recalls due to the lack of assurance of sterility. Although the Inspection Guide for Bulk Drug Substances provides some direction for the inspection of the sterile bulk drug substance, it does not provide the detailed direction needed.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS"
+    },
+    {
+     "context": "I. INTRODUCTION"
+    },
+    {
+     "ref": "¶3",
+     "text": "In the manufacture of the sterile bulk powders, it is important to recognize that there is no further processing of the finished sterile bulk powder to remove contaminants or impurities such as particulates, endotoxins and degradants.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > I. INTRODUCTION"
+    },
+    {
+     "ref": "¶4",
+     "text": "As with other inspections, any rejected batches, along with the various reasons for rejection, should be identified early in the inspection to provide direction for the investigator. For example, lists of batches rejected and/or retested over a period of time should be obtained from the manufacturer to provide direction for coverage to be given to specific processes or systems. Because some of the actual sterile bulk operations may not be seen, and because of the complexity of the process, it is particularly important to review reports and summaries, such as validation studies, reject lists, Environmental Monitoring Summary Reports, QA Investigation Logs, etc. These systems and others are discussed in the Basic Inspection Guide. This is particularly important for the foreign sterile bulk drug substance manufacturer where time is limited.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > I. INTRODUCTION"
+    },
+    {
+     "ref": "¶5",
+     "text": "In the preparation for a sterile bulk drug substance inspection, a flow chart with the major processing steps should be obtained. Generally, the manufacture of a sterile bulk substance usually includes the following steps:",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > I. INTRODUCTION"
+    },
+    {
+     "ref": "¶6",
+     "text": "Conversion of the non-sterile drug substance to the sterile form by dissolving in a solvent, sterilization of the solution by filtration and collection in a sterilized reactor (crystallizer).",
+     "list_item": true,
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > I. INTRODUCTION"
+    },
+    {
+     "ref": "¶7",
+     "text": "Aseptic precipitation or crystallization of the sterile drug substance in the sterile reactor.",
+     "list_item": true,
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > I. INTRODUCTION"
+    },
+    {
+     "ref": "¶8",
+     "text": "Aseptic isolation of the sterile substance by centrifugation or filtration.",
+     "list_item": true,
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > I. INTRODUCTION"
+    },
+    {
+     "ref": "¶9",
+     "text": "Aseptic drying, milling and blending of the sterile substance.",
+     "list_item": true,
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > I. INTRODUCTION"
+    },
+    {
+     "ref": "¶10",
+     "text": "Aseptic sampling and packaging the drug substance.",
+     "list_item": true,
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > I. INTRODUCTION"
+    },
+    {
+     "ref": "¶11",
+     "text": "These operations should be performed in closed systems, with minimal operator handling. Any aseptic operations performed by an operator(s) other than in a closed system should be identified and carefully reviewed.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > I. INTRODUCTION"
+    },
+    {
+     "context": "II. COMPONENTS"
+    },
+    {
+     "ref": "¶12",
+     "text": "In addition to the impurity concerns for the manufacture of bulk drug substances, there is a concern with endotoxins in the manufacture of the sterile bulk drug substances. The validation report, which demonstrates the removal, if present, of endotoxins to acceptable levels, should be reviewed. Some manufacturers have commented that since an organic solvent is typically used for the conversion of the non-sterile bulk drug substance to the sterile bulk drug substance, that endotoxins will be reduced at this stage. As with any operation, this may or may not be correct. For example, in an inspection of a manufacturer who conducted extensive studies of the conversion (crystallization) of the non-sterile substance to the sterile drug substance, they found no change from the initial endotoxin level. Organic solvents were used in this conversion. Thus, it is important to review and assess this aspect of the validation report.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > II. COMPONENTS"
+    },
+    {
+     "ref": "¶13",
+     "text": "In the validation of this conversion (non-sterile to sterile) from an endotoxin perspective, challenge studies can be carried out on a laboratory or pilot scale to determine the efficiency of the step. Once it is established that the process will result in acceptable endotoxin levels, some monitoring of the production batches would be appropriate. As with any validation process, the purpose and efficiency of each step should be evaluated. For example, if the conversion (crystallization) from the non-sterile to the sterile substance is to reduce endotoxins by one log, then data should support this step.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > II. COMPONENTS"
+    }
+   ]
+  },
+  {
+   "id": "fda-ora-guide-sterile-drug-substance-1994.html:¶14-¶24",
+   "source": "fda-ora-guide-sterile-drug-substance-1994.html",
+   "unit": "¶14-¶24",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "API",
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "¶14",
+     "text": "Since endotoxins may not be uniformly distributed, it is also important to monitor the bioburden of the non-sterile substance(s) being sterilized. For example, gram negative contaminats in a non-sterile bulk drug substance prior to sterilization are of concern, particularly if the sterilization (filtration) and crystallization steps do not reduce the endotoxins to acceptable levels. Therefore, microbiological, as well as endotoxin data on the critical components and operational steps should be reviewed.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > II. COMPONENTS"
+    },
+    {
+     "context": "III. FACILITY"
+    },
+    {
+     "ref": "¶15",
+     "text": "Facility design for the aseptic processing of sterile bulk drug substances should have the same design features as an SVP aseptic processing facility. These would include temperature, humidity and pressure control. Because sterile bulk aseptic facilities are usually larger, problems with pressure differentials and sanitization have been encountered. For example, a manufacturer was found to have the gowning area under greater pressure than the adjacent aseptic areas. The need to remove solvent vapors may also impact on area pressurization.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > III. FACILITY"
+    },
+    {
+     "ref": "¶16",
+     "text": "Unnecessary equipment and/or equipment that cannot be adequately sanitized, such as wooden skids and forklift trucks, should be identified. Inquire about the movement of large quantities of sterile drug substance and the location of pass-through areas between the sterile core and non-sterile areas. Observe these areas, review environmental monitoring results and sanitization procedures.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > III. FACILITY"
+    },
+    {
+     "ref": "¶17",
+     "text": "The CGMP Regulations prohibit the use of asbestos filters in the final filtration of solutions. At present, it would be difficult for a manufacturer to justify the use of asbestos filters for filtration of air or solutions. Inquire about the use of asbestos filters.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > III. FACILITY"
+    },
+    {
+     "ref": "¶18",
+     "text": "Facilities used for the charge or addition of non-sterile components, such as the non-sterile drug substance, should be similar to those used for the compounding of parenteral solutions prior to sterilization. The concern is soluble extraneous contaminants, including endotoxins, that may be carried through the process. Observe this area and review the environmental controls and specifications to determine the viable and non-viable particulate levels allowed in this area.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > III. FACILITY"
+    },
+    {
+     "context": "IV. PROCESSING"
+    },
+    {
+     "ref": "¶19",
+     "text": "Sterile powders are usually produced by dissolving the non-sterile substance or reactants in an organic solvent and then filtering the solution through a sterilizing filter. After filtration, the sterile bulk material is separated from the solvent by crystallization or precipitation. Other methods include dissolution in an aqueous solution, filtration sterilization and separation by crystallization/filtration. Aqueous solutions can also be sterile filtered and spray dried or lyophilized.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > IV. PROCESSING"
+    },
+    {
+     "ref": "¶20",
+     "text": "In the handling of aqueous solutions, prior to solvent evaporation (either by spray drying or lyophilization), check the adequacy of the system and controls to minimize endotoxin contamination. In some instances, piping systems for aqueous solutions have been shown to be the source of endotoxin contamination in sterile powders. There should be a print available of the piping system. Trace the actual piping, compare it with the print and assure that there are no \"dead legs\" in the system.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > IV. PROCESSING"
+    },
+    {
+     "ref": "¶21",
+     "text": "The validation data for the filtration (sterilization) process should also be reviewed. Determine the firm's criteria for selection of the filter and the frequency of changing filters. Determine if the firm knows the bioburden and examine their procedures for integrity testing filters.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > IV. PROCESSING"
+    },
+    {
+     "ref": "¶22",
+     "text": "Filters might not be changed after each batch is sterilized. Determine if there is data to justify the integrity of the filters for the time periods utilized and that \"grow through\" has not occurred.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > IV. PROCESSING"
+    },
+    {
+     "ref": "¶23",
+     "text": "In the spray drying of sterile powders, there are some concerns. These include the sterilization of the spray dryer, the source of air and its quality, the chamber temperatures and the particle residence or contact time. In some cases, charring and product degradation have been found for small portions of a batch.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > IV. PROCESSING"
+    },
+    {
+     "ref": "¶24",
+     "text": "With regard to bulk lyophilization, concerns include air classification and aseptic barriers for loading and unloading the unit, partial meltback, uneven freezing and heat transfer throughout the powder bed, and the additional aseptic manipulations required to break up the large cake. For bulk lyophilization, unlike other sterile bulk operations, media challenges can be performed. At this point in time, with today's level of technology, it would seem that it would be difficult to justify the bulk lyophilization of sterile powders (from a microbiological aspect). Refer to the Guide for the Inspection of a Lyophilization Process for additional direction regarding this process.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > IV. PROCESSING"
+    }
+   ]
+  },
+  {
+   "id": "fda-ora-guide-sterile-drug-substance-1994.html:¶25-¶33",
+   "source": "fda-ora-guide-sterile-drug-substance-1994.html",
+   "unit": "¶25-¶33",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "API",
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "¶25",
+     "text": "Seek to determine the number and frequency of process changes made to a specific process or step. This can be an indicator of a problem experienced in a number of batches. A number of changes in a short period of time can be an indicator that the firm is experiencing problems. Review the Process Change SOP and the log for process changes, including the reason for such changes.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > IV. PROCESSING"
+    },
+    {
+     "context": "V. EQUIPMENT"
+    },
+    {
+     "ref": "¶26",
+     "text": "Equipment used in the processing of sterile bulk drug substances should be sterile and capable of being sterilized. This includes the crystallizer, centrifuge and dryer. The sanitization, rather than sterilization of this equipment, is unacceptable. Sterilization procedures and the validation of the sterilization of suspect pieces of equipment and transfer lines should be reviewed.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > V. EQUIPMENT"
+    },
+    {
+     "ref": "¶27",
+     "text": "The method of choice for the sterilization of equipment and transfer lines is saturated clean steam under pressure. In the validation of the sterilization of equipment and of transfer systems, Biological Indicators (BIs), as well as temperature sensors (Thermocouple (TC) or Resistance Thermal Device (RTD)) should be strategically located in cold spots where condensate may accumulate. These include the point of steam injection and steam discharge, as well as cold spots, which are usually low spots. For example, in a recent inspection, a manufacturer utilized a Sterilize-In-Place (SIP) system and only monitored the temperature at the point of discharge and not in low spots in the system where condensate can accumulate.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > V. EQUIPMENT"
+    },
+    {
+     "ref": "¶28",
+     "text": "The use of formaldehyde is a much less desirable method of sterilization of equipment. It is not used in the United States, primarily because of residue levels in both the environment and in the product. A major problem with formaldehyde is its removal from piping and surfaces. In the inspection of a facility utilizing formaldehyde as a sterilant, pay particular attention to the validation of the cleaning process. The indirect testing of product or drug substance to demonstrate the absence of formaldehyde levels in a system is unacceptable. As discussed in the Cleaning Validation Guide, there should be some direct measure or determination of the absence of formaldehyde. Since contamination in a system and in a substance is not going to be uniform, merely testing the substance as a means of validating the absence of formaldehyde is unacceptable. Key surfaces should be sampled directly for residual formaldehyde.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > V. EQUIPMENT"
+    },
+    {
+     "ref": "¶29",
+     "text": "One large foreign drug substance manufacturer, after formaldehyde sterilization of the system, had to reject the initial batches coming through the system because of formaldehyde contamination. Unfortunately, they relied on end product testing of the product and not on direct sampling to determine the absence of formaldehyde residues on equipment.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > V. EQUIPMENT"
+    },
+    {
+     "ref": "¶30",
+     "text": "SIP systems for the bulk drug substance industry require considerable maintenance, and their malfunction has directly led to considerable product contamination and recall. The corrosive nature of the sterilant, whether it is clean steam, formaldehyde, peroxide or ethylene oxide, has caused problems with gaskets and seals. In two cases, inadequate operating procedures have led to even weld failure. For example, tower or pond water was inadvertently allowed to remain in a jacket and was valved shut. Clean steam applied to the tank resulted in pressure as high as 1,000 lbs., causing pinhole formation and contamination. Review the equipment maintenance logs. Review non-schedule equipment maintenance and the possible impact on product quality. Identify those suspect batches manufactured and released prior to the repair of the equipment.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > V. EQUIPMENT"
+    },
+    {
+     "ref": "¶31",
+     "text": "Another potential problem with SIP systems is condensate removal from the environment. Condensate and excessive moisture can result in increased humidity and increases in levels of microorganisms on surfaces of equipment. Therefore, it is particularly important to review environmental monitoring after sterilization of the system.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > V. EQUIPMENT"
+    },
+    {
+     "ref": "¶32",
+     "text": "The sterile bulk industry, as the non-sterile bulk industry, typically manufactures batches on a campaign basis. While this may be efficient with regard to system sterilization, it can present problems when a batch is found contaminated in the middle of a campaign. Frequently, all batches processed in a campaign in which a contaminated batch is identified are suspect. Review the failure investigation reports and the logic for the release of any batches in a campaign. Some of the more significant recalls have occurred because of the failure of a manufacturer to conclusively identify and isolate the source of a contaminant.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > V. EQUIPMENT"
+    },
+    {
+     "context": "VI. ENVIRONMENTAL MONITORING"
+    },
+    {
+     "ref": "¶33",
+     "text": "The environmental monitoring program for the sterile bulk drug substance manufacturer should be similar to the programs employed by the SVP industry. This includes the daily use of surface plates and the monitoring of personnel. As with the SVP industry, alert or action limits should be established and appropriate follow-up action taken when they are reached.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > VI. ENVIRONMENTAL MONITORING"
+    }
+   ]
+  },
+  {
+   "id": "fda-ora-guide-sterile-drug-substance-1994.html:¶34-¶46",
+   "source": "fda-ora-guide-sterile-drug-substance-1994.html",
+   "unit": "¶34-¶46",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "API",
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "¶34",
+     "text": "There are some bulk drug substance manufacturers that utilize UV lights in operating areas. Such lights are of limited value. They may mask a contaminant on a settling or aerobic plate. They may even contribute to the generation of a resistant (flora) organism. Thus, the use of Rodac or surface plates will provide more information on levels of contamination.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > VI. ENVIRONMENTAL MONITORING"
+    },
+    {
+     "ref": "¶35",
+     "text": "There are some manufacturers that set alert/action levels on averages of plates. For the sampling of critical surfaces, such as operators' gloves, the average of results on plates is unacceptable. The primary concern is any incidence of objectionable levels of contamination that may result in a non-sterile product.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > VI. ENVIRONMENTAL MONITORING"
+    },
+    {
+     "ref": "¶36",
+     "text": "As previously discussed, it is not unusual to see the highest level of contamination on the surfaces of equipment shortly after systems are steamed. If this occurs, the cause is usually the inadequate removal of condensate.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > VI. ENVIRONMENTAL MONITORING"
+    },
+    {
+     "ref": "¶37",
+     "text": "Since processing of the sterile bulk drug substance usually occurs around the clock, monitoring surfaces and personnel during the second and third shifts should be routine.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > VI. ENVIRONMENTAL MONITORING"
+    },
+    {
+     "ref": "¶38",
+     "text": "In the management of a sterile bulk operation, periodic (weekly/monthly/quarterly) summary reports of environmental monitoring are generated. Review these reports to obtain those situations in which alert/action limits were exceeded. Review the firm's investigation report and the disposition of batches processed when objectionable environmental conditions existed.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > VI. ENVIRONMENTAL MONITORING"
+    },
+    {
+     "context": "VII. VALIDATION"
+    },
+    {
+     "ref": "¶39",
+     "text": "The validation of the sterilization of some of the equipment and delivery systems and the validation of the process from an endotoxin perspective have been discussed.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > VII. VALIDATION"
+    },
+    {
+     "ref": "¶40",
+     "text": "In addition to these parameters, demonstration of the adequacy of the process to control other physicochemical aspects should also be addressed in a validation report. Depending upon the particular substance, these include potency, impurities, particulate matter, particle size, solvent residues, moisture content, and blend uniformity. For example, if the bulk substance is a blend of two active substances or an active substance and excipient, then there should be some discussion/evaluation of the process for assuring uniformity. The process validation report for such a blend would include documentation for the evaluation and assurance of uniformity. A list of validation reports and process variables evaluated should be reviewed.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > VII. VALIDATION"
+    },
+    {
+     "ref": "¶41",
+     "text": "As with a non-sterile bulk drug substance, there should be an impurity profile and specific, validated analytical methods. Those should also be reviewed.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > VII. VALIDATION"
+    },
+    {
+     "ref": "¶42",
+     "text": "Manufacturers are expected to validate the aseptic processing of sterile BPCs. Such validation must encompass all parts, phases, steps, and activities of any process where components, fluid pathways, in-process fluids, etc., are expected to remain sterile. Furthermore, such validation must include all probable potentials for loss of sterility as a result of processing. Validation must also account for all potential avenues of microbial ingress associated with the routine use of the process.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > VII. VALIDATION"
+    },
+    {
+     "ref": "¶43",
+     "text": "The validation procedure should approximate as closely as possible all those processing steps, activities, conditions, and characteristics that may have a bearing on the possibility of microbial ingress into the system during routine production. In this regard, it is essential that validation runs are as representative aspossible of routine production to ensure that the results obtained from validation are generalizable to routine production.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > VII. VALIDATION"
+    },
+    {
+     "ref": "¶44",
+     "text": "Validation must include the 100% assessment of sterility of an appropriate material that is subjected to the validation procedure. Culture media is the material of choice. whenever feasible. Where not feasible, non-media alternatives would be acceptable. Where necessary, different materials can be used in series for different phases of a composite aseptic process incapable of accommodating a single material. In any event, some material simulating the sterile BPC, or the sterile BPC itself, must pass through the entire system that is intended to be sterile. Any material used for process validation must be microbiologically inert.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > VII. VALIDATION"
+    },
+    {
+     "ref": "¶45",
+     "text": "Environmental and personnel monitoring must be performed during validation, in a manner and amount sufficient to establish appropriate monitoring limits for routine production.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > VII. VALIDATION"
+    },
+    {
+     "ref": "¶46",
+     "text": "At least three consecutive, successful validation runs are necessary before an aseptic process can be considered to be validated.",
+     "heading_path": "Sterile Drug Substance Manufacturers (7/94) > GUIDE TO INSPECTIONS OF STERILE DRUG SUBSTANCE MANUFACTURERS > VII. VALIDATION"
+    }
+   ]
+  }
+ ]
+}

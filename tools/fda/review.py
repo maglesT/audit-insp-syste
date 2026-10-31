@@ -92,6 +92,17 @@ SKEW = 600          # seconds an imported time may lie ahead of this machine's c
 def source_text(item):
     """The text the reviewer checks the item against: the cited XML paragraph and its sub-paragraphs, or for a page
     item its page reference (the page image is in work/vision-pages, rendered by tools/pages/vision.py)."""
+    if item.get("source", "").endswith(".html"):
+        sys.path.insert(0, str(HERE))
+        import htmlprofile
+        ref = item["clause_number"].strip()
+        if ref not in htmlprofile.cited(item["source"]):
+            unit = htmlprofile.units(item["source"]).get(item.get("section", ""), [])
+            return f"({ref!r} is not a paragraph of the page; the unit's text:)\n" + "\n".join(
+                f"{p['ref']}  {p['text']}" for p in unit if p["cite"])
+        own, after = htmlprofile.run_on(ref, item["source"])
+        lead = htmlprofile.lead_in(ref, item["source"])
+        return "\n".join(([f"(lead-in) {lead}"] if lead else []) + [f"{ref}  {own}"] + after)
     if item.get("source", "").endswith(".xml"):
         sys.path.insert(0, str(HERE))
         import xmlprofile
@@ -99,6 +110,19 @@ def source_text(item):
         return "\n".join(f"{r}  {t}" for r, t in xmlprofile.paragraphs(item["source"])
                          if r == ref or r.startswith(ref + "(") or r == xmlprofile.parent(ref))
     return f"{item['source']} page {item.get('page')} (page image: work/vision-pages)"
+
+
+def quote_in_source(item, quote):
+    """A corrected quote must be in the item's source text (XML or HTML profile); page items are not checked here."""
+    sys.path.insert(0, str(HERE))
+    it = dict(item, quote=quote)
+    if item["source"].endswith(".xml"):
+        import xmlprofile
+        return xmlprofile.check_item(it, it["source"])[1]
+    if item["source"].endswith(".html"):
+        import htmlprofile
+        return htmlprofile.check_item(it, it["source"])[1]
+    return True
 
 
 def queue(run):
@@ -128,10 +152,7 @@ def decide(run, item_id, decision, by, statement=None, quote=None, note="", path
     if decision == "fix" and not statement:
         raise SystemExit("fix needs the corrected statement (--statement)")
     if quote:
-        sys.path.insert(0, str(HERE))
-        import xmlprofile
-        it = dict(items[item_id], quote=quote)
-        if items[item_id]["source"].endswith(".xml") and not xmlprofile.check_item(it, it["source"])[1]:
+        if not quote_in_source(items[item_id], quote):
             raise SystemExit("the corrected quote is not in the source text")
     rec = {"id": item_id, "run": Path(run).name, "item_hash": fingerprint(items[item_id]), "decision": decision,
            "by": by.strip(),
@@ -206,12 +227,8 @@ def import_artifact(file, path=DECISIONS, runs=RUNS):
                 why = "no such item in the run"
             elif fingerprint(items[r["id"]]) != r["item_hash"]:
                 why = "item changed since it was shown (item_hash)"
-            elif r.get("quote") and items[r["id"]]["source"].endswith(".xml"):
-                sys.path.insert(0, str(HERE))
-                import xmlprofile
-                it = dict(items[r["id"]], quote=r["quote"])
-                if not xmlprofile.check_item(it, it["source"])[1]:
-                    why = "the corrected quote is not in the source text"
+            elif r.get("quote") and not quote_in_source(items[r["id"]], r["quote"]):
+                why = "the corrected quote is not in the source text"
         if why:
             skipped.append((r, why))
             continue

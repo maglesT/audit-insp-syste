@@ -1,0 +1,609 @@
+{
+ "instructions": "You read an FDA web page (a Q&A page on CGMP, a Guide to Inspections, an Inspection Technical Guide, a Compliance\nPolicy Guide or an alert to manufacturers) and list what it expects of a drug manufacturer. Each unit is given as\nits paragraphs, each with its reference (\"Q4.2\" on a Q&A page: question 4, answer paragraph 2; \"¶17\" elsewhere) and\nits exact text; \"context\" entries are headings or labels (not citable); \"list_item\" marks a list item, whose\nlead-in is the paragraph ending in \":\" above it. Your output is checked by software against that exact text and by\nindependent reviewers, so precision matters more than wording.\n\nList each separate expectation as its own item, so that together your items cover every expectation in the unit.\nOne expectation is one thing a manufacturer must, should or may do, with all its conditions, numbers and\nqualifiers; do not split one expectation across items. What counts:\n- what FDA says a firm must, should or may do (\"FDA expects firms to have written procedures ...\", \"manufacturers\n  should ...\", \"are required by the CGMP regulations to ...\");\n- in a Guide to Inspections or Inspection Technical Guide, what the investigator is told to check (\"Determine\n  whether the firm has validated ...\", \"Check that ...\", \"Review the ...\"): write the practice the firm is expected\n  to have (\"Validate ...\"), not the investigator's task. When the text only says what to look at (\"Examine the\n  design of equipment\") and states no expectation, write the expectation the text itself gives in the same\n  paragraph; if it gives none, put the sentence in not_applicable (\"inspection step without a stated expectation\").\nFor each item:\n- statement: the expectation in your own plain English words, as one checklist item a site could be audited\n  against. Do not copy more than a few words in a row. Keep every condition (\"where\", \"if\", \"unless\", \"when\",\n  \"except\") and every number. Do not add anything the text does not say. The statement itself must carry every\n  condition or qualifier of the lead-in above a list item. The statement is shown to customers: never cite a\n  regulation, section, question or paragraph number in it (\"21 CFR 211.42(d)\", \"Q4\", \"see above\"); say what is\n  required instead.\n- quote: the exact span of ONE paragraph's text that states the whole expectation, copied character for character\n  (matched against the page text by software; do not fix typos or change punctuation, keep footnote marks as\n  printed). A quote may continue into the paragraphs after it in the same unit, in order (e.g. a lead-in and its\n  list items), but must start in the cited paragraph.\n- clause_number: the reference of the paragraph the quote starts in, exactly as given (\"Q4.2\", \"¶17\").\n- strength: \"mandatory\" where the text states a legal requirement (shall / must / is required / may not, \"the\n  CGMP regulations require\"); \"recommended\" for should, \"FDA expects\", \"FDA recommends\", and for an inspection\n  point; \"optional\" for may / is acceptable. A list item without such a word takes its lead-in's.\n- plant_types: from OSD, LIQ, SEMI, INJ, API (INJ = sterile injectables); the plant scope given unless the text\n  narrows it. Text limited to non-sterile products does not apply to INJ; text limited to sterile products\n  (parenterals, aseptic processing, terminal sterilization) applies only to INJ (and API where in scope). Text\n  that rests on the CGMP regulations for finished pharmaceuticals (21 CFR 210/211, \"drug product manufacturers\",\n  \"finished drug products\") does not apply to API unless it speaks of APIs or bulk drug substances too.\n- numbers: every number, limit, frequency or period in the quote, as written (not regulation references).\n- condition: the condition or trigger in a few words, \"\" if none. This field only repeats what the statement\n  already says.\n- topic: the sub-topic id from TOPICS the expectation belongs to.\n\nDo not narrow or widen a term. Where the text gives examples (\"such as ...\"), keep them as examples; where it\ngives a closed list, keep it closed.\n\nSentences that state no expectation for the manufacturer go in not_applicable: the question itself, background and\nhistory, definitions, descriptions of what happened at a firm, FDA's own actions or enforcement, statements of\npurpose or scope, references, an inspection step without a stated expectation. One entry per SENTENCE, each with\nthe paragraph reference, the sentence's first 8 or more words copied exactly, and the reason in a few words. A\nsentence with \"should\", \"must\", \"FDA expects\" or an instruction to the investigator needs an item or a\nnot_applicable entry.\n\nWrite the answers file named in your task: {\"answers\": [one object per unit with \"unit\" set to the unit's \"id\"\nexactly, \"items\" and \"not_applicable\"]}.\n",
+ "topics": [
+  "QS.PQS",
+  "QS.MGMT",
+  "QS.QRM",
+  "QS.PQR",
+  "QS.CHANGE",
+  "QS.DEV",
+  "QS.CAPA",
+  "PER.ORG",
+  "PER.KEY",
+  "PER.TRAIN",
+  "PER.HYG",
+  "PER.GOWN",
+  "PREM.DESIGN",
+  "PREM.PROD",
+  "PREM.STORE",
+  "PREM.QC",
+  "PREM.ANC",
+  "EQ.DESIGN",
+  "EQ.MAINT",
+  "EQ.CLEAN",
+  "EQ.CAL",
+  "DOC.SYS",
+  "DOC.SPEC",
+  "DOC.MFR",
+  "DOC.BMR",
+  "DOC.SOP",
+  "DOC.RET",
+  "MAT.SUPP",
+  "MAT.RECV",
+  "MAT.SAMP",
+  "MAT.STATUS",
+  "MAT.PACK",
+  "MAT.REJ",
+  "PROD.GEN",
+  "PROD.XCONT",
+  "PROD.IPC",
+  "PROD.YIELD",
+  "PROD.PACK",
+  "PROD.REWORK",
+  "QC.GEN",
+  "QC.SAMP",
+  "QC.TEST",
+  "QC.OOS",
+  "QC.STAB",
+  "QC.REF",
+  "QC.MICRO",
+  "VAL.PLAN",
+  "VAL.QUAL",
+  "VAL.PROC",
+  "VAL.CLEAN",
+  "VAL.METH",
+  "CSV.VAL",
+  "CSV.ACCESS",
+  "CSV.AUDIT",
+  "CSV.ESIG",
+  "CSV.DI",
+  "UTIL.WATER",
+  "UTIL.HVAC",
+  "UTIL.GAS",
+  "CCS.STRAT",
+  "CCS.EM",
+  "CCS.CLEAN",
+  "CCS.PEST",
+  "STER.GRADE",
+  "STER.ASEPT",
+  "STER.APS",
+  "STER.STERIL",
+  "STER.FILT",
+  "STER.CCI",
+  "STER.LYO",
+  "API.START",
+  "API.PROC",
+  "API.IMP",
+  "API.SOLV",
+  "OUT.CONTRACT",
+  "OUT.AGREE",
+  "CMP.COMPL",
+  "CMP.RECALL",
+  "CMP.REPORT",
+  "SI.PROG",
+  "SI.TEAM",
+  "SI.REPORT",
+  "SI.FOLLOW",
+  "DIST.STORE",
+  "DIST.TRANS",
+  "DIST.RETURN",
+  "REL.QP",
+  "REL.REVIEW"
+ ],
+ "schema": {
+  "type": "object",
+  "required": [
+   "unit",
+   "items",
+   "not_applicable"
+  ],
+  "properties": {
+   "unit": {
+    "type": "string"
+   },
+   "items": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "statement",
+      "quote",
+      "clause_number",
+      "strength",
+      "plant_types",
+      "numbers",
+      "condition",
+      "topic"
+     ],
+     "properties": {
+      "statement": {
+       "type": "string"
+      },
+      "quote": {
+       "type": "string"
+      },
+      "clause_number": {
+       "type": "string"
+      },
+      "strength": {
+       "enum": [
+        "mandatory",
+        "recommended",
+        "optional"
+       ]
+      },
+      "plant_types": {
+       "type": "array",
+       "items": {
+        "enum": [
+         "OSD",
+         "LIQ",
+         "SEMI",
+         "INJ",
+         "API"
+        ]
+       }
+      },
+      "numbers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "condition": {
+       "type": "string"
+      },
+      "topic": {
+       "type": "string"
+      }
+     }
+    }
+   },
+   "not_applicable": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "clause_number",
+      "text",
+      "reason"
+     ],
+     "properties": {
+      "clause_number": {
+       "type": "string"
+      },
+      "text": {
+       "type": "string"
+      },
+      "reason": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  }
+ },
+ "units": [
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶159-¶195",
+   "source": "fda-ora-guide-dosage-form-cgmps-1993.html",
+   "unit": "¶159-¶195",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "¶159",
+     "text": "The use of cut labels can cause a significant problem and should be evaluated in detail. Most firms are replacing their cut labels with roll labels.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶160",
+     "text": "Review prescription drugs for which full disclosure information may be lacking. If such products are found, submit labels and other labeling as exhibits with the EIR See 21 CFR 201.56 for the recommended sequence in which full disclosure information should be presented.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶161",
+     "text": "Review labels of OTC products for warnings required by 21 CFR 369.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶162",
+     "text": "A control code must be used to identify the finished product with a lot, or control number that permits determination of the complete history of the manufacture and control of the batch.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶163",
+     "text": "Determine:",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶164",
+     "text": "The complete key (breakdown) to the code.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶165",
+     "text": "Whether the batch number is the same as the control number on the finished package. If not, determine how the finished package control number relates, and how it is used to find the identity of the original batch.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶166",
+     "text": "Beginning August 3, 1994 the following new requirements will become effective:",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶167",
+     "text": "Use of gang-printed labels will be prohibited unless they are adequately differentiated by size, shape or color. (211.122(f))",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶168",
+     "text": "If cut labels are used one of the following special control procedures shall be used (211.122(g)):",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶169",
+     "text": "Dedication of packaging lines.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶170",
+     "text": "Use of electronic or electromechanical equipment to conduct a 100-percent examination of finished product.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶171",
+     "text": "Use of visual inspection to examine 100-percent of the finished product for hand applied labeling. The visual examination will be conducted by one person and independently verified by a second person.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶172",
+     "text": "Labeling reconciliation required by 211.125 is waived for cut or roll labeling if a 100-percent examination is performed according to 211.22(g)(2).",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶173",
+     "text": "Holding and Distribution [21 CFR subpart H]",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶174",
+     "text": "Check the finished product storage and shipping areas for sanitary condition, stock rotation, and special storage conditions needed for specific drugs. Evaluate any drugs that have been rejected, or are on hold for other than routine reasons.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "Laboratory Controls [21 CFR Subpart I]"
+    },
+    {
+     "ref": "¶175",
+     "text": "Laboratory controls should include adequate specifications and test procedures to assure that components, in-process and finished products conform to appropriate standards of identity, strength, quality, and purity.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶176",
+     "text": "In order to permit proper evaluation of the firm's laboratory controls, determine:",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶177",
+     "text": "Whether the firm has established a master file of specifications for all raw materials used in drug manufacture. This master file should include sampling procedures, sample size, number of containers to be sampled, manner in which samples will be identified, tests to be performed, and retest dates for components subject to deterioration.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶178",
+     "text": "The firm's policies about protocols of assay. These reports are often furnished by raw material suppliers; however, the manufacturer is responsible for verifying the validity of the protocols by periodically performing their own complete testing and routinely conducting identity tests on all raw materials received",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶179",
+     "text": "Laboratory procedure for releasing raw materials, finished bulk drugs or packaged drugs from quarantine. Determine who is responsible for this decision. Raw material specifications should include approved suppliers. For NDA or ANDA drugs, the approved suppliers listed in their specifications should be the same as those approved in the NDA or ANDA.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶180",
+     "text": "If the laboratory is staffed and equipped to do all raw material, in-process, and finished product testing that is claimed.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶181",
+     "text": "Whether drug preparations are tested during processing. If so, determine what type of tests are made and whether a representative sample is obtained from various stages of processing.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶182",
+     "text": "Specifications and description of laboratory testing procedures for finished products.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶183",
+     "text": "Procedures for checking the identity and strength of all active ingredients including pyrogen and sterility testing, if applicable.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶184",
+     "text": "If the laboratory conducts pyrogen tests, safety tests, or bioassays; determine the number of laboratory animals and if they are adequately fed and housed. Determine what care is provided on weekends and holidays.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶185",
+     "text": "Sterility testing procedures.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶186",
+     "text": "Entries should be permanently recorded and show all results, both positive and negative. Examine representative samples being tested and their records. When checking the sterility testing procedures, determine:",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶187",
+     "text": "Physical conditions of testing room. The facility used to conduct sterility testing should be similar to those used for manufacturing products.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶188",
+     "text": "Laboratory procedures for handling sterile sample.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶189",
+     "text": "Use of ultra-violet lights.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶190",
+     "text": "Number of units tested per batch.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶191",
+     "text": "Procedure for identifying test media with specific batches.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶192",
+     "text": "Test media's ability to support growth of organisms.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶193",
+     "text": "Length of incubation period.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶194",
+     "text": "Procedure for diluting products to offset the effects of bacteriostatic agents.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "Pyrogen testing procedures"
+    },
+    {
+     "ref": "¶195",
+     "text": "Determine if animals involved in positive pyrogen tests are withdrawn from use for the required period.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    }
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶196-¶221",
+   "source": "fda-ora-guide-dosage-form-cgmps-1993.html",
+   "unit": "¶196-¶221",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "¶196",
+     "text": "If the L.A.L. Test is used, review the FDA \"Guideline on Validation of the Limulus Amebocyte Lysate Test ***.\"",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶197",
+     "text": "If any tests are made by outside laboratories, report the names of the laboratories and the tests they perform. Determine what precautions the firm takes to insure that the laboratories' work is bona fide.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶198",
+     "text": "Methods used to check the reliability, accuracy, and precision of laboratory test procedures and instrumentation.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶199",
+     "text": "How final acceptance or rejection of raw materials, intermediates, and finished products is determined. Review recent rejections and disposition of affected items.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶200",
+     "text": "The provisions for complete records of all data concerning laboratory tests performed, including dates and endorsements of individuals performing the tests, and traceability.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶201",
+     "text": "For components and finished product, the reserve sample program and procedures should be evaluated. Challenge the system and determine if the samples are maintained and can be retrieved. The storage container must maintain the integrity of the product.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶202",
+     "text": "Whether stability tests are performed on:",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶203",
+     "text": "The drug product in the container and closure system in which marketed.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶204",
+     "text": "Solutions prepared as directed in the labeling at the time of dispensing. Determine if expiration dates, based on appropriate stability studies, are placed on labels.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶205",
+     "text": "If penicillin and non-penicillin products are manufactured on the same premises, whether non-penicillin products are tested for penicillin contamination.",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶206",
+     "text": "Obtain copies of laboratory records, batch records, and any other documents that show errors or other deficiencies.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "Control Records [21 CFR Subpart J]"
+    },
+    {
+     "ref": "¶207",
+     "text": "Master Production and Control Records [21 CFR 211.186]",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶208",
+     "text": "The various master production and control records are important because all phases of production and control are governed by them. Master records, if erroneous, may adversely affect the product. These records must be prepared according to the drug CGMPR's outlined in 21 CFR 211.186. These records might not be in one location, but should be readily available for review.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶209",
+     "text": "Batch Production and Control Records [21 CFR 211.188]",
+     "list_item": true,
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶210",
+     "text": "The batch production and control records must document each significant step in the manufacture, labeling, packaging, and control of specific batches of drugs. 21 CFR 211.188 provides the basic information the batch records must provide. A complete production and control record may consist of several separate records which should be readily available to the investigator.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶211",
+     "text": "Routinely check the batch record calculations against the master formula record. Give special attention to those products on which there have been complaints.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶212",
+     "text": "Be alert for transcription errors from the master formula record to the batch record. Be alert for transcription or photocopying errors involving misinterpretation of symbols, abbreviations, and decimal points, etc.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶213",
+     "text": "It is important that batch production records be specific in terms of equipment (v-blender vs. ribbon blender) and processing times (mixing time and speed). The equipment should have its own unique identification number. The manufacturing process for these products must be standardized, controlled, and validated.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "Distribution [21 CFR 211.196]"
+    },
+    {
+     "ref": "¶214",
+     "text": "Complete distribution records should be maintained per 21 CFR 211.196. Be alert for suspicious shipments of products subject to abuse or which have been targeted for high priority investigation by the agency. These include steroids, counterfeits, diverted drugs (i.e.; physician samples, clinical packs, etc.).",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶215",
+     "text": "Determine and evaluate if the firm checks on the authenticity of orders received. What references are used, e.g. current editions of the AMA Directory, Hays Directory, etc.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "Complaint Files [21 CFR 211.198]"
+    },
+    {
+     "ref": "¶216",
+     "text": "21 CFR 211.198 requires that records of all written and oral complaints be maintained. Although FDA has no authority to require a drug firm, except for prescription drugs, to open its complaint files, attempt to review the firm's files.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶217",
+     "text": "The complaint files should be readily available for review. Do a follow-up investigation on all applicable consumer complaints in the firm's district factory jacket. Review and evaluate the firm's procedures for handling complaints. Determine if all complaints are handled as complaints and not inappropriately excluded.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶218",
+     "text": "Review the complaints and determine if they were fully investigated. Evaluate the firm's conclusions of the investigation, and determine if appropriate corrective action was taken. Determine if the product should be recalled, or warrant a comprehensive investigation by FDA",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶219",
+     "text": "Returned Drug Products [21 CFR Subpart K]",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶220",
+     "text": "Returned drugs often serve as an indication that products may have decomposed during storage, are being recalled or discontinued.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶221",
+     "text": "Determine how returned drug items are handled. For example, are they quarantined, destroyed after credit, or returned to storage?",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    }
+   ]
+  },
+  {
+   "id": "fda-ora-guide-dosage-form-cgmps-1993.html:¶222-¶223",
+   "source": "fda-ora-guide-dosage-form-cgmps-1993.html",
+   "unit": "¶222-¶223",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "¶222",
+     "text": "If an abnormally large amount of a specific drug item is on hand, determine why. Check if returned drug items are examined in the laboratory, and who makes the ultimate decision as to the use of the returned drugs.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "ref": "¶223",
+     "text": "Note: Dumping salvage drugs in the trash is a potentially dangerous practice. Advise management to properly dispose of the drugs to preclude salvage. Drugs should be disposed of in accordance with E.P.A. regulations.",
+     "heading_path": "Dosage Form Drug Manufacturers cGMPs (10/93) > GUIDE TO INSPECTIONS OF DOSAGE FORM DRUG MANUFACTURER'S - CGMPR'S > II. CURRENT GOOD"
+    },
+    {
+     "context": "Return to: Page Top | Inspection Start"
+    }
+   ]
+  }
+ ]
+}

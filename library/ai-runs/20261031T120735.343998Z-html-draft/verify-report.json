@@ -1,0 +1,79 @@
+{
+ "items": 89,
+ "both_correct": 79,
+ "both_incorrect": 5,
+ "disagree": 5,
+ "unanswered": 0,
+ "cases": [
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q1#1",
+   "a": "incorrect",
+   "a_reason": "Quote exact and permission/conditions captured, but the paragraph explicitly limits this to the CGMP regulations for finished pharmaceutical manufacturing, so it does not apply to API, which is listed.",
+   "b": "incorrect",
+   "b_reason": "Quote exact and the optional permission with both conditions is captured, but Q1.1 frames it explicitly within the 21 CFR 211 regulations for finished pharmaceutical manufacturing, so it does not apply to API, which is listed."
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q1#2",
+   "a": "incorrect",
+   "a_reason": "Quote exact and obligation/strength match. Lists API, but the paragraph's obligation rests on the part 211 finished-pharmaceutical regulations, so it does not apply to every listed plant type.",
+   "b": "incorrect",
+   "b_reason": "Quote exact and the retention obligation is stated, but it rests on 21 CFR 211.180/211.188 (finished-pharmaceutical CGMP, as Q1.1 frames it), which does not cover API, which is listed."
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q1#3",
+   "a": "incorrect",
+   "a_reason": "Quote exact and content matches (affected procedures incl. master production record, subject to inspection). Lists API, but the paragraph's obligation rests on the part 211 finished-pharmaceutical regulations, so it does not apply to every listed plant type.",
+   "b": "incorrect",
+   "b_reason": "Quote exact, but the obligation (master production record, part 211 context of Q1.1 for finished pharmaceutical manufacturing) does not apply to API, which is listed."
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q1#4",
+   "a": "incorrect",
+   "a_reason": "Quote exact and obligation matches. Lists API, but the paragraph's obligation rests on the part 211 finished-pharmaceutical regulations, so it does not apply to every listed plant type.",
+   "b": "incorrect",
+   "b_reason": "Quote exact, but the retention obligation rests on 21 CFR 211.192 in an answer framed for finished pharmaceutical manufacturing, so it does not apply to API, which is listed."
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q1#5",
+   "a": "incorrect",
+   "a_reason": "Quote exact and retention obligation matches. Lists API, but the paragraph's obligation rests on the part 211 finished-pharmaceutical regulations, so it does not apply to every listed plant type.",
+   "b": "incorrect",
+   "b_reason": "Quote exact and content complete, but the retention period is that of 21 CFR 211.180 (finished-pharmaceutical CGMP), which does not apply to API, which is listed."
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q2#3",
+   "a": "incorrect",
+   "a_reason": "Quote exact, but the paragraph specifies the measures with 'i.e.' (the minimum measures meant), while the statement turns them into 'e.g.' examples and drops 'at a minimum', weakening the obligation.",
+   "b": "correct",
+   "b_reason": "Quote is exact in Q2.1; the statement captures the whole obligation with its conditions, strength 'recommended' matches the text's wording, and the text applies to all listed plant types."
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q4#6",
+   "a": "incorrect",
+   "a_reason": "Quote exact and strength fits, but the paragraph concerns component receipt by the drug product manufacturer under § 211.84, so it does not apply to API, which is listed.",
+   "b": "correct",
+   "b_reason": "Quote is exact in Q4.8; the statement captures the whole obligation with its conditions, strength 'recommended' matches the text's wording, and the text applies to all listed plant types."
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q4#8",
+   "a": "incorrect",
+   "a_reason": "Quote exact and mandatory 'must' matches, but the approach is the drug product manufacturer's component identity approach under § 211.84; API is listed although not covered.",
+   "b": "correct",
+   "b_reason": "Quote is exact in Q4.8; the statement captures the whole obligation with its conditions, strength 'mandatory' matches the text's wording, and the text applies to all listed plant types."
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q4#10",
+   "a": "incorrect",
+   "a_reason": "Quote exact and optional strength fits, but the paragraph addresses drug product manufacturers' component testing under § 211.84; API is listed although not covered.",
+   "b": "correct",
+   "b_reason": "Quote is exact in Q4.10; the statement captures the whole obligation with its conditions, strength 'optional' matches the text's wording, and the text applies to all listed plant types."
+  },
+  {
+   "id": "fda-cgmp-qa-components-containers-closures.html:Q11#1",
+   "a": "correct",
+   "a_reason": "Quote is exact; the statement captures the whole obligation with its conditions, the optional strength matches the wording, and the text applies to all listed plant types.",
+   "b": "incorrect",
+   "b_reason": "Quote exact, but the paragraph presents these measures as the literature's 'recommended actions' to prevent lamellae, so the strength should be recommended, not optional."
+  }
+ ]
+}

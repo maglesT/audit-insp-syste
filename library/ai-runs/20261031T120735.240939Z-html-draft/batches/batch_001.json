@@ -1,0 +1,548 @@
+{
+ "instructions": "You read an FDA web page (a Q&A page on CGMP, a Guide to Inspections, an Inspection Technical Guide, a Compliance\nPolicy Guide or an alert to manufacturers) and list what it expects of a drug manufacturer. Each unit is given as\nits paragraphs, each with its reference (\"Q4.2\" on a Q&A page: question 4, answer paragraph 2; \"¶17\" elsewhere) and\nits exact text; \"context\" entries are headings or labels (not citable); \"list_item\" marks a list item, whose\nlead-in is the paragraph ending in \":\" above it. Your output is checked by software against that exact text and by\nindependent reviewers, so precision matters more than wording.\n\nList each separate expectation as its own item, so that together your items cover every expectation in the unit.\nOne expectation is one thing a manufacturer must, should or may do, with all its conditions, numbers and\nqualifiers; do not split one expectation across items. What counts:\n- what FDA says a firm must, should or may do (\"FDA expects firms to have written procedures ...\", \"manufacturers\n  should ...\", \"are required by the CGMP regulations to ...\");\n- in a Guide to Inspections or Inspection Technical Guide, what the investigator is told to check (\"Determine\n  whether the firm has validated ...\", \"Check that ...\", \"Review the ...\"): write the practice the firm is expected\n  to have (\"Validate ...\"), not the investigator's task. When the text only says what to look at (\"Examine the\n  design of equipment\") and states no expectation, write the expectation the text itself gives in the same\n  paragraph; if it gives none, put the sentence in not_applicable (\"inspection step without a stated expectation\").\nFor each item:\n- statement: the expectation in your own plain English words, as one checklist item a site could be audited\n  against. Do not copy more than a few words in a row. Keep every condition (\"where\", \"if\", \"unless\", \"when\",\n  \"except\") and every number. Do not add anything the text does not say. The statement itself must carry every\n  condition or qualifier of the lead-in above a list item. The statement is shown to customers: never cite a\n  regulation, section, question or paragraph number in it (\"21 CFR 211.42(d)\", \"Q4\", \"see above\"); say what is\n  required instead.\n- quote: the exact span of ONE paragraph's text that states the whole expectation, copied character for character\n  (matched against the page text by software; do not fix typos or change punctuation, keep footnote marks as\n  printed). A quote may continue into the paragraphs after it in the same unit, in order (e.g. a lead-in and its\n  list items), but must start in the cited paragraph.\n- clause_number: the reference of the paragraph the quote starts in, exactly as given (\"Q4.2\", \"¶17\").\n- strength: \"mandatory\" where the text states a legal requirement (shall / must / is required / may not, \"the\n  CGMP regulations require\"); \"recommended\" for should, \"FDA expects\", \"FDA recommends\", and for an inspection\n  point; \"optional\" for may / is acceptable. A list item without such a word takes its lead-in's.\n- plant_types: from OSD, LIQ, SEMI, INJ, API (INJ = sterile injectables); the plant scope given unless the text\n  narrows it. Text limited to non-sterile products does not apply to INJ; text limited to sterile products\n  (parenterals, aseptic processing, terminal sterilization) applies only to INJ (and API where in scope).\n- numbers: every number, limit, frequency or period in the quote, as written (not regulation references).\n- condition: the condition or trigger in a few words, \"\" if none. This field only repeats what the statement\n  already says.\n- topic: the sub-topic id from TOPICS the expectation belongs to.\n\nDo not narrow or widen a term. Where the text gives examples (\"such as ...\"), keep them as examples; where it\ngives a closed list, keep it closed.\n\nSentences that state no expectation for the manufacturer go in not_applicable: the question itself, background and\nhistory, definitions, descriptions of what happened at a firm, FDA's own actions or enforcement, statements of\npurpose or scope, references, an inspection step without a stated expectation. One entry per SENTENCE, each with\nthe paragraph reference, the sentence's first 8 or more words copied exactly, and the reason in a few words. A\nsentence with \"should\", \"must\", \"FDA expects\" or an instruction to the investigator needs an item or a\nnot_applicable entry.\n\nWrite the answers file named in your task: {\"answers\": [one object per unit with \"unit\" set to the unit's \"id\"\nexactly, \"items\" and \"not_applicable\"]}.\n",
+ "topics": [
+  "QS.PQS",
+  "QS.MGMT",
+  "QS.QRM",
+  "QS.PQR",
+  "QS.CHANGE",
+  "QS.DEV",
+  "QS.CAPA",
+  "PER.ORG",
+  "PER.KEY",
+  "PER.TRAIN",
+  "PER.HYG",
+  "PER.GOWN",
+  "PREM.DESIGN",
+  "PREM.PROD",
+  "PREM.STORE",
+  "PREM.QC",
+  "PREM.ANC",
+  "EQ.DESIGN",
+  "EQ.MAINT",
+  "EQ.CLEAN",
+  "EQ.CAL",
+  "DOC.SYS",
+  "DOC.SPEC",
+  "DOC.MFR",
+  "DOC.BMR",
+  "DOC.SOP",
+  "DOC.RET",
+  "MAT.SUPP",
+  "MAT.RECV",
+  "MAT.SAMP",
+  "MAT.STATUS",
+  "MAT.PACK",
+  "MAT.REJ",
+  "PROD.GEN",
+  "PROD.XCONT",
+  "PROD.IPC",
+  "PROD.YIELD",
+  "PROD.PACK",
+  "PROD.REWORK",
+  "QC.GEN",
+  "QC.SAMP",
+  "QC.TEST",
+  "QC.OOS",
+  "QC.STAB",
+  "QC.REF",
+  "QC.MICRO",
+  "VAL.PLAN",
+  "VAL.QUAL",
+  "VAL.PROC",
+  "VAL.CLEAN",
+  "VAL.METH",
+  "CSV.VAL",
+  "CSV.ACCESS",
+  "CSV.AUDIT",
+  "CSV.ESIG",
+  "CSV.DI",
+  "UTIL.WATER",
+  "UTIL.HVAC",
+  "UTIL.GAS",
+  "CCS.STRAT",
+  "CCS.EM",
+  "CCS.CLEAN",
+  "CCS.PEST",
+  "STER.GRADE",
+  "STER.ASEPT",
+  "STER.APS",
+  "STER.STERIL",
+  "STER.FILT",
+  "STER.CCI",
+  "STER.LYO",
+  "API.START",
+  "API.PROC",
+  "API.IMP",
+  "API.SOLV",
+  "OUT.CONTRACT",
+  "OUT.AGREE",
+  "CMP.COMPL",
+  "CMP.RECALL",
+  "CMP.REPORT",
+  "SI.PROG",
+  "SI.TEAM",
+  "SI.REPORT",
+  "SI.FOLLOW",
+  "DIST.STORE",
+  "DIST.TRANS",
+  "DIST.RETURN",
+  "REL.QP",
+  "REL.REVIEW"
+ ],
+ "schema": {
+  "type": "object",
+  "required": [
+   "unit",
+   "items",
+   "not_applicable"
+  ],
+  "properties": {
+   "unit": {
+    "type": "string"
+   },
+   "items": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "statement",
+      "quote",
+      "clause_number",
+      "strength",
+      "plant_types",
+      "numbers",
+      "condition",
+      "topic"
+     ],
+     "properties": {
+      "statement": {
+       "type": "string"
+      },
+      "quote": {
+       "type": "string"
+      },
+      "clause_number": {
+       "type": "string"
+      },
+      "strength": {
+       "enum": [
+        "mandatory",
+        "recommended",
+        "optional"
+       ]
+      },
+      "plant_types": {
+       "type": "array",
+       "items": {
+        "enum": [
+         "OSD",
+         "LIQ",
+         "SEMI",
+         "INJ",
+         "API"
+        ]
+       }
+      },
+      "numbers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "condition": {
+       "type": "string"
+      },
+      "topic": {
+       "type": "string"
+      }
+     }
+    }
+   },
+   "not_applicable": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "clause_number",
+      "text",
+      "reason"
+     ],
+     "properties": {
+      "clause_number": {
+       "type": "string"
+      },
+      "text": {
+       "type": "string"
+      },
+      "reason": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  }
+ },
+ "units": [
+  {
+   "id": "fda-cgmp-qa-buildings-facilities.html:Q1",
+   "source": "fda-cgmp-qa-buildings-facilities.html",
+   "unit": "Q1",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q1",
+     "text": "What is penicillin?"
+    },
+    {
+     "ref": "Q1.1",
+     "text": "Penicillin is defined as a group of natural or semi-synthetic antibiotics derived from fungi strains of the genus Penicillium. Generally, all penicillins share a three-carbon, one-nitrogen, and four-member cyclic amide structure, known as the beta-lactam ring."
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-buildings-facilities.html:Q2",
+   "source": "fda-cgmp-qa-buildings-facilities.html",
+   "unit": "Q2",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q2",
+     "text": "What are the penicillin drugs?"
+    },
+    {
+     "ref": "Q2.1",
+     "text": "The Manual of Clinical Microbiology, 11th edition, identifies penicillin drugs as follows:"
+    },
+    {
+     "ref": "Q2.2",
+     "text": "Natural"
+    },
+    {
+     "ref": "Q2.3",
+     "text": "Benzylpenicillin (penicillin G)*",
+     "list_item": true
+    },
+    {
+     "ref": "Q2.4",
+     "text": "Phenoxymethyl penicillin (penicillin V)*",
+     "list_item": true
+    },
+    {
+     "ref": "Q2.5",
+     "text": "Semisynthetic"
+    },
+    {
+     "ref": "Q2.6",
+     "text": "Penicillinase resistant:"
+    },
+    {
+     "ref": "Q2.7",
+     "text": "Cloxacillin*",
+     "list_item": true
+    },
+    {
+     "ref": "Q2.8",
+     "text": "Dicloxacillin*",
+     "list_item": true
+    },
+    {
+     "ref": "Q2.9",
+     "text": "Nafcillin",
+     "list_item": true
+    },
+    {
+     "ref": "Q2.10",
+     "text": "Oxacillin",
+     "list_item": true
+    },
+    {
+     "ref": "Q2.11",
+     "text": "Temocillin**",
+     "list_item": true
+    },
+    {
+     "ref": "Q2.12",
+     "text": "Extended spectrum:"
+    },
+    {
+     "ref": "Q2.13",
+     "text": "Aminopenicillins",
+     "list_item": true
+    },
+    {
+     "ref": "Q2.14",
+     "text": "Amoxicillin*",
+     "list_item": true
+    },
+    {
+     "ref": "Q2.15",
+     "text": "Ampicillin*",
+     "list_item": true
+    },
+    {
+     "ref": "Q2.16",
+     "text": "Mecillinam**",
+     "list_item": true
+    },
+    {
+     "ref": "Q2.17",
+     "text": "Carboxypenicillin",
+     "list_item": true
+    },
+    {
+     "ref": "Q2.18",
+     "text": "Ticarcillin*",
+     "list_item": true
+    },
+    {
+     "ref": "Q2.19",
+     "text": "Ureidopenicillin",
+     "list_item": true
+    },
+    {
+     "ref": "Q2.20",
+     "text": "Piperacillin",
+     "list_item": true
+    },
+    {
+     "ref": "Q2.21",
+     "text": "*Approved for veterinary use"
+    },
+    {
+     "ref": "Q2.22",
+     "text": "**Not approved in the United States"
+    },
+    {
+     "ref": "Q2.23",
+     "text": "Please be aware that penicillin trade names may vary by region and country. Manufacturers, including repackers, are responsible for knowing whether their drug is penicillin. FDA’s Approved Drug Products with Therapeutic Equivalence Evaluations (Orange Book) or Drugs@FDA, both of which are located on FDA’s Web site, enable searching by trade name (i.e., proprietary name) and by active ingredient name (i.e., generic or non-proprietary name)."
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-buildings-facilities.html:Q3",
+   "source": "fda-cgmp-qa-buildings-facilities.html",
+   "unit": "Q3",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q3",
+     "text": "Is cross-contamination a concern with penicillin drugs?"
+    },
+    {
+     "ref": "Q3.1",
+     "text": "Yes, penicillin can be a sensitizing agent that triggers a hypersensitive exaggerated allergic immune response in some people. Differences in the chemically substituted 6-aminopenicillanic acid side chain can generate allergic reactions ranging from skin rashes to life-threatening anaphylaxis."
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-buildings-facilities.html:Q4",
+   "source": "fda-cgmp-qa-buildings-facilities.html",
+   "unit": "Q4",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q4",
+     "text": "Are there special manufacturing requirements for penicillin drugs?"
+    },
+    {
+     "ref": "Q4.1",
+     "text": "Yes, all penicillin finished pharmaceutical manufacturers, including repackers, are required by the CGMP regulations to establish a comprehensive control strategy designed to prevent cross-contamination of other drugs with penicillin. These requirements include:"
+    },
+    {
+     "ref": "Q4.2",
+     "text": "21 CFR 211.42(d): Separation of facility and equipment",
+     "list_item": true
+    },
+    {
+     "ref": "Q4.3",
+     "text": "21 CFR 211.46(d): Separate air handling systems (HVAC)",
+     "list_item": true
+    },
+    {
+     "ref": "Q4.4",
+     "text": "21 CFR 211.176: Test for traces of penicillin where possible exposure exists.",
+     "list_item": true
+    },
+    {
+     "ref": "Q4.5",
+     "text": "Penicillin active pharmaceutical ingredients (APIs) are also required to be manufactured under CGMP in accordance with section 501(a)(2)(B) of the Federal Food, Drug, and Cosmetic Act. FDA has published internationally harmonized guidance on the manufacture of APIs; see ICH guidance for industry, Q7A Good Manufacturing Practice Guidance for Active Pharmaceutical Ingredients. Chapter 4, section 4.4 of this guidance describes actions API manufacturers, including those that manufacture or package APIs or penicillin intermediates, should follow to ensure such material is contained and does not contaminate other drugs."
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-buildings-facilities.html:Q5",
+   "source": "fda-cgmp-qa-buildings-facilities.html",
+   "unit": "Q5",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q5",
+     "text": "Why is FDA concerned about drug contamination with halogenated anisole compounds, such as 2,4,6-tribromoanisole (TBA)?"
+    },
+    {
+     "ref": "Q5.1",
+     "text": "Reports, including some dating back several decades, describe a moldy or musty odor in food (and wine) products due to contamination with trace amounts of halogenated anisole compounds such as 2,4,6-tribromoanisole (TBA). An odor attributable to the presence of a halogenated anisole compound can be detected by consumers even when the offending compound is present at parts per billion or lesser levels. An upward trend in consumer complaints about musty or moldy odor led a drug firm to identify TBA as the odor-causing compound. The firm’s investigation of this incident led to the detection of TBA in several oral products. The firm traced all of the contamination back to the use of certain wooden pallets used to transport drug packaging materials. TBA is prone to volatilize and adsorb onto articles stored near the TBA source. Because of their volatility, it appears that even minute levels of halogenated anisole compounds can adversely affect a large quantity of product in a single contamination incident."
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-buildings-facilities.html:Q6",
+   "source": "fda-cgmp-qa-buildings-facilities.html",
+   "unit": "Q6",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q6",
+     "text": "Are there any health effects associated with ingestion of halogenated anisole compounds?"
+    },
+    {
+     "ref": "Q6.1",
+     "text": "Although there is no meaningful toxicological data on TBA at these levels, the health risks appear to be minimal. Currently available data indicate that serious adverse health effects have not resulted from ingestion of drugs or foods contaminated with halogenated anisole compounds at the levels of contamination that have been reported. However, there are some reports of gastrointestinal events by consumers who also report sensing a foul odor, or taste, in drug products contaminated with the typical trace levels of TBA. Even if the health effects are minimal, FDA is concerned that patients sensing an unusual odor that is not intrinsic to the product will stop taking their medication."
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-buildings-facilities.html:Q7",
+   "source": "fda-cgmp-qa-buildings-facilities.html",
+   "unit": "Q7",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q7",
+     "text": "Has FDA identified the source of the halogenated anisole compounds that have contaminated drug products?"
+    },
+    {
+     "ref": "Q7.1",
+     "text": "The source of TBA-contaminated drug products appears to have been 2,4,6-tribromophenol (TBP), a chemical used as a wood preservative. Certain fungi are able to survive in TBP-treated wood by converting TBP to its anisole analog, TBA.1 In the contamination incident, an investigation found that TBP-treated wood was used to manufacture pallets that were then used to ship and store drug packaging material. Currently, the use of halogenated phenolic compounds to preserve wood appears to be very rare as this practice is either discouraged or prohibited in many regions of the world, including the United States. However, TBP treatment of wood continues in some regions that supply wood to the United States and other countries."
+    },
+    {
+     "ref": "Q7.2",
+     "text": "1Trichlorophenol (TCP) is another example of a compound that can be converted to a halogenated anisole compound."
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-buildings-facilities.html:Q8",
+   "source": "fda-cgmp-qa-buildings-facilities.html",
+   "unit": "Q8",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q8",
+     "text": "What is FDA’s expectation for preventing contamination of drug products with halogenated anisole compounds?"
+    },
+    {
+     "ref": "Q8.1",
+     "text": "FDA recommends that manufacturers and distributors take precautions to prevent the use of wood products treated with or exposed to a halogenated phenolic preservative anywhere in the supply chain. This includes all facilities that manufacture, hold, or distribute drug products, components, or packaging materials. We recommend that manufacturers not store drug products, components, or packaging materials near wood or wood-derived storage materials unless there is assurance that the wood material has not been treated with a halogenated phenolic preservative."
+    },
+    {
+     "ref": "Q8.2",
+     "text": "FDA further recommends that manufacturers establish agreements and request certification from suppliers to provide assurance that halogenated phenolic preservatives are not present. Manufacturers should also be vigilant to the characteristic odor of the offending compounds so they can intervene before products are contaminated or further distributed."
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-buildings-facilities.html:Q9",
+   "source": "fda-cgmp-qa-buildings-facilities.html",
+   "unit": "Q9",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q9",
+     "text": "Are there any standards applicable to preventing contamination of drug products with halogenated anisole compounds?"
+    },
+    {
+     "ref": "Q9.1",
+     "text": "U.S. (ASTM) and international standards (International Standard for Phytosanitary Measures (ISPM)) recommend heat treatment, or fumigation with methyl bromide, for the preservation of wood-derived packaging storage materials, including wood pallets. For more information, including certification to these standards, refer to Standard Practice for Treatment and/or Marking of Wood Packaging Materials (ASTM D 6253-10) and Guidelines for Regulating Wood Packaging Material in International Trade (ISPM 15)."
+    }
+   ]
+  },
+  {
+   "id": "fda-cgmp-qa-buildings-facilities.html:Q10",
+   "source": "fda-cgmp-qa-buildings-facilities.html",
+   "unit": "Q10",
+   "page_kind": "Q&A page (questions and answers on CGMP; nonbinding FDA guidance)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "Q10",
+     "text": "Can contamination of drug products with halogenated anisole compounds be detected?"
+    },
+    {
+     "ref": "Q10.1",
+     "text": "Although methods for detection exist and might be practical for periodic screening, FDA expects that manufacturers prevent such contamination through adherence to CGMP. A CGMP-compliant quality system will ensure that assurances are obtained from suppliers and that measures are taken to prevent exposure to problematic compounds. Manufacturers of finished pharmaceuticals are reminded that the CGMP regulations at 21 CFR 211.56(c) require written procedures for sanitation designed to prevent the contamination of equipment, components, drug product containers, closures, packaging, labeling materials, and drug products. Analogous recommendations for manufacturers of active pharmaceutical ingredients are included in internationally harmonized ICH guidance for industry Q7 Good Manufacturing Guidance for Active Pharmaceutical Ingredients (section 4.7)."
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,846 @@
+{
+ "instructions": "You read an FDA web page (a Q&A page on CGMP, a Guide to Inspections, an Inspection Technical Guide, a Compliance\nPolicy Guide or an alert to manufacturers) and list what it expects of a drug manufacturer. Each unit is given as\nits paragraphs, each with its reference (\"Q4.2\" on a Q&A page: question 4, answer paragraph 2; \"¶17\" elsewhere) and\nits exact text; \"context\" entries are headings or labels (not citable); \"list_item\" marks a list item, whose\nlead-in is the paragraph ending in \":\" above it. Your output is checked by software against that exact text and by\nindependent reviewers, so precision matters more than wording.\n\nList each separate expectation as its own item, so that together your items cover every expectation in the unit.\nOne expectation is one thing a manufacturer must, should or may do, with all its conditions, numbers and\nqualifiers; do not split one expectation across items. What counts:\n- what FDA says a firm must, should or may do (\"FDA expects firms to have written procedures ...\", \"manufacturers\n  should ...\", \"are required by the CGMP regulations to ...\");\n- in a Guide to Inspections or Inspection Technical Guide, what the investigator is told to check (\"Determine\n  whether the firm has validated ...\", \"Check that ...\", \"Review the ...\"): write the practice the firm is expected\n  to have (\"Validate ...\"), not the investigator's task. When the text only says what to look at (\"Examine the\n  design of equipment\") and states no expectation, write the expectation the text itself gives in the same\n  paragraph; if it gives none, put the sentence in not_applicable (\"inspection step without a stated expectation\").\nFor each item:\n- statement: the expectation in your own plain English words, as one checklist item a site could be audited\n  against. Do not copy more than a few words in a row. Keep every condition (\"where\", \"if\", \"unless\", \"when\",\n  \"except\") and every number. Do not add anything the text does not say. The statement itself must carry every\n  condition or qualifier of the lead-in above a list item. The statement is shown to customers: never cite a\n  regulation, section, question or paragraph number in it (\"21 CFR 211.42(d)\", \"Q4\", \"see above\"); say what is\n  required instead.\n- quote: the exact span of ONE paragraph's text that states the whole expectation, copied character for character\n  (matched against the page text by software; do not fix typos or change punctuation, keep footnote marks as\n  printed). A quote may continue into the paragraphs after it in the same unit, in order (e.g. a lead-in and its\n  list items), but must start in the cited paragraph.\n- clause_number: the reference of the paragraph the quote starts in, exactly as given (\"Q4.2\", \"¶17\").\n- strength: \"mandatory\" where the text states a legal requirement (shall / must / is required / may not, \"the\n  CGMP regulations require\"); \"recommended\" for should, \"FDA expects\", \"FDA recommends\", and for an inspection\n  point; \"optional\" for may / is acceptable. A list item without such a word takes its lead-in's.\n- plant_types: from OSD, LIQ, SEMI, INJ, API (INJ = sterile injectables); the plant scope given unless the text\n  narrows it. Text limited to non-sterile products does not apply to INJ; text limited to sterile products\n  (parenterals, aseptic processing, terminal sterilization) applies only to INJ (and API where in scope). Text\n  that rests on the CGMP regulations for finished pharmaceuticals (21 CFR 210/211, \"drug product manufacturers\",\n  \"finished drug products\") does not apply to API unless it speaks of APIs or bulk drug substances too.\n- numbers: every number, limit, frequency or period in the quote, as written (not regulation references).\n- condition: the condition or trigger in a few words, \"\" if none. This field only repeats what the statement\n  already says.\n- topic: the sub-topic id from TOPICS the expectation belongs to.\n\nDo not narrow or widen a term. Where the text gives examples (\"such as ...\"), keep them as examples; where it\ngives a closed list, keep it closed.\n\nSentences that state no expectation for the manufacturer go in not_applicable: the question itself, background and\nhistory, definitions, descriptions of what happened at a firm, FDA's own actions or enforcement, statements of\npurpose or scope, references, an inspection step without a stated expectation. One entry per SENTENCE, each with\nthe paragraph reference, the sentence's first 8 or more words copied exactly, and the reason in a few words. A\nsentence with \"should\", \"must\", \"FDA expects\" or an instruction to the investigator needs an item or a\nnot_applicable entry.\n\nWrite the answers file named in your task: {\"answers\": [one object per unit with \"unit\" set to the unit's \"id\"\nexactly, \"items\" and \"not_applicable\"]}.\n",
+ "topics": [
+  "QS.PQS",
+  "QS.MGMT",
+  "QS.QRM",
+  "QS.PQR",
+  "QS.CHANGE",
+  "QS.DEV",
+  "QS.CAPA",
+  "PER.ORG",
+  "PER.KEY",
+  "PER.TRAIN",
+  "PER.HYG",
+  "PER.GOWN",
+  "PREM.DESIGN",
+  "PREM.PROD",
+  "PREM.STORE",
+  "PREM.QC",
+  "PREM.ANC",
+  "EQ.DESIGN",
+  "EQ.MAINT",
+  "EQ.CLEAN",
+  "EQ.CAL",
+  "DOC.SYS",
+  "DOC.SPEC",
+  "DOC.MFR",
+  "DOC.BMR",
+  "DOC.SOP",
+  "DOC.RET",
+  "MAT.SUPP",
+  "MAT.RECV",
+  "MAT.SAMP",
+  "MAT.STATUS",
+  "MAT.PACK",
+  "MAT.REJ",
+  "PROD.GEN",
+  "PROD.XCONT",
+  "PROD.IPC",
+  "PROD.YIELD",
+  "PROD.PACK",
+  "PROD.REWORK",
+  "QC.GEN",
+  "QC.SAMP",
+  "QC.TEST",
+  "QC.OOS",
+  "QC.STAB",
+  "QC.REF",
+  "QC.MICRO",
+  "VAL.PLAN",
+  "VAL.QUAL",
+  "VAL.PROC",
+  "VAL.CLEAN",
+  "VAL.METH",
+  "CSV.VAL",
+  "CSV.ACCESS",
+  "CSV.AUDIT",
+  "CSV.ESIG",
+  "CSV.DI",
+  "UTIL.WATER",
+  "UTIL.HVAC",
+  "UTIL.GAS",
+  "CCS.STRAT",
+  "CCS.EM",
+  "CCS.CLEAN",
+  "CCS.PEST",
+  "STER.GRADE",
+  "STER.ASEPT",
+  "STER.APS",
+  "STER.STERIL",
+  "STER.FILT",
+  "STER.CCI",
+  "STER.LYO",
+  "API.START",
+  "API.PROC",
+  "API.IMP",
+  "API.SOLV",
+  "OUT.CONTRACT",
+  "OUT.AGREE",
+  "CMP.COMPL",
+  "CMP.RECALL",
+  "CMP.REPORT",
+  "SI.PROG",
+  "SI.TEAM",
+  "SI.REPORT",
+  "SI.FOLLOW",
+  "DIST.STORE",
+  "DIST.TRANS",
+  "DIST.RETURN",
+  "REL.QP",
+  "REL.REVIEW"
+ ],
+ "schema": {
+  "type": "object",
+  "required": [
+   "unit",
+   "items",
+   "not_applicable"
+  ],
+  "properties": {
+   "unit": {
+    "type": "string"
+   },
+   "items": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "statement",
+      "quote",
+      "clause_number",
+      "strength",
+      "plant_types",
+      "numbers",
+      "condition",
+      "topic"
+     ],
+     "properties": {
+      "statement": {
+       "type": "string"
+      },
+      "quote": {
+       "type": "string"
+      },
+      "clause_number": {
+       "type": "string"
+      },
+      "strength": {
+       "enum": [
+        "mandatory",
+        "recommended",
+        "optional"
+       ]
+      },
+      "plant_types": {
+       "type": "array",
+       "items": {
+        "enum": [
+         "OSD",
+         "LIQ",
+         "SEMI",
+         "INJ",
+         "API"
+        ]
+       }
+      },
+      "numbers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "condition": {
+       "type": "string"
+      },
+      "topic": {
+       "type": "string"
+      }
+     }
+    }
+   },
+   "not_applicable": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "clause_number",
+      "text",
+      "reason"
+     ],
+     "properties": {
+      "clause_number": {
+       "type": "string"
+      },
+      "text": {
+       "type": "string"
+      },
+      "reason": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  }
+ },
+ "units": [
+  {
+   "id": "fda-ora-guide-lyophilization-parenterals-1993.html:¶85-¶117",
+   "source": "fda-ora-guide-lyophilization-parenterals-1993.html",
+   "unit": "¶85-¶117",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "¶85",
+     "text": "Manufacturers should be aware of the stability of lyophilized products which exhibit partial or complete meltback. Literature shows that for some products, such as the cephalosporins, that the crystalline form is more stable than the amorphous form of lyophilized product. The amorphous form may exist in the \"meltback\" portion of the cake where there is incomplete sublimation.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > FINISHED PRODUCT INSPECTION - MELTBACK"
+    },
+    {
+     "context": "GLOSSARY"
+    },
+    {
+     "context": "ATMOSPHERE, THE EARTH"
+    },
+    {
+     "ref": "¶86",
+     "text": "The envelope of gases surrounding the earth, exerting under gravity a pressure at the earth's surface, which includes by volume 78% nitrogen, 21% oxygen, small quantities of hydrogen, carbon dioxide, noble gases, water vapor, pollutants and dust.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "ATMOSPHERIC PRESSURE"
+    },
+    {
+     "ref": "¶87",
+     "text": "The pressure exerted at the earth's surface by the atmosphere. For reference purposes a standard atmosphere is defined as 760 torr or millimeters of mercury, or 760,000 microns.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "BACKSTREAMING"
+    },
+    {
+     "ref": "¶88",
+     "text": "A process that occurs at low chamber pressures where hydrocarbon vapors from the vacuum system can enter the product chamber.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "BLANK-OFF PRESSURE"
+    },
+    {
+     "ref": "¶89",
+     "text": "This is the ultimate pressure the pump or system can attain.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "BLOWER (see Mechanical Booster Pump)"
+    },
+    {
+     "ref": "¶90",
+     "text": "This pump is positioned between the mechanical pump and the chamber. It operates by means of two lobes turning at a high rate of speed. It is used to reduce the chamber pressure to less than 20 microns.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "BREAKING VACUUM"
+    },
+    {
+     "ref": "¶91",
+     "text": "Admitting air or a selected gas to an evacuated chamber, while isolated from a vacuum pump, to raise the pressure towards, or up to, atmospheric.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "CIRCULATION PUMP"
+    },
+    {
+     "ref": "¶92",
+     "text": "A pump for conveying the heat transfer fluid.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "CONDENSER (Cold trap)"
+    },
+    {
+     "ref": "¶93",
+     "text": "In terms of the lyophilization process, this is the vessel that collects the moisture on plates and holds it in the frozen state. Protects the vacuum pump from water vapor contaminating the vacuum pump oil.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "CONDENSER/RECEIVER"
+    },
+    {
+     "ref": "¶94",
+     "text": "In terms of refrigeration, this unit condenses (changes) the hot refrigerant gas into a liquid and stores it under pressure to be reused by the system.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "COOLING"
+    },
+    {
+     "ref": "¶95",
+     "text": "The lowering of the temperature in any part of the temperature scale.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "CONAX CONNECTION"
+    },
+    {
+     "ref": "¶96",
+     "text": "A device to pass thermocouple wires through and maintain a vacuum tight vessel.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "CONTAMINATION"
+    },
+    {
+     "ref": "¶97",
+     "text": "ln the vacuum system, the introduction of water vapor into the oil in the vacuum pump, which then causes the pump to lose its ability to attain its ultimate pressure.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "DEFROSTING"
+    },
+    {
+     "ref": "¶98",
+     "text": "The removal of ice from a condenser by melting or mechanical means.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "DEGREE OF CRYSTALLIZATION"
+    },
+    {
+     "ref": "¶99",
+     "text": "The ratio of the energy released during the freezing of a solution to that of an equal volume of water.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "DEGREE OF SUPERCOOLING"
+    },
+    {
+     "ref": "¶100",
+     "text": "The number of degrees below the equilibrium freezing temperature where ice first starts to form.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "DESICCANT"
+    },
+    {
+     "ref": "¶101",
+     "text": "A drying agent.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "DRY"
+    },
+    {
+     "ref": "¶102",
+     "text": "Free from liquid, and/or moisture.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "DRYING"
+    },
+    {
+     "ref": "¶103",
+     "text": "The removal of moisture and other liquids by evaporation.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "EQUILIBRIUM FREEZING TEMPERATURES"
+    },
+    {
+     "ref": "¶104",
+     "text": "The temperature where ice will form in the absence of supercooling.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "EUTECTIC TEMPERATURE"
+    },
+    {
+     "ref": "¶105",
+     "text": "A point of a phase diagram where all phases are present and the temperature and composition of the liquid phase cannot be altered without one of the phases disappearing.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "EXPANSION TANK"
+    },
+    {
+     "ref": "¶106",
+     "text": "This tank is located in the circulation system and is used as a holding and expansion tank for the transfer liquid.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "FILTER OR FILTER/DRIER"
+    },
+    {
+     "ref": "¶107",
+     "text": "There are two systems that have their systems filtered or filter/dried. They are the circulation and refrigeration systems. In the newer dryers this filter or filter/dryer is the same, and can be replaced with a new core.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "FREE WATER"
+    },
+    {
+     "ref": "¶108",
+     "text": "The free water in a product is that water that is absorbed on the surfaces of the product and must be removed to limit further biological and chemical reactions.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "FREEZING"
+    },
+    {
+     "ref": "¶109",
+     "text": "This is the absence of heat. A controlled change of the product temperature as a function of time, during the freezing process, so as to ensure a completely frozen form.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "GAS BALLAST"
+    },
+    {
+     "ref": "¶110",
+     "text": "Used in the vacuum system on the vacuum pump to decontaminate small amounts of moisture in the vacuum pump oil.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "GAS BLEED (Vacuum control)"
+    },
+    {
+     "ref": "¶111",
+     "text": "To control the pressure in the chamber during the cycle to help the drying process. In freeze-drying the purpose is to improve heat-transfer to the product.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "HEAT EXCHANGER"
+    },
+    {
+     "ref": "¶112",
+     "text": "This exchanger is located in the circulation and refrigeration systems and transfers the heat from the circulation system to the refrigeration system.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "HEAT TRANSFER FLUID"
+    },
+    {
+     "ref": "¶113",
+     "text": "A liquid of suitable vapor pressure and viscosity range for transferring heat to or from a component, for example, a shelf or condenser in a freeze-dryer. The choice of such a fluid may depend on safety considerations. Diathermic fluid.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "HOT GAS BYPASS"
+    },
+    {
+     "ref": "¶114",
+     "text": "This is a refrigeration system. To control the suction pressure of the BIG FOUR (20-30 Hp) compressors during the refrigeration operation.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "HOT GAS DEFROST"
+    },
+    {
+     "ref": "¶115",
+     "text": "This is a refrigeration system. To defrost the condenser plates after the lyophilization cycle is complete.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "ICE"
+    },
+    {
+     "ref": "¶116",
+     "text": "The solid, crystalline form of water.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "INERT GAS"
+    },
+    {
+     "ref": "¶117",
+     "text": "Any gas of a group including helium, radon and nitrogen, formerly considered chemically inactive.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "INTERSTAGE"
+    }
+   ]
+  },
+  {
+   "id": "fda-ora-guide-lyophilization-parenterals-1993.html:¶118-¶149",
+   "source": "fda-ora-guide-lyophilization-parenterals-1993.html",
+   "unit": "¶118-¶149",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "¶118",
+     "text": "In a two stage compressor system, this is the cross over piping on top of the compressor that connects the low side to the high side. One could also think of it as low side, intermediate, and high side.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "INTERSTAGE PRESSURE REGULATING VALVE"
+    },
+    {
+     "ref": "¶119",
+     "text": "This valve controls the interstage pressure from exceeding 80 - 90 PSI. This valve opens to suction as the interstage pressure rises above 80 - 90 PSI.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "LEXSOL"
+    },
+    {
+     "ref": "¶120",
+     "text": "A heat transfer fluid (high grade kerosene).",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "ref": "¶121",
+     "text": "LIQUID SUB-COOLER HEAT EXCHANGER (see Sub-cooled Liquid)",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "ref": "¶122",
+     "text": "The liquid refrigerant leaving the condenser/receiver at cooling water temperature is sub-cooled to a temperature of +15oF (-10oC) to -15oF (-25oC).",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "LYOPHILIZATION"
+    },
+    {
+     "ref": "¶123",
+     "text": "A process in which the product is first frozen and then, while still in the frozen state, the major portion of the water and solvent system is reduced by sublimation and desorption so as to limit biological and chemical reactions at the designated storage temperature,",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "MAIN VACUUM VALVE (see Vapor Valve)"
+    },
+    {
+     "ref": "¶124",
+     "text": "This valve is between the chamber and external condenser to isolate the two vessels after the process is finished. This is the valve that protects the finished product.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "MATRIX"
+    },
+    {
+     "ref": "¶125",
+     "text": "A matrix, in terms of the lyophilization process, is a system of ice crystals and solids that is distributed throughout the product.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "MECHANICAL BOOSTER PUMP (see Blower)"
+    },
+    {
+     "ref": "¶126",
+     "text": "A roots pump with a high displacement for its size but a low compression ratio. When backed by an oil-seal rotary pump the combination is an economical alternative to a two-stage oil-sealed rotary pump, with the advantage of obtaining a high vacuum.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "MECHANICAL VACUUM PUMP"
+    },
+    {
+     "ref": "¶127",
+     "text": "The mechanical pumping system that lowers the pressure in the chamber to below atmospheric pressure so that sublimation can occur.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "MELTING TEMPERATURE (Melt-back)"
+    },
+    {
+     "ref": "¶128",
+     "text": "That temperature where mobile water first becomes evident in a frozen system.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "MICRON (see Torr)"
+    },
+    {
+     "ref": "¶129",
+     "text": "A unit of pressure used in the lyophilization process. One micron = one Mtorr or 25,400 microns = 1\" Hg., or 760,000 microns = one atmosphere.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "NONCONDENSABLES"
+    },
+    {
+     "ref": "¶130",
+     "text": "A mixture of gases such as nitrogen, hydrogen, chlorine, and hydrocarbons. They may be drawn into the system through leaks when part of the system is under a vacuum. Their presence reduces the operating efficiency of the system by increasing the condensing pressure.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "NUCLEATION"
+    },
+    {
+     "ref": "¶131",
+     "text": "The formation of ice crystals on foreign surfaces or as a result of the growth of water clusters.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "OIL-MIST FILTER"
+    },
+    {
+     "ref": "¶132",
+     "text": "In vacuum terminology a filter attached to the discharge (exhaust) of an oil-sealed rotary pump to eliminate most of the \"smoke\" of suspended fine droplets of oil which would be discharged into the environment.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "OIL SEALED ROTARY PUMP"
+    },
+    {
+     "ref": "¶133",
+     "text": "A standard type of mechanical vacuum pump used in freeze-drying with a high compression ratio but having a relatively low displacement (speed) for its size. A two-stage pump is effectively two such pumps in series and can obtain an ultimate vacuum.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "OIL SEPARATOR"
+    },
+    {
+     "ref": "¶134",
+     "text": "Separates the oil from the compressor discharge gas and returns the oil through the oil float trap and piping to the compressor crankcase.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "REAL LEAK"
+    },
+    {
+     "ref": "¶135",
+     "text": "A real leak is a source of atmospheric gases resulting from a penetration through the chamber.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "RECONSTITUTE"
+    },
+    {
+     "ref": "¶136",
+     "text": "The dissolving of the dried product into a solvent or diluent.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "RELIEF VALVE"
+    },
+    {
+     "ref": "¶137",
+     "text": "Used for safety purposes to prevent damage in case excessive pressure is encountered.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "ROTARY VANE PUMP"
+    },
+    {
+     "ref": "¶138",
+     "text": "A mechanical pumping system with sliding vanes as the mechanical seal. Can be single or two stages.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "ref": "¶139",
+     "text": "SHELF COMPRESSOR (Controlling Compressor)",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "ref": "¶140",
+     "text": "Used for controlling the shelf temperature, either cooling or from overheating.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "SELF LIQUID HEAT EXCHANGER"
+    },
+    {
+     "ref": "¶141",
+     "text": "The transfer of heat from the shelf fluid to the refrigeration system through tubes in the exchanger causing compressor suction gas to warm.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "SHELVES"
+    },
+    {
+     "ref": "¶142",
+     "text": "In terms of the lyophilization process, they are a form of heat exchanger, within the chamber, that have a serpentine liquid flow through them, entering one side and flowing to the other side. They are located in the circulation system.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "SINGLE STAGE COMPRESSOR"
+    },
+    {
+     "ref": "¶143",
+     "text": "This is a normal type compressor used in refrigeration. In the lyophilization process it is used to control the shelf temperature, both for cooling and keeping the shelf temperature from overheating using a temperature controller.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "SILICONE OIL"
+    },
+    {
+     "ref": "¶144",
+     "text": "A heat transfer fluid.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "STERILIZATION"
+    },
+    {
+     "ref": "¶145",
+     "text": "The use of steam and pressure to kill any bacteria that may be able to contaminate that environment or vessel.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "SUBLIMATION"
+    },
+    {
+     "ref": "¶146",
+     "text": "The conversion of a material from a solid phase directly to a vapor phase, without passing through the liquid phase. This is referred to as the primary drying stage.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "ref": "¶147",
+     "text": "SUB-COOLED LIQUID (See Liquid Sub-cooler Heat Exchanger)",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "ref": "¶148",
+     "text": "The liquid refrigerant is cooled through an exchanger so that it increases the refrigerating effect as well as reduces the volume of gas flashed from the liquid refrigerant in passage through the expansion valve.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "SUCTION LINE ACCUMULATOR"
+    },
+    {
+     "ref": "¶149",
+     "text": "To provide adequate refrigerant liquid slug protection (droplets of liquid refrigerant) from returning to the compressor, and causing damage to the compressor.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "TCE"
+    }
+   ]
+  },
+  {
+   "id": "fda-ora-guide-lyophilization-parenterals-1993.html:¶150-¶164",
+   "source": "fda-ora-guide-lyophilization-parenterals-1993.html",
+   "unit": "¶150-¶164",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "¶150",
+     "text": "Trichloroethylene - A heat transfer fluid.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "TEMPERATURE"
+    },
+    {
+     "ref": "¶151",
+     "text": "The degree of hotness or coldness of a body.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "THERMOCOUPLE"
+    },
+    {
+     "ref": "¶152",
+     "text": "A metal-to-metal contact between two dissimilar metals that produces a small voltage across the free ends of the wire.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "THERMOSTATIC EXPANSION VALVE"
+    },
+    {
+     "ref": "¶153",
+     "text": "An automatic variable device controlling the flow of liquid refrigerant.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "TORR (See Micron)"
+    },
+    {
+     "ref": "¶154",
+     "text": "A unit of measure equivalent to the amount of pressure in 1000 microns.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "TWO STAGE COMPRESSOR (see Interstage)"
+    },
+    {
+     "ref": "¶155",
+     "text": "This is a specially built compressor. Its function is to be able to attain low temperatures by being able to operate at low pressures. It is two compressors built into one. A low stage connected internally and a high stage connected externally with piping, called interstage.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "UNLOADING VALVE"
+    },
+    {
+     "ref": "¶156",
+     "text": "This valve connects the interstage with suction to equalize both pressures during pump-down.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "VACUUM"
+    },
+    {
+     "ref": "¶157",
+     "text": "Strictly speaking, a space in which the total pressure is less than atmospheric.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "VACUUM CONTROL (Gas Bleed)"
+    },
+    {
+     "ref": "¶158",
+     "text": "To assist in the rate of sublimation, by controlling the pressure in the lyophilizer.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "VACUUM PUMP"
+    },
+    {
+     "ref": "¶159",
+     "text": "A mechanical way of reducing the pressure in a vessel below atmospheric pressure to where sublimation can occur. There are three types of pumps, rotary vane, rotary piston and mechanical booster.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "VAPOR BAFFLE"
+    },
+    {
+     "ref": "¶160",
+     "text": "A target shaped object placed in the condenser to direct vapor flow and to promote an even distribution of condensate.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "VACUUM VALVES"
+    },
+    {
+     "ref": "¶161",
+     "text": "The vacuum valves used are of a ball or disk type that can seal without leaking. The balI types are used for services to the chamber and condenser. They are also used for drains and isolation applications. The disk types are used in the vacuum line system and are connected to the vacuum pump, chamber and condenser.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "VAPOR VALVE (See Main Vacuum Valve)"
+    },
+    {
+     "ref": "¶162",
+     "text": "The vacuum valve between the chamber and external condenser. When this valve is closed the chamber is isolated from the external condenser. Also known as the main vapor valve.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "VIAL"
+    },
+    {
+     "ref": "¶163",
+     "text": "A small glass bottle with a flat bottom, short neck and flat flange designed for stoppering.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "VIRTUAL LEAK"
+    },
+    {
+     "ref": "¶164",
+     "text": "In the vacuum system a virtual leak is the passage of gas into the chamber from a source that is located internally in the chamber.",
+     "heading_path": "Lyophilization of Parenteral (7/93) > GUIDE TO INSPECTIONS OF LYOPHILIZATION OF PARENTERALS > GLOSSARY"
+    },
+    {
+     "context": "Return to: Page Top | Inspection Start"
+    }
+   ]
+  }
+ ]
+}

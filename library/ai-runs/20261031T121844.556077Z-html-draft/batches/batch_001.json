@@ -1,0 +1,473 @@
+{
+ "instructions": "You read an FDA web page (a Q&A page on CGMP, a Guide to Inspections, an Inspection Technical Guide, a Compliance\nPolicy Guide or an alert to manufacturers) and list what it expects of a drug manufacturer. Each unit is given as\nits paragraphs, each with its reference (\"Q4.2\" on a Q&A page: question 4, answer paragraph 2; \"¶17\" elsewhere) and\nits exact text; \"context\" entries are headings or labels (not citable); \"list_item\" marks a list item, whose\nlead-in is the paragraph ending in \":\" above it. Your output is checked by software against that exact text and by\nindependent reviewers, so precision matters more than wording.\n\nList each separate expectation as its own item, so that together your items cover every expectation in the unit.\nOne expectation is one thing a manufacturer must, should or may do, with all its conditions, numbers and\nqualifiers; do not split one expectation across items. What counts:\n- what FDA says a firm must, should or may do (\"FDA expects firms to have written procedures ...\", \"manufacturers\n  should ...\", \"are required by the CGMP regulations to ...\");\n- in a Guide to Inspections or Inspection Technical Guide, what the investigator is told to check (\"Determine\n  whether the firm has validated ...\", \"Check that ...\", \"Review the ...\"): write the practice the firm is expected\n  to have (\"Validate ...\"), not the investigator's task. When the text only says what to look at (\"Examine the\n  design of equipment\") and states no expectation, write the expectation the text itself gives in the same\n  paragraph; if it gives none, put the sentence in not_applicable (\"inspection step without a stated expectation\").\nFor each item:\n- statement: the expectation in your own plain English words, as one checklist item a site could be audited\n  against. Do not copy more than a few words in a row. Keep every condition (\"where\", \"if\", \"unless\", \"when\",\n  \"except\") and every number. Do not add anything the text does not say. The statement itself must carry every\n  condition or qualifier of the lead-in above a list item. The statement is shown to customers: never cite a\n  regulation, section, question or paragraph number in it (\"21 CFR 211.42(d)\", \"Q4\", \"see above\"); say what is\n  required instead.\n- quote: the exact span of ONE paragraph's text that states the whole expectation, copied character for character\n  (matched against the page text by software; do not fix typos or change punctuation, keep footnote marks as\n  printed). A quote may continue into the paragraphs after it in the same unit, in order (e.g. a lead-in and its\n  list items), but must start in the cited paragraph.\n- clause_number: the reference of the paragraph the quote starts in, exactly as given (\"Q4.2\", \"¶17\").\n- strength: \"mandatory\" where the text states a legal requirement (shall / must / is required / may not, \"the\n  CGMP regulations require\"); \"recommended\" for should, \"FDA expects\", \"FDA recommends\", and for an inspection\n  point; \"optional\" for may / is acceptable. A list item without such a word takes its lead-in's.\n- plant_types: from OSD, LIQ, SEMI, INJ, API (INJ = sterile injectables); the plant scope given unless the text\n  narrows it. Text limited to non-sterile products does not apply to INJ; text limited to sterile products\n  (parenterals, aseptic processing, terminal sterilization) applies only to INJ (and API where in scope). Text\n  that rests on the CGMP regulations for finished pharmaceuticals (21 CFR 210/211, \"drug product manufacturers\",\n  \"finished drug products\") does not apply to API unless it speaks of APIs or bulk drug substances too.\n- numbers: every number, limit, frequency or period in the quote, as written (not regulation references).\n- condition: the condition or trigger in a few words, \"\" if none. This field only repeats what the statement\n  already says.\n- topic: the sub-topic id from TOPICS the expectation belongs to.\n\nDo not narrow or widen a term. Where the text gives examples (\"such as ...\"), keep them as examples; where it\ngives a closed list, keep it closed.\n\nSentences that state no expectation for the manufacturer go in not_applicable: the question itself, background and\nhistory, definitions, descriptions of what happened at a firm, FDA's own actions or enforcement, statements of\npurpose or scope, references, an inspection step without a stated expectation. One entry per SENTENCE, each with\nthe paragraph reference, the sentence's first 8 or more words copied exactly, and the reason in a few words. A\nsentence with \"should\", \"must\", \"FDA expects\" or an instruction to the investigator needs an item or a\nnot_applicable entry.\n\nWrite the answers file named in your task: {\"answers\": [one object per unit with \"unit\" set to the unit's \"id\"\nexactly, \"items\" and \"not_applicable\"]}.\n",
+ "topics": [
+  "QS.PQS",
+  "QS.MGMT",
+  "QS.QRM",
+  "QS.PQR",
+  "QS.CHANGE",
+  "QS.DEV",
+  "QS.CAPA",
+  "PER.ORG",
+  "PER.KEY",
+  "PER.TRAIN",
+  "PER.HYG",
+  "PER.GOWN",
+  "PREM.DESIGN",
+  "PREM.PROD",
+  "PREM.STORE",
+  "PREM.QC",
+  "PREM.ANC",
+  "EQ.DESIGN",
+  "EQ.MAINT",
+  "EQ.CLEAN",
+  "EQ.CAL",
+  "DOC.SYS",
+  "DOC.SPEC",
+  "DOC.MFR",
+  "DOC.BMR",
+  "DOC.SOP",
+  "DOC.RET",
+  "MAT.SUPP",
+  "MAT.RECV",
+  "MAT.SAMP",
+  "MAT.STATUS",
+  "MAT.PACK",
+  "MAT.REJ",
+  "PROD.GEN",
+  "PROD.XCONT",
+  "PROD.IPC",
+  "PROD.YIELD",
+  "PROD.PACK",
+  "PROD.REWORK",
+  "QC.GEN",
+  "QC.SAMP",
+  "QC.TEST",
+  "QC.OOS",
+  "QC.STAB",
+  "QC.REF",
+  "QC.MICRO",
+  "VAL.PLAN",
+  "VAL.QUAL",
+  "VAL.PROC",
+  "VAL.CLEAN",
+  "VAL.METH",
+  "CSV.VAL",
+  "CSV.ACCESS",
+  "CSV.AUDIT",
+  "CSV.ESIG",
+  "CSV.DI",
+  "UTIL.WATER",
+  "UTIL.HVAC",
+  "UTIL.GAS",
+  "CCS.STRAT",
+  "CCS.EM",
+  "CCS.CLEAN",
+  "CCS.PEST",
+  "STER.GRADE",
+  "STER.ASEPT",
+  "STER.APS",
+  "STER.STERIL",
+  "STER.FILT",
+  "STER.CCI",
+  "STER.LYO",
+  "API.START",
+  "API.PROC",
+  "API.IMP",
+  "API.SOLV",
+  "OUT.CONTRACT",
+  "OUT.AGREE",
+  "CMP.COMPL",
+  "CMP.RECALL",
+  "CMP.REPORT",
+  "SI.PROG",
+  "SI.TEAM",
+  "SI.REPORT",
+  "SI.FOLLOW",
+  "DIST.STORE",
+  "DIST.TRANS",
+  "DIST.RETURN",
+  "REL.QP",
+  "REL.REVIEW"
+ ],
+ "schema": {
+  "type": "object",
+  "required": [
+   "unit",
+   "items",
+   "not_applicable"
+  ],
+  "properties": {
+   "unit": {
+    "type": "string"
+   },
+   "items": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "statement",
+      "quote",
+      "clause_number",
+      "strength",
+      "plant_types",
+      "numbers",
+      "condition",
+      "topic"
+     ],
+     "properties": {
+      "statement": {
+       "type": "string"
+      },
+      "quote": {
+       "type": "string"
+      },
+      "clause_number": {
+       "type": "string"
+      },
+      "strength": {
+       "enum": [
+        "mandatory",
+        "recommended",
+        "optional"
+       ]
+      },
+      "plant_types": {
+       "type": "array",
+       "items": {
+        "enum": [
+         "OSD",
+         "LIQ",
+         "SEMI",
+         "INJ",
+         "API"
+        ]
+       }
+      },
+      "numbers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "condition": {
+       "type": "string"
+      },
+      "topic": {
+       "type": "string"
+      }
+     }
+    }
+   },
+   "not_applicable": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "clause_number",
+      "text",
+      "reason"
+     ],
+     "properties": {
+      "clause_number": {
+       "type": "string"
+      },
+      "text": {
+       "type": "string"
+      },
+      "reason": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  }
+ },
+ "units": [
+  {
+   "id": "fda-ora-guide-micro-qc-labs-1993.html:¶1-¶8",
+   "source": "fda-ora-guide-micro-qc-labs-1993.html",
+   "unit": "¶1-¶8",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "context": "Microbiological Pharmaceutical Quality Control Labs (7/93)"
+    },
+    {
+     "context": "GUIDE TO INSPECTIONS OF MICROBIOLOGICAL PHARMACEUTICAL QUALITY CONTROL LABORATORIES"
+    },
+    {
+     "ref": "¶1",
+     "text": "Note: This document is reference material for investigators and other FDA personnel. The document does not bind FDA, and does not confer any rights, privileges, benefits, or immunities for or on any person(s).",
+     "heading_path": "Microbiological Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF MICROBIOLOGICAL PHARMACEUTICAL QUALITY CONTROL LABORATORIES"
+    },
+    {
+     "context": "I. INTRODUCTION"
+    },
+    {
+     "ref": "¶2",
+     "text": "The Guide to the Inspection of Pharmaceutical Quality Control Laboratories provided very limited guidance on the matter of inspection of microbiological laboratories. While that guide addresses many of the issues associated with the chemical aspect of laboratory analysis of pharmaceuticals, this document will serve as a guide to the inspection of the microbiology analytical process. As with any laboratory inspection, it is recommended that an analyst (microbiologist) who is familiar with the tests being inspected participate in these inspections.",
+     "heading_path": "Microbiological Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF MICROBIOLOGICAL PHARMACEUTICAL QUALITY CONTROL LABORATORIES > I. INTRODUCTION"
+    },
+    {
+     "context": "II. MICROBIOLOGICAL TESTING OF NON-STERILE PRODUCTS"
+    },
+    {
+     "ref": "¶3",
+     "text": "For a variety of reasons, we have seen a number of problems associated with the microbiological contamination of topical drug products, nasal solutions and inhalation products. The USP Microbiological Attributes Chapter <1111> provides little specific guidance other than \"The significance of microorganisms in non-sterile pharmaceutical products should be evaluated in terms of the use of the product, the nature of the product, and the potential hazard to the user.\" The USP recommends that certain categories be routinely tested for total counts and specified indicator microbial contaminants. For example natural plant, animal and some mineral products for Salmonella, oral liquids for E. Coli, topicals for P. aeruginosa and S. Aureus, and articles intended for rectal, urethral, or vaginal administration for yeasts and molds. A number of specific monographs also include definitive microbial limits.",
+     "heading_path": "Microbiological Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF MICROBIOLOGICAL PHARMACEUTICAL QUALITY CONTROL LABORATORIES > II. MICROBIOLOGICAL TESTING OF NON-STERILE PRODUCTS"
+    },
+    {
+     "ref": "¶4",
+     "text": "As a general guide for acceptable levels and types of microbiological contamination in products, Dr. Dunnigan of the Bureau of Medicine of the FDA commented on the health hazard. In 1970, he said that topical preparations contaminated with gram negative organisms are a probable moderate to serious health hazard. Through the literature and through our investigations, it has been shown that a variety of infections have been traced to the gram negative contamination of topical products. The classical example being the Pseudomonas cepacia contamination of Povidone Iodine products reported by a hospital in Massachusetts several years ago.",
+     "heading_path": "Microbiological Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF MICROBIOLOGICAL PHARMACEUTICAL QUALITY CONTROL LABORATORIES > II. MICROBIOLOGICAL TESTING OF NON-STERILE PRODUCTS"
+    },
+    {
+     "ref": "¶5",
+     "text": "Therefore, each company is expected to develop microbial specifications for their non-sterile products. Likewise, the USP Microbial Limits Chapter <61> provides methodology for selected indicator organisms, but not all objectionable organisms. For example, it is widely recognized that Pseudomonas cepacia is objectionable if found in a topical product or nasal solution in high numbers; yet, there are no test methods provided in the USP that will enable the identification of the presence of this microorganism.",
+     "heading_path": "Microbiological Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF MICROBIOLOGICAL PHARMACEUTICAL QUALITY CONTROL LABORATORIES > II. MICROBIOLOGICAL TESTING OF NON-STERILE PRODUCTS"
+    },
+    {
+     "ref": "¶6",
+     "text": "A relevant example of this problem is the recall of Metaproterenol Sulfate Inhalation Solution. The USP XXII monograph requires no microbial testing for this product. The agency classified this as a Class I recall because the product was contaminated with Pseudomonas gladioli/cepacia. The health hazard evaluation commented that the risk of pulmonary infection is especially serious and potentially life-threatening to patients with chronic obstructive airway disease, cystic fibrosis, and immuno-compromised patients. Additionally, these organisms would not have been identified by testing procedures delineated in the general Microbial Limits section of the Compendia.",
+     "heading_path": "Microbiological Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF MICROBIOLOGICAL PHARMACEUTICAL QUALITY CONTROL LABORATORIES > II. MICROBIOLOGICAL TESTING OF NON-STERILE PRODUCTS"
+    },
+    {
+     "ref": "¶7",
+     "text": "The USP currently provides for retests in the Microbial Limits section <61> however there is a current proposal to remove the retest provision. As with any other test, the results of initial test should be reviewed and investigated. Microbiological contamination is not evenly dispersed throughout a lot or sample of product and finding a contaminant in one sample and not in another does not discount the findings of the initial sample results. Retest results should be reviewed and evaluated, and particular emphasis should be placed on the logic and rationale for conducting the retest.",
+     "heading_path": "Microbiological Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF MICROBIOLOGICAL PHARMACEUTICAL QUALITY CONTROL LABORATORIES > II. MICROBIOLOGICAL TESTING OF NON-STERILE PRODUCTS"
+    },
+    {
+     "ref": "¶8",
+     "text": "In order to isolate specific microbial contaminants, FDA laboratories, as well as many in the industry, employ some type of enrichment media containing inactivators, such as Tween or lecithin. This is essential to inactivate preservatives usually present in these types of product and provides a better medium for damaged or slow growing cells. Other growth parameters include a lower temperature and longer incubation time (at least 5 days) that provide a better survival condition for damaged or slow-growing cells.",
+     "heading_path": "Microbiological Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF MICROBIOLOGICAL PHARMACEUTICAL QUALITY CONTROL LABORATORIES > II. MICROBIOLOGICAL TESTING OF NON-STERILE PRODUCTS"
+    }
+   ]
+  },
+  {
+   "id": "fda-ora-guide-micro-qc-labs-1993.html:¶9-¶17",
+   "source": "fda-ora-guide-micro-qc-labs-1993.html",
+   "unit": "¶9-¶17",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "¶9",
+     "text": "For example, FDA laboratories use the test procedures for cosmetics in the Bacteriological Analytical Manual (BAM), 6th Edition, to identify contamination in non-sterile drug products. This testing includes an enrichment of a sample in modified letheen broth. After incubation, further identification is carried out on Blood Agar Plates and MacConkey Agar Plates. Isolated colonies are then identified. This procedure allows FDA microbiologists to optimize the recovery of all potential pathogens and to quantitate and speciate all recovered organisms. Another important aspect of procedures used by FDA analysts is to determine growth promotion characteristics for all of the media used.",
+     "heading_path": "Microbiological Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF MICROBIOLOGICAL PHARMACEUTICAL QUALITY CONTROL LABORATORIES > II. MICROBIOLOGICAL TESTING OF NON-STERILE PRODUCTS"
+    },
+    {
+     "ref": "¶10",
+     "text": "The selection of the appropriate neutralizing agents are largely dependent upon the preservative and formulation of the product under evaluation. If there is growth in the enrichment broth, transfer to more selective agar media or suitable enrichment agar may be necessary for subsequent identification.",
+     "heading_path": "Microbiological Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF MICROBIOLOGICAL PHARMACEUTICAL QUALITY CONTROL LABORATORIES > II. MICROBIOLOGICAL TESTING OF NON-STERILE PRODUCTS"
+    },
+    {
+     "ref": "¶11",
+     "text": "Microbiological testing may include an identification of colonies found during the Total Aerobic Plate Count test. Again, the identification should not merely be limited to the USP indicator organisms.",
+     "heading_path": "Microbiological Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF MICROBIOLOGICAL PHARMACEUTICAL QUALITY CONTROL LABORATORIES > II. MICROBIOLOGICAL TESTING OF NON-STERILE PRODUCTS"
+    },
+    {
+     "ref": "¶12",
+     "text": "The importance of identifying all isolates from either or both Total Plate Count testing and enrichment testing will depend upon the product and its intended use. Obviously, if an oral solid dosage form such as a tablet is tested, it may be acceptable to identify isolates when testing shows high levels. However, for other products such as topicals, inhalants or nasal solutions where there is a major concern for microbiological contamination, isolates from plate counts, as well as enrichment testing, should be identified.",
+     "heading_path": "Microbiological Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF MICROBIOLOGICAL PHARMACEUTICAL QUALITY CONTROL LABORATORIES > II. MICROBIOLOGICAL TESTING OF NON-STERILE PRODUCTS"
+    },
+    {
+     "context": "III. FACILITIES, EQUIPMENT, AND"
+    },
+    {
+     "context": "MEDIA"
+    },
+    {
+     "ref": "¶13",
+     "text": "Begin the inspection with a review of analyses being conducted and inspect the plates and tubes of media being incubated (caution should be exercised not to inadvertently contaminate plates or tubes of media on test). Be particularly alert for retests that have not been documented and \"special projects\" in which investigations of contamination problems have been identified. This can be evaluated by reviewing the ongoing analyses (product or environmental) for positive test results. Request to review the previous day's plates and media, if available and compare your observations to the recorded entries in the logs. Inspect the autoclaves used for the sterilization of media. Autoclaves may lack the ability to displace steam with sterile filtered air. For sealed bottles of media, this would not present a problem. However, for non-sealed bottles or flasks of media, non-sterile air has led to the contamination of media. In addition, autoclaving less than the required time will also allow media associated contaminants to grow and cause a false positive result. These problems may be more prevalent in laboratories with a heavy workload.",
+     "heading_path": "Microbiological Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF MICROBIOLOGICAL PHARMACEUTICAL QUALITY CONTROL LABORATORIES > III. FACILITIES, EQUIPMENT, AND"
+    },
+    {
+     "ref": "¶14",
+     "text": "Check the temperature of the autoclave since overheating can denature and even char necessary nutrients. This allows for a less than optimal recovery of already stressed microorganisms. The obvious problem with potential false positives is the inability to differentiate between inadvertent medium contamination and true contamination directly associated with the sample tested.",
+     "heading_path": "Microbiological Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF MICROBIOLOGICAL PHARMACEUTICAL QUALITY CONTROL LABORATORIES > III. FACILITIES, EQUIPMENT, AND"
+    },
+    {
+     "context": "IV. STERILITY TESTING"
+    },
+    {
+     "ref": "¶15",
+     "text": "On 10/11/91, the Agency published a proposed rule regarding the manufacture of drug products by aseptic processing and terminal sterilization. A list of contaminated or potentially contaminated drug products made by aseptic processing and later recalled was also made available. Many of the investigations/inspections of the recalled products started with a list of initial sterility test failures. FDA review of the manufacturer's production, controls, investigations and their inadequacies, coupled with the evidence of product failure (initial sterility test failure) ultimately led to the action.",
+     "heading_path": "Microbiological Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF MICROBIOLOGICAL PHARMACEUTICAL QUALITY CONTROL LABORATORIES > IV. STERILITY TESTING"
+    },
+    {
+     "ref": "¶16",
+     "text": "The USP points out that the facilities used to conduct sterility tests should be similar to those used for manufacturing product. The USP states, \"The facility for sterility testing should be such as to offer no greater a microbial challenge to the articles being tested than that of an aseptic processing production facility\". Proper design would, therefore, include a gowning area and pass-through airlock. Environmental monitoring and gowning should be equivalent to that used for manufacturing product.",
+     "heading_path": "Microbiological Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF MICROBIOLOGICAL PHARMACEUTICAL QUALITY CONTROL LABORATORIES > IV. STERILITY TESTING"
+    },
+    {
+     "ref": "¶17",
+     "text": "Since a number of product and media manipulations are involved in conducting a sterility test, it is recommended that the inspection include actual observation of the sterility test even though some companies have tried to discourage inspection on the grounds that it may make the firm's analyst nervous. The inspection team is expected to be sensitive to this concern and make the observations in a manner that will create the least amount of disruption in the normal operating environment. Nevertheless, such concerns are not sufficient cause for you to suspend this portion of the inspection.",
+     "heading_path": "Microbiological Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF MICROBIOLOGICAL PHARMACEUTICAL QUALITY CONTROL LABORATORIES > IV. STERILITY TESTING"
+    }
+   ]
+  },
+  {
+   "id": "fda-ora-guide-micro-qc-labs-1993.html:¶18-¶27",
+   "source": "fda-ora-guide-micro-qc-labs-1993.html",
+   "unit": "¶18-¶27",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "¶18",
+     "text": "One of the most important aspects of the inspection of a sterility analytical program is to review records of initial positive sterility test results. Request lists of test failures to facilitate review of production and control records and investigation reports. Particularly, for the high risk aseptically filled product, initial positive sterility test results and investigations should be reviewed. It is difficult for the manufacturer to justify the release of a product filled aseptically that fails an initial sterility test without identifying specific problems associated with the controls used for the sterility test.",
+     "heading_path": "Microbiological Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF MICROBIOLOGICAL PHARMACEUTICAL QUALITY CONTROL LABORATORIES > IV. STERILITY TESTING"
+    },
+    {
+     "ref": "¶19",
+     "text": "Examine the use of negative controls. They are particularly important to a high quality sterility test. Good practice for such testing includes the use of known terminally sterilized or irradiated samples as a system control. Alternatively, vials or ampules filled during media fills have also been used.",
+     "heading_path": "Microbiological Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF MICROBIOLOGICAL PHARMACEUTICAL QUALITY CONTROL LABORATORIES > IV. STERILITY TESTING"
+    },
+    {
+     "ref": "¶20",
+     "text": "Be especially concerned about the case where a manufacturer of aseptically filled products has never found an initial positive sterility test. While such situations may occur, they are rare. In one case, a manufacturer's records showed that they had never found a positive result; their records had been falsified. Also, the absence of initial positives may indicate that the test has not been validated to demonstrate that there is no carryover of inhibition from the product or preservative.",
+     "heading_path": "Microbiological Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF MICROBIOLOGICAL PHARMACEUTICAL QUALITY CONTROL LABORATORIES > IV. STERILITY TESTING"
+    },
+    {
+     "ref": "¶21",
+     "text": "Inspect robotic systems or isolation technology, such as La Calhene units used for sterility testing. These units allow product withdrawal in the absence of people. If an initial test failure is noted in a sample tested in such a system, it could be very difficult to justify release based on a retest, particularly if test controls are negative.",
+     "heading_path": "Microbiological Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF MICROBIOLOGICAL PHARMACEUTICAL QUALITY CONTROL LABORATORIES > IV. STERILITY TESTING"
+    },
+    {
+     "ref": "¶22",
+     "text": "Evaluate the time period used for sterility test sample incubation. This issue has been recently clarified. The USP states that samples are to be incubated for at least 7 days, and a proposal has been made to change the USP to require a period of 14 days incubation. You are expected to evaluate the specific analytical procedure and the product for the proper incubation period. Seven days may be insufficient, particularly when slow growing organisms have been identified. Media fill, environmental, sterility test results and other data should be reviewed to assure the absence of slow growing organisms. Also, you should compare the methods being used for incubation to determine if they conform to those listed in approved or pending applications.",
+     "heading_path": "Microbiological Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF MICROBIOLOGICAL PHARMACEUTICAL QUALITY CONTROL LABORATORIES > IV. STERILITY TESTING"
+    },
+    {
+     "context": "V. METHODOLOGY AND"
+    },
+    {
+     "context": "VALIDATION OF TEST"
+    },
+    {
+     "context": "PROCEDURES"
+    },
+    {
+     "ref": "¶23",
+     "text": "Determine the source of test procedures. Manufacturers derive test procedures from several sources, including the USP, BAM and other microbiological references. It would be virtually impossible to completely validate test procedures for every organism that may be objectionable. However, it is a good practice to assure that inhibitory substances in samples are neutralized.",
+     "heading_path": "Microbiological Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF MICROBIOLOGICAL PHARMACEUTICAL QUALITY CONTROL LABORATORIES > V. METHODOLOGY AND"
+    },
+    {
+     "ref": "¶24",
+     "text": "During inspections, including pre-approval inspections, evaluate the methodology for microbiological testing. For example, we expect test methods to identify the presence of organisms such as Pseudomonas cepacia or other Pseudomonas species that may be objectional or present a hazard to the user. Where pre-approval inspections are being conducted, compare the method being used against the one submitted in the application. Also verify that the laboratory has the equipment necessary to perform the tests and that the equipment was available and in good operating condition on the dates of critical testing.",
+     "heading_path": "Microbiological Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF MICROBIOLOGICAL PHARMACEUTICAL QUALITY CONTROL LABORATORIES > V. METHODOLOGY AND"
+    },
+    {
+     "ref": "¶25",
+     "text": "The USP states that an alternate method may be substituted for compendial tests, provided it has been properly validated as giving equivalent or better results.",
+     "heading_path": "Microbiological Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF MICROBIOLOGICAL PHARMACEUTICAL QUALITY CONTROL LABORATORIES > V. METHODOLOGY AND"
+    },
+    {
+     "ref": "¶26",
+     "text": "You may find that dehydrated media are being used for the preparation of media. Good practice includes the periodic challenge of prepared media with low levels of organisms. This includes USP indicator organisms as well as normal flora. The capability of the media to promote the growth of organisms may be affected by the media preparation process, sterilization (overheating) and storage. These represent important considerations in any inspection and in the good management of a microbiology laboratory.",
+     "heading_path": "Microbiological Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF MICROBIOLOGICAL PHARMACEUTICAL QUALITY CONTROL LABORATORIES > V. METHODOLOGY AND"
+    },
+    {
+     "context": "VI. DATA STORAGE"
+    },
+    {
+     "ref": "¶27",
+     "text": "Evaluate the test results that have been entered in either logbooks or on loose analytical sheets. While some manufacturers may be reluctant to provide tabulations, summaries, or printouts of microbiological test results, this data should be reviewed for the identification of potential microbial problems in processing. When summaries of this data are not available the inspection team is expected to review enough data to construct their own summary of the laboratory test results and quality control program.",
+     "heading_path": "Microbiological Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF MICROBIOLOGICAL PHARMACEUTICAL QUALITY CONTROL LABORATORIES > VI. DATA STORAGE"
+    }
+   ]
+  },
+  {
+   "id": "fda-ora-guide-micro-qc-labs-1993.html:¶28-¶36",
+   "source": "fda-ora-guide-micro-qc-labs-1993.html",
+   "unit": "¶28-¶36",
+   "page_kind": "FDA web page (inspection guide, inspection technical guide, compliance policy guide or alert)",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "¶28",
+     "text": "Some laboratories utilize preprinted forms only for recording test data. Some laboratories have also pointed out that the only way microbiological test data could be reviewed during inspections would be to review individual batch records. However, in most cases, preprinted forms are in multiple copies with a second or third copy in a central file. Some companies use log-books for recording data. These logbooks should also be reviewed.",
+     "heading_path": "Microbiological Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF MICROBIOLOGICAL PHARMACEUTICAL QUALITY CONTROL LABORATORIES > VI. DATA STORAGE"
+    },
+    {
+     "ref": "¶29",
+     "text": "Additionally, many manufacturers are equipped with an automated microbial system for the identification of microorganisms. Logs of such testing, along with the identification of the source of the sample, are also of value in the identification of potential microbial problems in processing.",
+     "heading_path": "Microbiological Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF MICROBIOLOGICAL PHARMACEUTICAL QUALITY CONTROL LABORATORIES > VI. DATA STORAGE"
+    },
+    {
+     "ref": "¶30",
+     "text": "The utilization of automated systems for the identification of microorganisms is relatively common in the parenteral manufacturer where isolates from the environment, water systems, validation and people are routinely identified.",
+     "heading_path": "Microbiological Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF MICROBIOLOGICAL PHARMACEUTICAL QUALITY CONTROL LABORATORIES > VI. DATA STORAGE"
+    },
+    {
+     "ref": "¶31",
+     "text": "Microbiologists in our Baltimore District are expert on the use of automated microbic analytical systems. They were the first FDA laboratory to use such equipment and have considerable experience in validating methods for these pieces of equipment. Contact the Baltimore District laboratory for information or questions about these systems. Plants with heavy utilization of these pieces of equipment should be inspected by individuals from the Baltimore District laboratory.",
+     "heading_path": "Microbiological Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF MICROBIOLOGICAL PHARMACEUTICAL QUALITY CONTROL LABORATORIES > VI. DATA STORAGE"
+    },
+    {
+     "context": "VII. MANAGEMENT REVIEW"
+    },
+    {
+     "ref": "¶32",
+     "text": "Microbiological test results represent one of the more difficult areas for the evaluation and interpretation of data. These evaluations require extensive training and experience in microbiology. Understanding the methodology, and more importantly, understanding the limitations of the test present the more difficult issues. For example, a manufacturer found high counts of Enterobacter cloacae in their oral dosage form product derived from a natural substance. Since they did not isolate E. coli, they released the product. FDA analysis found E. cloacae in most samples from the batch and even E. coli in one sample. In this case management failed to recognize that microbiological contamination might not be uniform, that other organisms may mask the presence of certain organisms when identification procedures are performed, and that microbiological testing is far from absolute. The inspection must consider the relationship between the organisms found in the samples and the potential for the existence of other objectionable conditions. For example, it is logical to assume that if the process would allow E. cloacae to be present, it could also allow the presence of the objectionable indicator organism. The microbiologist should evaluate this potential by considering such factors as methodology, and the growth conditions of the sample as well as other fundamental factors associated with microbiological analysis.",
+     "heading_path": "Microbiological Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF MICROBIOLOGICAL PHARMACEUTICAL QUALITY CONTROL LABORATORIES > VII. MANAGEMENT REVIEW"
+    },
+    {
+     "ref": "¶33",
+     "text": "Evaluate management's program to audit the quality of the laboratory work performed by outside contractors.",
+     "heading_path": "Microbiological Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF MICROBIOLOGICAL PHARMACEUTICAL QUALITY CONTROL LABORATORIES > VII. MANAGEMENT REVIEW"
+    },
+    {
+     "context": "VIII. CONTRACT TESTING"
+    },
+    {
+     "context": "LABORATORIES"
+    },
+    {
+     "ref": "¶34",
+     "text": "Many manufacturers contract with private or independent testing laboratories to analyze their products. Since, these laboratories will conduct only the tests that the manufacturer requests, determine the specific instructions given to the contractor. Evaluate these instructions to assure that necessary testing will be completed. For example, in a recent inspection of a topical manufacturer, total plate count and testing for the USP indicator organisms were requested. The control laboratory performed this testing only and did not look for other organisms that would be objectionable based on the product's intended use.",
+     "heading_path": "Microbiological Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF MICROBIOLOGICAL PHARMACEUTICAL QUALITY CONTROL LABORATORIES > VIII. CONTRACT TESTING"
+    },
+    {
+     "ref": "¶35",
+     "text": "Analytical results, particularly for those articles in which additional or retesting is conducted, should be reviewed. Test reports should be provided to the manufacturer for tests conducted. It is not unusual to see contract laboratories fail to provide complete results, with both failing as well as passing results.",
+     "heading_path": "Microbiological Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF MICROBIOLOGICAL PHARMACEUTICAL QUALITY CONTROL LABORATORIES > VIII. CONTRACT TESTING"
+    },
+    {
+     "ref": "¶36",
+     "text": "Bacteriostasis/fungiostasis testing must be performed either by the contract lab or the manufacturer. These test results must be negative otherwise any sterility test results obtained by the contractor on the product may not be valid.",
+     "heading_path": "Microbiological Pharmaceutical Quality Control Labs (7/93) > GUIDE TO INSPECTIONS OF MICROBIOLOGICAL PHARMACEUTICAL QUALITY CONTROL LABORATORIES > VIII. CONTRACT TESTING"
+    },
+    {
+     "context": "Return to: Page Top | Inspection Start"
+    }
+   ]
+  }
+ ]
+}
