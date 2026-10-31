@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FDA Item Review</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@500;600&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+/* Layout: a review desk. Left rail = queue by document; main = one item, regulation text beside the drafted item, verdict bar fixed at the bottom of the card. */
+:root {
+  --ink: #1b2430;
+  --muted: #5c6878;
+  --paper: #f5f6f2;
+  --card: #ffffff;
+  --rule: #d9ddd3;
+  --accent: #1f5f8b;
+  --ok: #2e7d4f;
+  --warn: #a8640b;
+  --bad: #b23a3a;
+  --hl: #fff3c4;
+  --display: "IBM Plex Serif", Georgia, serif;
+  --body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ink: #e4e8ee; --muted: #9aa5b4; --paper: #12161c; --card: #1a2029; --rule: #2c3440;
+    --accent: #6fb0e0; --ok: #5cc28a; --warn: #e0a54a; --bad: #e27373; --hl: #4a3f12; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --ink: #e4e8ee; --muted: #9aa5b4; --paper: #12161c; --card: #1a2029; --rule: #2c3440;
+  --accent: #6fb0e0; --ok: #5cc28a; --warn: #e0a54a; --bad: #e27373; --hl: #4a3f12; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 15px/1.5 var(--body); }
+header { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center; justify-content: space-between;
+  padding: 14px 20px; border-bottom: 1px solid var(--rule); background: var(--card); }
+h1 { font: 600 20px/1.2 var(--display); margin: 0; text-wrap: balance; }
+.sub { color: var(--muted); font-size: 13px; }
+.progress { display: flex; gap: 14px; align-items: center; font-variant-numeric: tabular-nums; flex-wrap: wrap; }
+.bar { width: 180px; height: 8px; background: var(--rule); border-radius: 4px; overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--ok); width: 0; }
+.who { display: flex; gap: 8px; align-items: center; }
+input[type=text], textarea, select { font: inherit; color: var(--ink); background: var(--paper);
+  border: 1px solid var(--rule); border-radius: 6px; padding: 6px 8px; }
+input:focus-visible, textarea:focus-visible, select:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.wrap { display: grid; grid-template-columns: 280px 1fr; gap: 0; min-height: calc(100% - 70px); }
+nav { border-right: 1px solid var(--rule); padding: 12px; overflow-y: auto; max-height: calc(100vh - 70px); position: sticky; top: 0; }
+nav .doc { margin: 10px 0 4px; font-weight: 600; font-size: 13px; display: flex; justify-content: space-between; gap: 8px; }
+nav .doc span { color: var(--muted); font-weight: 400; font-variant-numeric: tabular-nums; }
+nav button.it { display: flex; width: 100%; gap: 8px; align-items: center; text-align: left; border: 0; background: none;
+  color: var(--ink); padding: 4px 6px; border-radius: 4px; cursor: pointer; font: 13px/1.35 var(--mono); }
+nav button.it:hover { background: var(--paper); }
+nav button.it.cur { background: var(--accent); color: var(--card); }
+.dot { width: 9px; height: 9px; border-radius: 50%; flex: none; border: 1.5px solid var(--muted); }
+.dot.correct { background: var(--ok); border-color: var(--ok); }
+.dot.fix { background: var(--warn); border-color: var(--warn); }
+.dot.reject { background: var(--bad); border-color: var(--bad); }
+main { padding: 18px 20px 40px; max-width: 1180px; }
+.card { background: var(--card); border: 1px solid var(--rule); border-radius: 8px; }
+.meta { display: flex; flex-wrap: wrap; gap: 8px 16px; padding: 14px 18px; border-bottom: 1px solid var(--rule); align-items: baseline; }
+.meta .clause { font: 600 18px var(--display); }
+.chip { font-size: 12px; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--rule); color: var(--muted); }
+.chip.st-mandatory { color: var(--bad); border-color: var(--bad); }
+.chip.st-recommended { color: var(--warn); border-color: var(--warn); }
+.chip.dec { color: var(--card); border: 0; }
+.chip.dec.correct { background: var(--ok); } .chip.dec.fix { background: var(--warn); } .chip.dec.reject { background: var(--bad); }
+.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+.col { padding: 16px 18px; min-width: 0; }
+.col + .col { border-left: 1px solid var(--rule); }
+.label { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 0 0 6px; font-weight: 600; }
+.statement { font: 500 17px/1.5 var(--display); margin: 0 0 14px; max-width: 65ch; }
+.quote { border-left: 3px solid var(--accent); padding: 4px 0 4px 12px; margin: 0 0 14px; max-width: 65ch; }
+.source { font: 13.5px/1.6 var(--mono); white-space: pre-wrap; word-wrap: break-word; max-height: 460px; overflow: auto; margin: 0; }
+.source mark { background: var(--hl); color: inherit; padding: 0 1px; }
+.why { padding: 14px 18px; border-top: 1px solid var(--rule); display: grid; gap: 8px; }
+.why .row { display: flex; gap: 10px; align-items: flex-start; }
+.why .tag { flex: none; font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 4px; min-width: 92px; text-align: center; }
+.tag.flag { background: color-mix(in srgb, var(--warn) 18%, transparent); color: var(--warn); }
+.tag.vok { background: color-mix(in srgb, var(--ok) 18%, transparent); color: var(--ok); }
+.tag.vbad { background: color-mix(in srgb, var(--bad) 18%, transparent); color: var(--bad); }
+.decide { padding: 14px 18px; border-top: 1px solid var(--rule); display: grid; gap: 10px; background: color-mix(in srgb, var(--paper) 60%, var(--card)); border-radius: 0 0 8px 8px; }
+.btns { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+button.v { font: 600 14px var(--body); border-radius: 6px; padding: 8px 16px; cursor: pointer; border: 1.5px solid; background: var(--card); }
+button.v.correct { color: var(--ok); border-color: var(--ok); }
+button.v.fix { color: var(--warn); border-color: var(--warn); }
+button.v.reject { color: var(--bad); border-color: var(--bad); }
+button.v.correct:hover, button.v.correct.on { background: var(--ok); color: var(--card); }
+button.v.fix:hover, button.v.fix.on { background: var(--warn); color: var(--card); }
+button.v.reject:hover, button.v.reject.on { background: var(--bad); color: var(--card); }
+button.nav2 { font: 14px var(--body); background: none; border: 1px solid var(--rule); color: var(--ink); border-radius: 6px; padding: 8px 12px; cursor: pointer; }
+textarea { width: 100%; min-height: 70px; resize: vertical; }
+.hint { font-size: 12.5px; color: var(--muted); }
+.msg { font-size: 13.5px; min-height: 1.2em; }
+.msg.err { color: var(--bad); } .msg.ok { color: var(--ok); }
+.banner { margin: 0 0 14px; padding: 10px 14px; border-radius: 6px; border: 1px solid var(--warn); color: var(--ink); background: color-mix(in srgb, var(--warn) 10%, var(--card)); font-size: 13.5px; }
+.hidden { display: none !important; }
+kbd { font: 12px var(--mono); border: 1px solid var(--rule); border-radius: 3px; padding: 0 4px; }
+@media (max-width: 860px) {
+  .wrap { grid-template-columns: 1fr; }
+  nav { position: static; max-height: 220px; border-right: 0; border-bottom: 1px solid var(--rule); }
+  .cols { grid-template-columns: 1fr; }
+  .col + .col { border-left: 0; border-top: 1px solid var(--rule); }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>FDA Item Review</h1>
+    <div class="sub">Checklist items the automatic checks could not prove. Nothing here ships until you decide.</div>
+  </div>
+  <div class="progress"><div class="bar"><i id="bar"></i></div><span id="count">0 of 0 decided</span></div>
+  <div class="who"><label for="reviewer" class="sub">Reviewer</label><input type="text" id="reviewer" placeholder="Your full name" size="18"></div>
+</header>
+<div class="wrap">
+  <nav id="list" aria-label="Review queue"></nav>
+  <main>
+    <div id="status" class="banner hidden"></div>
+    <div id="p4" class="banner hidden">Part 4: most of these flags come from an exact-wording check ("If you manufacture" vs "When manufacturing") that is being fixed. Many will clear automatically, so you can leave Part 4 for later.</div>
+    <article class="card" id="card">
+      <div class="meta">
+        <span class="clause" id="clause"></span>
+        <span class="sub" id="doc"></span>
+        <span class="chip" id="strength"></span>
+        <span class="chip" id="plants"></span>
+        <span class="chip dec hidden" id="decchip"></span>
+      </div>
+      <div class="cols">
+        <section class="col">
+          <p class="label">Checklist item (our wording)</p>
+          <p class="statement" id="statement"></p>
+          <p class="label">Quote it rests on</p>
+          <p class="quote" id="quote"></p>
+          <p class="label hidden" id="condlabel">Condition recorded</p>
+          <p class="hidden" id="condition"></p>
+        </section>
+        <section class="col">
+          <p class="label">Regulation text (quote highlighted)</p>
+          <pre class="source" id="source"></pre>
+        </section>
+      </div>
+      <div class="why" id="why"></div>
+      <div class="decide">
+        <div class="btns">
+          <button class="v correct" id="b-correct" type="button">Correct</button>
+          <button class="v fix" id="b-fix" type="button">Fix wording</button>
+          <button class="v reject" id="b-reject" type="button">Reject</button>
+          <span style="flex:1"></span>
+          <button class="nav2" id="prev" type="button">Previous</button>
+          <button class="nav2" id="next" type="button">Next undecided</button>
+        </div>
+        <div id="fixbox" class="hidden">
+          <label class="label" for="fixtext">Corrected wording</label>
+          <textarea id="fixtext"></textarea>
+        </div>
+        <div>
+          <label class="label" for="note">Note (required for Fix and Reject)</label>
+          <textarea id="note" placeholder="Why, in a few words"></textarea>
+        </div>
+        <div class="btns"><button class="v correct hidden" id="save" type="button">Save decision</button><span class="msg" id="msg"></span></div>
+        <div class="hint">Correct: the item says exactly what the regulation requires. Fix: right idea, wording needs changing. Reject: the item should not exist. Each decision is saved with your name and the time; a later decision on the same item replaces an earlier one. Keys: <kbd>c</kbd> correct, <kbd>f</kbd> fix, <kbd>r</kbd> reject, <kbd>n</kbd> next.</div>
+      </div>
+    </article>
+  </main>
+</div>
+<script id="data" type="application/json">__DATA__</script>
+<script>
+const ITEMS = JSON.parse(document.getElementById("data").textContent);
+const $ = id => document.getElementById(id);
+const decided = {};          // key -> decision doc
+let cur = 0, pending = null, db = null, me = null;
+
+const key = it => (it.run + "__" + it.id).replace(/[^A-Za-z0-9_.-]/g, "_");
+const short = f => ({"ecfr-21cfr211-2026-10-27.xml":"21 CFR 211","ecfr-21cfr210-2026-10-27.xml":"21 CFR 210",
+  "fda-cfr-21-part-11.xml":"Part 11","fda-cfr-21-314.81.xml":"314.81","fda-cfr-21-314.70.xml":"314.70",
+  "fda-cfr-21-part-200.xml":"Part 200","fda-cfr-21-part-207.xml":"Part 207","fda-cfr-21-part-4.xml":"Part 4"})[f] || f.replace(/^fda-(cgmp-qa-|ora-guide-|itg-)?/, "").replace(/\.(html|xml|pdf)$/, "").replace(/-/g, " ");
+
+try { $("reviewer").value = localStorage.getItem("reviewer") || ""; } catch (e) {}
+$("reviewer").addEventListener("change", () => { try { localStorage.setItem("reviewer", $("reviewer").value.trim()); } catch (e) {} });
+
+function esc(s) { return String(s).replace(/[&<>]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;"})[c]); }
+function norm(s) { return s.replace(/\s+/g, " "); }
+
+function highlight(src, quote) {
+  const s = esc(src), q = esc(norm(quote)).trim();
+  if (!q) return s;
+  const words = q.split(" ").map(w => w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+  try {
+    const re = new RegExp(words.join("\\s+"));
+    return s.replace(re, m => "<mark>" + m + "</mark>");
+  } catch (e) { return s; }
+}
+
+function renderList() {
+  const nav = $("list"); nav.textContent = "";
+  let lastDoc = null, n = 0;
+  ITEMS.forEach((it, i) => {
+    if (it.file !== lastDoc) {
+      lastDoc = it.file;
+      const all = ITEMS.filter(x => x.file === it.file), done = all.filter(x => decided[key(x)]).length;
+      const h = document.createElement("div"); h.className = "doc";
+      h.innerHTML = esc(short(it.file)) + " <span>" + done + "/" + all.length + "</span>";
+      nav.appendChild(h);
+    }
+    const d = decided[key(it)];
+    const b = document.createElement("button"); b.type = "button"; b.className = "it" + (i === cur ? " cur" : "");
+    b.innerHTML = '<span class="dot ' + (d ? d.decision : "") + '"></span>' + esc(it.clause || it.id.split(":")[1]);
+    b.onclick = () => { cur = i; show(); };
+    nav.appendChild(b);
+    if (d) n++;
+  });
+  $("count").textContent = n + " of " + ITEMS.length + " decided";
+  $("bar").style.width = (100 * n / ITEMS.length) + "%";
+}
+
+function show() {
+  const it = ITEMS[cur], d = decided[key(it)];
+  pending = null; ["b-correct","b-fix","b-reject"].forEach(b => $(b).classList.remove("on"));
+  $("fixbox").classList.add("hidden"); $("save").classList.add("hidden"); $("msg").textContent = ""; $("msg").className = "msg";
+  $("clause").textContent = it.clause || it.id;
+  $("doc").textContent = it.document;
+  $("strength").textContent = it.strength; $("strength").className = "chip st-" + it.strength;
+  $("plants").textContent = (it.plant_types || []).join(" · ");
+  $("statement").textContent = it.statement;
+  $("quote").textContent = it.quote;
+  $("condition").textContent = it.condition || "";
+  $("condition").classList.toggle("hidden", !it.condition); $("condlabel").classList.toggle("hidden", !it.condition);
+  $("source").innerHTML = highlight(it.source_text || "", it.quote || "");
+  $("p4").classList.toggle("hidden", it.file !== "fda-cfr-21-part-4.xml");
+  const why = $("why"); why.textContent = "";
+  const p = document.createElement("p"); p.className = "label"; p.style.margin = "0"; p.textContent = "Why it is here"; why.appendChild(p);
+  (it.findings || []).forEach(f => {
+    const [kind, text] = Array.isArray(f) ? f : ["check", String(f)];
+    why.insertAdjacentHTML("beforeend", '<div class="row"><span class="tag flag">' + esc(kind) + ' check</span><span>' + esc(text) + '</span></div>');
+  });
+  [["a","Verifier A"],["b","Verifier B"]].forEach(([r, name]) => {
+    if (!it[r]) return;
+    const ok = it[r] === "correct";
+    why.insertAdjacentHTML("beforeend", '<div class="row"><span class="tag ' + (ok ? "vok" : "vbad") + '">' + name + ': ' + esc(it[r]) + '</span><span>' + esc(it[r + "_reason"] || "") + '</span></div>');
+  });
+  if (!(it.findings || []).length && !it.a) why.insertAdjacentHTML("beforeend", '<div class="row"><span>Routed to review by the checks.</span></div>');
+  const chip = $("decchip");
+  if (d) {
+    chip.className = "chip dec " + d.decision; chip.textContent = d.decision + " · " + (d.by || "") + " · " + (d.at || "").replace("T", " ").slice(0, 16) + " UTC";
+    $("note").value = d.note || ""; $("fixtext").value = d.statement || it.statement;
+  } else { chip.className = "chip dec hidden"; $("note").value = ""; $("fixtext").value = it.statement; }
+  renderList();
+  const c = document.querySelector("nav .cur"); if (c) c.scrollIntoView({block: "nearest"});
+}
+
+function choose(kind) {
+  pending = kind;
+  ["correct","fix","reject"].forEach(k => $("b-" + k).classList.toggle("on", k === kind));
+  $("fixbox").classList.toggle("hidden", kind !== "fix");
+  if (kind === "correct") { save(); return; }
+  $("save").classList.remove("hidden");
+  (kind === "fix" ? $("fixtext") : $("note")).focus();
+}
+
+async function save() {
+  const it = ITEMS[cur], by = $("reviewer").value.trim(), note = $("note").value.trim();
+  const m = $("msg");
+  if (!by) { m.className = "msg err"; m.textContent = "Enter your full name under Reviewer first."; $("reviewer").focus(); return; }
+  if (pending !== "correct" && !note) { m.className = "msg err"; m.textContent = "Add a short note saying why."; $("note").focus(); return; }
+  const rec = { id: it.id, run: it.run, item_hash: it.item_hash, decision: pending, by, note,
+    at: new Date().toISOString().replace(/\.\d+Z$/, "Z") };
+  if (pending === "fix") {
+    const s = $("fixtext").value.trim();
+    if (!s || s === it.statement) { m.className = "msg err"; m.textContent = "Change the wording, or choose Correct."; return; }
+    rec.statement = s;
+  }
+  if (me) rec.by_id = me;
+  if (!db) { m.className = "msg err"; m.textContent = "Saving is not available in this view. Open the page on claude.ai while signed in."; return; }
+  try {
+    await db.doc("decisions/" + key(it)).set(rec);
+    decided[key(it)] = rec; m.className = "msg ok"; m.textContent = "Saved.";
+    renderList(); setTimeout(nextUndecided, 350);
+  } catch (e) { m.className = "msg err"; m.textContent = "Not saved: " + (e && e.message ? e.message : "the store refused the write") + ". Try again."; }
+}
+
+function nextUndecided() {
+  for (let k = 1; k <= ITEMS.length; k++) { const i = (cur + k) % ITEMS.length; if (!decided[key(ITEMS[i])]) { cur = i; show(); return; } }
+  cur = Math.min(cur + 1, ITEMS.length - 1); show();
+}
+
+$("b-correct").onclick = () => choose("correct");
+$("b-fix").onclick = () => choose("fix");
+$("b-reject").onclick = () => choose("reject");
+$("save").onclick = save;
+$("next").onclick = nextUndecided;
+$("prev").onclick = () => { cur = Math.max(0, cur - 1); show(); };
+document.addEventListener("keydown", e => {
+  if (["INPUT","TEXTAREA","SELECT"].includes(document.activeElement.tagName) || e.metaKey || e.ctrlKey || e.altKey) return;
+  if (e.key === "c") choose("correct"); else if (e.key === "f") choose("fix");
+  else if (e.key === "r") choose("reject"); else if (e.key === "n") nextUndecided();
+});
+
+show();
+
+(async () => {
+  const st = $("status");
+  const timer = setTimeout(() => { st.textContent = "Saved decisions are taking long to load. You can keep reviewing; refresh later to see earlier decisions."; st.classList.remove("hidden"); }, 10000);
+  try {
+    db = window.claude ? await claude.use("db") : null;
+    const user = window.claude ? await claude.use("user") : null;
+    if (user) { try { me = await user.id(); } catch (e) {} }
+    if (!db) { clearTimeout(timer); st.textContent = "Saving is not available in this view. Open the page on claude.ai while signed in to record decisions."; st.classList.remove("hidden"); return; }
+    db.collection("decisions").onSnapshot(snap => {
+      clearTimeout(timer); st.classList.add("hidden");
+      const docs = snap.docs || snap;
+      docs.forEach(d => { const v = typeof d.data === "function" ? d.data() : d.data; if (v && v.id && v.run) decided[(v.run + "__" + v.id).replace(/[^A-Za-z0-9_.-]/g, "_")] = v; });
+      show();
+    }, err => { clearTimeout(timer); st.textContent = "Could not load saved decisions: " + (err && err.message || "error") + "."; st.classList.remove("hidden"); });
+  } catch (e) { clearTimeout(timer); st.textContent = "Saving is not available: " + (e && e.message || "error") + "."; st.classList.remove("hidden"); }
+})();
+</script>
+</body>
+</html>
