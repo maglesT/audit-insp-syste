@@ -31,7 +31,11 @@ qualifiers; do not split one obligation across items. For each item:
   lead-in belongs to every sub-paragraph under it. This field only repeats what the statement already says.
 
 A lead-in sentence that also states a duty of its own ("The written program shall be followed and shall include:")
-needs its own item for that duty, quoting the whole sentence including "shall include:".
+needs its own item for that duty, quoting the whole sentence including "shall include:". That item states only the
+lead-in's own duty ("follow the written stability program"); do not summarise the sub-paragraphs in it (their
+items carry them with their qualifiers). Where the text refers to a closed list of other sections ("operations
+addressed by §§ 211.101(c) or (d), 211.103 ..."), keep the list closed: name the operations, never "such as".
+Do not narrow or widen a term ("washing facilities" is not "hand-washing facilities"; "in and from" is not "from").
 - topic: the sub-topic id from TOPICS the obligation belongs to.
 
 Sentences that state no obligation for the manufacturer (a heading, a definition, a scope statement, a statement

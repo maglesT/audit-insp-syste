@@ -43,3 +43,31 @@ as a label); INJ = sterile injectables; no paragraph references in statements (c
   coverage gaps**, 211.113(a) now OSD/LIQ/SEMI; both verifiers 37/37 correct; **automatic route 36 of 37**. The one
   in review cited "211.166(a)(1)-(5)" in its statement (numbers check), which the prompt now forbids.
 - Part 211 has **60 sections** in the eCFR XML (324 paragraphs), not 107: the full build is 12 batches of 5.
+
+## Full 21 CFR 211 build (31 October 2026, session 7)
+
+Run `library/ai-runs/20261031T100541.543518Z-xml-draft` (60 sections, 12 drafting agents, 24 verifier agents, at
+most 3 at a time, each saw only its batch); 211.1 redrafted in `20261031T101348.722968Z-xml-draft` (0 items, 6
+not-applicable sentences, 0 gaps).
+
+| Measure | Result |
+|---|---|
+| Items | **399** from 60 sections; 67 + 6 not-applicable sentences with reasons |
+| Quote confirmed (exact XML text, starting in the cited paragraph) | **399 / 399** |
+| Coverage gaps | 0 (after the 211.1 redraft) |
+| Items with deterministic findings | 30: conditions 19, lead-in 9, numbers 4, strength 2 (an item can have several) |
+| Verifiers | both correct 385, both incorrect 7, disagree 7 |
+| **Automatic route** | **359 of 399 (90.0 %)**; **review queue 40** (30 with findings, 10 by the verifiers only) |
+| Usage (session agents, Max plan) | drafting about 700 k tokens (1.8 k per item), verifying about 1,520 k (3.8 k per item, both verifiers), 211.1 redraft 50 k |
+
+What the verifiers rejected (examples): 211.50 refuse "in and from" the building narrowed to "from"; 211.52
+"washing facilities" narrowed to hand-washing; 211.68(c) closed list of sections made open ("such as"); 211.105(b)
+exception (name when only one of a type) dropped; 211.125(c) "in accordance with 211.122(g)(2)" dropped; 211.132
+statement adds "and confirm it does"; 211.142/211.150/211.166(a) summary items over lead-ins that lose the
+sub-paragraphs' qualifiers. All 40 wait in the owner's review queue (`python3 tools/fda/review.py next
+library/ai-runs/20261031T100541.543518Z-xml-draft`); nothing of them ships until decided.
+
+Prompt lessons for the next XML documents (210, Part 11, 314.81): a summary item over a lead-in ("shall include:")
+loses the sub-paragraph qualifiers, so the lead-in's own duty is quoted alone ("shall be established and
+followed") and the contents stay with the sub-paragraph items; closed lists of cross-referenced sections stay
+closed without naming the references.

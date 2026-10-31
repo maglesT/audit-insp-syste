@@ -1,8 +1,29 @@
 # Handover: read this first in every new session
 
-Last updated: 31 October 2026, session 6 (D45/D46 page-based vision drafting; trial and re-run done; next: pre-scaling fixes, Layer 1 on pages, 0c, 0d).
+Last updated: 31 October 2026, session 7 (FDA build, D47: 21 CFR 211 built and verified; next: 210, Part 11, 314.81).
 
-## START HERE (session 7)
+## START HERE (session 8)
+- **FDA build (D46/D47), owned by session 7 (session_01PybpFspEA75VUpLPy2kLTG) and its successors.** FDA first,
+  document by document; nothing ships unless proven (automatic route, or the owner's review queue). The paid API
+  build is NOT started and needs direct owner confirmation. Report after each document to the coordinator
+  (session_01PybpFuvG6mX9B3zK3YZjZ1, send_message): items, automatic-route pass rate, review-queue size, usage.
+- **Done in session 7:** PR #36 merged. PR #38 (branch `fda-build`: D47, `tools/fda/xmlprofile.py`, prompts,
+  `tools/fda/review.py`, `tools/fda/status.py`, tests `tests/test_fda_xml.py`, runs) open; two independent review
+  passes, all findings fixed; merge on green CI. XML profile tuned (lead-in qualifiers over all lead-in ancestors,
+  sterile plant scope, lead-in coverage, cross-references are not numbers). **21 CFR 211 full build: 399 items
+  (60 sections; not 107), 399 quotes exact, 0 coverage gaps, automatic route 359 (90.0 %), review queue 40**
+  (`docs/fda-211-trial.md`, run `library/ai-runs/20261031T100541.543518Z-xml-draft`).
+- **Next:** (1) merge PR #38 on green CI (if the full suite shows the 2 test errors seen locally, check whether they
+  are pre-existing on main first); (2) 21 CFR 210 (`ecfr-21cfr210-2026-10-27.xml`), Part 11, 314.81, then 314.70,
+  200, 207, 4 with `xmlprofile.py` (prepare-draft SRC -> drafting agents, 3 at a time, one batch each -> ingest-draft
+  -> prepare-verify -> verifier agents -> ingest-verify -> `vision.py record-model` -> `tools/fda/status.py set`);
+  a redraft is a new run (ingest refuses a verified run); (3) group 2 (FDA HTML) needs an HTML profile (D47 D),
+  then group 3 (guidance PDFs, text first) and group 4 (compliance programs, vision on table pages).
+- **Status files:** `library/fda-status.json` + `docs/fda-worklist.md` (the coordinator's file; only the Status /
+  Items / Auto / Review cells change, via `tools/fda/status.py`). Owner review queue: CLI `review.py next|decide|
+  status RUN`; an owner-friendly page is still to build.
+
+## Session 7 start notes (kept for reference)
 - **Plan since 31 Oct (D45, D46): checklist items are drafted from PDF PAGES with vision** (page image + text layer),
   checked on page text; the parsed clause store, parser and fidelity work are FROZEN (kept for search/cross-checks).
   Read D43-D46 in `docs/decisions.md` and `docs/vision-trial.md`. CLAUDE.md lets drafting/verifier agents get images.
