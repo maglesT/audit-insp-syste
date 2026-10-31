@@ -165,6 +165,18 @@ class LeadInSentence(unittest.TestCase):
         self.assertIn("prevent contamination or mixups", X.lead_in_text("211.42(c)(1)", dict(X.paragraphs(SRC))))
 
 
+class LeadInNumbers(unittest.TestCase):
+    def test_statement_may_carry_the_lead_in_number(self):
+        src = "fda-cfr-21-314.81.xml"
+        ref = next(r for r, t in X.paragraphs(src) if r == "314.81(b)(1)(i)")
+        q = X.own_text(ref, dict(X.paragraphs(src))[ref])
+        self.assertIn("3 working days", " ".join(X.ancestors_text(ref, dict(X.paragraphs(src)))))
+        it = item(clause_number=ref, quote=q, plant_types=["OSD"], statement="Within 3 working days, report " + q)
+        self.assertNotIn("numbers", {c for c, _ in X.check_item(it, src)[0]})
+        it2 = dict(it, statement="Within 4 working days, report " + q)
+        self.assertIn("numbers", {c for c, _ in X.check_item(it2, src)[0]})
+
+
 class CrossReferences(unittest.TestCase):
     def test_cross_references_are_not_numbers(self):
         self.assertNotIn("211", X.without_refs("as required in § 211.192 and parts 600 through 680"))

@@ -4,6 +4,7 @@
   python3 tools/fda/xmlprofile.py ingest-draft RUN                     # checks, coverage -> RUN/items.jsonl, report.json
   python3 tools/fda/xmlprofile.py prepare-verify RUN                   # verifier A and B batches (section text + items)
   python3 tools/fda/xmlprofile.py ingest-verify RUN                    # agreement + automatic route -> RUN/route.json
+  python3 tools/fda/xmlprofile.py prepare-redraft RUN                  # new run drafting only RUN's coverage gaps
   python3 tools/fda/xmlprofile.py recheck RUN                          # deterministic checks again (items unchanged), re-route
 
 The XML is read as text (no rendering, no vision): tools/parse/ecfr.py gives every paragraph with its reference
@@ -116,6 +117,16 @@ def prepare_draft(source, wanted=None):
     return run
 
 
+def ancestors_text(ref, paras):
+    """Own texts of a paragraph's ancestors (without references), where a statement may rightly take a number
+    from: 314.81(b)(1) "... within 3 working days of receipt ..." governs (b)(1)(i) and (ii)."""
+    out, r = [], parent(ref)
+    while r:
+        out.append(without_refs(own_text(r, paras.get(r, ""))))
+        r = parent(r)
+    return out
+
+
 def lead_in_text(ref, paras):
     """The lead-ins over a paragraph: every ancestor paragraph whose own text ends in ":", nearest first
     (211.42(c)(10)(i) takes (c)(10) "Aseptic processing, which includes as appropriate:" and (c)'s "... as are
@@ -169,6 +180,33 @@ def item_hash(item):
     return hashlib.sha256(key.encode()).hexdigest()[:16]
 
 
+def prepare_redraft(run):
+    """A new run that drafts only the coverage gaps of RUN: each section with gaps, whole, plus the gap sentences;
+    the drafter writes items (or not-applicable entries) for those sentences only; coverage is then judged on them."""
+    run = Path(run)
+    src = json.loads((run / "source.json").read_text())["source"]
+    gaps = json.loads((run / "report.json").read_text())["coverage_gaps"]
+    if not gaps:
+        raise SystemExit("no coverage gaps")
+    new = vision.new_run("xml-redraft")
+    secs = sections(src)
+    keys = list(dict.fromkeys(g["section"] for g in gaps))
+    instructions = (PROMPTS / "draft_xml.md").read_text() + (
+        "\n\nREDRAFT: earlier items already cover this section except the sentences in \"gaps\". Write items, or "
+        "not_applicable entries, for those sentences only; do not repeat other obligations.\n")
+    units = [{"id": f"{src}:{k}", "source": src, "section": k, "plant_scope": vision.scope(src),
+              "paragraphs": [{"ref": r, "text": t} for r, t in secs[k]],
+              "gaps": [{"clause": g["clause"], "sentence": g["sentence"]} for g in gaps if g["section"] == k]}
+             for k in keys]
+    (new / "batches" / "batch_001.json").write_text(json.dumps(
+        {"instructions": instructions, "topics": vision.topics(), "schema": DRAFT_SCHEMA, "sections": units},
+        indent=1, ensure_ascii=False))
+    (new / "source.json").write_text(json.dumps({"source": src, "sha256": vision.sha256(OFFICIAL / src),
+                                                 "sections": keys, "redraft_of": run.name, "gaps": gaps}, indent=1))
+    print(new)
+    return new
+
+
 def check_item(item, source, section=None):
     """(findings, quote confirmed); section: the section the drafter answered for (its items must cite it)."""
     import layer1
@@ -184,13 +222,13 @@ def check_item(item, source, section=None):
     if not found:
         out.append(("quote", f"quote not in the text of {ref} (exact XML text, starting in {ref} itself, "
                              f"at least {MIN_QUOTE_TOKENS} tokens)"))
+    lead = lead_in_text(ref, paras)
     for n in re.findall(r"\d+(?:[.,]\d+)?", item["statement"]):
-        if not layer1.number_found(n, [item["quote"]]):
-            out.append(("numbers", f"{n} in the statement, not in the quote"))
+        if not layer1.number_found(n, [item["quote"], lead] + ancestors_text(ref, paras)):
+            out.append(("numbers", f"{n} in the statement, not in the quote or its parent paragraphs"))
     for n in re.findall(r"(?<![\w.^§])\d+(?:[.,]\d+)?", without_refs(item["quote"])):
         if not layer1.number_found(n, [item["statement"]]):
             out.append(("numbers", f"{n} in the quote, not in the statement"))
-    lead = lead_in_text(ref, paras)
     words = layer1.strength_of(item["quote"]) or (layer1.strength_of(lead) if lead else None)
     if words and words != item["strength"]:
         out.append(("strength", f"quote says {words}, item {item['strength']}"))
@@ -335,8 +373,11 @@ def ingest_draft(run):
                     rep["findings"][c] = rep["findings"].get(c, 0) + 1
                 items.append({"id": f"{u['id']}#{k}", "source": source, "section": u["section"], **it,
                               "findings": found, "quote_confirmed": ok, "hash": item_hash(it)})
-            rep["coverage_gaps"] += [{"section": u["section"], **g}
-                                     for g in coverage(source, u["section"], a["items"], a["not_applicable"])]
+            found_gaps = coverage(source, u["section"], a["items"], a["not_applicable"])
+            if "gaps" in u:                     # a redraft is judged on the sentences it was asked to cover
+                asked = {(g["clause"], g["sentence"]) for g in u["gaps"]}
+                found_gaps = [g for g in found_gaps if (g["clause"], g["sentence"]) in asked]
+            rep["coverage_gaps"] += [{"section": u["section"], **g} for g in found_gaps]
     rep["items"] = len(items)
     with open(run / "items.jsonl", "w", encoding="utf-8") as f:
         for i in items:
@@ -459,6 +500,8 @@ def main():
         prepare_verify(args[0])
     elif cmd == "ingest-verify":
         ingest_verify(args[0])
+    elif cmd == "prepare-redraft":
+        prepare_redraft(args[0])
     elif cmd == "recheck":
         recheck(args[0])
     else:
