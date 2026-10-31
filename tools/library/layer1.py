@@ -260,8 +260,8 @@ def check_requirement(req, sources, changed=()):
             out.append((req["id"], n, "quote", f"quote not found word for word in {m['clause_ref']}"))
         else:
             quotes.append(m["quote"])
-        words = strength_of(m["quote"]) or ("mandatory" if m["source"] in INSPECTION_CHECKLISTS
-                                            else lead_in_strength(m["quote"], clause["text"]))
+        words = (strength_of(m["quote"]) or lead_in_strength(m["quote"], clause["text"])
+                 or ("mandatory" if m["source"] in INSPECTION_CHECKLISTS else None))   # D46: only without a lead-in
         if words is None:
             out.append((req["id"], n, "strength", "quote has no obligation wording (shall/should/may)"))
         elif words != m["strength"]:

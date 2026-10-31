@@ -15,9 +15,11 @@ For each item:
   and every number. Do not add anything the page does not say.
 - quote: the exact span of the page that states the whole obligation, copied as printed, character for
   character from the TEXT LAYER where the text layer is right (it is matched against the page by software; do not
-  fix typos or change punctuation). For a table row, quote the column header cells joined with " | ", then
-  " || ", then the row's cells joined with " | ", starting with the row's first cell (its label), e.g.
-  "Grade | Air sample CFU/m3 || B | 10". Write a footnote mark printed after a word as "^" and the mark
+  fix typos or change punctuation). For a table row, quote the table's header: the cells of every header row, row
+  after row, joined with " | " (a two-row header gives both rows: "Grade | ≥ 0.5 µm | ≥ 5 µm | at rest | in
+  operation | at rest | in operation"), then " || ", then ALL cells of the row joined with " | ", from its
+  first cell (its label), e.g. "Grade | Air sample CFU/m3 | Settle plates || B | 10 | 5". Do not combine
+  header cells into new phrases. Write a footnote mark printed after a word as "^" and the mark
   ("Cumene^1", "specified^a"); a power of ten as "10^7" or "10^-6".
 - clause_number: the number exactly as printed for the clause or row ("9.3", "4.22 iii", "Table 2", "4.19"),
   "" if none. Do not compose references that are not printed ("Table 2 Note 1", "Table 1 Grade B").

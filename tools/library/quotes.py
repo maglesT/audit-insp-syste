@@ -48,11 +48,11 @@ LIGATURE = re.compile(r"ff[il]?|f[il]")
 def toks(text):
     """Comparable tokens: words, numbers with their decimal point or comma ("1.5", "3,520"), and the signs
     < > ≤ ≥ ± % ^ and a minus (−, or - and – before a number not after a word: "-20 °C", "10^-6"); case folded, NFKC, soft hyphens dropped. Punctuation and
-    spacing do not count, and a footnote mark written "^1" right after a word counts as "1" (D46: the drafters quote
+    spacing do not count, and a footnote mark written "^1" or "^a" right after a word counts as "1" or "a" (D46: the drafters quote
 footnote marks so; the readings print them flat), but every token must match whole: "15" is not "1.5", "inappropriate" is not
     "appropriate"."""
     text = unicodedata.normalize("NFKC", text).replace("\u00ad", "").casefold().replace("-", "-")
-    text = re.sub(r"(?:(?<=[^\W\d_])|(?<=\)))\^(?=\d)", " ", text)     # a footnote mark after a word, "Cumene^1": the
+    text = re.sub(r"(?:(?<=[^\W\d_])|(?<=\)))\^(?=\d|[a-z]\b)", " ", text)     # a footnote mark after a word, "Cumene^1": the
     return [("−" if t in "-–" else t) for t in TOKEN.findall(text)]   # readings print it flat ("Cumene1")
 
 
@@ -106,15 +106,24 @@ def line_key(line):
 
 def drop_running(pages):
     """Pages (lists of non-empty lines) without their running lines: among a page's first and last EDGE lines,
-    those whose line_key is also among the first or last EDGE lines of the page before or after."""
+    those whose line_key is also among the first or last EDGE lines of the page before or after, with numbers
+    that differ by at most 2 (a page counter)."""
     def edge(lines):
         n = len(lines)
         return set(range(min(EDGE, n))) | set(range(max(n - EDGE, 0), n))
-    keys = [{line_key(pg[k]) for k in edge(pg)} for pg in pages]
+    def nums(line):
+        return [int(n) for n in re.findall(r"\d+", line)]
+
+    def same(a, b):                                          # equal keys, and numbers that differ at most like a
+        if line_key(a) != line_key(b):                       # page counter ("-6-" / "-7-"); "5 years" and
+            return False                                     # "1 years" are other lines
+        na, nb = nums(a), nums(b)
+        return len(na) == len(nb) and all(abs(x - y) <= 2 for x, y in zip(na, nb))
+    edges = [[pg[k] for k in edge(pg)] for pg in pages]
     out = []
     for i, pg in enumerate(pages):
-        near = (keys[i - 1] if i > 0 else set()) | (keys[i + 1] if i + 1 < len(pages) else set())
-        out.append([ln for k, ln in enumerate(pg) if not (k in edge(pg) and line_key(ln) in near)])
+        near = (edges[i - 1] if i > 0 else []) + (edges[i + 1] if i + 1 < len(pages) else [])
+        out.append([ln for k, ln in enumerate(pg) if not (k in edge(pg) and any(same(ln, o) for o in near))])
     return out
 
 
