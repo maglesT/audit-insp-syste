@@ -105,3 +105,17 @@ before. They go to the "text layer differs" list.
 where it is printed, with the page given; (3) the batch passes the whole next page when a quote runs over;
 (4) the residual the checks cannot see (an exception in the following sentence of running text, a bare topic made
 into a requirement) stays with the two verifiers and the spot check.
+
+## Pre-scaling fixes (owner: "yes do the fixes before scaling", 31 October 2026)
+
+1. **Coverage** counts only real obligation sentences: not a descriptive "may"/"can" ("coverage may include",
+   "amines may be present"), not a table caption; a leading clause number and a glued WHO side title are left out
+   before matching; a sentence holding several obligations or a lead-in with its list is covered by the quotes
+   printed inside it, taken together (each still whole-token, with the sentence's condition words). On the re-run's
+   drafts: **39 -> 10 gaps**. Left: 2 caption fragments, 3 descriptive sentences (inspector notes, a purpose
+   statement, "may be facilitated through, for example"), and about 4 to look at by hand (EU Annex 1 p22 x2, PE 009
+   p19 and p22).
+2. **A continued table's header** is quoted from the page where it is printed: the item gives `header_page`; the
+   check takes the whole header of the last table on that page (ruled or unruled) and the whole row on this page,
+   with no other caption in between; the verifiers get that page's image too.
+3. **Run-over quotes:** the whole next page goes into the drafting and verifier batches (no 3,000-character cut).

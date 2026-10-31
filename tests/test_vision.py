@@ -223,3 +223,22 @@ class D46Review2(unittest.TestCase):
                 "justified.")
         part = "Only if use is unavoidable in order to produce a drug product, limit benzene to 2 ppm, unless otherwise justified."
         self.assertTrue(vision.lead_in_missing(lead, part))
+
+
+class PreScaling(unittest.TestCase):
+    def test_descriptive_may_and_captions_do_not_count(self):
+        self.assertFalse(vision.counts_for_coverage("Depending on the purpose, inspection coverage may include "
+                                                    "different numbers of systems."))
+        self.assertFalse(vision.counts_for_coverage("Secondary amines may be present as impurities."))
+        self.assertFalse(vision.counts_for_coverage("Table 1: Maximum permitted total particle concentration should "
+                                                    "not exceed the limits."))
+        self.assertTrue(vision.counts_for_coverage("Quality reviews may be grouped by product type where "
+                                                   "scientifically justified."))
+        self.assertTrue(vision.counts_for_coverage("The disinfection process should be validated."))
+
+    def test_continued_table_header_from_its_page(self):
+        q = "Solvent | PDE (mg/day) | Concentration limit (ppm) || Nitromethane | 0.5 | 50"
+        self.assertEqual(vision.table_quote_found(q, "ich-q3c-r9.pdf", 13, header_page=12), (True, True))
+        self.assertEqual(vision.table_quote_found(q, "ich-q3c-r9.pdf", 13), (False, False))     # not on p13
+        wrong = "Solvent | Concentration limit (ppm) | PDE (mg/day) || Nitromethane | 0.5 | 50"
+        self.assertEqual(vision.table_quote_found(wrong, "ich-q3c-r9.pdf", 13, header_page=12), (False, False))
