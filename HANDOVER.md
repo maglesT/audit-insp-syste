@@ -19,6 +19,13 @@ Last updated: 31 October 2026, session 7 (FDA build, D47: 21 CFR 211 built and v
 - **Group 1 done** (`library/fda-status.json`, `docs/fda-worklist.md`), items / automatic / review: 211 399/365/34;
   210 1/0/1; Part 11 48/45/3; 314.81 104/91/13; 314.70 78/53/25; Part 200 24/18/6; Part 207 149/115/34;
   Part 4 64/16/48. Total 867 items, 704 automatic (81.2 %), 163 in the owner's review queue.
+- **Owner review page (coordinator, 31 Oct):** private claude.ai artifact, slug
+  f1a4b335-e5ec-4d90-993a-02abf9913cbe, with the group 1 review queue (164 items, exported with review.load /
+  fingerprint / source_text; the superseded 211 trial run left out). Decisions are saved in its db collection
+  `decisions`, one doc per run+id: {id, run, item_hash, decision: correct|fix|reject, by, note, at (UTC),
+  statement for fix}. **To build:** `tools/fda/review.py import-artifact FILE` reads the db export (pulled with
+  the artifact db tools), appends the records to `library/review/decisions.jsonl` keeping their original `at`;
+  the existing rules apply (a decision counts only for a matching run and item_hash).
 - **Tune next (profile only):** the lead-in check (`vision.lead_in_missing`) compares 4+ letter words exactly, so
   "If you manufacture ..." vs "When manufacturing ..." is flagged (Part 4: 32 items); allow word forms (a light
   stemmer) and re-run `xmlprofile.py recheck` on all runs. `recheck` refuses a changed source file.
