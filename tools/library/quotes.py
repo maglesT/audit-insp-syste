@@ -8,7 +8,7 @@ The second is a separate code base: for a PDF, pdfminer.six's words (through pdf
 one page either side; for an HTML or XML page, the file's text taken with Python's own html.parser (tags dropped,
 entities resolved), not the parser's reader. The quote is found when its letters and digits, in order (case
 folded, Unicode NFKC, whole tokens in order; see toks() and contains()), are a stretch of the second
-reading; running headers and footers and small-font footnote marks between them are skipped (a quote may run
+reading; running headers and footers (drop_running) and small-font footnote marks between them are skipped (a quote may run
 over a page break or past a footnote mark). A quote from a table row is checked cell by cell (its " | " pieces),
 each piece equal (token for token) to the pdfminer words inside the row's cell boxes (Clause.cells, D44), from
 the row's first cell on, consecutive; without cell boxes a table quote is not found.
@@ -88,6 +88,34 @@ def contains(quote, text, loose=False):
     return False
 
 
+EDGE = 3       # lines at the top and the bottom of a page where running headers and footers stand
+
+
+def line_key(line):
+    """A line's key for running-line matching: digits masked only for a page-number line ("- 6 -", "Page 6 of 9")
+    or a footer of 4 or more words ("PE 009-18 (Annexes) -15- 24 September 2026"); a short body line such as
+    "6 months." must repeat exactly ("12 months." is another line)."""
+    line = re.sub(r"\s+", " ", line).strip().lower()
+    words = re.findall(r"[^\W\d_]+", line)
+    if len(line.split()) >= 4 or not [w for w in words if w not in ("page", "of")]:
+        return re.sub(r"\d+", "#", line)
+    return line
+
+
+def drop_running(pages):
+    """Pages (lists of non-empty lines) without their running lines: among a page's first and last EDGE lines,
+    those whose line_key is also among the first or last EDGE lines of the page before or after."""
+    def edge(lines):
+        n = len(lines)
+        return set(range(min(EDGE, n))) | set(range(max(n - EDGE, 0), n))
+    keys = [{line_key(pg[k]) for k in edge(pg)} for pg in pages]
+    out = []
+    for i, pg in enumerate(pages):
+        near = (keys[i - 1] if i > 0 else set()) | (keys[i + 1] if i + 1 < len(pages) else set())
+        out.append([ln for k, ln in enumerate(pg) if not (k in edge(pg) and line_key(ln) in near)])
+    return out
+
+
 def mapping_key(req_id, n):
     return f"{req_id}#{n}"
 
@@ -130,12 +158,14 @@ class PdfReading:
                 self.words.append([(fidelity.cid_text(w["text"]), w["x0"], w["top"], w["x1"], w["bottom"])
                                    for w in ws])
         read, _ = fidelity.read_pages(lines)
-        for (toks, small, _, _, _, head), page in zip(read, lines):
-            self.pages.append(letters(" ".join(t for k, t in enumerate(toks) if k not in small and k not in head)))
+        plain = [[" ".join(w[0] for w in ln) for ln in page] for page in lines]
+        self.body = [toks(" ".join(pg)) for pg in drop_running(plain)]
+        for (page_toks, small, _, _, _, head), page in zip(read, lines):
+            self.pages.append(toks(" ".join(t for k, t in enumerate(page_toks) if k not in small and k not in head)))
             self.full.append(letters(" ".join(w[0] for ln in page for w in ln)))
 
-    def text(self, first, last, full=False):
-        src = self.full if full else self.pages
+    def text(self, first, last, full=False, body=False):
+        src = self.body if body else self.full if full else self.pages
         return [t for page in src[max(first - 2, 0):min(last + 1, len(src))] for t in page]
 
     def cell_text(self, boxes):
@@ -152,7 +182,7 @@ def found(quote, clause, reading):
     if not isinstance(reading, PdfReading):                   # an HTML or XML page: its whole text
         return contains(toks(quote), reading)
     first, last = clause["page_start"], clause["page_end"]
-    texts = (reading.text(first, last), reading.text(first, last, full=True))
+    texts = (reading.text(first, last), reading.text(first, last, full=True), reading.text(first, last, body=True))
     if " | " in quote:                                        # a table row: its cells, whole and in order, are
         cells = [reading.cell_text(bs) for bs in clause.get("cells") or []]   # the row's cells from the first one
         pieces = [toks(x) for x in quote.split(" | ")]

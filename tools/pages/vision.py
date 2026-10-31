@@ -188,33 +188,11 @@ def _words(text):
     return re.findall(r"\w+", text.lower())
 
 
-EDGE = 3       # lines at the top and the bottom of a page where running headers and footers stand
-
-
-def _key(line):
-    """A line's key for running-line matching: digits masked only for a page-number line ("- 6 -", "Page 6 of 9")
-    or a footer of 4 or more words ("PE 009-18 (Annexes) -15- 24 September 2026"); a short body line such as
-    "6 months." must repeat exactly ("12 months." is another line)."""
-    line = re.sub(r"\s+", " ", line).strip().lower()
-    words = re.findall(r"[^\W\d_]+", line)
-    if len(line.split()) >= 4 or not [w for w in words if w not in ("page", "of")]:
-        return re.sub(r"\d+", "#", line)
-    return line
-
-
 def body(reader, source, pno):
-    """A page's text without its running lines: among its first and last EDGE non-empty lines, those that are
-    also among the first or last EDGE lines of the page before or after (digits masked, so "- 6 -" and "- 7 -" or
-    "Page 6" count; a body line, such as "6 months." ending a list, is never dropped)."""
-    def edges(p):
-        lines = [ln for ln in reader(source, p).splitlines() if ln.strip()] if p >= 1 else []
-        return lines, set(range(min(EDGE, len(lines)))) | set(range(max(len(lines) - EDGE, 0), len(lines)))
-    lines, edge = edges(pno)
-    near = set()
-    for p in (pno - 1, pno + 1):                              # edge lines of the neighbouring pages only
-        other, ks = edges(p)
-        near |= {_key(other[k]) for k in ks}
-    return "\n".join(ln for k, ln in enumerate(lines) if not (k in edge and _key(ln) in near))
+    """A page's text without its running lines (quotes.drop_running over the page and its neighbours)."""
+    pages = [[ln for ln in (reader(source, p).splitlines() if p >= 1 else []) if ln.strip()]
+             for p in (pno - 1, pno, pno + 1)]
+    return "\n".join(quotes.drop_running(pages)[1])
 
 
 def readings(reader, source, span):
