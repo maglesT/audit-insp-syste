@@ -16,6 +16,8 @@ Rules:
   its page part is read as text, so the words are not lost. A cell left out for a missing rule gets its
   column's box (_row_boxes).
   Tables on pages that are not English are skipped with the page (bilingual gazettes).
+- On the few pages listed in tatr.ADOPTED the grid is the Table Transformer's (D41, D43), read from the committed
+  library/tables-tatr/grids.json (Grid); the model itself never runs here.
 - Where a table sat, the page text gets a marker line; the clause the marker lands in becomes the table's parent
   (field `parent`). When the marker lands in a contents list or an unnumbered segment, the parent is the nearest
   clause before it that has a reference of its own ("" if none). The marker is removed again.
@@ -72,6 +74,43 @@ def page_tables(page):
     found = [t for t in page.find_tables() if len(t.columns) >= 2]
     found = [t for t in found if not any(o is not t and o.bbox != t.bbox and _inside(t.bbox, o.bbox) for o in found)]
     return sorted(found, key=lambda t: (round(t.bbox[1]), t.bbox[0]))
+
+
+class _Box:
+    def __init__(self, bbox, cells=None):
+        self.bbox, self.cells = tuple(bbox), cells
+
+
+class Grid:
+    """A table grid from the Table Transformer trial (tatr.py, D41) in the shape of a pdfplumber table (bbox, rows
+    with their cell boxes, columns), so the rest of this module treats it like a ruled table. A cell is a row's
+    band within a column; a spanning cell takes the place of the first grid cell it covers and the others it
+    covers are left out (None), as pdfplumber leaves out the cells a merged cell covers."""
+
+    def __init__(self, grid):
+        self.bbox = tuple(grid["bbox"])
+        self.columns = [_Box(c) for c in grid["columns"]]
+        spans = [tuple(b) for b in grid["spanning"]]
+        self.rows = []
+        placed = set()
+        for r in grid["rows"]:
+            cells = []
+            for c in grid["columns"]:
+                cell = (max(c[0], r[0]), r[1], min(c[2], r[2]), r[3])
+                span = next((b for b in spans if _centre_box_in(cell, b)), None)
+                if span is None:
+                    cells.append(cell)
+                elif span in placed:
+                    cells.append(None)
+                else:
+                    placed.add(span)
+                    cells.append(span)
+            self.rows.append(_Box(r, cells))
+
+
+def _centre_box_in(a, b):
+    x, y = (a[0] + a[2]) / 2, (a[1] + a[3]) / 2
+    return b[0] <= x <= b[2] and b[1] <= y <= b[3]
 
 
 def _drop_empty_columns(rows):
@@ -182,12 +221,16 @@ def read(path):
     its page if it is the first table there, "after": lines below it if it is the last}] in reading order; table i
     is marked in its page text as MARKER.format(i). dropped = characters of non-English table rows.
     """
+    import tatr
     layout = pdf_pages(path)
+    model = tatr.adopted_grids(Path(path).name)
     pages, tables, dropped = [], [], 0
     with pdfplumber.open(str(path)) as pdf:
         for pno, page in enumerate(pdf.pages, start=1):
             plain = layout[pno - 1] if pno <= len(layout) else ""
             found = page_tables(page) if english_page(plain) else []
+            if pno in model:                                 # the Table Transformer's grid (tatr.ADOPTED, D43)
+                found = [Grid(g) for g in model[pno]]
             words = _words(path, pno) if found else []
             found = [t for t in found if not stray_words(t, words)]
             exps = exponents(page)

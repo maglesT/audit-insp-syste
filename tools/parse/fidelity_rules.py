@@ -1535,6 +1535,11 @@ def verify(f):
                 verdict = 'footnote'
             else:
                 own = [t for i, t in enumerate(store) if clauses[i]['ref'] != c['ref']]
+                tables = {}                                  # each table's rows read in order, as one text
+                for i, o in enumerate(clauses):
+                    if o['kind'] in F.TABLE_KINDS:
+                        tables[o['ref'].split()[1]] = tables.get(o['ref'].split()[1], "") + store[i]
+                own += list(tables.values())
                 ok_minus = all(len(s) >= 3 and len(flat(" ".join(s))) >= 12 and flat(" ".join(s)) in page_text
                                for s in seg['-'])
                 ok_plus = all(len(s) >= 3 and len(flat(" ".join(s))) >= 12
@@ -1551,7 +1556,8 @@ with ProcessPoolExecutor(4) as pool:
 
 AUTO = {
     'order': "Order or place only (verified mechanically): every stored word run of this discrepancy is printed on "
-             "the clause's pages, and every page run it lacks is stored word for word (in this clause or another), "
+             "the clause's pages, and every page run it lacks is stored word for word (in this clause, another, or one "
+             "table's rows read in order), "
              "so no word is lost or added; the engines read table cells, columns or figure labels in different orders.",
     'footnote': "A footnote reference number (verified: it starts a line or is printed small on the clause's pages) "
                 "that the parser drops with the footnote mark; no regulation word changes.",
