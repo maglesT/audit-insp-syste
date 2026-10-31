@@ -1,0 +1,277 @@
+{
+ "instructions": "You read pages of a pharmaceutical GMP text and list the obligations printed on them. For each page you get the\nrendered page IMAGE (open it with your Read tool: the image is the truth) and the page's TEXT LAYER (extracted\ntext, which can be wrong: superscripts flattened, table cells merged, landscape pages, lost symbols). Your output\nis checked by software against two text readings of the page and by independent reviewers, so precision matters\nmore than wording.\n\nList each separate obligation printed on the page as its own item, so that together your items cover every\nobligation on the page (body text, list items, table rows and footnotes that require something). One obligation\nis one thing a site must, should or may do, with all its conditions, numbers and qualifiers; do not split one\nobligation across items. A sentence that starts on this page and ends on the next is drafted here (runs_over true;\nthe next page's text is given). A sentence that started on the previous page is not drafted again.\nFor each item:\n- statement: the obligation in your own plain English words, as one checklist item a site could be audited\n  against. Do not copy more than a few words in a row. Keep every condition (\"where\", \"if\", \"unless\", \"before\")\n  and every number. Do not add anything the page does not say.\n- quote: the exact span of the page that states the whole obligation, copied as printed, character for\n  character from the TEXT LAYER where the text layer is right (it is matched against the page by software; do not\n  fix typos or change punctuation). For a table row, quote the cells of the row joined with \" | \".\n- clause_number: the number printed for the clause or row (\"9.3\", \"Part I 10.4\", \"4.19\"), \"\" if none.\n- strength: \"mandatory\" for shall / must / is required / may not; \"recommended\" for should; \"optional\" for may.\n  Take it from the main verb of the quoted words, not from words in a condition.\n- plant_types: from OSD (oral solid dosage), LIQ (oral liquids), SEMI (semisolids), INJ (sterile injectables), API\n  (active substances); the plant scope given with the page unless the page itself narrows it.\n- numbers: every number, limit, frequency or period in the quote, as printed in the image (10⁷ written \"10^7\").\n- condition: the condition or trigger of the obligation in a few words, \"\" if none.\n- topic: the sub-topic id from TOPICS the obligation belongs to (an audit area).\n- runs_over: true when the quote continues on the next page.\n- text_layer_differs: \"\" normally. If the image shows something the text layer gets wrong inside your quote\n  (a superscript \"10^7\" printed as \"107\", a symbol lost, cells of two rows merged, words in another order), quote\n  what the image shows and describe the difference here in one sentence.\n\nObligation sentences on the page that are not drafted (a heading, a definition, an example, text that only\ndescribes, a sentence that started on the previous page) go in not_applicable: the first 8 or more words of the\nsentence copied from the text layer, and the reason in a few words. Running headers, footers and page numbers are\nignored.\n\nWrite the answers file named in your task: {\"answers\": [one object per page with \"page\" set to the page id]}.\n",
+ "topics": [
+  "QS.PQS",
+  "QS.MGMT",
+  "QS.QRM",
+  "QS.PQR",
+  "QS.CHANGE",
+  "QS.DEV",
+  "QS.CAPA",
+  "PER.ORG",
+  "PER.KEY",
+  "PER.TRAIN",
+  "PER.HYG",
+  "PER.GOWN",
+  "PREM.DESIGN",
+  "PREM.PROD",
+  "PREM.STORE",
+  "PREM.QC",
+  "PREM.ANC",
+  "EQ.DESIGN",
+  "EQ.MAINT",
+  "EQ.CLEAN",
+  "EQ.CAL",
+  "DOC.SYS",
+  "DOC.SPEC",
+  "DOC.MFR",
+  "DOC.BMR",
+  "DOC.SOP",
+  "DOC.RET",
+  "MAT.SUPP",
+  "MAT.RECV",
+  "MAT.SAMP",
+  "MAT.STATUS",
+  "MAT.PACK",
+  "MAT.REJ",
+  "PROD.GEN",
+  "PROD.XCONT",
+  "PROD.IPC",
+  "PROD.YIELD",
+  "PROD.PACK",
+  "PROD.REWORK",
+  "QC.GEN",
+  "QC.SAMP",
+  "QC.TEST",
+  "QC.OOS",
+  "QC.STAB",
+  "QC.REF",
+  "QC.MICRO",
+  "VAL.PLAN",
+  "VAL.QUAL",
+  "VAL.PROC",
+  "VAL.CLEAN",
+  "VAL.METH",
+  "CSV.VAL",
+  "CSV.ACCESS",
+  "CSV.AUDIT",
+  "CSV.ESIG",
+  "CSV.DI",
+  "UTIL.WATER",
+  "UTIL.HVAC",
+  "UTIL.GAS",
+  "CCS.STRAT",
+  "CCS.EM",
+  "CCS.CLEAN",
+  "CCS.PEST",
+  "STER.GRADE",
+  "STER.ASEPT",
+  "STER.APS",
+  "STER.STERIL",
+  "STER.FILT",
+  "STER.CCI",
+  "STER.LYO",
+  "API.START",
+  "API.PROC",
+  "API.IMP",
+  "API.SOLV",
+  "OUT.CONTRACT",
+  "OUT.AGREE",
+  "CMP.COMPL",
+  "CMP.RECALL",
+  "CMP.REPORT",
+  "SI.PROG",
+  "SI.TEAM",
+  "SI.REPORT",
+  "SI.FOLLOW",
+  "DIST.STORE",
+  "DIST.TRANS",
+  "DIST.RETURN",
+  "REL.QP",
+  "REL.REVIEW"
+ ],
+ "schema": {
+  "type": "object",
+  "required": [
+   "page",
+   "items",
+   "not_applicable"
+  ],
+  "properties": {
+   "page": {
+    "type": "string"
+   },
+   "items": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "statement",
+      "quote",
+      "clause_number",
+      "strength",
+      "plant_types",
+      "numbers",
+      "condition",
+      "topic",
+      "runs_over",
+      "text_layer_differs"
+     ],
+     "properties": {
+      "statement": {
+       "type": "string"
+      },
+      "quote": {
+       "type": "string"
+      },
+      "clause_number": {
+       "type": "string"
+      },
+      "strength": {
+       "enum": [
+        "mandatory",
+        "recommended",
+        "optional"
+       ]
+      },
+      "plant_types": {
+       "type": "array",
+       "items": {
+        "enum": [
+         "OSD",
+         "LIQ",
+         "SEMI",
+         "INJ",
+         "API"
+        ]
+       }
+      },
+      "numbers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "condition": {
+       "type": "string"
+      },
+      "topic": {
+       "type": "string"
+      },
+      "runs_over": {
+       "type": "boolean"
+      },
+      "text_layer_differs": {
+       "type": "string"
+      }
+     }
+    }
+   },
+   "not_applicable": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "text",
+      "reason"
+     ],
+     "properties": {
+      "text": {
+       "type": "string"
+      },
+      "reason": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  }
+ },
+ "pages": [
+  {
+   "id": "who-trs1010-a8-hvac-nonsterile.pdf:8",
+   "source": "who-trs1010-a8-hvac-nonsterile.pdf",
+   "page": 8,
+   "image": "work/vision-pages/who-trs1010-a8-hvac-nonsterile-p008.png",
+   "image_sha256": "e85c0fb6fee48d94c1983474d0c5d8b153c015d958e0ff430aaee4e84360b091",
+   "dpi": 150,
+   "pdf_sha256": "1fe8543d62cdfabe23a4087532c3ed3769ab57a494272c7111e4f58b76e8f62b",
+   "text_layer": "                                               WHO Expert Committee on Specifications for Pharmaceutical Preparations Fifty-second report\n\n\n\n\n                                                      turbulent air ﬂow. Turbulent ﬂow, or non-unidirectional airﬂow, is air\n                                              distribution that is introduced into the controlled space and then mixes with\n                                              room air by means of induction.\n                                                      unidirectional airﬂow. A rectiﬁed airﬂow over the entire cross-sectional\n                                              area of a clean zone with a steady velocity and approximately parallel streamlines\n                                              (see also turbulent air ﬂow). (Modern standards no longer refer to laminar flow,\n                                              but have adopted the term unidirectional airflow.)\n                                                      validation. The documented act of proving that any procedure, process,\n                                              equipment, material, activity or system actually leads to the expected results.\n                                                      validation master plan. A high-level document that establishes an\n                                              umbrella validation plan for the entire project and is used as guidance by the\n                                              project team for resource and technical planning (also referred to as a master\n                                              qualiﬁcation plan).\n\n\n                                              4. Premises\n                                              4.1    The manufacture of non-sterile pharmaceutical products should take place\n                                                     in a controlled environment, as defined by the manufacturer.\n\n                                              4.2    The design of the HVAC system should be closely coordinated with the\n                                                     architectural design of the building.\n\n                                              4.3    Infiltration of unfiltered air into a manufacturing facility should be\n                                                     prevented as this can be a source of contamination.\n\n                                              4.4    Manufacturing facilities should normally be maintained at a positive\n                                                     pressure relative to the outside, to prevent the ingress of contaminants.\n                                                     Where facilities are to be maintained at negative pressures relative to the\n                                                     outside, special precautions should be taken to mitigate any risks (see (3)).\nWHO Technical Report Series, No. 1010, 2018\n\n\n\n\n                                              4.5    Areas for the manufacture of products, especially where materials and\n                                                     products are exposed to the environment, should be of an appropriate\n                                                     level of cleanliness. The level of air cleanliness for different areas should be\n                                                     determined according to, but not limited to, the products manufactured,\n                                                     the process used and the products’ susceptibility to degradation.\n                                                              Where a clean room classification is specified, the manufacturer\n                                                     should state whether the classification is rated for the “as-built”, “at-rest” or\n                                                     “operational” condition.\n\n                                              4.6    HVAC systems should ensure that the specified room conditions are\n                                                     attained, for example through heating, cooling, air filtration, air distribution,\n                                                     airflow rates and air exchange rates.\n256\n",
+   "next_page_text": "                                                                           Annex 8\n\n\n\n\n4.7   Any area where pharmaceutical starting materials, products, primary\n      packing materials, utensils and equipment are exposed to the environment\n      should have the same level of cleanliness or classification as the area in\n      which the products are produced.\n4.8   Appropriate design and controls for the premises and HVAC systems\n      should be in place to achieve containment, cleanliness and the appropriate\n      levels of protection of the product, personnel and the environment.\nNote: For facilities where the highest level of containment is a requirement,\nrefer to the guidance in WHO good manufacturing practices for pharmaceutical\nproducts containing hazardous substances (3).\n4.9   Containment, cleanliness and protection may be facilitated through, for\n      example:\n        ■■ correct building layout;\n        ■■ building finishes;\n        ■■ the use of airlocks such as personnel airlocks (PAL) and/or material\n           airlocks (MAL);\n        ■■ pass-through hatches (PTH);\n        ■■ change rooms and passages;\n        ■■ sufficient pressure differentials.\n4.10 Detailed schematic diagrams should be maintained, indicating, for example,\n     air supply and air return, room pressure differentials and airflow directions.\n4.11 Where possible, personnel and materials should not move from a higher\n     cleanliness zone to a lower cleanliness zone and back to a higher cleanliness\n     zone. Where this is unavoidable, risks should be identified and controlled.\n4.12 The final change room should be at the same cleanliness level (at rest) as the\n     area into which it leads.\n4.13 Where appropriate, such as where the simultaneous opening of airlock\n     doors might lead to a cross-contamination risk, airlock doors should not\n     be opened at the same time. In such cases, controls such as interlocking\n     systems, warning systems and procedures should be implemented.\n4.14 Swing doors should normally open to the high-pressure side and be\n     provided with self-closers. Exceptions to the door swing direction should\n     be justified and may include for fire escapes or other health and safety\n     measures. In these cases, door closer mechanisms should be carefully\n     controlled and other controls should be in place to prevent any risk.\n                                                                                      257\n",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "API"
+   ]
+  },
+  {
+   "id": "who-trs1010-a8-hvac-nonsterile.pdf:9",
+   "source": "who-trs1010-a8-hvac-nonsterile.pdf",
+   "page": 9,
+   "image": "work/vision-pages/who-trs1010-a8-hvac-nonsterile-p009.png",
+   "image_sha256": "79a77e87d26f029f374ed79005524ab41e6c72835a0bc7efb1777af29b5950fc",
+   "dpi": 150,
+   "pdf_sha256": "1fe8543d62cdfabe23a4087532c3ed3769ab57a494272c7111e4f58b76e8f62b",
+   "text_layer": "                                                                           Annex 8\n\n\n\n\n4.7   Any area where pharmaceutical starting materials, products, primary\n      packing materials, utensils and equipment are exposed to the environment\n      should have the same level of cleanliness or classification as the area in\n      which the products are produced.\n4.8   Appropriate design and controls for the premises and HVAC systems\n      should be in place to achieve containment, cleanliness and the appropriate\n      levels of protection of the product, personnel and the environment.\nNote: For facilities where the highest level of containment is a requirement,\nrefer to the guidance in WHO good manufacturing practices for pharmaceutical\nproducts containing hazardous substances (3).\n4.9   Containment, cleanliness and protection may be facilitated through, for\n      example:\n        ■■ correct building layout;\n        ■■ building finishes;\n        ■■ the use of airlocks such as personnel airlocks (PAL) and/or material\n           airlocks (MAL);\n        ■■ pass-through hatches (PTH);\n        ■■ change rooms and passages;\n        ■■ sufficient pressure differentials.\n4.10 Detailed schematic diagrams should be maintained, indicating, for example,\n     air supply and air return, room pressure differentials and airflow directions.\n4.11 Where possible, personnel and materials should not move from a higher\n     cleanliness zone to a lower cleanliness zone and back to a higher cleanliness\n     zone. Where this is unavoidable, risks should be identified and controlled.\n4.12 The final change room should be at the same cleanliness level (at rest) as the\n     area into which it leads.\n4.13 Where appropriate, such as where the simultaneous opening of airlock\n     doors might lead to a cross-contamination risk, airlock doors should not\n     be opened at the same time. In such cases, controls such as interlocking\n     systems, warning systems and procedures should be implemented.\n4.14 Swing doors should normally open to the high-pressure side and be\n     provided with self-closers. Exceptions to the door swing direction should\n     be justified and may include for fire escapes or other health and safety\n     measures. In these cases, door closer mechanisms should be carefully\n     controlled and other controls should be in place to prevent any risk.\n                                                                                      257\n",
+   "next_page_text": "                                               WHO Expert Committee on Specifications for Pharmaceutical Preparations Fifty-second report\n\n\n\n\n                                              4.15 Sampling, weighing and dispensing areas should be appropriately designed\n                                                   to provide the required levels of containment, operator protection and\n                                                   product protection.\n                                              4.16 Sampling, weighing and dispensing should be performed under the same\n                                                   environmental conditions as specified in the areas for the next stage of\n                                                   processing of the product.\n                                              4.17 Factors such as airflow should not disrupt the accuracy of balances.\n                                              4.18 The position of the operator, equipment and containers should not obstruct\n                                                   airflow patterns and result in risks.\n                                              4.19 Once an area is qualified with a specific layout for operators, equipment\n                                                   and processes, this configuration should be ensured during routine activity.\n                                              4.20 Return and exhaust filters and grilles selected and installed should be\n                                                   appropriate and their design should facilitate cleaning and maintenance.\n                                              4.21 The impact and risk to the HVAC system should be considered when\n                                                   changes are planned to an existing facility. This includes upgrades and\n                                                   retrofitting of facilities.\n\n\n                                              5. Design of HVAC systems and components\n                                              HVAC systems should be appropriately designed and managed throughout their\n                                              life cycle. Documentation such as schematic drawings should be maintained to\n                                              reflect the current situation.\n                                              5.1    Risk management principles should be applied for HVAC systems. This\nWHO Technical Report Series, No. 1010, 2018\n\n\n\n\n                                                     includes, but is not limited to, appropriate design, operation and monitoring,\n                                                     control of the climatic conditions and the prevention of contamination\n                                                     and cross-contamination.\n                                              5.2    The HVAC system capacity should be sufficient to ensure that the required\n                          ",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "API"
+   ]
+  },
+  {
+   "id": "who-trs1010-a8-hvac-nonsterile.pdf:15",
+   "source": "who-trs1010-a8-hvac-nonsterile.pdf",
+   "page": 15,
+   "image": "work/vision-pages/who-trs1010-a8-hvac-nonsterile-p015.png",
+   "image_sha256": "a84ca7f775f30053f979799d21dae10c0f557ee03dd1c19fd988c775568d7ff3",
+   "dpi": 150,
+   "pdf_sha256": "1fe8543d62cdfabe23a4087532c3ed3769ab57a494272c7111e4f58b76e8f62b",
+   "text_layer": "      Table A8.1\n      Comparison of filter test standards – approximate equivalencies a\n\n        Eurovent 4/5      ASHRAE          Eurovent 4/5            Eurovent 4/5\n           rating          52.2           ASHRAE 52.1             ASHRAE 52.1                     EN 779 & EN 1822\n                                          BS6540 Part 1           BS6540 Part 1\n       (superseded)         Merv       Average arrestance       Average dust spot    MPPS integral\n                                                                                                                                           ISO 29463\n\n\n\n\n                           rating            Am (%)                 efficiency      overall efficiency\n                                                                                                               EN rating\n                                          (superseded)               Em (%)                (%)\n                                                                  (superseded)\n                                                                                       99.999995             U17                           75E\n                                                                                        99.99995             U16                           65E\n           EU 14                                                                        99.9995              U15                           55E\n           EU 13                                                                         99.995              H14                           45E\n           EU 12                                                                          99.95              H13                           35E\n                                                                                                                           EN 1822: 2009\n\n\n\n\n           EU 11                                                                          99.5                E12                          25E\n           EU 10                                                                           95                 E11                          15E\n            EU 9          Merv 16                                         >95              85                 E10\n            EU 9          Merv 15                                          95                                 F9\n            EU 8          Merv 14                                          90                                 F8\n                          Merv 13              >98                         85                                 F7\n                                                                                                                           EN 779: 2012\n\n\n\n\n            EU 7                               >98                         80\n                                                                                                                                                       Annex 8\n\n\n\n\n263\n",
+   "next_page_text": "        WHO Technical Report Series, No. 1010, 2018\n\n\n\n\n264\n      Table A8.1 continued\n      Eurovent 4/5           ASHRAE         Eurovent 4/5        Eurovent 4/5\n         rating               52.2          ASHRAE 52.1         ASHRAE 52.1                   EN 779 & EN 1822\n                                            BS6540 Part 1       BS6540 Part 1\n      (superseded)            Merv       Average arrestance   Average dust spot    MPPS integral\n                                                                                                                                      ISO 29463\n\n\n                             rating            Am (%)             efficiency      overall efficiency\n                                                                                                           EN rating\n                                            (superseded)           Em (%)                (%)\n                                                                (superseded)\n                             Merv 12             >95                 75\n           EU 6                                  >95                 70                                   M6\n                             Merv 11             >95                 65\n                                                 >95                 60\n                             Merv 10             >95                 55\n           EU 5              Merv 9              >95                 50                                   M5\n                             Merv 8              >95                 45\n                                                 >95                 40\n                                                                                                                       EN 779: 2012\n\n\n\n\n                             Merv 7              >90                 35\n           EU 4                                  >90                 30                                   G4\n                                                                                                                                                  WHO Expert Committee on Specifications for Pharmaceutical Preparations Fifty-second report\n\n\n\n\n                             Merv 6                   90             25\n           EU 3              Merv 5                   85             20                                   G3\n                                                      80            <20\n",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "API"
+   ]
+  },
+  {
+   "id": "who-trs1010-a8-hvac-nonsterile.pdf:16",
+   "source": "who-trs1010-a8-hvac-nonsterile.pdf",
+   "page": 16,
+   "image": "work/vision-pages/who-trs1010-a8-hvac-nonsterile-p016.png",
+   "image_sha256": "3ca99d0333a19014cea57c01ac3f4a316b4e12b0154d0aab4af06ae30f7aafd3",
+   "dpi": 150,
+   "pdf_sha256": "1fe8543d62cdfabe23a4087532c3ed3769ab57a494272c7111e4f58b76e8f62b",
+   "text_layer": "        WHO Technical Report Series, No. 1010, 2018\n\n\n\n\n264\n      Table A8.1 continued\n      Eurovent 4/5           ASHRAE         Eurovent 4/5        Eurovent 4/5\n         rating               52.2          ASHRAE 52.1         ASHRAE 52.1                   EN 779 & EN 1822\n                                            BS6540 Part 1       BS6540 Part 1\n      (superseded)            Merv       Average arrestance   Average dust spot    MPPS integral\n                                                                                                                                      ISO 29463\n\n\n                             rating            Am (%)             efficiency      overall efficiency\n                                                                                                           EN rating\n                                            (superseded)           Em (%)                (%)\n                                                                (superseded)\n                             Merv 12             >95                 75\n           EU 6                                  >95                 70                                   M6\n                             Merv 11             >95                 65\n                                                 >95                 60\n                             Merv 10             >95                 55\n           EU 5              Merv 9              >95                 50                                   M5\n                             Merv 8              >95                 45\n                                                 >95                 40\n                                                                                                                       EN 779: 2012\n\n\n\n\n                             Merv 7              >90                 35\n           EU 4                                  >90                 30                                   G4\n                                                                                                                                                  WHO Expert Committee on Specifications for Pharmaceutical Preparations Fifty-second report\n\n\n\n\n                             Merv 6                   90             25\n           EU 3              Merv 5                   85             20                                   G3\n                                                      80            <20\n",
+   "next_page_text": "       Table A8.1 continued\n        Eurovent 4/5             ASHRAE                 Eurovent 4/5                     Eurovent 4/5\n           rating                 52.2                  ASHRAE 52.1                      ASHRAE 52.1                                  EN 779 & EN 1822\n                                                        BS6540 Part 1                    BS6540 Part 1\n        (superseded)                Merv            Average arrestance                Average dust spot                MPPS integral\n                                                                                                                                                                                         ISO 29463\n\n\n                                   rating                 Am (%)                          efficiency                  overall efficiency\n                                                                                                                                                           EN rating\n                                                       (superseded)                        Em (%)                            (%)\n                                                                                        (superseded)\n                                  Merv 4                         75\n              EU 2                Merv 3                         70                                                                                       G2\n                                  Merv 2                         65\n                                                                                                                                                                          EN 779: 2012\n\n\n\n\n              EU 1                Merv 1                       <65                                                                                        G1\n      a\n        Ensure that the classification is current.\n      MPPS: most penetrating particle size.\n      Note: The filter classifications referred to above relate to the EN 1822:2009 and EN 779: 2012 test standards (EN 779 relates to filter classes G1 to F9 and EN 1822 relates to filter\n      classes E10 to U17.\n                                                                                                                                                                                                     Annex 8\n\n\n\n\n265\n",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "API"
+   ]
+  },
+  {
+   "id": "who-trs1010-a8-hvac-nonsterile.pdf:17",
+   "source": "who-trs1010-a8-hvac-nonsterile.pdf",
+   "page": 17,
+   "image": "work/vision-pages/who-trs1010-a8-hvac-nonsterile-p017.png",
+   "image_sha256": "c1547cea13f8136f6d6ab354b8d5babd827d6563973f9358deed2b137b5159f6",
+   "dpi": 150,
+   "pdf_sha256": "1fe8543d62cdfabe23a4087532c3ed3769ab57a494272c7111e4f58b76e8f62b",
+   "text_layer": "       Table A8.1 continued\n        Eurovent 4/5             ASHRAE                 Eurovent 4/5                     Eurovent 4/5\n           rating                 52.2                  ASHRAE 52.1                      ASHRAE 52.1                                  EN 779 & EN 1822\n                                                        BS6540 Part 1                    BS6540 Part 1\n        (superseded)                Merv            Average arrestance                Average dust spot                MPPS integral\n                                                                                                                                                                                         ISO 29463\n\n\n                                   rating                 Am (%)                          efficiency                  overall efficiency\n                                                                                                                                                           EN rating\n                                                       (superseded)                        Em (%)                            (%)\n                                                                                        (superseded)\n                                  Merv 4                         75\n              EU 2                Merv 3                         70                                                                                       G2\n                                  Merv 2                         65\n                                                                                                                                                                          EN 779: 2012\n\n\n\n\n              EU 1                Merv 1                       <65                                                                                        G1\n      a\n        Ensure that the classification is current.\n      MPPS: most penetrating particle size.\n      Note: The filter classifications referred to above relate to the EN 1822:2009 and EN 779: 2012 test standards (EN 779 relates to filter classes G1 to F9 and EN 1822 relates to filter\n      classes E10 to U17.\n                                                                                                                                                                                                     Annex 8\n\n\n\n\n265\n",
+   "next_page_text": "                                               WHO Expert Committee on Specifications for Pharmaceutical Preparations Fifty-second report\n\n\n\n\n                                              8. Temperature and relative humidity\n                                              8.1    Where appropriate, temperature and relative humidity should be controlled,\n                                                     monitored and recorded to ensure that the conditions are maintained\n                                                     pertinent to the materials and products as required, and provide a\n                                                     comfortable environment for the operators.\n                                              8.2    Limits for minimum and maximum room temperatures and relative\n                                                     humidity should be appropriate taking into consideration, for example,\n                                                     materials and products.\n                                              8.3    Where steam or humidity is present, controls should be in place to ensure\n                                                     that the HVAC system will remain effective. Precautions should be taken\n                                                     to prevent moisture migration that may increase an uncontrolled load on\n                                                     the HVAC system.\n                                                             Where humidification or dehumidification is required, this should\n                                                     be achieved by appropriate means that will not become a source of\n                                                     contamination.\n                                              8.4    Dehumidification and cooling systems should be well drained. Condensate\n                                                     should not accumulate in air-handling systems and should not become a\n                                                     source of contamination.\n\n\n                                              9. Dust, vapour and fume control\n                                              The discharge location of dust, vapours and fumes should be carefully considered\n                                              to prevent contamination and cross-contamination.\n\n                                              9.1    Dust, vapours and fumes could be sources of contamination and should\nWHO Technical Report Series, No. 1010, 2018\n\n\n\n\n                                                     be appropriately controlled. Wherever possible, they should be removed\n                                                     at source. The HVAC system should not normally serve as the primary\n                                                     mechanism of dust control.\n\n                                              9.2    Dust extraction systems should be appropriately desig",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "API"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,536 @@
+{
+ "role": "b",
+ "instructions": "You are a second, independent auditor. Check one checklist item against the page it claims to come from. You get the page IMAGE\n(open it with your Read tool: the image is the truth), the page's TEXT LAYER (extracted text, which can be wrong)\nand the item. Start from the PAGE: find the obligation the item covers, read it fully, then compare the item.\n\nThe item must state one whole obligation printed on the page. If a condition, number, frequency or qualifier that\nbelongs to the same obligation is left out of the item, it counts as omitted. Judge only what the item's own words\nsay: do not read the page back into the item. A condition, trigger, timing or qualifier that is on the page but\nnot in the item is omitted, even if it seems implied. A trigger such as \"if\", \"where ... is required\", \"when\" or\n\"before\" is part of the obligation.\n\nAnswer strictly:\n- quote_as_printed: is the item's quote printed on the page exactly (as the image shows it; for a table row, its\n  cells joined with \" | \") (true/false)?\n- verdict: \"correct\" only if the quote is as printed, the page requires what the statement asks for, the\n  statement adds nothing and omits nothing of that obligation, the strength (shall/must = mandatory, should =\n  recommended, may = optional) matches the quoted words, and the page applies to every listed plant type;\n  otherwise \"incorrect\".\n- reason: one or two sentences.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "items": [
+  {
+   "id": "fda-cp-7356-002-drug-manufacturing-inspections.pdf:20#1",
+   "image": "work/vision-pages/fda-cp-7356-002-drug-manufacturing-inspections-p020.png",
+   "text_layer": "                                                                                   PROGRAM             7356.002\n\n\n    products but may also incorporate components and in-process materials. These areas may\n    indicate deficiencies not only in this system but also in other major systems that would warrant\n    expansion of coverage. All areas under this system should be covered; however, the depth of\n    coverage may vary depending on inspectional findings.\n         •   Quality oversight of contracted operations and material suppliers: Effective monitoring\n             strategy has been implemented; incoming material monitoring, lifecycle qualification\n             program, quality agreements, and timely communication mechanisms are included\n         •   Management oversight of the development, implementation, monitoring, and continual\n             improvement of the quality system: Quality risk management and knowledge\n             management 18 are incorporated (e.g., providing an early warning system for appropriate\n             resource allocation)\n         •   Quality risk management program:\n             o Documented and implemented to ensure hazards (e.g., cross-contamination,\n               adulteration, hazardous impurities such as nitrosamines, 19 nitrosating agents, nitrites,\n               nitrates, and azides) are identified, evaluated, addressed, communicated (to the\n               establishment’s management and FDA), and continuously reviewed as needed\n               throughout a product’s lifecycle\n             o Hazardous impurity risk is assessed and control strategies are implemented to\n               mitigate the risk (e.g., actions to address sources of variability, release testing,\n               reduction or elimination of impurities, cleaning validation); control strategies are\n               reviewed following changes and throughout a product’s lifecycle\n         •   Product reviews: Conducted at least annually; product quality is reviewed to assess risk\n             and determine the need for changes, such as changes in drug product specifications,\n             manufacturing, or control procedures; statistical analysis is conducted to identify areas\n             (e.g., trends, patterns, correlations, anomalies) for action and improvement; refer to 21\n             CFR 211.180(e)\n         •   Complaint reviews (quality and medical): Documented; evaluated; investigated in a\n             timely manner; corrective action is included where appropriate\n         •   Discrepancy and failure investigations: Documented; investigated in a timely manner\n             using scientific evidence to identify the root cause; corrective actions and preventive\n             actions (CAPAs) are included and effectiveness of the CAPAs is evaluated\n         •   Change management for the manufacturing of all products: Documented (with\n             justification); quality risk management 20 is used to evaluate proposed changes for\n\n\n    18\n       Effective knowledge management (e.g., acquiring, analyzing, storing, and disseminating information) supports\n    effective risk management, along with timely risk review, corrective actions and preventive actions, and change\n    management.\n    19\n       See guidance for industry Control of Nitrosamine Impurities in Human Drugs.\n    20\n       See PIC/S recommendation PI 054-1 How To Evaluate and Demonstrate the Effectiveness of a Pharmaceutical\n    Quality System in Relation to Risk-Based Change Management.\n\n\nDate of Issuance: 09/16/2022                                                                            Page 20 of 44\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Quality oversight of contracted operations and material suppliers uses an implemented, effective monitoring strategy that covers incoming material monitoring, a lifecycle qualification program, quality agreements and timely communication mechanisms.",
+    "quote": "Quality oversight of contracted operations and material suppliers: Effective monitoring strategy has been implemented; incoming material monitoring, lifecycle qualification program, quality agreements, and timely communication mechanisms are included",
+    "clause_number": "",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cp-7356-002-drug-manufacturing-inspections.pdf:20#2",
+   "image": "work/vision-pages/fda-cp-7356-002-drug-manufacturing-inspections-p020.png",
+   "text_layer": "                                                                                   PROGRAM             7356.002\n\n\n    products but may also incorporate components and in-process materials. These areas may\n    indicate deficiencies not only in this system but also in other major systems that would warrant\n    expansion of coverage. All areas under this system should be covered; however, the depth of\n    coverage may vary depending on inspectional findings.\n         •   Quality oversight of contracted operations and material suppliers: Effective monitoring\n             strategy has been implemented; incoming material monitoring, lifecycle qualification\n             program, quality agreements, and timely communication mechanisms are included\n         •   Management oversight of the development, implementation, monitoring, and continual\n             improvement of the quality system: Quality risk management and knowledge\n             management 18 are incorporated (e.g., providing an early warning system for appropriate\n             resource allocation)\n         •   Quality risk management program:\n             o Documented and implemented to ensure hazards (e.g., cross-contamination,\n               adulteration, hazardous impurities such as nitrosamines, 19 nitrosating agents, nitrites,\n               nitrates, and azides) are identified, evaluated, addressed, communicated (to the\n               establishment’s management and FDA), and continuously reviewed as needed\n               throughout a product’s lifecycle\n             o Hazardous impurity risk is assessed and control strategies are implemented to\n               mitigate the risk (e.g., actions to address sources of variability, release testing,\n               reduction or elimination of impurities, cleaning validation); control strategies are\n               reviewed following changes and throughout a product’s lifecycle\n         •   Product reviews: Conducted at least annually; product quality is reviewed to assess risk\n             and determine the need for changes, such as changes in drug product specifications,\n             manufacturing, or control procedures; statistical analysis is conducted to identify areas\n             (e.g., trends, patterns, correlations, anomalies) for action and improvement; refer to 21\n             CFR 211.180(e)\n         •   Complaint reviews (quality and medical): Documented; evaluated; investigated in a\n             timely manner; corrective action is included where appropriate\n         •   Discrepancy and failure investigations: Documented; investigated in a timely manner\n             using scientific evidence to identify the root cause; corrective actions and preventive\n             actions (CAPAs) are included and effectiveness of the CAPAs is evaluated\n         •   Change management for the manufacturing of all products: Documented (with\n             justification); quality risk management 20 is used to evaluate proposed changes for\n\n\n    18\n       Effective knowledge management (e.g., acquiring, analyzing, storing, and disseminating information) supports\n    effective risk management, along with timely risk review, corrective actions and preventive actions, and change\n    management.\n    19\n       See guidance for industry Control of Nitrosamine Impurities in Human Drugs.\n    20\n       See PIC/S recommendation PI 054-1 How To Evaluate and Demonstrate the Effectiveness of a Pharmaceutical\n    Quality System in Relation to Risk-Based Change Management.\n\n\nDate of Issuance: 09/16/2022                                                                            Page 20 of 44\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Management oversees the development, implementation, monitoring and continual improvement of the quality system, with quality risk management and knowledge management built in (for example as an early warning system for allocating resources).",
+    "quote": "Management oversight of the development, implementation, monitoring, and continual improvement of the quality system: Quality risk management and knowledge management 18 are incorporated (e.g., providing an early warning system for appropriate resource allocation)",
+    "clause_number": "",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cp-7356-002-drug-manufacturing-inspections.pdf:20#3",
+   "image": "work/vision-pages/fda-cp-7356-002-drug-manufacturing-inspections-p020.png",
+   "text_layer": "                                                                                   PROGRAM             7356.002\n\n\n    products but may also incorporate components and in-process materials. These areas may\n    indicate deficiencies not only in this system but also in other major systems that would warrant\n    expansion of coverage. All areas under this system should be covered; however, the depth of\n    coverage may vary depending on inspectional findings.\n         •   Quality oversight of contracted operations and material suppliers: Effective monitoring\n             strategy has been implemented; incoming material monitoring, lifecycle qualification\n             program, quality agreements, and timely communication mechanisms are included\n         •   Management oversight of the development, implementation, monitoring, and continual\n             improvement of the quality system: Quality risk management and knowledge\n             management 18 are incorporated (e.g., providing an early warning system for appropriate\n             resource allocation)\n         •   Quality risk management program:\n             o Documented and implemented to ensure hazards (e.g., cross-contamination,\n               adulteration, hazardous impurities such as nitrosamines, 19 nitrosating agents, nitrites,\n               nitrates, and azides) are identified, evaluated, addressed, communicated (to the\n               establishment’s management and FDA), and continuously reviewed as needed\n               throughout a product’s lifecycle\n             o Hazardous impurity risk is assessed and control strategies are implemented to\n               mitigate the risk (e.g., actions to address sources of variability, release testing,\n               reduction or elimination of impurities, cleaning validation); control strategies are\n               reviewed following changes and throughout a product’s lifecycle\n         •   Product reviews: Conducted at least annually; product quality is reviewed to assess risk\n             and determine the need for changes, such as changes in drug product specifications,\n             manufacturing, or control procedures; statistical analysis is conducted to identify areas\n             (e.g., trends, patterns, correlations, anomalies) for action and improvement; refer to 21\n             CFR 211.180(e)\n         •   Complaint reviews (quality and medical): Documented; evaluated; investigated in a\n             timely manner; corrective action is included where appropriate\n         •   Discrepancy and failure investigations: Documented; investigated in a timely manner\n             using scientific evidence to identify the root cause; corrective actions and preventive\n             actions (CAPAs) are included and effectiveness of the CAPAs is evaluated\n         •   Change management for the manufacturing of all products: Documented (with\n             justification); quality risk management 20 is used to evaluate proposed changes for\n\n\n    18\n       Effective knowledge management (e.g., acquiring, analyzing, storing, and disseminating information) supports\n    effective risk management, along with timely risk review, corrective actions and preventive actions, and change\n    management.\n    19\n       See guidance for industry Control of Nitrosamine Impurities in Human Drugs.\n    20\n       See PIC/S recommendation PI 054-1 How To Evaluate and Demonstrate the Effectiveness of a Pharmaceutical\n    Quality System in Relation to Risk-Based Change Management.\n\n\nDate of Issuance: 09/16/2022                                                                            Page 20 of 44\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "A quality risk management program is documented and implemented so that hazards (such as cross-contamination, adulteration and hazardous impurities like nitrosamines, nitrosating agents, nitrites, nitrates and azides) are identified, evaluated, addressed, communicated to site management and FDA, and reviewed continuously as needed over the product lifecycle.",
+    "quote": "Quality risk management program: o Documented and implemented to ensure hazards (e.g., cross-contamination, adulteration, hazardous impurities such as nitrosamines, 19 nitrosating agents, nitrites, nitrates, and azides) are identified, evaluated, addressed, communicated (to the establishment’s management and FDA), and continuously reviewed as needed throughout a product’s lifecycle",
+    "clause_number": "",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cp-7356-002-drug-manufacturing-inspections.pdf:20#4",
+   "image": "work/vision-pages/fda-cp-7356-002-drug-manufacturing-inspections-p020.png",
+   "text_layer": "                                                                                   PROGRAM             7356.002\n\n\n    products but may also incorporate components and in-process materials. These areas may\n    indicate deficiencies not only in this system but also in other major systems that would warrant\n    expansion of coverage. All areas under this system should be covered; however, the depth of\n    coverage may vary depending on inspectional findings.\n         •   Quality oversight of contracted operations and material suppliers: Effective monitoring\n             strategy has been implemented; incoming material monitoring, lifecycle qualification\n             program, quality agreements, and timely communication mechanisms are included\n         •   Management oversight of the development, implementation, monitoring, and continual\n             improvement of the quality system: Quality risk management and knowledge\n             management 18 are incorporated (e.g., providing an early warning system for appropriate\n             resource allocation)\n         •   Quality risk management program:\n             o Documented and implemented to ensure hazards (e.g., cross-contamination,\n               adulteration, hazardous impurities such as nitrosamines, 19 nitrosating agents, nitrites,\n               nitrates, and azides) are identified, evaluated, addressed, communicated (to the\n               establishment’s management and FDA), and continuously reviewed as needed\n               throughout a product’s lifecycle\n             o Hazardous impurity risk is assessed and control strategies are implemented to\n               mitigate the risk (e.g., actions to address sources of variability, release testing,\n               reduction or elimination of impurities, cleaning validation); control strategies are\n               reviewed following changes and throughout a product’s lifecycle\n         •   Product reviews: Conducted at least annually; product quality is reviewed to assess risk\n             and determine the need for changes, such as changes in drug product specifications,\n             manufacturing, or control procedures; statistical analysis is conducted to identify areas\n             (e.g., trends, patterns, correlations, anomalies) for action and improvement; refer to 21\n             CFR 211.180(e)\n         •   Complaint reviews (quality and medical): Documented; evaluated; investigated in a\n             timely manner; corrective action is included where appropriate\n         •   Discrepancy and failure investigations: Documented; investigated in a timely manner\n             using scientific evidence to identify the root cause; corrective actions and preventive\n             actions (CAPAs) are included and effectiveness of the CAPAs is evaluated\n         •   Change management for the manufacturing of all products: Documented (with\n             justification); quality risk management 20 is used to evaluate proposed changes for\n\n\n    18\n       Effective knowledge management (e.g., acquiring, analyzing, storing, and disseminating information) supports\n    effective risk management, along with timely risk review, corrective actions and preventive actions, and change\n    management.\n    19\n       See guidance for industry Control of Nitrosamine Impurities in Human Drugs.\n    20\n       See PIC/S recommendation PI 054-1 How To Evaluate and Demonstrate the Effectiveness of a Pharmaceutical\n    Quality System in Relation to Risk-Based Change Management.\n\n\nDate of Issuance: 09/16/2022                                                                            Page 20 of 44\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "The risk from hazardous impurities is assessed and control strategies (for example addressing sources of variability, release testing, reducing or eliminating impurities, cleaning validation) are put in place to mitigate it, and these strategies are reviewed after changes and across the product lifecycle.",
+    "quote": "Hazardous impurity risk is assessed and control strategies are implemented to mitigate the risk (e.g., actions to address sources of variability, release testing, reduction or elimination of impurities, cleaning validation); control strategies are reviewed following changes and throughout a product’s lifecycle",
+    "clause_number": "",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cp-7356-002-drug-manufacturing-inspections.pdf:20#5",
+   "image": "work/vision-pages/fda-cp-7356-002-drug-manufacturing-inspections-p020.png",
+   "text_layer": "                                                                                   PROGRAM             7356.002\n\n\n    products but may also incorporate components and in-process materials. These areas may\n    indicate deficiencies not only in this system but also in other major systems that would warrant\n    expansion of coverage. All areas under this system should be covered; however, the depth of\n    coverage may vary depending on inspectional findings.\n         •   Quality oversight of contracted operations and material suppliers: Effective monitoring\n             strategy has been implemented; incoming material monitoring, lifecycle qualification\n             program, quality agreements, and timely communication mechanisms are included\n         •   Management oversight of the development, implementation, monitoring, and continual\n             improvement of the quality system: Quality risk management and knowledge\n             management 18 are incorporated (e.g., providing an early warning system for appropriate\n             resource allocation)\n         •   Quality risk management program:\n             o Documented and implemented to ensure hazards (e.g., cross-contamination,\n               adulteration, hazardous impurities such as nitrosamines, 19 nitrosating agents, nitrites,\n               nitrates, and azides) are identified, evaluated, addressed, communicated (to the\n               establishment’s management and FDA), and continuously reviewed as needed\n               throughout a product’s lifecycle\n             o Hazardous impurity risk is assessed and control strategies are implemented to\n               mitigate the risk (e.g., actions to address sources of variability, release testing,\n               reduction or elimination of impurities, cleaning validation); control strategies are\n               reviewed following changes and throughout a product’s lifecycle\n         •   Product reviews: Conducted at least annually; product quality is reviewed to assess risk\n             and determine the need for changes, such as changes in drug product specifications,\n             manufacturing, or control procedures; statistical analysis is conducted to identify areas\n             (e.g., trends, patterns, correlations, anomalies) for action and improvement; refer to 21\n             CFR 211.180(e)\n         •   Complaint reviews (quality and medical): Documented; evaluated; investigated in a\n             timely manner; corrective action is included where appropriate\n         •   Discrepancy and failure investigations: Documented; investigated in a timely manner\n             using scientific evidence to identify the root cause; corrective actions and preventive\n             actions (CAPAs) are included and effectiveness of the CAPAs is evaluated\n         •   Change management for the manufacturing of all products: Documented (with\n             justification); quality risk management 20 is used to evaluate proposed changes for\n\n\n    18\n       Effective knowledge management (e.g., acquiring, analyzing, storing, and disseminating information) supports\n    effective risk management, along with timely risk review, corrective actions and preventive actions, and change\n    management.\n    19\n       See guidance for industry Control of Nitrosamine Impurities in Human Drugs.\n    20\n       See PIC/S recommendation PI 054-1 How To Evaluate and Demonstrate the Effectiveness of a Pharmaceutical\n    Quality System in Relation to Risk-Based Change Management.\n\n\nDate of Issuance: 09/16/2022                                                                            Page 20 of 44\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Product reviews are carried out at least once a year, assessing product quality for risk and for any needed changes to drug product specifications, manufacturing or control procedures, and using statistical analysis to find trends, patterns, correlations or anomalies for action and improvement (per 21 CFR 211.180(e)).",
+    "quote": "Product reviews: Conducted at least annually; product quality is reviewed to assess risk and determine the need for changes, such as changes in drug product specifications, manufacturing, or control procedures; statistical analysis is conducted to identify areas (e.g., trends, patterns, correlations, anomalies) for action and improvement; refer to 21 CFR 211.180(e)",
+    "clause_number": "",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cp-7356-002-drug-manufacturing-inspections.pdf:20#6",
+   "image": "work/vision-pages/fda-cp-7356-002-drug-manufacturing-inspections-p020.png",
+   "text_layer": "                                                                                   PROGRAM             7356.002\n\n\n    products but may also incorporate components and in-process materials. These areas may\n    indicate deficiencies not only in this system but also in other major systems that would warrant\n    expansion of coverage. All areas under this system should be covered; however, the depth of\n    coverage may vary depending on inspectional findings.\n         •   Quality oversight of contracted operations and material suppliers: Effective monitoring\n             strategy has been implemented; incoming material monitoring, lifecycle qualification\n             program, quality agreements, and timely communication mechanisms are included\n         •   Management oversight of the development, implementation, monitoring, and continual\n             improvement of the quality system: Quality risk management and knowledge\n             management 18 are incorporated (e.g., providing an early warning system for appropriate\n             resource allocation)\n         •   Quality risk management program:\n             o Documented and implemented to ensure hazards (e.g., cross-contamination,\n               adulteration, hazardous impurities such as nitrosamines, 19 nitrosating agents, nitrites,\n               nitrates, and azides) are identified, evaluated, addressed, communicated (to the\n               establishment’s management and FDA), and continuously reviewed as needed\n               throughout a product’s lifecycle\n             o Hazardous impurity risk is assessed and control strategies are implemented to\n               mitigate the risk (e.g., actions to address sources of variability, release testing,\n               reduction or elimination of impurities, cleaning validation); control strategies are\n               reviewed following changes and throughout a product’s lifecycle\n         •   Product reviews: Conducted at least annually; product quality is reviewed to assess risk\n             and determine the need for changes, such as changes in drug product specifications,\n             manufacturing, or control procedures; statistical analysis is conducted to identify areas\n             (e.g., trends, patterns, correlations, anomalies) for action and improvement; refer to 21\n             CFR 211.180(e)\n         •   Complaint reviews (quality and medical): Documented; evaluated; investigated in a\n             timely manner; corrective action is included where appropriate\n         •   Discrepancy and failure investigations: Documented; investigated in a timely manner\n             using scientific evidence to identify the root cause; corrective actions and preventive\n             actions (CAPAs) are included and effectiveness of the CAPAs is evaluated\n         •   Change management for the manufacturing of all products: Documented (with\n             justification); quality risk management 20 is used to evaluate proposed changes for\n\n\n    18\n       Effective knowledge management (e.g., acquiring, analyzing, storing, and disseminating information) supports\n    effective risk management, along with timely risk review, corrective actions and preventive actions, and change\n    management.\n    19\n       See guidance for industry Control of Nitrosamine Impurities in Human Drugs.\n    20\n       See PIC/S recommendation PI 054-1 How To Evaluate and Demonstrate the Effectiveness of a Pharmaceutical\n    Quality System in Relation to Risk-Based Change Management.\n\n\nDate of Issuance: 09/16/2022                                                                            Page 20 of 44\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Quality and medical complaint reviews are documented, evaluated and investigated promptly, with corrective action included where appropriate.",
+    "quote": "Complaint reviews (quality and medical): Documented; evaluated; investigated in a timely manner; corrective action is included where appropriate",
+    "clause_number": "",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cp-7356-002-drug-manufacturing-inspections.pdf:20#7",
+   "image": "work/vision-pages/fda-cp-7356-002-drug-manufacturing-inspections-p020.png",
+   "text_layer": "                                                                                   PROGRAM             7356.002\n\n\n    products but may also incorporate components and in-process materials. These areas may\n    indicate deficiencies not only in this system but also in other major systems that would warrant\n    expansion of coverage. All areas under this system should be covered; however, the depth of\n    coverage may vary depending on inspectional findings.\n         •   Quality oversight of contracted operations and material suppliers: Effective monitoring\n             strategy has been implemented; incoming material monitoring, lifecycle qualification\n             program, quality agreements, and timely communication mechanisms are included\n         •   Management oversight of the development, implementation, monitoring, and continual\n             improvement of the quality system: Quality risk management and knowledge\n             management 18 are incorporated (e.g., providing an early warning system for appropriate\n             resource allocation)\n         •   Quality risk management program:\n             o Documented and implemented to ensure hazards (e.g., cross-contamination,\n               adulteration, hazardous impurities such as nitrosamines, 19 nitrosating agents, nitrites,\n               nitrates, and azides) are identified, evaluated, addressed, communicated (to the\n               establishment’s management and FDA), and continuously reviewed as needed\n               throughout a product’s lifecycle\n             o Hazardous impurity risk is assessed and control strategies are implemented to\n               mitigate the risk (e.g., actions to address sources of variability, release testing,\n               reduction or elimination of impurities, cleaning validation); control strategies are\n               reviewed following changes and throughout a product’s lifecycle\n         •   Product reviews: Conducted at least annually; product quality is reviewed to assess risk\n             and determine the need for changes, such as changes in drug product specifications,\n             manufacturing, or control procedures; statistical analysis is conducted to identify areas\n             (e.g., trends, patterns, correlations, anomalies) for action and improvement; refer to 21\n             CFR 211.180(e)\n         •   Complaint reviews (quality and medical): Documented; evaluated; investigated in a\n             timely manner; corrective action is included where appropriate\n         •   Discrepancy and failure investigations: Documented; investigated in a timely manner\n             using scientific evidence to identify the root cause; corrective actions and preventive\n             actions (CAPAs) are included and effectiveness of the CAPAs is evaluated\n         •   Change management for the manufacturing of all products: Documented (with\n             justification); quality risk management 20 is used to evaluate proposed changes for\n\n\n    18\n       Effective knowledge management (e.g., acquiring, analyzing, storing, and disseminating information) supports\n    effective risk management, along with timely risk review, corrective actions and preventive actions, and change\n    management.\n    19\n       See guidance for industry Control of Nitrosamine Impurities in Human Drugs.\n    20\n       See PIC/S recommendation PI 054-1 How To Evaluate and Demonstrate the Effectiveness of a Pharmaceutical\n    Quality System in Relation to Risk-Based Change Management.\n\n\nDate of Issuance: 09/16/2022                                                                            Page 20 of 44\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Discrepancy and failure investigations are documented and carried out promptly using scientific evidence to find the root cause, include CAPAs, and evaluate the effectiveness of those CAPAs.",
+    "quote": "Discrepancy and failure investigations: Documented; investigated in a timely manner using scientific evidence to identify the root cause; corrective actions and preventive actions (CAPAs) are included and effectiveness of the CAPAs is evaluated",
+    "clause_number": "",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cp-7356-002-drug-manufacturing-inspections.pdf:20#8",
+   "image": "work/vision-pages/fda-cp-7356-002-drug-manufacturing-inspections-p020.png",
+   "text_layer": "                                                                                   PROGRAM             7356.002\n\n\n    products but may also incorporate components and in-process materials. These areas may\n    indicate deficiencies not only in this system but also in other major systems that would warrant\n    expansion of coverage. All areas under this system should be covered; however, the depth of\n    coverage may vary depending on inspectional findings.\n         •   Quality oversight of contracted operations and material suppliers: Effective monitoring\n             strategy has been implemented; incoming material monitoring, lifecycle qualification\n             program, quality agreements, and timely communication mechanisms are included\n         •   Management oversight of the development, implementation, monitoring, and continual\n             improvement of the quality system: Quality risk management and knowledge\n             management 18 are incorporated (e.g., providing an early warning system for appropriate\n             resource allocation)\n         •   Quality risk management program:\n             o Documented and implemented to ensure hazards (e.g., cross-contamination,\n               adulteration, hazardous impurities such as nitrosamines, 19 nitrosating agents, nitrites,\n               nitrates, and azides) are identified, evaluated, addressed, communicated (to the\n               establishment’s management and FDA), and continuously reviewed as needed\n               throughout a product’s lifecycle\n             o Hazardous impurity risk is assessed and control strategies are implemented to\n               mitigate the risk (e.g., actions to address sources of variability, release testing,\n               reduction or elimination of impurities, cleaning validation); control strategies are\n               reviewed following changes and throughout a product’s lifecycle\n         •   Product reviews: Conducted at least annually; product quality is reviewed to assess risk\n             and determine the need for changes, such as changes in drug product specifications,\n             manufacturing, or control procedures; statistical analysis is conducted to identify areas\n             (e.g., trends, patterns, correlations, anomalies) for action and improvement; refer to 21\n             CFR 211.180(e)\n         •   Complaint reviews (quality and medical): Documented; evaluated; investigated in a\n             timely manner; corrective action is included where appropriate\n         •   Discrepancy and failure investigations: Documented; investigated in a timely manner\n             using scientific evidence to identify the root cause; corrective actions and preventive\n             actions (CAPAs) are included and effectiveness of the CAPAs is evaluated\n         •   Change management for the manufacturing of all products: Documented (with\n             justification); quality risk management 20 is used to evaluate proposed changes for\n\n\n    18\n       Effective knowledge management (e.g., acquiring, analyzing, storing, and disseminating information) supports\n    effective risk management, along with timely risk review, corrective actions and preventive actions, and change\n    management.\n    19\n       See guidance for industry Control of Nitrosamine Impurities in Human Drugs.\n    20\n       See PIC/S recommendation PI 054-1 How To Evaluate and Demonstrate the Effectiveness of a Pharmaceutical\n    Quality System in Relation to Risk-Based Change Management.\n\n\nDate of Issuance: 09/16/2022                                                                            Page 20 of 44\n",
+   "next_page_text": "                                                                                   PROGRAM            7356.002\n\n\n             potential risks (e.g., hazardous impurities) and impact on product quality; reviewed by\n             subject matter experts; approved before implementation; evaluated for effectiveness;\n             revalidated, reverified, requalified as needed; changes are reported to FDA as appropriate\n         •   Reporting of changes for approved application products: Changes to ECs are documented\n             and reported as defined by the PLCM document in the application or as described in the\n             regulations and existing guidance 21\n         •   Rejects: Investigation is expanded where warranted; CAPAs are implemented where\n             appropriate\n         •   Stability failures: Investigation is expanded where warranted; need for FARs, BPDRs,\n             and recalls are evaluated; disposition is documented\n         •   Quarantine products\n         •   Validation: Approval of required validation/revalidation (e.g., computer, manufacturing\n             process, laboratory methods) is documented\n         •   Training/qualification of employees in CGMP: Includes coverage of quality functions,\n             risk management, and specific CGMP operations assigned to individual employees\n         •   Programs for the ongoing monitoring of process performance and product quality\n             throughout a product’s lifecycle: Significant issues are escalated to senior management\n         •   Reprocess/Rework: Evaluation is conducted and approval is documented; impact on\n             validation and stability is assessed\n         •   Returns/Salvages: Assessment is conducted; investigation is expanded where warranted;\n             disposition is completed\n\n         B. Facilities and Equipment System\n\n    For each of the following, the establishment should have written and approved procedures and\n    documentation resulting therefrom. The establishment’s adherence to written procedures should\n    be verified through observation whenever possible. These areas are not limited to finished\n    products but may also incorporate components and in-process materials. These areas may\n    indicate deficiencies not only in this system but also in other systems that would warrant\n    expansion of coverage. When this system is selected for coverage in addition to the quality\n    system, all areas listed below should be covered; however, the depth of coverage may vary\n    depending on inspectional findings.\n\n\n\n\n    21\n      See e.g., FDA’s Scale-Up and Postapproval Changes (SUPAC) guidances and the guidances for industry Changes\n    to an Approved Application for Specified Biotechnology and Specified Synthetic Biological Products, Changes to an\n    Approved NDA or ANDA, Chemistry, Manufacturing, and Controls Changes to an Approved Application: Certain\n    Biological Products, and CMC Postapproval Manufacturing Changes To Be Documented in Annual Re",
+   "item": {
+    "statement": "Changes affecting the manufacture of any product are documented with justification, evaluated using quality risk management for potential risks (such as hazardous impurities) and product quality impact, reviewed by subject matter experts, approved before implementation, checked for effectiveness, followed by revalidation, reverification or requalification as needed, and reported to FDA as appropriate.",
+    "quote": "Change management for the manufacturing of all products: Documented (with justification); quality risk management 20 is used to evaluate proposed changes for potential risks (e.g., hazardous impurities) and impact on product quality; reviewed by subject matter experts; approved before implementation; evaluated for effectiveness; revalidated, reverified, requalified as needed; changes are reported to FDA as appropriate",
+    "clause_number": "",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "",
+    "runs_over": true
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cp-7356-002-drug-manufacturing-inspections.pdf:21#1",
+   "image": "work/vision-pages/fda-cp-7356-002-drug-manufacturing-inspections-p021.png",
+   "text_layer": "                                                                                   PROGRAM            7356.002\n\n\n             potential risks (e.g., hazardous impurities) and impact on product quality; reviewed by\n             subject matter experts; approved before implementation; evaluated for effectiveness;\n             revalidated, reverified, requalified as needed; changes are reported to FDA as appropriate\n         •   Reporting of changes for approved application products: Changes to ECs are documented\n             and reported as defined by the PLCM document in the application or as described in the\n             regulations and existing guidance 21\n         •   Rejects: Investigation is expanded where warranted; CAPAs are implemented where\n             appropriate\n         •   Stability failures: Investigation is expanded where warranted; need for FARs, BPDRs,\n             and recalls are evaluated; disposition is documented\n         •   Quarantine products\n         •   Validation: Approval of required validation/revalidation (e.g., computer, manufacturing\n             process, laboratory methods) is documented\n         •   Training/qualification of employees in CGMP: Includes coverage of quality functions,\n             risk management, and specific CGMP operations assigned to individual employees\n         •   Programs for the ongoing monitoring of process performance and product quality\n             throughout a product’s lifecycle: Significant issues are escalated to senior management\n         •   Reprocess/Rework: Evaluation is conducted and approval is documented; impact on\n             validation and stability is assessed\n         •   Returns/Salvages: Assessment is conducted; investigation is expanded where warranted;\n             disposition is completed\n\n         B. Facilities and Equipment System\n\n    For each of the following, the establishment should have written and approved procedures and\n    documentation resulting therefrom. The establishment’s adherence to written procedures should\n    be verified through observation whenever possible. These areas are not limited to finished\n    products but may also incorporate components and in-process materials. These areas may\n    indicate deficiencies not only in this system but also in other systems that would warrant\n    expansion of coverage. When this system is selected for coverage in addition to the quality\n    system, all areas listed below should be covered; however, the depth of coverage may vary\n    depending on inspectional findings.\n\n\n\n\n    21\n      See e.g., FDA’s Scale-Up and Postapproval Changes (SUPAC) guidances and the guidances for industry Changes\n    to an Approved Application for Specified Biotechnology and Specified Synthetic Biological Products, Changes to an\n    Approved NDA or ANDA, Chemistry, Manufacturing, and Controls Changes to an Approved Application: Certain\n    Biological Products, and CMC Postapproval Manufacturing Changes To Be Documented in Annual Reports.\n\n\nDate of Issuance: 09/16/2022                                                                           Page 21 of 44\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "For products with an approved application, changes to established conditions are documented and reported as set out in the application's PLCM document or as described in the regulations and existing guidance.",
+    "quote": "Reporting of changes for approved application products: Changes to ECs are documented and reported as defined by the PLCM document in the application or as described in the regulations and existing guidance 21",
+    "clause_number": "",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "approved application products",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cp-7356-002-drug-manufacturing-inspections.pdf:21#2",
+   "image": "work/vision-pages/fda-cp-7356-002-drug-manufacturing-inspections-p021.png",
+   "text_layer": "                                                                                   PROGRAM            7356.002\n\n\n             potential risks (e.g., hazardous impurities) and impact on product quality; reviewed by\n             subject matter experts; approved before implementation; evaluated for effectiveness;\n             revalidated, reverified, requalified as needed; changes are reported to FDA as appropriate\n         •   Reporting of changes for approved application products: Changes to ECs are documented\n             and reported as defined by the PLCM document in the application or as described in the\n             regulations and existing guidance 21\n         •   Rejects: Investigation is expanded where warranted; CAPAs are implemented where\n             appropriate\n         •   Stability failures: Investigation is expanded where warranted; need for FARs, BPDRs,\n             and recalls are evaluated; disposition is documented\n         •   Quarantine products\n         •   Validation: Approval of required validation/revalidation (e.g., computer, manufacturing\n             process, laboratory methods) is documented\n         •   Training/qualification of employees in CGMP: Includes coverage of quality functions,\n             risk management, and specific CGMP operations assigned to individual employees\n         •   Programs for the ongoing monitoring of process performance and product quality\n             throughout a product’s lifecycle: Significant issues are escalated to senior management\n         •   Reprocess/Rework: Evaluation is conducted and approval is documented; impact on\n             validation and stability is assessed\n         •   Returns/Salvages: Assessment is conducted; investigation is expanded where warranted;\n             disposition is completed\n\n         B. Facilities and Equipment System\n\n    For each of the following, the establishment should have written and approved procedures and\n    documentation resulting therefrom. The establishment’s adherence to written procedures should\n    be verified through observation whenever possible. These areas are not limited to finished\n    products but may also incorporate components and in-process materials. These areas may\n    indicate deficiencies not only in this system but also in other systems that would warrant\n    expansion of coverage. When this system is selected for coverage in addition to the quality\n    system, all areas listed below should be covered; however, the depth of coverage may vary\n    depending on inspectional findings.\n\n\n\n\n    21\n      See e.g., FDA’s Scale-Up and Postapproval Changes (SUPAC) guidances and the guidances for industry Changes\n    to an Approved Application for Specified Biotechnology and Specified Synthetic Biological Products, Changes to an\n    Approved NDA or ANDA, Chemistry, Manufacturing, and Controls Changes to an Approved Application: Certain\n    Biological Products, and CMC Postapproval Manufacturing Changes To Be Documented in Annual Reports.\n\n\nDate of Issuance: 09/16/2022                                                                           Page 21 of 44\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "For rejects, the investigation is widened where warranted and CAPAs are implemented where appropriate.",
+    "quote": "Rejects: Investigation is expanded where warranted; CAPAs are implemented where appropriate",
+    "clause_number": "",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "rejects",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cp-7356-002-drug-manufacturing-inspections.pdf:21#3",
+   "image": "work/vision-pages/fda-cp-7356-002-drug-manufacturing-inspections-p021.png",
+   "text_layer": "                                                                                   PROGRAM            7356.002\n\n\n             potential risks (e.g., hazardous impurities) and impact on product quality; reviewed by\n             subject matter experts; approved before implementation; evaluated for effectiveness;\n             revalidated, reverified, requalified as needed; changes are reported to FDA as appropriate\n         •   Reporting of changes for approved application products: Changes to ECs are documented\n             and reported as defined by the PLCM document in the application or as described in the\n             regulations and existing guidance 21\n         •   Rejects: Investigation is expanded where warranted; CAPAs are implemented where\n             appropriate\n         •   Stability failures: Investigation is expanded where warranted; need for FARs, BPDRs,\n             and recalls are evaluated; disposition is documented\n         •   Quarantine products\n         •   Validation: Approval of required validation/revalidation (e.g., computer, manufacturing\n             process, laboratory methods) is documented\n         •   Training/qualification of employees in CGMP: Includes coverage of quality functions,\n             risk management, and specific CGMP operations assigned to individual employees\n         •   Programs for the ongoing monitoring of process performance and product quality\n             throughout a product’s lifecycle: Significant issues are escalated to senior management\n         •   Reprocess/Rework: Evaluation is conducted and approval is documented; impact on\n             validation and stability is assessed\n         •   Returns/Salvages: Assessment is conducted; investigation is expanded where warranted;\n             disposition is completed\n\n         B. Facilities and Equipment System\n\n    For each of the following, the establishment should have written and approved procedures and\n    documentation resulting therefrom. The establishment’s adherence to written procedures should\n    be verified through observation whenever possible. These areas are not limited to finished\n    products but may also incorporate components and in-process materials. These areas may\n    indicate deficiencies not only in this system but also in other systems that would warrant\n    expansion of coverage. When this system is selected for coverage in addition to the quality\n    system, all areas listed below should be covered; however, the depth of coverage may vary\n    depending on inspectional findings.\n\n\n\n\n    21\n      See e.g., FDA’s Scale-Up and Postapproval Changes (SUPAC) guidances and the guidances for industry Changes\n    to an Approved Application for Specified Biotechnology and Specified Synthetic Biological Products, Changes to an\n    Approved NDA or ANDA, Chemistry, Manufacturing, and Controls Changes to an Approved Application: Certain\n    Biological Products, and CMC Postapproval Manufacturing Changes To Be Documented in Annual Reports.\n\n\nDate of Issuance: 09/16/2022                                                                           Page 21 of 44\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "For stability failures, the investigation is widened where warranted, the need for FARs, BPDRs and recalls is evaluated, and the disposition is documented.",
+    "quote": "Stability failures: Investigation is expanded where warranted; need for FARs, BPDRs, and recalls are evaluated; disposition is documented",
+    "clause_number": "",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "stability failure",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cp-7356-002-drug-manufacturing-inspections.pdf:21#4",
+   "image": "work/vision-pages/fda-cp-7356-002-drug-manufacturing-inspections-p021.png",
+   "text_layer": "                                                                                   PROGRAM            7356.002\n\n\n             potential risks (e.g., hazardous impurities) and impact on product quality; reviewed by\n             subject matter experts; approved before implementation; evaluated for effectiveness;\n             revalidated, reverified, requalified as needed; changes are reported to FDA as appropriate\n         •   Reporting of changes for approved application products: Changes to ECs are documented\n             and reported as defined by the PLCM document in the application or as described in the\n             regulations and existing guidance 21\n         •   Rejects: Investigation is expanded where warranted; CAPAs are implemented where\n             appropriate\n         •   Stability failures: Investigation is expanded where warranted; need for FARs, BPDRs,\n             and recalls are evaluated; disposition is documented\n         •   Quarantine products\n         •   Validation: Approval of required validation/revalidation (e.g., computer, manufacturing\n             process, laboratory methods) is documented\n         •   Training/qualification of employees in CGMP: Includes coverage of quality functions,\n             risk management, and specific CGMP operations assigned to individual employees\n         •   Programs for the ongoing monitoring of process performance and product quality\n             throughout a product’s lifecycle: Significant issues are escalated to senior management\n         •   Reprocess/Rework: Evaluation is conducted and approval is documented; impact on\n             validation and stability is assessed\n         •   Returns/Salvages: Assessment is conducted; investigation is expanded where warranted;\n             disposition is completed\n\n         B. Facilities and Equipment System\n\n    For each of the following, the establishment should have written and approved procedures and\n    documentation resulting therefrom. The establishment’s adherence to written procedures should\n    be verified through observation whenever possible. These areas are not limited to finished\n    products but may also incorporate components and in-process materials. These areas may\n    indicate deficiencies not only in this system but also in other systems that would warrant\n    expansion of coverage. When this system is selected for coverage in addition to the quality\n    system, all areas listed below should be covered; however, the depth of coverage may vary\n    depending on inspectional findings.\n\n\n\n\n    21\n      See e.g., FDA’s Scale-Up and Postapproval Changes (SUPAC) guidances and the guidances for industry Changes\n    to an Approved Application for Specified Biotechnology and Specified Synthetic Biological Products, Changes to an\n    Approved NDA or ANDA, Chemistry, Manufacturing, and Controls Changes to an Approved Application: Certain\n    Biological Products, and CMC Postapproval Manufacturing Changes To Be Documented in Annual Reports.\n\n\nDate of Issuance: 09/16/2022                                                                           Page 21 of 44\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Approval of required validation and revalidation (such as computer, manufacturing process and laboratory method validation) is documented.",
+    "quote": "Validation: Approval of required validation/revalidation (e.g., computer, manufacturing process, laboratory methods) is documented",
+    "clause_number": "",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cp-7356-002-drug-manufacturing-inspections.pdf:21#5",
+   "image": "work/vision-pages/fda-cp-7356-002-drug-manufacturing-inspections-p021.png",
+   "text_layer": "                                                                                   PROGRAM            7356.002\n\n\n             potential risks (e.g., hazardous impurities) and impact on product quality; reviewed by\n             subject matter experts; approved before implementation; evaluated for effectiveness;\n             revalidated, reverified, requalified as needed; changes are reported to FDA as appropriate\n         •   Reporting of changes for approved application products: Changes to ECs are documented\n             and reported as defined by the PLCM document in the application or as described in the\n             regulations and existing guidance 21\n         •   Rejects: Investigation is expanded where warranted; CAPAs are implemented where\n             appropriate\n         •   Stability failures: Investigation is expanded where warranted; need for FARs, BPDRs,\n             and recalls are evaluated; disposition is documented\n         •   Quarantine products\n         •   Validation: Approval of required validation/revalidation (e.g., computer, manufacturing\n             process, laboratory methods) is documented\n         •   Training/qualification of employees in CGMP: Includes coverage of quality functions,\n             risk management, and specific CGMP operations assigned to individual employees\n         •   Programs for the ongoing monitoring of process performance and product quality\n             throughout a product’s lifecycle: Significant issues are escalated to senior management\n         •   Reprocess/Rework: Evaluation is conducted and approval is documented; impact on\n             validation and stability is assessed\n         •   Returns/Salvages: Assessment is conducted; investigation is expanded where warranted;\n             disposition is completed\n\n         B. Facilities and Equipment System\n\n    For each of the following, the establishment should have written and approved procedures and\n    documentation resulting therefrom. The establishment’s adherence to written procedures should\n    be verified through observation whenever possible. These areas are not limited to finished\n    products but may also incorporate components and in-process materials. These areas may\n    indicate deficiencies not only in this system but also in other systems that would warrant\n    expansion of coverage. When this system is selected for coverage in addition to the quality\n    system, all areas listed below should be covered; however, the depth of coverage may vary\n    depending on inspectional findings.\n\n\n\n\n    21\n      See e.g., FDA’s Scale-Up and Postapproval Changes (SUPAC) guidances and the guidances for industry Changes\n    to an Approved Application for Specified Biotechnology and Specified Synthetic Biological Products, Changes to an\n    Approved NDA or ANDA, Chemistry, Manufacturing, and Controls Changes to an Approved Application: Certain\n    Biological Products, and CMC Postapproval Manufacturing Changes To Be Documented in Annual Reports.\n\n\nDate of Issuance: 09/16/2022                                                                           Page 21 of 44\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "CGMP training and qualification of employees covers quality functions, risk management and the specific CGMP operations each employee is assigned.",
+    "quote": "Training/qualification of employees in CGMP: Includes coverage of quality functions, risk management, and specific CGMP operations assigned to individual employees",
+    "clause_number": "",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cp-7356-002-drug-manufacturing-inspections.pdf:21#6",
+   "image": "work/vision-pages/fda-cp-7356-002-drug-manufacturing-inspections-p021.png",
+   "text_layer": "                                                                                   PROGRAM            7356.002\n\n\n             potential risks (e.g., hazardous impurities) and impact on product quality; reviewed by\n             subject matter experts; approved before implementation; evaluated for effectiveness;\n             revalidated, reverified, requalified as needed; changes are reported to FDA as appropriate\n         •   Reporting of changes for approved application products: Changes to ECs are documented\n             and reported as defined by the PLCM document in the application or as described in the\n             regulations and existing guidance 21\n         •   Rejects: Investigation is expanded where warranted; CAPAs are implemented where\n             appropriate\n         •   Stability failures: Investigation is expanded where warranted; need for FARs, BPDRs,\n             and recalls are evaluated; disposition is documented\n         •   Quarantine products\n         •   Validation: Approval of required validation/revalidation (e.g., computer, manufacturing\n             process, laboratory methods) is documented\n         •   Training/qualification of employees in CGMP: Includes coverage of quality functions,\n             risk management, and specific CGMP operations assigned to individual employees\n         •   Programs for the ongoing monitoring of process performance and product quality\n             throughout a product’s lifecycle: Significant issues are escalated to senior management\n         •   Reprocess/Rework: Evaluation is conducted and approval is documented; impact on\n             validation and stability is assessed\n         •   Returns/Salvages: Assessment is conducted; investigation is expanded where warranted;\n             disposition is completed\n\n         B. Facilities and Equipment System\n\n    For each of the following, the establishment should have written and approved procedures and\n    documentation resulting therefrom. The establishment’s adherence to written procedures should\n    be verified through observation whenever possible. These areas are not limited to finished\n    products but may also incorporate components and in-process materials. These areas may\n    indicate deficiencies not only in this system but also in other systems that would warrant\n    expansion of coverage. When this system is selected for coverage in addition to the quality\n    system, all areas listed below should be covered; however, the depth of coverage may vary\n    depending on inspectional findings.\n\n\n\n\n    21\n      See e.g., FDA’s Scale-Up and Postapproval Changes (SUPAC) guidances and the guidances for industry Changes\n    to an Approved Application for Specified Biotechnology and Specified Synthetic Biological Products, Changes to an\n    Approved NDA or ANDA, Chemistry, Manufacturing, and Controls Changes to an Approved Application: Certain\n    Biological Products, and CMC Postapproval Manufacturing Changes To Be Documented in Annual Reports.\n\n\nDate of Issuance: 09/16/2022                                                                           Page 21 of 44\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Programs exist to monitor process performance and product quality on an ongoing basis over the product lifecycle, and significant issues from them are escalated to senior management.",
+    "quote": "Programs for the ongoing monitoring of process performance and product quality throughout a product’s lifecycle: Significant issues are escalated to senior management",
+    "clause_number": "",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cp-7356-002-drug-manufacturing-inspections.pdf:21#7",
+   "image": "work/vision-pages/fda-cp-7356-002-drug-manufacturing-inspections-p021.png",
+   "text_layer": "                                                                                   PROGRAM            7356.002\n\n\n             potential risks (e.g., hazardous impurities) and impact on product quality; reviewed by\n             subject matter experts; approved before implementation; evaluated for effectiveness;\n             revalidated, reverified, requalified as needed; changes are reported to FDA as appropriate\n         •   Reporting of changes for approved application products: Changes to ECs are documented\n             and reported as defined by the PLCM document in the application or as described in the\n             regulations and existing guidance 21\n         •   Rejects: Investigation is expanded where warranted; CAPAs are implemented where\n             appropriate\n         •   Stability failures: Investigation is expanded where warranted; need for FARs, BPDRs,\n             and recalls are evaluated; disposition is documented\n         •   Quarantine products\n         •   Validation: Approval of required validation/revalidation (e.g., computer, manufacturing\n             process, laboratory methods) is documented\n         •   Training/qualification of employees in CGMP: Includes coverage of quality functions,\n             risk management, and specific CGMP operations assigned to individual employees\n         •   Programs for the ongoing monitoring of process performance and product quality\n             throughout a product’s lifecycle: Significant issues are escalated to senior management\n         •   Reprocess/Rework: Evaluation is conducted and approval is documented; impact on\n             validation and stability is assessed\n         •   Returns/Salvages: Assessment is conducted; investigation is expanded where warranted;\n             disposition is completed\n\n         B. Facilities and Equipment System\n\n    For each of the following, the establishment should have written and approved procedures and\n    documentation resulting therefrom. The establishment’s adherence to written procedures should\n    be verified through observation whenever possible. These areas are not limited to finished\n    products but may also incorporate components and in-process materials. These areas may\n    indicate deficiencies not only in this system but also in other systems that would warrant\n    expansion of coverage. When this system is selected for coverage in addition to the quality\n    system, all areas listed below should be covered; however, the depth of coverage may vary\n    depending on inspectional findings.\n\n\n\n\n    21\n      See e.g., FDA’s Scale-Up and Postapproval Changes (SUPAC) guidances and the guidances for industry Changes\n    to an Approved Application for Specified Biotechnology and Specified Synthetic Biological Products, Changes to an\n    Approved NDA or ANDA, Chemistry, Manufacturing, and Controls Changes to an Approved Application: Certain\n    Biological Products, and CMC Postapproval Manufacturing Changes To Be Documented in Annual Reports.\n\n\nDate of Issuance: 09/16/2022                                                                           Page 21 of 44\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Reprocessing and rework are evaluated, their approval is documented, and their impact on validation and stability is assessed.",
+    "quote": "Reprocess/Rework: Evaluation is conducted and approval is documented; impact on validation and stability is assessed",
+    "clause_number": "",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "reprocessing or rework",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cp-7356-002-drug-manufacturing-inspections.pdf:21#8",
+   "image": "work/vision-pages/fda-cp-7356-002-drug-manufacturing-inspections-p021.png",
+   "text_layer": "                                                                                   PROGRAM            7356.002\n\n\n             potential risks (e.g., hazardous impurities) and impact on product quality; reviewed by\n             subject matter experts; approved before implementation; evaluated for effectiveness;\n             revalidated, reverified, requalified as needed; changes are reported to FDA as appropriate\n         •   Reporting of changes for approved application products: Changes to ECs are documented\n             and reported as defined by the PLCM document in the application or as described in the\n             regulations and existing guidance 21\n         •   Rejects: Investigation is expanded where warranted; CAPAs are implemented where\n             appropriate\n         •   Stability failures: Investigation is expanded where warranted; need for FARs, BPDRs,\n             and recalls are evaluated; disposition is documented\n         •   Quarantine products\n         •   Validation: Approval of required validation/revalidation (e.g., computer, manufacturing\n             process, laboratory methods) is documented\n         •   Training/qualification of employees in CGMP: Includes coverage of quality functions,\n             risk management, and specific CGMP operations assigned to individual employees\n         •   Programs for the ongoing monitoring of process performance and product quality\n             throughout a product’s lifecycle: Significant issues are escalated to senior management\n         •   Reprocess/Rework: Evaluation is conducted and approval is documented; impact on\n             validation and stability is assessed\n         •   Returns/Salvages: Assessment is conducted; investigation is expanded where warranted;\n             disposition is completed\n\n         B. Facilities and Equipment System\n\n    For each of the following, the establishment should have written and approved procedures and\n    documentation resulting therefrom. The establishment’s adherence to written procedures should\n    be verified through observation whenever possible. These areas are not limited to finished\n    products but may also incorporate components and in-process materials. These areas may\n    indicate deficiencies not only in this system but also in other systems that would warrant\n    expansion of coverage. When this system is selected for coverage in addition to the quality\n    system, all areas listed below should be covered; however, the depth of coverage may vary\n    depending on inspectional findings.\n\n\n\n\n    21\n      See e.g., FDA’s Scale-Up and Postapproval Changes (SUPAC) guidances and the guidances for industry Changes\n    to an Approved Application for Specified Biotechnology and Specified Synthetic Biological Products, Changes to an\n    Approved NDA or ANDA, Chemistry, Manufacturing, and Controls Changes to an Approved Application: Certain\n    Biological Products, and CMC Postapproval Manufacturing Changes To Be Documented in Annual Reports.\n\n\nDate of Issuance: 09/16/2022                                                                           Page 21 of 44\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Returned and salvaged products are assessed, the investigation is widened where warranted, and their disposition is completed.",
+    "quote": "Returns/Salvages: Assessment is conducted; investigation is expanded where warranted; disposition is completed",
+    "clause_number": "",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "returned or salvaged products",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cp-7356-002-drug-manufacturing-inspections.pdf:21#9",
+   "image": "work/vision-pages/fda-cp-7356-002-drug-manufacturing-inspections-p021.png",
+   "text_layer": "                                                                                   PROGRAM            7356.002\n\n\n             potential risks (e.g., hazardous impurities) and impact on product quality; reviewed by\n             subject matter experts; approved before implementation; evaluated for effectiveness;\n             revalidated, reverified, requalified as needed; changes are reported to FDA as appropriate\n         •   Reporting of changes for approved application products: Changes to ECs are documented\n             and reported as defined by the PLCM document in the application or as described in the\n             regulations and existing guidance 21\n         •   Rejects: Investigation is expanded where warranted; CAPAs are implemented where\n             appropriate\n         •   Stability failures: Investigation is expanded where warranted; need for FARs, BPDRs,\n             and recalls are evaluated; disposition is documented\n         •   Quarantine products\n         •   Validation: Approval of required validation/revalidation (e.g., computer, manufacturing\n             process, laboratory methods) is documented\n         •   Training/qualification of employees in CGMP: Includes coverage of quality functions,\n             risk management, and specific CGMP operations assigned to individual employees\n         •   Programs for the ongoing monitoring of process performance and product quality\n             throughout a product’s lifecycle: Significant issues are escalated to senior management\n         •   Reprocess/Rework: Evaluation is conducted and approval is documented; impact on\n             validation and stability is assessed\n         •   Returns/Salvages: Assessment is conducted; investigation is expanded where warranted;\n             disposition is completed\n\n         B. Facilities and Equipment System\n\n    For each of the following, the establishment should have written and approved procedures and\n    documentation resulting therefrom. The establishment’s adherence to written procedures should\n    be verified through observation whenever possible. These areas are not limited to finished\n    products but may also incorporate components and in-process materials. These areas may\n    indicate deficiencies not only in this system but also in other systems that would warrant\n    expansion of coverage. When this system is selected for coverage in addition to the quality\n    system, all areas listed below should be covered; however, the depth of coverage may vary\n    depending on inspectional findings.\n\n\n\n\n    21\n      See e.g., FDA’s Scale-Up and Postapproval Changes (SUPAC) guidances and the guidances for industry Changes\n    to an Approved Application for Specified Biotechnology and Specified Synthetic Biological Products, Changes to an\n    Approved NDA or ANDA, Chemistry, Manufacturing, and Controls Changes to an Approved Application: Certain\n    Biological Products, and CMC Postapproval Manufacturing Changes To Be Documented in Annual Reports.\n\n\nDate of Issuance: 09/16/2022                                                                           Page 21 of 44\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "For each facilities and equipment area, the site has written, approved procedures and the documentation produced by following them.",
+    "quote": "For each of the following, the establishment should have written and approved procedures and documentation resulting therefrom.",
+    "clause_number": "",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "fda-cp-7356-002-drug-manufacturing-inspections.pdf:41#1",
+   "image": "work/vision-pages/fda-cp-7356-002-drug-manufacturing-inspections-p041.png",
+   "text_layer": "                                                                                    PROGRAM            7356.002\n\n\n                   ATTACHMENT A: REMOTE REGULATORY ASSESSMENTS\n\n    In addition to its inspectional authority, FDA may conduct remote regulatory assessments\n    (RRAs), under certain circumstances, to support oversight of FDA-regulated products and\n    establishments. 1 An RRA is an examination of an FDA-regulated establishment and/or its\n    records, conducted entirely remotely, to evaluate compliance with applicable FDA requirements.\n    RRAs assist in protecting human health, informing regulatory decisions, and verifying certain\n    information submitted to the Agency.\n    RRAs used in lieu of or in advance of inspections have allowed FDA to remotely evaluate drug\n    manufacturing establishments to mitigate risks. However, RRAs are not the same as an\n    inspection as described in section 704(a)(1) of the Federal Food, Drug, and Cosmetic Act\n    (FD&C Act), and FDA does not consider them to satisfy the statutory requirement for an\n    inspection under section 510(h) of the FD&C Act.\n    The following RRAs, along with applicable FDA policies, may be used to help meet the\n    objectives of this compliance program to determine whether the establishment meets CGMP\n    requirements.\n\n    1. FDA Records and Other Information Requests Under Section 704(a)(4) of the FD&C\n       Act (Statutorily Authorized RRA)\n\n    In 2012, with the passage of the Food and Drug Administration Safety and Innovation Act to\n    amend the FD&C Act, Congress gave FDA the authority to request “any records or other\n    information” in advance of or in lieu of an inspection related to human or animal drugs,\n    including human biological drug products. Section 704(a)(4) of the FD&C Act requires “a\n    person that owns or operates an establishment that is engaged in the manufacture, preparation,\n    propagation, compounding, or processing of a drug” to provide FDA, upon request, records or\n    other information that FDA may inspect under section 704(a)(1).\n    With regards to this compliance program, the use of this authority helps strengthen FDA’s\n    surveillance program and improve the overall effectiveness of the drug inspection program. The\n    records received from an establishment can be used to help assess an establishment’s compliance\n    with current good manufacturing practice, support regulatory decisions, inform inspection\n    planning (e.g., a risk-based inspection schedule), and prepare for a scheduled inspection (e.g.,\n    inspection coverage). The use of 704(a)(4) authority does not prevent an FDA investigator from\n    requesting records or other information on inspection. During an inspection, FDA may collect\n    copies of previously received documents and other documents not previously requested.\n\n\n\n\n    1\n      See the draft guidance for industry Conducting Remote Regulatory Assessments: Questions and Answers (July\n    2022). When final, this guidance will represent FDA’s current thinking on this topic. Also see FDA’s An Update to\n    the Resiliency Roadmap for FDA Inspectional Oversight and section 704 of the Federal Food, Drug, and Cosmetic\n    Act.\n\n\nDate of Issuance: 09/16/2022                                                                            Page 41 of 44\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "A site that manufactures, prepares, propagates, compounds or processes a drug provides FDA, when asked, with records or other information that FDA may inspect under section 704(a)(1) of the FD&C Act.",
+    "quote": "Section 704(a)(4) of the FD&C Act requires “a person that owns or operates an establishment that is engaged in the manufacture, preparation, propagation, compounding, or processing of a drug” to provide FDA, upon request, records or other information that FDA may inspect under section 704(a)(1).",
+    "clause_number": "",
+    "strength": "mandatory",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "upon FDA request",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  }
+ ]
+}

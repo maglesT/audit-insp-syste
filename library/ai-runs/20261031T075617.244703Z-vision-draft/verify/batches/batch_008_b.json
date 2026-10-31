@@ -1,0 +1,1320 @@
+{
+ "role": "b",
+ "instructions": "You are a second, independent auditor. Check one checklist item against the page it claims to come from. You get the page IMAGE\n(open it with your Read tool: the image is the truth), the page's TEXT LAYER (extracted text, which can be wrong)\nand the item. Start from the PAGE: find the obligation the item covers, read it fully, then compare the item.\n\nThe item must state one whole obligation printed on the page. If a condition, number, frequency or qualifier that\nbelongs to the same obligation is left out of the item, it counts as omitted. Judge only what the item's own words\nsay: do not read the page back into the item. A condition, trigger, timing or qualifier that is on the page but\nnot in the item is omitted, even if it seems implied. A trigger such as \"if\", \"where ... is required\", \"when\" or\n\"before\" is part of the obligation.\n\nAnswer strictly:\n- quote_as_printed: is the item's quote printed on the page exactly (as the image shows it; for a table row, its\n  cells joined with \" | \") (true/false)?\n- verdict: \"correct\" only if the quote is as printed, the page requires what the statement asks for, the\n  statement adds nothing and omits nothing of that obligation, the strength (shall/must = mandatory, should =\n  recommended, may = optional) matches the quoted words, and the page applies to every listed plant type;\n  otherwise \"incorrect\".\n- reason: one or two sentences.\n\nWrite the answers file named in your task: {\"answers\": [{\"id\", \"verdict\", \"quote_as_printed\", \"reason\"}, ...]}.\n",
+ "schema": {
+  "type": "object",
+  "required": [
+   "id",
+   "verdict",
+   "quote_as_printed",
+   "reason"
+  ],
+  "properties": {
+   "id": {
+    "type": "string"
+   },
+   "verdict": {
+    "enum": [
+     "correct",
+     "incorrect"
+    ]
+   },
+   "quote_as_printed": {
+    "type": "boolean"
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ },
+ "items": [
+  {
+   "id": "ich-q3c-r9.pdf:8#1",
+   "image": "work/vision-pages/ich-q3c-r9-p008.png",
+   "text_layer": "This guideline does not apply to potential new drug substances, excipients, or drug products used\nduring the clinical research stages of development, nor does it apply to existing marketed drug\nproducts.\nThe guideline applies to all dosage forms and routes of administration. Higher levels of residual\nsolvents may be acceptable in certain cases such as short term (30 days or less) or topical\napplication. Justification for these levels should be made on a case by case basis.\nSee Appendix 2 for additional background information related to residual solvents.\n\n3.     GENERAL PRINCIPLES\n3.1 Classification of Residual Solvents by Risk Assessment\nThe term \"tolerable daily intake\" (TDI) is used by the International Program on Chemical Safety\n(IPCS) to describe exposure limits of toxic chemicals and \"acceptable daily intake\" (ADI) is used\nby the World Health Organization (WHO) and other national and international health authorities\nand institutes. The new term \"permitted daily exposure\" (PDE) is defined in the present guideline\nas a pharmaceutically acceptable intake of residual solvents to avoid confusion of differing values\nfor ADI's of the same substance.\nResidual solvents assessed in this guideline are listed in Appendix 1 by common names and\nstructures. They were evaluated for their possible risk to human health and placed into one of three\nclasses as follows:\n\n     Class 1 solvents: Solvents to be avoided\n     Known human carcinogens, strongly suspected human carcinogens, and environmental\n     hazards.\n\n     Class 2 solvents: Solvents to be limited\n     Non-genotoxic animal carcinogens or possible causative agents of other irreversible toxicity\n     such as neurotoxicity or teratogenicity.\n     Solvents suspected of other significant but reversible toxicities.\n\n     Class 3 solvents: Solvents with low toxic potential\n     Solvents with low toxic potential to man; no health-based exposure limit is needed. Class 3\n     solvents have PDEs of 50 mg or more per day.\n\n3.2 Methods for Establishing Exposure Limits\nThe method used to establish permitted daily exposures for residual solvents is presented in\nAppendix 3. Summaries of the toxicity data that were used to establish limits are published in\nPharmeuropa, Vol. 9, No. 1, Supplement, April 1997.\n\n\n\n\n                                                   2\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Where residual solvent levels above the guideline limits are used (e.g. short-term use of 30 days or less, or topical application), justify those higher levels case by case.",
+    "quote": "Higher levels of residual\nsolvents may be acceptable in certain cases such as short term (30 days or less) or topical\napplication. Justification for these levels should be made on a case by case basis.",
+    "clause_number": "",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "higher residual solvent levels used",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "ich-q3c-r9.pdf:11#1",
+   "image": "work/vision-pages/ich-q3c-r9-p011.png",
+   "text_layer": "                                                              Impurities: Guideline for Residual Solvents\n\n\nIf Class 1 solvents are likely to be present, they should be identified and quantified.\n\"Likely to be present\" refers to the solvent used in the final manufacturing step and to solvents that\nare used in earlier manufacturing steps and not removed consistently by a validated process.\nIf solvents of Class 2 or Class 3 are present at greater than their Option 1 limits or 0.5%,\nrespectively, they should be identified and quantified.\n\n4.     LIMITS OF RESIDUAL SOLVENTS\n4.1 Solvents to Be Avoided\nSolvents in Class 1 should not be employed in the manufacture of drug substances, excipients, and\ndrug products because of their unacceptable toxicity or their deleterious environmental effect.\nHowever, if their use is unavoidable in order to produce a drug product with a significant\ntherapeutic advance, then their levels should be restricted as shown in Table 1, unless otherwise\njustified. 1,1,1-Trichloroethane is included in Table 1 because it is an environmental hazard. The\nstated limit of 1500 ppm is based on a review of the safety data.\n\nTABLE 1. Class 1 solvents in pharmaceutical products (solvents that should be avoided).\nSolvent                        Concentration limit                    Concern\n                                    (ppm)\nBenzene                                  2                          Carcinogen\nCarbon tetrachloride                     4               Toxic and environmental hazard\n1,2-Dichloroethane                       5                             Toxic\n1,1-Dichloroethene                       8                             Toxic\n1,1,1-Trichloroethane                  1500                    Environmental hazard\n\n\n\n\n                                                   5\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Identify and quantify Class 1 solvents whenever they are likely to be present.",
+    "quote": "If Class 1 solvents are likely to be present, they should be identified and quantified.",
+    "clause_number": "",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "Class 1 solvents likely present",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "ich-q3c-r9.pdf:11#2",
+   "image": "work/vision-pages/ich-q3c-r9-p011.png",
+   "text_layer": "                                                              Impurities: Guideline for Residual Solvents\n\n\nIf Class 1 solvents are likely to be present, they should be identified and quantified.\n\"Likely to be present\" refers to the solvent used in the final manufacturing step and to solvents that\nare used in earlier manufacturing steps and not removed consistently by a validated process.\nIf solvents of Class 2 or Class 3 are present at greater than their Option 1 limits or 0.5%,\nrespectively, they should be identified and quantified.\n\n4.     LIMITS OF RESIDUAL SOLVENTS\n4.1 Solvents to Be Avoided\nSolvents in Class 1 should not be employed in the manufacture of drug substances, excipients, and\ndrug products because of their unacceptable toxicity or their deleterious environmental effect.\nHowever, if their use is unavoidable in order to produce a drug product with a significant\ntherapeutic advance, then their levels should be restricted as shown in Table 1, unless otherwise\njustified. 1,1,1-Trichloroethane is included in Table 1 because it is an environmental hazard. The\nstated limit of 1500 ppm is based on a review of the safety data.\n\nTABLE 1. Class 1 solvents in pharmaceutical products (solvents that should be avoided).\nSolvent                        Concentration limit                    Concern\n                                    (ppm)\nBenzene                                  2                          Carcinogen\nCarbon tetrachloride                     4               Toxic and environmental hazard\n1,2-Dichloroethane                       5                             Toxic\n1,1-Dichloroethene                       8                             Toxic\n1,1,1-Trichloroethane                  1500                    Environmental hazard\n\n\n\n\n                                                   5\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Identify and quantify Class 2 solvents present above their Option 1 limits and Class 3 solvents present above 0.5%.",
+    "quote": "If solvents of Class 2 or Class 3 are present at greater than their Option 1 limits or 0.5%,\nrespectively, they should be identified and quantified.",
+    "clause_number": "",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "Class 2 above Option 1 limit or Class 3 above 0.5%",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "ich-q3c-r9.pdf:11#3",
+   "image": "work/vision-pages/ich-q3c-r9-p011.png",
+   "text_layer": "                                                              Impurities: Guideline for Residual Solvents\n\n\nIf Class 1 solvents are likely to be present, they should be identified and quantified.\n\"Likely to be present\" refers to the solvent used in the final manufacturing step and to solvents that\nare used in earlier manufacturing steps and not removed consistently by a validated process.\nIf solvents of Class 2 or Class 3 are present at greater than their Option 1 limits or 0.5%,\nrespectively, they should be identified and quantified.\n\n4.     LIMITS OF RESIDUAL SOLVENTS\n4.1 Solvents to Be Avoided\nSolvents in Class 1 should not be employed in the manufacture of drug substances, excipients, and\ndrug products because of their unacceptable toxicity or their deleterious environmental effect.\nHowever, if their use is unavoidable in order to produce a drug product with a significant\ntherapeutic advance, then their levels should be restricted as shown in Table 1, unless otherwise\njustified. 1,1,1-Trichloroethane is included in Table 1 because it is an environmental hazard. The\nstated limit of 1500 ppm is based on a review of the safety data.\n\nTABLE 1. Class 1 solvents in pharmaceutical products (solvents that should be avoided).\nSolvent                        Concentration limit                    Concern\n                                    (ppm)\nBenzene                                  2                          Carcinogen\nCarbon tetrachloride                     4               Toxic and environmental hazard\n1,2-Dichloroethane                       5                             Toxic\n1,1-Dichloroethene                       8                             Toxic\n1,1,1-Trichloroethane                  1500                    Environmental hazard\n\n\n\n\n                                                   5\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Do not use Class 1 solvents in manufacturing drug substances, excipients or drug products.",
+    "quote": "Solvents in Class 1 should not be employed in the manufacture of drug substances, excipients, and\ndrug products because of their unacceptable toxicity or their deleterious environmental effect.",
+    "clause_number": "4.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "ich-q3c-r9.pdf:11#4",
+   "image": "work/vision-pages/ich-q3c-r9-p011.png",
+   "text_layer": "                                                              Impurities: Guideline for Residual Solvents\n\n\nIf Class 1 solvents are likely to be present, they should be identified and quantified.\n\"Likely to be present\" refers to the solvent used in the final manufacturing step and to solvents that\nare used in earlier manufacturing steps and not removed consistently by a validated process.\nIf solvents of Class 2 or Class 3 are present at greater than their Option 1 limits or 0.5%,\nrespectively, they should be identified and quantified.\n\n4.     LIMITS OF RESIDUAL SOLVENTS\n4.1 Solvents to Be Avoided\nSolvents in Class 1 should not be employed in the manufacture of drug substances, excipients, and\ndrug products because of their unacceptable toxicity or their deleterious environmental effect.\nHowever, if their use is unavoidable in order to produce a drug product with a significant\ntherapeutic advance, then their levels should be restricted as shown in Table 1, unless otherwise\njustified. 1,1,1-Trichloroethane is included in Table 1 because it is an environmental hazard. The\nstated limit of 1500 ppm is based on a review of the safety data.\n\nTABLE 1. Class 1 solvents in pharmaceutical products (solvents that should be avoided).\nSolvent                        Concentration limit                    Concern\n                                    (ppm)\nBenzene                                  2                          Carcinogen\nCarbon tetrachloride                     4               Toxic and environmental hazard\n1,2-Dichloroethane                       5                             Toxic\n1,1-Dichloroethene                       8                             Toxic\n1,1,1-Trichloroethane                  1500                    Environmental hazard\n\n\n\n\n                                                   5\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Where Class 1 solvent use cannot be avoided to make a drug product with a significant therapeutic advance, restrict their levels to the Table 1 limits unless otherwise justified.",
+    "quote": "However, if their use is unavoidable in order to produce a drug product with a significant\ntherapeutic advance, then their levels should be restricted as shown in Table 1, unless otherwise\njustified.",
+    "clause_number": "4.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "Class 1 use unavoidable for significant therapeutic advance; unless otherwise justified",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "ich-q3c-r9.pdf:11#5",
+   "image": "work/vision-pages/ich-q3c-r9-p011.png",
+   "text_layer": "                                                              Impurities: Guideline for Residual Solvents\n\n\nIf Class 1 solvents are likely to be present, they should be identified and quantified.\n\"Likely to be present\" refers to the solvent used in the final manufacturing step and to solvents that\nare used in earlier manufacturing steps and not removed consistently by a validated process.\nIf solvents of Class 2 or Class 3 are present at greater than their Option 1 limits or 0.5%,\nrespectively, they should be identified and quantified.\n\n4.     LIMITS OF RESIDUAL SOLVENTS\n4.1 Solvents to Be Avoided\nSolvents in Class 1 should not be employed in the manufacture of drug substances, excipients, and\ndrug products because of their unacceptable toxicity or their deleterious environmental effect.\nHowever, if their use is unavoidable in order to produce a drug product with a significant\ntherapeutic advance, then their levels should be restricted as shown in Table 1, unless otherwise\njustified. 1,1,1-Trichloroethane is included in Table 1 because it is an environmental hazard. The\nstated limit of 1500 ppm is based on a review of the safety data.\n\nTABLE 1. Class 1 solvents in pharmaceutical products (solvents that should be avoided).\nSolvent                        Concentration limit                    Concern\n                                    (ppm)\nBenzene                                  2                          Carcinogen\nCarbon tetrachloride                     4               Toxic and environmental hazard\n1,2-Dichloroethane                       5                             Toxic\n1,1-Dichloroethene                       8                             Toxic\n1,1,1-Trichloroethane                  1500                    Environmental hazard\n\n\n\n\n                                                   5\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Where Benzene (Class 1) is used, keep its residual level at or below 2 ppm.",
+    "quote": "Benzene | 2 | Carcinogen",
+    "clause_number": "4.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "Class 1 solvent use unavoidable",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "ich-q3c-r9.pdf:11#6",
+   "image": "work/vision-pages/ich-q3c-r9-p011.png",
+   "text_layer": "                                                              Impurities: Guideline for Residual Solvents\n\n\nIf Class 1 solvents are likely to be present, they should be identified and quantified.\n\"Likely to be present\" refers to the solvent used in the final manufacturing step and to solvents that\nare used in earlier manufacturing steps and not removed consistently by a validated process.\nIf solvents of Class 2 or Class 3 are present at greater than their Option 1 limits or 0.5%,\nrespectively, they should be identified and quantified.\n\n4.     LIMITS OF RESIDUAL SOLVENTS\n4.1 Solvents to Be Avoided\nSolvents in Class 1 should not be employed in the manufacture of drug substances, excipients, and\ndrug products because of their unacceptable toxicity or their deleterious environmental effect.\nHowever, if their use is unavoidable in order to produce a drug product with a significant\ntherapeutic advance, then their levels should be restricted as shown in Table 1, unless otherwise\njustified. 1,1,1-Trichloroethane is included in Table 1 because it is an environmental hazard. The\nstated limit of 1500 ppm is based on a review of the safety data.\n\nTABLE 1. Class 1 solvents in pharmaceutical products (solvents that should be avoided).\nSolvent                        Concentration limit                    Concern\n                                    (ppm)\nBenzene                                  2                          Carcinogen\nCarbon tetrachloride                     4               Toxic and environmental hazard\n1,2-Dichloroethane                       5                             Toxic\n1,1-Dichloroethene                       8                             Toxic\n1,1,1-Trichloroethane                  1500                    Environmental hazard\n\n\n\n\n                                                   5\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Where Carbon tetrachloride (Class 1) is used, keep its residual level at or below 4 ppm.",
+    "quote": "Carbon tetrachloride | 4 | Toxic and environmental hazard",
+    "clause_number": "4.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "Class 1 solvent use unavoidable",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "ich-q3c-r9.pdf:11#7",
+   "image": "work/vision-pages/ich-q3c-r9-p011.png",
+   "text_layer": "                                                              Impurities: Guideline for Residual Solvents\n\n\nIf Class 1 solvents are likely to be present, they should be identified and quantified.\n\"Likely to be present\" refers to the solvent used in the final manufacturing step and to solvents that\nare used in earlier manufacturing steps and not removed consistently by a validated process.\nIf solvents of Class 2 or Class 3 are present at greater than their Option 1 limits or 0.5%,\nrespectively, they should be identified and quantified.\n\n4.     LIMITS OF RESIDUAL SOLVENTS\n4.1 Solvents to Be Avoided\nSolvents in Class 1 should not be employed in the manufacture of drug substances, excipients, and\ndrug products because of their unacceptable toxicity or their deleterious environmental effect.\nHowever, if their use is unavoidable in order to produce a drug product with a significant\ntherapeutic advance, then their levels should be restricted as shown in Table 1, unless otherwise\njustified. 1,1,1-Trichloroethane is included in Table 1 because it is an environmental hazard. The\nstated limit of 1500 ppm is based on a review of the safety data.\n\nTABLE 1. Class 1 solvents in pharmaceutical products (solvents that should be avoided).\nSolvent                        Concentration limit                    Concern\n                                    (ppm)\nBenzene                                  2                          Carcinogen\nCarbon tetrachloride                     4               Toxic and environmental hazard\n1,2-Dichloroethane                       5                             Toxic\n1,1-Dichloroethene                       8                             Toxic\n1,1,1-Trichloroethane                  1500                    Environmental hazard\n\n\n\n\n                                                   5\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Where 1,2-Dichloroethane (Class 1) is used, keep its residual level at or below 5 ppm.",
+    "quote": "1,2-Dichloroethane | 5 | Toxic",
+    "clause_number": "4.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "Class 1 solvent use unavoidable",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "ich-q3c-r9.pdf:11#8",
+   "image": "work/vision-pages/ich-q3c-r9-p011.png",
+   "text_layer": "                                                              Impurities: Guideline for Residual Solvents\n\n\nIf Class 1 solvents are likely to be present, they should be identified and quantified.\n\"Likely to be present\" refers to the solvent used in the final manufacturing step and to solvents that\nare used in earlier manufacturing steps and not removed consistently by a validated process.\nIf solvents of Class 2 or Class 3 are present at greater than their Option 1 limits or 0.5%,\nrespectively, they should be identified and quantified.\n\n4.     LIMITS OF RESIDUAL SOLVENTS\n4.1 Solvents to Be Avoided\nSolvents in Class 1 should not be employed in the manufacture of drug substances, excipients, and\ndrug products because of their unacceptable toxicity or their deleterious environmental effect.\nHowever, if their use is unavoidable in order to produce a drug product with a significant\ntherapeutic advance, then their levels should be restricted as shown in Table 1, unless otherwise\njustified. 1,1,1-Trichloroethane is included in Table 1 because it is an environmental hazard. The\nstated limit of 1500 ppm is based on a review of the safety data.\n\nTABLE 1. Class 1 solvents in pharmaceutical products (solvents that should be avoided).\nSolvent                        Concentration limit                    Concern\n                                    (ppm)\nBenzene                                  2                          Carcinogen\nCarbon tetrachloride                     4               Toxic and environmental hazard\n1,2-Dichloroethane                       5                             Toxic\n1,1-Dichloroethene                       8                             Toxic\n1,1,1-Trichloroethane                  1500                    Environmental hazard\n\n\n\n\n                                                   5\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Where 1,1-Dichloroethene (Class 1) is used, keep its residual level at or below 8 ppm.",
+    "quote": "1,1-Dichloroethene | 8 | Toxic",
+    "clause_number": "4.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "Class 1 solvent use unavoidable",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "ich-q3c-r9.pdf:11#9",
+   "image": "work/vision-pages/ich-q3c-r9-p011.png",
+   "text_layer": "                                                              Impurities: Guideline for Residual Solvents\n\n\nIf Class 1 solvents are likely to be present, they should be identified and quantified.\n\"Likely to be present\" refers to the solvent used in the final manufacturing step and to solvents that\nare used in earlier manufacturing steps and not removed consistently by a validated process.\nIf solvents of Class 2 or Class 3 are present at greater than their Option 1 limits or 0.5%,\nrespectively, they should be identified and quantified.\n\n4.     LIMITS OF RESIDUAL SOLVENTS\n4.1 Solvents to Be Avoided\nSolvents in Class 1 should not be employed in the manufacture of drug substances, excipients, and\ndrug products because of their unacceptable toxicity or their deleterious environmental effect.\nHowever, if their use is unavoidable in order to produce a drug product with a significant\ntherapeutic advance, then their levels should be restricted as shown in Table 1, unless otherwise\njustified. 1,1,1-Trichloroethane is included in Table 1 because it is an environmental hazard. The\nstated limit of 1500 ppm is based on a review of the safety data.\n\nTABLE 1. Class 1 solvents in pharmaceutical products (solvents that should be avoided).\nSolvent                        Concentration limit                    Concern\n                                    (ppm)\nBenzene                                  2                          Carcinogen\nCarbon tetrachloride                     4               Toxic and environmental hazard\n1,2-Dichloroethane                       5                             Toxic\n1,1-Dichloroethene                       8                             Toxic\n1,1,1-Trichloroethane                  1500                    Environmental hazard\n\n\n\n\n                                                   5\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Where 1,1,1-Trichloroethane (Class 1) is used, keep its residual level at or below 1500 ppm.",
+    "quote": "1,1,1-Trichloroethane | 1500 | Environmental hazard",
+    "clause_number": "4.1",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "Class 1 solvent use unavoidable",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "ich-q3c-r9.pdf:12#1",
+   "image": "work/vision-pages/ich-q3c-r9-p012.png",
+   "text_layer": "4.2 Solvents to Be Limited\nSolvents in Table 2 should be limited in pharmaceutical products because of their inherent\ntoxicity. PDEs are given to the nearest 0.1 mg/day, and concentrations are given to the\nnearest 10 ppm. The stated values do not reflect the necessary analytical precision of\ndetermination. Precision should be determined as part of the validation of the method.\n\nTABLE 2. Class 2 solvents in pharmaceutical products.\n\nSolvent                          PDE (mg/day)       Concentration limit (ppm)\n\n\nAcetonitrile                          4.1                      410\nChlorobenzene                         3.6                      360\nChloroform                            0.6                       60\nCumene1                               0.7                       70\nCyclohexane                          38.8                      3880\nCyclopentyl methyl ether2            15.0                      1500\n1,2-Dichloroethene                   18.7                      1870\nDichloromethane                       6.0                      600\n1,2-Dimethoxyethane                   1.0                      100\nN,N-Dimethylacetamide                10.9                      1090\nN,N-Dimethylformamide                 8.8                      880\n1,4-Dioxane                           3.8                      380\n2-Ethoxyethanol                       1.6                      160\nEthyleneglycol                        6.2                      620\nFormamide                             2.2                      220\nHexane                                2.9                      290\nMethanol                             30.0                      3000\n2-Methoxyethanol                      0.5                       50\nMethylbutyl ketone                    0.5                       50\nMethylcyclohexane                    11.8                      1180\n                      3\nMethylisobutylketone                  45                       4500\nN-Methylpyrrolidone4                  5.3                      530\n\n\n1 The information included for Cumene reflects that included in the Revision of PDE\nInformation for Cumene which reached Step 4 in February 2011 and was subsequently\nincorporated into the core Guideline. See Part IV (pages 24-27).\n2 The information included for Cyclopentyl Methyl Ether reflects that included in the Revision\n\nof PDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n3 The information included for Methylisobutylketone reflects that included in the Revision of\n\nPDE Information for Methylisobutylketone which reached Step 4 in November 2016 and was\nsubsequently incorporated into the core Guideline. See Part V (pages 28-34).\n4 The information included for N-Methylpyrrolidone reflects that included in the Revision of\n\nPDE Information for NMP which reached Step 4 in September 2002 (two mistyping corrections\n\n\n\n                                                6\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Limit the Class 2 solvents listed in Table 2 in pharmaceutical products.",
+    "quote": "Solvents in Table 2 should be limited in pharmaceutical products because of their inherent\ntoxicity.",
+    "clause_number": "4.2",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "ich-q3c-r9.pdf:12#2",
+   "image": "work/vision-pages/ich-q3c-r9-p012.png",
+   "text_layer": "4.2 Solvents to Be Limited\nSolvents in Table 2 should be limited in pharmaceutical products because of their inherent\ntoxicity. PDEs are given to the nearest 0.1 mg/day, and concentrations are given to the\nnearest 10 ppm. The stated values do not reflect the necessary analytical precision of\ndetermination. Precision should be determined as part of the validation of the method.\n\nTABLE 2. Class 2 solvents in pharmaceutical products.\n\nSolvent                          PDE (mg/day)       Concentration limit (ppm)\n\n\nAcetonitrile                          4.1                      410\nChlorobenzene                         3.6                      360\nChloroform                            0.6                       60\nCumene1                               0.7                       70\nCyclohexane                          38.8                      3880\nCyclopentyl methyl ether2            15.0                      1500\n1,2-Dichloroethene                   18.7                      1870\nDichloromethane                       6.0                      600\n1,2-Dimethoxyethane                   1.0                      100\nN,N-Dimethylacetamide                10.9                      1090\nN,N-Dimethylformamide                 8.8                      880\n1,4-Dioxane                           3.8                      380\n2-Ethoxyethanol                       1.6                      160\nEthyleneglycol                        6.2                      620\nFormamide                             2.2                      220\nHexane                                2.9                      290\nMethanol                             30.0                      3000\n2-Methoxyethanol                      0.5                       50\nMethylbutyl ketone                    0.5                       50\nMethylcyclohexane                    11.8                      1180\n                      3\nMethylisobutylketone                  45                       4500\nN-Methylpyrrolidone4                  5.3                      530\n\n\n1 The information included for Cumene reflects that included in the Revision of PDE\nInformation for Cumene which reached Step 4 in February 2011 and was subsequently\nincorporated into the core Guideline. See Part IV (pages 24-27).\n2 The information included for Cyclopentyl Methyl Ether reflects that included in the Revision\n\nof PDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n3 The information included for Methylisobutylketone reflects that included in the Revision of\n\nPDE Information for Methylisobutylketone which reached Step 4 in November 2016 and was\nsubsequently incorporated into the core Guideline. See Part V (pages 28-34).\n4 The information included for N-Methylpyrrolidone reflects that included in the Revision of\n\nPDE Information for NMP which reached Step 4 in September 2002 (two mistyping corrections\n\n\n\n                                                6\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Determine the analytical precision for residual solvent testing as part of method validation.",
+    "quote": "Precision should be determined as part of the validation of the method.",
+    "clause_number": "4.2",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "ich-q3c-r9.pdf:12#3",
+   "image": "work/vision-pages/ich-q3c-r9-p012.png",
+   "text_layer": "4.2 Solvents to Be Limited\nSolvents in Table 2 should be limited in pharmaceutical products because of their inherent\ntoxicity. PDEs are given to the nearest 0.1 mg/day, and concentrations are given to the\nnearest 10 ppm. The stated values do not reflect the necessary analytical precision of\ndetermination. Precision should be determined as part of the validation of the method.\n\nTABLE 2. Class 2 solvents in pharmaceutical products.\n\nSolvent                          PDE (mg/day)       Concentration limit (ppm)\n\n\nAcetonitrile                          4.1                      410\nChlorobenzene                         3.6                      360\nChloroform                            0.6                       60\nCumene1                               0.7                       70\nCyclohexane                          38.8                      3880\nCyclopentyl methyl ether2            15.0                      1500\n1,2-Dichloroethene                   18.7                      1870\nDichloromethane                       6.0                      600\n1,2-Dimethoxyethane                   1.0                      100\nN,N-Dimethylacetamide                10.9                      1090\nN,N-Dimethylformamide                 8.8                      880\n1,4-Dioxane                           3.8                      380\n2-Ethoxyethanol                       1.6                      160\nEthyleneglycol                        6.2                      620\nFormamide                             2.2                      220\nHexane                                2.9                      290\nMethanol                             30.0                      3000\n2-Methoxyethanol                      0.5                       50\nMethylbutyl ketone                    0.5                       50\nMethylcyclohexane                    11.8                      1180\n                      3\nMethylisobutylketone                  45                       4500\nN-Methylpyrrolidone4                  5.3                      530\n\n\n1 The information included for Cumene reflects that included in the Revision of PDE\nInformation for Cumene which reached Step 4 in February 2011 and was subsequently\nincorporated into the core Guideline. See Part IV (pages 24-27).\n2 The information included for Cyclopentyl Methyl Ether reflects that included in the Revision\n\nof PDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n3 The information included for Methylisobutylketone reflects that included in the Revision of\n\nPDE Information for Methylisobutylketone which reached Step 4 in November 2016 and was\nsubsequently incorporated into the core Guideline. See Part V (pages 28-34).\n4 The information included for N-Methylpyrrolidone reflects that included in the Revision of\n\nPDE Information for NMP which reached Step 4 in September 2002 (two mistyping corrections\n\n\n\n                                                6\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Limit residual Acetonitrile (Class 2) to a PDE of 4.1 mg/day, equivalent to a concentration limit of 410 ppm.",
+    "quote": "Acetonitrile | 4.1 | 410",
+    "clause_number": "4.2",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "ich-q3c-r9.pdf:12#4",
+   "image": "work/vision-pages/ich-q3c-r9-p012.png",
+   "text_layer": "4.2 Solvents to Be Limited\nSolvents in Table 2 should be limited in pharmaceutical products because of their inherent\ntoxicity. PDEs are given to the nearest 0.1 mg/day, and concentrations are given to the\nnearest 10 ppm. The stated values do not reflect the necessary analytical precision of\ndetermination. Precision should be determined as part of the validation of the method.\n\nTABLE 2. Class 2 solvents in pharmaceutical products.\n\nSolvent                          PDE (mg/day)       Concentration limit (ppm)\n\n\nAcetonitrile                          4.1                      410\nChlorobenzene                         3.6                      360\nChloroform                            0.6                       60\nCumene1                               0.7                       70\nCyclohexane                          38.8                      3880\nCyclopentyl methyl ether2            15.0                      1500\n1,2-Dichloroethene                   18.7                      1870\nDichloromethane                       6.0                      600\n1,2-Dimethoxyethane                   1.0                      100\nN,N-Dimethylacetamide                10.9                      1090\nN,N-Dimethylformamide                 8.8                      880\n1,4-Dioxane                           3.8                      380\n2-Ethoxyethanol                       1.6                      160\nEthyleneglycol                        6.2                      620\nFormamide                             2.2                      220\nHexane                                2.9                      290\nMethanol                             30.0                      3000\n2-Methoxyethanol                      0.5                       50\nMethylbutyl ketone                    0.5                       50\nMethylcyclohexane                    11.8                      1180\n                      3\nMethylisobutylketone                  45                       4500\nN-Methylpyrrolidone4                  5.3                      530\n\n\n1 The information included for Cumene reflects that included in the Revision of PDE\nInformation for Cumene which reached Step 4 in February 2011 and was subsequently\nincorporated into the core Guideline. See Part IV (pages 24-27).\n2 The information included for Cyclopentyl Methyl Ether reflects that included in the Revision\n\nof PDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n3 The information included for Methylisobutylketone reflects that included in the Revision of\n\nPDE Information for Methylisobutylketone which reached Step 4 in November 2016 and was\nsubsequently incorporated into the core Guideline. See Part V (pages 28-34).\n4 The information included for N-Methylpyrrolidone reflects that included in the Revision of\n\nPDE Information for NMP which reached Step 4 in September 2002 (two mistyping corrections\n\n\n\n                                                6\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Limit residual Chlorobenzene (Class 2) to a PDE of 3.6 mg/day, equivalent to a concentration limit of 360 ppm.",
+    "quote": "Chlorobenzene | 3.6 | 360",
+    "clause_number": "4.2",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "ich-q3c-r9.pdf:12#5",
+   "image": "work/vision-pages/ich-q3c-r9-p012.png",
+   "text_layer": "4.2 Solvents to Be Limited\nSolvents in Table 2 should be limited in pharmaceutical products because of their inherent\ntoxicity. PDEs are given to the nearest 0.1 mg/day, and concentrations are given to the\nnearest 10 ppm. The stated values do not reflect the necessary analytical precision of\ndetermination. Precision should be determined as part of the validation of the method.\n\nTABLE 2. Class 2 solvents in pharmaceutical products.\n\nSolvent                          PDE (mg/day)       Concentration limit (ppm)\n\n\nAcetonitrile                          4.1                      410\nChlorobenzene                         3.6                      360\nChloroform                            0.6                       60\nCumene1                               0.7                       70\nCyclohexane                          38.8                      3880\nCyclopentyl methyl ether2            15.0                      1500\n1,2-Dichloroethene                   18.7                      1870\nDichloromethane                       6.0                      600\n1,2-Dimethoxyethane                   1.0                      100\nN,N-Dimethylacetamide                10.9                      1090\nN,N-Dimethylformamide                 8.8                      880\n1,4-Dioxane                           3.8                      380\n2-Ethoxyethanol                       1.6                      160\nEthyleneglycol                        6.2                      620\nFormamide                             2.2                      220\nHexane                                2.9                      290\nMethanol                             30.0                      3000\n2-Methoxyethanol                      0.5                       50\nMethylbutyl ketone                    0.5                       50\nMethylcyclohexane                    11.8                      1180\n                      3\nMethylisobutylketone                  45                       4500\nN-Methylpyrrolidone4                  5.3                      530\n\n\n1 The information included for Cumene reflects that included in the Revision of PDE\nInformation for Cumene which reached Step 4 in February 2011 and was subsequently\nincorporated into the core Guideline. See Part IV (pages 24-27).\n2 The information included for Cyclopentyl Methyl Ether reflects that included in the Revision\n\nof PDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n3 The information included for Methylisobutylketone reflects that included in the Revision of\n\nPDE Information for Methylisobutylketone which reached Step 4 in November 2016 and was\nsubsequently incorporated into the core Guideline. See Part V (pages 28-34).\n4 The information included for N-Methylpyrrolidone reflects that included in the Revision of\n\nPDE Information for NMP which reached Step 4 in September 2002 (two mistyping corrections\n\n\n\n                                                6\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Limit residual Chloroform (Class 2) to a PDE of 0.6 mg/day, equivalent to a concentration limit of 60 ppm.",
+    "quote": "Chloroform | 0.6 | 60",
+    "clause_number": "4.2",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "ich-q3c-r9.pdf:12#6",
+   "image": "work/vision-pages/ich-q3c-r9-p012.png",
+   "text_layer": "4.2 Solvents to Be Limited\nSolvents in Table 2 should be limited in pharmaceutical products because of their inherent\ntoxicity. PDEs are given to the nearest 0.1 mg/day, and concentrations are given to the\nnearest 10 ppm. The stated values do not reflect the necessary analytical precision of\ndetermination. Precision should be determined as part of the validation of the method.\n\nTABLE 2. Class 2 solvents in pharmaceutical products.\n\nSolvent                          PDE (mg/day)       Concentration limit (ppm)\n\n\nAcetonitrile                          4.1                      410\nChlorobenzene                         3.6                      360\nChloroform                            0.6                       60\nCumene1                               0.7                       70\nCyclohexane                          38.8                      3880\nCyclopentyl methyl ether2            15.0                      1500\n1,2-Dichloroethene                   18.7                      1870\nDichloromethane                       6.0                      600\n1,2-Dimethoxyethane                   1.0                      100\nN,N-Dimethylacetamide                10.9                      1090\nN,N-Dimethylformamide                 8.8                      880\n1,4-Dioxane                           3.8                      380\n2-Ethoxyethanol                       1.6                      160\nEthyleneglycol                        6.2                      620\nFormamide                             2.2                      220\nHexane                                2.9                      290\nMethanol                             30.0                      3000\n2-Methoxyethanol                      0.5                       50\nMethylbutyl ketone                    0.5                       50\nMethylcyclohexane                    11.8                      1180\n                      3\nMethylisobutylketone                  45                       4500\nN-Methylpyrrolidone4                  5.3                      530\n\n\n1 The information included for Cumene reflects that included in the Revision of PDE\nInformation for Cumene which reached Step 4 in February 2011 and was subsequently\nincorporated into the core Guideline. See Part IV (pages 24-27).\n2 The information included for Cyclopentyl Methyl Ether reflects that included in the Revision\n\nof PDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n3 The information included for Methylisobutylketone reflects that included in the Revision of\n\nPDE Information for Methylisobutylketone which reached Step 4 in November 2016 and was\nsubsequently incorporated into the core Guideline. See Part V (pages 28-34).\n4 The information included for N-Methylpyrrolidone reflects that included in the Revision of\n\nPDE Information for NMP which reached Step 4 in September 2002 (two mistyping corrections\n\n\n\n                                                6\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Limit residual Cumene (Class 2) to a PDE of 0.7 mg/day, equivalent to a concentration limit of 70 ppm.",
+    "quote": "Cumene | 0.7 | 70",
+    "clause_number": "4.2",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "ich-q3c-r9.pdf:12#7",
+   "image": "work/vision-pages/ich-q3c-r9-p012.png",
+   "text_layer": "4.2 Solvents to Be Limited\nSolvents in Table 2 should be limited in pharmaceutical products because of their inherent\ntoxicity. PDEs are given to the nearest 0.1 mg/day, and concentrations are given to the\nnearest 10 ppm. The stated values do not reflect the necessary analytical precision of\ndetermination. Precision should be determined as part of the validation of the method.\n\nTABLE 2. Class 2 solvents in pharmaceutical products.\n\nSolvent                          PDE (mg/day)       Concentration limit (ppm)\n\n\nAcetonitrile                          4.1                      410\nChlorobenzene                         3.6                      360\nChloroform                            0.6                       60\nCumene1                               0.7                       70\nCyclohexane                          38.8                      3880\nCyclopentyl methyl ether2            15.0                      1500\n1,2-Dichloroethene                   18.7                      1870\nDichloromethane                       6.0                      600\n1,2-Dimethoxyethane                   1.0                      100\nN,N-Dimethylacetamide                10.9                      1090\nN,N-Dimethylformamide                 8.8                      880\n1,4-Dioxane                           3.8                      380\n2-Ethoxyethanol                       1.6                      160\nEthyleneglycol                        6.2                      620\nFormamide                             2.2                      220\nHexane                                2.9                      290\nMethanol                             30.0                      3000\n2-Methoxyethanol                      0.5                       50\nMethylbutyl ketone                    0.5                       50\nMethylcyclohexane                    11.8                      1180\n                      3\nMethylisobutylketone                  45                       4500\nN-Methylpyrrolidone4                  5.3                      530\n\n\n1 The information included for Cumene reflects that included in the Revision of PDE\nInformation for Cumene which reached Step 4 in February 2011 and was subsequently\nincorporated into the core Guideline. See Part IV (pages 24-27).\n2 The information included for Cyclopentyl Methyl Ether reflects that included in the Revision\n\nof PDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n3 The information included for Methylisobutylketone reflects that included in the Revision of\n\nPDE Information for Methylisobutylketone which reached Step 4 in November 2016 and was\nsubsequently incorporated into the core Guideline. See Part V (pages 28-34).\n4 The information included for N-Methylpyrrolidone reflects that included in the Revision of\n\nPDE Information for NMP which reached Step 4 in September 2002 (two mistyping corrections\n\n\n\n                                                6\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Limit residual Cyclohexane (Class 2) to a PDE of 38.8 mg/day, equivalent to a concentration limit of 3880 ppm.",
+    "quote": "Cyclohexane | 38.8 | 3880",
+    "clause_number": "4.2",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "ich-q3c-r9.pdf:12#8",
+   "image": "work/vision-pages/ich-q3c-r9-p012.png",
+   "text_layer": "4.2 Solvents to Be Limited\nSolvents in Table 2 should be limited in pharmaceutical products because of their inherent\ntoxicity. PDEs are given to the nearest 0.1 mg/day, and concentrations are given to the\nnearest 10 ppm. The stated values do not reflect the necessary analytical precision of\ndetermination. Precision should be determined as part of the validation of the method.\n\nTABLE 2. Class 2 solvents in pharmaceutical products.\n\nSolvent                          PDE (mg/day)       Concentration limit (ppm)\n\n\nAcetonitrile                          4.1                      410\nChlorobenzene                         3.6                      360\nChloroform                            0.6                       60\nCumene1                               0.7                       70\nCyclohexane                          38.8                      3880\nCyclopentyl methyl ether2            15.0                      1500\n1,2-Dichloroethene                   18.7                      1870\nDichloromethane                       6.0                      600\n1,2-Dimethoxyethane                   1.0                      100\nN,N-Dimethylacetamide                10.9                      1090\nN,N-Dimethylformamide                 8.8                      880\n1,4-Dioxane                           3.8                      380\n2-Ethoxyethanol                       1.6                      160\nEthyleneglycol                        6.2                      620\nFormamide                             2.2                      220\nHexane                                2.9                      290\nMethanol                             30.0                      3000\n2-Methoxyethanol                      0.5                       50\nMethylbutyl ketone                    0.5                       50\nMethylcyclohexane                    11.8                      1180\n                      3\nMethylisobutylketone                  45                       4500\nN-Methylpyrrolidone4                  5.3                      530\n\n\n1 The information included for Cumene reflects that included in the Revision of PDE\nInformation for Cumene which reached Step 4 in February 2011 and was subsequently\nincorporated into the core Guideline. See Part IV (pages 24-27).\n2 The information included for Cyclopentyl Methyl Ether reflects that included in the Revision\n\nof PDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n3 The information included for Methylisobutylketone reflects that included in the Revision of\n\nPDE Information for Methylisobutylketone which reached Step 4 in November 2016 and was\nsubsequently incorporated into the core Guideline. See Part V (pages 28-34).\n4 The information included for N-Methylpyrrolidone reflects that included in the Revision of\n\nPDE Information for NMP which reached Step 4 in September 2002 (two mistyping corrections\n\n\n\n                                                6\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Limit residual Cyclopentyl methyl ether (Class 2) to a PDE of 15.0 mg/day, equivalent to a concentration limit of 1500 ppm.",
+    "quote": "Cyclopentyl methyl ether | 15.0 | 1500",
+    "clause_number": "4.2",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "ich-q3c-r9.pdf:12#9",
+   "image": "work/vision-pages/ich-q3c-r9-p012.png",
+   "text_layer": "4.2 Solvents to Be Limited\nSolvents in Table 2 should be limited in pharmaceutical products because of their inherent\ntoxicity. PDEs are given to the nearest 0.1 mg/day, and concentrations are given to the\nnearest 10 ppm. The stated values do not reflect the necessary analytical precision of\ndetermination. Precision should be determined as part of the validation of the method.\n\nTABLE 2. Class 2 solvents in pharmaceutical products.\n\nSolvent                          PDE (mg/day)       Concentration limit (ppm)\n\n\nAcetonitrile                          4.1                      410\nChlorobenzene                         3.6                      360\nChloroform                            0.6                       60\nCumene1                               0.7                       70\nCyclohexane                          38.8                      3880\nCyclopentyl methyl ether2            15.0                      1500\n1,2-Dichloroethene                   18.7                      1870\nDichloromethane                       6.0                      600\n1,2-Dimethoxyethane                   1.0                      100\nN,N-Dimethylacetamide                10.9                      1090\nN,N-Dimethylformamide                 8.8                      880\n1,4-Dioxane                           3.8                      380\n2-Ethoxyethanol                       1.6                      160\nEthyleneglycol                        6.2                      620\nFormamide                             2.2                      220\nHexane                                2.9                      290\nMethanol                             30.0                      3000\n2-Methoxyethanol                      0.5                       50\nMethylbutyl ketone                    0.5                       50\nMethylcyclohexane                    11.8                      1180\n                      3\nMethylisobutylketone                  45                       4500\nN-Methylpyrrolidone4                  5.3                      530\n\n\n1 The information included for Cumene reflects that included in the Revision of PDE\nInformation for Cumene which reached Step 4 in February 2011 and was subsequently\nincorporated into the core Guideline. See Part IV (pages 24-27).\n2 The information included for Cyclopentyl Methyl Ether reflects that included in the Revision\n\nof PDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n3 The information included for Methylisobutylketone reflects that included in the Revision of\n\nPDE Information for Methylisobutylketone which reached Step 4 in November 2016 and was\nsubsequently incorporated into the core Guideline. See Part V (pages 28-34).\n4 The information included for N-Methylpyrrolidone reflects that included in the Revision of\n\nPDE Information for NMP which reached Step 4 in September 2002 (two mistyping corrections\n\n\n\n                                                6\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Limit residual 1,2-Dichloroethene (Class 2) to a PDE of 18.7 mg/day, equivalent to a concentration limit of 1870 ppm.",
+    "quote": "1,2-Dichloroethene | 18.7 | 1870",
+    "clause_number": "4.2",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "ich-q3c-r9.pdf:12#10",
+   "image": "work/vision-pages/ich-q3c-r9-p012.png",
+   "text_layer": "4.2 Solvents to Be Limited\nSolvents in Table 2 should be limited in pharmaceutical products because of their inherent\ntoxicity. PDEs are given to the nearest 0.1 mg/day, and concentrations are given to the\nnearest 10 ppm. The stated values do not reflect the necessary analytical precision of\ndetermination. Precision should be determined as part of the validation of the method.\n\nTABLE 2. Class 2 solvents in pharmaceutical products.\n\nSolvent                          PDE (mg/day)       Concentration limit (ppm)\n\n\nAcetonitrile                          4.1                      410\nChlorobenzene                         3.6                      360\nChloroform                            0.6                       60\nCumene1                               0.7                       70\nCyclohexane                          38.8                      3880\nCyclopentyl methyl ether2            15.0                      1500\n1,2-Dichloroethene                   18.7                      1870\nDichloromethane                       6.0                      600\n1,2-Dimethoxyethane                   1.0                      100\nN,N-Dimethylacetamide                10.9                      1090\nN,N-Dimethylformamide                 8.8                      880\n1,4-Dioxane                           3.8                      380\n2-Ethoxyethanol                       1.6                      160\nEthyleneglycol                        6.2                      620\nFormamide                             2.2                      220\nHexane                                2.9                      290\nMethanol                             30.0                      3000\n2-Methoxyethanol                      0.5                       50\nMethylbutyl ketone                    0.5                       50\nMethylcyclohexane                    11.8                      1180\n                      3\nMethylisobutylketone                  45                       4500\nN-Methylpyrrolidone4                  5.3                      530\n\n\n1 The information included for Cumene reflects that included in the Revision of PDE\nInformation for Cumene which reached Step 4 in February 2011 and was subsequently\nincorporated into the core Guideline. See Part IV (pages 24-27).\n2 The information included for Cyclopentyl Methyl Ether reflects that included in the Revision\n\nof PDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n3 The information included for Methylisobutylketone reflects that included in the Revision of\n\nPDE Information for Methylisobutylketone which reached Step 4 in November 2016 and was\nsubsequently incorporated into the core Guideline. See Part V (pages 28-34).\n4 The information included for N-Methylpyrrolidone reflects that included in the Revision of\n\nPDE Information for NMP which reached Step 4 in September 2002 (two mistyping corrections\n\n\n\n                                                6\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Limit residual Dichloromethane (Class 2) to a PDE of 6.0 mg/day, equivalent to a concentration limit of 600 ppm.",
+    "quote": "Dichloromethane | 6.0 | 600",
+    "clause_number": "4.2",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "ich-q3c-r9.pdf:12#11",
+   "image": "work/vision-pages/ich-q3c-r9-p012.png",
+   "text_layer": "4.2 Solvents to Be Limited\nSolvents in Table 2 should be limited in pharmaceutical products because of their inherent\ntoxicity. PDEs are given to the nearest 0.1 mg/day, and concentrations are given to the\nnearest 10 ppm. The stated values do not reflect the necessary analytical precision of\ndetermination. Precision should be determined as part of the validation of the method.\n\nTABLE 2. Class 2 solvents in pharmaceutical products.\n\nSolvent                          PDE (mg/day)       Concentration limit (ppm)\n\n\nAcetonitrile                          4.1                      410\nChlorobenzene                         3.6                      360\nChloroform                            0.6                       60\nCumene1                               0.7                       70\nCyclohexane                          38.8                      3880\nCyclopentyl methyl ether2            15.0                      1500\n1,2-Dichloroethene                   18.7                      1870\nDichloromethane                       6.0                      600\n1,2-Dimethoxyethane                   1.0                      100\nN,N-Dimethylacetamide                10.9                      1090\nN,N-Dimethylformamide                 8.8                      880\n1,4-Dioxane                           3.8                      380\n2-Ethoxyethanol                       1.6                      160\nEthyleneglycol                        6.2                      620\nFormamide                             2.2                      220\nHexane                                2.9                      290\nMethanol                             30.0                      3000\n2-Methoxyethanol                      0.5                       50\nMethylbutyl ketone                    0.5                       50\nMethylcyclohexane                    11.8                      1180\n                      3\nMethylisobutylketone                  45                       4500\nN-Methylpyrrolidone4                  5.3                      530\n\n\n1 The information included for Cumene reflects that included in the Revision of PDE\nInformation for Cumene which reached Step 4 in February 2011 and was subsequently\nincorporated into the core Guideline. See Part IV (pages 24-27).\n2 The information included for Cyclopentyl Methyl Ether reflects that included in the Revision\n\nof PDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n3 The information included for Methylisobutylketone reflects that included in the Revision of\n\nPDE Information for Methylisobutylketone which reached Step 4 in November 2016 and was\nsubsequently incorporated into the core Guideline. See Part V (pages 28-34).\n4 The information included for N-Methylpyrrolidone reflects that included in the Revision of\n\nPDE Information for NMP which reached Step 4 in September 2002 (two mistyping corrections\n\n\n\n                                                6\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Limit residual 1,2-Dimethoxyethane (Class 2) to a PDE of 1.0 mg/day, equivalent to a concentration limit of 100 ppm.",
+    "quote": "1,2-Dimethoxyethane | 1.0 | 100",
+    "clause_number": "4.2",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "ich-q3c-r9.pdf:12#12",
+   "image": "work/vision-pages/ich-q3c-r9-p012.png",
+   "text_layer": "4.2 Solvents to Be Limited\nSolvents in Table 2 should be limited in pharmaceutical products because of their inherent\ntoxicity. PDEs are given to the nearest 0.1 mg/day, and concentrations are given to the\nnearest 10 ppm. The stated values do not reflect the necessary analytical precision of\ndetermination. Precision should be determined as part of the validation of the method.\n\nTABLE 2. Class 2 solvents in pharmaceutical products.\n\nSolvent                          PDE (mg/day)       Concentration limit (ppm)\n\n\nAcetonitrile                          4.1                      410\nChlorobenzene                         3.6                      360\nChloroform                            0.6                       60\nCumene1                               0.7                       70\nCyclohexane                          38.8                      3880\nCyclopentyl methyl ether2            15.0                      1500\n1,2-Dichloroethene                   18.7                      1870\nDichloromethane                       6.0                      600\n1,2-Dimethoxyethane                   1.0                      100\nN,N-Dimethylacetamide                10.9                      1090\nN,N-Dimethylformamide                 8.8                      880\n1,4-Dioxane                           3.8                      380\n2-Ethoxyethanol                       1.6                      160\nEthyleneglycol                        6.2                      620\nFormamide                             2.2                      220\nHexane                                2.9                      290\nMethanol                             30.0                      3000\n2-Methoxyethanol                      0.5                       50\nMethylbutyl ketone                    0.5                       50\nMethylcyclohexane                    11.8                      1180\n                      3\nMethylisobutylketone                  45                       4500\nN-Methylpyrrolidone4                  5.3                      530\n\n\n1 The information included for Cumene reflects that included in the Revision of PDE\nInformation for Cumene which reached Step 4 in February 2011 and was subsequently\nincorporated into the core Guideline. See Part IV (pages 24-27).\n2 The information included for Cyclopentyl Methyl Ether reflects that included in the Revision\n\nof PDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n3 The information included for Methylisobutylketone reflects that included in the Revision of\n\nPDE Information for Methylisobutylketone which reached Step 4 in November 2016 and was\nsubsequently incorporated into the core Guideline. See Part V (pages 28-34).\n4 The information included for N-Methylpyrrolidone reflects that included in the Revision of\n\nPDE Information for NMP which reached Step 4 in September 2002 (two mistyping corrections\n\n\n\n                                                6\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Limit residual N,N-Dimethylacetamide (Class 2) to a PDE of 10.9 mg/day, equivalent to a concentration limit of 1090 ppm.",
+    "quote": "N,N-Dimethylacetamide | 10.9 | 1090",
+    "clause_number": "4.2",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "ich-q3c-r9.pdf:12#13",
+   "image": "work/vision-pages/ich-q3c-r9-p012.png",
+   "text_layer": "4.2 Solvents to Be Limited\nSolvents in Table 2 should be limited in pharmaceutical products because of their inherent\ntoxicity. PDEs are given to the nearest 0.1 mg/day, and concentrations are given to the\nnearest 10 ppm. The stated values do not reflect the necessary analytical precision of\ndetermination. Precision should be determined as part of the validation of the method.\n\nTABLE 2. Class 2 solvents in pharmaceutical products.\n\nSolvent                          PDE (mg/day)       Concentration limit (ppm)\n\n\nAcetonitrile                          4.1                      410\nChlorobenzene                         3.6                      360\nChloroform                            0.6                       60\nCumene1                               0.7                       70\nCyclohexane                          38.8                      3880\nCyclopentyl methyl ether2            15.0                      1500\n1,2-Dichloroethene                   18.7                      1870\nDichloromethane                       6.0                      600\n1,2-Dimethoxyethane                   1.0                      100\nN,N-Dimethylacetamide                10.9                      1090\nN,N-Dimethylformamide                 8.8                      880\n1,4-Dioxane                           3.8                      380\n2-Ethoxyethanol                       1.6                      160\nEthyleneglycol                        6.2                      620\nFormamide                             2.2                      220\nHexane                                2.9                      290\nMethanol                             30.0                      3000\n2-Methoxyethanol                      0.5                       50\nMethylbutyl ketone                    0.5                       50\nMethylcyclohexane                    11.8                      1180\n                      3\nMethylisobutylketone                  45                       4500\nN-Methylpyrrolidone4                  5.3                      530\n\n\n1 The information included for Cumene reflects that included in the Revision of PDE\nInformation for Cumene which reached Step 4 in February 2011 and was subsequently\nincorporated into the core Guideline. See Part IV (pages 24-27).\n2 The information included for Cyclopentyl Methyl Ether reflects that included in the Revision\n\nof PDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n3 The information included for Methylisobutylketone reflects that included in the Revision of\n\nPDE Information for Methylisobutylketone which reached Step 4 in November 2016 and was\nsubsequently incorporated into the core Guideline. See Part V (pages 28-34).\n4 The information included for N-Methylpyrrolidone reflects that included in the Revision of\n\nPDE Information for NMP which reached Step 4 in September 2002 (two mistyping corrections\n\n\n\n                                                6\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Limit residual N,N-Dimethylformamide (Class 2) to a PDE of 8.8 mg/day, equivalent to a concentration limit of 880 ppm.",
+    "quote": "N,N-Dimethylformamide | 8.8 | 880",
+    "clause_number": "4.2",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "ich-q3c-r9.pdf:12#14",
+   "image": "work/vision-pages/ich-q3c-r9-p012.png",
+   "text_layer": "4.2 Solvents to Be Limited\nSolvents in Table 2 should be limited in pharmaceutical products because of their inherent\ntoxicity. PDEs are given to the nearest 0.1 mg/day, and concentrations are given to the\nnearest 10 ppm. The stated values do not reflect the necessary analytical precision of\ndetermination. Precision should be determined as part of the validation of the method.\n\nTABLE 2. Class 2 solvents in pharmaceutical products.\n\nSolvent                          PDE (mg/day)       Concentration limit (ppm)\n\n\nAcetonitrile                          4.1                      410\nChlorobenzene                         3.6                      360\nChloroform                            0.6                       60\nCumene1                               0.7                       70\nCyclohexane                          38.8                      3880\nCyclopentyl methyl ether2            15.0                      1500\n1,2-Dichloroethene                   18.7                      1870\nDichloromethane                       6.0                      600\n1,2-Dimethoxyethane                   1.0                      100\nN,N-Dimethylacetamide                10.9                      1090\nN,N-Dimethylformamide                 8.8                      880\n1,4-Dioxane                           3.8                      380\n2-Ethoxyethanol                       1.6                      160\nEthyleneglycol                        6.2                      620\nFormamide                             2.2                      220\nHexane                                2.9                      290\nMethanol                             30.0                      3000\n2-Methoxyethanol                      0.5                       50\nMethylbutyl ketone                    0.5                       50\nMethylcyclohexane                    11.8                      1180\n                      3\nMethylisobutylketone                  45                       4500\nN-Methylpyrrolidone4                  5.3                      530\n\n\n1 The information included for Cumene reflects that included in the Revision of PDE\nInformation for Cumene which reached Step 4 in February 2011 and was subsequently\nincorporated into the core Guideline. See Part IV (pages 24-27).\n2 The information included for Cyclopentyl Methyl Ether reflects that included in the Revision\n\nof PDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n3 The information included for Methylisobutylketone reflects that included in the Revision of\n\nPDE Information for Methylisobutylketone which reached Step 4 in November 2016 and was\nsubsequently incorporated into the core Guideline. See Part V (pages 28-34).\n4 The information included for N-Methylpyrrolidone reflects that included in the Revision of\n\nPDE Information for NMP which reached Step 4 in September 2002 (two mistyping corrections\n\n\n\n                                                6\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Limit residual 1,4-Dioxane (Class 2) to a PDE of 3.8 mg/day, equivalent to a concentration limit of 380 ppm.",
+    "quote": "1,4-Dioxane | 3.8 | 380",
+    "clause_number": "4.2",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "ich-q3c-r9.pdf:12#15",
+   "image": "work/vision-pages/ich-q3c-r9-p012.png",
+   "text_layer": "4.2 Solvents to Be Limited\nSolvents in Table 2 should be limited in pharmaceutical products because of their inherent\ntoxicity. PDEs are given to the nearest 0.1 mg/day, and concentrations are given to the\nnearest 10 ppm. The stated values do not reflect the necessary analytical precision of\ndetermination. Precision should be determined as part of the validation of the method.\n\nTABLE 2. Class 2 solvents in pharmaceutical products.\n\nSolvent                          PDE (mg/day)       Concentration limit (ppm)\n\n\nAcetonitrile                          4.1                      410\nChlorobenzene                         3.6                      360\nChloroform                            0.6                       60\nCumene1                               0.7                       70\nCyclohexane                          38.8                      3880\nCyclopentyl methyl ether2            15.0                      1500\n1,2-Dichloroethene                   18.7                      1870\nDichloromethane                       6.0                      600\n1,2-Dimethoxyethane                   1.0                      100\nN,N-Dimethylacetamide                10.9                      1090\nN,N-Dimethylformamide                 8.8                      880\n1,4-Dioxane                           3.8                      380\n2-Ethoxyethanol                       1.6                      160\nEthyleneglycol                        6.2                      620\nFormamide                             2.2                      220\nHexane                                2.9                      290\nMethanol                             30.0                      3000\n2-Methoxyethanol                      0.5                       50\nMethylbutyl ketone                    0.5                       50\nMethylcyclohexane                    11.8                      1180\n                      3\nMethylisobutylketone                  45                       4500\nN-Methylpyrrolidone4                  5.3                      530\n\n\n1 The information included for Cumene reflects that included in the Revision of PDE\nInformation for Cumene which reached Step 4 in February 2011 and was subsequently\nincorporated into the core Guideline. See Part IV (pages 24-27).\n2 The information included for Cyclopentyl Methyl Ether reflects that included in the Revision\n\nof PDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n3 The information included for Methylisobutylketone reflects that included in the Revision of\n\nPDE Information for Methylisobutylketone which reached Step 4 in November 2016 and was\nsubsequently incorporated into the core Guideline. See Part V (pages 28-34).\n4 The information included for N-Methylpyrrolidone reflects that included in the Revision of\n\nPDE Information for NMP which reached Step 4 in September 2002 (two mistyping corrections\n\n\n\n                                                6\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Limit residual 2-Ethoxyethanol (Class 2) to a PDE of 1.6 mg/day, equivalent to a concentration limit of 160 ppm.",
+    "quote": "2-Ethoxyethanol | 1.6 | 160",
+    "clause_number": "4.2",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "ich-q3c-r9.pdf:12#16",
+   "image": "work/vision-pages/ich-q3c-r9-p012.png",
+   "text_layer": "4.2 Solvents to Be Limited\nSolvents in Table 2 should be limited in pharmaceutical products because of their inherent\ntoxicity. PDEs are given to the nearest 0.1 mg/day, and concentrations are given to the\nnearest 10 ppm. The stated values do not reflect the necessary analytical precision of\ndetermination. Precision should be determined as part of the validation of the method.\n\nTABLE 2. Class 2 solvents in pharmaceutical products.\n\nSolvent                          PDE (mg/day)       Concentration limit (ppm)\n\n\nAcetonitrile                          4.1                      410\nChlorobenzene                         3.6                      360\nChloroform                            0.6                       60\nCumene1                               0.7                       70\nCyclohexane                          38.8                      3880\nCyclopentyl methyl ether2            15.0                      1500\n1,2-Dichloroethene                   18.7                      1870\nDichloromethane                       6.0                      600\n1,2-Dimethoxyethane                   1.0                      100\nN,N-Dimethylacetamide                10.9                      1090\nN,N-Dimethylformamide                 8.8                      880\n1,4-Dioxane                           3.8                      380\n2-Ethoxyethanol                       1.6                      160\nEthyleneglycol                        6.2                      620\nFormamide                             2.2                      220\nHexane                                2.9                      290\nMethanol                             30.0                      3000\n2-Methoxyethanol                      0.5                       50\nMethylbutyl ketone                    0.5                       50\nMethylcyclohexane                    11.8                      1180\n                      3\nMethylisobutylketone                  45                       4500\nN-Methylpyrrolidone4                  5.3                      530\n\n\n1 The information included for Cumene reflects that included in the Revision of PDE\nInformation for Cumene which reached Step 4 in February 2011 and was subsequently\nincorporated into the core Guideline. See Part IV (pages 24-27).\n2 The information included for Cyclopentyl Methyl Ether reflects that included in the Revision\n\nof PDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n3 The information included for Methylisobutylketone reflects that included in the Revision of\n\nPDE Information for Methylisobutylketone which reached Step 4 in November 2016 and was\nsubsequently incorporated into the core Guideline. See Part V (pages 28-34).\n4 The information included for N-Methylpyrrolidone reflects that included in the Revision of\n\nPDE Information for NMP which reached Step 4 in September 2002 (two mistyping corrections\n\n\n\n                                                6\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Limit residual Ethyleneglycol (Class 2) to a PDE of 6.2 mg/day, equivalent to a concentration limit of 620 ppm.",
+    "quote": "Ethyleneglycol | 6.2 | 620",
+    "clause_number": "4.2",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "ich-q3c-r9.pdf:12#17",
+   "image": "work/vision-pages/ich-q3c-r9-p012.png",
+   "text_layer": "4.2 Solvents to Be Limited\nSolvents in Table 2 should be limited in pharmaceutical products because of their inherent\ntoxicity. PDEs are given to the nearest 0.1 mg/day, and concentrations are given to the\nnearest 10 ppm. The stated values do not reflect the necessary analytical precision of\ndetermination. Precision should be determined as part of the validation of the method.\n\nTABLE 2. Class 2 solvents in pharmaceutical products.\n\nSolvent                          PDE (mg/day)       Concentration limit (ppm)\n\n\nAcetonitrile                          4.1                      410\nChlorobenzene                         3.6                      360\nChloroform                            0.6                       60\nCumene1                               0.7                       70\nCyclohexane                          38.8                      3880\nCyclopentyl methyl ether2            15.0                      1500\n1,2-Dichloroethene                   18.7                      1870\nDichloromethane                       6.0                      600\n1,2-Dimethoxyethane                   1.0                      100\nN,N-Dimethylacetamide                10.9                      1090\nN,N-Dimethylformamide                 8.8                      880\n1,4-Dioxane                           3.8                      380\n2-Ethoxyethanol                       1.6                      160\nEthyleneglycol                        6.2                      620\nFormamide                             2.2                      220\nHexane                                2.9                      290\nMethanol                             30.0                      3000\n2-Methoxyethanol                      0.5                       50\nMethylbutyl ketone                    0.5                       50\nMethylcyclohexane                    11.8                      1180\n                      3\nMethylisobutylketone                  45                       4500\nN-Methylpyrrolidone4                  5.3                      530\n\n\n1 The information included for Cumene reflects that included in the Revision of PDE\nInformation for Cumene which reached Step 4 in February 2011 and was subsequently\nincorporated into the core Guideline. See Part IV (pages 24-27).\n2 The information included for Cyclopentyl Methyl Ether reflects that included in the Revision\n\nof PDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n3 The information included for Methylisobutylketone reflects that included in the Revision of\n\nPDE Information for Methylisobutylketone which reached Step 4 in November 2016 and was\nsubsequently incorporated into the core Guideline. See Part V (pages 28-34).\n4 The information included for N-Methylpyrrolidone reflects that included in the Revision of\n\nPDE Information for NMP which reached Step 4 in September 2002 (two mistyping corrections\n\n\n\n                                                6\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Limit residual Formamide (Class 2) to a PDE of 2.2 mg/day, equivalent to a concentration limit of 220 ppm.",
+    "quote": "Formamide | 2.2 | 220",
+    "clause_number": "4.2",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "ich-q3c-r9.pdf:12#18",
+   "image": "work/vision-pages/ich-q3c-r9-p012.png",
+   "text_layer": "4.2 Solvents to Be Limited\nSolvents in Table 2 should be limited in pharmaceutical products because of their inherent\ntoxicity. PDEs are given to the nearest 0.1 mg/day, and concentrations are given to the\nnearest 10 ppm. The stated values do not reflect the necessary analytical precision of\ndetermination. Precision should be determined as part of the validation of the method.\n\nTABLE 2. Class 2 solvents in pharmaceutical products.\n\nSolvent                          PDE (mg/day)       Concentration limit (ppm)\n\n\nAcetonitrile                          4.1                      410\nChlorobenzene                         3.6                      360\nChloroform                            0.6                       60\nCumene1                               0.7                       70\nCyclohexane                          38.8                      3880\nCyclopentyl methyl ether2            15.0                      1500\n1,2-Dichloroethene                   18.7                      1870\nDichloromethane                       6.0                      600\n1,2-Dimethoxyethane                   1.0                      100\nN,N-Dimethylacetamide                10.9                      1090\nN,N-Dimethylformamide                 8.8                      880\n1,4-Dioxane                           3.8                      380\n2-Ethoxyethanol                       1.6                      160\nEthyleneglycol                        6.2                      620\nFormamide                             2.2                      220\nHexane                                2.9                      290\nMethanol                             30.0                      3000\n2-Methoxyethanol                      0.5                       50\nMethylbutyl ketone                    0.5                       50\nMethylcyclohexane                    11.8                      1180\n                      3\nMethylisobutylketone                  45                       4500\nN-Methylpyrrolidone4                  5.3                      530\n\n\n1 The information included for Cumene reflects that included in the Revision of PDE\nInformation for Cumene which reached Step 4 in February 2011 and was subsequently\nincorporated into the core Guideline. See Part IV (pages 24-27).\n2 The information included for Cyclopentyl Methyl Ether reflects that included in the Revision\n\nof PDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n3 The information included for Methylisobutylketone reflects that included in the Revision of\n\nPDE Information for Methylisobutylketone which reached Step 4 in November 2016 and was\nsubsequently incorporated into the core Guideline. See Part V (pages 28-34).\n4 The information included for N-Methylpyrrolidone reflects that included in the Revision of\n\nPDE Information for NMP which reached Step 4 in September 2002 (two mistyping corrections\n\n\n\n                                                6\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Limit residual Hexane (Class 2) to a PDE of 2.9 mg/day, equivalent to a concentration limit of 290 ppm.",
+    "quote": "Hexane | 2.9 | 290",
+    "clause_number": "4.2",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "ich-q3c-r9.pdf:12#19",
+   "image": "work/vision-pages/ich-q3c-r9-p012.png",
+   "text_layer": "4.2 Solvents to Be Limited\nSolvents in Table 2 should be limited in pharmaceutical products because of their inherent\ntoxicity. PDEs are given to the nearest 0.1 mg/day, and concentrations are given to the\nnearest 10 ppm. The stated values do not reflect the necessary analytical precision of\ndetermination. Precision should be determined as part of the validation of the method.\n\nTABLE 2. Class 2 solvents in pharmaceutical products.\n\nSolvent                          PDE (mg/day)       Concentration limit (ppm)\n\n\nAcetonitrile                          4.1                      410\nChlorobenzene                         3.6                      360\nChloroform                            0.6                       60\nCumene1                               0.7                       70\nCyclohexane                          38.8                      3880\nCyclopentyl methyl ether2            15.0                      1500\n1,2-Dichloroethene                   18.7                      1870\nDichloromethane                       6.0                      600\n1,2-Dimethoxyethane                   1.0                      100\nN,N-Dimethylacetamide                10.9                      1090\nN,N-Dimethylformamide                 8.8                      880\n1,4-Dioxane                           3.8                      380\n2-Ethoxyethanol                       1.6                      160\nEthyleneglycol                        6.2                      620\nFormamide                             2.2                      220\nHexane                                2.9                      290\nMethanol                             30.0                      3000\n2-Methoxyethanol                      0.5                       50\nMethylbutyl ketone                    0.5                       50\nMethylcyclohexane                    11.8                      1180\n                      3\nMethylisobutylketone                  45                       4500\nN-Methylpyrrolidone4                  5.3                      530\n\n\n1 The information included for Cumene reflects that included in the Revision of PDE\nInformation for Cumene which reached Step 4 in February 2011 and was subsequently\nincorporated into the core Guideline. See Part IV (pages 24-27).\n2 The information included for Cyclopentyl Methyl Ether reflects that included in the Revision\n\nof PDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n3 The information included for Methylisobutylketone reflects that included in the Revision of\n\nPDE Information for Methylisobutylketone which reached Step 4 in November 2016 and was\nsubsequently incorporated into the core Guideline. See Part V (pages 28-34).\n4 The information included for N-Methylpyrrolidone reflects that included in the Revision of\n\nPDE Information for NMP which reached Step 4 in September 2002 (two mistyping corrections\n\n\n\n                                                6\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Limit residual Methanol (Class 2) to a PDE of 30.0 mg/day, equivalent to a concentration limit of 3000 ppm.",
+    "quote": "Methanol | 30.0 | 3000",
+    "clause_number": "4.2",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "ich-q3c-r9.pdf:12#20",
+   "image": "work/vision-pages/ich-q3c-r9-p012.png",
+   "text_layer": "4.2 Solvents to Be Limited\nSolvents in Table 2 should be limited in pharmaceutical products because of their inherent\ntoxicity. PDEs are given to the nearest 0.1 mg/day, and concentrations are given to the\nnearest 10 ppm. The stated values do not reflect the necessary analytical precision of\ndetermination. Precision should be determined as part of the validation of the method.\n\nTABLE 2. Class 2 solvents in pharmaceutical products.\n\nSolvent                          PDE (mg/day)       Concentration limit (ppm)\n\n\nAcetonitrile                          4.1                      410\nChlorobenzene                         3.6                      360\nChloroform                            0.6                       60\nCumene1                               0.7                       70\nCyclohexane                          38.8                      3880\nCyclopentyl methyl ether2            15.0                      1500\n1,2-Dichloroethene                   18.7                      1870\nDichloromethane                       6.0                      600\n1,2-Dimethoxyethane                   1.0                      100\nN,N-Dimethylacetamide                10.9                      1090\nN,N-Dimethylformamide                 8.8                      880\n1,4-Dioxane                           3.8                      380\n2-Ethoxyethanol                       1.6                      160\nEthyleneglycol                        6.2                      620\nFormamide                             2.2                      220\nHexane                                2.9                      290\nMethanol                             30.0                      3000\n2-Methoxyethanol                      0.5                       50\nMethylbutyl ketone                    0.5                       50\nMethylcyclohexane                    11.8                      1180\n                      3\nMethylisobutylketone                  45                       4500\nN-Methylpyrrolidone4                  5.3                      530\n\n\n1 The information included for Cumene reflects that included in the Revision of PDE\nInformation for Cumene which reached Step 4 in February 2011 and was subsequently\nincorporated into the core Guideline. See Part IV (pages 24-27).\n2 The information included for Cyclopentyl Methyl Ether reflects that included in the Revision\n\nof PDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n3 The information included for Methylisobutylketone reflects that included in the Revision of\n\nPDE Information for Methylisobutylketone which reached Step 4 in November 2016 and was\nsubsequently incorporated into the core Guideline. See Part V (pages 28-34).\n4 The information included for N-Methylpyrrolidone reflects that included in the Revision of\n\nPDE Information for NMP which reached Step 4 in September 2002 (two mistyping corrections\n\n\n\n                                                6\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Limit residual 2-Methoxyethanol (Class 2) to a PDE of 0.5 mg/day, equivalent to a concentration limit of 50 ppm.",
+    "quote": "2-Methoxyethanol | 0.5 | 50",
+    "clause_number": "4.2",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "ich-q3c-r9.pdf:12#21",
+   "image": "work/vision-pages/ich-q3c-r9-p012.png",
+   "text_layer": "4.2 Solvents to Be Limited\nSolvents in Table 2 should be limited in pharmaceutical products because of their inherent\ntoxicity. PDEs are given to the nearest 0.1 mg/day, and concentrations are given to the\nnearest 10 ppm. The stated values do not reflect the necessary analytical precision of\ndetermination. Precision should be determined as part of the validation of the method.\n\nTABLE 2. Class 2 solvents in pharmaceutical products.\n\nSolvent                          PDE (mg/day)       Concentration limit (ppm)\n\n\nAcetonitrile                          4.1                      410\nChlorobenzene                         3.6                      360\nChloroform                            0.6                       60\nCumene1                               0.7                       70\nCyclohexane                          38.8                      3880\nCyclopentyl methyl ether2            15.0                      1500\n1,2-Dichloroethene                   18.7                      1870\nDichloromethane                       6.0                      600\n1,2-Dimethoxyethane                   1.0                      100\nN,N-Dimethylacetamide                10.9                      1090\nN,N-Dimethylformamide                 8.8                      880\n1,4-Dioxane                           3.8                      380\n2-Ethoxyethanol                       1.6                      160\nEthyleneglycol                        6.2                      620\nFormamide                             2.2                      220\nHexane                                2.9                      290\nMethanol                             30.0                      3000\n2-Methoxyethanol                      0.5                       50\nMethylbutyl ketone                    0.5                       50\nMethylcyclohexane                    11.8                      1180\n                      3\nMethylisobutylketone                  45                       4500\nN-Methylpyrrolidone4                  5.3                      530\n\n\n1 The information included for Cumene reflects that included in the Revision of PDE\nInformation for Cumene which reached Step 4 in February 2011 and was subsequently\nincorporated into the core Guideline. See Part IV (pages 24-27).\n2 The information included for Cyclopentyl Methyl Ether reflects that included in the Revision\n\nof PDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n3 The information included for Methylisobutylketone reflects that included in the Revision of\n\nPDE Information for Methylisobutylketone which reached Step 4 in November 2016 and was\nsubsequently incorporated into the core Guideline. See Part V (pages 28-34).\n4 The information included for N-Methylpyrrolidone reflects that included in the Revision of\n\nPDE Information for NMP which reached Step 4 in September 2002 (two mistyping corrections\n\n\n\n                                                6\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Limit residual Methylbutyl ketone (Class 2) to a PDE of 0.5 mg/day, equivalent to a concentration limit of 50 ppm.",
+    "quote": "Methylbutyl ketone | 0.5 | 50",
+    "clause_number": "4.2",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "ich-q3c-r9.pdf:12#22",
+   "image": "work/vision-pages/ich-q3c-r9-p012.png",
+   "text_layer": "4.2 Solvents to Be Limited\nSolvents in Table 2 should be limited in pharmaceutical products because of their inherent\ntoxicity. PDEs are given to the nearest 0.1 mg/day, and concentrations are given to the\nnearest 10 ppm. The stated values do not reflect the necessary analytical precision of\ndetermination. Precision should be determined as part of the validation of the method.\n\nTABLE 2. Class 2 solvents in pharmaceutical products.\n\nSolvent                          PDE (mg/day)       Concentration limit (ppm)\n\n\nAcetonitrile                          4.1                      410\nChlorobenzene                         3.6                      360\nChloroform                            0.6                       60\nCumene1                               0.7                       70\nCyclohexane                          38.8                      3880\nCyclopentyl methyl ether2            15.0                      1500\n1,2-Dichloroethene                   18.7                      1870\nDichloromethane                       6.0                      600\n1,2-Dimethoxyethane                   1.0                      100\nN,N-Dimethylacetamide                10.9                      1090\nN,N-Dimethylformamide                 8.8                      880\n1,4-Dioxane                           3.8                      380\n2-Ethoxyethanol                       1.6                      160\nEthyleneglycol                        6.2                      620\nFormamide                             2.2                      220\nHexane                                2.9                      290\nMethanol                             30.0                      3000\n2-Methoxyethanol                      0.5                       50\nMethylbutyl ketone                    0.5                       50\nMethylcyclohexane                    11.8                      1180\n                      3\nMethylisobutylketone                  45                       4500\nN-Methylpyrrolidone4                  5.3                      530\n\n\n1 The information included for Cumene reflects that included in the Revision of PDE\nInformation for Cumene which reached Step 4 in February 2011 and was subsequently\nincorporated into the core Guideline. See Part IV (pages 24-27).\n2 The information included for Cyclopentyl Methyl Ether reflects that included in the Revision\n\nof PDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n3 The information included for Methylisobutylketone reflects that included in the Revision of\n\nPDE Information for Methylisobutylketone which reached Step 4 in November 2016 and was\nsubsequently incorporated into the core Guideline. See Part V (pages 28-34).\n4 The information included for N-Methylpyrrolidone reflects that included in the Revision of\n\nPDE Information for NMP which reached Step 4 in September 2002 (two mistyping corrections\n\n\n\n                                                6\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Limit residual Methylcyclohexane (Class 2) to a PDE of 11.8 mg/day, equivalent to a concentration limit of 1180 ppm.",
+    "quote": "Methylcyclohexane | 11.8 | 1180",
+    "clause_number": "4.2",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "ich-q3c-r9.pdf:12#23",
+   "image": "work/vision-pages/ich-q3c-r9-p012.png",
+   "text_layer": "4.2 Solvents to Be Limited\nSolvents in Table 2 should be limited in pharmaceutical products because of their inherent\ntoxicity. PDEs are given to the nearest 0.1 mg/day, and concentrations are given to the\nnearest 10 ppm. The stated values do not reflect the necessary analytical precision of\ndetermination. Precision should be determined as part of the validation of the method.\n\nTABLE 2. Class 2 solvents in pharmaceutical products.\n\nSolvent                          PDE (mg/day)       Concentration limit (ppm)\n\n\nAcetonitrile                          4.1                      410\nChlorobenzene                         3.6                      360\nChloroform                            0.6                       60\nCumene1                               0.7                       70\nCyclohexane                          38.8                      3880\nCyclopentyl methyl ether2            15.0                      1500\n1,2-Dichloroethene                   18.7                      1870\nDichloromethane                       6.0                      600\n1,2-Dimethoxyethane                   1.0                      100\nN,N-Dimethylacetamide                10.9                      1090\nN,N-Dimethylformamide                 8.8                      880\n1,4-Dioxane                           3.8                      380\n2-Ethoxyethanol                       1.6                      160\nEthyleneglycol                        6.2                      620\nFormamide                             2.2                      220\nHexane                                2.9                      290\nMethanol                             30.0                      3000\n2-Methoxyethanol                      0.5                       50\nMethylbutyl ketone                    0.5                       50\nMethylcyclohexane                    11.8                      1180\n                      3\nMethylisobutylketone                  45                       4500\nN-Methylpyrrolidone4                  5.3                      530\n\n\n1 The information included for Cumene reflects that included in the Revision of PDE\nInformation for Cumene which reached Step 4 in February 2011 and was subsequently\nincorporated into the core Guideline. See Part IV (pages 24-27).\n2 The information included for Cyclopentyl Methyl Ether reflects that included in the Revision\n\nof PDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n3 The information included for Methylisobutylketone reflects that included in the Revision of\n\nPDE Information for Methylisobutylketone which reached Step 4 in November 2016 and was\nsubsequently incorporated into the core Guideline. See Part V (pages 28-34).\n4 The information included for N-Methylpyrrolidone reflects that included in the Revision of\n\nPDE Information for NMP which reached Step 4 in September 2002 (two mistyping corrections\n\n\n\n                                                6\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Limit residual Methylisobutylketone (Class 2) to a PDE of 45 mg/day, equivalent to a concentration limit of 4500 ppm.",
+    "quote": "Methylisobutylketone | 45 | 4500",
+    "clause_number": "4.2",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "ich-q3c-r9.pdf:12#24",
+   "image": "work/vision-pages/ich-q3c-r9-p012.png",
+   "text_layer": "4.2 Solvents to Be Limited\nSolvents in Table 2 should be limited in pharmaceutical products because of their inherent\ntoxicity. PDEs are given to the nearest 0.1 mg/day, and concentrations are given to the\nnearest 10 ppm. The stated values do not reflect the necessary analytical precision of\ndetermination. Precision should be determined as part of the validation of the method.\n\nTABLE 2. Class 2 solvents in pharmaceutical products.\n\nSolvent                          PDE (mg/day)       Concentration limit (ppm)\n\n\nAcetonitrile                          4.1                      410\nChlorobenzene                         3.6                      360\nChloroform                            0.6                       60\nCumene1                               0.7                       70\nCyclohexane                          38.8                      3880\nCyclopentyl methyl ether2            15.0                      1500\n1,2-Dichloroethene                   18.7                      1870\nDichloromethane                       6.0                      600\n1,2-Dimethoxyethane                   1.0                      100\nN,N-Dimethylacetamide                10.9                      1090\nN,N-Dimethylformamide                 8.8                      880\n1,4-Dioxane                           3.8                      380\n2-Ethoxyethanol                       1.6                      160\nEthyleneglycol                        6.2                      620\nFormamide                             2.2                      220\nHexane                                2.9                      290\nMethanol                             30.0                      3000\n2-Methoxyethanol                      0.5                       50\nMethylbutyl ketone                    0.5                       50\nMethylcyclohexane                    11.8                      1180\n                      3\nMethylisobutylketone                  45                       4500\nN-Methylpyrrolidone4                  5.3                      530\n\n\n1 The information included for Cumene reflects that included in the Revision of PDE\nInformation for Cumene which reached Step 4 in February 2011 and was subsequently\nincorporated into the core Guideline. See Part IV (pages 24-27).\n2 The information included for Cyclopentyl Methyl Ether reflects that included in the Revision\n\nof PDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n3 The information included for Methylisobutylketone reflects that included in the Revision of\n\nPDE Information for Methylisobutylketone which reached Step 4 in November 2016 and was\nsubsequently incorporated into the core Guideline. See Part V (pages 28-34).\n4 The information included for N-Methylpyrrolidone reflects that included in the Revision of\n\nPDE Information for NMP which reached Step 4 in September 2002 (two mistyping corrections\n\n\n\n                                                6\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Limit residual N-Methylpyrrolidone (Class 2) to a PDE of 5.3 mg/day, equivalent to a concentration limit of 530 ppm.",
+    "quote": "N-Methylpyrrolidone | 5.3 | 530",
+    "clause_number": "4.2",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "ich-q3c-r9.pdf:13#1",
+   "image": "work/vision-pages/ich-q3c-r9-p013.png",
+   "text_layer": "                                                              Impurities: Guideline for Residual Solvents\n\n\nNitromethane                            0.5                          50\nPyridine                                 2.0                        200\nSulfolane                               1.6                         160\n\n\nTertiary-butyl alcohol5                  35                         3500\nTetrahydrofuran6                        7.2                         720\nTetralin                                1.0                         100\nToluene                                 8.9                         890\n1,1,2-Trichloroethene                   0.8                          80\nXylene*                                 21.7                        2170\n*\n usually 60% m-xylene, 14% p-xylene, 9% o-xylene with 17% ethyl benzene\n\n4.3 Solvents with Low Toxic Potential\nSolvents in Class 3 (shown in Table 3) may be regarded as less toxic and of lower risk to human\nhealth. Class 3 includes no solvent known as a human health hazard at levels normally accepted in\npharmaceuticals. However, there are no long-term toxicity or carcinogenicity studies for many of\nthe solvents in Class 3. Available data indicate that they are less toxic in acute or short-term studies\nand negative in genotoxicity studies. It is considered that amounts of these residual solvents of 50\nmg per day or less (corresponding to 5000 ppm or 0.5% under Option 1) would be acceptable\nwithout justification. Higher amounts may also be acceptable provided they are realistic in relation\nto manufacturing capability and good manufacturing practice.\n\nTABLE 3. Class 3 solvents which should be limited by GMP or other quality-based\nrequirements.\n    Acetic acid                                 Heptane\n    Acetone                                     Isobutyl acetate\n    Anisole                                     Isopropyl acetate\n    1-Butanol                                   Methyl acetate\n    2-Butanol                                   3-Methyl-1-butanol\n    Butyl acetate                               Methylethyl ketone\n    tert-Butylmethyl ether                      2-Methyl-1-propanol\n    Dimethyl sulfoxide                          2-Methyltetrahydrofuran7\n    Ethanol                                     Pentane\n\n\nmade in October 2002), and was incorporated into the core guideline in November 2005. See\nPart III (pages 22-23).\n5 The information included for Tertiary-butyl Alcohol reflects that included in the Revision of\n\nPDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n6 The information included for Tetrahydrofuran reflects that included in the Revision of PDE\n\nInformation for THF which reached Step 4 in September 2002, and was incorporated into the\ncore guideline in November 2005. See Part II (pages 20-21).\n7 The information included for 2-Methyltetrahydrofuran reflects that included in the Revision\n\nof PDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n\n\n\n                                                   7\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Limit residual Nitromethane (Class 2) to a PDE of 0.5 mg/day, equivalent to a concentration limit of 50 ppm.",
+    "quote": "Nitromethane | 0.5 | 50",
+    "clause_number": "4.2",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "ich-q3c-r9.pdf:13#2",
+   "image": "work/vision-pages/ich-q3c-r9-p013.png",
+   "text_layer": "                                                              Impurities: Guideline for Residual Solvents\n\n\nNitromethane                            0.5                          50\nPyridine                                 2.0                        200\nSulfolane                               1.6                         160\n\n\nTertiary-butyl alcohol5                  35                         3500\nTetrahydrofuran6                        7.2                         720\nTetralin                                1.0                         100\nToluene                                 8.9                         890\n1,1,2-Trichloroethene                   0.8                          80\nXylene*                                 21.7                        2170\n*\n usually 60% m-xylene, 14% p-xylene, 9% o-xylene with 17% ethyl benzene\n\n4.3 Solvents with Low Toxic Potential\nSolvents in Class 3 (shown in Table 3) may be regarded as less toxic and of lower risk to human\nhealth. Class 3 includes no solvent known as a human health hazard at levels normally accepted in\npharmaceuticals. However, there are no long-term toxicity or carcinogenicity studies for many of\nthe solvents in Class 3. Available data indicate that they are less toxic in acute or short-term studies\nand negative in genotoxicity studies. It is considered that amounts of these residual solvents of 50\nmg per day or less (corresponding to 5000 ppm or 0.5% under Option 1) would be acceptable\nwithout justification. Higher amounts may also be acceptable provided they are realistic in relation\nto manufacturing capability and good manufacturing practice.\n\nTABLE 3. Class 3 solvents which should be limited by GMP or other quality-based\nrequirements.\n    Acetic acid                                 Heptane\n    Acetone                                     Isobutyl acetate\n    Anisole                                     Isopropyl acetate\n    1-Butanol                                   Methyl acetate\n    2-Butanol                                   3-Methyl-1-butanol\n    Butyl acetate                               Methylethyl ketone\n    tert-Butylmethyl ether                      2-Methyl-1-propanol\n    Dimethyl sulfoxide                          2-Methyltetrahydrofuran7\n    Ethanol                                     Pentane\n\n\nmade in October 2002), and was incorporated into the core guideline in November 2005. See\nPart III (pages 22-23).\n5 The information included for Tertiary-butyl Alcohol reflects that included in the Revision of\n\nPDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n6 The information included for Tetrahydrofuran reflects that included in the Revision of PDE\n\nInformation for THF which reached Step 4 in September 2002, and was incorporated into the\ncore guideline in November 2005. See Part II (pages 20-21).\n7 The information included for 2-Methyltetrahydrofuran reflects that included in the Revision\n\nof PDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n\n\n\n                                                   7\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Limit residual Pyridine (Class 2) to a PDE of 2.0 mg/day, equivalent to a concentration limit of 200 ppm.",
+    "quote": "Pyridine | 2.0 | 200",
+    "clause_number": "4.2",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "ich-q3c-r9.pdf:13#3",
+   "image": "work/vision-pages/ich-q3c-r9-p013.png",
+   "text_layer": "                                                              Impurities: Guideline for Residual Solvents\n\n\nNitromethane                            0.5                          50\nPyridine                                 2.0                        200\nSulfolane                               1.6                         160\n\n\nTertiary-butyl alcohol5                  35                         3500\nTetrahydrofuran6                        7.2                         720\nTetralin                                1.0                         100\nToluene                                 8.9                         890\n1,1,2-Trichloroethene                   0.8                          80\nXylene*                                 21.7                        2170\n*\n usually 60% m-xylene, 14% p-xylene, 9% o-xylene with 17% ethyl benzene\n\n4.3 Solvents with Low Toxic Potential\nSolvents in Class 3 (shown in Table 3) may be regarded as less toxic and of lower risk to human\nhealth. Class 3 includes no solvent known as a human health hazard at levels normally accepted in\npharmaceuticals. However, there are no long-term toxicity or carcinogenicity studies for many of\nthe solvents in Class 3. Available data indicate that they are less toxic in acute or short-term studies\nand negative in genotoxicity studies. It is considered that amounts of these residual solvents of 50\nmg per day or less (corresponding to 5000 ppm or 0.5% under Option 1) would be acceptable\nwithout justification. Higher amounts may also be acceptable provided they are realistic in relation\nto manufacturing capability and good manufacturing practice.\n\nTABLE 3. Class 3 solvents which should be limited by GMP or other quality-based\nrequirements.\n    Acetic acid                                 Heptane\n    Acetone                                     Isobutyl acetate\n    Anisole                                     Isopropyl acetate\n    1-Butanol                                   Methyl acetate\n    2-Butanol                                   3-Methyl-1-butanol\n    Butyl acetate                               Methylethyl ketone\n    tert-Butylmethyl ether                      2-Methyl-1-propanol\n    Dimethyl sulfoxide                          2-Methyltetrahydrofuran7\n    Ethanol                                     Pentane\n\n\nmade in October 2002), and was incorporated into the core guideline in November 2005. See\nPart III (pages 22-23).\n5 The information included for Tertiary-butyl Alcohol reflects that included in the Revision of\n\nPDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n6 The information included for Tetrahydrofuran reflects that included in the Revision of PDE\n\nInformation for THF which reached Step 4 in September 2002, and was incorporated into the\ncore guideline in November 2005. See Part II (pages 20-21).\n7 The information included for 2-Methyltetrahydrofuran reflects that included in the Revision\n\nof PDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n\n\n\n                                                   7\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Limit residual Sulfolane (Class 2) to a PDE of 1.6 mg/day, equivalent to a concentration limit of 160 ppm.",
+    "quote": "Sulfolane | 1.6 | 160",
+    "clause_number": "4.2",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "ich-q3c-r9.pdf:13#4",
+   "image": "work/vision-pages/ich-q3c-r9-p013.png",
+   "text_layer": "                                                              Impurities: Guideline for Residual Solvents\n\n\nNitromethane                            0.5                          50\nPyridine                                 2.0                        200\nSulfolane                               1.6                         160\n\n\nTertiary-butyl alcohol5                  35                         3500\nTetrahydrofuran6                        7.2                         720\nTetralin                                1.0                         100\nToluene                                 8.9                         890\n1,1,2-Trichloroethene                   0.8                          80\nXylene*                                 21.7                        2170\n*\n usually 60% m-xylene, 14% p-xylene, 9% o-xylene with 17% ethyl benzene\n\n4.3 Solvents with Low Toxic Potential\nSolvents in Class 3 (shown in Table 3) may be regarded as less toxic and of lower risk to human\nhealth. Class 3 includes no solvent known as a human health hazard at levels normally accepted in\npharmaceuticals. However, there are no long-term toxicity or carcinogenicity studies for many of\nthe solvents in Class 3. Available data indicate that they are less toxic in acute or short-term studies\nand negative in genotoxicity studies. It is considered that amounts of these residual solvents of 50\nmg per day or less (corresponding to 5000 ppm or 0.5% under Option 1) would be acceptable\nwithout justification. Higher amounts may also be acceptable provided they are realistic in relation\nto manufacturing capability and good manufacturing practice.\n\nTABLE 3. Class 3 solvents which should be limited by GMP or other quality-based\nrequirements.\n    Acetic acid                                 Heptane\n    Acetone                                     Isobutyl acetate\n    Anisole                                     Isopropyl acetate\n    1-Butanol                                   Methyl acetate\n    2-Butanol                                   3-Methyl-1-butanol\n    Butyl acetate                               Methylethyl ketone\n    tert-Butylmethyl ether                      2-Methyl-1-propanol\n    Dimethyl sulfoxide                          2-Methyltetrahydrofuran7\n    Ethanol                                     Pentane\n\n\nmade in October 2002), and was incorporated into the core guideline in November 2005. See\nPart III (pages 22-23).\n5 The information included for Tertiary-butyl Alcohol reflects that included in the Revision of\n\nPDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n6 The information included for Tetrahydrofuran reflects that included in the Revision of PDE\n\nInformation for THF which reached Step 4 in September 2002, and was incorporated into the\ncore guideline in November 2005. See Part II (pages 20-21).\n7 The information included for 2-Methyltetrahydrofuran reflects that included in the Revision\n\nof PDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n\n\n\n                                                   7\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Limit residual Tertiary-butyl alcohol (Class 2) to a PDE of 35 mg/day, equivalent to a concentration limit of 3500 ppm.",
+    "quote": "Tertiary-butyl alcohol | 35 | 3500",
+    "clause_number": "4.2",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "ich-q3c-r9.pdf:13#5",
+   "image": "work/vision-pages/ich-q3c-r9-p013.png",
+   "text_layer": "                                                              Impurities: Guideline for Residual Solvents\n\n\nNitromethane                            0.5                          50\nPyridine                                 2.0                        200\nSulfolane                               1.6                         160\n\n\nTertiary-butyl alcohol5                  35                         3500\nTetrahydrofuran6                        7.2                         720\nTetralin                                1.0                         100\nToluene                                 8.9                         890\n1,1,2-Trichloroethene                   0.8                          80\nXylene*                                 21.7                        2170\n*\n usually 60% m-xylene, 14% p-xylene, 9% o-xylene with 17% ethyl benzene\n\n4.3 Solvents with Low Toxic Potential\nSolvents in Class 3 (shown in Table 3) may be regarded as less toxic and of lower risk to human\nhealth. Class 3 includes no solvent known as a human health hazard at levels normally accepted in\npharmaceuticals. However, there are no long-term toxicity or carcinogenicity studies for many of\nthe solvents in Class 3. Available data indicate that they are less toxic in acute or short-term studies\nand negative in genotoxicity studies. It is considered that amounts of these residual solvents of 50\nmg per day or less (corresponding to 5000 ppm or 0.5% under Option 1) would be acceptable\nwithout justification. Higher amounts may also be acceptable provided they are realistic in relation\nto manufacturing capability and good manufacturing practice.\n\nTABLE 3. Class 3 solvents which should be limited by GMP or other quality-based\nrequirements.\n    Acetic acid                                 Heptane\n    Acetone                                     Isobutyl acetate\n    Anisole                                     Isopropyl acetate\n    1-Butanol                                   Methyl acetate\n    2-Butanol                                   3-Methyl-1-butanol\n    Butyl acetate                               Methylethyl ketone\n    tert-Butylmethyl ether                      2-Methyl-1-propanol\n    Dimethyl sulfoxide                          2-Methyltetrahydrofuran7\n    Ethanol                                     Pentane\n\n\nmade in October 2002), and was incorporated into the core guideline in November 2005. See\nPart III (pages 22-23).\n5 The information included for Tertiary-butyl Alcohol reflects that included in the Revision of\n\nPDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n6 The information included for Tetrahydrofuran reflects that included in the Revision of PDE\n\nInformation for THF which reached Step 4 in September 2002, and was incorporated into the\ncore guideline in November 2005. See Part II (pages 20-21).\n7 The information included for 2-Methyltetrahydrofuran reflects that included in the Revision\n\nof PDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n\n\n\n                                                   7\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Limit residual Tetrahydrofuran (Class 2) to a PDE of 7.2 mg/day, equivalent to a concentration limit of 720 ppm.",
+    "quote": "Tetrahydrofuran | 7.2 | 720",
+    "clause_number": "4.2",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "ich-q3c-r9.pdf:13#6",
+   "image": "work/vision-pages/ich-q3c-r9-p013.png",
+   "text_layer": "                                                              Impurities: Guideline for Residual Solvents\n\n\nNitromethane                            0.5                          50\nPyridine                                 2.0                        200\nSulfolane                               1.6                         160\n\n\nTertiary-butyl alcohol5                  35                         3500\nTetrahydrofuran6                        7.2                         720\nTetralin                                1.0                         100\nToluene                                 8.9                         890\n1,1,2-Trichloroethene                   0.8                          80\nXylene*                                 21.7                        2170\n*\n usually 60% m-xylene, 14% p-xylene, 9% o-xylene with 17% ethyl benzene\n\n4.3 Solvents with Low Toxic Potential\nSolvents in Class 3 (shown in Table 3) may be regarded as less toxic and of lower risk to human\nhealth. Class 3 includes no solvent known as a human health hazard at levels normally accepted in\npharmaceuticals. However, there are no long-term toxicity or carcinogenicity studies for many of\nthe solvents in Class 3. Available data indicate that they are less toxic in acute or short-term studies\nand negative in genotoxicity studies. It is considered that amounts of these residual solvents of 50\nmg per day or less (corresponding to 5000 ppm or 0.5% under Option 1) would be acceptable\nwithout justification. Higher amounts may also be acceptable provided they are realistic in relation\nto manufacturing capability and good manufacturing practice.\n\nTABLE 3. Class 3 solvents which should be limited by GMP or other quality-based\nrequirements.\n    Acetic acid                                 Heptane\n    Acetone                                     Isobutyl acetate\n    Anisole                                     Isopropyl acetate\n    1-Butanol                                   Methyl acetate\n    2-Butanol                                   3-Methyl-1-butanol\n    Butyl acetate                               Methylethyl ketone\n    tert-Butylmethyl ether                      2-Methyl-1-propanol\n    Dimethyl sulfoxide                          2-Methyltetrahydrofuran7\n    Ethanol                                     Pentane\n\n\nmade in October 2002), and was incorporated into the core guideline in November 2005. See\nPart III (pages 22-23).\n5 The information included for Tertiary-butyl Alcohol reflects that included in the Revision of\n\nPDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n6 The information included for Tetrahydrofuran reflects that included in the Revision of PDE\n\nInformation for THF which reached Step 4 in September 2002, and was incorporated into the\ncore guideline in November 2005. See Part II (pages 20-21).\n7 The information included for 2-Methyltetrahydrofuran reflects that included in the Revision\n\nof PDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n\n\n\n                                                   7\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Limit residual Tetralin (Class 2) to a PDE of 1.0 mg/day, equivalent to a concentration limit of 100 ppm.",
+    "quote": "Tetralin | 1.0 | 100",
+    "clause_number": "4.2",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "ich-q3c-r9.pdf:13#7",
+   "image": "work/vision-pages/ich-q3c-r9-p013.png",
+   "text_layer": "                                                              Impurities: Guideline for Residual Solvents\n\n\nNitromethane                            0.5                          50\nPyridine                                 2.0                        200\nSulfolane                               1.6                         160\n\n\nTertiary-butyl alcohol5                  35                         3500\nTetrahydrofuran6                        7.2                         720\nTetralin                                1.0                         100\nToluene                                 8.9                         890\n1,1,2-Trichloroethene                   0.8                          80\nXylene*                                 21.7                        2170\n*\n usually 60% m-xylene, 14% p-xylene, 9% o-xylene with 17% ethyl benzene\n\n4.3 Solvents with Low Toxic Potential\nSolvents in Class 3 (shown in Table 3) may be regarded as less toxic and of lower risk to human\nhealth. Class 3 includes no solvent known as a human health hazard at levels normally accepted in\npharmaceuticals. However, there are no long-term toxicity or carcinogenicity studies for many of\nthe solvents in Class 3. Available data indicate that they are less toxic in acute or short-term studies\nand negative in genotoxicity studies. It is considered that amounts of these residual solvents of 50\nmg per day or less (corresponding to 5000 ppm or 0.5% under Option 1) would be acceptable\nwithout justification. Higher amounts may also be acceptable provided they are realistic in relation\nto manufacturing capability and good manufacturing practice.\n\nTABLE 3. Class 3 solvents which should be limited by GMP or other quality-based\nrequirements.\n    Acetic acid                                 Heptane\n    Acetone                                     Isobutyl acetate\n    Anisole                                     Isopropyl acetate\n    1-Butanol                                   Methyl acetate\n    2-Butanol                                   3-Methyl-1-butanol\n    Butyl acetate                               Methylethyl ketone\n    tert-Butylmethyl ether                      2-Methyl-1-propanol\n    Dimethyl sulfoxide                          2-Methyltetrahydrofuran7\n    Ethanol                                     Pentane\n\n\nmade in October 2002), and was incorporated into the core guideline in November 2005. See\nPart III (pages 22-23).\n5 The information included for Tertiary-butyl Alcohol reflects that included in the Revision of\n\nPDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n6 The information included for Tetrahydrofuran reflects that included in the Revision of PDE\n\nInformation for THF which reached Step 4 in September 2002, and was incorporated into the\ncore guideline in November 2005. See Part II (pages 20-21).\n7 The information included for 2-Methyltetrahydrofuran reflects that included in the Revision\n\nof PDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n\n\n\n                                                   7\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Limit residual Toluene (Class 2) to a PDE of 8.9 mg/day, equivalent to a concentration limit of 890 ppm.",
+    "quote": "Toluene | 8.9 | 890",
+    "clause_number": "4.2",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "ich-q3c-r9.pdf:13#8",
+   "image": "work/vision-pages/ich-q3c-r9-p013.png",
+   "text_layer": "                                                              Impurities: Guideline for Residual Solvents\n\n\nNitromethane                            0.5                          50\nPyridine                                 2.0                        200\nSulfolane                               1.6                         160\n\n\nTertiary-butyl alcohol5                  35                         3500\nTetrahydrofuran6                        7.2                         720\nTetralin                                1.0                         100\nToluene                                 8.9                         890\n1,1,2-Trichloroethene                   0.8                          80\nXylene*                                 21.7                        2170\n*\n usually 60% m-xylene, 14% p-xylene, 9% o-xylene with 17% ethyl benzene\n\n4.3 Solvents with Low Toxic Potential\nSolvents in Class 3 (shown in Table 3) may be regarded as less toxic and of lower risk to human\nhealth. Class 3 includes no solvent known as a human health hazard at levels normally accepted in\npharmaceuticals. However, there are no long-term toxicity or carcinogenicity studies for many of\nthe solvents in Class 3. Available data indicate that they are less toxic in acute or short-term studies\nand negative in genotoxicity studies. It is considered that amounts of these residual solvents of 50\nmg per day or less (corresponding to 5000 ppm or 0.5% under Option 1) would be acceptable\nwithout justification. Higher amounts may also be acceptable provided they are realistic in relation\nto manufacturing capability and good manufacturing practice.\n\nTABLE 3. Class 3 solvents which should be limited by GMP or other quality-based\nrequirements.\n    Acetic acid                                 Heptane\n    Acetone                                     Isobutyl acetate\n    Anisole                                     Isopropyl acetate\n    1-Butanol                                   Methyl acetate\n    2-Butanol                                   3-Methyl-1-butanol\n    Butyl acetate                               Methylethyl ketone\n    tert-Butylmethyl ether                      2-Methyl-1-propanol\n    Dimethyl sulfoxide                          2-Methyltetrahydrofuran7\n    Ethanol                                     Pentane\n\n\nmade in October 2002), and was incorporated into the core guideline in November 2005. See\nPart III (pages 22-23).\n5 The information included for Tertiary-butyl Alcohol reflects that included in the Revision of\n\nPDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n6 The information included for Tetrahydrofuran reflects that included in the Revision of PDE\n\nInformation for THF which reached Step 4 in September 2002, and was incorporated into the\ncore guideline in November 2005. See Part II (pages 20-21).\n7 The information included for 2-Methyltetrahydrofuran reflects that included in the Revision\n\nof PDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n\n\n\n                                                   7\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Limit residual 1,1,2-Trichloroethene (Class 2) to a PDE of 0.8 mg/day, equivalent to a concentration limit of 80 ppm.",
+    "quote": "1,1,2-Trichloroethene | 0.8 | 80",
+    "clause_number": "4.2",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "ich-q3c-r9.pdf:13#9",
+   "image": "work/vision-pages/ich-q3c-r9-p013.png",
+   "text_layer": "                                                              Impurities: Guideline for Residual Solvents\n\n\nNitromethane                            0.5                          50\nPyridine                                 2.0                        200\nSulfolane                               1.6                         160\n\n\nTertiary-butyl alcohol5                  35                         3500\nTetrahydrofuran6                        7.2                         720\nTetralin                                1.0                         100\nToluene                                 8.9                         890\n1,1,2-Trichloroethene                   0.8                          80\nXylene*                                 21.7                        2170\n*\n usually 60% m-xylene, 14% p-xylene, 9% o-xylene with 17% ethyl benzene\n\n4.3 Solvents with Low Toxic Potential\nSolvents in Class 3 (shown in Table 3) may be regarded as less toxic and of lower risk to human\nhealth. Class 3 includes no solvent known as a human health hazard at levels normally accepted in\npharmaceuticals. However, there are no long-term toxicity or carcinogenicity studies for many of\nthe solvents in Class 3. Available data indicate that they are less toxic in acute or short-term studies\nand negative in genotoxicity studies. It is considered that amounts of these residual solvents of 50\nmg per day or less (corresponding to 5000 ppm or 0.5% under Option 1) would be acceptable\nwithout justification. Higher amounts may also be acceptable provided they are realistic in relation\nto manufacturing capability and good manufacturing practice.\n\nTABLE 3. Class 3 solvents which should be limited by GMP or other quality-based\nrequirements.\n    Acetic acid                                 Heptane\n    Acetone                                     Isobutyl acetate\n    Anisole                                     Isopropyl acetate\n    1-Butanol                                   Methyl acetate\n    2-Butanol                                   3-Methyl-1-butanol\n    Butyl acetate                               Methylethyl ketone\n    tert-Butylmethyl ether                      2-Methyl-1-propanol\n    Dimethyl sulfoxide                          2-Methyltetrahydrofuran7\n    Ethanol                                     Pentane\n\n\nmade in October 2002), and was incorporated into the core guideline in November 2005. See\nPart III (pages 22-23).\n5 The information included for Tertiary-butyl Alcohol reflects that included in the Revision of\n\nPDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n6 The information included for Tetrahydrofuran reflects that included in the Revision of PDE\n\nInformation for THF which reached Step 4 in September 2002, and was incorporated into the\ncore guideline in November 2005. See Part II (pages 20-21).\n7 The information included for 2-Methyltetrahydrofuran reflects that included in the Revision\n\nof PDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n\n\n\n                                                   7\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Limit residual xylene (Class 2) to a PDE of 21.7 mg/day, equivalent to a concentration limit of 2170 ppm.",
+    "quote": "Xylene* | 21.7 | 2170",
+    "clause_number": "4.2",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "ich-q3c-r9.pdf:13#10",
+   "image": "work/vision-pages/ich-q3c-r9-p013.png",
+   "text_layer": "                                                              Impurities: Guideline for Residual Solvents\n\n\nNitromethane                            0.5                          50\nPyridine                                 2.0                        200\nSulfolane                               1.6                         160\n\n\nTertiary-butyl alcohol5                  35                         3500\nTetrahydrofuran6                        7.2                         720\nTetralin                                1.0                         100\nToluene                                 8.9                         890\n1,1,2-Trichloroethene                   0.8                          80\nXylene*                                 21.7                        2170\n*\n usually 60% m-xylene, 14% p-xylene, 9% o-xylene with 17% ethyl benzene\n\n4.3 Solvents with Low Toxic Potential\nSolvents in Class 3 (shown in Table 3) may be regarded as less toxic and of lower risk to human\nhealth. Class 3 includes no solvent known as a human health hazard at levels normally accepted in\npharmaceuticals. However, there are no long-term toxicity or carcinogenicity studies for many of\nthe solvents in Class 3. Available data indicate that they are less toxic in acute or short-term studies\nand negative in genotoxicity studies. It is considered that amounts of these residual solvents of 50\nmg per day or less (corresponding to 5000 ppm or 0.5% under Option 1) would be acceptable\nwithout justification. Higher amounts may also be acceptable provided they are realistic in relation\nto manufacturing capability and good manufacturing practice.\n\nTABLE 3. Class 3 solvents which should be limited by GMP or other quality-based\nrequirements.\n    Acetic acid                                 Heptane\n    Acetone                                     Isobutyl acetate\n    Anisole                                     Isopropyl acetate\n    1-Butanol                                   Methyl acetate\n    2-Butanol                                   3-Methyl-1-butanol\n    Butyl acetate                               Methylethyl ketone\n    tert-Butylmethyl ether                      2-Methyl-1-propanol\n    Dimethyl sulfoxide                          2-Methyltetrahydrofuran7\n    Ethanol                                     Pentane\n\n\nmade in October 2002), and was incorporated into the core guideline in November 2005. See\nPart III (pages 22-23).\n5 The information included for Tertiary-butyl Alcohol reflects that included in the Revision of\n\nPDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n6 The information included for Tetrahydrofuran reflects that included in the Revision of PDE\n\nInformation for THF which reached Step 4 in September 2002, and was incorporated into the\ncore guideline in November 2005. See Part II (pages 20-21).\n7 The information included for 2-Methyltetrahydrofuran reflects that included in the Revision\n\nof PDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n\n\n\n                                                   7\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Class 3 residual solvents at 50 mg per day or less (5000 ppm or 0.5% under Option 1) may be accepted without justification.",
+    "quote": "It is considered that amounts of these residual solvents of 50\nmg per day or less (corresponding to 5000 ppm or 0.5% under Option 1) would be acceptable\nwithout justification.",
+    "clause_number": "4.3",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "Class 3 solvents at or below 50 mg/day",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "ich-q3c-r9.pdf:13#11",
+   "image": "work/vision-pages/ich-q3c-r9-p013.png",
+   "text_layer": "                                                              Impurities: Guideline for Residual Solvents\n\n\nNitromethane                            0.5                          50\nPyridine                                 2.0                        200\nSulfolane                               1.6                         160\n\n\nTertiary-butyl alcohol5                  35                         3500\nTetrahydrofuran6                        7.2                         720\nTetralin                                1.0                         100\nToluene                                 8.9                         890\n1,1,2-Trichloroethene                   0.8                          80\nXylene*                                 21.7                        2170\n*\n usually 60% m-xylene, 14% p-xylene, 9% o-xylene with 17% ethyl benzene\n\n4.3 Solvents with Low Toxic Potential\nSolvents in Class 3 (shown in Table 3) may be regarded as less toxic and of lower risk to human\nhealth. Class 3 includes no solvent known as a human health hazard at levels normally accepted in\npharmaceuticals. However, there are no long-term toxicity or carcinogenicity studies for many of\nthe solvents in Class 3. Available data indicate that they are less toxic in acute or short-term studies\nand negative in genotoxicity studies. It is considered that amounts of these residual solvents of 50\nmg per day or less (corresponding to 5000 ppm or 0.5% under Option 1) would be acceptable\nwithout justification. Higher amounts may also be acceptable provided they are realistic in relation\nto manufacturing capability and good manufacturing practice.\n\nTABLE 3. Class 3 solvents which should be limited by GMP or other quality-based\nrequirements.\n    Acetic acid                                 Heptane\n    Acetone                                     Isobutyl acetate\n    Anisole                                     Isopropyl acetate\n    1-Butanol                                   Methyl acetate\n    2-Butanol                                   3-Methyl-1-butanol\n    Butyl acetate                               Methylethyl ketone\n    tert-Butylmethyl ether                      2-Methyl-1-propanol\n    Dimethyl sulfoxide                          2-Methyltetrahydrofuran7\n    Ethanol                                     Pentane\n\n\nmade in October 2002), and was incorporated into the core guideline in November 2005. See\nPart III (pages 22-23).\n5 The information included for Tertiary-butyl Alcohol reflects that included in the Revision of\n\nPDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n6 The information included for Tetrahydrofuran reflects that included in the Revision of PDE\n\nInformation for THF which reached Step 4 in September 2002, and was incorporated into the\ncore guideline in November 2005. See Part II (pages 20-21).\n7 The information included for 2-Methyltetrahydrofuran reflects that included in the Revision\n\nof PDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n\n\n\n                                                   7\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Class 3 residual solvent amounts above 50 mg per day may be accepted only if they are realistic for manufacturing capability and good manufacturing practice.",
+    "quote": "Higher amounts may also be acceptable provided they are realistic in relation\nto manufacturing capability and good manufacturing practice.",
+    "clause_number": "4.3",
+    "strength": "optional",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "provided realistic for manufacturing capability and GMP",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  },
+  {
+   "id": "ich-q3c-r9.pdf:13#12",
+   "image": "work/vision-pages/ich-q3c-r9-p013.png",
+   "text_layer": "                                                              Impurities: Guideline for Residual Solvents\n\n\nNitromethane                            0.5                          50\nPyridine                                 2.0                        200\nSulfolane                               1.6                         160\n\n\nTertiary-butyl alcohol5                  35                         3500\nTetrahydrofuran6                        7.2                         720\nTetralin                                1.0                         100\nToluene                                 8.9                         890\n1,1,2-Trichloroethene                   0.8                          80\nXylene*                                 21.7                        2170\n*\n usually 60% m-xylene, 14% p-xylene, 9% o-xylene with 17% ethyl benzene\n\n4.3 Solvents with Low Toxic Potential\nSolvents in Class 3 (shown in Table 3) may be regarded as less toxic and of lower risk to human\nhealth. Class 3 includes no solvent known as a human health hazard at levels normally accepted in\npharmaceuticals. However, there are no long-term toxicity or carcinogenicity studies for many of\nthe solvents in Class 3. Available data indicate that they are less toxic in acute or short-term studies\nand negative in genotoxicity studies. It is considered that amounts of these residual solvents of 50\nmg per day or less (corresponding to 5000 ppm or 0.5% under Option 1) would be acceptable\nwithout justification. Higher amounts may also be acceptable provided they are realistic in relation\nto manufacturing capability and good manufacturing practice.\n\nTABLE 3. Class 3 solvents which should be limited by GMP or other quality-based\nrequirements.\n    Acetic acid                                 Heptane\n    Acetone                                     Isobutyl acetate\n    Anisole                                     Isopropyl acetate\n    1-Butanol                                   Methyl acetate\n    2-Butanol                                   3-Methyl-1-butanol\n    Butyl acetate                               Methylethyl ketone\n    tert-Butylmethyl ether                      2-Methyl-1-propanol\n    Dimethyl sulfoxide                          2-Methyltetrahydrofuran7\n    Ethanol                                     Pentane\n\n\nmade in October 2002), and was incorporated into the core guideline in November 2005. See\nPart III (pages 22-23).\n5 The information included for Tertiary-butyl Alcohol reflects that included in the Revision of\n\nPDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n6 The information included for Tetrahydrofuran reflects that included in the Revision of PDE\n\nInformation for THF which reached Step 4 in September 2002, and was incorporated into the\ncore guideline in November 2005. See Part II (pages 20-21).\n7 The information included for 2-Methyltetrahydrofuran reflects that included in the Revision\n\nof PDE Information for 2-MTHF, CPME, and TBA which reached Step 4 in April 2021 and was\nsubsequently incorporated into the core Guideline. See Part VI (pages 35-45).\n\n\n\n                                                   7\n",
+   "next_page_text": "",
+   "item": {
+    "statement": "Limit the Class 3 solvents listed in Table 3 by GMP or other quality-based requirements.",
+    "quote": "TABLE 3. Class 3 solvents which should be limited by GMP or other quality-based\nrequirements.",
+    "clause_number": "4.3",
+    "strength": "recommended",
+    "plant_types": [
+     "OSD",
+     "LIQ",
+     "SEMI",
+     "INJ",
+     "API"
+    ],
+    "condition": "",
+    "runs_over": false
+   },
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ]
+  }
+ ]
+}
