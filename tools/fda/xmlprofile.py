@@ -99,12 +99,30 @@ def own_text(ref, text):
     return re.sub(r"^(?:\([^()]{1,6}\)\s*)+", "", text).strip()
 
 
+MAX_BATCH_CHARS = 20000
+MAX_BATCH_SECTIONS = 10
+
+
+def pack(keys, secs):
+    """Sections in order, packed into batches of at most MAX_BATCH_SECTIONS sections and about MAX_BATCH_CHARS
+    characters of text (a longer section is a batch alone)."""
+    out, cur, size = [], [], 0
+    for k in keys:
+        n = sum(len(t) for _, t in secs[k])
+        if cur and (size + n > MAX_BATCH_CHARS or len(cur) >= MAX_BATCH_SECTIONS):
+            out.append(cur)
+            cur, size = [], 0
+        cur.append(k)
+        size += n
+    return out + ([cur] if cur else [])
+
+
 def prepare_draft(source, wanted=None):
     run = vision.new_run("xml-draft")
     secs = sections(source)
     keys = [s for s in secs if not wanted or s in wanted]
     instructions = (PROMPTS / "draft_xml.md").read_text()
-    batches = [keys[i:i + SECTIONS_PER_BATCH] for i in range(0, len(keys), SECTIONS_PER_BATCH)]
+    batches = pack(keys, secs)
     for n, group in enumerate(batches, start=1):
         units = [{"id": f"{source}:{s}", "source": source, "section": s, "plant_scope": vision.scope(source),
                   "paragraphs": [{"ref": r, "text": t} for r, t in secs[s]]} for s in group]
@@ -402,7 +420,7 @@ def prepare_verify(run):
     for it in items:
         groups.setdefault(it["section"], []).append(it)
     keys = list(groups)
-    chunks = [keys[i:i + SECTIONS_PER_BATCH] for i in range(0, len(keys), SECTIONS_PER_BATCH)]
+    chunks = pack(keys, secs)
     n = 0
     for role in ("a", "b"):
         instructions = (PROMPTS / f"verify_xml_{role}.md").read_text()

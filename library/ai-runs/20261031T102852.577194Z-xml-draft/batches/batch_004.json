@@ -1,0 +1,328 @@
+{
+ "instructions": "You read sections of a US regulation (21 CFR, from the official eCFR XML) and list the obligations they state. Each\nsection is given as its paragraphs, each with its reference from the XML structure (\"211.84(c)(1)\") and its exact\ntext. Your output is checked by software against that exact text and by independent reviewers, so precision\nmatters more than wording.\n\nList each separate obligation as its own item, so that together your items cover every obligation in the section.\nOne obligation is one thing a manufacturer must, should or may do, with all its conditions, numbers and\nqualifiers; do not split one obligation across items. For each item:\n- statement: the obligation in your own plain English words, as one checklist item a site could be audited\n  against. Do not copy more than a few words in a row. Keep every condition (\"where\", \"if\", \"unless\", \"when\",\n  \"except\") and every number. Do not add anything the text does not say. The statement itself must carry every\n  condition or qualifier of the lead-ins above its paragraph (a parent paragraph ending in \":\", and its parent if\n  that also ends in \":\"): for 211.42(c)(1) under \"... such other control systems ... as are necessary to prevent\n  contamination or mixups during the course of the following procedures:\", write e.g. \"Provide separate or defined\n  areas, or other control systems as necessary to prevent contamination or mixups, for receipt ...\". Putting the\n  qualifier only in the condition field is not enough. The statement is shown to customers: never cite a\n  paragraph or section reference in it (\"211.166(a)(1)-(5)\", \"this section\"); say what is required instead\n  (\"contains the elements listed below\" is not enough: name them, or let each sub-paragraph's own item carry it).\n- quote: the exact span of ONE paragraph's text that states the whole obligation, copied character for character\n  (matched against the XML text by software; do not fix typos or change punctuation). Leave out the paragraph's\n  designation (\"(c)\"). A quote may continue into that paragraph's sub-paragraphs, in order.\n- clause_number: the reference of the paragraph the quote comes from, exactly as given (\"211.84(c)(1)\").\n- strength: \"mandatory\" for shall / must / is required / may not; \"recommended\" for should; \"optional\" for may.\n  A sub-paragraph without such a word takes its parent's lead-in (\"(c) Samples shall be collected in accordance\n  with the following procedures:\" makes (c)(1)-(c)(6) mandatory).\n- plant_types: from OSD, LIQ, SEMI, INJ, API (INJ = sterile injectables); the plant scope given unless the text\n  narrows it. A paragraph limited to drug products not required to be sterile does not apply to INJ; one limited to\n  sterile drug products (\"purporting to be sterile\") applies only to INJ (and API where in scope).\n- numbers: every number, limit, frequency or period in the quote, as written.\n- condition: the condition or trigger in a few words, \"\" if none. A condition stated in a parent paragraph's\n  lead-in belongs to every sub-paragraph under it. This field only repeats what the statement already says.\n\nA lead-in sentence that also states a duty of its own (\"The written program shall be followed and shall include:\")\nneeds its own item for that duty, quoting the whole sentence including \"shall include:\". That item states only the\nlead-in's own duty (\"follow the written stability program\"); do not summarise the sub-paragraphs in it (their\nitems carry them with their qualifiers). Where the text refers to a closed list of other sections (\"operations\naddressed by §§ 211.101(c) or (d), 211.103 ...\"), keep the list closed: name the operations, never \"such as\".\nDo not narrow or widen a term (\"washing facilities\" is not \"hand-washing facilities\"; \"in and from\" is not \"from\").\n- topic: the sub-topic id from TOPICS the obligation belongs to.\n\nSentences that state no obligation for the manufacturer (a heading, a definition, a scope statement, a statement\nof purpose, an exemption, an enforcement or interpretation statement addressed to FDA) go in not_applicable: one\nentry per SENTENCE (a paragraph of three such sentences needs three entries), each with the paragraph reference,\nthe sentence's first 8 or more words copied exactly (without the paragraph designation), and the reason in a few\nwords.\n\nWrite the answers file named in your task: {\"answers\": [one object per section with \"section\" set to the section's\n\"id\" exactly]}.\n",
+ "topics": [
+  "QS.PQS",
+  "QS.MGMT",
+  "QS.QRM",
+  "QS.PQR",
+  "QS.CHANGE",
+  "QS.DEV",
+  "QS.CAPA",
+  "PER.ORG",
+  "PER.KEY",
+  "PER.TRAIN",
+  "PER.HYG",
+  "PER.GOWN",
+  "PREM.DESIGN",
+  "PREM.PROD",
+  "PREM.STORE",
+  "PREM.QC",
+  "PREM.ANC",
+  "EQ.DESIGN",
+  "EQ.MAINT",
+  "EQ.CLEAN",
+  "EQ.CAL",
+  "DOC.SYS",
+  "DOC.SPEC",
+  "DOC.MFR",
+  "DOC.BMR",
+  "DOC.SOP",
+  "DOC.RET",
+  "MAT.SUPP",
+  "MAT.RECV",
+  "MAT.SAMP",
+  "MAT.STATUS",
+  "MAT.PACK",
+  "MAT.REJ",
+  "PROD.GEN",
+  "PROD.XCONT",
+  "PROD.IPC",
+  "PROD.YIELD",
+  "PROD.PACK",
+  "PROD.REWORK",
+  "QC.GEN",
+  "QC.SAMP",
+  "QC.TEST",
+  "QC.OOS",
+  "QC.STAB",
+  "QC.REF",
+  "QC.MICRO",
+  "VAL.PLAN",
+  "VAL.QUAL",
+  "VAL.PROC",
+  "VAL.CLEAN",
+  "VAL.METH",
+  "CSV.VAL",
+  "CSV.ACCESS",
+  "CSV.AUDIT",
+  "CSV.ESIG",
+  "CSV.DI",
+  "UTIL.WATER",
+  "UTIL.HVAC",
+  "UTIL.GAS",
+  "CCS.STRAT",
+  "CCS.EM",
+  "CCS.CLEAN",
+  "CCS.PEST",
+  "STER.GRADE",
+  "STER.ASEPT",
+  "STER.APS",
+  "STER.STERIL",
+  "STER.FILT",
+  "STER.CCI",
+  "STER.LYO",
+  "API.START",
+  "API.PROC",
+  "API.IMP",
+  "API.SOLV",
+  "OUT.CONTRACT",
+  "OUT.AGREE",
+  "CMP.COMPL",
+  "CMP.RECALL",
+  "CMP.REPORT",
+  "SI.PROG",
+  "SI.TEAM",
+  "SI.REPORT",
+  "SI.FOLLOW",
+  "DIST.STORE",
+  "DIST.TRANS",
+  "DIST.RETURN",
+  "REL.QP",
+  "REL.REVIEW"
+ ],
+ "schema": {
+  "type": "object",
+  "required": [
+   "section",
+   "items",
+   "not_applicable"
+  ],
+  "properties": {
+   "section": {
+    "type": "string"
+   },
+   "items": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "statement",
+      "quote",
+      "clause_number",
+      "strength",
+      "plant_types",
+      "numbers",
+      "condition",
+      "topic"
+     ],
+     "properties": {
+      "statement": {
+       "type": "string"
+      },
+      "quote": {
+       "type": "string"
+      },
+      "clause_number": {
+       "type": "string"
+      },
+      "strength": {
+       "enum": [
+        "mandatory",
+        "recommended",
+        "optional"
+       ]
+      },
+      "plant_types": {
+       "type": "array",
+       "items": {
+        "enum": [
+         "OSD",
+         "LIQ",
+         "SEMI",
+         "INJ",
+         "API"
+        ]
+       }
+      },
+      "numbers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "condition": {
+       "type": "string"
+      },
+      "topic": {
+       "type": "string"
+      }
+     }
+    }
+   },
+   "not_applicable": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "clause_number",
+      "text",
+      "reason"
+     ],
+     "properties": {
+      "clause_number": {
+       "type": "string"
+      },
+      "text": {
+       "type": "string"
+      },
+      "reason": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  }
+ },
+ "sections": [
+  {
+   "id": "fda-cfr-21-part-4.xml:4.101 \"Constituent part\"",
+   "source": "fda-cfr-21-part-4.xml",
+   "section": "4.101 \"Constituent part\"",
+   "plant_scope": [
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "4.101 \"Constituent part\"",
+     "text": "Constituent part has the meaning given the term in § 4.2."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-4.xml:4.101 \"Constituent part applicant\"",
+   "source": "fda-cfr-21-part-4.xml",
+   "section": "4.101 \"Constituent part applicant\"",
+   "plant_scope": [
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "4.101 \"Constituent part applicant\"",
+     "text": "Constituent part applicant means the applicant for a constituent part of a combination product the constituent parts of which are marketed under applications held by different applicants."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-4.xml:4.101 \"Correction or removal report\"",
+   "source": "fda-cfr-21-part-4.xml",
+   "section": "4.101 \"Correction or removal report\"",
+   "plant_scope": [
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "4.101 \"Correction or removal report\"",
+     "text": "Correction or removal report is a report as described in § 806.10 of this chapter."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-4.xml:4.101 \"De novo classification request\"",
+   "source": "fda-cfr-21-part-4.xml",
+   "section": "4.101 \"De novo classification request\"",
+   "plant_scope": [
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "4.101 \"De novo classification request\"",
+     "text": "De novo classification request is a submission requesting de novo classification under section 513(f)(2) of the Federal Food, Drug, and Cosmetic Act."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-4.xml:4.101 \"Device\"",
+   "source": "fda-cfr-21-part-4.xml",
+   "section": "4.101 \"Device\"",
+   "plant_scope": [
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "4.101 \"Device\"",
+     "text": "Device has the meaning given the term in section 201(h) of the Federal Food, Drug, and Cosmetic Act."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-4.xml:4.101 \"Device application\"",
+   "source": "fda-cfr-21-part-4.xml",
+   "section": "4.101 \"Device application\"",
+   "plant_scope": [
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "4.101 \"Device application\"",
+     "text": "Device application means a PMA, PDP, premarket notification submission, de novo classification request, or HDE."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-4.xml:4.101 \"Drug\"",
+   "source": "fda-cfr-21-part-4.xml",
+   "section": "4.101 \"Drug\"",
+   "plant_scope": [
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "4.101 \"Drug\"",
+     "text": "Drug has the meaning given the term in section 201(g)(1) of the Federal Food, Drug, and Cosmetic Act."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-4.xml:4.101 \"Field alert report\"",
+   "source": "fda-cfr-21-part-4.xml",
+   "section": "4.101 \"Field alert report\"",
+   "plant_scope": [
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "4.101 \"Field alert report\"",
+     "text": "Field alert report is a report as described in § 314.81 of this chapter."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-4.xml:4.101 \"Fifteen-day report\"",
+   "source": "fda-cfr-21-part-4.xml",
+   "section": "4.101 \"Fifteen-day report\"",
+   "plant_scope": [
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "4.101 \"Fifteen-day report\"",
+     "text": "Fifteen-day report is a report required to be submitted within 15 days as described in § 314.80 of this chapter or § 600.80 of this chapter, as well as followup reports to such a report."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-4.xml:4.101 \"Five-day report\"",
+   "source": "fda-cfr-21-part-4.xml",
+   "section": "4.101 \"Five-day report\"",
+   "plant_scope": [
+    "INJ"
+   ],
+   "paragraphs": [
+    {
+     "ref": "4.101 \"Five-day report\"",
+     "text": "Five-day report is a report as described in §§ 803.3 and 803.53 of this chapter, as well as supplemental or followup reports to such a report as described in § 803.56 of this chapter."
+    }
+   ]
+  }
+ ]
+}

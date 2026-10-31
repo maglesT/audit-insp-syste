@@ -1,0 +1,440 @@
+{
+ "instructions": "You read sections of a US regulation (21 CFR, from the official eCFR XML) and list the obligations they state. Each\nsection is given as its paragraphs, each with its reference from the XML structure (\"211.84(c)(1)\") and its exact\ntext. Your output is checked by software against that exact text and by independent reviewers, so precision\nmatters more than wording.\n\nList each separate obligation as its own item, so that together your items cover every obligation in the section.\nOne obligation is one thing a manufacturer must, should or may do, with all its conditions, numbers and\nqualifiers; do not split one obligation across items. For each item:\n- statement: the obligation in your own plain English words, as one checklist item a site could be audited\n  against. Do not copy more than a few words in a row. Keep every condition (\"where\", \"if\", \"unless\", \"when\",\n  \"except\") and every number. Do not add anything the text does not say. The statement itself must carry every\n  condition or qualifier of the lead-ins above its paragraph (a parent paragraph ending in \":\", and its parent if\n  that also ends in \":\"): for 211.42(c)(1) under \"... such other control systems ... as are necessary to prevent\n  contamination or mixups during the course of the following procedures:\", write e.g. \"Provide separate or defined\n  areas, or other control systems as necessary to prevent contamination or mixups, for receipt ...\". Putting the\n  qualifier only in the condition field is not enough. The statement is shown to customers: never cite a\n  paragraph or section reference in it (\"211.166(a)(1)-(5)\", \"this section\"); say what is required instead\n  (\"contains the elements listed below\" is not enough: name them, or let each sub-paragraph's own item carry it).\n- quote: the exact span of ONE paragraph's text that states the whole obligation, copied character for character\n  (matched against the XML text by software; do not fix typos or change punctuation). Leave out the paragraph's\n  designation (\"(c)\"). A quote may continue into that paragraph's sub-paragraphs, in order.\n- clause_number: the reference of the paragraph the quote comes from, exactly as given (\"211.84(c)(1)\").\n- strength: \"mandatory\" for shall / must / is required / may not; \"recommended\" for should; \"optional\" for may.\n  A sub-paragraph without such a word takes its parent's lead-in (\"(c) Samples shall be collected in accordance\n  with the following procedures:\" makes (c)(1)-(c)(6) mandatory).\n- plant_types: from OSD, LIQ, SEMI, INJ, API (INJ = sterile injectables); the plant scope given unless the text\n  narrows it. A paragraph limited to drug products not required to be sterile does not apply to INJ; one limited to\n  sterile drug products (\"purporting to be sterile\") applies only to INJ (and API where in scope).\n- numbers: every number, limit, frequency or period in the quote, as written.\n- condition: the condition or trigger in a few words, \"\" if none. A condition stated in a parent paragraph's\n  lead-in belongs to every sub-paragraph under it. This field only repeats what the statement already says.\n\nA lead-in sentence that also states a duty of its own (\"The written program shall be followed and shall include:\")\nneeds its own item for that duty, quoting the whole sentence including \"shall include:\". That item states only the\nlead-in's own duty (\"follow the written stability program\"); do not summarise the sub-paragraphs in it (their\nitems carry them with their qualifiers). Where the text refers to a closed list of other sections (\"operations\naddressed by §§ 211.101(c) or (d), 211.103 ...\"), keep the list closed: name the operations, never \"such as\".\nDo not narrow or widen a term (\"washing facilities\" is not \"hand-washing facilities\"; \"in and from\" is not \"from\").\n- topic: the sub-topic id from TOPICS the obligation belongs to.\n\nSentences that state no obligation for the manufacturer (a heading, a definition, a scope statement, a statement\nof purpose, an exemption, an enforcement or interpretation statement addressed to FDA) go in not_applicable: one\nentry per SENTENCE (a paragraph of three such sentences needs three entries), each with the paragraph reference,\nthe sentence's first 8 or more words copied exactly (without the paragraph designation), and the reason in a few\nwords.\n\nWrite the answers file named in your task: {\"answers\": [one object per section with \"section\" set to the section's\n\"id\" exactly]}.\n",
+ "topics": [
+  "QS.PQS",
+  "QS.MGMT",
+  "QS.QRM",
+  "QS.PQR",
+  "QS.CHANGE",
+  "QS.DEV",
+  "QS.CAPA",
+  "PER.ORG",
+  "PER.KEY",
+  "PER.TRAIN",
+  "PER.HYG",
+  "PER.GOWN",
+  "PREM.DESIGN",
+  "PREM.PROD",
+  "PREM.STORE",
+  "PREM.QC",
+  "PREM.ANC",
+  "EQ.DESIGN",
+  "EQ.MAINT",
+  "EQ.CLEAN",
+  "EQ.CAL",
+  "DOC.SYS",
+  "DOC.SPEC",
+  "DOC.MFR",
+  "DOC.BMR",
+  "DOC.SOP",
+  "DOC.RET",
+  "MAT.SUPP",
+  "MAT.RECV",
+  "MAT.SAMP",
+  "MAT.STATUS",
+  "MAT.PACK",
+  "MAT.REJ",
+  "PROD.GEN",
+  "PROD.XCONT",
+  "PROD.IPC",
+  "PROD.YIELD",
+  "PROD.PACK",
+  "PROD.REWORK",
+  "QC.GEN",
+  "QC.SAMP",
+  "QC.TEST",
+  "QC.OOS",
+  "QC.STAB",
+  "QC.REF",
+  "QC.MICRO",
+  "VAL.PLAN",
+  "VAL.QUAL",
+  "VAL.PROC",
+  "VAL.CLEAN",
+  "VAL.METH",
+  "CSV.VAL",
+  "CSV.ACCESS",
+  "CSV.AUDIT",
+  "CSV.ESIG",
+  "CSV.DI",
+  "UTIL.WATER",
+  "UTIL.HVAC",
+  "UTIL.GAS",
+  "CCS.STRAT",
+  "CCS.EM",
+  "CCS.CLEAN",
+  "CCS.PEST",
+  "STER.GRADE",
+  "STER.ASEPT",
+  "STER.APS",
+  "STER.STERIL",
+  "STER.FILT",
+  "STER.CCI",
+  "STER.LYO",
+  "API.START",
+  "API.PROC",
+  "API.IMP",
+  "API.SOLV",
+  "OUT.CONTRACT",
+  "OUT.AGREE",
+  "CMP.COMPL",
+  "CMP.RECALL",
+  "CMP.REPORT",
+  "SI.PROG",
+  "SI.TEAM",
+  "SI.REPORT",
+  "SI.FOLLOW",
+  "DIST.STORE",
+  "DIST.TRANS",
+  "DIST.RETURN",
+  "REL.QP",
+  "REL.REVIEW"
+ ],
+ "schema": {
+  "type": "object",
+  "required": [
+   "section",
+   "items",
+   "not_applicable"
+  ],
+  "properties": {
+   "section": {
+    "type": "string"
+   },
+   "items": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "statement",
+      "quote",
+      "clause_number",
+      "strength",
+      "plant_types",
+      "numbers",
+      "condition",
+      "topic"
+     ],
+     "properties": {
+      "statement": {
+       "type": "string"
+      },
+      "quote": {
+       "type": "string"
+      },
+      "clause_number": {
+       "type": "string"
+      },
+      "strength": {
+       "enum": [
+        "mandatory",
+        "recommended",
+        "optional"
+       ]
+      },
+      "plant_types": {
+       "type": "array",
+       "items": {
+        "enum": [
+         "OSD",
+         "LIQ",
+         "SEMI",
+         "INJ",
+         "API"
+        ]
+       }
+      },
+      "numbers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "condition": {
+       "type": "string"
+      },
+      "topic": {
+       "type": "string"
+      }
+     }
+    }
+   },
+   "not_applicable": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "clause_number",
+      "text",
+      "reason"
+     ],
+     "properties": {
+      "clause_number": {
+       "type": "string"
+      },
+      "text": {
+       "type": "string"
+      },
+      "reason": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  }
+ },
+ "sections": [
+  {
+   "id": "fda-cfr-21-part-200.xml:200.5",
+   "source": "fda-cfr-21-part-200.xml",
+   "section": "200.5",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "200.5",
+     "text": "§ 200.5 Mailing of important information about drugs. Manufacturers and distributors of drugs and the Food and Drug Administration occasionally are required to mail important information about drugs to physicians and others responsible for patient care. In the public interest, such mail should be distinctive in appearance so that it will be promptly recognized and read. The Food and Drug Administration will make such mailings in accordance with the specifications set forth in this section. Manufacturers and distributors of drugs are asked to make such mailings as prescribed by this section and not to use the distinctive envelopes for ordinary mail."
+    },
+    {
+     "ref": "200.5(a)",
+     "text": "(a) Use first class mail and No. 10 white envelopes."
+    },
+    {
+     "ref": "200.5(b)",
+     "text": "(b) The name and address of the agency or the drug manufacturer or distributor is to appear in the upper left corner of the envelope."
+    },
+    {
+     "ref": "200.5(c)",
+     "text": "(c) The following statements are to appear in the far left third of the envelope front, in the type and size indicated, centered in a rectangular space approximately 3 inches wide and 2 1/4 inches high with an approximately 3/8 inch-wide border in the color indicated:"
+    },
+    {
+     "ref": "200.5(c)(1)",
+     "text": "(1) When the information concerns a significant hazard to health, the statement:"
+    },
+    {
+     "ref": "200.5(c)(2)",
+     "text": "(2) When the information concerns important changes in drug package labeling, the statement:"
+    },
+    {
+     "ref": "200.5(c)(3)",
+     "text": "(3) When the information concerns a correction of prescription drug advertising or labeling, the statement:"
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-200.xml:200.7",
+   "source": "fda-cfr-21-part-200.xml",
+   "section": "200.7",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "200.7",
+     "text": "§ 200.7 Supplying pharmacists with indications and dosage information. There are presently no regulations under the Federal Food, Drug, and Cosmetic Act that prevent a manufacturer of prescription drugs from sending the pharmacist data he needs on indications and dosage in exercising his important professional function of checking against possible mistakes in a prescription. The Food and Drug Administration believes manufacturers should be encouraged to supply such printed matter to the pharmacist for his professional information. Obviously, such printed matter should not be displayed to prospective purchasers to promote over-the-counter sale of prescription drugs."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-200.xml:200.10",
+   "source": "fda-cfr-21-part-200.xml",
+   "section": "200.10",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "200.10",
+     "text": "§ 200.10 Contract facilities (including consulting laboratories) utilized as extramural facilities by pharmaceutical manufacturers."
+    },
+    {
+     "ref": "200.10(a)",
+     "text": "(a) Section 704(a) of the Federal Food, Drug, and Cosmetic Act specifically authorizes inspection of consulting laboratories as well as any factory, warehouse, or establishment in which prescription drugs are manufactured, processed, packed, or held."
+    },
+    {
+     "ref": "200.10(b)",
+     "text": "(b) The Food and Drug Administration is aware that many manufacturers of pharmaceutical products utilize extramural independent contract facilities, such as testing laboratories, contract packers or labelers, and custom grinders, and regards extramural facilities as an extension of the manufacturer's own facility."
+    },
+    {
+     "ref": "200.10(c)",
+     "text": "(c) The Food and Drug Administration reserves the right to disclose to the pharmaceutical manufacturer, or to the applicant of a new drug application (NDA) or to the sponsor of an Investigational New Drug (IND) Application, any information obtained during the inspection of an extramural facility having a specific bearing on the compliance of the manufacturer's, applicant's, or sponsor's product with the Federal Food, Drug, and Cosmetic Act. The Food and Drug Administration's position is that by the acceptance of such contract work, the extramural facility authorizes such disclosures."
+    },
+    {
+     "ref": "200.10(d)",
+     "text": "(d) The Food and Drug Administration does not consider results of validation studies of analytical and assay methods and control procedures to be trade secrets that may be withheld from the drug manufacturer by the contracted extramural facility."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-200.xml:200.11",
+   "source": "fda-cfr-21-part-200.xml",
+   "section": "200.11",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "200.11",
+     "text": "§ 200.11 Use of octadecylamine in steam lines of drug establishments. The Food and Drug Administration will not object to the use of octadecylamine in steam lines where the steam may be used for autoclaving surgical instruments and gauze if the octadecylamine in the steam is not more than 2.4 parts per million."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-200.xml:200.15",
+   "source": "fda-cfr-21-part-200.xml",
+   "section": "200.15",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "200.15",
+     "text": "§ 200.15 Definition of term “insulin.” For purposes of sections 801 and 802 of the act and this title, the term insulin means the active principle of the pancreas that affects the metabolism of carbohydrates in the animal body and which is of value in the treatment of diabetes mellitus. The term includes synthetic and biotechnologically derived products that are the same as, or similar to, naturally occurring insulins in structure, use, and intended effect and are of value in the treatment of diabetes mellitus."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-200.xml:200.50",
+   "source": "fda-cfr-21-part-200.xml",
+   "section": "200.50",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "200.50",
+     "text": "§ 200.50 Ophthalmic preparations and dispensers."
+    },
+    {
+     "ref": "200.50(a)",
+     "text": "(a)"
+    },
+    {
+     "ref": "200.50(a)(1)",
+     "text": "(1) Informed medical opinion is in agreement that all preparations offered or intended for ophthalmic use, including preparations for cleansing the eyes, should be sterile. It is further evident that such preparations purport to be of such purity and quality as to be suitable for safe use in the eye."
+    },
+    {
+     "ref": "200.50(a)(2)",
+     "text": "(2) The Food and Drug Administration concludes that all such preparations, if they are not sterile, fall below their professed standard of purity or quality and may be unsafe. In a statement of policy issued on September 1, 1964, the Food and Drug Administration ruled that liquid preparations offered or intended for ophthalmic use that are not sterile may be regarded as adulterated within the meaning of section 501(c) of the Federal Food, Drug, and Cosmetic Act (the act), and, further, may be deemed misbranded within the meaning of section 502(j) of the act. This ruling is extended to affect all preparations for ophthalmic use. By this regulation, this ruling is applicable to ophthalmic preparations that are regulated as drugs. By the regulation in § 800.10 of this chapter, this ruling is applicable to ophthalmic preparations that are regulated as medical devices."
+    },
+    {
+     "ref": "200.50(a)(3)",
+     "text": "(3) The containers of ophthalmic preparations shall be sterile at the time of filling and closing, and the container or individual carton shall be so sealed that the contents cannot be used without destroying the seal. The packaging and labeling of ophthalmic preparations that are over-the-counter drugs shall also comply with § 211.132 of this chapter on tamper-resistant packaging requirements."
+    },
+    {
+     "ref": "200.50(b)",
+     "text": "(b) Liquid ophthalmic preparations packed in multiple-dose containers should:"
+    },
+    {
+     "ref": "200.50(b)(1)",
+     "text": "(1) Contain one or more suitable and harmless substances that will inhibit the growth of microorganisms; or"
+    },
+    {
+     "ref": "200.50(b)(2)",
+     "text": "(2) Be so packaged as to volume and type of container and so labeled as to duration of use and with such necessary warnings as to afford adequate protection and minimize the hazard of injury resulting from contamination during use."
+    },
+    {
+     "ref": "200.50(c)",
+     "text": "(c) Eye cups, eye droppers, and other dispensers intended for ophthalmic use should be sterile, and may be regarded as falling below their professed standard of purity or quality if they are not sterile. These articles, which are regulated as drugs if packaged with the drugs with which they are to be used, should be packaged so as to maintain sterility until the package is opened and be labeled, on or within the retail package, so as to afford adequate directions and necessary warnings to minimize the hazard of injury resulting from contamination during use."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-200.xml:200.51",
+   "source": "fda-cfr-21-part-200.xml",
+   "section": "200.51",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "200.51",
+     "text": "§ 200.51 Aqueous-based drug products for oral inhalation."
+    },
+    {
+     "ref": "200.51(a)",
+     "text": "(a) All aqueous-based drug products for oral inhalation must be manufactured to be sterile."
+    },
+    {
+     "ref": "200.51(b)",
+     "text": "(b) Manufacturers must also comply with the requirements in § 211.113(b) of this chapter."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-200.xml:200.200",
+   "source": "fda-cfr-21-part-200.xml",
+   "section": "200.200",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "200.200",
+     "text": "§ 200.200 Prescription drugs; reminder advertisements and reminder labeling to provide price information to consumers."
+    },
+    {
+     "ref": "200.200(a)",
+     "text": "(a) Prescription drug reminder advertisements and reminder labeling intended to provide price information to consumers are exempt from the requirements of §§ 201 .100 and 202.1 of this chapter if all of the following conditions are met:"
+    },
+    {
+     "ref": "200.200(a)(1)",
+     "text": "(1) The only purpose of the reminder advertisement or reminder labeling is to provide consumers with information concerning the price charged for a prescription for a particular drug product, and the reminder advertisement or reminder labeling contains no representation or suggestion concerning the drug product's safety, effectiveness, or indications for use."
+    },
+    {
+     "ref": "200.200(a)(2)",
+     "text": "(2) The reminder advertisement or reminder labeling contains the proprietary name of the drug product, if any; the established (generic) name of the drug product, if any; the drug product's strength if the product contains a single active ingredient or if the product contains more than one active ingredient and a relevant strength can be associated with the product without indicating each active ingredient (the established name and quantity of each active ingredient are not required); the dosage form; and the price charged for a prescription for a specific quantity of the drug product."
+    },
+    {
+     "ref": "200.200(a)(3)",
+     "text": "(3) The reminder advertisement or reminder labeling may also include other written, printed, or graphic matter, e.g., identification of professional or convenience services provided by the pharmacy: Provided, That such information is neither false nor misleading and contains no representation or suggestion concerning the drug product's safety, effectiveness, or indications for use."
+    },
+    {
+     "ref": "200.200(a)(4)",
+     "text": "(4) The price stated in the reminder advertisement or reminder labeling as that charged for a prescription shall include all charges to the consumer including, but not limited to, the cost of the drug product, professional fees, and handling fees, if any. Mailing fees and delivery fees, if any, may be stated separately and without repetition."
+    },
+    {
+     "ref": "200.200(b)",
+     "text": "(b) This exemption from §§ 201.100 and 202.1 of this chapter is applicable to all prescription drug reminder labeling and reminder advertisements solely intended to provide consumers with information regarding the price charged for prescriptions including price lists, catalogs, and other promotional material, whether mailed, posted in a pharmacy, placed in a newspaper, or aired on radio or television."
+    },
+    {
+     "ref": "200.200(c)",
+     "text": "(c) Any reminder advertisement or reminder labeling intended to provide consumers with prescription price information which is not in compliance with this section shall be the subject of appropriate regulatory action. Such action may be taken against the product and/or the responsible person."
+    }
+   ]
+  }
+ ]
+}

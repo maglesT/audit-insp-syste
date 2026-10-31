@@ -1,0 +1,368 @@
+{
+ "instructions": "You read sections of a US regulation (21 CFR, from the official eCFR XML) and list the obligations they state. Each\nsection is given as its paragraphs, each with its reference from the XML structure (\"211.84(c)(1)\") and its exact\ntext. Your output is checked by software against that exact text and by independent reviewers, so precision\nmatters more than wording.\n\nList each separate obligation as its own item, so that together your items cover every obligation in the section.\nOne obligation is one thing a manufacturer must, should or may do, with all its conditions, numbers and\nqualifiers; do not split one obligation across items. For each item:\n- statement: the obligation in your own plain English words, as one checklist item a site could be audited\n  against. Do not copy more than a few words in a row. Keep every condition (\"where\", \"if\", \"unless\", \"when\",\n  \"except\") and every number. Do not add anything the text does not say. The statement itself must carry every\n  condition or qualifier of the lead-ins above its paragraph (a parent paragraph ending in \":\", and its parent if\n  that also ends in \":\"): for 211.42(c)(1) under \"... such other control systems ... as are necessary to prevent\n  contamination or mixups during the course of the following procedures:\", write e.g. \"Provide separate or defined\n  areas, or other control systems as necessary to prevent contamination or mixups, for receipt ...\". Putting the\n  qualifier only in the condition field is not enough. The statement is shown to customers: never cite a\n  paragraph or section reference in it (\"211.166(a)(1)-(5)\", \"this section\"); say what is required instead\n  (\"contains the elements listed below\" is not enough: name them, or let each sub-paragraph's own item carry it).\n- quote: the exact span of ONE paragraph's text that states the whole obligation, copied character for character\n  (matched against the XML text by software; do not fix typos or change punctuation). Leave out the paragraph's\n  designation (\"(c)\"). A quote may continue into that paragraph's sub-paragraphs, in order.\n- clause_number: the reference of the paragraph the quote comes from, exactly as given (\"211.84(c)(1)\").\n- strength: \"mandatory\" for shall / must / is required / may not; \"recommended\" for should; \"optional\" for may.\n  A sub-paragraph without such a word takes its parent's lead-in (\"(c) Samples shall be collected in accordance\n  with the following procedures:\" makes (c)(1)-(c)(6) mandatory).\n- plant_types: from OSD, LIQ, SEMI, INJ, API (INJ = sterile injectables); the plant scope given unless the text\n  narrows it. A paragraph limited to drug products not required to be sterile does not apply to INJ; one limited to\n  sterile drug products (\"purporting to be sterile\") applies only to INJ (and API where in scope).\n- numbers: every number, limit, frequency or period in the quote, as written.\n- condition: the condition or trigger in a few words, \"\" if none. A condition stated in a parent paragraph's\n  lead-in belongs to every sub-paragraph under it. This field only repeats what the statement already says.\n\nA lead-in sentence that also states a duty of its own (\"The written program shall be followed and shall include:\")\nneeds its own item for that duty, quoting the whole sentence including \"shall include:\". That item states only the\nlead-in's own duty (\"follow the written stability program\"); do not summarise the sub-paragraphs in it (their\nitems carry them with their qualifiers). Where the text refers to a closed list of other sections (\"operations\naddressed by §§ 211.101(c) or (d), 211.103 ...\"), keep the list closed: name the operations, never \"such as\".\nDo not narrow or widen a term (\"washing facilities\" is not \"hand-washing facilities\"; \"in and from\" is not \"from\").\n- topic: the sub-topic id from TOPICS the obligation belongs to.\n\nSentences that state no obligation for the manufacturer (a heading, a definition, a scope statement, a statement\nof purpose, an exemption, an enforcement or interpretation statement addressed to FDA) go in not_applicable: one\nentry per SENTENCE (a paragraph of three such sentences needs three entries), each with the paragraph reference,\nthe sentence's first 8 or more words copied exactly (without the paragraph designation), and the reason in a few\nwords.\n\nWrite the answers file named in your task: {\"answers\": [one object per section with \"section\" set to the section's\n\"id\" exactly]}.\n",
+ "topics": [
+  "QS.PQS",
+  "QS.MGMT",
+  "QS.QRM",
+  "QS.PQR",
+  "QS.CHANGE",
+  "QS.DEV",
+  "QS.CAPA",
+  "PER.ORG",
+  "PER.KEY",
+  "PER.TRAIN",
+  "PER.HYG",
+  "PER.GOWN",
+  "PREM.DESIGN",
+  "PREM.PROD",
+  "PREM.STORE",
+  "PREM.QC",
+  "PREM.ANC",
+  "EQ.DESIGN",
+  "EQ.MAINT",
+  "EQ.CLEAN",
+  "EQ.CAL",
+  "DOC.SYS",
+  "DOC.SPEC",
+  "DOC.MFR",
+  "DOC.BMR",
+  "DOC.SOP",
+  "DOC.RET",
+  "MAT.SUPP",
+  "MAT.RECV",
+  "MAT.SAMP",
+  "MAT.STATUS",
+  "MAT.PACK",
+  "MAT.REJ",
+  "PROD.GEN",
+  "PROD.XCONT",
+  "PROD.IPC",
+  "PROD.YIELD",
+  "PROD.PACK",
+  "PROD.REWORK",
+  "QC.GEN",
+  "QC.SAMP",
+  "QC.TEST",
+  "QC.OOS",
+  "QC.STAB",
+  "QC.REF",
+  "QC.MICRO",
+  "VAL.PLAN",
+  "VAL.QUAL",
+  "VAL.PROC",
+  "VAL.CLEAN",
+  "VAL.METH",
+  "CSV.VAL",
+  "CSV.ACCESS",
+  "CSV.AUDIT",
+  "CSV.ESIG",
+  "CSV.DI",
+  "UTIL.WATER",
+  "UTIL.HVAC",
+  "UTIL.GAS",
+  "CCS.STRAT",
+  "CCS.EM",
+  "CCS.CLEAN",
+  "CCS.PEST",
+  "STER.GRADE",
+  "STER.ASEPT",
+  "STER.APS",
+  "STER.STERIL",
+  "STER.FILT",
+  "STER.CCI",
+  "STER.LYO",
+  "API.START",
+  "API.PROC",
+  "API.IMP",
+  "API.SOLV",
+  "OUT.CONTRACT",
+  "OUT.AGREE",
+  "CMP.COMPL",
+  "CMP.RECALL",
+  "CMP.REPORT",
+  "SI.PROG",
+  "SI.TEAM",
+  "SI.REPORT",
+  "SI.FOLLOW",
+  "DIST.STORE",
+  "DIST.TRANS",
+  "DIST.RETURN",
+  "REL.QP",
+  "REL.REVIEW"
+ ],
+ "schema": {
+  "type": "object",
+  "required": [
+   "section",
+   "items",
+   "not_applicable"
+  ],
+  "properties": {
+   "section": {
+    "type": "string"
+   },
+   "items": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "statement",
+      "quote",
+      "clause_number",
+      "strength",
+      "plant_types",
+      "numbers",
+      "condition",
+      "topic"
+     ],
+     "properties": {
+      "statement": {
+       "type": "string"
+      },
+      "quote": {
+       "type": "string"
+      },
+      "clause_number": {
+       "type": "string"
+      },
+      "strength": {
+       "enum": [
+        "mandatory",
+        "recommended",
+        "optional"
+       ]
+      },
+      "plant_types": {
+       "type": "array",
+       "items": {
+        "enum": [
+         "OSD",
+         "LIQ",
+         "SEMI",
+         "INJ",
+         "API"
+        ]
+       }
+      },
+      "numbers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "condition": {
+       "type": "string"
+      },
+      "topic": {
+       "type": "string"
+      }
+     }
+    }
+   },
+   "not_applicable": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "clause_number",
+      "text",
+      "reason"
+     ],
+     "properties": {
+      "clause_number": {
+       "type": "string"
+      },
+      "text": {
+       "type": "string"
+      },
+      "reason": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  }
+ },
+ "sections": [
+  {
+   "id": "fda-cfr-21-part-207.xml:207.1 \"Relabel\"",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.1 \"Relabel\"",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.1 \"Relabel\"",
+     "text": "Relabel means to change the existing label or labels on a drug or drug package, or change or alter the existing labeling for a drug or drug package, without repacking the drug or drug package. This term does not include the addition or modification of information affixed solely for purposes of delivery to a customer, customer identification, and/or inventory management."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.1 \"Relabeler\"",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.1 \"Relabeler\"",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.1 \"Relabeler\"",
+     "text": "Relabeler means a person who owns or operates an establishment that relabels a drug. When not modified by “domestic” or “foreign,” the term includes both domestic relabelers and foreign relabelers."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.1 \"Repack or repackage\"",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.1 \"Repack or repackage\"",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.1 \"Repack or repackage\"",
+     "text": "Repack or repackage means the act of taking a finished drug product or unfinished drug from the container in which it was placed in commercial distribution and placing it into a different container without manipulating, changing, or affecting the composition or formulation of the drug."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.1 \"Repacker\"",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.1 \"Repacker\"",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.1 \"Repacker\"",
+     "text": "Repacker means a person who owns or operates an establishment that repacks a drug or drug package. When not modified by “domestic” or “foreign,” the term includes both domestic repackers and foreign repackers."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.1 \"Representative sampling of advertisements\"",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.1 \"Representative sampling of advertisements\"",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.1 \"Representative sampling of advertisements\"",
+     "text": "Representative sampling of advertisements means typical advertising material (including the promotional material described in § 202.1(l)(1) of this chapter, but excluding labeling as determined in § 202.1(l)(2) of this chapter), that gives a balanced picture of the promotional claims used for the drug."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.1 \"Representative sampling of any other labeling\"",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.1 \"Representative sampling of any other labeling\"",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.1 \"Representative sampling of any other labeling\"",
+     "text": "Representative sampling of any other labeling means typical labeling material (including the labeling material described in § 202.1(l)(2) of this chapter, but excluding labels and package inserts) that gives a balanced picture of the promotional claims used for the drug."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.1 \"Salvage\"",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.1 \"Salvage\"",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.1 \"Salvage\"",
+     "text": "Salvage means the act of segregating out those finished drug products that may have been subjected to improper storage conditions (such as extremes in temperature, humidity, smoke, fumes, pressure, age, or radiation) for the purpose of returning the products to the marketplace and includes applying manufacturing controls such as those required by current good manufacturing practice in parts 210 and 211 of this chapter."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.1 \"Salvager\"",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.1 \"Salvager\"",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.1 \"Salvager\"",
+     "text": "Salvager means a person who owns or operates an establishment that engages in salvaging. When not modified by “domestic” or “foreign,” the term includes both domestic and foreign salvagers."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.1 \"Unfinished drug\"",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.1 \"Unfinished drug\"",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.1 \"Unfinished drug\"",
+     "text": "Unfinished drug means an active pharmaceutical ingredient either alone or together with one or more other ingredients but does not include finished drug products."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.3",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.3",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.3",
+     "text": "§ 207.3 Bulk drug substance."
+    }
+   ]
+  }
+ ]
+}

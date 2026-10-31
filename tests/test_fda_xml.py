@@ -177,6 +177,14 @@ class LeadInNumbers(unittest.TestCase):
         self.assertIn("numbers", {c for c, _ in X.check_item(it2, src)[0]})
 
 
+class Packing(unittest.TestCase):
+    def test_batches_by_size(self):
+        secs = {"a": [("a", "x" * 15000)], "b": [("b", "x" * 6000)], "c": [("c", "x" * 30000)], "d": [("d", "x")]}
+        self.assertEqual(X.pack(list(secs), secs), [["a"], ["b"], ["c"], ["d"]])
+        small = {str(i): [(str(i), "x")] for i in range(12)}
+        self.assertEqual([len(b) for b in X.pack(list(small), small)], [10, 2])
+
+
 class CrossReferences(unittest.TestCase):
     def test_cross_references_are_not_numbers(self):
         self.assertNotIn("211", X.without_refs("as required in § 211.192 and parts 600 through 680"))

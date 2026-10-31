@@ -1,0 +1,702 @@
+{
+ "instructions": "You read sections of a US regulation (21 CFR, from the official eCFR XML) and list the obligations they state. Each\nsection is given as its paragraphs, each with its reference from the XML structure (\"211.84(c)(1)\") and its exact\ntext. Your output is checked by software against that exact text and by independent reviewers, so precision\nmatters more than wording.\n\nList each separate obligation as its own item, so that together your items cover every obligation in the section.\nOne obligation is one thing a manufacturer must, should or may do, with all its conditions, numbers and\nqualifiers; do not split one obligation across items. For each item:\n- statement: the obligation in your own plain English words, as one checklist item a site could be audited\n  against. Do not copy more than a few words in a row. Keep every condition (\"where\", \"if\", \"unless\", \"when\",\n  \"except\") and every number. Do not add anything the text does not say. The statement itself must carry every\n  condition or qualifier of the lead-ins above its paragraph (a parent paragraph ending in \":\", and its parent if\n  that also ends in \":\"): for 211.42(c)(1) under \"... such other control systems ... as are necessary to prevent\n  contamination or mixups during the course of the following procedures:\", write e.g. \"Provide separate or defined\n  areas, or other control systems as necessary to prevent contamination or mixups, for receipt ...\". Putting the\n  qualifier only in the condition field is not enough. The statement is shown to customers: never cite a\n  paragraph or section reference in it (\"211.166(a)(1)-(5)\", \"this section\"); say what is required instead\n  (\"contains the elements listed below\" is not enough: name them, or let each sub-paragraph's own item carry it).\n- quote: the exact span of ONE paragraph's text that states the whole obligation, copied character for character\n  (matched against the XML text by software; do not fix typos or change punctuation). Leave out the paragraph's\n  designation (\"(c)\"). A quote may continue into that paragraph's sub-paragraphs, in order.\n- clause_number: the reference of the paragraph the quote comes from, exactly as given (\"211.84(c)(1)\").\n- strength: \"mandatory\" for shall / must / is required / may not; \"recommended\" for should; \"optional\" for may.\n  A sub-paragraph without such a word takes its parent's lead-in (\"(c) Samples shall be collected in accordance\n  with the following procedures:\" makes (c)(1)-(c)(6) mandatory).\n- plant_types: from OSD, LIQ, SEMI, INJ, API (INJ = sterile injectables); the plant scope given unless the text\n  narrows it. A paragraph limited to drug products not required to be sterile does not apply to INJ; one limited to\n  sterile drug products (\"purporting to be sterile\") applies only to INJ (and API where in scope).\n- numbers: every number, limit, frequency or period in the quote, as written.\n- condition: the condition or trigger in a few words, \"\" if none. A condition stated in a parent paragraph's\n  lead-in belongs to every sub-paragraph under it. This field only repeats what the statement already says.\n\nA lead-in sentence that also states a duty of its own (\"The written program shall be followed and shall include:\")\nneeds its own item for that duty, quoting the whole sentence including \"shall include:\". That item states only the\nlead-in's own duty (\"follow the written stability program\"); do not summarise the sub-paragraphs in it (their\nitems carry them with their qualifiers). Where the text refers to a closed list of other sections (\"operations\naddressed by §§ 211.101(c) or (d), 211.103 ...\"), keep the list closed: name the operations, never \"such as\".\nDo not narrow or widen a term (\"washing facilities\" is not \"hand-washing facilities\"; \"in and from\" is not \"from\").\n- topic: the sub-topic id from TOPICS the obligation belongs to.\n\nSentences that state no obligation for the manufacturer (a heading, a definition, a scope statement, a statement\nof purpose, an exemption, an enforcement or interpretation statement addressed to FDA) go in not_applicable: one\nentry per SENTENCE (a paragraph of three such sentences needs three entries), each with the paragraph reference,\nthe sentence's first 8 or more words copied exactly (without the paragraph designation), and the reason in a few\nwords.\n\nWrite the answers file named in your task: {\"answers\": [one object per section with \"section\" set to the section's\n\"id\" exactly]}.\n",
+ "topics": [
+  "QS.PQS",
+  "QS.MGMT",
+  "QS.QRM",
+  "QS.PQR",
+  "QS.CHANGE",
+  "QS.DEV",
+  "QS.CAPA",
+  "PER.ORG",
+  "PER.KEY",
+  "PER.TRAIN",
+  "PER.HYG",
+  "PER.GOWN",
+  "PREM.DESIGN",
+  "PREM.PROD",
+  "PREM.STORE",
+  "PREM.QC",
+  "PREM.ANC",
+  "EQ.DESIGN",
+  "EQ.MAINT",
+  "EQ.CLEAN",
+  "EQ.CAL",
+  "DOC.SYS",
+  "DOC.SPEC",
+  "DOC.MFR",
+  "DOC.BMR",
+  "DOC.SOP",
+  "DOC.RET",
+  "MAT.SUPP",
+  "MAT.RECV",
+  "MAT.SAMP",
+  "MAT.STATUS",
+  "MAT.PACK",
+  "MAT.REJ",
+  "PROD.GEN",
+  "PROD.XCONT",
+  "PROD.IPC",
+  "PROD.YIELD",
+  "PROD.PACK",
+  "PROD.REWORK",
+  "QC.GEN",
+  "QC.SAMP",
+  "QC.TEST",
+  "QC.OOS",
+  "QC.STAB",
+  "QC.REF",
+  "QC.MICRO",
+  "VAL.PLAN",
+  "VAL.QUAL",
+  "VAL.PROC",
+  "VAL.CLEAN",
+  "VAL.METH",
+  "CSV.VAL",
+  "CSV.ACCESS",
+  "CSV.AUDIT",
+  "CSV.ESIG",
+  "CSV.DI",
+  "UTIL.WATER",
+  "UTIL.HVAC",
+  "UTIL.GAS",
+  "CCS.STRAT",
+  "CCS.EM",
+  "CCS.CLEAN",
+  "CCS.PEST",
+  "STER.GRADE",
+  "STER.ASEPT",
+  "STER.APS",
+  "STER.STERIL",
+  "STER.FILT",
+  "STER.CCI",
+  "STER.LYO",
+  "API.START",
+  "API.PROC",
+  "API.IMP",
+  "API.SOLV",
+  "OUT.CONTRACT",
+  "OUT.AGREE",
+  "CMP.COMPL",
+  "CMP.RECALL",
+  "CMP.REPORT",
+  "SI.PROG",
+  "SI.TEAM",
+  "SI.REPORT",
+  "SI.FOLLOW",
+  "DIST.STORE",
+  "DIST.TRANS",
+  "DIST.RETURN",
+  "REL.QP",
+  "REL.REVIEW"
+ ],
+ "schema": {
+  "type": "object",
+  "required": [
+   "section",
+   "items",
+   "not_applicable"
+  ],
+  "properties": {
+   "section": {
+    "type": "string"
+   },
+   "items": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "statement",
+      "quote",
+      "clause_number",
+      "strength",
+      "plant_types",
+      "numbers",
+      "condition",
+      "topic"
+     ],
+     "properties": {
+      "statement": {
+       "type": "string"
+      },
+      "quote": {
+       "type": "string"
+      },
+      "clause_number": {
+       "type": "string"
+      },
+      "strength": {
+       "enum": [
+        "mandatory",
+        "recommended",
+        "optional"
+       ]
+      },
+      "plant_types": {
+       "type": "array",
+       "items": {
+        "enum": [
+         "OSD",
+         "LIQ",
+         "SEMI",
+         "INJ",
+         "API"
+        ]
+       }
+      },
+      "numbers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "condition": {
+       "type": "string"
+      },
+      "topic": {
+       "type": "string"
+      }
+     }
+    }
+   },
+   "not_applicable": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "clause_number",
+      "text",
+      "reason"
+     ],
+     "properties": {
+      "clause_number": {
+       "type": "string"
+      },
+      "text": {
+       "type": "string"
+      },
+      "reason": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  }
+ },
+ "sections": [
+  {
+   "id": "fda-cfr-21-part-207.xml:207.3 \"Bulk drug substance\"",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.3 \"Bulk drug substance\"",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.3 \"Bulk drug substance\"",
+     "text": "Bulk drug substance, as referenced in sections 503A(b)(1)(A) and 503B(a)(2) of the Federal Food, Drug, and Cosmetic Act, previously defined in § 207.3(a)(4), means the same as “active pharmaceutical ingredient” as defined in § 207.1."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.5",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.5",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.5",
+     "text": "§ 207.5 What is the purpose of this part? Establishment registration information helps FDA identify who is manufacturing, repacking, relabeling, and salvaging drugs and where those operations are performed. Drug listing information gives FDA a current inventory of drugs manufactured, repacked, relabeled, or salvaged for commercial distribution. Both types of information facilitate implementation and enforcement of the Federal Food, Drug, and Cosmetic Act and are used for many important public health purposes."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.9",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.9",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.9",
+     "text": "§ 207.9 Who does this part cover?"
+    },
+    {
+     "ref": "207.9(a)",
+     "text": "(a) Except as provided in paragraph (b) of this section, this part applies to:"
+    },
+    {
+     "ref": "207.9(a)(1)",
+     "text": "(1) Domestic manufacturers, domestic repackers, domestic relabelers and domestic salvagers, not exempt under section 510(g) of the Federal Food, Drug, and Cosmetic Act or § 207.13, regardless of whether their drugs enter interstate commerce;"
+    },
+    {
+     "ref": "207.9(a)(2)",
+     "text": "(2) Foreign manufacturers, foreign repackers, foreign relabelers and foreign salvagers, not exempt under section 510(g) of the Federal Food, Drug, and Cosmetic Act or § 207.13;"
+    },
+    {
+     "ref": "207.9(a)(3)",
+     "text": "(3) Private label distributors, because they must have labeler codes;"
+    },
+    {
+     "ref": "207.9(a)(4)",
+     "text": "(4) Establishments engaged in the manufacture, repacking, relabeling, or salvaging of human drugs regulated under a biologics license application (BLA). These establishments are subject to the requirements of this part unless they are required to register and list such drugs as human blood or blood products under part 607 of this chapter and do not engage in activities that would otherwise require them to register and list under this part."
+    },
+    {
+     "ref": "207.9(a)(5)",
+     "text": "(5) Establishments engaged in the manufacture (as defined in § 1271.3(e) of this chapter) of human cells, tissues, and cellular and tissue-based products (HCT/Ps) (as defined in § 1271.3(d) of this chapter) that, under § 1271.20 of this chapter, are also drugs regulated under section 351 of the Public Health Service Act or section 505 of the Federal Food, Drug, and Cosmetic Act. These establishments must register and list those HCT/Ps following the procedures described in this part."
+    },
+    {
+     "ref": "207.9(b)",
+     "text": "(b) This part does not apply to owners and operators of establishments that collect or process human whole blood and blood products unless the establishment also manufactures, repacks, or relabels other drugs. For purposes of this paragraph (b), human whole blood and blood products do not include plasma derivatives such as albumin, Immune Globulin, Factor VIII and Factor IX, and recombinant versions of plasma derivatives or animal derived plasma derivatives, or bulk product substances such as fractionation intermediates or pastes. Establishments that collect or process human whole blood and blood products as well as establishments involved in testing of human whole blood and blood products must register and list under part 607 of this chapter. Manufacturers of licensed devices and manufacturers of licensed biological products used in a licensed device must register and list under part 607 of this chapter."
+    },
+    {
+     "ref": "207.9(c)",
+     "text": "(c) This part does not apply to establishments that solely manufacture, prepare, propagate, compound, assemble, or process medical devices. Registration and listing regulations for such establishments are codified in part 807 of this chapter."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.13",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.13",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.13",
+     "text": "§ 207.13 Who is exempt from the registration and listing requirements? Except as provided in § 207.13(l), the following classes of persons are exempt from registration and drug listing in accordance with section 510(g) of the Federal Food, Drug, and Cosmetic Act or because FDA has determined, under section 510(g)(5) of the Federal Food, Drug, and Cosmetic Act, that their registration is not necessary for the protection of the public health. This exemption is limited to establishment registration and drug listing requirements and does not relieve a person from other statutory or regulatory obligations."
+    },
+    {
+     "ref": "207.13(a)",
+     "text": "(a)"
+    },
+    {
+     "ref": "207.13(a)(1)",
+     "text": "(1) Pharmacies that:"
+    },
+    {
+     "ref": "207.13(a)(1)(i)",
+     "text": "(i) Operate in conformance with all applicable local laws regulating the practice of pharmacy and medicine, including all applicable local laws regulating the dispensing of prescription drugs;"
+    },
+    {
+     "ref": "207.13(a)(1)(ii)",
+     "text": "(ii) Regularly engage in dispensing prescription drugs upon a valid prescription by practitioners licensed by law to administer these drugs to patients under their professional care; and"
+    },
+    {
+     "ref": "207.13(a)(1)(iii)",
+     "text": "(iii) Do not manufacture, repack, relabel, or salvage drugs other than in the regular course of their business of dispensing or selling drugs at retail."
+    },
+    {
+     "ref": "207.13(a)(2)",
+     "text": "(2) The exemption in this paragraph (a) is limited to pharmacies located in any State as defined in section 201(a)(1) of the Federal Food, Drug, and Cosmetic Act."
+    },
+    {
+     "ref": "207.13(b)",
+     "text": "(b)"
+    },
+    {
+     "ref": "207.13(b)(1)",
+     "text": "(1) Hospitals, clinics, other health care entities, and public health agencies that:"
+    },
+    {
+     "ref": "207.13(b)(1)(i)",
+     "text": "(i) Operate establishments in conformance with all applicable local laws regulating the practice of pharmacy and medicine, including all applicable local laws regulating the dispensing of prescription drugs;"
+    },
+    {
+     "ref": "207.13(b)(1)(ii)",
+     "text": "(ii) Regularly engage in dispensing prescription drugs, other than human whole blood or blood products, upon a valid order or prescription by practitioners licensed by law to administer these drugs to patients under their professional care; and"
+    },
+    {
+     "ref": "207.13(b)(1)(iii)",
+     "text": "(iii) Do not manufacture, repack, relabel, or salvage drugs other than in the regular course of their practice of pharmacy, including dispensing."
+    },
+    {
+     "ref": "207.13(b)(2)",
+     "text": "(2) The exemption in this paragraph (b) is limited to hospitals, clinics, other health care entities, and public health agencies located in any State as defined in section 201(a)(1) of the Federal Food, Drug, and Cosmetic Act."
+    },
+    {
+     "ref": "207.13(c)",
+     "text": "(c) Individuals or establishments under contract, agreement, or other arrangement with a registered establishment and engaged solely in recovering cells or tissues and sending the recovered cells or tissues to the registered establishment to become components of a biological product are exempt from registration and listing under this part unless FDA determines that drug establishment registration and listing is necessary for the protection of the public health."
+    },
+    {
+     "ref": "207.13(d)",
+     "text": "(d) Practitioners who are licensed by law to prescribe or administer drugs and who manufacture, repack, relabel, or salvage drugs solely for use in their professional practice."
+    },
+    {
+     "ref": "207.13(e)",
+     "text": "(e) Manufacturers, repackers, relabelers, or salvagers who manufacture, repack, relabel, or salvage drugs solely for use in research, teaching, or chemical analysis and not for sale."
+    },
+    {
+     "ref": "207.13(f)",
+     "text": "(f) Manufacturers, repackers, and relabelers of harmless inactive ingredients such as excipients, colorings, flavorings, emulsifiers, lubricants, preservatives, or solvents that become components of drugs."
+    },
+    {
+     "ref": "207.13(g)",
+     "text": "(g) Manufacturers, repackers, relabelers, or salvagers of Type B or Type C medicated feeds, except for persons who manufacture, repack, relabel, or salvage Type B or Type C medicated feeds starting from Category II, Type A medicated articles for which a medicated feed mill license approved under part 515 of this chapter is required. This exemption also does not apply to persons that would otherwise be required to register (such as manufacturers, repackers, relabelers, or salvagers of certain free-choice feeds, as defined in § 510.455 of this chapter, or certain liquid feeds, as defined in § 558.5 of this chapter, where the specifications and/or formulas are not published and a medicated feed mill license is required). All manufacturers, repackers, relabelers, or salvagers of Type B or Type C medicated feeds are exempt from listing."
+    },
+    {
+     "ref": "207.13(h)",
+     "text": "(h) Any manufacturer, repacker, relabeler, or salvager of a virus, serum, toxin, or analogous product intended for the treatment of domestic animals who holds an unsuspended and unrevoked license issued by the Secretary of Agriculture under the animal virus-serum-toxin law of March 4, 1913 (37 Stat. 832 (21 U.S.C. 151 et seq.)), provided that this exemption from registration applies only to the manufacturer, repacker, relabeler, or salvager of that animal virus, serum, toxin, or analogous product."
+    },
+    {
+     "ref": "207.13(i)",
+     "text": "(i) Carriers, in their receipt, carriage, holding, or delivery of drugs in the usual course of business as carriers."
+    },
+    {
+     "ref": "207.13(j)",
+     "text": "(j) Foreign establishments whose drugs are imported or offered for import into the United States must comply with the establishment registration and listing requirements of this part unless exempt under this section or unless:"
+    },
+    {
+     "ref": "207.13(j)(1)",
+     "text": "(1) Their drugs enter a foreign trade zone and are re-exported without having entered U.S. commerce, or"
+    },
+    {
+     "ref": "207.13(j)(2)",
+     "text": "(2) Their drugs are imported in conformance with section 801(d)(3) of the Federal Food, Drug, and Cosmetic Act."
+    },
+    {
+     "ref": "207.13(k)",
+     "text": "(k) Entities that are registered with FDA as outsourcing facilities and that compound drugs in conformance with section 503B of the Federal Food, Drug, and Cosmetic Act."
+    },
+    {
+     "ref": "207.13(l)",
+     "text": "(l) The exemptions provided in paragraphs (a) through (k) of this section do not apply to such persons if they:"
+    },
+    {
+     "ref": "207.13(l)(1)",
+     "text": "(1) Manufacture (as defined in § 207.1), repack, relabel, or salvage compounded positron emission tomography drugs as defined in section 201(ii) of the Federal Food, Drug, and Cosmetic Act;"
+    },
+    {
+     "ref": "207.13(l)(2)",
+     "text": "(2) Manufacture (as defined in § 600.3(u) of this chapter) a human biological product subject to licensing under section 351 of the Public Health Service Act; or"
+    },
+    {
+     "ref": "207.13(l)(3)",
+     "text": "(3) Engage in activities that would otherwise require them to register under this part."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.17",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.17",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.17",
+     "text": "§ 207.17 Who must register?"
+    },
+    {
+     "ref": "207.17(a)",
+     "text": "(a) Unless exempt under section 510(g) of the Federal Food, Drug, and Cosmetic Act or this part, all manufacturers, repackers, relabelers, and salvagers must register each domestic establishment that manufactures, repacks, relabels, or salvages a drug, or an animal feed bearing or containing a new animal drug, and each foreign establishment that manufactures, repacks, relabels, or salvages a drug, or an animal feed bearing or containing a new animal drug, that is imported or offered for import into the United States. When operations are conducted at more than one establishment and common ownership and control among all the establishments exists, the parent, subsidiary, or affiliate company may submit registration information for all establishments."
+    },
+    {
+     "ref": "207.17(b)",
+     "text": "(b) Private label distributors who do not also manufacture, repack, relabel, or salvage drugs are not required to register under this part. FDA will accept registration or listing information submitted by a private label distributor only if it is acting as an authorized agent for and submitting information that pertains to an establishment that manufactures, repacks, relabels, or salvages drugs."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.21",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.21",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.21",
+     "text": "§ 207.21 When must initial registration information be provided?"
+    },
+    {
+     "ref": "207.21(a)",
+     "text": "(a) Registrants must register each domestic establishment no later than 5 calendar days after beginning to manufacture, repack, relabel, or salvage a drug or an animal feed bearing or containing a new animal drug at such establishment."
+    },
+    {
+     "ref": "207.21(b)",
+     "text": "(b) Registrants must register each foreign establishment before a drug or an animal feed bearing or containing a new animal drug manufactured, repacked, relabeled, or salvaged at the establishment is imported or offered for import into the United States."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.25",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.25",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.25",
+     "text": "§ 207.25 What information is required for registration? Registrants must provide the following information:"
+    },
+    {
+     "ref": "207.25(a)",
+     "text": "(a) Name of the owner or operator of each establishment; if a partnership, the name of each partner; if a corporation, the name of each corporate officer and director, and the place of incorporation;"
+    },
+    {
+     "ref": "207.25(b)",
+     "text": "(b) Each establishment's name, physical address, and telephone number(s);"
+    },
+    {
+     "ref": "207.25(c)",
+     "text": "(c) All name(s) of the establishment, including names under which the establishment conducts business or names by which the establishment is known;"
+    },
+    {
+     "ref": "207.25(d)",
+     "text": "(d) Registration number of each establishment, if previously assigned by FDA;"
+    },
+    {
+     "ref": "207.25(e)",
+     "text": "(e) A Unique Facility Identifier in accordance with the system specified under section 510 of the Federal Food, Drug, and Cosmetic Act."
+    },
+    {
+     "ref": "207.25(f)",
+     "text": "(f) All types of operations performed at each establishment;"
+    },
+    {
+     "ref": "207.25(g)",
+     "text": "(g) Name, mailing address, telephone number, and email address of the official contact for the establishment, as provided in § 207.69(a); and"
+    },
+    {
+     "ref": "207.25(h)",
+     "text": "(h) Additionally, with respect to foreign establishments subject to registration, the name, mailing address, telephone number, and email address must be provided for:"
+    },
+    {
+     "ref": "207.25(h)(1)",
+     "text": "(1) The United States agent, as provided in § 207.69(b);"
+    },
+    {
+     "ref": "207.25(h)(2)",
+     "text": "(2) Each importer in the United States of drugs manufactured, repacked, relabeled, or salvaged at the establishment that is known to the establishment; and"
+    },
+    {
+     "ref": "207.25(h)(3)",
+     "text": "(3) Each person who imports or offers for import such drug to the United States."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.29",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.29",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.29",
+     "text": "§ 207.29 What are the requirements for reviewing and updating registration information?"
+    },
+    {
+     "ref": "207.29(a)",
+     "text": "(a) Expedited updates. Registrants must update their registration information no later than 30 calendar days after:"
+    },
+    {
+     "ref": "207.29(a)(1)",
+     "text": "(1) Closing or selling an establishment;"
+    },
+    {
+     "ref": "207.29(a)(2)",
+     "text": "(2) Changing an establishment's name or physical address; or"
+    },
+    {
+     "ref": "207.29(a)(3)",
+     "text": "(3) Changing the name, mailing address, telephone number, or email address of the official contact or the United States agent. A registrant, official contact, or United States agent may notify FDA about a change of information for the designated official contact or United States agent, but only a registrant is permitted to designate a new official contact or United States agent."
+    },
+    {
+     "ref": "207.29(b)",
+     "text": "(b) Annual review and update of registration information. Registrants must review and update all registration information required under § 207.25 for each establishment."
+    },
+    {
+     "ref": "207.29(b)(1)",
+     "text": "(1) The first review and update must occur during the period beginning on October 1 and ending December 31 of the year of initial registration, if the initial registration occurs prior to October 1. Subsequent reviews and updates must occur annually, during the period beginning on October 1 and ending December 31 of each calendar year."
+    },
+    {
+     "ref": "207.29(b)(2)",
+     "text": "(2) The updates must reflect all changes that have occurred since the last annual review and update."
+    },
+    {
+     "ref": "207.29(b)(3)",
+     "text": "(3) If no changes have occurred since the last registration, registrants must certify that no changes have occurred."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.33",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.33",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.33",
+     "text": "§ 207.33 What is the National Drug Code (NDC), how is it assigned, and what are its requirements?"
+    },
+    {
+     "ref": "207.33(a)",
+     "text": "(a) What is the NDC for a drug and what products must have unique NDCs? The NDC for a drug is a numeric code. Each finished drug product or unfinished drug subject to the listing requirements of this part must have a unique NDC to identify its labeler, product, and package size and type."
+    },
+    {
+     "ref": "207.33(b)",
+     "text": "(b) What is the format of an NDC?"
+    },
+    {
+     "ref": "207.33(b)(1)",
+     "text": "(1) Except as described in paragraph (b)(4) of this section, the NDC must consist of 10 or 11 digits, divided into three segments as follows:"
+    },
+    {
+     "ref": "207.33(b)(1)(i)",
+     "text": "(i) The first segment of the NDC is the labeler code and consists of 4, 5, or 6 digits. The labeler code is assigned by FDA."
+    },
+    {
+     "ref": "207.33(b)(1)(ii)",
+     "text": "(ii) The second segment of the NDC is the product code and consists of 3 or 4 digits, as specified in paragraphs (b)(2) and (3) of this section."
+    },
+    {
+     "ref": "207.33(b)(1)(iii)",
+     "text": "(iii) The third segment of the NDC is the package code and consists of 1 or 2 digits as specified in paragraphs (b)(2) and (3) of this section. The package code identifies the package size and type of the drug and differentiates between different quantitative and qualitative attributes of the product packaging."
+    },
+    {
+     "ref": "207.33(b)(2)",
+     "text": "(2) The following combinations of labeler code, product code and package code character lengths are permissible:"
+    },
+    {
+     "ref": "207.33(b)(2)(i)",
+     "text": "(i) If a labeler code is either 5 or 6 digits in length, it may be combined with:"
+    },
+    {
+     "ref": "207.33(b)(2)(i)(A)",
+     "text": "(A) A product code consisting of 4 digits and a package code consisting of 1 digit for a total NDC length of 10 or 11 digits (5-4-1 or 6-4-1), or"
+    },
+    {
+     "ref": "207.33(b)(2)(i)(B)",
+     "text": "(B) A product code consisting of 3 digits and a package code consisting of 2 digits for a total NDC length of 10 or 11 digits (5-3-2 or 6-3-2)."
+    },
+    {
+     "ref": "207.33(b)(2)(ii)",
+     "text": "(ii) If a labeler code is 4 digits in length, it may be combined only with a product code consisting of 4 digits and a package code consisting of 2 digits for a total NDC length of 10 digits (4-4-2)."
+    },
+    {
+     "ref": "207.33(b)(3)",
+     "text": "(3) A registrant or private label distributor with a given labeler code must use only one Product-Package Code configuration (e.g., a 3-digit product code combined with a 2-digit package code or a 4-digit product code combined with a 1-digit package code). This single configuration must be used in all NDCs that include the given labeler code that are reserved in accordance with § 207.33(d)(3) or listed in accordance with § 207.49 or § 207.53."
+    },
+    {
+     "ref": "207.33(b)(4)",
+     "text": "(4) An alternatively formatted NDC that is approved for use by the relevant Center Director may be used for the following HCT/Ps if they are minimally manipulated: Hematopoietic stem/progenitor cells derived from peripheral and cord blood, and lymphocytes collected from peripheral blood."
+    },
+    {
+     "ref": "207.33(c)",
+     "text": "(c) Who must obtain an NDC labeler code and how is the code assigned and updated?"
+    },
+    {
+     "ref": "207.33(c)(1)",
+     "text": "(1) Each person who engages in manufacturing, repacking, relabeling, or private label distribution of a drug subject to listing under this part must apply for an NDC labeler code, by providing the following information:"
+    },
+    {
+     "ref": "207.33(c)(1)(i)",
+     "text": "(i) The name, physical address, email address, and other contact information FDA may request, of the person for whom the NDC labeler code is requested;"
+    },
+    {
+     "ref": "207.33(c)(1)(ii)",
+     "text": "(ii) The type(s) of activities (e.g., manufacture or repacking) in which the person requesting the NDC labeler code engages with respect to human drugs; and"
+    },
+    {
+     "ref": "207.33(c)(1)(iii)",
+     "text": "(iii) The type(s) of drug(s) (human, animal, or both, and prescription, nonprescription, or both) to which the NDC labeler code will be applied."
+    },
+    {
+     "ref": "207.33(c)(2)",
+     "text": "(2) Each person who is assigned an NDC labeler code must update the information submitted under paragraph (c)(1)of this section within 30 calendar days after any change to that information."
+    },
+    {
+     "ref": "207.33(d)",
+     "text": "(d) How is an NDC proposed for assignment by FDA, when is an NDC assigned by FDA, and how can a proposed NDC be reserved?"
+    },
+    {
+     "ref": "207.33(d)(1)",
+     "text": "(1) An NDC is proposed for assignment by FDA when it is submitted for the first time with listing information in accordance with § 207.49 or § 207.53, as applicable."
+    },
+    {
+     "ref": "207.33(d)(1)(i)",
+     "text": "(i) Each manufacturer, repacker, or relabeler must propose for assignment by FDA an NDC that includes its own labeler code for each package size and type of drug that it manufactures, repacks, or relabels for commercial distribution."
+    },
+    {
+     "ref": "207.33(d)(1)(ii)",
+     "text": "(ii) In addition, if a drug is distributed under the trade name or label of a private label distributor, the manufacturer, repacker, or relabeler must also propose for assignment by FDA an NDC that includes the labeler code of the private label distributor under whose trade name or label the drug is distributed, for each package size and type so distributed."
+    },
+    {
+     "ref": "207.33(d)(2)",
+     "text": "(2) If a proposed NDC conforms to the requirements of this section and is not reserved for a different drug or was not previously assigned to a different drug, FDA will assign the NDC to a drug when it receives listing information required for that drug under § 207.49 or § 207.53."
+    },
+    {
+     "ref": "207.33(d)(3)",
+     "text": "(3) A manufacturer, repacker, relabeler, or private label distributor may voluntarily reserve a proposed NDC for a drug, before the drug is listed, by submitting the following information:"
+    },
+    {
+     "ref": "207.33(d)(3)(i)",
+     "text": "(i) A proposed NDC that conforms to the requirements of this section;"
+    },
+    {
+     "ref": "207.33(d)(3)(ii)",
+     "text": "(ii) The established name of the active ingredient(s) and the strength of each active ingredient in the drug; and"
+    },
+    {
+     "ref": "207.33(d)(3)(iii)",
+     "text": "(iii) In the case of a finished drug product, the dosage form, and route of administration."
+    },
+    {
+     "ref": "207.33(d)(4)",
+     "text": "(4) If the required information is submitted and the proposed NDC is properly formatted and not already assigned or reserved, FDA will reserve the proposed NDC for a period of 2 years from the date of submission. If the drug for which the proposed NDC is reserved is not listed in accordance with § 207.49 or § 207.53 during such 2-year period, the reservation of the proposed NDC will lapse. FDA may also cancel the reservation of a proposed NDC at any time on the request of the person whose labeler code is included in the proposed NDC."
+    },
+    {
+     "ref": "207.33(e)",
+     "text": "(e) How must the information be submitted to us? The information described in paragraphs (c) and (d) of this section must be submitted electronically unless FDA grants a waiver under § 207.65."
+    }
+   ]
+  }
+ ]
+}

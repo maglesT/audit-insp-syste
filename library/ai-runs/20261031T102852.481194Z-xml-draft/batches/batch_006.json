@@ -1,0 +1,390 @@
+{
+ "instructions": "You read sections of a US regulation (21 CFR, from the official eCFR XML) and list the obligations they state. Each\nsection is given as its paragraphs, each with its reference from the XML structure (\"211.84(c)(1)\") and its exact\ntext. Your output is checked by software against that exact text and by independent reviewers, so precision\nmatters more than wording.\n\nList each separate obligation as its own item, so that together your items cover every obligation in the section.\nOne obligation is one thing a manufacturer must, should or may do, with all its conditions, numbers and\nqualifiers; do not split one obligation across items. For each item:\n- statement: the obligation in your own plain English words, as one checklist item a site could be audited\n  against. Do not copy more than a few words in a row. Keep every condition (\"where\", \"if\", \"unless\", \"when\",\n  \"except\") and every number. Do not add anything the text does not say. The statement itself must carry every\n  condition or qualifier of the lead-ins above its paragraph (a parent paragraph ending in \":\", and its parent if\n  that also ends in \":\"): for 211.42(c)(1) under \"... such other control systems ... as are necessary to prevent\n  contamination or mixups during the course of the following procedures:\", write e.g. \"Provide separate or defined\n  areas, or other control systems as necessary to prevent contamination or mixups, for receipt ...\". Putting the\n  qualifier only in the condition field is not enough. The statement is shown to customers: never cite a\n  paragraph or section reference in it (\"211.166(a)(1)-(5)\", \"this section\"); say what is required instead\n  (\"contains the elements listed below\" is not enough: name them, or let each sub-paragraph's own item carry it).\n- quote: the exact span of ONE paragraph's text that states the whole obligation, copied character for character\n  (matched against the XML text by software; do not fix typos or change punctuation). Leave out the paragraph's\n  designation (\"(c)\"). A quote may continue into that paragraph's sub-paragraphs, in order.\n- clause_number: the reference of the paragraph the quote comes from, exactly as given (\"211.84(c)(1)\").\n- strength: \"mandatory\" for shall / must / is required / may not; \"recommended\" for should; \"optional\" for may.\n  A sub-paragraph without such a word takes its parent's lead-in (\"(c) Samples shall be collected in accordance\n  with the following procedures:\" makes (c)(1)-(c)(6) mandatory).\n- plant_types: from OSD, LIQ, SEMI, INJ, API (INJ = sterile injectables); the plant scope given unless the text\n  narrows it. A paragraph limited to drug products not required to be sterile does not apply to INJ; one limited to\n  sterile drug products (\"purporting to be sterile\") applies only to INJ (and API where in scope).\n- numbers: every number, limit, frequency or period in the quote, as written.\n- condition: the condition or trigger in a few words, \"\" if none. A condition stated in a parent paragraph's\n  lead-in belongs to every sub-paragraph under it. This field only repeats what the statement already says.\n\nA lead-in sentence that also states a duty of its own (\"The written program shall be followed and shall include:\")\nneeds its own item for that duty, quoting the whole sentence including \"shall include:\". That item states only the\nlead-in's own duty (\"follow the written stability program\"); do not summarise the sub-paragraphs in it (their\nitems carry them with their qualifiers). Where the text refers to a closed list of other sections (\"operations\naddressed by §§ 211.101(c) or (d), 211.103 ...\"), keep the list closed: name the operations, never \"such as\".\nDo not narrow or widen a term (\"washing facilities\" is not \"hand-washing facilities\"; \"in and from\" is not \"from\").\n- topic: the sub-topic id from TOPICS the obligation belongs to.\n\nSentences that state no obligation for the manufacturer (a heading, a definition, a scope statement, a statement\nof purpose, an exemption, an enforcement or interpretation statement addressed to FDA) go in not_applicable: one\nentry per SENTENCE (a paragraph of three such sentences needs three entries), each with the paragraph reference,\nthe sentence's first 8 or more words copied exactly (without the paragraph designation), and the reason in a few\nwords.\n\nWrite the answers file named in your task: {\"answers\": [one object per section with \"section\" set to the section's\n\"id\" exactly]}.\n",
+ "topics": [
+  "QS.PQS",
+  "QS.MGMT",
+  "QS.QRM",
+  "QS.PQR",
+  "QS.CHANGE",
+  "QS.DEV",
+  "QS.CAPA",
+  "PER.ORG",
+  "PER.KEY",
+  "PER.TRAIN",
+  "PER.HYG",
+  "PER.GOWN",
+  "PREM.DESIGN",
+  "PREM.PROD",
+  "PREM.STORE",
+  "PREM.QC",
+  "PREM.ANC",
+  "EQ.DESIGN",
+  "EQ.MAINT",
+  "EQ.CLEAN",
+  "EQ.CAL",
+  "DOC.SYS",
+  "DOC.SPEC",
+  "DOC.MFR",
+  "DOC.BMR",
+  "DOC.SOP",
+  "DOC.RET",
+  "MAT.SUPP",
+  "MAT.RECV",
+  "MAT.SAMP",
+  "MAT.STATUS",
+  "MAT.PACK",
+  "MAT.REJ",
+  "PROD.GEN",
+  "PROD.XCONT",
+  "PROD.IPC",
+  "PROD.YIELD",
+  "PROD.PACK",
+  "PROD.REWORK",
+  "QC.GEN",
+  "QC.SAMP",
+  "QC.TEST",
+  "QC.OOS",
+  "QC.STAB",
+  "QC.REF",
+  "QC.MICRO",
+  "VAL.PLAN",
+  "VAL.QUAL",
+  "VAL.PROC",
+  "VAL.CLEAN",
+  "VAL.METH",
+  "CSV.VAL",
+  "CSV.ACCESS",
+  "CSV.AUDIT",
+  "CSV.ESIG",
+  "CSV.DI",
+  "UTIL.WATER",
+  "UTIL.HVAC",
+  "UTIL.GAS",
+  "CCS.STRAT",
+  "CCS.EM",
+  "CCS.CLEAN",
+  "CCS.PEST",
+  "STER.GRADE",
+  "STER.ASEPT",
+  "STER.APS",
+  "STER.STERIL",
+  "STER.FILT",
+  "STER.CCI",
+  "STER.LYO",
+  "API.START",
+  "API.PROC",
+  "API.IMP",
+  "API.SOLV",
+  "OUT.CONTRACT",
+  "OUT.AGREE",
+  "CMP.COMPL",
+  "CMP.RECALL",
+  "CMP.REPORT",
+  "SI.PROG",
+  "SI.TEAM",
+  "SI.REPORT",
+  "SI.FOLLOW",
+  "DIST.STORE",
+  "DIST.TRANS",
+  "DIST.RETURN",
+  "REL.QP",
+  "REL.REVIEW"
+ ],
+ "schema": {
+  "type": "object",
+  "required": [
+   "section",
+   "items",
+   "not_applicable"
+  ],
+  "properties": {
+   "section": {
+    "type": "string"
+   },
+   "items": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "statement",
+      "quote",
+      "clause_number",
+      "strength",
+      "plant_types",
+      "numbers",
+      "condition",
+      "topic"
+     ],
+     "properties": {
+      "statement": {
+       "type": "string"
+      },
+      "quote": {
+       "type": "string"
+      },
+      "clause_number": {
+       "type": "string"
+      },
+      "strength": {
+       "enum": [
+        "mandatory",
+        "recommended",
+        "optional"
+       ]
+      },
+      "plant_types": {
+       "type": "array",
+       "items": {
+        "enum": [
+         "OSD",
+         "LIQ",
+         "SEMI",
+         "INJ",
+         "API"
+        ]
+       }
+      },
+      "numbers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "condition": {
+       "type": "string"
+      },
+      "topic": {
+       "type": "string"
+      }
+     }
+    }
+   },
+   "not_applicable": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "clause_number",
+      "text",
+      "reason"
+     ],
+     "properties": {
+      "clause_number": {
+       "type": "string"
+      },
+      "text": {
+       "type": "string"
+      },
+      "reason": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  }
+ },
+ "sections": [
+  {
+   "id": "fda-cfr-21-part-207.xml:207.61",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.61",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.61",
+     "text": "§ 207.61 How is registration and listing information provided to FDA?"
+    },
+    {
+     "ref": "207.61(a)",
+     "text": "(a) Electronic format."
+    },
+    {
+     "ref": "207.61(a)(1)",
+     "text": "(1) Except as provided in § 207.65, all information submitted under this part must be transmitted to FDA in electronic format by using our electronic drug registration and listing system, in a form that we can process, review, and archive. We may periodically issue guidance on how to provide registration and listing information in electronic format (specifying for example method of transmission, media, file formats, preparation, and organization of files)."
+    },
+    {
+     "ref": "207.61(a)(2)",
+     "text": "(2) Information provided in electronic format must comply with part 11 of this chapter, except as follows:"
+    },
+    {
+     "ref": "207.61(a)(2)(i)",
+     "text": "(i) Advertisements and labeling, including the content of labeling, required under this part are exempt from the requirements in § 11.10(a), (c) through (h), and (k) of this chapter and the corresponding requirements in § 11.30 of this chapter."
+    },
+    {
+     "ref": "207.61(a)(2)(ii)",
+     "text": "(ii) All other information submitted under this part is exempt from the requirements in § 11.10(b), (c), and (e) of this chapter and the corresponding requirements in § 11.30 of this chapter."
+    },
+    {
+     "ref": "207.61(b)",
+     "text": "(b) English language. Drug establishment registration and drug listing information must be provided in the English language. The content of labeling must be provided at a minimum in the English language. Where § 201.15(c) of this chapter permits product labeling solely in a foreign language, the content of labeling must be submitted in that language along with an accurate English translation."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.65",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.65",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.65",
+     "text": "§ 207.65 How can a waiver of the electronic submission requirement be obtained?"
+    },
+    {
+     "ref": "207.65(a)",
+     "text": "(a) All information submitted under this part must be transmitted to FDA electronically in accordance with § 207.61(a) unless FDA has granted a request for waiver of this requirement prior to the date on which submission of such information is due. Submission of a request for waiver does not excuse timely compliance with the registration and listing requirements. FDA will grant a waiver request if FDA determines that the use of electronic means for submission of registration and listing information is not reasonable for the registrant making the waiver request."
+    },
+    {
+     "ref": "207.65(b)",
+     "text": "(b) Waiver requests under this section must be submitted in writing and must include the specific reasons why electronic submission is not reasonable for the registrant and a U.S. telephone number and mailing address where FDA can contact the registrant. All waiver requests must be sent to: SPL Coordinator, U.S. Food and Drug Administration, 10903 New Hampshire Ave., Bldg. 32, Silver Spring, MD 20993."
+    },
+    {
+     "ref": "207.65(c)",
+     "text": "(c) If FDA grants the waiver request, FDA may limit its duration and will specify terms of the waiver and provide information on how to submit establishment registration, drug listings, other information, and updates, as applicable."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.69",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.69",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.69",
+     "text": "§ 207.69 What are the requirements for an official contact and a United States agent?"
+    },
+    {
+     "ref": "207.69(a)",
+     "text": "(a) Official contact. Registrants subject to the registration requirements of this part must designate an official contact for each establishment. The official contact is responsible for:"
+    },
+    {
+     "ref": "207.69(a)(1)",
+     "text": "(1) Ensuring the accuracy of registration and listing information; and"
+    },
+    {
+     "ref": "207.69(a)(2)",
+     "text": "(2) Reviewing, disseminating, routing, and responding to all communications from FDA including emergency communications."
+    },
+    {
+     "ref": "207.69(b)",
+     "text": "(b) United States agent. Registrants of foreign establishments subject to this part must designate a single United States agent. The United States agent must reside or maintain a place of business in the United States and may not be a mailbox, answering machine or service, or other place where a person acting as the United States agent is not physically present. The United States agent is responsible for:"
+    },
+    {
+     "ref": "207.69(b)(1)",
+     "text": "(1) Reviewing, disseminating, routing, and responding to all communications from FDA including emergency communications;"
+    },
+    {
+     "ref": "207.69(b)(2)",
+     "text": "(2) Responding to questions concerning those drugs that are imported or offered for import to the United States;"
+    },
+    {
+     "ref": "207.69(b)(3)",
+     "text": "(3) Assisting FDA in scheduling inspections; and"
+    },
+    {
+     "ref": "207.69(b)(4)",
+     "text": "(4) If FDA is unable to contact a foreign registrant directly or expeditiously, FDA may provide the information and/or documents to the United States agent. FDA's providing information and/or documents to the United States agent is equivalent to providing the same information and/or documents to the foreign registrant."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.77",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.77",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.77",
+     "text": "§ 207.77 What legal status is conferred by registration and listing?"
+    },
+    {
+     "ref": "207.77(a)",
+     "text": "(a) Registration of an establishment or listing of a drug does not denote approval of the establishment, the drug, or other drugs of the establishment, nor does it mean that a product may be legally marketed. Any representation that creates an impression of official approval or that a drug is approved or is legally marketable because of registration or listing is misleading and constitutes misbranding."
+    },
+    {
+     "ref": "207.77(b)",
+     "text": "(b) FDA's acceptance of registration and listing information, inclusion of a drug in our database of drugs, or assignment of an NDC does not denote approval of the establishment or the drug or any other drugs of the establishment, nor does it mean that the drug may be legally marketed. Any representation that creates the impression that a drug is approved or is legally marketable because it appears in our database of drugs, has been assigned or displays an NDC, or the establishment has been assigned an establishment registration number or Unique Facility Identifier is misleading and constitutes misbranding. Failure to comply with § 207.37 may also constitute misbranding."
+    },
+    {
+     "ref": "207.77(c)",
+     "text": "(c) Neither registration nor listing constitutes a determination by FDA that a product is a drug as defined by section 201(g)(1) of the Federal Food, Drug, and Cosmetic Act. Registration or listing may, however, be evidence that a facility intends to or does manufacture, repack, relabel, distribute, or salvage drugs or that a product is intended to be a drug."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.81",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.81",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.81",
+     "text": "§ 207.81 What registration and listing information will FDA make available for public disclosure?"
+    },
+    {
+     "ref": "207.81(a)",
+     "text": "(a) Except as provided in paragraphs (b) and (c) of this section, the following information will be available for public disclosure, upon request or at FDA's discretion:"
+    },
+    {
+     "ref": "207.81(a)(1)",
+     "text": "(1) All establishment registration information, and"
+    },
+    {
+     "ref": "207.81(a)(2)",
+     "text": "(2) After a drug is marketed, information obtained under § 207.33, § 207.49, § 207.53, § 207.54, or § 207.57."
+    },
+    {
+     "ref": "207.81(b)",
+     "text": "(b) Unless such information is publicly available or FDA finds that confidentiality would be inconsistent with protection of the public health, FDA will not make publicly available:"
+    },
+    {
+     "ref": "207.81(b)(1)",
+     "text": "(1) Any information submitted under § 207.55 as the basis upon which it has been determined that a particular drug is not subject to section 505 or 512 of the Federal Food, Drug, and Cosmetic Act or section 351 of the Public Health Service Act,"
+    },
+    {
+     "ref": "207.81(b)(2)",
+     "text": "(2) The names of any inactive ingredients submitted under § 207.49(a)(4) for which the registrant makes a valid assertion of confidentiality under § 20.61 of this chapter or other provision of law, or"
+    },
+    {
+     "ref": "207.81(b)(3)",
+     "text": "(3) Drug listing information obtained under § 207.33(d)(3), § 207.49(a)(9) and (12), § 207.53(b) and (c), or § 207.54(a) or (c)."
+    },
+    {
+     "ref": "207.81(c)",
+     "text": "(c) FDA may determine, in limited circumstances and on a case-by-case basis, that it would be consistent with the protection of the public health and the Freedom of Information Act to exempt from public disclosure specific information identified in paragraph (a) of this section."
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,690 @@
+{
+ "instructions": "You read sections of a US regulation (21 CFR, from the official eCFR XML) and list the obligations they state. Each\nsection is given as its paragraphs, each with its reference from the XML structure (\"211.84(c)(1)\") and its exact\ntext. Your output is checked by software against that exact text and by independent reviewers, so precision\nmatters more than wording.\n\nList each separate obligation as its own item, so that together your items cover every obligation in the section.\nOne obligation is one thing a manufacturer must, should or may do, with all its conditions, numbers and\nqualifiers; do not split one obligation across items. For each item:\n- statement: the obligation in your own plain English words, as one checklist item a site could be audited\n  against. Do not copy more than a few words in a row. Keep every condition (\"where\", \"if\", \"unless\", \"when\",\n  \"except\") and every number. Do not add anything the text does not say. The statement itself must carry every\n  condition or qualifier of the lead-ins above its paragraph (a parent paragraph ending in \":\", and its parent if\n  that also ends in \":\"): for 211.42(c)(1) under \"... such other control systems ... as are necessary to prevent\n  contamination or mixups during the course of the following procedures:\", write e.g. \"Provide separate or defined\n  areas, or other control systems as necessary to prevent contamination or mixups, for receipt ...\". Putting the\n  qualifier only in the condition field is not enough. The statement is shown to customers: never cite a\n  paragraph or section reference in it (\"211.166(a)(1)-(5)\", \"this section\"); say what is required instead\n  (\"contains the elements listed below\" is not enough: name them, or let each sub-paragraph's own item carry it).\n- quote: the exact span of ONE paragraph's text that states the whole obligation, copied character for character\n  (matched against the XML text by software; do not fix typos or change punctuation). Leave out the paragraph's\n  designation (\"(c)\"). A quote may continue into that paragraph's sub-paragraphs, in order.\n- clause_number: the reference of the paragraph the quote comes from, exactly as given (\"211.84(c)(1)\").\n- strength: \"mandatory\" for shall / must / is required / may not; \"recommended\" for should; \"optional\" for may.\n  A sub-paragraph without such a word takes its parent's lead-in (\"(c) Samples shall be collected in accordance\n  with the following procedures:\" makes (c)(1)-(c)(6) mandatory).\n- plant_types: from OSD, LIQ, SEMI, INJ, API (INJ = sterile injectables); the plant scope given unless the text\n  narrows it. A paragraph limited to drug products not required to be sterile does not apply to INJ; one limited to\n  sterile drug products (\"purporting to be sterile\") applies only to INJ (and API where in scope).\n- numbers: every number, limit, frequency or period in the quote, as written.\n- condition: the condition or trigger in a few words, \"\" if none. A condition stated in a parent paragraph's\n  lead-in belongs to every sub-paragraph under it. This field only repeats what the statement already says.\n\nA lead-in sentence that also states a duty of its own (\"The written program shall be followed and shall include:\")\nneeds its own item for that duty, quoting the whole sentence including \"shall include:\". That item states only the\nlead-in's own duty (\"follow the written stability program\"); do not summarise the sub-paragraphs in it (their\nitems carry them with their qualifiers). Where the text refers to a closed list of other sections (\"operations\naddressed by §§ 211.101(c) or (d), 211.103 ...\"), keep the list closed: name the operations, never \"such as\".\nDo not narrow or widen a term (\"washing facilities\" is not \"hand-washing facilities\"; \"in and from\" is not \"from\").\n- topic: the sub-topic id from TOPICS the obligation belongs to.\n\nSentences that state no obligation for the manufacturer (a heading, a definition, a scope statement, a statement\nof purpose, an exemption, an enforcement or interpretation statement addressed to FDA) go in not_applicable: one\nentry per SENTENCE (a paragraph of three such sentences needs three entries), each with the paragraph reference,\nthe sentence's first 8 or more words copied exactly (without the paragraph designation), and the reason in a few\nwords.\n\nWrite the answers file named in your task: {\"answers\": [one object per section with \"section\" set to the section's\n\"id\" exactly]}.\n",
+ "topics": [
+  "QS.PQS",
+  "QS.MGMT",
+  "QS.QRM",
+  "QS.PQR",
+  "QS.CHANGE",
+  "QS.DEV",
+  "QS.CAPA",
+  "PER.ORG",
+  "PER.KEY",
+  "PER.TRAIN",
+  "PER.HYG",
+  "PER.GOWN",
+  "PREM.DESIGN",
+  "PREM.PROD",
+  "PREM.STORE",
+  "PREM.QC",
+  "PREM.ANC",
+  "EQ.DESIGN",
+  "EQ.MAINT",
+  "EQ.CLEAN",
+  "EQ.CAL",
+  "DOC.SYS",
+  "DOC.SPEC",
+  "DOC.MFR",
+  "DOC.BMR",
+  "DOC.SOP",
+  "DOC.RET",
+  "MAT.SUPP",
+  "MAT.RECV",
+  "MAT.SAMP",
+  "MAT.STATUS",
+  "MAT.PACK",
+  "MAT.REJ",
+  "PROD.GEN",
+  "PROD.XCONT",
+  "PROD.IPC",
+  "PROD.YIELD",
+  "PROD.PACK",
+  "PROD.REWORK",
+  "QC.GEN",
+  "QC.SAMP",
+  "QC.TEST",
+  "QC.OOS",
+  "QC.STAB",
+  "QC.REF",
+  "QC.MICRO",
+  "VAL.PLAN",
+  "VAL.QUAL",
+  "VAL.PROC",
+  "VAL.CLEAN",
+  "VAL.METH",
+  "CSV.VAL",
+  "CSV.ACCESS",
+  "CSV.AUDIT",
+  "CSV.ESIG",
+  "CSV.DI",
+  "UTIL.WATER",
+  "UTIL.HVAC",
+  "UTIL.GAS",
+  "CCS.STRAT",
+  "CCS.EM",
+  "CCS.CLEAN",
+  "CCS.PEST",
+  "STER.GRADE",
+  "STER.ASEPT",
+  "STER.APS",
+  "STER.STERIL",
+  "STER.FILT",
+  "STER.CCI",
+  "STER.LYO",
+  "API.START",
+  "API.PROC",
+  "API.IMP",
+  "API.SOLV",
+  "OUT.CONTRACT",
+  "OUT.AGREE",
+  "CMP.COMPL",
+  "CMP.RECALL",
+  "CMP.REPORT",
+  "SI.PROG",
+  "SI.TEAM",
+  "SI.REPORT",
+  "SI.FOLLOW",
+  "DIST.STORE",
+  "DIST.TRANS",
+  "DIST.RETURN",
+  "REL.QP",
+  "REL.REVIEW"
+ ],
+ "schema": {
+  "type": "object",
+  "required": [
+   "section",
+   "items",
+   "not_applicable"
+  ],
+  "properties": {
+   "section": {
+    "type": "string"
+   },
+   "items": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "statement",
+      "quote",
+      "clause_number",
+      "strength",
+      "plant_types",
+      "numbers",
+      "condition",
+      "topic"
+     ],
+     "properties": {
+      "statement": {
+       "type": "string"
+      },
+      "quote": {
+       "type": "string"
+      },
+      "clause_number": {
+       "type": "string"
+      },
+      "strength": {
+       "enum": [
+        "mandatory",
+        "recommended",
+        "optional"
+       ]
+      },
+      "plant_types": {
+       "type": "array",
+       "items": {
+        "enum": [
+         "OSD",
+         "LIQ",
+         "SEMI",
+         "INJ",
+         "API"
+        ]
+       }
+      },
+      "numbers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "condition": {
+       "type": "string"
+      },
+      "topic": {
+       "type": "string"
+      }
+     }
+    }
+   },
+   "not_applicable": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "clause_number",
+      "text",
+      "reason"
+     ],
+     "properties": {
+      "clause_number": {
+       "type": "string"
+      },
+      "text": {
+       "type": "string"
+      },
+      "reason": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  }
+ },
+ "sections": [
+  {
+   "id": "fda-cfr-21-part-207.xml:207.35",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.35",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.35",
+     "text": "§ 207.35 What changes require a new NDC?"
+    },
+    {
+     "ref": "207.35(a)",
+     "text": "(a) Once an NDC has been assigned by FDA, the registrant must propose a new and unique NDC for a drug when there is a change, after the drug is initially marketed, to any of the information identified in paragraphs (b) and (c) of this section. A new NDC must be proposed to FDA for assignment through an updated listing in accordance with § 207.57."
+    },
+    {
+     "ref": "207.35(b)",
+     "text": "(b) The proposed new NDC must include a new product code when there is a change to any of the following information:"
+    },
+    {
+     "ref": "207.35(b)(1)",
+     "text": "(1) The drug's established name or proprietary name, if any;"
+    },
+    {
+     "ref": "207.35(b)(2)",
+     "text": "(2) Any active pharmaceutical ingredient or the strength of any active pharmaceutical ingredient;"
+    },
+    {
+     "ref": "207.35(b)(3)",
+     "text": "(3) The dosage form;"
+    },
+    {
+     "ref": "207.35(b)(4)",
+     "text": "(4) A change in the drug's status, between prescription and nonprescription, or for animal drugs, between prescription, nonprescription, or veterinary feed directive (VFD) status;"
+    },
+    {
+     "ref": "207.35(b)(5)",
+     "text": "(5) A change in the drug's intended use between human and animal; or"
+    },
+    {
+     "ref": "207.35(b)(6)",
+     "text": "(6) The drug's distinguishing characteristics such as size, shape, color, code imprint, flavor, and scoring (if any)."
+    },
+    {
+     "ref": "207.35(c)",
+     "text": "(c) When there is a change only to the package size or type, including the immediate unit-of-use container, if any, the proposed new NDC must include only a new package code and retain the existing product code unless all available package codes have already been combined with the existing product code in NDCs assigned by FDA."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.37",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.37",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.37",
+     "text": "§ 207.37 What restrictions pertain to the use of the NDC?"
+    },
+    {
+     "ref": "207.37(a)",
+     "text": "(a) A product may be deemed to be misbranded if an NDC is used:"
+    },
+    {
+     "ref": "207.37(a)(1)",
+     "text": "(1) To represent a different drug than the drug for which the NDC has been assigned, as described in § 207.33;"
+    },
+    {
+     "ref": "207.37(a)(2)",
+     "text": "(2) To denote or imply FDA approval of a drug; or"
+    },
+    {
+     "ref": "207.37(a)(3)",
+     "text": "(3) On products that are not subject to parts 207, 607 of this chapter, or 1271 of this chapter, such as dietary supplements and medical devices."
+    },
+    {
+     "ref": "207.37(b)",
+     "text": "(b) If marketing is resumed for a discontinued drug, and no changes have been made to the drug that would require a new NDC under § 207.35, the drug must have the same NDC that was assigned to it as described in § 207.33, before marketing was discontinued."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.41",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.41",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.41",
+     "text": "§ 207.41 Who must list drugs and what drugs must they list?"
+    },
+    {
+     "ref": "207.41(a)",
+     "text": "(a) Each registrant must list each drug that it manufactures, repacks, relabels, or salvages for commercial distribution. Each domestic registrant must list each such drug regardless of whether the drug enters interstate commerce. When operations are conducted at more than one establishment, and common ownership and control exists among all the establishments, the parent, subsidiary, or affiliate company may submit listing information for any drug manufactured, repacked, relabeled, or salvaged at any such establishment. A drug manufactured, repacked, or relabeled for private label distribution must be listed in accordance with paragraph (c) of this section."
+    },
+    {
+     "ref": "207.41(b)",
+     "text": "(b) Registrants must provide listing information for each drug in accordance with the listing requirements described in §§ 207.49, 207.53, and 207.54 that correspond to the activity or activities they engage in for that drug."
+    },
+    {
+     "ref": "207.41(c)",
+     "text": "(c)"
+    },
+    {
+     "ref": "207.41(c)(1)",
+     "text": "(1) For both animal and human drugs, each registrant must list each drug it manufactures, repacks, or relabels for commercial distribution under the trade name or label of a private label distributor using an NDC that includes such private label distributor's labeler code."
+    },
+    {
+     "ref": "207.41(c)(2)",
+     "text": "(2) Additionally, in the case of human drugs, each registrant must list each human drug it manufactures, repacks, or relabels using an NDC that includes the registrant's own labeler code, regardless of whether the drug is commercially distributed under the registrant's own label or trade name or under the label or trade name of a private label distributor."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.45",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.45",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.45",
+     "text": "§ 207.45 When, after initial registration of an establishment, must drug listing information be submitted? For each drug being manufactured, repacked, relabeled, or salvaged for commercial distribution at an establishment at the time of initial registration, drug listing information must be submitted no later than 3 calendar days after the initial registration of the establishment."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.49",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.49",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.49",
+     "text": "§ 207.49 What listing information must a registrant submit for a drug it manufactures?"
+    },
+    {
+     "ref": "207.49(a)",
+     "text": "(a) Each registrant must provide the following listing information for each drug it manufactures for commercial distribution."
+    },
+    {
+     "ref": "207.49(a)(1)",
+     "text": "(1) The appropriate NDC(s), as described in § 207.33, that include all package code variations. In the case of human drugs, the appropriate NDC(s) submitted under this paragraph include the registrant's labeler code. In the case of animal drugs, the appropriate NDC(s) submitted under this paragraph include the registrant's labeler code, except that when the drug is manufactured for commercial distribution under the trade name or label of a private label distributor, the appropriate NDC(s) for animal drugs include the private label distributor's labeler code;"
+    },
+    {
+     "ref": "207.49(a)(2)",
+     "text": "(2) Package type and volume information corresponding to the package code segment of the NDC;"
+    },
+    {
+     "ref": "207.49(a)(3)",
+     "text": "(3) The listed drug's established name and proprietary name, if any;"
+    },
+    {
+     "ref": "207.49(a)(4)",
+     "text": "(4) The name and quantity of each active pharmaceutical ingredient in the listed drug;"
+    },
+    {
+     "ref": "207.49(a)(5)",
+     "text": "(5) The name of each inactive ingredient in the listed drug, along with any assertions of confidentiality associated with individual inactive ingredients;"
+    },
+    {
+     "ref": "207.49(a)(6)",
+     "text": "(6) The dosage form;"
+    },
+    {
+     "ref": "207.49(a)(7)",
+     "text": "(7) The drug's approved U.S. application number, if any;"
+    },
+    {
+     "ref": "207.49(a)(8)",
+     "text": "(8) The drug type (e.g., as applicable, finished vs. unfinished, human vs. animal, prescription vs. nonprescription);"
+    },
+    {
+     "ref": "207.49(a)(9)",
+     "text": "(9) In the case of an unfinished drug, the number assigned to the Drug Master File or Veterinary Master File, if any, that describes the manufacture of the drug;"
+    },
+    {
+     "ref": "207.49(a)(10)",
+     "text": "(10) For each drug that is subject to the imprinting requirements of part 206 of this chapter including products that are exempted under § 206.7(b), the drug's size, shape, color, scoring, and code imprint (if any);"
+    },
+    {
+     "ref": "207.49(a)(11)",
+     "text": "(11) The route or routes of administration of the drug;"
+    },
+    {
+     "ref": "207.49(a)(12)",
+     "text": "(12) For each drug bearing an NDC:"
+    },
+    {
+     "ref": "207.49(a)(12)(i)",
+     "text": "(i) The name and Unique Facility Identifier of the establishment where the registrant who lists the drug manufactures it and the type of operation performed on the drug at that establishment, and"
+    },
+    {
+     "ref": "207.49(a)(12)(ii)",
+     "text": "(ii) The name and Unique Facility Identifier of every other establishment where manufacturing is performed for the drug and the type of operation performed at each such establishment. This includes all establishments involved in the production of each unfinished drug received by the registrant for use in the production of the drug being listed. The names, Unique Facility Identifiers, and type of operations for establishments involved in production of each unfinished drug received by the registrant for use in the production of the drug being listed may be provided by including the properly assigned and listed NDC for such unfinished drug."
+    },
+    {
+     "ref": "207.49(a)(13)",
+     "text": "(13) The schedule of the drug under section 202 of the Controlled Substances Act, if applicable;"
+    },
+    {
+     "ref": "207.49(a)(14)",
+     "text": "(14) Advertisements:"
+    },
+    {
+     "ref": "207.49(a)(14)(i)",
+     "text": "(i) A representative sampling of advertisements for a human prescription drug that is not subject to section 505 of the Federal Food, Drug, and Cosmetic Act or section 351 of the Public Health Service Act;"
+    },
+    {
+     "ref": "207.49(a)(14)(ii)",
+     "text": "(ii) If FDA requests it, for good cause, a copy of all advertisements for a human prescription drug that is not subject to section 505 of the Federal Food, Drug, and Cosmetic Act or section 351 of the Public Health Service Act, including those advertisements described in § 202.1(l)(1) of this chapter. Such advertisements must be submitted within 30 calendar days after FDA's request."
+    },
+    {
+     "ref": "207.49(a)(15)",
+     "text": "(15) For drugs bearing the NDC(s) reported under paragraph (a)(1) of this section, except those drugs manufactured exclusively for private label distribution and not distributed under the registrant's own name and label, provide the following labeling, as applicable:"
+    },
+    {
+     "ref": "207.49(a)(15)(i)",
+     "text": "(i) Human prescription drugs. All current labeling except that only one representative container or carton label need be submitted where differences exist only in the quantity of contents statement or the bar code. This labeling submission must include the content of labeling, as defined in § 207.1."
+    },
+    {
+     "ref": "207.49(a)(15)(ii)",
+     "text": "(ii) Human nonprescription drugs."
+    },
+    {
+     "ref": "207.49(a)(15)(ii)(A)",
+     "text": "(A) For each human nonprescription drug subject to section 505 of the Federal Food, Drug, and Cosmetic Act or section 351 of the Public Health Service Act, all current labeling, except that only one representative container or carton label need be submitted where differences exist only in the quantity of contents statement or the bar code. This labeling submission must include the content of labeling, as defined in § 207.1."
+    },
+    {
+     "ref": "207.49(a)(15)(ii)(B)",
+     "text": "(B) For each human nonprescription drug not subject to section 505 of the Federal Food, Drug, and Cosmetic Act or section 351 of the Public Health Service Act, the current label (except that only one representative container or carton label need be submitted where differences exist only in the quantity of contents statement or the bar code), the package insert (if any), and a representative sampling of any other labeling. This labeling submission must include the content of labeling as defined in section § 207.1."
+    },
+    {
+     "ref": "207.49(a)(15)(iii)",
+     "text": "(iii) Animal drugs."
+    },
+    {
+     "ref": "207.49(a)(15)(iii)(A)",
+     "text": "(A) For each animal drug that is subject to section 512 of the Federal Food, Drug, and Cosmetic Act, which includes, but is not limited to, new animal drugs that have been approved, conditionally approved, or indexed under sections 512, 571, or 572 of the Federal Food, Drug, and Cosmetic Act, a copy of all current labeling (except that only one representative container or carton label need be submitted where differences exist only in the quantity of contents statement), including the content of labeling as defined in § 207.1;"
+    },
+    {
+     "ref": "207.49(a)(15)(iii)(B)",
+     "text": "(B) For all other animal drugs, a copy of the current label (except that only one representative container or carton label need be submitted where differences exist only in the quantity of contents statement), the package insert, the content of labeling as defined in § 207.1, and a representative sampling of any other labeling;"
+    },
+    {
+     "ref": "207.49(a)(15)(iv)",
+     "text": "(iv) All other listed drugs. For all other listed drugs, including unfinished drugs, the label (if any), except that only one representative label need be submitted where differences exist only in the quantity of contents statement."
+    },
+    {
+     "ref": "207.49(a)(16)",
+     "text": "(16) Listing submissions described in § 207.41(c)(2) for human drugs manufactured for private label distribution must include all information specified in § 207.49(a)(2) through (14) and:"
+    },
+    {
+     "ref": "207.49(a)(16)(i)",
+     "text": "(i) The appropriate NDC(s) (as described in § 207.33) that include the private label distributor's labeler code and all package code variations;"
+    },
+    {
+     "ref": "207.49(a)(16)(ii)",
+     "text": "(ii) The name, mailing address, telephone number, and email address of the private label distributor; and"
+    },
+    {
+     "ref": "207.49(a)(16)(iii)",
+     "text": "(iii) For drugs bearing the NDC(s) reported under paragraph (a)(16)(i) of this section, labeling as described in paragraph (a)(15) of this section that accompanies the private label distributor's product."
+    },
+    {
+     "ref": "207.49(b)",
+     "text": "(b) Additionally, each registrant is requested, but not required, to provide the following information for each human drug it manufactures for commercial distribution:"
+    },
+    {
+     "ref": "207.49(b)(1)",
+     "text": "(1) The drug's over-the-counter monograph reference, if any; and"
+    },
+    {
+     "ref": "207.49(b)(2)",
+     "text": "(2) The date on which the drug was or will be introduced into commercial distribution."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.53",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.53",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.53",
+     "text": "§ 207.53 What listing information must a registrant submit for a drug that it repacks or relabels? Each registrant must provide the following listing information for each drug it repacks or relabels:"
+    },
+    {
+     "ref": "207.53(a)",
+     "text": "(a) NDC. The appropriate NDC(s), as described in § 207.33, that include the registrant's labeler code and all package code variations;"
+    },
+    {
+     "ref": "207.53(b)",
+     "text": "(b) Source NDC. The NDC assigned to each finished drug received by the registrant for repacking or relabeling, with the exception of medical gases. Each such NDC must be associated with the corresponding NDC(s) for repacked or relabeled drugs, reported under paragraph (a) of this section."
+    },
+    {
+     "ref": "207.53(c)",
+     "text": "(c) Name and Unique Facility Identifier. For each drug identified by an NDC reported under paragraph (a) of this section, the name and Unique Facility Identifier of every establishment where repacking or relabeling is performed for the drug and the type of operation (repacking vs. relabeling) performed at each such establishment."
+    },
+    {
+     "ref": "207.53(d)",
+     "text": "(d) Labeling. For each drug identified by an NDC reported under paragraph (a) of this section, except those human drugs repacked or relabeled exclusively for private label distribution and not distributed under the registrant's own name and label, provide the following:"
+    },
+    {
+     "ref": "207.53(d)(1)",
+     "text": "(1) Human prescription drugs. All current labeling for the repacked or relabeled drug except that only one representative container or carton label need be submitted where differences exist only in the quantity of contents statement or the bar code. This labeling submission must include the content of labeling, as defined in section § 207.1."
+    },
+    {
+     "ref": "207.53(d)(2)",
+     "text": "(2) Human nonprescription drugs."
+    },
+    {
+     "ref": "207.53(d)(2)(i)",
+     "text": "(i) For each human nonprescription drug subject to section 505 of the Federal Food, Drug, and Cosmetic Act or section 351 of the Public Health Service Act, all current labeling, except that only one representative container or carton label need be submitted where differences exist only in the quantity of contents statement or the bar code. This labeling submission must include the content of labeling, as defined in § 207.1."
+    },
+    {
+     "ref": "207.53(d)(2)(ii)",
+     "text": "(ii) For each human nonprescription drug not subject to section 505 of the Federal Food, Drug, and Cosmetic Act or section 351 of the Public Health Service Act, the current label (except that only one representative container or carton label need be submitted where differences exist only in the quantity of contents statement or the bar code), the package insert (if any), and a representative sampling of any other labeling. This labeling submission must include the content of labeling as defined in § 207.1."
+    },
+    {
+     "ref": "207.53(d)(3)",
+     "text": "(3) Animal drugs."
+    },
+    {
+     "ref": "207.53(d)(3)(i)",
+     "text": "(i) For each animal drug that is subject to section 512 of the Federal Food, Drug, and Cosmetic Act, which includes but is not limited to, new animal drugs that have been approved, conditionally approved, or indexed under sections 512, 571, or 572 of the Federal Food, Drug, and Cosmetic Act, a copy of all current labeling (except that only one representative container or carton label need be submitted where differences exist only in the quantity of contents statement), including the content of labeling as defined in § 207.1;"
+    },
+    {
+     "ref": "207.53(d)(3)(ii)",
+     "text": "(ii) For all other animal drugs, a copy of the current label (except that only one representative container or carton label need be submitted where differences exist only in the quantity of contents statement), the package insert, the content of labeling as defined in § 207.1, and a representative sampling of any other labeling;"
+    },
+    {
+     "ref": "207.53(d)(4)",
+     "text": "(4) All other. For all other listed drugs, including unfinished drugs, the label (if any), except that only one representative label need be submitted where differences exist only in the quantity of contents statement."
+    },
+    {
+     "ref": "207.53(e)",
+     "text": "(e) Advertisements."
+    },
+    {
+     "ref": "207.53(e)(1)",
+     "text": "(1) A representative sampling of advertisements for a human prescription drug that is not subject to section 505 of the Federal Food, Drug, and Cosmetic Act or section 351 of the Public Health Service Act;"
+    },
+    {
+     "ref": "207.53(e)(2)",
+     "text": "(2) If we request it for good cause, a copy of all advertisements for a particular drug described in paragraph (e)(1) of this section, including advertisements described in § 202.1(l)(1) of this chapter. Such advertisements must be submitted within 30 calendar days after our request."
+    },
+    {
+     "ref": "207.53(f)",
+     "text": "(f) Private label distributor products. A listing submission for a human drug distributed by a private label distributor described in § 207.41(c)(2) must include information specified in § 207.53(b) through (e) as applicable and:"
+    },
+    {
+     "ref": "207.53(f)(1)",
+     "text": "(1) The appropriate NDC(s) (as described in § 207.33) that include the private label distributor's labeler code and all package code variations;"
+    },
+    {
+     "ref": "207.53(f)(2)",
+     "text": "(2) The name, mailing address, telephone number, and email address of the private label distributor; and"
+    },
+    {
+     "ref": "207.53(f)(3)",
+     "text": "(3) For drugs bearing the NDC(s) reported under paragraph (f)(1) of this section, labeling as described in paragraphs (d)(1) through (4) of this section, as applicable, that accompanies the private label distributor's product."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.54",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.54",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.54",
+     "text": "§ 207.54 What listing information must a registrant submit for a drug that it salvages? A registrant who also relabels or repacks a drug that it salvages must list the drug it relabels or repacks in accordance with § 207.53 rather than in accordance with this section. A registrant who performs only salvaging with respect to a drug must provide the following listing information for that drug."
+    },
+    {
+     "ref": "207.54(a)",
+     "text": "(a) The NDC assigned to the drug immediately before the drug is received by the registrant for salvaging;"
+    },
+    {
+     "ref": "207.54(b)",
+     "text": "(b) The lot number and expiration date of the salvaged drug product; and"
+    },
+    {
+     "ref": "207.54(c)",
+     "text": "(c) The name and Unique Facility Identifier for each establishment where the registrant salvages the drug."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.55",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.55",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.55",
+     "text": "§ 207.55 What additional drug listing information may FDA require? For a particular listed drug, upon our request, the registrant must briefly state the basis for its belief that the drug is not subject to section 505 or 512 of the Federal Food, Drug, and Cosmetic Act or section 351 of the Public Health Service Act."
+    }
+   ]
+  },
+  {
+   "id": "fda-cfr-21-part-207.xml:207.57",
+   "source": "fda-cfr-21-part-207.xml",
+   "section": "207.57",
+   "plant_scope": [
+    "OSD",
+    "LIQ",
+    "SEMI",
+    "INJ",
+    "API"
+   ],
+   "paragraphs": [
+    {
+     "ref": "207.57",
+     "text": "§ 207.57 What information must registrants submit when updating listing information and when? Registrants must review and update listing information at a minimum, as follows:"
+    },
+    {
+     "ref": "207.57(a)",
+     "text": "(a) Registrants must provide listing information at the time of annual establishment registration for any drug manufactured, repacked, relabeled, or salvaged by them for commercial distribution that has not been listed previously."
+    },
+    {
+     "ref": "207.57(b)",
+     "text": "(b) Registrants must review and update their drug listing information each June and December. When doing so, registrants must:"
+    },
+    {
+     "ref": "207.57(b)(1)",
+     "text": "(1)"
+    },
+    {
+     "ref": "207.57(b)(1)(i)",
+     "text": "(i) Provide listing information, in accordance with §§ 207.49, 207.53, and 207.54, for any drug manufactured, repacked, relabeled, or salvaged by them for commercial distribution that has not been previously listed;"
+    },
+    {
+     "ref": "207.57(b)(1)(ii)",
+     "text": "(ii) Submit the date that they discontinued the manufacture, repacking, relabeling or salvaging for commercial distribution of a listed drug and provide the expiration date of the last lot manufactured, repacked, relabeled, or salvaged;"
+    },
+    {
+     "ref": "207.57(b)(1)(iii)",
+     "text": "(iii) Submit the date that they resumed the manufacture, repacking, or relabeling for commercial distribution of a drug previously discontinued, and provide any required listing information not previously submitted; and"
+    },
+    {
+     "ref": "207.57(b)(1)(iv)",
+     "text": "(iv) Submit any material changes in any information previously submitted pursuant to §§ 207.49, 207.53, 207.54, or other relevant sections of this part; or"
+    },
+    {
+     "ref": "207.57(b)(2)",
+     "text": "(2) For each listed drug, certify that no changes subject to reporting under paragraph (b)(1)(iv) of this section have occurred if no such changes have occurred since the last review and update. If a drug is discontinued and FDA has received the information required under paragraph (b)(1)(ii) of this section, no further certifications are necessary for the discontinued drug. After initial electronic listing, registrants may satisfy the listing update requirement with respect to unchanged listing information by making a single “no changes” certification during the annual registration update under § 207.29(b) applicable to all of the registrant's listed drugs for which no changes have been made since the previous annual registration update."
+    },
+    {
+     "ref": "207.57(c)",
+     "text": "(c) Registrants are encouraged to submit listing information for every drug subject to listing under this part prior to commercial distribution and are encouraged to update listing information at the time of any change affecting information previously submitted."
+    }
+   ]
+  }
+ ]
+}
