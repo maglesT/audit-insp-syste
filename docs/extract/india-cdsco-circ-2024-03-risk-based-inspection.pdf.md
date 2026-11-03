@@ -1,0 +1,34 @@
+# Extraction: india-cdsco-circ-2024-03-risk-based-inspection.pdf
+
+Method: tagged PDF structure (D52); tool `tools/extract/cdsco.py`.
+
+- Questions: 554
+- Cross-check against the part-2 copy: {'exact': 535, 'wording differs': 17, 'no counterpart': 2}
+- Numbers restored (printed rounded): 68
+- Page-break joins: 13
+- Text outside table cells on checklist pages (besides running headers): {23: 'Risk Based Joint Inspection Report Page 2 of 55 Observations should be descriptive without ambiguity and answer like "Yes" or "No" should be avoided', 74: 'Risk Based Joint Inspection Report Page 53 of 55 List of Observations/Deficiencies: 1) Critical: 1.1: 1.2: 2) Major: 2.1: 2.2: 3) Others: 3.1: 3.2: 3.3:'}
+
+## Needs the owner's review
+
+- p56 30.9 | Sch-M | Specify the duration of retaining the documents after the expiry of the respective product and who is responsible for its maintenance.
+- p56 (no number) | - | Do the manufacturing records pertaining to manufacture of Sterile & Non- Sterile products indicate the following details: Serial number of Batch Manufacturing ,Record ,Name of the product, Reference to Master Formula Record, Batch/ Lot number, Batch/ Lot size, Date of commencement and completion of manufacture, Date of manufacture and assigned date of expiry, Date of each step in manufacturing, Names of all ingredients with reference number given by the quality control department ,Quantity of all ingredients, Time and duration of blending, mixing etc. where ever applicable, PH of solutions whenever applicable, Filter integrity testing records, Temperature and humidity records whenever applicable, Records of plate-counts whenever applicable, Results of bacterial endo-toxin and toxicity, Records of weight or volume of drug filled in containers, Bio burden records before sterilisation, Leak test records, Inspection records, Sterilization records including load details, date, duration, temperature, pressure etc. Container washing & testing records, Total number of containers filled, Total number of containers rejected at each stage, Theoretical yield, permissible yield, actual yield and variation there of, Clarification for variation in yield ,beyond permissible yield, Reference number of relevant analytical reports, Details of re-processing, if any, Names of all operators carrying out different activities, Environmental monitoring records, Specimens of different packaging material, Records of destruction of rejected containers and packaging material, and Signature of the competent technical staff responsible for manufacture and testing.
+
+## Wording differs from the part-2 copy (part 1 kept as printed)
+
+- 14.4: part 1 "What criterion of pressure differential has been set for production v/s adjoining areas." / part 2 "What criteria of pressure differential has been set for production v/s adjoining areas."
+- 17.3: part 1 "Are the locations of services like water, steam, gases etc. Such that the servicing or repairs can be carried out without any threat to the integrity of the facility" / part 2 "Are the location of services like water, steam, gases etc. Such that the servicing or repairs can be carried out without any threat to the integrity of the facility"
+- 17.25: part 1 "Specify the method of transfer of sterile rubber bungs & aluminum caps to the aseptic area." / part 2 "Specify the method of transfer of sterile rubber bungs & aluminium caps to the aseptic area."
+- 19.3: part 1 "Mention the periodic monitoring frequencies of the followings: 9) Particulate Counts 10) HEPA filters integrity testing 11) Air Change rates 12) Air pressure differentials 13) Temperature and Humidity 14) Microbiological monitoring by settle plates and/ or swabs in Critical areas & Other areas" / part 2 "Mention the periodic monitoring frequencies of the followings:1) Particulate counts2) HEPA filters integrity testing 3) Air Change rates4) Air pressure differentials5) Temperature and Humidity 6) Microbiological monitoring by settle plates and/ or swabs in Critical areas & Other areas"
+- 20.4: part 1 "Specify the process of sterilization of the garments & the practice followed to carry the sterilised garments to the final change room." / part 2 "Specify the process of sterilization of the garments & the practise followed to carry the sterilised garments to the final change room."
+- 20.11: part 1 "Does the safety goggles / numbered glasses worn inside the critical areas have side extensions" / part 2 "Are the safety goggles / numbered glasses worn inside the critical areas and have side extensions"
+- 20.13: part 1 "Specify the garment changing procedure documented" / part 2 "Specify the garment changing procedure and SOPs"
+- 20.15: part 1 "Specify a full size mirror been provided in the final change room to ascertain that the operator has appropriately attired in the garments." / part 2 "if full size mirror has been provided in the final change room to ascertain that the operator has appropriately attired in the garments."
+- 21.1: part 1 "Specify the SOP followed for sanitation of sterile processing facilities and mention the SOP nos." / part 2 "Specify the SOP followed for sanitisation of sterile processing facilities and mention the SOP nos."
+- 21.10: part 1 "Specify whether any SOP exist for the purpose of fumigation if so mentioned the SOP nos." / part 2 "Specify whether any SOP exists for the purpose of fumigation if so mention the SOP nos."
+- 22.4: part 1 "Specify suitable vent filters and recording thermographs provided in autoclaves & dry sterilizers." / part 2 "Specify if suitable vent filters and recording thermographs are provided for autoclaves & dry heat sterilizers."
+- 22.5: part 1 "Specify HEPA filters for cooling air and recording thermographs provided in DHS/Tunnel." / part 2 "Specify whether cool air is passed through HEPA filter and recording thermographs provided in DHS/Tunnel."
+- 22.7: part 1 "Specify whether pure steams are in use." / part 2 "Specify whether pure steam is in use."
+- 22.8: part 1 "Specify filter integrity test carried out before and after the filtration process." / part 2 "Specify if filter integrity test is carried out before and after the sterile filtration process."
+- 22.9: part 1 "Specify the material of construction of the equipment & glass containers." / part 2 "Specify the material of construction of the equipment & type of glass containers"
+- 24.6: part 1 "Specify whether the personal working in the aseptic area is qualified for clean room procedure or not. If so verify the training records." / part 2 "Specify whether the personal working in the aseptic area are qualified for clean room procedure or not. If so verify the training records."
+- 26.6: part 1 "Verify the qualification, protocol and reports for the sterilizers" / part 2 "Verify the qualification, protocol and reports for the sterilisers"

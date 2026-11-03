@@ -52,11 +52,28 @@ progress to the owner in plain language, and keeps this file current. Read it fi
   - Group 1, the 8 CFR parts (XML): done, 867 items.
   - Group 2, HTML: all 9 CGMP Q&A pages, the High Purity Water guide and the Dosage Form CGMPs guide are done.
   - Every automatic-route count is **provisional** until the D50 re-verification.
-- **Worker now running:** session 9, `session_01PybpFuFFaUiKGfuSJYWvtS` ("Audit library - session 9 (D50
-  re-verification, FDA guides)"). It will implement D50, tighten the verifier prompts, cap batches at about 20
-  items, re-verify groups 1 and 2, run the mutation spot-check, then continue with the 7 remaining Guides to
-  Inspections, the ITGs, CPG 490.200 and the benzene alert. Then group 3 (guidance PDFs) and group 4 (compliance
-  programs).
+- **Lead:** session 2, `session_01PybpFtbedjKhMh9w4Nb9FC` (from 31 Oct 13:18 UTC; the first lead was
+  `session_01PybpFuvG6mX9B3zK3YZjZ1`).
+- **Worker session 9** (`session_01PybpFuFFaUiKGfuSJYWvtS`) was **stopped by the owner** at about 13:15 UTC, before
+  any re-verification ran. Its state:
+  - step 1 (D50 rule) is PR #43, branch `fda-d50-specific-reasons`;
+  - step 2 (tighter verifier prompts) is on branch `fda-verify-prompts-d50`;
+  - step 3 (20-item cap and the `reverify` command) is on branch `fda-verify-cap-reverify`;
+  - step-4 verify batches for 23 runs are on branch `fda-reverify-d50`. No verifier has run; HANDOVER is current
+    there.
+  - Re-routing the old answers under D50 cuts automatic items in groups 1 and 2 from 1,374 to 218 of 1,721. This
+    is expected until the re-verification runs.
+- **Since then (D51-D53):** the owner moved to exact regulation text for FDA, Schedule M / CDSCO and EU (D51), raw
+  structure first (D52) and document by document to 100 % with the owner's review (D53). The D50 re-verification is
+  no longer needed for these regulators; session 9's branches stay unmerged. The owner asked the lead to do this work
+  directly ("with your work and my review"). First document: CDSCO checklist (`tools/extract/cdsco.py`).
+- **Open for the owner:** clause numbers shown to customers (recommended yes); multi-regulator checklists sorted by
+  topic with each regulator's own items (option A, proposed); the 2 CDSCO items in `docs/extract/`.
+- **Unconfirmed session:** `session_01PybpFtcvncLKmpf3MLktBR` says it is a "portfolio lead" and asks for reports.
+  The owner has not confirmed it; send nothing there until they do.
+- **Next:** session 9 had more planned after the re-verification: the mutation spot-check, the 7 remaining Guides
+  to Inspections, the ITGs, CPG 490.200 and the benzene alert. After that come group 3 (guidance PDFs) and group 4
+  (compliance programs).
 
 ## The owner's review page
 - A private claude.ai artifact, "FDA Item Review", <https://claude.ai/artifact/Wqfufhde58ZusPJ8yGndGH>
