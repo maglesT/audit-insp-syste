@@ -1,0 +1,48 @@
+{
+ "status": "NOT PROVEN to the 0-error standard (owner decision 20 Nov: option A once, then STOP; no push)",
+ "rule": "0 confirmed errors in a fresh random sample of 59 points + 59 other_requirements (2-of-3 opinions per FAIL) would show, at 95 % confidence, an error rate below 5 % in each list.",
+ "last_sample": {
+  "seed": 20261124,
+  "points": "58/59 pass, 1 confirmed ERROR (3/3 opinions)",
+  "other_requirements": "59/59 pass",
+  "cost_usd": 0.69
+ },
+ "history": [
+  {
+   "seed": 20261120,
+   "rule": "one opinion",
+   "points_errors": 1,
+   "no_point_errors": 6
+  },
+  {
+   "seed": 20261121,
+   "rule": "one opinion",
+   "points_errors": 2,
+   "no_point_errors": 2
+  },
+  {
+   "seed": 20261122,
+   "rule": "2-of-3",
+   "points_errors": 0,
+   "no_point_errors": 2
+  },
+  {
+   "seed": 20261123,
+   "rule": "2-of-3",
+   "points_errors": 2,
+   "no_point_errors": 1
+  },
+  {
+   "seed": 20261124,
+   "rule": "2-of-3",
+   "points_errors": 1,
+   "no_point_errors": 0
+  }
+ ],
+ "estimate": "about 1-2 % of points and under 2 % of other_requirements may still have a wording error (scattered; mostly an evidence hint or modality that says slightly more or less than the clause). Every error found so far was fixed as a class or moved to owner review.",
+ "what_is_proven_by_code": "V1-V9, V11-V14 all PASS: every duty unit covered (point, other requirement or owner review), never-both, modality / (recommended), softener and scope-negation rules, copy guard, regulator / scope fields, REF1 references incl. joined items, owner review kept out, rebuild identical; WHO/PIC/S wording scan 0.",
+ "known_errors_moved_to_owner_review": [
+  "B0824-P01"
+ ],
+ "recommendation": "Show the audit points with a 'draft - independently checked, not yet certified' label until a GMP expert reviews a sample, or fund a full per-item check (~US$30)."
+}

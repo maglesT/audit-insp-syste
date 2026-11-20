@@ -1,0 +1,1292 @@
+{
+ "_doc": "Items still failing after their ONE repair (owner rule 19 Nov): kept out of points.json; the clauses stay plain checklist items until the owner decides.",
+ "items": [
+  {
+   "kind": "point",
+   "id": "B0014-R401",
+   "units": [
+    "SchM-IV-1.5#4"
+   ],
+   "question": "Was the control strategy for all manufacturing stages developed using QRM principles to minimise variability and the chance of contamination and cross-contamination?",
+   "verify": "Verify that QRM principles are used to develop the control strategy across all stages of manufacture so as to minimise variability and reduce the opportunity for contamination and cross-contamination.",
+   "evidence": [
+    {
+     "type": "document",
+     "what": "control strategy"
+    },
+    {
+     "type": "record",
+     "what": "QRM records behind the control strategy"
+    }
+   ],
+   "why": "no_less: The verify and question drop the scope 'for this class of materials' (biological active substances and finished products) and the point that QRM principles are 'particularly important' for them, so the duty reads as applying to any manufacture.",
+   "clauses": [
+    {
+     "item": "SchM-IV-1.5",
+     "ref": "Schedule M Part IV 1.5",
+     "unit": 4,
+     "text": "As a result, QRM principles are particularly important for this class of materials and shall be used to develop the control strategy across all stages of manufacture so as to minimise variability and reduce the opportunity for contamination and cross-contamination."
+    }
+   ],
+   "resolved": "shown as other requirement (clause text), owner/lead 20 Nov"
+  },
+  {
+   "kind": "point",
+   "id": "B0039-R501",
+   "units": [
+    "EU C1 QM-intro#1"
+   ],
+   "question": "Do manufacturing records show that products are made to be fit for use, in line with their marketing or clinical trial authorisation, and without risk to patients from poor safety, quality or efficacy?",
+   "verify": "Verify that the holder of the Manufacturing Authorisation manufactures medicinal products so as to ensure that they are fit for their intended use, comply with the requirements of the Marketing Authorisation or Clinical Trial Authorisation, as appropriate, and do not place patients at risk due to inadequate safety, quality or efficacy.",
+   "evidence": [
+    {
+     "type": "record",
+     "what": "records showing manufacture complies with the Marketing Authorisation or Clinical Trial Authorisation requirements"
+    },
+    {
+     "type": "document",
+     "what": "Marketing Authorisation or Clinical Trial Authorisation requirements held on site"
+    }
+   ],
+   "why": "no_more: The evidence wording 'held on site' adds a location requirement for the authorisation documents that the unit does not state.",
+   "clauses": [
+    {
+     "item": "EU C1 QM-intro",
+     "ref": "EU GMP Part I, Chapter 1, Principle",
+     "unit": 1,
+     "text": "The holder of a Manufacturing Authorisation must manufacture medicinal products so as to ensure that they are fit for their intended use, comply with the requirements of the Marketing Authorisation or Clinical Trial Authorisation, as appropriate and do not place patients at risk due to inadequate safety, quality or efficacy."
+    }
+   ],
+   "resolved": "shown as other requirement (clause text), owner/lead 20 Nov"
+  },
+  {
+   "kind": "point",
+   "id": "B0075-R501",
+   "units": [
+    "ICH Q10 4.3#5"
+   ],
+   "question": "Are management review results and actions written down, shared in good time and raised to senior management where needed (recommended)?",
+   "verify": "Verify that the results of the management review and actions are documented and communicated in a timely and effective way, including escalation of appropriate issues to senior management (recommended).",
+   "evidence": [
+    {
+     "type": "record",
+     "what": "management review results and actions"
+    },
+    {
+     "type": "record",
+     "what": "records showing communication and escalation of the results"
+    }
+   ],
+   "why": "no_more: The lead-in says the outcome 'can include' item (h), which is only a possibility, but the point turns it into a recommendation by marking it '(recommended)'.",
+   "clauses": [
+    {
+     "item": "ICH Q10 4.3",
+     "ref": "ICH Q10, 4.3",
+     "unit": 5,
+     "text": "(h) Documentation and timely and effective communication of the results of the management review and actions, including escalation of appropriate issues to senior management."
+    }
+   ],
+   "resolved": "shown as other requirement (clause text), owner/lead 20 Nov"
+  },
+  {
+   "kind": "point",
+   "id": "B0104-R501",
+   "units": [
+    "EMA MAH-RP 5.4 ¶9#2"
+   ],
+   "question": "Does the PQR contain the relevant information that the MAH itself holds (recommended)?",
+   "verify": "Verify that the MAH ensures that information that it holds which is relevant to the PQR is actually included in the PQR (recommended).",
+   "evidence": [
+    {
+     "type": "document",
+     "what": "PQR reports"
+    },
+    {
+     "type": "record",
+     "what": "MAH-held information relevant to the PQR"
+    }
+   ],
+   "why": "no_more: The unit only says the MAH \"can ensure\" its information is included, as one way it \"may add value\"; marking this \"(recommended)\" turns an option into a recommendation.",
+   "clauses": [
+    {
+     "item": "EMA MAH-RP 5.4 ¶9",
+     "ref": "EMA reflection paper GMP and MAHs, 5.4 ¶9",
+     "unit": 2,
+     "text": "• The MAH can ensure that information that it holds which is relevant to the PQR is actually included in the PQR."
+    }
+   ],
+   "resolved": "shown as other requirement (clause text), owner/lead 20 Nov"
+  },
+  {
+   "kind": "point",
+   "id": "B0193-R101",
+   "units": [
+    "EU P4 7.16#2"
+   ],
+   "question": "Do records show that the current TSE note for guidance is complied with?",
+   "verify": "Verify that there is compliance with the latest version of the Note for Guidance on Minimising the Risk of Transmitting Animal Spongiform Encephalopathy (TSE) Agents via Human and Veterinary Medicinal Products.",
+   "evidence": [
+    {
+     "type": "record",
+     "what": "records showing compliance with the latest TSE Note for Guidance"
+    }
+   ],
+   "why": "code: A8 question drops the qualifier '\\bminimi[sz]'",
+   "clauses": [
+    {
+     "item": "EU P4 7.16",
+     "ref": "EU GMP Part IV, 7.16",
+     "unit": 2,
+     "text": "Compliance with the latest version of the Note for Guidance on Minimising the Risk of Transmitting Animal Spongiform Encephalopathy (TSE) Agents via Human and Veterinary Medicinal Products is required."
+    }
+   ],
+   "resolved": "shown as other requirement (clause text), owner/lead 20 Nov"
+  },
+  {
+   "kind": "point",
+   "id": "B0321-R501",
+   "units": [
+    "EU P4 11.26#18"
+   ],
+   "question": "For investigational ATMPs, do release records show that the QP's checks match the development stage, including that the manufacturer's quality specifications are met for a device still under investigation (recommended)?",
+   "verify": "Verify that, in the case of investigational ATMPs, the checks reflect that the amount of relevant information available depends on the stage of development (e.g. where medical devices used in an investigational combined ATMP are in an investigational phase as well, the QP ensures that the quality specifications set by the manufacturer are respected) (recommended).",
+   "evidence": [
+    {
+     "type": "record",
+     "what": "batch release records of investigational ATMPs"
+    },
+    {
+     "type": "document",
+     "what": "quality specifications set by the manufacturer"
+    }
+   ],
+   "why": "no_more: The point marks the QP's role \"to ensure that the quality specifications set by the manufacturer are respected\" as \"(recommended)\". The unit states this as the QP's role, not a should-recommendation. The question also turns the descriptive \"amount of relevant information available will depend on the stage of development\" into a duty that \"the QP's checks match the development stage\".",
+   "clauses": [
+    {
+     "item": "EU P4 11.26",
+     "ref": "EU GMP Part IV, 11.26 to 11.34",
+     "unit": 18,
+     "text": "11.29. In the case of investigational ATMPs, the amount of relevant information available will depend on the stage of development (e.g. medical devices used in an investigational combined ATMP may be in an investigational phase as well and, in such cases, the role of the QP is to ensure that the quality specifications set by the manufacturer are respected)."
+    }
+   ],
+   "resolved": "shown as other requirement (clause text), owner/lead 20 Nov"
+  },
+  {
+   "kind": "point",
+   "id": "B0331-R501",
+   "units": [
+    "EU A13 8 ¶4#2"
+   ],
+   "question": "Where appropriate, does the qualified person's batch assessment cover the batch records and their reports (recommended)?",
+   "verify": "Verify that, as appropriate, the qualified person's assessment of each batch for certification prior to release includes batch records, including control reports, in-process test reports and release reports demonstrating compliance with the product specification file, the order, protocol and randomisation code (recommended).",
+   "evidence": [
+    {
+     "type": "record",
+     "what": "qualified person's batch assessment records"
+    }
+   ],
+   "why": "no_more: The lead-in only permits ('may include as appropriate'), but the point turns this into a recommendation: 'includes batch records ... (recommended)'.",
+   "clauses": [
+    {
+     "item": "EU A13 8 ¶4",
+     "ref": "EU GMP Annex 13 8 ¶4",
+     "unit": 2,
+     "text": "i. Batch records, including control reports, in-process test reports and release reports demonstrating compliance with the product specification file, the order, protocol and randomisation code."
+    }
+   ],
+   "resolved": "shown as other requirement (clause text), owner/lead 20 Nov"
+  },
+  {
+   "kind": "point",
+   "id": "B0331-R502",
+   "units": [
+    "EU A13 8 ¶4#12"
+   ],
+   "question": "Where appropriate, does the qualified person's batch assessment cover proof that the third-country manufacturer is authorised to make the product for export (recommended)?",
+   "verify": "Verify that, as appropriate, the qualified person's assessment of each batch for certification prior to release includes documents certifying that the manufacturer is authorised to manufacture investigational medicinal product for export by the appropriate authorities in the third country (recommended).",
+   "evidence": [
+    {
+     "type": "record",
+     "what": "qualified person's batch assessment records"
+    },
+    {
+     "type": "document",
+     "what": "documents certifying the manufacturer's authorisation"
+    }
+   ],
+   "why": "no_more: The lead-in says the assessment 'may include as appropriate', which is a permission; the point's 'includes ... (recommended)' turns it into a recommendation.",
+   "clauses": [
+    {
+     "item": "EU A13 8 ¶4",
+     "ref": "EU GMP Annex 13 8 ¶4",
+     "unit": 12,
+     "text": "x. Documents certifying that the manufacturer is authorised to manufacture investigational medicinal product for export by the appropriate authorities in the third country;"
+    }
+   ],
+   "resolved": "shown as other requirement (clause text), owner/lead 20 Nov"
+  },
+  {
+   "kind": "point",
+   "id": "B0331-R503",
+   "units": [
+    "EU A13 8 ¶4#14"
+   ],
+   "question": "Where appropriate, does the qualified person's batch assessment cover a check of the supply chain and its sites (recommended)?",
+   "verify": "Verify that, as appropriate, the qualified person's assessment of each batch for certification prior to release includes verification of the supply chain including manufacturing, packaging, labelling and testing sites for the investigational medicinal products (recommended).",
+   "evidence": [
+    {
+     "type": "record",
+     "what": "qualified person's batch assessment records"
+    }
+   ],
+   "why": "no_more: The lead-in says the assessment 'may include as appropriate', which is a permission, but the point marks supply-chain verification as '(recommended)', turning the permission into a should-level expectation.",
+   "clauses": [
+    {
+     "item": "EU A13 8 ¶4",
+     "ref": "EU GMP Annex 13 8 ¶4",
+     "unit": 14,
+     "text": "xii. Verification of the supply chain including manufacturing, packaging, labelling and testing sites for the investigational medicinal products;"
+    }
+   ],
+   "resolved": "shown as other requirement (clause text), owner/lead 20 Nov"
+  },
+  {
+   "kind": "point",
+   "id": "B0343-R401",
+   "units": [
+    "EU A17 1.1#1"
+   ],
+   "question": "Do release records show that products meet their approved specifications, with release normally based on the full set of tests set in the authorisation?",
+   "verify": "Verify that medicinal products comply with their approved specifications. Subject to compliance with GMP, they can normally be released to market by performing a complete set of tests on active substances and/or finished products as defined in the relevant marketing authorization or clinical trial authorization.",
+   "evidence": [
+    {
+     "type": "document",
+     "what": "approved specifications"
+    },
+    {
+     "type": "record",
+     "what": "test results and batch release records"
+    }
+   ],
+   "why": "no_more: The question's 'with release normally based on the full set of tests set in the authorisation' turns the unit's permission ('can normally be released ... by performing a complete set of tests') into a condition that release records must show.",
+   "clauses": [
+    {
+     "item": "EU A17 1.1",
+     "ref": "EU GMP Annex 17 1.1",
+     "unit": 1,
+     "text": "Medicinal products must comply with their approved specifications and subject to compliance with GMP, can normally be released to market by performing a complete set of tests on active substances and/or finished products as defined in the relevant marketing authorization or clinical trial authorization."
+    }
+   ],
+   "resolved": "shown as other requirement (clause text), owner/lead 20 Nov"
+  },
+  {
+   "kind": "point",
+   "id": "B0374-R201",
+   "units": [
+    "EMA MAH-RP 5.5 ¶11#1"
+   ],
+   "question": "Does the MAH itself follow each of these recall requirements and have systems in place for its recall activities?",
+   "verify": "Verify that each of these recall requirements is applied to the MAH, given the MAH's role in recall decision making, coordination and management, and that the MAH has systems in place to deal with these activities.",
+   "evidence": [
+    {
+     "type": "document",
+     "what": "MAH systems for recall decision making, coordination and management"
+    },
+    {
+     "type": "record",
+     "what": "records showing the MAH applies the recall requirements"
+    }
+   ],
+   "why": "answerable: The question and verify say \"each of these recall requirements\" without naming them. These are the ¶10 duties: periodic effectiveness evaluation, covering office and out-of-office hours, considering mock recalls, and documented and justified evaluations. An auditor therefore cannot tell from the point what to check for a YES/NO.",
+   "clauses": [
+    {
+     "item": "EMA MAH-RP 5.5 ¶11",
+     "ref": "EMA reflection paper GMP and MAHs, 5.5 ¶11",
+     "unit": 1,
+     "text": "Each of these requirements is applicable to the MAH, given the MAH’s role in recall decision making, coordination and management, and it is important that the MAH has systems in place to deal with these activities."
+    }
+   ],
+   "resolved": "shown as other requirement (clause text), owner/lead 20 Nov"
+  },
+  {
+   "kind": "point",
+   "id": "B0420-R501",
+   "units": [
+    "EU P4 3.38#1"
+   ],
+   "question": "Do the heads of production and quality control, and of quality assurance where there is one, share the listed quality system responsibilities (recommended)?",
+   "verify": "Verify that the person responsible for production, the person responsible for quality control and, where applicable, the person responsible for quality assurance share some responsibilities regarding the design and implementation of the pharmaceutical quality system, in particular concerning training, documentation obligations, process validation, validation of the transport conditions and of the reconstitution process (where applicable), control of the manufacturing environment, control of outsourced activities, and quality investigations (recommended).",
+   "evidence": [
+    {
+     "type": "document",
+     "what": "documents or records showing the responsibilities of these persons"
+    }
+   ],
+   "why": "no_more: The unit states as fact that these persons 'share some responsibilities', with no 'should'; marking the question and verify '(recommended)' weakens it to a recommendation.",
+   "clauses": [
+    {
+     "item": "EU P4 3.38",
+     "ref": "EU GMP Part IV, 3.38",
+     "unit": 1,
+     "text": "The person responsible for production, the person responsible for quality control, and - where applicable- the person responsible for quality assurance, share some responsibilities regarding the design and implementation of the pharmaceutical quality system and in particular concerning training, documentation obligations, process validation, validation of the transport conditions and of the reconstitution process (where applicable), control of the manufacturing environment, control of outsourced activities, and quality investigations."
+    }
+   ],
+   "resolved": "shown as other requirement (clause text), owner/lead 20 Nov"
+  },
+  {
+   "kind": "point",
+   "id": "B0423-R701",
+   "units": [
+    "EU A1 7.13#18"
+   ],
+   "question": "Where the CCS defines an activity in grade C or D areas as a contamination risk, is the extra gowning it calls for worn (recommended)?",
+   "verify": "Verify that, in grade C and D areas, additional gowning including gloves and facemask is worn where it is called for when performing activities considered to be a contamination risk as defined by the CCS (recommended).",
+   "evidence": [
+    {
+     "type": "document",
+     "what": "CCS: activities in grade C and D areas defined as a contamination risk and the additional gowning for them"
+    },
+    {
+     "type": "observation",
+     "what": "gowning, including gloves and facemask, worn during these activities in grade C and D areas"
+    }
+   ],
+   "why": "no_more: The question's 'the extra gowning it calls for' and the evidence's 'the additional gowning for them' make the CCS specify the gowning, but the unit only says the CCS defines the contamination-risk activities.",
+   "clauses": [
+    {
+     "item": "EU A1 7.13",
+     "ref": "EU GMP Annex 1 7.13",
+     "unit": 18,
+     "text": "iv. Additional gowning including gloves and facemask may be required in grade C and D areas when performing activities considered to be a contamination risk as defined by the CCS."
+    }
+   ],
+   "resolved": "shown as other requirement (clause text), owner/lead 20 Nov"
+  },
+  {
+   "kind": "point",
+   "id": "B0441-R201",
+   "units": [
+    "SchM-IV-7.5#1"
+   ],
+   "question": "Are the specific containment requirements for poliomyelitis vaccine applied?",
+   "verify": "Verify that the specific containment requirements that apply to poliomyelitis vaccine are applied, to minimise poliovirus facility associated risk and for the safe production and quality control of inactivated poliomyelitis vaccine manufactured from wild polioviruses.",
+   "evidence": [
+    {
+     "type": "observation",
+     "what": "containment measures in poliomyelitis vaccine production and quality control"
+    },
+    {
+     "type": "document",
+     "what": "procedure or records showing the containment requirements applied to poliomyelitis vaccine"
+    }
+   ],
+   "why": "code: A8 question drops the qualifier '\\bminimi[sz]'",
+   "clauses": [
+    {
+     "item": "SchM-IV-7.5",
+     "ref": "Schedule M Part IV 7.5",
+     "unit": 1,
+     "text": "Specific containment requirements apply to poliomyelitis vaccine to minimise poliovirus facility associated risk and for the safe production and quality control of inactivated poliomyelitis vaccine manufactured from wild polioviruses."
+    }
+   ],
+   "resolved": "shown as other requirement (clause text), owner/lead 20 Nov"
+  },
+  {
+   "kind": "point",
+   "id": "B0461-R602",
+   "units": [
+    "SchM-XIII-11#1",
+    "SchM-XIII-11#6"
+   ],
+   "question": "Does the layout for parenterals in glass containers show a filling, capping and sealing area as a separate area or room (recommended)?",
+   "verify": "Verify that the whole operation of manufacture of parenteral preparations (small volume injectables and large volume parenterals) in glass and plastic containers is divided into separate areas or rooms that include, for parenteral preparations in glass containers, a filling capping and sealing area, which includes filling and sealing of ampoules or filling, capping and sealing of vials and bottles (recommended).",
+   "evidence": [
+    {
+     "type": "document",
+     "what": "plant layout drawings"
+    },
+    {
+     "type": "observation",
+     "what": "the areas or rooms on site"
+    }
+   ],
+   "why": "no_more: The unit only permits the division ('may be divided'), but the point marks it '(recommended)', turning a permission into a recommendation.",
+   "clauses": [
+    {
+     "item": "SchM-XIII-11",
+     "ref": "Schedule M Part XIII 11 to 11.1",
+     "unit": 1,
+     "text": "The whole operation of manufacture of parenteral preparations (small volume injectables and large volume parenterals) in glass and plastic containers may be divided into the following separate areas or rooms, namely-"
+    },
+    {
+     "item": "SchM-XIII-11",
+     "ref": "Schedule M Part XIII 11 to 11.1",
+     "unit": 6,
+     "text": "(4) Filling capping and sealing area: This includes filling and sealing of ampoules or filling, capping and sealing of vials and bottles;"
+    }
+   ],
+   "resolved": "shown as other requirement (clause text), owner/lead 20 Nov"
+  },
+  {
+   "kind": "point",
+   "id": "B0461-R604",
+   "units": [
+    "SchM-XIII-11#1",
+    "SchM-XIII-11#9"
+   ],
+   "question": "Does the layout for parenterals in glass containers show a visual inspection area as a separate area or room (recommended)?",
+   "verify": "Verify that the whole operation of manufacture of parenteral preparations (small volume injectables and large volume parenterals) in glass and plastic containers is divided into separate areas or rooms that include, for parenteral preparations in glass containers, a visual inspection area (recommended).",
+   "evidence": [
+    {
+     "type": "document",
+     "what": "plant layout drawings"
+    },
+    {
+     "type": "observation",
+     "what": "the areas or rooms on site"
+    }
+   ],
+   "why": "no_more: The unit says the operation 'may be divided' into separate areas, which is a permission; the point recasts it as 'is divided ... (recommended)', turning the permission into a recommendation.",
+   "clauses": [
+    {
+     "item": "SchM-XIII-11",
+     "ref": "Schedule M Part XIII 11 to 11.1",
+     "unit": 1,
+     "text": "The whole operation of manufacture of parenteral preparations (small volume injectables and large volume parenterals) in glass and plastic containers may be divided into the following separate areas or rooms, namely-"
+    },
+    {
+     "item": "SchM-XIII-11",
+     "ref": "Schedule M Part XIII 11 to 11.1",
+     "unit": 9,
+     "text": "(7) Visual inspection area; and"
+    }
+   ],
+   "resolved": "shown as other requirement (clause text), owner/lead 20 Nov"
+  },
+  {
+   "kind": "point",
+   "id": "B0461-R606",
+   "units": [
+    "SchM-XIII-11.2#1",
+    "SchM-XIII-11.2#2"
+   ],
+   "question": "Does the layout for Form-Fill-Seal or Blow-Fill-Seal parenterals in plastic containers show a water management area as a separate area or room (recommended)?",
+   "verify": "Verify that, for parenteral preparations in plastic containers by Form-Fill-Seal or Blow, Fill-Seal technology, the whole operation of manufacture of large volume parenteral preparations in plastic containers including plastic pouches by automatic (all operations in one station) Form-Fill-Seal machine or by semi-automatic blow moulding, filling-cum-sealing machine is divided into separate areas or rooms that include a water management area (recommended).",
+   "evidence": [
+    {
+     "type": "document",
+     "what": "plant layout drawings"
+    },
+    {
+     "type": "observation",
+     "what": "the areas or rooms on site"
+    }
+   ],
+   "why": "no_more: The unit only permits the division ('may be divided into following separate areas or rooms'), but the point turns this permission into a recommendation with '(recommended)', which is a stricter modality.",
+   "clauses": [
+    {
+     "item": "SchM-XIII-11.2",
+     "ref": "Schedule M Part XIII 11.2",
+     "unit": 1,
+     "text": "Parenteral preparations in plastic containers by Form-Fill-Seal or Blow, Fill-Seal technology- The whole operation of manufacture of large volume parenteral preparations in plastic containers including plastic pouches by automatic (all operations in one station) Form-Fill-Seal machine or by semi-automatic blow moulding, filling-cum-sealing machine may be divided into following separate areas or rooms, namely-"
+    },
+    {
+     "item": "SchM-XIII-11.2",
+     "ref": "Schedule M Part XIII 11.2",
+     "unit": 2,
+     "text": "(1) Water management area;"
+    }
+   ],
+   "resolved": "shown as other requirement (clause text), owner/lead 20 Nov"
+  },
+  {
+   "kind": "point",
+   "id": "B0461-R608",
+   "units": [
+    "SchM-XIII-11.2#1",
+    "SchM-XIII-11.2#5"
+   ],
+   "question": "Does the layout for Form-Fill-Seal or Blow-Fill-Seal parenterals in plastic containers show a sterilisation area as a separate area or room (recommended)?",
+   "verify": "Verify that, for parenteral preparations in plastic containers by Form-Fill-Seal or Blow, Fill-Seal technology, the whole operation of manufacture of large volume parenteral preparations in plastic containers including plastic pouches by automatic (all operations in one station) Form-Fill-Seal machine or by semi-automatic blow moulding, filling-cum-sealing machine is divided into separate areas or rooms that include a sterilisation area (recommended).",
+   "evidence": [
+    {
+     "type": "document",
+     "what": "plant layout drawings"
+    },
+    {
+     "type": "observation",
+     "what": "the areas or rooms on site"
+    }
+   ],
+   "why": "no_more: The unit says the operation 'may be divided' into separate areas, which is a permission; the point turns it into a recommendation that a separate sterilisation area be shown ('is divided ... (recommended)'), making it stricter than the unit.",
+   "clauses": [
+    {
+     "item": "SchM-XIII-11.2",
+     "ref": "Schedule M Part XIII 11.2",
+     "unit": 1,
+     "text": "Parenteral preparations in plastic containers by Form-Fill-Seal or Blow, Fill-Seal technology- The whole operation of manufacture of large volume parenteral preparations in plastic containers including plastic pouches by automatic (all operations in one station) Form-Fill-Seal machine or by semi-automatic blow moulding, filling-cum-sealing machine may be divided into following separate areas or rooms, namely-"
+    },
+    {
+     "item": "SchM-XIII-11.2",
+     "ref": "Schedule M Part XIII 11.2",
+     "unit": 5,
+     "text": "(4) Sterilisation area;"
+    }
+   ],
+   "resolved": "shown as other requirement (clause text), owner/lead 20 Nov"
+  },
+  {
+   "kind": "point",
+   "id": "B0461-R609",
+   "units": [
+    "SchM-XIII-11.2#1",
+    "SchM-XIII-11.2#6"
+   ],
+   "question": "Does the layout for Form-Fill-Seal or Blow-Fill-Seal parenterals in plastic containers show a quarantine area as a separate area or room (recommended)?",
+   "verify": "Verify that, for parenteral preparations in plastic containers by Form-Fill-Seal or Blow, Fill-Seal technology, the whole operation of manufacture of large volume parenteral preparations in plastic containers including plastic pouches by automatic (all operations in one station) Form-Fill-Seal machine or by semi-automatic blow moulding, filling-cum-sealing machine is divided into separate areas or rooms that include a quarantine area (recommended).",
+   "evidence": [
+    {
+     "type": "document",
+     "what": "plant layout drawings"
+    },
+    {
+     "type": "observation",
+     "what": "the areas or rooms on site"
+    }
+   ],
+   "why": "no_more: The unit only permits the operation ('may be divided'), but the point turns this into a recommendation: 'is divided into separate areas or rooms that include a quarantine area (recommended)'.",
+   "clauses": [
+    {
+     "item": "SchM-XIII-11.2",
+     "ref": "Schedule M Part XIII 11.2",
+     "unit": 1,
+     "text": "Parenteral preparations in plastic containers by Form-Fill-Seal or Blow, Fill-Seal technology- The whole operation of manufacture of large volume parenteral preparations in plastic containers including plastic pouches by automatic (all operations in one station) Form-Fill-Seal machine or by semi-automatic blow moulding, filling-cum-sealing machine may be divided into following separate areas or rooms, namely-"
+    },
+    {
+     "item": "SchM-XIII-11.2",
+     "ref": "Schedule M Part XIII 11.2",
+     "unit": 6,
+     "text": "(5) Quarantine area;"
+    }
+   ],
+   "resolved": "shown as other requirement (clause text), owner/lead 20 Nov"
+  },
+  {
+   "kind": "point",
+   "id": "B0461-R610",
+   "units": [
+    "SchM-XIII-11.2#1",
+    "SchM-XIII-11.2#8"
+   ],
+   "question": "Does the layout for Form-Fill-Seal or Blow-Fill-Seal parenterals in plastic containers show a packaging area as a separate area or room (recommended)?",
+   "verify": "Verify that, for parenteral preparations in plastic containers by Form-Fill-Seal or Blow, Fill-Seal technology, the whole operation of manufacture of large volume parenteral preparations in plastic containers including plastic pouches by automatic (all operations in one station) Form-Fill-Seal machine or by semi-automatic blow moulding, filling-cum-sealing machine is divided into separate areas or rooms that include a packaging area (recommended).",
+   "evidence": [
+    {
+     "type": "document",
+     "what": "plant layout drawings"
+    },
+    {
+     "type": "observation",
+     "what": "the areas or rooms on site"
+    }
+   ],
+   "why": "no_more: The unit only permits division ('may be divided into following separate areas or rooms'), but the point turns this permission into a recommendation ('is divided ... (recommended)'), which strengthens the modality.",
+   "clauses": [
+    {
+     "item": "SchM-XIII-11.2",
+     "ref": "Schedule M Part XIII 11.2",
+     "unit": 1,
+     "text": "Parenteral preparations in plastic containers by Form-Fill-Seal or Blow, Fill-Seal technology- The whole operation of manufacture of large volume parenteral preparations in plastic containers including plastic pouches by automatic (all operations in one station) Form-Fill-Seal machine or by semi-automatic blow moulding, filling-cum-sealing machine may be divided into following separate areas or rooms, namely-"
+    },
+    {
+     "item": "SchM-XIII-11.2",
+     "ref": "Schedule M Part XIII 11.2",
+     "unit": 8,
+     "text": "(7) Packaging area."
+    }
+   ],
+   "resolved": "shown as other requirement (clause text), owner/lead 20 Nov"
+  },
+  {
+   "kind": "point",
+   "id": "B0461-R611",
+   "units": [
+    "SchM-XIII-11.2#9"
+   ],
+   "question": "Do the areas for parenterals in plastic containers have the equipment that is recommended for them (recommended)?",
+   "verify": "Verify that the equipment recommended for the different areas mentioned above is in place in those areas (recommended).",
+   "evidence": [
+    {
+     "type": "document",
+     "what": "equipment list for these areas"
+    },
+    {
+     "type": "observation",
+     "what": "equipment in the areas"
+    }
+   ],
+   "why": "answerable: The unit is only a lead-in, and neither the point nor the unit names the equipment ('the equipment recommended ... mentioned above'), so an auditor cannot judge YES/NO against the equipment list or observation.",
+   "clauses": [
+    {
+     "item": "SchM-XIII-11.2",
+     "ref": "Schedule M Part XIII 11.2",
+     "unit": 9,
+     "text": "The following equipment is recommended for different above mentioned areas namely-"
+    }
+   ],
+   "resolved": "shown as other requirement (clause text), owner/lead 20 Nov"
+  },
+  {
+   "kind": "point",
+   "id": "B0490-R201",
+   "units": [
+    "EU A1 4.22#2"
+   ],
+   "question": "Is cleaning carried out before the bio-decontamination step (recommended)?",
+   "verify": "Verify that the cleaning process is carried out prior to the bio-decontamination step, since any residues that remain may inhibit the effectiveness of the decontamination process (recommended).",
+   "evidence": [
+    {
+     "type": "document",
+     "what": "procedure or records showing cleaning before the bio-decontamination step"
+    }
+   ],
+   "why": "no_more: The unit states the cleaning step 'is essential', which is a firm requirement. Marking it '(recommended)' in the question and verify loosens the modality.",
+   "clauses": [
+    {
+     "item": "EU A1 4.22",
+     "ref": "EU GMP Annex 1 4.22",
+     "unit": 2,
+     "text": "The cleaning process prior to the bio-decontamination step is essential; any residues that remain may inhibit the effectiveness of the decontamination process."
+    }
+   ],
+   "resolved": "shown as other requirement (clause text), owner/lead 20 Nov"
+  },
+  {
+   "kind": "point",
+   "id": "B0554-R201",
+   "units": [
+    "SchM-V-4.6#3"
+   ],
+   "question": "Where national central laboratories cannot be contacted to calibrate the apparatus for measuring very short half-lives, is an alternative approach, such as documented procedures, used (recommended)?",
+   "verify": "Where it is not possible to contact national central laboratories to calibrate the apparatus for the measurement of very short half-lives, verify that an alternative approach, such as documented procedures, is used (recommended).",
+   "evidence": [
+    {
+     "type": "document",
+     "what": "procedure or records showing the alternative approach used"
+    }
+   ],
+   "why": "no_more: The unit only permits alternative approaches ('may be used'), but the point turns this into a recommendation to use one ('is an alternative approach ... used (recommended)').",
+   "clauses": [
+    {
+     "item": "SchM-V-4.6",
+     "ref": "Schedule M Part V 4.6",
+     "unit": 3,
+     "text": "Where this is not possible, alternative approaches, such as documented procedures, may be used."
+    }
+   ],
+   "resolved": "shown as other requirement (clause text), owner/lead 20 Nov"
+  },
+  {
+   "kind": "point",
+   "id": "B0560-R201",
+   "units": [
+    "SchM-XII-5.2.3#1"
+   ],
+   "question": "Are equipment and utensils cleaned, stored and, where appropriate, also sanitised or sterilised, so as to prevent contamination or carryover of a material that would alter intermediate or API quality beyond the official or other established specifications?",
+   "verify": "Verify that equipment and utensils are cleaned, stored and, where appropriate, sanitised or sterilised to prevent contamination or carryover of a material that would alter the quality of the intermediate or API beyond the official or other established specifications.",
+   "evidence": [
+    {
+     "type": "observation",
+     "what": "cleaned and stored equipment and utensils"
+    },
+    {
+     "type": "record",
+     "what": "procedure or records showing cleaning, sanitising or sterilising of equipment and utensils"
+    }
+   ],
+   "why": "code: A4 question copies 10+ words of SchM-XII-5.2.3#1",
+   "clauses": [
+    {
+     "item": "SchM-XII-5.2.3",
+     "ref": "Schedule M Part XII 5.2.3",
+     "unit": 1,
+     "text": "Equipment and utensils shall be cleaned, stored and, where appropriate, sanitised or sterilised to prevent contamination or carryover of a material that would alter the quality of the intermediate or API beyond the official or other established specifications."
+    }
+   ],
+   "resolved": "shown as other requirement (clause text), owner/lead 20 Nov"
+  },
+  {
+   "kind": "point",
+   "id": "B0564-R401",
+   "units": [
+    "SchM-XIII-3.1#1",
+    "SchM-XIII-3.1#6",
+    "SchM-XIII-3.1#7",
+    "SchM-XIII-3.1#8"
+   ],
+   "question": "Does the tablet granulation section have a granulator where needed, a hot air oven (trays preferably on a trolley) or fluid bed dryer, and weighing machines (recommended)?",
+   "verify": "Verify that, for the manufacture of compressed tablets and hypodermic tablets, the following electrically operated equipment is provided in the granulation-cum-drying section: a granulator wherever required; a thermostatically controlled hot air oven with trays (preferably mounted on a trolley) or a fluid bed dryer; and weighing machines (recommended).",
+   "evidence": [
+    {
+     "type": "observation",
+     "what": "equipment in the granulation-cum-drying section"
+    }
+   ],
+   "why": "no_more: The lead-in makes all listed equipment \"recommended\", but \"(recommended)\" is attached only to \"weighing machines\", so \"is provided ... a granulator wherever required; a thermostatically controlled hot air oven\" reads as a mandatory duty.",
+   "clauses": [
+    {
+     "item": "SchM-XIII-3.1",
+     "ref": "Schedule M Part XIII 3.1",
+     "unit": 1,
+     "text": "The following electrically operated equipment are recommended for the manufacture of compressed tablets and hypodermic tablets, namely:-"
+    },
+    {
+     "item": "SchM-XIII-3.1",
+     "ref": "Schedule M Part XIII 3.1",
+     "unit": 6,
+     "text": "(4) Granulator wherever required;"
+    },
+    {
+     "item": "SchM-XIII-3.1",
+     "ref": "Schedule M Part XIII 3.1",
+     "unit": 7,
+     "text": "(5) Thermostatically controlled hot air oven with trays (preferably mounted on a trolley) or Fluid bed dryer; and"
+    },
+    {
+     "item": "SchM-XIII-3.1",
+     "ref": "Schedule M Part XIII 3.1",
+     "unit": 8,
+     "text": "(6) Weighing machines;"
+    }
+   ],
+   "resolved": "shown as other requirement (clause text), owner/lead 20 Nov"
+  },
+  {
+   "kind": "point",
+   "id": "B0572-R401",
+   "units": [
+    "SchM-XIII-11.1-5#1",
+    "SchM-XIII-11.1-5#2",
+    "SchM-XIII-11.1-5#3"
+   ],
+   "question": "Does the sterilisation area have a steam steriliser (preferably computer controlled, with trolley sets), a hot air steriliser (preferably double ended) and a pressure leak tester (recommended)?",
+   "verify": "Verify that the sterilisation area has: a steam steriliser (preferably with computer control for sterilisation cycle along with trolley sets for loading or unloading containers before and after sterilisation); a hot air steriliser (preferably double ended); and pressure leak test apparatus (recommended).",
+   "evidence": [
+    {
+     "type": "observation",
+     "what": "equipment in the sterilisation area"
+    }
+   ],
+   "why": "no_more: The lead-in makes all three items recommended, but '(recommended)' is attached only to the pressure leak test apparatus, so the steam steriliser and hot air steriliser read as mandatory.",
+   "clauses": [
+    {
+     "item": "SchM-XIII-11.1-5",
+     "ref": "Schedule M Part XIII 11.1-5",
+     "unit": 1,
+     "text": "(1) Steam steriliser (preferably with computer control for sterilisation cycle along with trolley sets for loading or unloading containers before and after sterilisation);"
+    },
+    {
+     "item": "SchM-XIII-11.1-5",
+     "ref": "Schedule M Part XIII 11.1-5",
+     "unit": 2,
+     "text": "(2) Hot Air steriliser (preferably double ended); and"
+    },
+    {
+     "item": "SchM-XIII-11.1-5",
+     "ref": "Schedule M Part XIII 11.1-5",
+     "unit": 3,
+     "text": "(3) Pressure leak test apparatus."
+    }
+   ],
+   "resolved": "shown as other requirement (clause text), owner/lead 20 Nov"
+  },
+  {
+   "kind": "point",
+   "id": "B0572-R403",
+   "units": [
+    "SchM-XIII-11.1-8#1",
+    "SchM-XIII-11.1-8#2",
+    "SchM-XIII-11.1-8#3"
+   ],
+   "question": "Does the packaging area have a batch coding machine (preferably automatic), a labeling unit (preferably conveyor belt type) and benches or stools (recommended)?",
+   "verify": "Verify that the packaging area has a batch coding machine (preferably automatic), a labeling unit (preferably conveyor belt type) and benches or stools (recommended).",
+   "evidence": [
+    {
+     "type": "observation",
+     "what": "equipment in the packaging area"
+    }
+   ],
+   "why": "no_more: '(recommended)' is attached only to 'benches or stools', so the batch coding machine and labeling unit read as mandatory, although the lead-in makes all three items recommended.",
+   "clauses": [
+    {
+     "item": "SchM-XIII-11.1-8",
+     "ref": "Schedule M Part XIII 11.1-8",
+     "unit": 1,
+     "text": "(1) Batch coding machine (preferably automatic);"
+    },
+    {
+     "item": "SchM-XIII-11.1-8",
+     "ref": "Schedule M Part XIII 11.1-8",
+     "unit": 2,
+     "text": "(2) Labeling unit (preferably conveyor belt type); and"
+    },
+    {
+     "item": "SchM-XIII-11.1-8",
+     "ref": "Schedule M Part XIII 11.1-8",
+     "unit": 3,
+     "text": "(3) benches or stools."
+    }
+   ],
+   "resolved": "shown as other requirement (clause text), owner/lead 20 Nov"
+  },
+  {
+   "kind": "point",
+   "id": "B0684-R501",
+   "units": [
+    "SchM-XII-17.3.9#1"
+   ],
+   "question": "Where warranted for equipment shared between products, is extra testing done after cleaning between campaigns (recommended)?",
+   "verify": "For shared (multiproduct) equipment, verify that, where warranted and as appropriate, additional testing is done after cleaning between product campaigns to minimise the risk of cross-contamination (recommended).",
+   "evidence": [
+    {
+     "type": "record",
+     "what": "results of additional testing after cleaning between product campaigns"
+    }
+   ],
+   "why": "code: A8 question drops the qualifier '\\bminimi[sz]'",
+   "clauses": [
+    {
+     "item": "SchM-XII-17.3.9",
+     "ref": "Schedule M Part XII 17.3.9",
+     "unit": 1,
+     "text": "Shared (multiproduct) equipment may warrant additional testing after cleaning between product campaigns, as appropriate, to minimise the risk of cross-contamination."
+    }
+   ],
+   "resolved": "shown as other requirement (clause text), owner/lead 20 Nov"
+  },
+  {
+   "kind": "point",
+   "id": "B0724-R501",
+   "units": [
+    "EMA HBEL 5.1 ¶1#5"
+   ],
+   "question": "For leftover active substances that have no threshold, does the limit-setting document use the stated limit dose (recommended)?",
+   "verify": "Verify that, in the case of residual active substances without a threshold, the limit dose applied is 1.5 μg/person/day (recommended).",
+   "evidence": [
+    {
+     "type": "document",
+     "what": "document setting the limit for the residual active substance"
+    }
+   ],
+   "why": "no_more: The unit is a permission ('a limit dose of 1.5 μg/person/day may be applied'), but the point turns it into a recommendation ('the limit dose applied is 1.5 μg/person/day (recommended)').",
+   "clauses": [
+    {
+     "item": "EMA HBEL 5.1 ¶1",
+     "ref": "EMA HBEL guideline, 5.1 ¶1",
+     "unit": 5,
+     "text": "Hence, in the case of residual active substances without a threshold, a limit dose of 1.5 μg/person/day may be applied."
+    }
+   ],
+   "resolved": "shown as other requirement (clause text), owner/lead 20 Nov"
+  },
+  {
+   "kind": "point",
+   "id": "B0779-R301",
+   "units": [
+    "SchM-VI-23.5.5#1",
+    "SchM-VI-23.5.5#3",
+    "SchM-VI-23.5.5#4"
+   ],
+   "question": "Are the active ingredient particulars of plant materials and plant preparations expressed in one of the set ways?",
+   "verify": "Verify that the qualitative and quantitative particulars of the active ingredients in plant materials and plant preparations are expressed so that either the quantity of the plant material is stated or, if constituents with known therapeutic activity are unidentified, the quantity of the plant material or phytopharmaceutical preparation is stated; or the quantity of the plant material or phytopharmaceutical preparation is given as a range, corresponding to a defined quantity of constituents with known therapeutic activity.",
+   "evidence": [
+    {
+     "type": "document",
+     "what": "product label or other documents showing the active ingredient particulars"
+    }
+   ],
+   "why": "no_more: Options (a)/(b) are applied to all 'plant materials and plant preparations', widening the scope beyond preparations of comminuted or powdered plant materials. | no_less: The verify drops the 23.5.5.1 scope 'consisting of comminuted or powdered plant materials' to which options (a) and (b) are limited.",
+   "clauses": [
+    {
+     "item": "SchM-VI-23.5.5",
+     "ref": "Schedule M Part VI 23.5.5 to 23.5.5.2",
+     "unit": 1,
+     "text": "The qualitative and quantitative particulars of the active ingredients in plant materials and plant preparations shall be expressed in the following manner, namely-"
+    },
+    {
+     "item": "SchM-VI-23.5.5",
+     "ref": "Schedule M Part VI 23.5.5 to 23.5.5.2",
+     "unit": 3,
+     "text": "(a) the quantity of the plant material must be stated or, if constituents with known therapeutic activity are unidentified, the quantity of the plant material or phytopharmaceutical preparation shall be stated; or"
+    },
+    {
+     "item": "SchM-VI-23.5.5",
+     "ref": "Schedule M Part VI 23.5.5 to 23.5.5.2",
+     "unit": 4,
+     "text": "(b) the quantity of the plant material or phytopharmaceutical preparation shall be given as a range, corresponding to a defined quantity of constituents with known therapeutic activity."
+    }
+   ],
+   "resolved": "shown as other requirement (clause text), owner/lead 20 Nov"
+  },
+  {
+   "kind": "point",
+   "id": "B0813-R301",
+   "units": [
+    "SchM-II-4.6.4#1"
+   ],
+   "question": "Was the “in operation” classification shown under normal operations, simulated operations or media fills, as a worst-case simulation?",
+   "verify": "Verify that “in operation” classification is demonstrated during normal operations, simulated operations or during media fills, as worst-case simulation is required for this.",
+   "evidence": [
+    {
+     "type": "record",
+     "what": "classification reports for the “in operation” state"
+    }
+   ],
+   "why": "no_more: The unit's permission ('may be demonstrated during normal operations, simulated operations or during media fills') becomes a duty or restriction in 'is demonstrated during…', limiting classification to those three options.",
+   "clauses": [
+    {
+     "item": "SchM-II-4.6.4",
+     "ref": "Schedule M Part II 4.6.4",
+     "unit": 1,
+     "text": "“In operation” classification may be demonstrated during normal operations, simulated operations or during media fills as worst-case simulation is required for this."
+    }
+   ],
+   "resolved": "shown as other requirement (clause text), owner/lead 20 Nov"
+  },
+  {
+   "kind": "point",
+   "id": "B0814-R302",
+   "units": [
+    "SchM-II-4.7.9#2"
+   ],
+   "question": "Is each operation done in the Grade that the table of example operations gives for it?",
+   "verify": "Verify that operations are carried out in the Grades given for them in the table \"Examples of operations to be carried out in the various Grades\".",
+   "evidence": [
+    {
+     "type": "document",
+     "what": "documents showing the Grade assigned to each operation"
+    },
+    {
+     "type": "observation",
+     "what": "Grade of the area where each operation is carried out"
+    }
+   ],
+   "why": "no_more: The table gives only 'Examples of operations', but 'Is each operation done in the Grade that the table ... gives' makes those examples a binding duty.",
+   "clauses": [
+    {
+     "item": "SchM-II-4.7.9",
+     "ref": "Schedule M Part II 4.7.9",
+     "unit": 2,
+     "text": "[Table II-T2, shown below]"
+    }
+   ],
+   "resolved": "shown as other requirement (clause text), owner/lead 20 Nov"
+  },
+  {
+   "kind": "point",
+   "id": "B0824-P01",
+   "units": [
+    "SchM-II-6.11.3.1#3"
+   ],
+   "question": "Does the design of the isolator and its surrounding room allow each zone to reach its needed air quality?",
+   "verify": "Verify that the isolator and the background environment are designed so that the required air quality for each zone can be realised.",
+   "evidence": [
+    {
+     "type": "document",
+     "what": "design documents of isolator and background environment"
+    },
+    {
+     "type": "record",
+     "what": "air quality data for each zone"
+    }
+   ],
+   "why": "confirmed proof-sample ERROR: seed 20261124, 3 of 3 opinions: the evidence 'air quality data for each zone' implies a duty to measure / monitor air quality that the unit does not state",
+   "clauses": [
+    {
+     "item": "SchM-II-6.11.3.1",
+     "ref": "Schedule M Part II 6.11.3.1",
+     "unit": 3,
+     "text": "The isolator and the background environment shall be designed so that the required air quality for each zone can be realised."
+    }
+   ],
+   "resolved": "shown as other requirement (clause text), owner/lead 20 Nov"
+  },
+  {
+   "kind": "point",
+   "id": "B0835-R501",
+   "units": [
+    "EU P4 9.39#6"
+   ],
+   "question": "Where products are made in a closed system or an isolator, is the surrounding clean area of the grade stated as acceptable (recommended)?",
+   "verify": "Where production takes place in a closed system, in an isolator, or positive pressure isolators, verify that the background clean area is of grade D, which is acceptable (recommended).",
+   "evidence": [
+    {
+     "type": "record",
+     "what": "records showing the grade of the background clean area"
+    },
+    {
+     "type": "observation",
+     "what": "background area of the closed system or isolator"
+    }
+   ],
+   "why": "no_more: The unit only permits grade D as an acceptable background (a minimum), but 'verify that the background clean area is of grade D' turns that permission into a restriction to exactly grade D.",
+   "clauses": [
+    {
+     "item": "EU P4 9.39",
+     "ref": "EU GMP Part IV, 9.39 to 9.54",
+     "unit": 6,
+     "text": "9.41. • Production in a closed system, in an isolator, or positive pressure isolators: a background clean area of grade D is acceptable."
+    }
+   ],
+   "resolved": "shown as other requirement (clause text), owner/lead 20 Nov"
+  },
+  {
+   "kind": "point",
+   "id": "B0840-R303",
+   "units": [
+    "EU A1 4.4#8"
+   ],
+   "question": "Where a cleanroom of a grade lower than B has been considered as the background, is isolator technology used there (recommended)?",
+   "verify": "Where cleanrooms of lower grade than grade B are considered (as the background cleanroom for grade A), verify that isolator technology is used (see paragraph 4.20); such cleanrooms can be considered in that case (recommended).",
+   "evidence": [
+    {
+     "type": "observation",
+     "what": "isolator and the grade of its background cleanroom"
+    },
+    {
+     "type": "document",
+     "what": "layout showing cleanroom grades"
+    }
+   ],
+   "why": "no_more: The unit only permits lower-grade cleanrooms ('can be considered where isolator technology is used'); 'verify that isolator technology is used' turns that permission into a restriction or check.",
+   "clauses": [
+    {
+     "item": "EU A1 4.4",
+     "ref": "EU GMP Annex 1 4.4",
+     "unit": 8,
+     "text": "Cleanrooms of lower grade than grade B can be considered where isolator technology is used (see paragraph 4.20 )."
+    }
+   ],
+   "resolved": "shown as other requirement (clause text), owner/lead 20 Nov"
+  },
+  {
+   "kind": "point",
+   "id": "B0857-R301",
+   "units": [
+    "EU A1 8.81#2"
+   ],
+   "question": "Does the filtration system keep fibre and particle generation to a minimum, without unacceptable impurity levels or other change to product quality and efficacy (recommended)?",
+   "verify": "Verify that the filtration system minimizes the generation of fibres and particles, does not cause or contribute to unacceptable levels of impurities, and does not possess characteristics that otherwise alter the quality and efficacy of the product (recommended).",
+   "evidence": [
+    {
+     "type": "record",
+     "what": "data on fibres, particles and impurities from the filtration system"
+    }
+   ],
+   "why": "code: A8 question drops the qualifier '\\bminimi[sz]'",
+   "clauses": [
+    {
+     "item": "EU A1 8.81",
+     "ref": "EU GMP Annex 1 8.81",
+     "unit": 2,
+     "text": "The filtration system should minimize the generation of fibres and particles, not cause or contribute to unacceptable levels of impurities, or possess characteristics that otherwise alter the quality and efficacy of the product."
+    }
+   ],
+   "resolved": "shown as other requirement (clause text), owner/lead 20 Nov"
+  },
+  {
+   "kind": "point",
+   "id": "B0871-R302",
+   "units": [
+    "EU A3 27#1"
+   ],
+   "question": "Where closed and automated systems are used, are they in a grade C environment (usually a hot-cell)?",
+   "verify": "Verify that, in case of use of closed and automated systems (chemical synthesis, purification, on-line sterile filtration), they are in a grade C environment (usually \"Hot-cell\"), which is the suitable environment.",
+   "evidence": [
+    {
+     "type": "document",
+     "what": "documents showing the grade of the environment of closed and automated systems"
+    },
+    {
+     "type": "observation",
+     "what": "environment of closed and automated systems"
+    }
+   ],
+   "why": "no_more: The unit only says a grade C environment 'will be suitable'; asking 'are they in a grade C environment' turns this suitability statement into a mandatory placement duty.",
+   "clauses": [
+    {
+     "item": "EU A3 27",
+     "ref": "EU GMP Annex 3 27",
+     "unit": 1,
+     "text": "In case of use of closed and automated systems (chemical synthesis, purification, on-line sterile filtration) a grade C environment (usually “Hot-cell”) will be suitable."
+    }
+   ],
+   "resolved": "shown as other requirement (clause text), owner/lead 20 Nov"
+  },
+  {
+   "kind": "point",
+   "id": "B0918-R301",
+   "units": [
+    "FDA-211.137(h)#1"
+   ],
+   "question": "Where the expiration dating requirements are not applied to a human OTC drug product under the pending exemption, is its labeling free of dosage limitations and do appropriate stability data support stability of at least 3 years (recommended)?",
+   "verify": "Where a human OTC drug product relies on the requirements in this section not being enforced pending consideration of the proposed exemption published in the Federal Register of September 29, 1978, verify that its labeling does not bear dosage limitations and that it is stable for at least 3 years as supported by appropriate stability data (recommended).",
+   "evidence": [
+    {
+     "type": "document",
+     "what": "labeling of the human OTC drug product"
+    },
+    {
+     "type": "record",
+     "what": "stability data for the product"
+    }
+   ],
+   "why": "code: A11 (recommended) on must-only units; no_more: The point adds \"(recommended)\", which weakens a firm condition: the exemption applies only if the labeling has no dosage limitations and the product is stable for at least 3 years. Without these, expiration dating under the section is required.",
+   "clauses": [
+    {
+     "item": "FDA-211.137(h)",
+     "ref": "21 CFR 211.137(h)",
+     "unit": 1,
+     "text": "Pending consideration of a proposed exemption, published in the Federal Register of September 29, 1978, the requirements in this section shall not be enforced for human OTC drug products if their labeling does not bear dosage limitations and they are stable for at least 3 years as supported by appropriate stability data."
+    }
+   ],
+   "resolved": "shown as other requirement (clause text), owner/lead 20 Nov"
+  },
+  {
+   "kind": "point",
+   "id": "B0961-R301",
+   "units": [
+    "EU A1 9.1#1"
+   ],
+   "question": "Is the environmental and process monitoring programme part of the CCS and used to monitor the contamination controls?",
+   "verify": "Verify that the site's environmental and process monitoring programme forms part of the overall CCS and is used to monitor the controls designed to minimize the risk of microbial and particle contamination.",
+   "evidence": [
+    {
+     "type": "document",
+     "what": "CCS"
+    },
+    {
+     "type": "document",
+     "what": "environmental and process monitoring programme"
+    }
+   ],
+   "why": "code: A8 question drops the qualifier '\\bminimi[sz]'",
+   "clauses": [
+    {
+     "item": "EU A1 9.1",
+     "ref": "EU GMP Annex 1 9.1",
+     "unit": 1,
+     "text": "The site’s environmental and process monitoring programme forms part of the overall CCS and is used to monitor the controls designed to minimize the risk of microbial and particle contamination."
+    }
+   ],
+   "resolved": "shown as other requirement (clause text), owner/lead 20 Nov"
+  },
+  {
+   "kind": "point",
+   "id": "B1029-R301",
+   "units": [
+    "EU A13 6.2 ¶2#2"
+   ],
+   "question": "Is the validation documented in line with Annex 15 (recommended), and has the manufacturer identified the process steps that protect subject safety and the trial data?",
+   "verify": "Verify that the validation is documented in accordance with the requirements detailed in EudraLex, Volume 4, Annex 15 (recommended). Verify that, as Article 9(3) of Commission Delegated Regulation (EU) No 2017/1569 also states, the manufacturer has identified the process steps that safeguard the safety of the subject and the reliability and robustness of the clinical trial data generated in the clinical study.",
+   "evidence": [
+    {
+     "type": "document",
+     "what": "validation documentation"
+    },
+    {
+     "type": "document",
+     "what": "identified process steps safeguarding subject safety and trial data"
+    }
+   ],
+   "why": "code: A2 must-point marked (recommended)",
+   "clauses": [
+    {
+     "item": "EU A13 6.2 ¶2",
+     "ref": "EU GMP Annex 13 6.2 ¶2",
+     "unit": 2,
+     "text": "It should be documented in accordance with the requirements detailed in EudraLex, Volume 4, Annex 15. Article 9(3) of Commission Delegated Regulation (EU) No 2017/1569 states also that the manufacturer shall identify the process steps that safeguard the safety of the subject and the reliability and robustness of the clinical trial data generated in the clinical study."
+    }
+   ],
+   "resolved": "shown as other requirement (clause text), owner/lead 20 Nov"
+  },
+  {
+   "kind": "no_point",
+   "id": "EU A16 1.7#2",
+   "units": [
+    "EU A16 1.7#2"
+   ],
+   "reason": "permission only",
+   "why": "The unit is a permission, but its qualifier 'appropriately trained personnel or third parties' can be checked, e.g. 'Where the QP delegates tasks of 1.7.1 to 1.7.21, are they delegated to appropriately trained personnel or third parties?', with delegation and training records as evidence.",
+   "clauses": [
+    {
+     "item": "EU A16 1.7",
+     "ref": "EU GMP Annex 16 1.7",
+     "unit": 2,
+     "text": "These tasks may be delegated to appropriately trained personnel or third parties."
+    }
+   ],
+   "resolved": "shown as other requirement (clause text), owner/lead 20 Nov"
+  },
+  {
+   "kind": "no_point (kept in other requirements)",
+   "id": "EU A13 8 ¶4#6",
+   "units": [],
+   "reason": "",
+   "why": "proof sample: opinions split (2-of-3 rule): 1 of 3 per-item opinions FAIL (all other_requirements got 2-3 opinions)",
+   "clauses": [
+    {
+     "item": "EU A13 8 ¶4",
+     "ref": "EU GMP Annex 13 8 ¶4",
+     "unit": 6,
+     "text": "iv. The qualification status of facilities, validation status of processes and methods;"
+    }
+   ]
+  },
+  {
+   "kind": "no_point (kept in other requirements)",
+   "id": "EU A1 8.77#2",
+   "units": [],
+   "reason": "",
+   "why": "proof sample: opinions split (2-of-3 rule): 1 of 3 per-item opinions FAIL (all other_requirements got 2-3 opinions)",
+   "clauses": [
+    {
+     "item": "EU A1 8.77",
+     "ref": "EU GMP Annex 1 8.77",
+     "unit": 2,
+     "text": "i. EO gas concentration."
+    }
+   ]
+  },
+  {
+   "kind": "no_point (kept in other requirements)",
+   "id": "EMA IMP-SHIP 4 ¶2#9",
+   "units": [],
+   "reason": "",
+   "why": "proof sample: opinions split (2-of-3 rule): 1 of 3 per-item opinions FAIL (all other_requirements got 2-3 opinions)",
+   "clauses": [
+    {
+     "item": "EMA IMP-SHIP 4 ¶2",
+     "ref": "EMA guideline on IMP handling and shipping, 4 ¶2",
+     "unit": 9,
+     "text": "• Clarifying the manufacturer’s roles and deliverables regarding the regulatory release."
+    }
+   ]
+  },
+  {
+   "kind": "no_point (kept in other requirements)",
+   "id": "SchM-VII-11.1#1",
+   "units": [],
+   "reason": "",
+   "why": "proof sample: opinions split (2-of-3 rule): 1 of 3 per-item opinions FAIL (all other_requirements got 2-3 opinions)",
+   "clauses": [
+    {
+     "item": "SchM-VII-11.1",
+     "ref": "Schedule M Part VII 11.1",
+     "unit": 1,
+     "text": "As processes may not be standardised or fully validated, end-product testing is more important in ensuring that each batch meets its specification."
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,2384 @@
+{
+ "summary": {
+  "checked": 101,
+  "pass": 95,
+  "errors": 0,
+  "fail_by_criterion": {
+   "no_more": 6,
+   "no_less": 1
+  },
+  "no_point_checked": 0,
+  "no_point_pass": 0,
+  "no_point_P2_major_overrides": 0,
+  "usage": {
+   "model": "claude-opus-5-5",
+   "input_tokens": 284055,
+   "output_tokens": 28903,
+   "cost_usd": 0.86,
+   "refusals": 0
+  }
+ },
+ "fails": [
+  {
+   "id": "B0871-R302",
+   "ok": false,
+   "fail": [
+    "no_more"
+   ],
+   "no_more": {
+    "result": "FAIL",
+    "reason": "The unit only says a grade C environment 'will be suitable'; asking 'are they in a grade C environment' turns this suitability statement into a mandatory placement duty."
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "question": "Where closed and automated systems are used, are they in a grade C environment (usually a hot-cell)?",
+   "verify": "Verify that, in case of use of closed and automated systems (chemical synthesis, purification, on-line sterile filtration), they are in a grade C environment (usually \"Hot-cell\"), which is the suitable environment.",
+   "evidence": [
+    {
+     "type": "document",
+     "what": "documents showing the grade of the environment of closed and automated systems"
+    },
+    {
+     "type": "observation",
+     "what": "environment of closed and automated systems"
+    }
+   ],
+   "units": [
+    "EU A3 27#1"
+   ]
+  },
+  {
+   "id": "B0814-R302",
+   "ok": false,
+   "fail": [
+    "no_more"
+   ],
+   "no_more": {
+    "result": "FAIL",
+    "reason": "The table gives only 'Examples of operations', but 'Is each operation done in the Grade that the table ... gives' makes those examples a binding duty."
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "question": "Is each operation done in the Grade that the table of example operations gives for it?",
+   "verify": "Verify that operations are carried out in the Grades given for them in the table \"Examples of operations to be carried out in the various Grades\".",
+   "evidence": [
+    {
+     "type": "document",
+     "what": "documents showing the Grade assigned to each operation"
+    },
+    {
+     "type": "observation",
+     "what": "Grade of the area where each operation is carried out"
+    }
+   ],
+   "units": [
+    "SchM-II-4.7.9#2"
+   ]
+  },
+  {
+   "id": "B0840-R303",
+   "ok": false,
+   "fail": [
+    "no_more"
+   ],
+   "no_more": {
+    "result": "FAIL",
+    "reason": "The unit only permits lower-grade cleanrooms ('can be considered where isolator technology is used'); 'verify that isolator technology is used' turns that permission into a restriction or check."
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "question": "Where a cleanroom of a grade lower than B has been considered as the background, is isolator technology used there (recommended)?",
+   "verify": "Where cleanrooms of lower grade than grade B are considered (as the background cleanroom for grade A), verify that isolator technology is used (see paragraph 4.20); such cleanrooms can be considered in that case (recommended).",
+   "evidence": [
+    {
+     "type": "observation",
+     "what": "isolator and the grade of its background cleanroom"
+    },
+    {
+     "type": "document",
+     "what": "layout showing cleanroom grades"
+    }
+   ],
+   "units": [
+    "EU A1 4.4#8"
+   ]
+  },
+  {
+   "id": "B0813-R301",
+   "ok": false,
+   "fail": [
+    "no_more"
+   ],
+   "no_more": {
+    "result": "FAIL",
+    "reason": "The unit's permission ('may be demonstrated during normal operations, simulated operations or during media fills') becomes a duty or restriction in 'is demonstrated during…', limiting classification to those three options."
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "question": "Was the “in operation” classification shown under normal operations, simulated operations or media fills, as a worst-case simulation?",
+   "verify": "Verify that “in operation” classification is demonstrated during normal operations, simulated operations or during media fills, as worst-case simulation is required for this.",
+   "evidence": [
+    {
+     "type": "record",
+     "what": "classification reports for the “in operation” state"
+    }
+   ],
+   "units": [
+    "SchM-II-4.6.4#1"
+   ]
+  },
+  {
+   "id": "B0779-R301",
+   "ok": false,
+   "fail": [
+    "no_more",
+    "no_less"
+   ],
+   "no_more": {
+    "result": "FAIL",
+    "reason": "Options (a)/(b) are applied to all 'plant materials and plant preparations', widening the scope beyond preparations of comminuted or powdered plant materials."
+   },
+   "no_less": {
+    "result": "FAIL",
+    "reason": "The verify drops the 23.5.5.1 scope 'consisting of comminuted or powdered plant materials' to which options (a) and (b) are limited."
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "question": "Are the active ingredient particulars of plant materials and plant preparations expressed in one of the set ways?",
+   "verify": "Verify that the qualitative and quantitative particulars of the active ingredients in plant materials and plant preparations are expressed so that either the quantity of the plant material is stated or, if constituents with known therapeutic activity are unidentified, the quantity of the plant material or phytopharmaceutical preparation is stated; or the quantity of the plant material or phytopharmaceutical preparation is given as a range, corresponding to a defined quantity of constituents with known therapeutic activity.",
+   "evidence": [
+    {
+     "type": "document",
+     "what": "product label or other documents showing the active ingredient particulars"
+    }
+   ],
+   "units": [
+    "SchM-VI-23.5.5#1",
+    "SchM-VI-23.5.5#3",
+    "SchM-VI-23.5.5#4"
+   ]
+  },
+  {
+   "id": "B0918-R301",
+   "ok": false,
+   "fail": [
+    "no_more"
+   ],
+   "no_more": {
+    "result": "FAIL",
+    "reason": "The point adds \"(recommended)\", which weakens a firm condition: the exemption applies only if the labeling has no dosage limitations and the product is stable for at least 3 years. Without these, expiration dating under the section is required."
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "question": "Where the expiration dating requirements are not applied to a human OTC drug product under the pending exemption, is its labeling free of dosage limitations and do appropriate stability data support stability of at least 3 years (recommended)?",
+   "verify": "Where a human OTC drug product relies on the requirements in this section not being enforced pending consideration of the proposed exemption published in the Federal Register of September 29, 1978, verify that its labeling does not bear dosage limitations and that it is stable for at least 3 years as supported by appropriate stability data (recommended).",
+   "evidence": [
+    {
+     "type": "document",
+     "what": "labeling of the human OTC drug product"
+    },
+    {
+     "type": "record",
+     "what": "stability data for the product"
+    }
+   ],
+   "units": [
+    "FDA-211.137(h)#1"
+   ]
+  }
+ ],
+ "no_point_fails": [],
+ "results": [
+  {
+   "id": "B0890-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0789-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B1073-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0973-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0973-R302",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0964-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0964-R302",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0871-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0871-R302",
+   "ok": false,
+   "fail": [
+    "no_more"
+   ],
+   "no_more": {
+    "result": "FAIL",
+    "reason": "The unit only says a grade C environment 'will be suitable'; asking 'are they in a grade C environment' turns this suitability statement into a mandatory placement duty."
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0698-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B1029-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0702-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0883-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B1082-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0814-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0814-R302",
+   "ok": false,
+   "fail": [
+    "no_more"
+   ],
+   "no_more": {
+    "result": "FAIL",
+    "reason": "The table gives only 'Examples of operations', but 'Is each operation done in the Grade that the table ... gives' makes those examples a binding duty."
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0803-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0917-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0917-R302",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0747-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0604-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0604-R302",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B1069-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0931-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0812-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0679-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0755-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0680-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0566-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0804-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0993-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0774-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0774-R302",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0984-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0846-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B1041-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0832-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0575-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B1058-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0954-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0643-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0840-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0840-R302",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0840-R303",
+   "ok": false,
+   "fail": [
+    "no_more"
+   ],
+   "no_more": {
+    "result": "FAIL",
+    "reason": "The unit only permits lower-grade cleanrooms ('can be considered where isolator technology is used'); 'verify that isolator technology is used' turns that permission into a restriction or check."
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0608-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0950-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0648-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0648-R302",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0648-R303",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0875-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0654-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0835-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0961-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0961-R302",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0819-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0807-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B1009-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0823-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0583-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0888-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B1057-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0772-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0849-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0893-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0802-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0972-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0826-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0885-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0940-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0939-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0939-R302",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0857-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0646-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0646-R302",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0646-R303",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0646-R304",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0577-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B1049-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0612-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0813-R301",
+   "ok": false,
+   "fail": [
+    "no_more"
+   ],
+   "no_more": {
+    "result": "FAIL",
+    "reason": "The unit's permission ('may be demonstrated during normal operations, simulated operations or during media fills') becomes a duty or restriction in 'is demonstrated during…', limiting classification to those three options."
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0827-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0795-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0795-R302",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0894-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0858-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0858-R302",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0628-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0764-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0753-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0975-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0669-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0669-R302",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0779-R301",
+   "ok": false,
+   "fail": [
+    "no_more",
+    "no_less"
+   ],
+   "no_more": {
+    "result": "FAIL",
+    "reason": "Options (a)/(b) are applied to all 'plant materials and plant preparations', widening the scope beyond preparations of comminuted or powdered plant materials."
+   },
+   "no_less": {
+    "result": "FAIL",
+    "reason": "The verify drops the 23.5.5.1 scope 'consisting of comminuted or powdered plant materials' to which options (a) and (b) are limited."
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0951-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0918-R301",
+   "ok": false,
+   "fail": [
+    "no_more"
+   ],
+   "no_more": {
+    "result": "FAIL",
+    "reason": "The point adds \"(recommended)\", which weakens a firm condition: the exemption applies only if the labeling has no dosage limitations and the product is stable for at least 3 years. Without these, expiration dating under the section is required."
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0688-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0874-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0629-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B1019-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0903-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  },
+  {
+   "id": "B0717-R301",
+   "ok": true,
+   "fail": [],
+   "no_more": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "no_less": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "answerable": {
+    "result": "PASS",
+    "reason": ""
+   },
+   "own_words": {
+    "result": "PASS",
+    "reason": ""
+   }
+  }
+ ],
+ "no_point_results": []
+}
