@@ -1,0 +1,18 @@
+{
+  "name": "medhanta-audit-checklist",
+  "private": true,
+  "version": "0.2.0",
+  "type": "module",
+  "scripts": {
+    "start": "node --no-warnings server.js",
+    "build-data": "python3 -I build_data.py",
+    "test": "node --no-warnings --test test/*.test.js",
+    "test:platform": "scripts/test-platform.sh",
+    "migrate": "node db/migrate.js"
+  },
+  "dependencies": {
+    "exceljs": "4.4.0",
+    "pdfmake": "0.2.23",
+    "postgres": "3.4.9"
+  }
+}

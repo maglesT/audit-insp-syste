@@ -1,0 +1,30 @@
+/* Medhanta core: the same look as the Medhanta products (Deviations, Materials, Logbook): Medhanta orange on white,
+   grey text, the red-orange-amber gradient under the top bar. Status colours keep their meaning and are never the brand
+   orange. */
+:root {
+  --bg: #faf8f6;
+  --card: #fff;
+  --fg: #2b2b2b;
+  --muted: #666b73;
+  --line: #ebe7e4;
+  --line-strong: #d9d3ce;
+  /* Medhanta: red #dd1a10 -> orange #f4511e -> amber #f7941d, grey #5f5f5f */
+  --brand: #e8500f;
+  --brand-dark: #c8410a;
+  --brand-soft: #fff1e8;
+  --brand-grey: #5f5f5f;
+  --brand-gradient: linear-gradient(90deg, #dd1a10, #f4511e 55%, #f7941d);
+  --ok: #17803d;
+  --ok-soft: #e4f5ea;
+  --bad: #c0352b;
+  --bad-soft: #fdebe9;
+  --radius: 12px;
+  --shadow: 0 1px 2px rgba(60, 40, 30, 0.05), 0 4px 14px rgba(60, 40, 30, 0.06);
+  /* Kept for older rules: the accent is the brand orange, warnings are red. */
+  --accent: var(--brand);
+  --warn: var(--bad);
+  font-family: Inter, 'Segoe UI', system-ui, -apple-system, Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.45;
+  color: var(--fg);
+  background: var(--bg);
