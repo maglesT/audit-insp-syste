@@ -323,6 +323,7 @@ export function createApp(deps) {
       if (mm[2] && m === 'GET') return exportXlsx(res, a, cfg, a.answers, u);
       if (m === 'GET') return send(res, 200, a);
       if (m === 'PUT') {
+        if (a.status === 'withdrawn') throw new HttpErr(409, 'This audit was withdrawn. It is kept as it was and cannot be changed.');
         const b = await readBody(req);
         const status = ['open', 'closed'].includes(b.status) ? b.status : a.status;
         if (status !== a.status) need(u, 'audit.audit.close');
@@ -347,9 +348,15 @@ export function createApp(deps) {
           await store.trail(u, 'audit.header', 'audit', a.id, { name: next.name, site: next.site, audit_date: next.audit_date, header });
         return send(res, 200, { ok: true, updated, header, answers });
       }
+      // MED-11 (PL-06): an audit is never deleted. An open one is withdrawn with a reason and kept; a closed one stays.
       if (m === 'DELETE') {
         need(u, 'audit.audit.close');
-        await store.deleteAudit(a.id); await store.trail(u, 'audit.delete', 'audit', a.id, { name: a.name }); return send(res, 200, { ok: true });
+        const reason = str((await readBody(req)).reason, 500);
+        if (!reason) throw new HttpErr(400, 'Give the reason for withdrawing this audit.');
+        if (a.status !== 'open') throw new HttpErr(409, a.status === 'closed' ? 'This audit is closed. A closed audit cannot be withdrawn.' : 'This audit was already withdrawn.');
+        if (!(await store.withdrawAudit(a.id, { reason, by: u.email }))) throw new HttpErr(409, 'This audit is no longer open. Reload the page.');
+        await store.trail(u, 'audit.withdraw', 'audit', a.id, { name: a.name, reason });
+        return send(res, 200, { ok: true });
       }
     }
 

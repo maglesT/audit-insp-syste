@@ -85,7 +85,12 @@ export function pgStore(url, { max = 10 } = {}) {
         header = ${sql.json(a.header)}, answers = ${sql.json(a.answers)}, updated = now(), updated_by = ${a.by} where id = ${id} returning updated`;
       return iso(r.updated);
     },
-    async deleteAudit(id) { await sql`delete from audits where id = ${id}`; },
+    // MED-11: kept with its reason; only an open audit (a closed one is final). Returns false when it was not open.
+    async withdrawAudit(id, { reason, by }) {
+      const r = await sql`update audits set status = 'withdrawn', withdrawn_reason = ${reason}, updated = now(), updated_by = ${by}
+        where id = ${id} and status = 'open' returning id`;
+      return r.length > 0;
+    },
 
     // ----- audit trail (insert-only) -----
     async trail(u, action, objectType, objectId, detail) {
