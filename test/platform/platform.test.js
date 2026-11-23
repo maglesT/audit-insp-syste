@@ -71,7 +71,7 @@ const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'mac-pl-'));
 const ids = {};
 test.before(async () => {
   core.issuer = (await listen(coreSrv)) + '/oidc';
-  assert.deepEqual(await migrate(`${SU}/audit`, { role: 'audit_owner' }), ['0001_init.sql']);
+  assert.deepEqual(await migrate(`${SU}/audit`, { role: 'audit_owner' }), ['0001_init.sql', '0002_withdraw_audits.sql']);
   assert.deepEqual(await migrate(`${SU}/audit`, { role: 'audit_owner' }), [], 'second run: up to date');
   idSu = su('identity'); mdSu = su('master_data'); auditSu = su('audit');
   // What apply does for a licensed product: its links switched on through the platform's own function.
@@ -310,6 +310,26 @@ test('PL-06 least privilege: audit_trail is insert-only, the site row and the id
   assert.equal(await sqlstate(db`delete from users`), '42501');
   assert.equal(await sqlstate(auditSu`update audit_trail set action = 'x'`), '42501', 'even the owner cannot change the trail');
   await db.end();
+});
+
+test('MED-11 PL-06: audit_app cannot delete an audit; withdrawal keeps it with status and reason; a closed audit cannot be withdrawn', async () => {
+  const b = await person('wd', ALL); const aid = await newAudit(b);
+  const db = appDb('audit');
+  try {
+  assert.equal(await sqlstate(db`delete from audits where id = ${aid}`), '42501');
+  assert.equal((await b.api('DELETE', '/api/audits/' + aid)).status, 400, 'a reason is required');
+  assert.equal((await b.api('DELETE', '/api/audits/' + aid, { reason: 'duplicate of another audit' })).status, 200);
+  const [r] = await auditSu`select status, withdrawn_reason, updated_by from audits where id = ${aid}`;
+  assert.deepEqual({ ...r }, { status: 'withdrawn', withdrawn_reason: 'duplicate of another audit', updated_by: 'wd' });
+  const [t] = await auditSu`select user_name, detail from audit_trail where action = 'audit.withdraw' and object_id = ${aid}`;
+  assert.equal(t.detail.reason, 'duplicate of another audit');
+  assert.equal(await sqlstate(db`update audits set status = 'withdrawn', withdrawn_reason = null where id = ${aid}`), '23514', 'withdrawn needs a reason');
+  assert.equal((await b.api('PUT', '/api/audits/' + aid, { status: 'open' })).status, 409);
+  const cid = await newAudit(b);
+  assert.equal((await b.api('PUT', '/api/audits/' + cid, { status: 'closed' })).status, 200);
+  assert.equal((await b.api('DELETE', '/api/audits/' + cid, { reason: 'try' })).status, 409);
+  assert.equal((await auditSu`select status from audits where id = ${cid}`)[0].status, 'closed');
+  } finally { await db.end(); }
 });
 
 test('platform: health endpoint; Ask is off even with the flag file; no internal texts in the data', async () => {

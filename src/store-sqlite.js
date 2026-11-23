@@ -42,6 +42,7 @@ CREATE TABLE IF NOT EXISTS audit_trail (id INTEGER PRIMARY KEY, at TEXT NOT NULL
 CREATE TRIGGER IF NOT EXISTS audit_trail_no_update BEFORE UPDATE ON audit_trail BEGIN SELECT RAISE(ABORT, 'audit_trail is insert-only'); END;
 CREATE TRIGGER IF NOT EXISTS audit_trail_no_delete BEFORE DELETE ON audit_trail BEGIN SELECT RAISE(ABORT, 'audit_trail is insert-only'); END;`);
   if (!db.prepare('PRAGMA table_info(audits)').all().some((c) => c.name === 'header')) db.exec("ALTER TABLE audits ADD COLUMN header TEXT NOT NULL DEFAULT '{}'");
+  if (!db.prepare('PRAGMA table_info(audits)').all().some((c) => c.name === 'withdrawn_reason')) db.exec('ALTER TABLE audits ADD COLUMN withdrawn_reason TEXT');
 
   const tpl = (r) => r && { ...r, config: J(r.config, {}) };
   const aud = (r) => r && { ...r, config: J(r.config, {}), answers: J(r.answers, {}), header: J(r.header, {}) };
@@ -95,7 +96,11 @@ CREATE TRIGGER IF NOT EXISTS audit_trail_no_delete BEFORE DELETE ON audit_trail 
         .run(a.name, a.site, a.auditor, a.audit_date, a.status, JSON.stringify(a.header), JSON.stringify(a.answers), t, a.by, id);
       return t;
     },
-    async deleteAudit(id) { db.prepare('DELETE FROM audits WHERE id=?').run(id); },
+    // MED-11: kept with its reason; only an open audit (a closed one is final). Returns false when it was not open.
+    async withdrawAudit(id, { reason, by }) {
+      return db.prepare("UPDATE audits SET status='withdrawn',withdrawn_reason=?,updated=?,updated_by=? WHERE id=? AND status='open'")
+        .run(reason, now(), by, id).changes > 0;
+    },
 
     async trail(u, action, objectType, objectId, detail) {
       db.prepare('INSERT INTO audit_trail (at,user_id,user_name,action,object_type,object_id,detail) VALUES (?,?,?,?,?,?,?)')

@@ -134,7 +134,7 @@ async function viewHome() {
         h('a', { class: 'btn sm', href: `/api/audits/${a.id}/export.xlsx` }, 'Excel'),
         h('a', { class: 'btn sm', href: `/api/audits/${a.id}/export.pdf` }, 'PDF'),
         h('a', { class: 'btn sm', href: '#/print/' + a.id }, 'Print'),
-        can('audit.audit.close') && h('button', { class: 'btn sm danger', onclick: async () => { if (confirm(`Delete audit "${a.name}" and all its answers?`)) { await call('DELETE', '/api/audits/' + a.id); route(); } } }, 'Delete'))));
+        can('audit.audit.close') && a.status === 'open' && h('button', { class: 'btn sm danger', onclick: async () => { const reason = prompt(`Withdraw audit "${a.name}"? It is kept, marked withdrawn. Reason:`); if (reason?.trim()) { await call('DELETE', '/api/audits/' + a.id, { reason }); route(); } } }, 'Withdraw'))));
   }
   $app.replaceChildren(findBox(),
     h('div', { class: 'row', style: 'justify-content:space-between' }, h('h1', {}, 'Templates'), can('audit.template.edit') && h('a', { class: 'btn pri', href: '#/template/new' }, '+ New template')),
@@ -469,7 +469,7 @@ async function viewAudit(id) {
   const lines = auditLines(DATA, cfg);
   const status = h('span', { class: 'small muted' });
   let timer = null, saving = Promise.resolve();
-  const closed = () => a.status === 'closed';
+  const closed = () => a.status !== 'open';
   const ro = () => closed() || !can('audit.audit.perform');
   // header people / rooms: older audits had one typed auditor text
   const hd = { auditors: a.header?.auditors?.length ? a.header.auditors : a.auditor && !PLATFORM() ? [{ name: a.auditor }] : [], auditees: a.header?.auditees || [], rooms: a.header?.rooms || [] };
@@ -590,7 +590,7 @@ async function viewAudit(id) {
     await call('PUT', '/api/audits/' + id, { ...fields(), status: to });
     dirty = false; route();
   } }, closed() ? 'Re-open audit' : 'Close audit');
-  if (!can('audit.audit.close')) closeBtn.style.display = 'none';
+  if (!can('audit.audit.close') || a.status === 'withdrawn') closeBtn.style.display = 'none';
   counts(); drawBody();
   $app.replaceChildren(
     h('div', { class: 'row', style: 'justify-content:space-between' }, h('h1', {}, 'Audit'), h('div', { class: 'row' },
@@ -631,7 +631,7 @@ async function viewPrint(id) {
     h('div', { class: 'row noprint', style: 'margin-bottom:10px' }, h('a', { class: 'btn pri', href: `/api/audits/${id}/export.pdf` }, 'Download PDF'), h('button', { class: 'btn', onclick: () => window.print() }, 'Print'), h('a', { class: 'btn', href: '#/audit/' + id }, 'Back to audit')),
     h('h1', {}, a.name),
     h('p', {}, [a.site && 'Site: ' + a.site, a.auditor && 'Auditor: ' + a.auditor, a.header?.auditees?.length && 'Auditees: ' + a.header.auditees.map((x) => x.name).join(', '),
-      a.header?.rooms?.length && 'Rooms / areas: ' + a.header.rooms.map(refLabel).join(', '), a.audit_date && 'Date: ' + a.audit_date, 'Status: ' + a.status].filter(Boolean).join(' · ')),
+      a.header?.rooms?.length && 'Rooms / areas: ' + a.header.rooms.map(refLabel).join(', '), a.audit_date && 'Date: ' + a.audit_date, 'Status: ' + a.status + (a.withdrawn_reason ? ' (' + a.withdrawn_reason + ')' : '')].filter(Boolean).join(' · ')),
     mode === 'points' && isBeta() ? h('p', { class: 'small' }, h('b', {}, 'Audit points: ' + BETA)) : null,
     h('p', { class: 'small' }, 'Template: ', a.template_name, ' · Markets: ', cfg.markets.map((m) => MARKETS[m].label).join(', '), ' · Plant types: ', ['general GMP', ...cfg.plants].join(', ')),
     h('p', {}, h('b', {}, `${s.total} ${mode === 'points' ? 'lines (audit points + other requirements)' : 'check points'}: ${mode === 'points' ? 'Compliant/Yes' : 'Yes'} ${s.yes} · ${mode === 'points' ? 'Not compliant/No' : 'No'} ${s.no} · N/A ${s.na} · not answered ${s.total - s.yes - s.no - s.na}`)),
