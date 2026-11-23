@@ -92,6 +92,29 @@ test('template -> audit -> answers -> excel; company scoping', async () => {
   r = await A('PUT', '/api/audits/' + aid, { answers: {} }); assert.equal(r.status, 409, 'closed audit is read-only');
 });
 
+test('MED-11 PL-06: an audit is withdrawn with a reason and kept, never deleted; a closed audit cannot be withdrawn', async () => {
+  const A = await login('a@x.test'); const B = await login('b@x.test');
+  const tid = (await (await A('POST', '/api/templates', { name: 'TW', config: { markets: ['india'], plants: ['oral-solid'] } })).json()).id;
+  const aid = (await (await A('POST', '/api/audits', { template_id: tid, name: 'To withdraw' })).json()).id;
+  assert.equal((await A('DELETE', '/api/audits/' + aid)).status, 400, 'a reason is required');
+  assert.equal((await A('DELETE', '/api/audits/' + aid, { reason: '  ' })).status, 400, 'a blank reason is refused');
+  assert.equal((await B('DELETE', '/api/audits/' + aid, { reason: 'not mine' })).status, 404, 'other company cannot withdraw it');
+  assert.equal((await A('DELETE', '/api/audits/' + aid, { reason: 'started on the wrong template' })).status, 200);
+  const a = await (await A('GET', '/api/audits/' + aid)).json();
+  assert.equal(a.status, 'withdrawn'); assert.equal(a.withdrawn_reason, 'started on the wrong template'); assert.equal(a.updated_by, 'a@x.test');
+  assert.equal((await A('GET', '/api/audits')).status, 200);
+  assert.equal((await (await A('GET', '/api/audits')).json()).find((x) => x.id === aid).status, 'withdrawn', 'listed, marked withdrawn');
+  const tr = db.prepare("SELECT user_name, detail FROM audit_trail WHERE action='audit.withdraw' AND object_id=?").get(aid);
+  assert.equal(tr.user_name, 'a@x.test'); assert.equal(JSON.parse(tr.detail).reason, 'started on the wrong template');
+  assert.equal((await A('PUT', '/api/audits/' + aid, { status: 'open' })).status, 409, 'a withdrawn audit cannot be re-opened');
+  assert.equal((await A('PUT', '/api/audits/' + aid, { answers: {} })).status, 409, 'nor changed');
+  assert.equal((await A('DELETE', '/api/audits/' + aid, { reason: 'again' })).status, 409);
+  const cid = (await (await A('POST', '/api/audits', { template_id: tid, name: 'Closed one' })).json()).id;
+  assert.equal((await A('PUT', '/api/audits/' + cid, { status: 'closed' })).status, 200);
+  assert.equal((await A('DELETE', '/api/audits/' + cid, { reason: 'try' })).status, 409, 'a closed audit cannot be withdrawn');
+  assert.equal((await (await A('GET', '/api/audits/' + cid)).json()).status, 'closed');
+});
+
 test('ask: disabled until the flag exists; then answers, logs cost without question text, limits per hour', async () => {
   const A = await login('a@x.test');
   let r = await (await A('POST', '/api/ask', { question: 'water for injection?' })).json();
