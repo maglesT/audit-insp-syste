@@ -151,3 +151,10 @@ test('Download PDF: same content as the print page (answers, names, removed item
   assert.equal((await B('GET', `/api/audits/${aid}/export.pdf`)).status, 404, 'other company cannot get it');
   assert.equal((await fetch(`${base}/api/audits/${aid}/export.pdf`)).status, 401);
 });
+
+test('PH-01: encoded or odd-cased API paths never return data (no login)', async () => {
+  for (const u of ['/%61pi/templates', '/%61%70%69/templates', '/API/templates', '//api/templates', '/api%2Ftemplates', '/%5Capi/templates', '/api/./templates/']) {
+    const r = await fetch(base + u);
+    assert.ok([400, 401, 404].includes(r.status), `${u} -> ${r.status}`);
+  }
+});

@@ -528,9 +528,14 @@ export function createApp(deps) {
   }
 
   const handler = async (req, res) => {
+    // `//host/path` would be read as a host by the URL parser, hiding the real path: refuse it.
+    if (/^[\\/]{2}/.test(req.url)) return send(res, 404, { error: 'Not found' });
     const url = new URL(req.url, 'http://x');
     try {
       if (url.pathname.startsWith('/api/')) return await api(req, res, url);
+      // Pen test PH-01: an encoded or odd-cased spelling of an API path (/%61pi/..., /API/..., //api/...) is never served, not even as a page.
+      let decoded = url.pathname; try { decoded = decodeURIComponent(decoded); } catch { throw new HttpErr(400, 'Bad path'); }
+      if (/^[\\/]+api([\\/]|$)/i.test(decoded)) throw new HttpErr(404, 'Not found');
       if (PLATFORM && ['/login', '/cb', '/backchannel-logout'].includes(url.pathname)) { if ((await signon(req, res, url)) !== false) return; }
       if (req.method !== 'GET' && req.method !== 'HEAD') throw new HttpErr(405, 'Method not allowed');
       return await serveStatic(req, res, url);
